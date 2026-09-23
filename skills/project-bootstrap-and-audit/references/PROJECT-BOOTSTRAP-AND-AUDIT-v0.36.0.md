@@ -4011,7 +4011,7 @@ never loads the file twice. So the rule that it becomes `OVER` once native suppo
 retired, and the fallback claim this file called wrong is now right. A retired rule is a
 minor bump, not a patch. **Two study descriptions were wrong**: Lulla et al.
 (`arXiv:2601.20404`) measured efficiency with and without an `AGENTS.md`, not curated files on
-focused changes; and the 5.6% per-step decay is exploratory and non-monotonic, in a study whose
+focused changes; and the 5.6% per-function decay is exploratory and non-monotonic, in a study whose
 main result was no detectable effect of file size, position, structure or conflicts. **Named
 where it was anonymous**: the 32 KiB limit is Codex's `project_doc_max_bytes`, and Anthropic's
 own target is under 200 lines per `CLAUDE.md`. **Corrected in passing**: the Dependabot cooldown
