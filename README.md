@@ -16,7 +16,7 @@ In Claude Code:
 
 | Skill | Plugin | What it does |
 |---|---|---|
-| `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.35.0) |
+| `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.36.0) |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill

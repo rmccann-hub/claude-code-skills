@@ -12,6 +12,12 @@ Notable changes to this repository. The format follows
 - `skillcheck` checks `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/` for hidden and
   bidirectional characters, as it already did for skills.
 
+### Changed
+
+- The standard is now v0.36.0, with nine dated facts corrected against their primary sources.
+  The main change: Claude Code reads `AGENTS.md` natively, but only in some sessions, so the
+  `CLAUDE.md` shim stays. Its history entry lists the rest.
+
 ## [0.1.0] - 2026-09-23
 
 ### Added

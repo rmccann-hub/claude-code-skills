@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.35.0"
-  updated: "2026-09-22"
-  supersedes: "0.34.1"
+  version: "0.36.0"
+  updated: "2026-09-23"
+  supersedes: "0.35.0"
   reading: "One file, read in ranges. Start at How to Read This File; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at Phase 0 — none is a valid answer>"
@@ -127,23 +127,26 @@ These are beliefs the design rests on. Each could be wrong, and saying so is che
 discovering it.
 
 - **Instruction files are weak, and the evidence is specific about how.** A controlled study
-  (Gloaguen et al., ETH Zurich / LogicStar, 2026, `arXiv:2602.11988`) tested four agents on
-  438 tasks and found repository-level context files produced **no significant task-success
-  gain while raising inference cost over 20% on average** — and that this held for
-  developer-written files as much as generated ones. A follow-up (Lulla et al., 2026, cited
-  in `arXiv:2606.20512`) found *curated* files did cut runtime and token use on focused
-  changes, so the finding is about bloat rather than about instructions as such. **What
-  survives both results:** keep the context file short, hand-written, and limited to what a
-  reader cannot discover from the codebase — tool commands being the one content type
-  measurably used, by two orders of magnitude when the file names a non-standard tool, while
-  repository overviews earned nothing. Two later measurements harden the same design. First,
-  **adherence to written instructions decays within a session** — about 5.6% lower odds of
-  compliance for each additional function generated, replicated across codebases
-  (`arXiv:2605.10039`) — which is why this file uses hard gates and puts its self-check last,
-  where the decay is worst, rather than trusting one instruction stated once. Second, **the
-  same guidance file measurably helped one model while hurting another**, which is why every
-  budget rule here says minimal rather than complete. Everything here treats written rules as
-  guidance, and only deny rules, hooks and server-side checks as enforcement.
+  (Gloaguen et al., ETH Zurich / LogicStar, 2026, `arXiv:2602.11988`) tested four agents on 438
+  tasks and found repository-level context files produced **no significant task-success gain
+  while raising inference cost over 20% on average** — and that this held for developer-written
+  files as much as generated ones. A follow-up (Lulla et al., 2026, `arXiv:2601.20404`)
+  compared agents with and without an `AGENTS.md` on 124 pull requests in 10 repositories: the
+  file went with **lower median runtime (28.64%) and fewer output tokens (16.58%)**, and task
+  completion stayed comparable. One measures success and the other efficiency, so the two do
+  not conflict. **What survives both results:** keep the context file short, hand-written, and
+  limited to what a reader cannot discover from the codebase — tool commands being the one
+  content type measurably used, by two orders of magnitude when the file names a non-standard
+  tool, while repository overviews earned nothing. Two later measurements point the same way,
+  the first only tentatively. First, **adherence to written instructions may decay within a
+  session** — about 5.6% lower odds of compliance for each additional function generated
+  (`arXiv:2605.10039`), an exploratory and non-monotonic finding in a study whose main result
+  was that file size, position, structure and conflicts made no detectable difference — which
+  is why this file uses hard gates and puts its self-check last, where any decay is worst,
+  rather than trusting one instruction stated once. Second, **the same guidance file measurably
+  helped one model while hurting another**, which is why every budget rule here says minimal
+  rather than complete. Everything here treats written rules as guidance, and only deny rules,
+  hooks and server-side checks as enforcement.
 - **Accretion is the failure mode**, not absence. A solo project dies of configuration nobody
   maintains more often than of configuration nobody wrote. Hence `OVER` as a first-class finding.
 - **Declines are worth recording** — a written "no" with a reopen trigger prevents the same
@@ -626,22 +629,23 @@ reads as diligence.
 
 | Fact | As of | Why a run cares |
 |---|---|---|
-| Classic branch protection **and** rulesets: public repositories on a free plan, or public and private on a paid one — **GitHub Pro suffices for a personal account**. Push rulesets need an organisation plan | 2026-09 | Dimension 6. Decides `GAP` against `N/A`, and whether the public-or-pay decision is raised at all |
+| Classic branch protection **and** rulesets: public repositories on a free plan, or public and private on a paid one — **GitHub Pro suffices for a personal account**. Push rulesets need an organisation plan and apply only to private and internal repositories | 2026-09 | Dimension 6. Decides `GAP` against `N/A`, and whether the public-or-pay decision is raised at all |
 | Secret scanning and push protection: free and default-on for public repositories; a paid per-committer add-on for private | 2026-09 | Dimension 7. Decides whether the free remedy exists |
 | Immutable releases are a **repository or organisation setting**, not a default. When on: tag and assets frozen at publish, title and notes still editable, and assets must be uploaded while the release is a draft | 2026-09 | The release gate. Read the setting; do not assume either way |
-| Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt; `cooldown: 0` opts out | 2026-07 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
+| Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt. The period is set with `default-days` under `cooldown:`, with per-semver keys alongside; a bare `cooldown: 0` is not a documented form | 2026-09 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
 | A tag can be created in the browser at publish time, with no clone | 2026-09 | The only reason the release gate is reachable at all without a working copy |
 
 ### Agent tooling
 
 | Fact | As of | Why a run cares |
 |---|---|---|
-| Claude Code does **not** read `AGENTS.md` natively; the shim or a symlink is required | 2026-09 | Dimension 4 and *Any Agent, Any Tool*. The most likely fact here to change |
+| Claude Code reads `AGENTS.md` natively from v2.1.277, **but only when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` exists** in the working directory or above it, and not in sessions without feature flags (Bedrock, other third-party providers, telemetry off), in the first session after an install or upgrade, or with the built-in `agents-md` plugin disabled. Keeping `@AGENTS.md` in `CLAUDE.md` works in all of them and "never makes Claude read `AGENTS.md` twice" | 2026-09 | Dimension 4 and *Any Agent, Any Tool*. Why the shim stays although native reading shipped |
 | `AGENTS.md` is read directly by most other major agent tools; Gemini CLI and Aider need one config line | 2026-09 | Whether a shim is warranted per tool |
-| At least one tool silently truncates its context file past ~32 KiB | 2026-09 | The budget table. Silent truncation reads exactly like being ignored |
+| Anthropic's target is under 200 lines per `CLAUDE.md`; Claude Code loads one of up to 4 MiB in full and skips a larger one | 2026-09 | The budget table. The one published number behind it; the others are this file's heuristics |
+| Codex stops adding instruction files once their combined size reaches `project_doc_max_bytes`, 32 KiB by default | 2026-09 | The budget table. Truncation reads exactly like being ignored |
 | Deny rules are evaluated ahead of allow at every scope and survive permissive modes — but govern the agent's own tools, not a script it writes | 2026-09 | Dimension 4. Bounds what the enforced layer can honestly claim |
-| Adherence to written instructions decays within a session — about 5.6% lower odds of compliance per additional function generated | 2026-09 | Why the gates exist, and why the conformance block sits last |
-| Security audits of public skill marketplaces found roughly a third of published skills flawed, with confirmed coordinated malicious campaigns | 2026-09 | Dimension 4's inventory of hooks, skills and plugins |
+| Adherence to written instructions may decay within a session — about 5.6% lower odds of compliance per additional function generated, an exploratory, non-monotonic finding; the same study found no detectable effect of file size, position, structure or conflicts (`arXiv:2605.10039`) | 2026-09 | Why the gates exist, and why the conformance block sits last |
+| Audits of public skill marketplaces found between a quarter and a third of published skills flawed (Snyk: 36.82% of 3,984; `arXiv:2601.10338`: 26.1% of 42,447), with confirmed coordinated malicious campaigns | 2026-09 | Dimension 4's inventory of hooks, skills and plugins |
 
 ### Language toolchains
 
@@ -663,7 +667,7 @@ check what answered you, per the probe rule above.**
 
 | Standard | What it already covers | Where this file defers to it |
 |---|---|---|
-| **OpenSSF Scorecard** | Eighteen automated supply-chain and process checks, runnable as a workflow | Dimension 8, and parts of 6 and 7 |
+| **OpenSSF Scorecard** | Nineteen automated supply-chain and process checks, runnable as a workflow | Dimension 8, and parts of 6 and 7 |
 | **OpenSSF Best Practices Badge** | Self-attested practices a scanner cannot detect | A T3 project with external users |
 | **MADR** (4.x) | A published decision-record format, minimal and full variants | Dimension 10 |
 | **Keep a Changelog**, **Semantic Versioning**, **Conventional Commits** | Changelog shape, version meaning, commit grammar | Dimension 10 |
@@ -1213,14 +1217,15 @@ not choices. `CODEOWNERS` once a second person exists.
 ### 4. Agent configuration
 
 - `AGENTS.md` canonical; `CLAUDE.md` a shim holding only what cannot be portable.
-  **Claude Code does not read `AGENTS.md` natively** (as of 2026-09; the request is open and
-  heavily subscribed, so re-check it). Two supported ways round it, both documented by the
-  vendor rather than improvised: a one-line `CLAUDE.md` containing `@AGENTS.md`, or
-  `ln -s AGENTS.md CLAUDE.md`. **Prefer the import** — a symlink is invisible in a file
-  listing, survives badly on Windows checkouts, and this maintainer works across both.
-  A run that claims Claude Code picks up `AGENTS.md` on its own has asserted something false;
-  a third-party claim that it reads the file as a fallback when no `CLAUDE.md` exists is in
-  circulation and is **wrong**.
+  **Claude Code reads `AGENTS.md` natively only in some sessions** (from v2.1.277, as of
+  2026-09): when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` exists, and not on
+  Bedrock or other third-party providers, with telemetry off, or in the first session after an
+  install or upgrade. **So keep the shim.** A one-line `CLAUDE.md` containing `@AGENTS.md`
+  works in every session, and the vendor documents that it never loads `AGENTS.md` twice;
+  `ln -s AGENTS.md CLAUDE.md` is the other documented route. **Prefer the import** — a symlink
+  is invisible in a file listing, survives badly on Windows checkouts, and this maintainer
+  works across both. A run that claims Claude Code picks up `AGENTS.md` on its own in every
+  session has asserted something false.
 - **Verify the context file actually loads. Do not infer it from the file existing.** The
   cheapest proof is the session's own context: list what the harness loaded this run, and check
   the canonical file is in it. A live audit run did exactly this and found `AGENTS.md` — 62
@@ -1230,8 +1235,8 @@ not choices. `CODEOWNERS` once a second person exists.
   **This is the highest-value single check on this dimension**, because the failure is
   invisible from the filesystem and indistinguishable from the file being ignored.
 - **Size is a real constraint, not a style note.** Keep the always-loaded context under ~300
-  lines; at least one agent tool silently truncates its context file past 32 KiB, and silent
-  truncation is indistinguishable from the file being ignored. Put instructions near the end
+  lines; Codex stops reading instruction files past 32 KiB combined (`project_doc_max_bytes`),
+  and truncation is indistinguishable from the file being ignored. Put instructions near the end
   of a long file rather than the start.
 - Language rules in `.claude/rules/` load **per file** — that is the point of the split.
 - `.claude/settings.json` carries the enforced layer. Deny beats allow. A baseline worth
@@ -1280,9 +1285,10 @@ it does. One that fetches remote content, reaches outside the tree, or fires on 
 call is a finding to explain — never a style note.
 
 **Installed skills and plugins are dependencies with instructions inside, and the supply is
-measurably compromised.** Security-firm audits of public skill marketplaces in early 2026
-found roughly a third of published skills carrying at least one flaw, and confirmed
-coordinated malicious campaigns among them — vendor audits rather than peer review, but
+measurably compromised.** Audits of public skill marketplaces in early 2026 found between a
+quarter and a third of published skills carrying at least one flaw (36.82% of 3,984 in Snyk's;
+26.1% of 42,447 in `arXiv:2601.10338`), and confirmed coordinated malicious campaigns among
+them — vendor and preprint audits rather than peer review, but
 corroborated across independent sources and in the direction that matters here. So the
 inventory treats them exactly like dependencies: where each came from, whether it was read
 before adoption, and whether anything inside instructs the agent to change tooling, weaken a
@@ -1386,7 +1392,7 @@ Two things stand between a change and the default branch: what gates it, and wha
 | CI required checks | Merge gating | Yes — server-side |
 | Branch protection | Force-push, direct commit | Server-side, **and unavailable on private repos on free plans** |
 | Repository rulesets | The same, plus tag rules | Server-side, **and gated on exactly the same plans** — not a free-tier substitute |
-| Push rulesets | Blocks pushes across a repository and its fork network | **Gated higher still** — organisation plans only, not personal paid ones. Usually `N/A` here |
+| Push rulesets | Blocks pushes across a repository and its fork network | **Gated higher still** — organisation plans only, not personal paid ones, and private or internal repositories only. Usually `N/A` here |
 
 **The gates must exist; the runner is not dictated.** A deliberate `repo: local` /
 `language: system` config with documented reasoning is not a finding. Required gates: secret
@@ -1555,7 +1561,7 @@ three cases differ and only one is a finding:
 |---|---|
 | A cooldown set to roughly three days | `OVER` — it configures what the platform now does anyway, and it will drift from the default when that moves |
 | A longer window, seven or ten days | **Not a finding.** A deliberate hardening choice above the default, and the reasoning belongs in the decision record if it is not already there |
-| `cooldown: 0`, or a window below the default | A question rather than a verdict. Someone opted out of a supply-chain control; ask why before proposing anything |
+| `default-days: 0` under `cooldown:`, or a window below the default | A question rather than a verdict. Someone opted out of a supply-chain control; ask why before proposing anything |
 
 **Do not propose adding a cooldown that matches the default.** It is the same `OVER` in the
 making, one run later.
@@ -1585,7 +1591,7 @@ least-privilege workflow tokens, pinned dependencies, no dangerous workflow patt
 releases with provenance, a security policy, static analysis, and a license.
 
 **Do not re-derive supply-chain hygiene from first principles.** OpenSSF Scorecard already
-specifies and automates eighteen checks over exactly this ground — pinned dependencies,
+specifies and automates nineteen checks over exactly this ground — pinned dependencies,
 dependency update tooling, signed releases, dangerous workflows, token permissions, branch
 protection — and runs as a workflow. Where the repository would benefit, **propose Scorecard
 rather than writing an equivalent by hand**, and cite it instead of inventing thresholds.
@@ -2428,11 +2434,12 @@ for rather than discovering in the output:
   generated rather than observed. **The tell is `_proof` fields holding summaries** — "verified",
   "command ran successfully", "output as expected" — instead of literal output. A proof field
   that has been paraphrased is a fabrication with good manners.
-- **Instruction decay across a long run.** Adherence drops as the session lengthens —
-  measured, not folklore: about 5.6% lower odds of compliance per additional function
-  generated — which is why there are gates rather than a single approval at the end, and why
-  this block sits at the very end where the drop is worst. **A run that was careful in Phase 2 and loose in Phase 7 is the
-  normal shape of this failure**, not an unusual one.
+- **Instruction decay across a long run.** Adherence may drop as the session lengthens — one
+  study found about 5.6% lower odds of compliance per additional function generated, though as
+  an exploratory, non-monotonic finding — which is why there are gates rather than a single
+  approval at the end, and why this block sits at the very end where any drop is worst. **A
+  run that was careful in Phase 2 and loose in Phase 7 is the normal shape of this failure**,
+  not an unusual one.
 - **Helpful ordering.** Presenting amendments with a recommendation already selected, or
   proceeding past a wait because nothing seemed to be blocking. **Both read as service and are
   the posture this file exists to prevent.**
@@ -2748,8 +2755,8 @@ empty because nothing applies or because nobody filled it in.
 
 ## `AGENTS.md` — the canonical context file
 
-**Target: under 150 lines. Hard ceiling 300, and past ~32 KiB at least one tool truncates it
-without saying so.** Everything that can live in a linked document should.
+**Target: under 150 lines. Hard ceiling 300, and past 32 KiB Codex stops reading it
+(`project_doc_max_bytes`).** Everything that can live in a linked document should.
 
 ```markdown
 # <project name>
@@ -2793,8 +2800,9 @@ formatter or linter already enforces belongs in that tool's config, not in prose
 
 ## `CLAUDE.md` — the shim
 
-One line. **It is a shim because Claude Code does not read `AGENTS.md` natively; if that changes,
-this file becomes `OVER` and comes out.**
+One line. **It is a shim because Claude Code reads `AGENTS.md` natively only in some sessions**
+(the conditions are in *Facts with an Expiry Date*), **and the import works in all of them without
+loading the file twice.** It becomes `OVER` only if native reading stops having conditions.
 
 ```markdown
 @AGENTS.md
@@ -3263,7 +3271,7 @@ is indistinguishable from no context file, and the failure is silent in both dir
 | Tool | How it gets `AGENTS.md` |
 |---|---|
 | Codex, Cursor, Windsurf, Jules, Copilot coding agent, Zed, Warp and most others | Directly, no configuration |
-| **Claude Code** | **Not natively.** A one-line `CLAUDE.md` containing `@AGENTS.md`, or a symlink |
+| **Claude Code** | **Natively only in some sessions** (see *Facts with an Expiry Date*). A one-line `CLAUDE.md` containing `@AGENTS.md` covers every session, or a symlink |
 | Gemini CLI | `{"context": {"fileName": "AGENTS.md"}}` in `.gemini/settings.json` |
 | Aider | `read: AGENTS.md` in `.aider.conf.yml` |
 
@@ -3271,9 +3279,9 @@ is indistinguishable from no context file, and the failure is silent in both dir
 beats the root one, and an explicit instruction in the session beats both. That is the
 mechanism behind the scoped-rules row above, and it is portable, which `.claude/rules/` is not.
 
-**Re-check the Claude Code row before relying on it.** Native support is a long-standing open
-request; if it has shipped since this file was written, the shim becomes `OVER` and should
-come out. **Look, rather than repeating this table.**
+**Re-check the Claude Code row before relying on it.** Native support shipped in v2.1.277 with
+conditions; if they are ever lifted, the shim becomes `OVER` and should come out. **Look, rather
+than repeating this table.**
 
 </constraints>
 
@@ -3339,7 +3347,7 @@ delivery form — a reply body does not survive being carried into another sessi
 
 | Scope | Guidance |
 |---|---|
-| **Always-loaded volume** | The per-session cost, and the number that matters. Past ~150 lines in the canonical file, prune. **~300 lines is the outer limit anyone recommends, and ~32 KiB is where at least one tool silently truncates** — past that the file is not merely expensive, it is partly unread |
+| **Always-loaded volume** | The per-session cost, and the number that matters. Past ~150 lines in the canonical file, prune. **~300 lines is the outer limit anyone recommends**, and Anthropic's own target is under 200 lines per `CLAUDE.md`. **At 32 KiB Codex stops reading** (`project_doc_max_bytes`, combined size) — past that the file is not merely expensive, it is partly unread |
 | **Reference volume** | Costs nothing until opened. **A large evidence file is not sprawl** |
 | Any tool shim | ~30 lines |
 | Any single rule file | ~50 lines |
@@ -3891,7 +3899,7 @@ re-reading the table it came from is not confirmed.
 | Push protection on a **public** repository | Settings, security | Confirms the free remedy exists, which is what makes that finding actionable |
 | **Immutable releases**, on or off for you | Repository settings, or a published release's detail | This file says *read the setting*. Confirm the setting is where it says it is |
 | A recent **dependency-update PR** lagging its release by about three days | Any repository with it enabled | Confirms the default cooldown, and therefore the `OVER` rule built on it |
-| **Canonical context file with no tool shim** — start the agent, ask it something only that file says | A session | If it knows, the shim is `OVER` and the Any Agent table needs rewriting. **The fact most likely to have moved since this was written** |
+| **Canonical context file with no tool shim** — start the agent, ask it something only that file says | A session | If it knows, native reading worked in that session. **Repeat it in a first session after an upgrade, and with telemetry off**, before calling the shim `OVER`: those are the conditions that keep it |
 
 ## Destructive tests
 
@@ -3992,6 +4000,24 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.36.0** — **nine dated facts corrected against their primary sources**, found by the
+maintainer's first research runs and each checked on 2026-09-23. **Claude Code now reads
+`AGENTS.md` natively, with conditions**: from v2.1.277, only when no `CLAUDE.md`,
+`.claude/CLAUDE.md` or `CLAUDE.local.md` exists, and not without feature flags (Bedrock, other
+providers, telemetry off), in the first session after an install or upgrade, or with the
+`agents-md` plugin disabled. **The shim stays**, because the import works in all of those and
+never loads the file twice. So the rule that it becomes `OVER` once native support ships is
+retired, and the fallback claim this file called wrong is now right. A retired rule is a
+minor bump, not a patch. **Two study descriptions were wrong**: Lulla et al.
+(`arXiv:2601.20404`) measured efficiency with and without an `AGENTS.md`, not curated files on
+focused changes; and the 5.6% per-step decay is exploratory and non-monotonic, in a study whose
+main result was no detectable effect of file size, position, structure or conflicts. **Named
+where it was anonymous**: the 32 KiB limit is Codex's `project_doc_max_bytes`, and Anthropic's
+own target is under 200 lines per `CLAUDE.md`. **Corrected in passing**: the Dependabot cooldown
+is set with `default-days` under `cooldown:`, not a bare `cooldown: 0`; Scorecard runs nineteen
+checks, not eighteen; push rulesets apply only to private and internal repositories; and the
+skill-audit figure names its samples.
 
 **0.35.0** — **the most consequential finding in this file's history, and the simplest
 fix.** A full audit of a live production application — twenty-two amendments, twelve commits,
