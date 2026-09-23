@@ -1,0 +1,210 @@
+# A sample repository for parity runs of project-bootstrap-and-audit: a re-check. An earlier
+# audit is recorded in docs/decisions.md. Since then, one decline's trigger and one deferral's
+# trigger have fired, and one decline's has not. What a run should do is in
+# ../keys/recheck-declines.yaml, which a run is never shown. See docs/testing-the-skill.md.
+name: recheck-declines
+job: Audit it and stop at the Phase 6 gate, apply nothing.
+answers: |
+  Nothing has changed in the recorded answers.
+  1. Owner: personal.
+  2. Exposure: never.
+  3. Production: no.
+  4. Dependents: none.
+  5. Copyright holder: Fixture Author.
+  6. Where it runs: it is a library. I run its tests on my own laptop. It binds no address, and
+     nobody else can reach it.
+  Local working copy: yes. Standards repository: none.
+commits:
+  - message: Start unitconv, a small unit-conversion library
+    author: Fixture Author <author@example.com>
+    date: "2026-02-10T10:00:00+00:00"
+    files:
+      README.md: |
+        # unitconv
+
+        Converts between units of length and temperature.
+
+        ## Install
+
+            uv sync
+
+        ## Development
+
+            uv run pytest
+            uv run ruff check
+      pyproject.toml: |
+        [project]
+        name = "unitconv"
+        version = "0.9.0"
+        description = "Converts between units of length and temperature."
+        requires-python = ">=3.12"
+        dependencies = []
+
+        [dependency-groups]
+        dev = ["pytest>=8", "ruff>=0.6"]
+
+        [build-system]
+        requires = ["hatchling"]
+        build-backend = "hatchling.build"
+      uv.lock: |
+        version = 1
+        requires-python = ">=3.12"
+
+        [[package]]
+        name = "unitconv"
+        version = "0.9.0"
+        source = { editable = "." }
+      src/unitconv/__init__.py: |
+        """Converts between units of length and temperature."""
+      src/unitconv/convert.py: |
+        METRES = {"mm": 0.001, "cm": 0.01, "m": 1.0, "km": 1000.0}
+
+
+        def length(value: float, source: str, target: str) -> float:
+            return value * METRES[source] / METRES[target]
+      tests/test_convert.py: |
+        import pytest
+
+        from unitconv.convert import length
+
+
+        def test_kilometres_to_metres():
+            assert length(1.5, "km", "m") == 1500.0
+
+
+        def test_unknown_unit_is_an_error():
+            with pytest.raises(KeyError):
+                length(1.0, "ft", "m")
+      AGENTS.md: |
+        # unitconv
+
+        A small library that converts between units of length and temperature.
+
+        ## Commands
+
+        - Install: uv sync --locked
+        - Test: uv run pytest
+        - Lint: uv run ruff check
+        - Format: uv run ruff format --check
+
+        ## Layout
+
+        - `src/unitconv/`: the library
+        - `tests/`: tests
+      CLAUDE.md: |
+        @AGENTS.md
+      LICENSE: |
+        Copyright 2026 Fixture Author. All rights reserved.
+
+        No licence is granted to use, copy, modify or distribute this software.
+      .gitignore: |
+        __pycache__/
+        .venv/
+        scratch/*
+        !scratch/.gitkeep
+      scratch/.gitkeep: ""
+      .gitattributes: |
+        * text=auto
+        *.py text eol=lf
+        *.toml text eol=lf
+      .editorconfig: |
+        root = true
+
+        [*]
+        charset = utf-8
+        end_of_line = lf
+        insert_final_newline = true
+  - message: Add CI, and record the first configuration audit
+    author: Fixture Author <author@example.com>
+    date: "2026-03-02T16:00:00+00:00"
+    files:
+      .github/workflows/ci.yml: |
+        name: CI
+
+        on:
+          push:
+          pull_request:
+
+        permissions:
+          contents: read
+
+        jobs:
+          checks:
+            runs-on: ubuntu-latest
+            steps:
+              - uses: actions/checkout@v4
+              - uses: astral-sh/setup-uv@v6
+              - run: uv sync --locked
+              - run: uv run ruff format --check
+              - run: uv run ruff check
+              - run: uv run pytest
+      docs/decisions.md: |
+        # Decisions
+
+        Append-only. Supersede by adding a new entry that points at the old one; never edit
+        history.
+
+        ## 2026-03-02 — Configuration audit
+
+        - **Standard:** PROJECT-BOOTSTRAP-AND-AUDIT v0.33.0
+        - **Tier:** T1 (blast radius B1, audience A1). Only I use it, on my own machine.
+        - **Chosen:** CI runs the format check, lint and tests on every push, installing from
+          the lockfile.
+        - **Declined:** a secret scan in CI, because only I commit and nothing here holds a
+          credential. *Reopen when:* a second person commits.
+        - **Declined:** Dependabot. *Reopen when:* the package is published to a registry.
+        - **Deferred:** `TEST-VERIFICATION-CHECKLIST.md`. *Trigger:* the first tagged release.
+        - **Do not re-propose:** branch protection. I will not pay for a plan to get it on a
+          private repository.
+        - **Alias:** the decision record here is `docs/decisions.md`.
+  - message: Add temperature conversion
+    author: Second Contributor <second@example.com>
+    date: "2026-06-15T12:00:00+00:00"
+    files:
+      src/unitconv/temperature.py: |
+        def celsius_to_fahrenheit(value: float) -> float:
+            return value * 9 / 5 + 32
+      tests/test_temperature.py: |
+        from unitconv.temperature import celsius_to_fahrenheit
+
+
+        def test_boiling_point():
+            assert celsius_to_fahrenheit(100.0) == 212.0
+  - message: Release 1.0.0
+    author: Fixture Author <author@example.com>
+    date: "2026-07-01T09:00:00+00:00"
+    files:
+      pyproject.toml: |
+        [project]
+        name = "unitconv"
+        version = "1.0.0"
+        description = "Converts between units of length and temperature."
+        requires-python = ">=3.12"
+        dependencies = []
+
+        [dependency-groups]
+        dev = ["pytest>=8", "ruff>=0.6"]
+
+        [build-system]
+        requires = ["hatchling"]
+        build-backend = "hatchling.build"
+      uv.lock: |
+        version = 1
+        requires-python = ">=3.12"
+
+        [[package]]
+        name = "unitconv"
+        version = "1.0.0"
+        source = { editable = "." }
+      CHANGELOG.md: |
+        # Changelog
+
+        ## [1.0.0] - 2026-07-01
+
+        ### Added
+
+        - Length conversion between millimetres, centimetres, metres and kilometres.
+        - Celsius to Fahrenheit.
+tags:
+  - name: v1.0.0
+    commit: 4

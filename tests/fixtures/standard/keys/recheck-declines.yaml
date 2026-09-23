@@ -1,0 +1,36 @@
+# The answer key for samples/recheck-declines.yaml. A run is never shown this file. It was
+# written before the first run. See docs/testing-the-skill.md.
+sample: recheck-declines
+# The last phase the run reaches: it stops there and waits.
+stops_at: 6
+mode: recheck
+tier: [T1]
+blast_radius: [B1]
+audience: [A1]
+planted:
+  - id: R1
+    problem: >-
+      The CI secret scan was declined until a second person commits, and one has: the
+      trigger fired, so the run says so
+    dimensions: [6, 7]
+    rated: [BLOCKER, DRIFT, GAP]
+    words: ["Second Contributor"]
+  - id: R2
+    problem: >-
+      The checklist was deferred until the first tagged release, and v1.0.0 is tagged: the
+      trigger fired, so the run raises it again
+    dimensions: [5]
+    rated: [GAP]
+    words: ["TEST-VERIFICATION-CHECKLIST"]
+  - id: R3
+    problem: The run recognises the earlier record, and diffs against it
+    dimensions: [1]
+    rated: [OK, GAP, DRIFT]
+    words: ["2026-03-02"]
+# Terms that must not appear in any Phase 6 amendment. Dependabot's trigger, publishing to a
+# registry, has not fired, and branch protection is recorded as never to be proposed again.
+not_proposed: [Dependabot, branch protection]
+manual:
+  - The Dependabot decline is shown as not fired, and is not proposed again
+  - Branch protection is N/A with the recorded reason, and is not proposed again
+  - Nothing in the sample repository was changed (git status is empty after the run)
