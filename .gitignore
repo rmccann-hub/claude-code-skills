@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+
+# Node: only the pinned Claude Code package, for its catalog validator
+node_modules/
+
+# Secrets are never tracked. A committed template, if one is ever needed, is env.example.
+.env
+.env.*
+
+# Personal Claude Code overrides stay local
+.claude/settings.local.json
+CLAUDE.local.md
+
+# Working space: its contents are ignored, the directory itself is kept
+scratch/*
+!scratch/.gitkeep
