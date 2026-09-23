@@ -9,6 +9,8 @@ Notable changes to this repository. The format follows
 ### Added
 
 - Research results R01-R05 and R08, each filed in `research/runs/` with a verification table.
+- `skillcheck` checks `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/` for hidden and
+  bidirectional characters, as it already did for skills.
 
 ## [0.1.0] - 2026-09-23
 

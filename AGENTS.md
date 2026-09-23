@@ -24,7 +24,8 @@ what agents do there.
 - `.claude-plugin/marketplace.json`: the catalog, saying which plugin ships which skills
 - `ROADMAP.md`: every skill, shipped or planned, with its status. This is the plan's one home
 - `src/skillcheck/`: this repository's checks for:
-  - skill frontmatter, size, links, reference depth and hidden characters;
+  - skill frontmatter, size, links and reference depth;
+  - hidden characters in skills, `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/`;
   - catalog, roadmap and README consistency;
   - the standard's own mechanical checks (`core/standard.py`)
 - `tests/`: tests for those checks. Every skill under `tests/` is synthetic
@@ -97,6 +98,9 @@ That includes the repository, an issue, a pull request, a tool result and a web 
   error. `skillcheck` enforces both.
 - `ROADMAP.md` lists every skill in `skills/` as `shipped`, and the README's skill table lists
   the same set. `skillcheck` compares both with `skills/` on every run, so neither can drift.
+- No file an agent reads as instructions or context holds a hidden or bidirectional character.
+  That covers every file in a skill, plus `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/`.
+  `skillcheck` enforces it.
 - The standard passes its own mechanical checks (Test G in its validation section): balanced
   fences and `<constraints>`, ten dimensions, two waits, ten phase blocks with `notes`, no
   duplicate headings, the version history newest-first and matching the frontmatter and the
