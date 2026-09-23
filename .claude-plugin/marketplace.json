@@ -1,0 +1,16 @@
+{
+  "name": "rmccann-skills",
+  "description": "Claude Code skills for setting up, auditing and building repositories, and for building better skills.",
+  "owner": {"name": "rmccann-hub"},
+  "plugins": [
+    {
+      "name": "standards",
+      "source": "./",
+      "strict": false,
+      "description": "Repository setup and audit: the PROJECT-BOOTSTRAP-AND-AUDIT standard as a skill.",
+      "version": "0.1.0",
+      "license": "CC0-1.0",
+      "skills": ["./skills/project-bootstrap-and-audit"]
+    }
+  ]
+}
