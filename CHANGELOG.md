@@ -6,6 +6,10 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Research results R01-R05 and R08, each filed in `research/runs/` with a verification table.
+
 ## [0.1.0] - 2026-09-23
 
 ### Added
