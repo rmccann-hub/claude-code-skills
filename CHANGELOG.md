@@ -14,6 +14,9 @@ Notable changes to this repository. The format follows
   repository's name, which is what claude.ai shows for it. The plugin is now
   `standards@claude-code-skills`. If you added the marketplace under its old name, remove it
   with `/plugin marketplace remove rmccann-skills` and add it again.
+- Sessions on this repository don't load an installed copy of the plugin. `.claude/settings.json`
+  turns off `standards@synced` and `standards@claude-code-skills`, so an older copy can't stand
+  in for the one being rebuilt.
 - The standard is now v0.36.0, with nine dated facts corrected against their primary sources.
   The main change: Claude Code reads `AGENTS.md` natively, but only in some sessions, so the
   `CLAUDE.md` shim stays. Its history entry lists the rest.
