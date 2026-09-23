@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-23
+
 ### Added
 
 - The PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.35.0) as the skill `project-bootstrap-and-audit`,
@@ -20,6 +22,13 @@ Notable changes to this repository. The format follows
 - `ROADMAP.md`: every skill, shipped or planned. `skillcheck` keeps it and the README's skill
   table in step with `skills/`.
 - `skillcheck` runs the standard's own mechanical checks (its Test G) on the copy shipped here.
-- CI: the checks, Claude Code's own catalog validator, and a secret scan behind a canary.
+- CI: the checks, Claude Code's own catalog validator, and a secret scan behind a canary. Every
+  action is pinned to a full commit SHA.
 - Research prompts, and the procedure for taking results in (`research/`).
 - Context files, the decision record, the authoring review, the security policy.
+- How to withdraw a bad skill: the README's Operations section.
+
+### Changed
+
+- The repository's licence is now Apache-2.0, replacing the CC0-1.0 file it was created with.
+  The standard keeps its own CC0-1.0 dedication.
