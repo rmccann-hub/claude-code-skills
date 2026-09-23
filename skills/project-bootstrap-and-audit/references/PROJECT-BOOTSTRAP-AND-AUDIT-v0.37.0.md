@@ -936,8 +936,8 @@ against it, not a re-run.**
 
 **In greenfield mode there is nothing to inventory.** Phase 2 instead **proposes the shape**:
 which project shape from *Project Shapes and Layout*, which languages, which auxiliary file
-types are expected. Emit those as the inventory, marked as proposals. **The human picks at
-the Phase 3 wait**, so nothing here is decided yet. Documented commands do not exist yet, so
+types are expected. Emit them in the block's `proposed` field. **The human picks at the
+Phase 3 wait**, so nothing here is decided yet. Documented commands do not exist yet, so
 `command_tally` is all zeroes and `setup` records what the proposed toolchain will need.
 
 </constraints>
@@ -956,6 +956,8 @@ than the project documents has failed even at exit 0 — silently skipped module
 ```yaml
 phase: 2
 recon_report_used: <path | none>
+proposed: <greenfield only, omitted otherwise:
+           {shape: "...", languages: [...], auxiliary_files: [...]}>
 environment_preexisting: [<what was already installed at session start | none>]
 setup: [{cmd: "...", result: PASS, note: "project's own declared deps"}]
 languages: {py: 109, md: 23}
@@ -967,7 +969,8 @@ hooks_installed: yes | no
 hooks_proof: |
   <literal output>
 ci: {workflows: [<paths>], jobs: [<names>]}
-ci_remote_conclusion: {head: <success|failure|none>, default_branch: <success|failure|none>,
+ci_remote_conclusion: {head: <success|failure|none|unknown>,
+                       default_branch: <success|failure|none|unknown>,
                        proof: "<how it was read>"}
 gates_present: [lint, type-check, test]
 gates_absent: [secret-scan, format-check]
@@ -1005,6 +1008,8 @@ have been rated is a confirmation of work already done.
 **A run that ends at this wait still hands over its report.** The file holds phases 0–3,
 the questions asked and any recommendation still waiting on a pick, under the same name as
 any other run's report. If the run continues after the answers, it appends to the same file.
+Its `overrides` go in the Phase 3 block's `notes`, since the Phase 4 block that holds them is
+never emitted.
 
 1. **Owner** — work (employer-owned), personal, or mixed?
 2. **Exposure** — already public / possible later / never?
@@ -1181,8 +1186,11 @@ constraints.
 modules stopped importing and **998 tests were collected instead of 1533 — at exit 0.** Local
 gates missed it because the local environment held the old version.
 
-**Verify the lock on every matrix leg, and in a fresh clone.** Record the regeneration command
-including that verification in the lockfile header.
+**Verify the lock on every matrix leg, and in a fresh clone.** Record the regeneration command,
+including that verification, in the lockfile header. **Where the tool writes the lock whole and
+keeps no comment** — `uv.lock`, `package-lock.json`, `Cargo.lock` — record it in the context
+file's commands instead. Two runs found a header added to `uv.lock` gone after the next
+`uv lock`.
 
 </constraints>
 
@@ -1213,8 +1221,8 @@ while quietly writing a different tree than the lock describes.
 **Regenerating is not upgrading, and the commands differ per ecosystem.** `go mod tidy`
 re-derives without upgrading and `go mod tidy -diff` checks non-destructively; `go get -u`
 upgrades. `cargo update` upgrades; `--locked` refuses to. The Python case is the one this
-file already documents and the one that has bitten. **Name the exact regeneration command in
-the lockfile header** so the next person does not guess.
+file already documents and the one that has bitten. **Name the exact regeneration command**,
+where the rule above records it, so the next person does not guess.
 
 **The language choice itself is recorded here.** Rank 5 of the irreversibility gate is
 language and runtime; *Choosing a Language and Runtime* is where
@@ -1279,6 +1287,12 @@ not choices. `CODEOWNERS` once a second person exists.
   than the nearest one replacing the rest, and within the merged set the order is
   **deny, then ask, then allow**, first match winning. A deny at any scope cannot be undone
   by an allow at another.
+- **A tracked `.claude/settings.local.json` is rated for what it grants**, not only for what it
+  fails to enforce. Tracked, its `allow` rules reach every clone, at the scope above the
+  project's `settings.json`. An allow that lets the agent install packages or run arbitrary
+  commands without asking — `Bash(pip install:*)`, `Bash(npm install:*)`, a bare `Bash` — is a
+  `BLOCKER` on this dimension in its own right, and a narrower allow nobody reviewed is
+  `DRIFT`. Propose untracking it, and moving anything meant to be shared into `settings.json`.
 - **A deny rule names an access path, not just a file.** `Read(.env*)` leaves `Bash(cat .env)`
   open — same file, different tool, no rule. For each thing that must not be reached, cover
   every tool that could reach it. **Verify the matcher works rather than assuming it**; a rule
@@ -1435,7 +1449,7 @@ Two things stand between a change and the default branch: what gates it, and wha
 | Mechanism | Enforces | Survives an ephemeral session? |
 |---|---|---|
 | `.claude/settings.json` deny rules | Agent actions | Yes — committed |
-| `.claude/settings.local.json` | **Nothing durable** | No — untracked, often session-generated |
+| `.claude/settings.local.json` | **Nothing durable** while untracked. Tracked, it reaches every clone: dimension 4 rates what it grants | No — untracked, often session-generated |
 | `ask` rules | Nothing, unattended | Only with a human present |
 | Git hooks / `pre-commit` | Pre-commit gates | **Only if committed, *and* installed by the session that commits.** With no local clone every commit comes from an ephemeral container, so an uninstalled hook gates nothing |
 | CI required checks | Merge gating | Yes — server-side |
@@ -3292,11 +3306,8 @@ home.** It answers one question per row: **why does this live exactly here?**
 **Three rows carry most of the findings on this dimension, and all three fail quietly:**
 
 - **A tracked `settings.local.json`** — enforces nothing durable, and is frequently written by
-  the auditing session itself. Check tracked status with git, never with `ls`. **Then read
-  what it grants.** Tracked, its `allow` rules reach every clone, at a scope above the
-  project's `settings.json`. An allow that lets the agent install packages or run arbitrary
-  commands without asking — `Bash(pip install:*)`, `Bash(npm install:*)`, a bare `Bash` — is a
-  `BLOCKER` on dimension 4 in its own right. A narrower allow nobody reviewed is `DRIFT`.
+  the auditing session itself. Check tracked status with git, never with `ls`. **Dimension 4
+  rates what a tracked one grants.**
 - **An ignored `scratch/` that does not exist** — the rule is present, the directory is not, and
   git has nothing to descend into. Both halves or neither.
 - **A lockfile committed but not installed from** — the file is there, the CI resolves fresh
@@ -4070,23 +4081,28 @@ records are append-only and are not edited for this.
 
 ## Entries
 
-**0.37.0** — **eighteen fixes from the first parity runs and the maintainer's set-up run**,
-applied at the maintainer's request. **Git reads write nothing**: phases 0–5 set
-`GIT_OPTIONAL_LOCKS=0`, because a plain `git status` rewrote `.git/index` during the parity
-runs' read-only phases. **One routing table**: the two disagreed on what the Set up job reads,
-one pointed at a *Part II* that no heading carries, and section names now match their headings.
-**Greenfield proposes rather than chooses** at Phase 2; the Phase 3 block holds a recommendation
-not yet picked, as `recommended` and `pending`; and a run that ends at the Phase 3 wait still
-hands over its report. **`owner` takes `mixed`**, and the human-actions list allows a local
-command where Phase 0 recorded a working copy. **Ratings made definite where runs split**: a
-step that cannot fail is `BLOCKER` when something counts on it and a `GAP` otherwise; a tracked
-`settings.local.json` is rated for what it grants; a vendored context file that instructs agents
-gets a stated remedy, left to the human; and a load check made from outside the audited
-repository is recorded as inferred. **A repository that holds this standard** now has a rule.
-**The starter CI's collection guard names itself when it fails** — under the runner's `bash -e`,
-it used to stop before its message printed — and its checkout action is v7. Agent skills get a
-distribution row, installed skills that check code add a separate list, nine dated facts join
-the table, and the two oldest write-ups are back in order.
+**0.37.0** — **twenty-two fixes from the parity runs and the maintainer's set-up run**, applied
+at the maintainer's request. **Git reads write nothing**: phases 0–5 set `GIT_OPTIONAL_LOCKS=0`,
+because a plain `git status` rewrote `.git/index` during the parity runs' read-only phases.
+**One routing table**: the two disagreed on what the Set up job reads, one pointed at a *Part
+II* that no heading carries, and section names now match their headings. **Greenfield proposes
+rather than chooses** at Phase 2; the Phase 3 block holds a recommendation not yet picked, as
+`recommended` and `pending`; and a run that ends at the Phase 3 wait still hands over its
+report. **`owner` takes `mixed`**, and the human-actions list allows a local command where Phase
+0 recorded a working copy. **Ratings made definite where runs split**: a step that cannot fail
+is `BLOCKER` when something counts on it and a `GAP` otherwise; a tracked `settings.local.json`
+is rated for what it grants; a vendored context file that instructs agents gets a stated remedy,
+left to the human; and a load check made from outside the audited repository is recorded as
+inferred. **A repository that holds this standard** now has a rule. **The starter CI's
+collection guard names itself when it fails** — under the runner's `bash -e`, it used to stop
+before its message printed — and its checkout action is v7. Agent skills get a distribution row,
+installed skills that check code add a separate list, nine dated facts join the table, and the
+two oldest write-ups are back in order. **This version's own parity runs found four more**: a
+lockfile header does not survive in `uv.lock`, so the command goes in the context file's
+commands; the CI conclusion takes `unknown`; greenfield proposals get a field; and a run that
+stops at Phase 3 keeps its overrides in `notes`. **They also moved one fix**: the rule for a
+tracked `settings.local.json` sat in a section an audit never reads, so it now lives in
+dimension 4.
 
 **0.36.0** — **nine dated facts corrected against their primary sources**, found by the
 maintainer's first research runs and each checked on 2026-09-23. **Claude Code now reads

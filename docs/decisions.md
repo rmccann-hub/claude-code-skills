@@ -4,10 +4,11 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 
 ## 2026-09-23 — The standard moves to v0.37.0
 
-- **Chosen:** eighteen fixes to the standard, applied together at the owner's request, so the
-  one file can audit the owner's public repositories now and bring results back:
+- **Chosen:** twenty-two fixes to the standard, applied together at the owner's request, so
+  the one file can audit the owner's public repositories now and bring results back:
   - the nine findings from the parity baseline, F1-F9 in `ROADMAP.md`;
-  - the set-up run's open amendments S2-S7 and S9-S11.
+  - the set-up run's open amendments S2-S7 and S9-S11;
+  - four that this version's own parity runs found, below.
 
   Each had been proposed and was waiting for approval. They land in the standard file rather
   than piece by piece, and the rebuild's pieces move the fixed text.
@@ -24,8 +25,25 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 - **Not checked here:** the current `actions/checkout` release. This session can't reach that
   repository, so v7.0.1 is the set-up run's reading, and the release this repository's
   Dependabot pins.
+- **Parity:** one run of each sample on `8c18f51`, compared with the v0.36.0 baseline.
+  - The audit and greenfield samples passed every check, and no value moved.
+  - The re-check sample failed two checks, and its dimension 8 moved from `OK` to
+    `UNVERIFIABLE-HERE`. Reading the report settles all three. The run proposed neither
+    Dependabot nor branch protection, and lists both under `not_proposed` with the right
+    reasons; the grader matched the words in two amendments' reasoning. Dimension 8 rests on
+    the new dated fact that `actions/checkout` is at v7, which an offline run can't confirm,
+    so marking it is the rule working.
+  - No run changed `.git/index`, where every v0.36.0 run did.
+- **Chosen:** four more fixes the runs found, applied before this merged. A lockfile header
+  doesn't survive in `uv.lock`: two runs found it gone after `uv lock`, so the command goes in
+  the context file's commands. The CI conclusion takes `unknown`. Greenfield proposals get a
+  field in Phase 2. A run that stops at Phase 3 keeps its overrides in `notes`.
+- **Chosen:** the rule for a tracked `settings.local.json` moves into dimension 4. The audit
+  run never read *The Configuration File Map*, where it first went, because the routing table
+  doesn't send an audit there, and rated the sample's `pip install` grant `DRIFT`.
 - **Deferred:** this repository's own CI guard copies the template's, and gets the same fix in
-  a change of its own. *Trigger:* this change merges.
+  a change of its own. So does the grader's `not_proposed` check, which should read what an
+  amendment proposes rather than every word in it. *Trigger:* this change merges.
 
 ## 2026-09-23 — Release 0.1.1: the marketplace takes the repository's name
 

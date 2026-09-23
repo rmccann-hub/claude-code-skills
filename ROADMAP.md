@@ -155,6 +155,13 @@ piece moves text that is already fixed. The piece named is where each one's sect
   without saying why when nothing is collected. Under GitHub's default `bash -e`, the `grep` in
   its command substitution exits first. It should name itself when it fails (piece 2).
 
+The v0.37.0 parity runs found two more, left for the piece named:
+
+- **F10:** for Active Directory on a Windows host, the defaults say PowerShell 7, while the
+  first criterion, what the target already has, points at Windows PowerShell 5.1, which ships
+  with Windows Server. The default should say which wins (piece 5).
+- **F11:** the shapes table has no row for a PowerShell scheduled job (piece 5).
+
 | Piece | What moves | Status |
 |---|---|---|
 | 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | shipped |
