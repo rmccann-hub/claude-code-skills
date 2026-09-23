@@ -190,11 +190,15 @@ def test_every_baseline_names_its_key_and_the_skill_it_measured(path):
 
 def test_materialize_builds_history_tags_and_a_remote(tmp_path):
     work = parity.materialize(small_sample(), tmp_path)
-    log = git(work, "log", "--format=%an|%ae|%aI|%s").splitlines()
+    # Dates as Unix time: git 2.55 prints a UTC date as ...Z where 2.43 prints ...+00:00.
+    log = git(work, "log", "--format=%an|%ae|%at|%ct|%s").splitlines()
+    day = {
+        n: int(datetime.datetime(2026, 1, n, tzinfo=datetime.UTC).timestamp()) for n in (1, 2, 3)
+    }
     assert log == [
-        "A Person|a@example.com|2026-01-03T00:00:00+00:00|Third",
-        "B Person|b@example.com|2026-01-02T00:00:00+00:00|Second",
-        "A Person|a@example.com|2026-01-01T00:00:00+00:00|First",
+        f"A Person|a@example.com|{day[3]}|{day[3]}|Third",
+        f"B Person|b@example.com|{day[2]}|{day[2]}|Second",
+        f"A Person|a@example.com|{day[1]}|{day[1]}|First",
     ]
     assert sorted(p.name for p in work.iterdir()) == [".git", "src"]
     first = git(work, "rev-list", "--max-parents=0", "HEAD")

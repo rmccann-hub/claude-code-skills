@@ -73,7 +73,9 @@ repository's own. `pytest` checks that every sample builds and every key matches
    ```
 
 4. **Check what the grader can't.** Work through the key's `manual` list, and confirm that
-   `git status --porcelain` in the sample is still empty.
+   `GIT_OPTIONAL_LOCKS=0 git status --porcelain` in the sample is still empty. Without the
+   variable, `git status` itself rewrites `.git/index` to refresh git's cache. That changes no
+   content, but it isn't nothing.
 5. **Compare with the baseline:**
 
    ```
@@ -91,6 +93,10 @@ These come from the standard's own procedure for testing itself, and they still 
 - **The answer key stays out of the run's reach.** A run gets copies in a scratch folder and is
   told to read nothing outside it.
 - **Grade the YAML blocks, not the prose.** The prose is the run's own account of itself.
+
+**A known limit of this prompt:** the sample's bare remote sits outside the three directories,
+so a run skips Phase 0's `git fetch` and records it as something it couldn't do. The baseline
+was taken that way. Changing the prompt to reach the remote means taking a new baseline.
 
 ## What counts as a difference
 
