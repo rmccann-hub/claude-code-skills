@@ -2,6 +2,22 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-23 — The standard moves to v0.36.0
+
+- **Chosen:** nine of the standard's dated facts were corrected, each checked against its
+  primary source (research R01, R02, R05 and R08). The maintainer approved the fixes, and they
+  were applied on their own.
+- **Chosen:** 0.36.0 rather than 0.35.1. One fix retires a rule: the `CLAUDE.md` shim no longer
+  becomes `OVER` once Claude Code reads `AGENTS.md` natively, because native reading has
+  conditions. The standard's versioning makes that a minor bump, since a patch changes no
+  output.
+- **Not included:** the other amendments to the standard from the set-up run (S2-S11). They
+  stay open for the maintainer.
+- **Deferred:** a release for it, at the maintainer's choice. The catalog stays at 0.1.0, so
+  copies already installed at 0.1.0 keep v0.35.0: Claude Code updates an installed plugin only
+  when its version changes. Until the next release, `main` and the `v0.1.0` tag carry different
+  standards under the same version number. *Trigger:* the next release.
+
 ## 2026-09-23 — Hidden-character checks beyond skills
 
 - **Chosen:** `skillcheck` checks `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/` for hidden
