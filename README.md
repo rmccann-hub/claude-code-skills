@@ -37,6 +37,9 @@ npm ci
 npx --no-install claude plugin validate --strict .
 ```
 
+Parity runs check how the skill behaves on sample repositories, before and after a change.
+[docs/testing-the-skill.md](docs/testing-the-skill.md) says how to run one.
+
 ## Operations: withdrawing a bad skill
 
 If a skill here gives wrong or harmful instructions, take it out of circulation in this order.

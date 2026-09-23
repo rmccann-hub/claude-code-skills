@@ -1,0 +1,20 @@
+# The answer key for samples/greenfield-choose.yaml. A run is never shown this file. It was
+# written before the first run. See docs/testing-the-skill.md.
+sample: greenfield-choose
+# The last phase the run reaches: it stops there and waits.
+stops_at: 3
+mode: greenfield
+tier: [T1, T2]
+blast_radius: [B1, B2]
+audience: [A1]
+# The run stops at Phase 3, so no dimension is rated. Its recommendation is checked by words.
+planted: []
+words:
+  # The defaults for a Windows host and Active Directory start from PowerShell 7.
+  - PowerShell
+  # What invokes it decides the shape: a schedule makes it a scheduled job.
+  - scheduled job
+not_proposed: []
+manual:
+  - The recommendation names a runner-up and what each costs, and leaves the choice to the person
+  - Nothing was generated, in the sample repository or anywhere else

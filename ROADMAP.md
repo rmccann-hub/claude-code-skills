@@ -104,6 +104,66 @@ than inside it.
 | `visual-theme` | Design tokens, palettes, typography, dark mode | planned | standard | R20 |
 | `data-visualization` | Choosing charts, accessible charts, charting libraries | planned | standard | R20 |
 
+## Rebuilding `project-bootstrap-and-audit`
+
+The standard stops being one separate document. Its content becomes the skill's own parts, one
+piece at a time. Each piece moves its sections out of the standard file in the same commit, and
+is checked against the version before it by parity runs
+([docs/testing-the-skill.md](docs/testing-the-skill.md)). The decision is in
+[docs/decisions.md](docs/decisions.md).
+
+What it becomes:
+
+- **`SKILL.md`:** the procedure. That's the jobs, the phases, the two stops and the report.
+- **`references/`:** one topic each:
+  - standing rules, vocabularies, the environment, facts and the self-check;
+  - the phases, and one file per dimension;
+  - new projects and the starter files;
+  - the configuration file map, file governance, the release gate and cross-repository
+    contracts;
+  - `other-tools.md`, which says how to use the skill with other AIs and lists each Claude
+    Code-only feature with what it does.
+- **`assets/`:** the starter files as tested templates, and the run report's skeleton and schema.
+- **`scripts/`:** the mechanical checks, in Python with the standard library only.
+
+Rules for the rebuild:
+- Nothing is lost: each piece's pull request lists every rule it moved and where it went.
+- A reference never links to another reference.
+- No rule lives in two places.
+- Frontmatter uses only the Agent Skills fields.
+- A Claude Code-only feature is marked where it's used.
+
+The baseline runs found nine things about the skill itself, and each is proposed for the piece
+named, for approval:
+
+- **F1:** the read-only phases rewrite `.git/index`, so git reads should use
+  `GIT_OPTIONAL_LOCKS=0` (piece 4).
+- **F2:** in greenfield, Phase 2 says the run chooses the language while Phase 3 says the person
+  picks. It should say "proposes" (piece 4).
+- **F3:** the Phase 3 block has no field for a recommendation not yet picked (piece 1).
+- **F4:** no rule says what the report holds when a run stops at Phase 3 (piece 1).
+- **F5:** two runs rated dimension 5 differently, GAP and BLOCKER, for a check that can never
+  fail. The dimension should say which it is (piece 3).
+- **F6:** a session started outside the audited repository can't observe what loads, so the
+  context-file check should record its verdict as inferred (piece 3).
+- **F7:** a tracked `settings.local.json` should be rated for what it grants, not only for what
+  it fails to enforce (piece 5).
+- **F8:** a vendored context file that instructs agents needs a stated remedy, left to the
+  person: drop the copy, or carry a recorded patch (piece 3).
+- **F9:** the starter CI template's collection guard, which this repository's CI copies, fails
+  without saying why when nothing is collected. Under GitHub's default `bash -e`, the `grep` in
+  its command substitution exits first. It should name itself when it fails (piece 2).
+
+| Piece | What moves | Status |
+|---|---|---|
+| 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | shipped |
+| 1 | The procedure into `SKILL.md`, from How to Read This File, the two routing tables, What this is for, Scope, Assumptions, Limitations and the stop rules. Standing rules, vocabularies, environment and the conformance self-check into references, with `other-tools.md`. The report's skeleton and schema, and `check_report.py`. `skillcheck` checks the new structure. S3 lands here if approved | planned |
+| 2 | Starter File Contents into `assets/templates/`, each file tested, with `starter-files.md`. S10 lands here if approved | planned |
+| 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. S9 lands here if approved | planned |
+| 4 | Phases 0 to 3 and 5 to 9 into four phase files, with `preflight.py` and `inventory.py`. S4 and S5 land here if approved | planned |
+| 5 | Choosing a Language and Runtime, Choosing the Shape and Project Shapes into `new-project.md`. The Configuration File Map, Standards Distribution, File Governance, the Release and Deploy Currency Gate, Cross-Repository Contracts, Any Agent, Any Tool and the facts into their references. S6 and S7 land here if approved | planned |
+| 6 | Versioning, Proposing a Change, Sending Results Back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's licence becomes Apache-2.0. Release 0.2.0 | planned |
+
 ## Repository
 
 These aren't skills, so `skillcheck` doesn't match them against `skills/`. Each waits on its

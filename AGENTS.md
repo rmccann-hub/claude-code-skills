@@ -27,8 +27,11 @@ what agents do there.
   - skill frontmatter, size, links and reference depth;
   - hidden characters in skills, `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/`;
   - catalog, roadmap and README consistency;
-  - the standard's own mechanical checks (`core/standard.py`)
+  - the standard's own mechanical checks (`core/standard.py`);
+  - parity runs of the skill against sample repositories (`parity.py`)
 - `tests/`: tests for those checks. Every skill under `tests/` is synthetic
+- `tests/fixtures/standard/`: the samples, answer keys and baseline for parity runs, described
+  in [docs/testing-the-skill.md](docs/testing-the-skill.md)
 - `research/`: prompts, dated results with their sources, and how results are taken in
 - `docs/decisions.md`: the decision record, append-only, newest entry first
 - `docs/authoring-a-skill.md`: the review every new or rebuilt skill passes before it is committed
@@ -42,7 +45,7 @@ what agents do there.
   `source: "./"` and `strict: false`, listing `./skills/<name>` paths. Regrouping edits this
   file only.
 - **Research:** prompts in `research/prompts/`, results in `research/runs/<date>-<run>.md`.
-- **Fixtures:** for testing the standard (answer sheets, stored run reports),
+- **Fixtures:** for parity runs of the skill (sample manifests, answer keys, baseline results),
   `tests/fixtures/standard/`; trigger-evaluation sets, one per skill, `tests/fixtures/skills/`.
 
 ## Budgets

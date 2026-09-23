@@ -2,6 +2,46 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-23 — The standard is rebuilt into the skill
+
+- **Chosen:** the standard stops being a separate document. Its content becomes the parts of the
+  `project-bootstrap-and-audit` skill:
+  - a procedure;
+  - references by topic;
+  - tested templates;
+  - scripts;
+  - a report schema.
+
+  Its self-management goes: its own version, version history, test procedure and change
+  process. This repository's history, changelog, decision record and tests already do that job.
+  The owner approved a section-by-section map of where everything goes. Its pieces are in
+  `ROADMAP.md`.
+- **Chosen:** it lands in seven pieces, with the parity checks first. Each piece moves its
+  sections out of the standard file in the same commit, and is checked against the version
+  before it (`docs/testing-the-skill.md`). The file is deleted in the last piece, which is
+  release 0.2.0.
+- **Chosen:** built for Claude Code first, and kept usable with other AIs such as Gemini and
+  ChatGPT without going out of the way (the owner's direction):
+  - frontmatter stays at the six Agent Skills fields;
+  - scripts use only Python's standard library;
+  - each Claude Code-only feature is marked with what it does, so another tool can look for its
+    own equivalent.
+- **Chosen:** the owner works in cloud sessions, and those load only what's enabled on the
+  owner's claude.ai account or committed to the repository being worked on (Claude Code's docs,
+  checked 2026-09-23). So the claude.ai account stays the route into them, and H2 (below) stands.
+  *To verify:* whether this repository's plugin can be enabled for that account. If it can, its
+  hooks and subagents would reach cloud sessions.
+- **Chosen:** the rebuilt skill is Apache-2.0, like the rest of the repository, from piece 6.
+  The standard's versions up to v0.36.0 stay CC0-1.0 in git. From then on, this supersedes the
+  inception entry's line that the standard keeps its own CC0-1.0 dedication.
+- **Chosen:** parity runs happen in the working session, as fresh subagents.
+  - *Deferred:* `claude plugin eval` in CI. *Trigger:* an Anthropic API key is stored as a
+    repository secret.
+  - *Open:* the report's format, Markdown with YAML blocks and a checker, or JSON. It's decided
+    at piece 1.
+- **Supersedes, from piece 6:** the inception entry's gate default that the standard ships as a
+  skill (H6).
+
 ## 2026-09-23 — The standard moves to v0.36.0
 
 - **Chosen:** nine of the standard's dated facts were corrected, each checked against its

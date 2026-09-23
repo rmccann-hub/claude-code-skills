@@ -1,0 +1,29 @@
+# A sample repository for parity runs of project-bootstrap-and-audit: something new, where the
+# run helps choose the language and the shape, and stops at the Phase 3 stop with its
+# recommendation. What it should recommend is in ../keys/greenfield-choose.yaml, which a run is
+# never shown. See docs/testing-the-skill.md.
+name: greenfield-choose
+job: >-
+  I want to build something new. Help me choose the language and the shape first. It lists the
+  Active Directory accounts whose passwords expire within 14 days, and writes them to a CSV
+  file. It is started by a schedule. It runs on a Windows server I manage. It keeps files: the
+  CSV reports. Stop at the Phase 3 stop with your recommendation, and write the run report with
+  what you have. Do not generate anything.
+answers: |
+  1. Owner: personal.
+  2. Exposure: never.
+  3. Production: no.
+  4. Dependents: none. Only I read the reports.
+  5. Copyright holder: Fixture Author.
+  6. Where it runs: a Windows server I manage at home. Task Scheduler starts it. It binds no
+     address, and nobody else can reach it.
+  Local working copy: yes. Standards repository: none.
+commits:
+  - message: Start a repository for the expiry report
+    author: Fixture Author <author@example.com>
+    date: "2026-08-03T19:00:00+00:00"
+    files:
+      README.md: |
+        # ad-expiry-report
+
+        A scheduled report of Active Directory passwords about to expire. Nothing is built yet.
