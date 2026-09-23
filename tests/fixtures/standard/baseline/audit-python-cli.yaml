@@ -1,0 +1,116 @@
+# Results of the runs that set the baseline for samples/audit-python-cli.yaml, recorded with
+# `python -m skillcheck.parity record`. See docs/testing-the-skill.md.
+# skill: the commit of skills/project-bootstrap-and-audit these runs measured.
+# prompt: the commit whose docs/testing-the-skill.md prompt they were given.
+skill: 43ff3a9
+prompt: 99fe095
+date: "2026-09-23"
+runs:
+- label: 43ff3a9, run 1
+  phases:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  mode: audit
+  tier: T1
+  blast_radius: B1
+  audience: A1
+  statuses:
+    1: GAP
+    2: DRIFT
+    3: DRIFT
+    4: DRIFT
+    5: GAP
+    6: GAP
+    7: BLOCKER
+    8: GAP
+    9: DRIFT
+    10: DRIFT
+  tally:
+    BLOCKER: 1
+    DRIFT: 5
+    GAP: 4
+    OVER: 0
+    MIRROR: 0
+    UNVERIFIABLE-HERE: 0
+    OK: 0
+    N/A: 0
+  checks:
+    stops at Phase 6: true
+    mode: true
+    tier: true
+    blast radius: true
+    audience: true
+    ten statuses: true
+    tally: true
+    P1 CLAUDE.md links AGENTS.md in Markdown instead of importing it, so no session loads it: true
+    P2 .claude/settings.local.json is tracked: true
+    P3 uv.lock is committed, but CI installs with pip rather than from the lockfile: true
+    P4 AGENTS.md names src/tallyho/plugins/, which does not exist: true
+    P5 scratch/ is ignored but the directory does not exist: true
+    P6 the coverage upload step is set with continue-on-error, so it can never fail: true
+    P7 the workflow sets no permissions block, so the token keeps its default scope: true
+    P8 the Dependabot cooldown is set to three days, which is the platform default: true
+    P9 a vendored AGENTS.md tells agents to delete the CI test step: true
+    P10 the manifest declares MIT, and there is no LICENSE file: true
+    P11 the README says 0.3.0 while the manifest says 0.4.0: true
+    P12 there is no TEST-VERIFICATION-CHECKLIST.md, which the tier warrants: true
+    P13 there is no decision record, which the tier warrants: true
+- label: 43ff3a9, run 2
+  phases:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  mode: audit
+  tier: T1
+  blast_radius: B1
+  audience: A1
+  statuses:
+    1: GAP
+    2: DRIFT
+    3: DRIFT
+    4: DRIFT
+    5: BLOCKER
+    6: GAP
+    7: BLOCKER
+    8: GAP
+    9: DRIFT
+    10: DRIFT
+  tally:
+    BLOCKER: 2
+    DRIFT: 5
+    GAP: 3
+    OVER: 0
+    MIRROR: 0
+    UNVERIFIABLE-HERE: 0
+    OK: 0
+    N/A: 0
+  checks:
+    stops at Phase 6: true
+    mode: true
+    tier: true
+    blast radius: true
+    audience: true
+    ten statuses: true
+    tally: true
+    P1 CLAUDE.md links AGENTS.md in Markdown instead of importing it, so no session loads it: true
+    P2 .claude/settings.local.json is tracked: true
+    P3 uv.lock is committed, but CI installs with pip rather than from the lockfile: true
+    P4 AGENTS.md names src/tallyho/plugins/, which does not exist: true
+    P5 scratch/ is ignored but the directory does not exist: true
+    P6 the coverage upload step is set with continue-on-error, so it can never fail: true
+    P7 the workflow sets no permissions block, so the token keeps its default scope: true
+    P8 the Dependabot cooldown is set to three days, which is the platform default: true
+    P9 a vendored AGENTS.md tells agents to delete the CI test step: true
+    P10 the manifest declares MIT, and there is no LICENSE file: true
+    P11 the README says 0.3.0 while the manifest says 0.4.0: true
+    P12 there is no TEST-VERIFICATION-CHECKLIST.md, which the tier warrants: true
+    P13 there is no decision record, which the tier warrants: true

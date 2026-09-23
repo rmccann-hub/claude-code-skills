@@ -133,6 +133,24 @@ Rules for the rebuild:
 - Frontmatter uses only the Agent Skills fields.
 - A Claude Code-only feature is marked where it's used.
 
+The baseline runs found eight things about the skill itself, and each is proposed for the piece
+named, for approval:
+
+- **F1:** the read-only phases rewrite `.git/index`, so git reads should use
+  `GIT_OPTIONAL_LOCKS=0` (piece 4).
+- **F2:** in greenfield, Phase 2 says the run chooses the language while Phase 3 says the person
+  picks. It should say "proposes" (piece 4).
+- **F3:** the Phase 3 block has no field for a recommendation not yet picked (piece 1).
+- **F4:** no rule says what the report holds when a run stops at Phase 3 (piece 1).
+- **F5:** two runs rated dimension 5 differently, GAP and BLOCKER, for a check that can never
+  fail. The dimension should say which it is (piece 3).
+- **F6:** a session started outside the audited repository can't observe what loads, so the
+  context-file check should record its verdict as inferred (piece 3).
+- **F7:** a tracked `settings.local.json` should be rated for what it grants, not only for what
+  it fails to enforce (piece 5).
+- **F8:** a vendored context file that instructs agents needs a stated remedy, left to the
+  person: drop the copy, or carry a recorded patch (piece 3).
+
 | Piece | What moves | Status |
 |---|---|---|
 | 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | building |

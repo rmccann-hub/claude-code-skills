@@ -12,8 +12,8 @@ Notable changes to this repository. The format follows
 - `skillcheck` checks `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/` for hidden and
   bidirectional characters, as it already did for skills.
 - Parity runs for `project-bootstrap-and-audit`, the first piece of its rebuild. There are three
-  sample repositories with answer keys, and a grader (`python -m skillcheck.parity`).
-  `docs/testing-the-skill.md` says how to run one.
+  sample repositories with answer keys, a grader (`python -m skillcheck.parity`), and the
+  current skill's results as the baseline. `docs/testing-the-skill.md` says how to run one.
 - The plan for rebuilding the standard into the skill, in `ROADMAP.md`.
 
 ### Changed

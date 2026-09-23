@@ -39,8 +39,8 @@ repository's own. `pytest` checks that every sample builds and every key matches
    git archive --format=tar HEAD skills/project-bootstrap-and-audit | tar -x -C <dir>
    ```
 
-   The sample is a git repository with its full history and a bare remote beside it, so a run
-   can fetch.
+   The sample is a git repository with its full history, and a bare remote beside it that it
+   names as `origin`.
 2. **Start a fresh session for each run,** never a continuation: a run that can see another
    run reproduces its answer. In Claude Code, the runs so far were subagents started from a
    working session. With another AI, use a new chat that can read files and run commands. Give
