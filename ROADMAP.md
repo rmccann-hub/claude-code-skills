@@ -133,7 +133,7 @@ Rules for the rebuild:
 - Frontmatter uses only the Agent Skills fields.
 - A Claude Code-only feature is marked where it's used.
 
-The baseline runs found eight things about the skill itself, and each is proposed for the piece
+The baseline runs found nine things about the skill itself, and each is proposed for the piece
 named, for approval:
 
 - **F1:** the read-only phases rewrite `.git/index`, so git reads should use
@@ -150,6 +150,9 @@ named, for approval:
   it fails to enforce (piece 5).
 - **F8:** a vendored context file that instructs agents needs a stated remedy, left to the
   person: drop the copy, or carry a recorded patch (piece 3).
+- **F9:** the starter CI template's collection guard, which this repository's CI copies, fails
+  without saying why when nothing is collected. Under GitHub's default `bash -e`, the `grep` in
+  its command substitution exits first. It should name itself when it fails (piece 2).
 
 | Piece | What moves | Status |
 |---|---|---|

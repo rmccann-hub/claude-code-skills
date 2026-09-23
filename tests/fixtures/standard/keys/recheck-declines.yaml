@@ -27,6 +27,14 @@ planted:
     dimensions: [1]
     rated: [OK, GAP, DRIFT]
     words: ["2026-03-02"]
+  - id: R4
+    # Not planted on purpose. The sample's uv.lock is a stub without the dev group, so CI's own
+    # `uv sync --locked` fails and none of its later steps can run. The first baseline run found
+    # it on 2026-09-23, and it stays as a check, because it's a real problem in the sample.
+    problem: The committed lock is incomplete, so CI fails at its install step
+    dimensions: [2, 6]
+    rated: [BLOCKER, DRIFT, GAP]
+    words: ["uv sync --locked"]
 # Terms that must not appear in any Phase 6 amendment. Dependabot's trigger, publishing to a
 # registry, has not fired, and branch protection is recorded as never to be proposed again.
 not_proposed: [Dependabot, branch protection]

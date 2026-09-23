@@ -1,0 +1,57 @@
+# Results of the runs that set the baseline for samples/recheck-declines.yaml, recorded with
+# `python -m skillcheck.parity record`. See docs/testing-the-skill.md.
+# skill: the commit of skills/project-bootstrap-and-audit these runs measured.
+# prompt: the commit whose docs/testing-the-skill.md prompt they were given.
+skill: 43ff3a9
+prompt: 99fe095
+date: "2026-09-23"
+runs:
+- label: 43ff3a9, run 1
+  phases:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  mode: recheck
+  tier: T1
+  blast_radius: B1
+  audience: A1
+  statuses:
+    1: OK
+    2: DRIFT
+    3: OK
+    4: GAP
+    5: GAP
+    6: DRIFT
+    7: GAP
+    8: OK
+    9: OK
+    10: DRIFT
+  tally:
+    BLOCKER: 0
+    DRIFT: 3
+    GAP: 3
+    OVER: 0
+    MIRROR: 0
+    UNVERIFIABLE-HERE: 0
+    OK: 4
+    N/A: 0
+  checks:
+    stops at Phase 6: true
+    mode: true
+    tier: true
+    blast radius: true
+    audience: true
+    ten statuses: true
+    tally: true
+    'R1 The CI secret scan was declined until a second person commits, and one has: the trigger fired, so the run says so': true
+    ? 'R2 The checklist was deferred until the first tagged release, and v1.0.0 is tagged:
+      the trigger fired, so the run raises it again'
+    : true
+    R3 The run recognises the earlier record, and diffs against it: true
+    R4 The committed lock is incomplete, so CI fails at its install step: true
+    does not propose Dependabot: true
+    does not propose branch protection: true
