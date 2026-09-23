@@ -2,6 +2,36 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-23 — The plugin reaches the account, not cloud sessions
+
+- **Found:** the plugin can be enabled for the owner's claude.ai account. The owner added this
+  repository as a marketplace of their own, under Customize > Plugins > Personal plugins > Add
+  marketplace > Add from a repository, and installed `standards` 0.1.0 with no error. claude.ai
+  took the catalog as it stands, with the plugin defined in `marketplace.json`
+  (`strict: false`) and no `plugin.json`. It names the marketplace after the repository,
+  `claude-code-skills`, rather than the catalog's `rmccann-skills`.
+- **Found:** cloud sessions don't load it.
+  - A fresh session started a few minutes after the install, on Claude Code 2.1.281. Its
+    folder for synced plugins was empty, and it had no `standards` skill.
+  - About ten minutes after the install, a lookup of the account's enabled plugins still found
+    none.
+  - The working session that made the lookup had pulled in the account's skills when it
+    started, but none of the Anthropic plugins listed on the account since the day before.
+
+  Claude Code's plugins reference says cloud sessions download the plugins enabled for the
+  account when they start (checked 2026-09-23). So either the product doesn't yet match its
+  docs, or a condition applies that they don't state.
+- **Found:** the organization route is closed to this repository. The Help Center says a
+  GitHub-synced organization marketplace "must be private or internal" (checked 2026-09-23),
+  and this repository is public. An organization could still take the plugin as an uploaded ZIP
+  file, one upload per release.
+- **Chosen:** H2 stands, and with it the six-field frontmatter rule: uploading the skill to
+  claude.ai stays the route into cloud sessions. That answers the *To verify* item in the entry
+  below. Nothing is lost yet, because the plugin carries only a skill. Hooks and subagents are
+  what would need the plugin route.
+  *Reopen when:* a cloud session's `~/.claude/plugins/synced/` holds the account's plugins, or
+  a piece of the rebuild adds hooks or subagents.
+
 ## 2026-09-23 — The standard is rebuilt into the skill
 
 - **Chosen:** the standard stops being a separate document. Its content becomes the parts of the
