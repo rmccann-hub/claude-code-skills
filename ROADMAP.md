@@ -156,7 +156,7 @@ named, for approval:
 
 | Piece | What moves | Status |
 |---|---|---|
-| 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | building |
+| 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | shipped |
 | 1 | The procedure into `SKILL.md`, from How to Read This File, the two routing tables, What this is for, Scope, Assumptions, Limitations and the stop rules. Standing rules, vocabularies, environment and the conformance self-check into references, with `other-tools.md`. The report's skeleton and schema, and `check_report.py`. `skillcheck` checks the new structure. S3 lands here if approved | planned |
 | 2 | Starter File Contents into `assets/templates/`, each file tested, with `starter-files.md`. S10 lands here if approved | planned |
 | 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. S9 lands here if approved | planned |
