@@ -54,6 +54,10 @@ LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 HIDDEN = re.compile(
     "[\u00ad\u180e\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff\U000e0000-\U000e007f]"
 )
+# Outside skills/, the files agents read as instructions or context. Research results are pasted
+# in from outside the repository, so they get the same scan as a skill.
+AGENT_FILES = ("AGENTS.md", "CLAUDE.md")
+AGENT_DIRS = (".claude", "research")
 
 
 @dataclass(frozen=True)
@@ -105,6 +109,7 @@ def check_repository(root: Path) -> Report:
     names = {skill.name for skill in skills}
     _check_roadmap(root, names, report)
     _check_readme(root, names, report)
+    _check_agent_files(root, report)
     for path in standard.find(root):
         report.standard_version = standard.check(root, path, report.add)
     return report
@@ -129,7 +134,7 @@ def _discover_skills(root: Path, report: Report) -> list[Path]:
 
 def _check_skill(skill_dir: Path, report: Report) -> None:
     where = f"{SKILLS_DIR}/{skill_dir.name}/SKILL.md"
-    _check_hidden_characters(skill_dir, report)
+    _check_hidden_characters(skill_dir.parent.parent, _files_under(skill_dir), report)
     try:
         text = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
         data, body = frontmatter.parse(text)
@@ -244,8 +249,20 @@ def _is_text(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
-def _check_hidden_characters(skill_dir: Path, report: Report) -> None:
-    for path in sorted(p for p in skill_dir.rglob("*") if p.is_file()):
+def _check_agent_files(root: Path, report: Report) -> None:
+    files = [root / name for name in AGENT_FILES if (root / name).is_file()]
+    for directory in AGENT_DIRS:
+        if (root / directory).is_dir():
+            files += _files_under(root / directory)
+    _check_hidden_characters(root, files, report)
+
+
+def _files_under(directory: Path) -> list[Path]:
+    return sorted(p for p in directory.rglob("*") if p.is_file())
+
+
+def _check_hidden_characters(root: Path, files: list[Path], report: Report) -> None:
+    for path in files:
         try:
             text = path.read_text(encoding="utf-8")
         except UnicodeDecodeError:
@@ -260,7 +277,7 @@ def _check_hidden_characters(skill_dir: Path, report: Report) -> None:
         number, char = hits[0]
         more = f", and {len(hits) - 1} more in this file" if len(hits) > 1 else ""
         report.add(
-            f"{SKILLS_DIR}/{skill_dir.name}/{path.relative_to(skill_dir).as_posix()}",
+            path.relative_to(root).as_posix(),
             "unicode",
             f"line {number} holds U+{ord(char):04X}, which is invisible or reorders text{more}",
         )

@@ -2,6 +2,14 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-23 — Hidden-character checks beyond skills
+
+- **Chosen:** `skillcheck` checks `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/` for hidden
+  and bidirectional characters, as it already did for skills (A30). Agents read these files as
+  instructions or context, and research results are pasted in from outside the repository.
+  R01 recommends this check for agent-instruction files. The owner approved it on taking in
+  R01-R05 and R08.
+
 ## 2026-09-23 — Before the first merge: the 0.1.0 release, and a cost of SHA pins
 
 - **Chosen:** the first merge to `main` is the 0.1.0 release (A29), because a version that
