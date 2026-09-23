@@ -2,6 +2,31 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-23 — The standard moves to v0.37.0
+
+- **Chosen:** eighteen fixes to the standard, applied together at the owner's request, so the
+  one file can audit the owner's public repositories now and bring results back:
+  - the nine findings from the parity baseline, F1-F9 in `ROADMAP.md`;
+  - the set-up run's open amendments S2-S7 and S9-S11.
+
+  Each had been proposed and was waiting for approval. They land in the standard file rather
+  than piece by piece, and the rebuild's pieces move the fixed text.
+- **Chosen:** 0.37.0, a minor bump. The new rules and fields are additive (`owner: mixed`,
+  `recommended` and `pending` in the Phase 3 block, `shape_recommended`, `category_checks`), so
+  older reports stay readable.
+- **Not included:** S8, a Keep current mode for the standard. The roadmap's `keeping-current`
+  skill covers it.
+- **Checked:** the facts behind two new rules, against their primary sources on 2026-09-23.
+  GitHub's workflow syntax says a `run` step with no `shell:` runs `bash -e {0}`, and naming
+  `shell: bash` adds `-o pipefail`. Git's documentation says `GIT_OPTIONAL_LOCKS` set to false
+  "will prevent git status from refreshing the index". Under `bash -e` with nothing collected,
+  the old guard exited 1 and printed nothing; the new one names the failure.
+- **Not checked here:** the current `actions/checkout` release. This session can't reach that
+  repository, so v7.0.1 is the set-up run's reading, and the release this repository's
+  Dependabot pins.
+- **Deferred:** this repository's own CI guard copies the template's, and gets the same fix in
+  a change of its own. *Trigger:* this change merges.
+
 ## 2026-09-23 — Release 0.1.1: the marketplace takes the repository's name
 
 - **Chosen:** the marketplace is renamed from `rmccann-skills` to `claude-code-skills`, so that

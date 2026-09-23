@@ -6,6 +6,13 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- The standard is now v0.37.0, with eighteen fixes: the nine the parity baseline found, and the
+  set-up run's open amendments. Read-only phases no longer write `.git/index`, one routing
+  table replaces two that disagreed, ratings are definite where two runs split, and the starter
+  CI's collection guard names itself when it fails. Its history entry lists the rest.
+
 ## [0.1.1] - 2026-09-23
 
 ### Changed

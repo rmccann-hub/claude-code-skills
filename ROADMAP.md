@@ -17,7 +17,7 @@ than inside it.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.36.0 | shipped | core | none |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.37.0 | shipped | core | none |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -133,8 +133,9 @@ Rules for the rebuild:
 - Frontmatter uses only the Agent Skills fields.
 - A Claude Code-only feature is marked where it's used.
 
-The baseline runs found nine things about the skill itself, and each is proposed for the piece
-named, for approval:
+The baseline runs found nine things about the skill itself. The owner had them applied at once,
+in standard v0.37.0, together with the set-up run's open amendments S2-S7 and S9-S11, so each
+piece moves text that is already fixed. The piece named is where each one's section goes:
 
 - **F1:** the read-only phases rewrite `.git/index`, so git reads should use
   `GIT_OPTIONAL_LOCKS=0` (piece 4).
@@ -157,11 +158,11 @@ named, for approval:
 | Piece | What moves | Status |
 |---|---|---|
 | 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | shipped |
-| 1 | The procedure into `SKILL.md`, from How to Read This File, the two routing tables, What this is for, Scope, Assumptions, Limitations and the stop rules. Standing rules, vocabularies, environment and the conformance self-check into references, with `other-tools.md`. The report's skeleton and schema, and `check_report.py`. `skillcheck` checks the new structure. S3 lands here if approved | planned |
-| 2 | Starter File Contents into `assets/templates/`, each file tested, with `starter-files.md`. S10 lands here if approved | planned |
-| 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. S9 lands here if approved | planned |
-| 4 | Phases 0 to 3 and 5 to 9 into four phase files, with `preflight.py` and `inventory.py`. S4 and S5 land here if approved | planned |
-| 5 | Choosing a Language and Runtime, Choosing the Shape and Project Shapes into `new-project.md`. The Configuration File Map, Standards Distribution, File Governance, the Release and Deploy Currency Gate, Cross-Repository Contracts, Any Agent, Any Tool and the facts into their references. S6 and S7 land here if approved | planned |
+| 1 | The procedure into `SKILL.md`, from How to Read This File, the routing table, What this is for, Scope, Assumptions, Limitations and the stop rules. Standing rules, vocabularies, environment and the conformance self-check into references, with `other-tools.md`. The report's skeleton and schema, and `check_report.py`. `skillcheck` checks the new structure. | planned |
+| 2 | Starter File Contents into `assets/templates/`, each file tested, with `starter-files.md`. | planned |
+| 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. | planned |
+| 4 | Phases 0 to 3 and 5 to 9 into four phase files, with `preflight.py` and `inventory.py`. | planned |
+| 5 | Choosing a Language and Runtime, Choosing the Shape and Project Shapes into `new-project.md`. The Configuration File Map, Standards Distribution, File Governance, the Release and Deploy Currency Gate, Cross-Repository Contracts, Any Agent, Any Tool and the facts into their references. | planned |
 | 6 | Versioning, Proposing a Change, Sending Results Back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's licence becomes Apache-2.0. Release 0.2.0 | planned |
 
 ## Repository
