@@ -93,6 +93,10 @@ These come from the standard's own procedure for testing itself, and they still 
 - **The answer key stays out of the run's reach.** A run gets copies in a scratch folder and is
   told to read nothing outside it.
 - **Grade the YAML blocks, not the prose.** The prose is the run's own account of itself.
+- **Only the copy under test.** A run could invoke an installed copy of the skill instead of
+  reading the one it's given. `.claude/settings.json` keeps the plugin's copies out of sessions
+  on this repository. A copy uploaded as a claude.ai skill loads anyway, so turn it off on the
+  account before a run.
 
 **A known limit of this prompt:** the sample's bare remote sits outside the three directories,
 so a run skips Phase 0's `git fetch` and records it as something it couldn't do. The baseline

@@ -52,6 +52,12 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   what would need the plugin route.
   *Reopen when:* a cloud session's `~/.claude/plugins/synced/` holds the account's plugins, or
   a piece of the rebuild adds hooks or subagents.
+- **Chosen:** sessions on this repository don't load an installed copy of the plugin, so a
+  session rebuilding the skill, or a parity run, can't pick up an older one. `.claude/settings.json`
+  turns off `standards@synced` and `standards@claude-code-skills`, which Claude Code's docs let a
+  project do in its committed settings (checked 2026-09-23). A copy uploaded as a claude.ai
+  skill can't be turned off from here, so `CLAUDE.md` says the file here wins, and a parity run
+  needs it turned off on the account.
 
 ## 2026-09-23 — The standard is rebuilt into the skill
 

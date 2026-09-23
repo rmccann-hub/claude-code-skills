@@ -11,5 +11,9 @@
       "Bash(git push -f*)"
     ],
     "allow": []
+  },
+  "enabledPlugins": {
+    "standards@synced": false,
+    "standards@claude-code-skills": false
   }
 }
