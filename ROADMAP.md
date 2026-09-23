@@ -162,7 +162,7 @@ named, for approval:
 | 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. S9 lands here if approved | planned |
 | 4 | Phases 0 to 3 and 5 to 9 into four phase files, with `preflight.py` and `inventory.py`. S4 and S5 land here if approved | planned |
 | 5 | Choosing a Language and Runtime, Choosing the Shape and Project Shapes into `new-project.md`. The Configuration File Map, Standards Distribution, File Governance, the Release and Deploy Currency Gate, Cross-Repository Contracts, Any Agent, Any Tool and the facts into their references. S6 and S7 land here if approved | planned |
-| 6 | Versioning, Proposing a Change, Sending Results Back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's licence becomes Apache-2.0. Release 0.3.0 | planned |
+| 6 | Versioning, Proposing a Change, Sending Results Back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's licence becomes Apache-2.0. Release 0.2.0 | planned |
 
 ## Repository
 

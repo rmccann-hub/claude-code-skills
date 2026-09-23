@@ -2,7 +2,7 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
-## 2026-09-23 — Release 0.2.0: the marketplace takes the repository's name
+## 2026-09-23 — Release 0.1.1: the marketplace takes the repository's name
 
 - **Chosen:** the marketplace is renamed from `rmccann-skills` to `claude-code-skills`, so that
   it matches the repository. The owner asked for the names to match. claude.ai shows a
@@ -15,11 +15,11 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
     at every load. `claude-code-skills` isn't on the reserved list, and Claude Code 2.1.280's
     strict validator passes it (checked 2026-09-23). *Reopen when:* Claude Code rejects the
     name.
-- **Chosen:** the rename ships as release 0.2.0, with standard v0.36.0. A version that reaches
+- **Chosen:** the rename ships as release 0.1.1, with standard v0.36.0. A version that reaches
   `main` is published, so a breaking change can't reach it under 0.1.0. And 0.1.0 already named
   two standards: v0.35.0 at its tag, and v0.36.0 on `main`. This settles the release that the
-  v0.36.0 entry deferred. The rebuild's last piece becomes release 0.3.0, superseding the
-  rebuild entry's 0.2.0.
+  v0.36.0 entry deferred. The owner chose 0.1.1 over 0.2.0: under 0.x anything may change
+  (A13), and 0.2.0 stays the rebuild's release.
 - **Chosen:** the catalog's plugin entry names its author and repository, as a plugin's own
   manifest does. Claude Code's strict validator asks a manifest for an author.
 

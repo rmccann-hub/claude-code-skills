@@ -8,7 +8,7 @@
       "source": "./",
       "strict": false,
       "description": "Repository setup and audit: the PROJECT-BOOTSTRAP-AND-AUDIT standard as a skill.",
-      "version": "0.2.0",
+      "version": "0.1.1",
       "author": {"name": "rmccann-hub"},
       "repository": "https://github.com/rmccann-hub/claude-code-skills",
       "license": "CC0-1.0",

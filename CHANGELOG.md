@@ -6,7 +6,7 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
-## [0.2.0] - 2026-09-23
+## [0.1.1] - 2026-09-23
 
 ### Changed
 

@@ -12,7 +12,7 @@ In Claude Code:
 /plugin install standards@claude-code-skills
 ```
 
-Before 0.2.0 the marketplace was called `rmccann-skills`. If you added it under that name,
+Before 0.1.1 the marketplace was called `rmccann-skills`. If you added it under that name,
 run `/plugin marketplace remove rmccann-skills`, then add it again as above.
 
 ## Skills
