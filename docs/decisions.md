@@ -2,6 +2,63 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-23 — Release 0.1.1: the marketplace takes the repository's name
+
+- **Chosen:** the marketplace is renamed from `rmccann-skills` to `claude-code-skills`, so that
+  it matches the repository. The owner asked for the names to match. claude.ai shows a
+  marketplace added from a repository by the repository's name, while Claude Code shows the
+  catalog's `name`, so the two differed. This supersedes the marketplace name in the inception
+  entry's H3. The plugin stays `standards`.
+  - *Considered:* renaming the repository instead. That touches 36 files, among them the
+    owner-file lines in `AGENTS.md` and dated research records.
+  - *Risk:* Claude Code blocks marketplace names that impersonate official ones, and re-checks
+    at every load. `claude-code-skills` isn't on the reserved list, and Claude Code 2.1.280's
+    strict validator passes it (checked 2026-09-23). *Reopen when:* Claude Code rejects the
+    name.
+- **Chosen:** the rename ships as release 0.1.1, with standard v0.36.0. A version that reaches
+  `main` is published, so a breaking change can't reach it under 0.1.0. And 0.1.0 already named
+  two standards: v0.35.0 at its tag, and v0.36.0 on `main`. This settles the release that the
+  v0.36.0 entry deferred. The owner chose 0.1.1 over 0.2.0: under 0.x anything may change
+  (A13), and 0.2.0 stays the rebuild's release.
+- **Chosen:** the catalog's plugin entry names its author and repository, as a plugin's own
+  manifest does. Claude Code's strict validator asks a manifest for an author.
+
+## 2026-09-23 — The plugin reaches the account, not cloud sessions
+
+- **Found:** the plugin can be enabled for the owner's claude.ai account. The owner added this
+  repository as a marketplace of their own, under Customize > Plugins > Personal plugins > Add
+  marketplace > Add from a repository, and installed `standards` 0.1.0 with no error. claude.ai
+  took the catalog as it stands, with the plugin defined in `marketplace.json`
+  (`strict: false`) and no `plugin.json`. It names the marketplace after the repository,
+  `claude-code-skills`, rather than the catalog's `rmccann-skills`.
+- **Found:** cloud sessions don't load it.
+  - A fresh session started a few minutes after the install, on Claude Code 2.1.281. Its
+    folder for synced plugins was empty, and it had no `standards` skill.
+  - About ten minutes after the install, a lookup of the account's enabled plugins still found
+    none.
+  - The working session that made the lookup had pulled in the account's skills when it
+    started, but none of the Anthropic plugins listed on the account since the day before.
+
+  Claude Code's plugins reference says cloud sessions download the plugins enabled for the
+  account when they start (checked 2026-09-23). So either the product doesn't yet match its
+  docs, or a condition applies that they don't state.
+- **Found:** the organization route is closed to this repository. The Help Center says a
+  GitHub-synced organization marketplace "must be private or internal" (checked 2026-09-23),
+  and this repository is public. An organization could still take the plugin as an uploaded ZIP
+  file, one upload per release.
+- **Chosen:** H2 stands, and with it the six-field frontmatter rule: uploading the skill to
+  claude.ai stays the route into cloud sessions. That answers the *To verify* item in the entry
+  below. Nothing is lost yet, because the plugin carries only a skill. Hooks and subagents are
+  what would need the plugin route.
+  *Reopen when:* a cloud session's `~/.claude/plugins/synced/` holds the account's plugins, or
+  a piece of the rebuild adds hooks or subagents.
+- **Chosen:** sessions on this repository don't load an installed copy of the plugin, so a
+  session rebuilding the skill, or a parity run, can't pick up an older one. `.claude/settings.json`
+  turns off `standards@synced` and `standards@claude-code-skills`, which Claude Code's docs let a
+  project do in its committed settings (checked 2026-09-23). A copy uploaded as a claude.ai
+  skill can't be turned off from here, so `CLAUDE.md` says the file here wins, and a parity run
+  needs it turned off on the account.
+
 ## 2026-09-23 — The standard is rebuilt into the skill
 
 - **Chosen:** the standard stops being a separate document. Its content becomes the parts of the
