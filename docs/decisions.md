@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-23 — Before the first merge: the 0.1.0 release, and a cost of SHA pins
+
+- **Chosen:** the first merge to `main` is the 0.1.0 release (A29), because a version that
+  reaches `main` is published, tag or no tag. The changelog's entries moved under `[0.1.0]`,
+  and the README's Operations section says how to withdraw a bad skill. This settles the
+  runbook that the inception entry below deferred until the first release.
+- **Chosen:** keep A16's SHA pins, knowing a cost the gate didn't state. GitHub's secure-use
+  reference (checked 2026-09-23) says "Dependabot only creates alerts for vulnerable actions
+  that use semantic versioning and will not create alerts for actions pinned to SHA values."
+  Weekly version updates still cover the pins, and their tag comments on the same line.
+  *Reopen when:* GitHub raises alerts for SHA-pinned actions, or a vulnerability in a pinned
+  action is found before an update for it reaches this repository.
+
 ## 2026-09-23 — Inception: set up against the standard
 
 - **Standard:** PROJECT-BOOTSTRAP-AND-AUDIT v0.35.0. Job: set up; mode: greenfield. The run
