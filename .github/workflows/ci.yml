@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.18"
+
+      - name: Install from the lockfile, failing on drift
+        run: uv sync --locked
+
+      - name: Format check
+        run: uv run ruff format --check
+
+      - name: Lint
+        run: uv run ruff check
+
+      - name: Test
+        run: uv run pytest
+
+      - name: Guard the collection count
+        run: |
+          BASELINE=$(cat .test-baseline)
+          ACTUAL=$(uv run pytest --collect-only -q --no-cov 2>/dev/null | tail -1 | grep -oE '^[0-9]+')
+          echo "collected ${ACTUAL}, baseline ${BASELINE}"
+          if [ -z "$ACTUAL" ] || [ "$ACTUAL" -lt "$BASELINE" ]; then
+            echo "::error::collection fell below baseline"; exit 1
+          fi
+
+      - name: Check skills and catalog
+        run: uv run skillcheck .
+
+  catalog:
+    # Claude Code's own validator checks the catalog's schema; skillcheck checks the skills.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "24"
+
+      - name: Install the pinned Claude Code from the lockfile
+        run: npm ci
+
+      - name: Validate the catalog
+        run: npx --no-install claude plugin validate --strict .
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GITLEAKS_VERSION: v8.30.1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.27"
+          cache: false
+
+      - name: Install gitleaks (module checksums verified against sum.golang.org)
+        run: go install "github.com/zricethezav/gitleaks/v8@${GITLEAKS_VERSION}"
+
+      - name: Prove the scanner detects before trusting a clean result
+        run: |
+          gitleaks="$(go env GOPATH)/bin/gitleaks"
+          canary="$RUNNER_TEMP/canary"
+          mkdir -p "$canary"
+          # Fixed values, measured as reported by this gitleaks version. Random ones are not a
+          # test: about 4% of random passwords and 3 in 5,000 random keys went unreported.
+          # Each value is split here so this file never holds one whole.
+          python3 - "$canary" <<'EOF'
+          import sys
+          canary = sys.argv[1]
+          key = "AKIA" + "Q7ZM3VBK" + "2PWT6RNX"
+          password = "Zq7Kx9Wm" + "2Rt5Vn8Y" + "s4Pb"
+          open(f"{canary}/config.ini", "w").write(f"aws_access_key_id = {key}\n")
+          open(f"{canary}/notes.md", "w").write(f"Before running, set `DB_PASSWORD={password}`.\n")
+          EOF
+          for planted in config.ini notes.md; do
+            set +e
+            "$gitleaks" dir "$canary/$planted" --no-banner --redact >/dev/null 2>&1
+            rc=$?
+            set -e
+            if [ "$rc" -ne 1 ]; then
+              echo "::error::expected gitleaks to report the secret planted in $planted (exit 1), got exit $rc"
+              exit 1
+            fi
+            echo "canary $planted: detected"
+          done
+
+      - name: Scan the full history
+        run: '"$(go env GOPATH)/bin/gitleaks" git . --no-banner --redact'

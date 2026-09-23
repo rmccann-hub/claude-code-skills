@@ -1,0 +1,8 @@
+{
+  "name": "claude-code-skills",
+  "private": true,
+  "description": "Pins Claude Code for its catalog validator. Nothing here is published.",
+  "devDependencies": {
+    "@anthropic-ai/claude-code": "2.1.280"
+  }
+}
