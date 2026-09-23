@@ -6,8 +6,21 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-23
+
+### Changed
+
+- **Breaking:** the marketplace is renamed from `rmccann-skills` to `claude-code-skills`, the
+  repository's name, which is what claude.ai shows for it. The plugin is now
+  `standards@claude-code-skills`. If you added the marketplace under its old name, remove it
+  with `/plugin marketplace remove rmccann-skills` and add it again.
+- The standard is now v0.36.0, with nine dated facts corrected against their primary sources.
+  The main change: Claude Code reads `AGENTS.md` natively, but only in some sessions, so the
+  `CLAUDE.md` shim stays. Its history entry lists the rest.
+
 ### Added
 
+- The catalog's plugin entry names its author and repository.
 - Research results R01-R05 and R08, each filed in `research/runs/` with a verification table.
 - `skillcheck` checks `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/` for hidden and
   bidirectional characters, as it already did for skills.
@@ -15,12 +28,6 @@ Notable changes to this repository. The format follows
   sample repositories with answer keys, a grader (`python -m skillcheck.parity`), and the
   current skill's results as the baseline. `docs/testing-the-skill.md` says how to run one.
 - The plan for rebuilding the standard into the skill, in `ROADMAP.md`.
-
-### Changed
-
-- The standard is now v0.36.0, with nine dated facts corrected against their primary sources.
-  The main change: Claude Code reads `AGENTS.md` natively, but only in some sessions, so the
-  `CLAUDE.md` shim stays. Its history entry lists the rest.
 
 ## [0.1.0] - 2026-09-23
 

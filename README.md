@@ -9,8 +9,11 @@ In Claude Code:
 
 ```
 /plugin marketplace add rmccann-hub/claude-code-skills
-/plugin install standards@rmccann-skills
+/plugin install standards@claude-code-skills
 ```
+
+Before 0.2.0 the marketplace was called `rmccann-skills`. If you added it under that name,
+run `/plugin marketplace remove rmccann-skills`, then add it again as above.
 
 ## Skills
 
@@ -69,12 +72,12 @@ If a skill here gives wrong or harmful instructions, take it out of circulation 
      turned that on. Ask users to run these in a terminal:
 
      ```
-     claude plugin marketplace update rmccann-skills
-     claude plugin update <plugin>@rmccann-skills
+     claude plugin marketplace update claude-code-skills
+     claude plugin update <plugin>@claude-code-skills
      ```
 
      If the plugin itself was removed, ask them to run
-     `claude plugin uninstall <plugin>@rmccann-skills` instead.
+     `claude plugin uninstall <plugin>@claude-code-skills` instead.
    - **Committed copies:** each repository with a copy in `.claude/skills/` removes or replaces
      it.
 4. **If it was a security problem,** publish a security advisory from the Security tab, naming
