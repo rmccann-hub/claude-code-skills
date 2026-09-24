@@ -40,7 +40,9 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   field in Phase 2. A run that stops at Phase 3 keeps its overrides in `notes`.
 - **Chosen:** the rule for a tracked `settings.local.json` moves into dimension 4. The audit
   run never read *The Configuration File Map*, where it first went, because the routing table
-  doesn't send an audit there, and rated the sample's `pip install` grant `DRIFT`.
+  doesn't send an audit there, and rated the sample's `pip install` grant `DRIFT`. A second
+  audit run, on `ecababf`, rated it `BLOCKER`, as the rule intends. Every planted problem was
+  still found, and dimension 4 was the only value that moved from the baseline.
 - **Deferred:** this repository's own CI guard copies the template's, and gets the same fix in
   a change of its own. So does the grader's `not_proposed` check, which should read what an
   amendment proposes rather than every word in it. *Trigger:* this change merges.
