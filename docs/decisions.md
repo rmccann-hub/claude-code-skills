@@ -43,6 +43,10 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   doesn't send an audit there, and rated the sample's `pip install` grant `DRIFT`. A second
   audit run, on `ecababf`, rated it `BLOCKER`, as the rule intends. Every planted problem was
   still found, and dimension 4 was the only value that moved from the baseline.
+- **Deferred:** a release, at the owner's choice. The catalog stays at 0.1.1, so until the next
+  release `main` carries standard v0.37.0 while the 0.1.1 release carries v0.36.0, under one
+  version number, as the v0.36.0 entry recorded for 0.1.0. The `v0.1.1` tag goes on
+  `cbe163f`, the release's merge commit, not on `main`. *Trigger:* the next release.
 - **Deferred:** this repository's own CI guard copies the template's, and gets the same fix in
   a change of its own. So does the grader's `not_proposed` check, which should read what an
   amendment proposes rather than every word in it. *Trigger:* this change merges.
