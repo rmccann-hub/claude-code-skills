@@ -1501,6 +1501,12 @@ Two things stand between a change and the default branch: what gates it, and wha
 `language: system` config with documented reasoning is not a finding. Required gates: secret
 scan, format check, lint, test.
 
+**Every workflow sets `permissions:`** — `contents: read` or narrower at the top, with any wider
+grant given only to the job that needs it. A workflow without the block runs with the
+repository's default token, which is broader than a test run needs. **One workflow missing it
+is the finding, however many others have it:** rate it `GAP` here and name the file. *Starter
+File Contents* shows the block, and says why a gate that checks only some workflows misleads.
+
 <constraints>
 
 **Enforcement placement is a tier decision, not a default.**
@@ -4156,7 +4162,7 @@ records are append-only and are not edited for this.
 
 ## Entries
 
-**0.38.0** — **fourteen fixes and one addition before the file audits live repositories**,
+**0.38.0** — **fifteen fixes and one addition before the file audits live repositories**,
 at the maintainer's request, grouped by what found them.
 
 **Reading a live repository before its first run found four.** *Phase 1 finds a decision
@@ -4179,14 +4185,16 @@ where someone will, 7 is recommended with that upkeep named as its cost. *A Powe
 scheduled job has a layout*: a module holding the logic, one entry script that the task runs
 with `-NoProfile -NonInteractive -File`, and the task's definition in `packaging/`.
 
-**This version's own parity runs found four.** *Phase 0 says what to do when a fetch cannot
+**This version's own parity runs found five.** *Phase 0 says what to do when a fetch cannot
 run*: a fetch writes only remote-tracking refs, and where one is not possible the run reads
 refs as they stand and marks what rests on them. *The routing table covers a repository that
 holds no source yet*, under setting something up. *An install that is itself a gate counts in
 the tally*: the setup carve-out kept a failing lockfile install out of `command_tally`, which
 then read all `PASS` while CI's first step failed. *A proposed change to this standard has a
 place in the gate's block*: `standard_amendments`, apart from the repository's amendments and
-their closure count, where a run had found nowhere to put one.
+their closure count, where a run had found nowhere to put one. *Dimension 6 says every
+workflow sets `permissions:`*: the rule lived only in the starter template, which an audit
+does not read, and one of the final audit runs missed the planted workflow that lacked it.
 
 **Four more.** *The starter CI pins its action to a full commit SHA*, with the version in a
 comment, because GitHub's hardening guide calls that the only immutable reference; the price

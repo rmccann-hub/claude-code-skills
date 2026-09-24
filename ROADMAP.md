@@ -171,7 +171,7 @@ Reading a live repository before its first run found two more, also applied in v
 - **F13:** a context file that tells agents to act without asking, commit as they go or write
   a session log before ending could read as lifting the run's waits (piece 1).
 
-The v0.38.0 parity runs found four more, applied before it merged:
+The v0.38.0 parity runs found five more, applied before it merged:
 
 - **F14:** Phase 0 says nothing about a fetch that can't run, and its "read without writing"
   sits beside a command that writes refs (piece 4).
@@ -179,6 +179,9 @@ The v0.38.0 parity runs found four more, applied before it merged:
 - **F16:** the setup carve-out keeps a failing install out of `command_tally` even when the
   install is CI's first step, so the tally can read all `PASS` (piece 4).
 - **F17:** the Phase 6 block has no field for a `class: standard` amendment (piece 1).
+- **F21:** the rule that every workflow sets `permissions:` lived only in the starter
+  template, which an audit doesn't read, and one final audit run missed the planted workflow
+  that lacked it. Dimension 6 now states it (piece 3).
 
 The final v0.38.0 greenfield run raised three more, each one run's evidence, left for the next
 revision because an audit never reads them:

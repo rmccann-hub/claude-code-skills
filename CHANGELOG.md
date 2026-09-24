@@ -19,7 +19,7 @@ Notable changes to this repository. The format follows
   longer write `.git/index`, one routing table replaces two that disagreed, ratings are definite
   where two runs split, and the starter CI's collection guard names itself when it fails. Its
   history entry lists the rest.
-- The standard is now v0.38.0, with fourteen fixes and one addition made before its first live
+- The standard is now v0.38.0, with fifteen fixes and one addition made before its first live
   run:
   - Phase 1 finds a decision record by its content, including one kept inside another file,
     and no longer reads the words "blast radius" in prose as a recorded tier.
@@ -34,6 +34,8 @@ Notable changes to this repository. The format follows
     commit SHA.
   - An install that is itself a gate counts in the tally of commands, and a proposed change
     to the standard has its own list at the gate.
+  - Dimension 6 says every workflow sets `permissions:`, a rule that lived only in the starter
+    template, where an audit doesn't look.
   - A run can read the standard from a link pinned to a commit and checked against its
     SHA-256, and its self-check records that hash.
 
