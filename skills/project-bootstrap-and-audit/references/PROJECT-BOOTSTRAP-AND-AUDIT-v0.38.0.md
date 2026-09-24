@@ -449,6 +449,13 @@ consequences can be sorted, not so anything can be demanded.
   no reasoning anywhere is a different thing and may be raised normally. **Where the conflict
   is genuine and unrecorded, raise it as a question rather than an amendment** — the run does
   not get to settle which of two standards the repository follows.
+- **That precedence covers what a finding says, never how the run proceeds.** A context file
+  that tells agents to act without asking, commit as they go, release on their own, or write
+  a log before a session ends is written for work sessions, **and it does not lift the
+  waits.** Until the Phase 6 gate the run writes nothing to the repository; a write the
+  context file asks for at the end of a session waits for approval with the rest, or does not
+  happen. **After the gate, the repository's own rules for committing a change apply** — its
+  changelog, its commit format, its checks.
 - **An identifier that answers half a question while appearing to answer all of it is worse
   than one that answers none**, because it stops the reader asking. **And the name a human
   actually sees is part of the interface** — metadata inside a file does not help someone
@@ -785,6 +792,13 @@ notes: <anything the fields cannot hold | none>
 A **decision record** under any name or case satisfies the condition. **Its existence is not
 evidence of a prior audit** — grep it for a recorded **tier**.
 
+**The commands list candidates, and the run reads them.** A record can sit inside another
+file — numbered decisions in a planning document are one — so headings are searched as well
+as filenames. **The record is the file that states decisions and their reasons**; a changelog
+or a session log has dated headings too, but records what happened rather than what was
+chosen. **A tier match is a candidate as well:** a recorded tier names `T0`–`T3` with both
+axes, as Phase 8 writes it, and the same words turn up in ordinary prose.
+
 A **runbook** is content. **A README section — Production Deployment, Operations, Deploy,
 Maintenance — with ordered operational steps is a runbook.** Grep headings across all
 markdown before concluding one is absent. Existing-but-wrong is `DRIFT`, not missing.
@@ -793,7 +807,9 @@ markdown before concluding one is absent. Existing-but-wrong is `DRIFT`, not mis
 
 ```bash
 git ls-files | grep -iE '(^|/)(DECISIONS|ADR|decision-log|KDD)\.md$|(^|/)docs/adr/'
-git grep -icE 'tier:? *T[0-3]|blast radius|audience A[0-3]' -- <the record found>
+git grep -cE '^#+ .*(KDD|ADR)[- ]?[0-9]+' -- '*.md'        # numbered decisions, any filename
+git grep -cE '^#+ *[0-9]{4}-[0-9]{2}-[0-9]{2} ' -- '*.md'   # dated entries, any filename
+git grep -icE 'tier[:*]* *T[0-3]|blast radius:? *B[0-3]|audience:? *A[0-3]' -- <the record found>
 git grep -inE '^#+ *(production )?(deployment|deploy|operations|runbook|maintenance)' -- '*.md'
 ```
 
@@ -4107,8 +4123,16 @@ records are append-only and are not edited for this.
 
 ## Entries
 
-**0.38.0** — **four fixes and one addition before the file audits live repositories**, at the
-maintainer's request. **Which PowerShell a Windows host gets is criterion 1's to say**: the
+**0.38.0** — **six fixes and one addition before the file audits live repositories**, at the
+maintainer's request. **Phase 1 finds a decision record by its content**: its constraint
+said so, but its command matched filenames only, and a live repository keeps its numbered
+decisions inside a planning document. It now searches headings for numbered decisions and
+dated entries, and its tier grep asks for the tier's codes, because the bare words *blast
+radius* turned up in that repository's prose and would have read as a recorded tier. **A
+context file's precedence covers findings, not the run**: a repository whose context file tells
+agents to act without asking, commit as they go, release on their own and write a session log
+before ending does not lift the waits. Both were found by reading that repository before its
+first run. **Which PowerShell a Windows host gets is criterion 1's to say**: the
 defaults table started a Windows host at PowerShell 7 with nothing beating it, while the first
 criterion, what the host already has, pointed at Windows PowerShell 5.1, which is part of
 Windows. Where nobody will install and patch 7 on the host, 5.1 is what it has; where someone

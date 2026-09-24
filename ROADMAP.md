@@ -163,6 +163,18 @@ the piece named is where each one's section goes:
   with Windows Server. The default should say which wins (piece 5).
 - **F11:** the shapes table has no row for a PowerShell scheduled job (piece 5).
 
+Reading a live repository before its first run found two more, also applied in v0.38.0:
+
+- **F12:** Phase 1 says a decision record is found by content, but its command matched
+  filenames only, and its tier grep counted the words "blast radius" in prose as a recorded
+  tier (piece 4).
+- **F13:** a context file that tells agents to act without asking, commit as they go or write
+  a session log before ending could read as lifting the run's waits (piece 1).
+
+Live runs on the owner's repositories come between pieces. Each report is triaged as
+[docs/testing-the-skill.md](docs/testing-the-skill.md) describes, and what it finds is fixed
+before the next repository's run.
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
