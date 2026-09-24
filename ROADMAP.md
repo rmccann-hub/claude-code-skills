@@ -195,6 +195,14 @@ revision because an audit never reads them:
   XML export in UTF-16 doesn't give without a `working-tree-encoding` rule or a registration
   script instead (piece 5).
 
+The final audit runs raised two more, also left for the next revision:
+
+- **F22:** the command results don't name a command the session's permission layer refuses.
+  Both runs that met one chose `UNVERIFIABLE-HERE`, which fits, but saying so settles it
+  (piece 1).
+- **F23:** the standard names no default path for a decision record when none exists, so two
+  runs on a repository without one can propose different paths (piece 4).
+
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
 pins its action to a commit SHA. An upload that renames the file isn't a version mismatch.
