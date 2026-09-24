@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-24 — This repository's guard and grader get their fixes
+
+- **Done:** the two deferrals in the v0.37.0 entry below, whose trigger fired when that change
+  merged.
+  - CI's collection guard now matches the standard's template, with this repository's
+    collection command. Run under `bash -e` with nothing collected, the old guard exited 1 and
+    printed nothing, and the new one names the failure. It was checked in three states: as
+    committed, with a baseline above the count, and with nothing collected.
+  - The grader's `not_proposed` check reads each amendment's `change:` only. The v0.37.0
+    re-check report's two false alarms clear, and a change that names a declined item still
+    fails the check.
+- **Changed:** `.test-baseline` goes to 144, for the four new grader tests.
+
 ## 2026-09-24 — Fewest dependencies, newest versions: researched before it's a rule
 
 - **Asked:** the owner wants every repository the standard sets up or audits to run on as few
