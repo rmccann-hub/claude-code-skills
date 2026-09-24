@@ -567,7 +567,12 @@ consequence of refusing it is an order wearing a suggestion's clothes.
 
 **The setup carve-out.** Installing the **project's own declared dependencies** into the
 ephemeral container — `pip install -e ".[test,dev]"`, `npm ci`, `meson setup build` — is
-**setup, not a side effect.** Record it in `setup`. **Do not count it in `command_tally`.**
+**setup, not a side effect.** Record it in `setup`. **Do not count it in `command_tally`** —
+**unless the install is itself a gate**, such as CI's install step or the install the context
+file documents. Then it goes in `commands` as well, and its result is counted: the carve-out
+exempts installing from being a side effect, not a gate's result from the tally. A lockfile
+install that fails is the gate failing, and a tally that reads all `PASS` beside it misleads
+the reader who triages from the numbers.
 A dependency environment that already existed at session start goes in
 `environment_preexisting`, not `setup` — the distinction is material to reproducibility.
 
@@ -2149,12 +2154,14 @@ amendments: [{id: A1, dimension: 0, severity: recommended|optional, change: "...
               evidence: "...", if_accepted: "...", if_declined: "...",
               gates_on: [<H ids | none>], severity_depends_on: [<H ids | none>],
               recommendation: "not pre-selected"}]
+standard_amendments: [<S1…, in the shape *Proposing a change to this standard* gives | none>]
 human_actions: [{id: X1, action: "...", why_not_agent: "server-side | manual"}]
 not_proposed: [{finding: "...", why_not: "...", dimension: 0}]
 premise_check: {stated: "<what the prompt claimed>", found: "<what is actually true>",
                 evidence: "..."}
-counts: {human_decisions: 0, recommended: 0, optional: 0, amendments_total: 0, human_actions: 0}
-closure_check: "recommended + optional == amendments_total"
+counts: {human_decisions: 0, recommended: 0, optional: 0, amendments_total: 0, human_actions: 0,
+         standard_amendments: 0}
+closure_check: "recommended + optional == amendments_total"   # repository amendments only
 no_writes_proof: |
   $ git status --porcelain
   (empty)
@@ -2570,7 +2577,9 @@ fire because the environment cannot reach what it names. A dated fact that no lo
 definition two runs read differently. **A gap where you did the right thing and no rule told
 you to** — that is the most valuable kind and the easiest to leave unsaid.
 
-**How it arrives.** As a numbered amendment in the `standard` class, carrying:
+**How it arrives.** As a numbered amendment in the `standard` class, in the Phase 6 block's
+`standard_amendments` list, apart from the repository's amendments and outside their closure
+count, carrying:
 
 ```yaml
 - id: S1
@@ -4147,8 +4156,8 @@ records are append-only and are not edited for this.
 
 ## Entries
 
-**0.38.0** — **twelve fixes and one addition before the file audits live repositories**, at
-the maintainer's request, grouped by what found them.
+**0.38.0** — **fourteen fixes and one addition before the file audits live repositories**,
+at the maintainer's request, grouped by what found them.
 
 **Reading a live repository before its first run found four.** *Phase 1 finds a decision
 record by its content*: its constraint said so, but its command matched filenames only, and
@@ -4170,10 +4179,14 @@ where someone will, 7 is recommended with that upkeep named as its cost. *A Powe
 scheduled job has a layout*: a module holding the logic, one entry script that the task runs
 with `-NoProfile -NonInteractive -File`, and the task's definition in `packaging/`.
 
-**This version's own parity run found two.** *Phase 0 says what to do when a fetch cannot
+**This version's own parity runs found four.** *Phase 0 says what to do when a fetch cannot
 run*: a fetch writes only remote-tracking refs, and where one is not possible the run reads
 refs as they stand and marks what rests on them. *The routing table covers a repository that
-holds no source yet*, under setting something up.
+holds no source yet*, under setting something up. *An install that is itself a gate counts in
+the tally*: the setup carve-out kept a failing lockfile install out of `command_tally`, which
+then read all `PASS` while CI's first step failed. *A proposed change to this standard has a
+place in the gate's block*: `standard_amendments`, apart from the repository's amendments and
+their closure count, where a run had found nowhere to put one.
 
 **Four more.** *The starter CI pins its action to a full commit SHA*, with the version in a
 comment, because GitHub's hardening guide calls that the only immutable reference; the price

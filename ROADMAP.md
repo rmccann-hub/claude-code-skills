@@ -171,11 +171,14 @@ Reading a live repository before its first run found two more, also applied in v
 - **F13:** a context file that tells agents to act without asking, commit as they go or write
   a session log before ending could read as lifting the run's waits (piece 1).
 
-The v0.38.0 parity runs found two more, applied before it merged:
+The v0.38.0 parity runs found four more, applied before it merged:
 
 - **F14:** Phase 0 says nothing about a fetch that can't run, and its "read without writing"
   sits beside a command that writes refs (piece 4).
 - **F15:** the routing table has no row for a repository that holds no source yet (piece 1).
+- **F16:** the setup carve-out keeps a failing install out of `command_tally` even when the
+  install is CI's first step, so the tally can read all `PASS` (piece 4).
+- **F17:** the Phase 6 block has no field for a `class: standard` amendment (piece 1).
 
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
