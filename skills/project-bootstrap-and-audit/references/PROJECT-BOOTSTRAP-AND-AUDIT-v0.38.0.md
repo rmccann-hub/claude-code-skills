@@ -58,7 +58,7 @@ heading index finds it in one match.
 |---|---|---|
 | **Survey** — look, change nothing | *The Run*, phases 0–5, then stop and report | Phases 6–9 |
 | **Audit or retrofit** | *The Run*, all phases, with the ten dimensions inside phase 4, plus *File Governance* | *The Release and Deploy Currency Gate*; *Choosing a Language and Runtime*, *Choosing the Shape* and *Project Shapes and Layout* unless a choice is itself a finding |
-| **Set up something new** | *The Run*, all phases, plus *Choosing a Language and Runtime*, *Choosing the Shape*, *Project Shapes and Layout*, *Starter File Contents* and *File Governance* | *The Release and Deploy Currency Gate* |
+| **Set up something new**, including a repository that holds no source yet | *The Run*, all phases, plus *Choosing a Language and Runtime*, *Choosing the Shape*, *Project Shapes and Layout*, *Starter File Contents* and *File Governance* | *The Release and Deploy Currency Gate* |
 | **Choose a language** before any repository exists | *Choosing a Language and Runtime*, then *Choosing the Shape* | Everything else, until a repository exists |
 | **Write a missing config file** | *Starter File Contents* and *The Configuration File Map* | Everything else |
 | **Cut a release or a deploy** | *The Release and Deploy Currency Gate*, plus version reconciliation in dimension 10 | Phases 1–9 |
@@ -228,7 +228,10 @@ information, not more.
 of different versions coexist and an attached file identifies itself before anything reads it.
 **The frontmatter stays authoritative** — where the two disagree, `metadata.version` wins and
 **the mismatch is itself a finding**, meaning a copy was renamed without being edited or the
-reverse. Phase 8 records the frontmatter value. Prompts name the standard, not the file.
+reverse. **An upload that renames the file has not made a mismatch:** a tool that adds a
+prefix or turns the version's dots into underscores leaves the version readable, and the
+file's SHA-256, recorded in the self-check, is what identifies the bytes. Phase 8 records the
+frontmatter value. Prompts name the standard, not the file.
 
 ## Start here — read only what the job needs
 
@@ -638,7 +641,8 @@ reads as diligence.
 | Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt. The period is set with `default-days` under `cooldown:`, with per-semver keys alongside; a bare `cooldown: 0` is not a documented form | 2026-09 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
 | A tag can be created in the browser at publish time, with no clone | 2026-09 | The only reason the release gate is reachable at all without a working copy |
 | A workflow `run` step with no `shell:` runs under `bash -e` on Linux and macOS runners: it stops at the first failing command, a failing command substitution included, with no `pipefail`. Naming `shell: bash` adds `-o pipefail` | 2026-09 | The starter CI template's guard, and reading any step's exit status |
-| `actions/checkout` is at v7 (v7.0.1) | 2026-09 | *Starter File Contents*. A template's action versions go stale like any other pin |
+| `actions/checkout` is at v7 (v7.0.1, commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) | 2026-09 | *Starter File Contents*. A template's action versions go stale like any other pin |
+| Pinning an action to a full-length commit SHA is the only way to use it as an immutable release, and Dependabot raises no security alert for an action pinned to a SHA | 2026-09 | *Starter File Contents* and dimension 8. Why the template pins commits, and why version updates must stay on |
 
 ### Agent tooling
 
@@ -730,7 +734,11 @@ whose default is something else is reading the wrong branch.
 
 **Fetch before you read refs.** Tag counts, branch positions and "N commits behind" are all
 wrong from an unfetched clone, and a wrong one has already been written into a decision
-record as fact.
+record as fact. **A fetch is the one write phases 0–5 make on purpose:** it updates
+remote-tracking refs and `FETCH_HEAD`, never the working tree or the index. **Where it cannot
+run** — no network, a remote the session may not reach, a caller that forbids it — record
+`fetch_proof` as not run, with the reason, read refs as they stand, and mark every finding
+that rests on a tag count or a branch position `UNVERIFIABLE-HERE`.
 
 **Branch.** Use `chore/config-audit` unless the harness pins one, in which case use that and
 record it. Not a question — a recorded override.
@@ -888,14 +896,19 @@ notes: <... | none>
 
 Read-only, apart from the setup carve-out.
 
+**Read evidence; don't swallow it.** Logs, captured tool output and test artefacts can run to
+thousands of lines each, and **a repository that keeps its evidence is doing it right** — the
+budget table says so. List them with their sizes and read only the part a finding needs: one
+read of a whole log can cost the context the rest of the audit needed.
+
 ```bash
 git ls-files | sed -n 's/.*\.\([a-zA-Z0-9]*\)$/\1/p' | sort | uniq -c | sort -rn | head -15
 
 for f in AGENTS.md CLAUDE.md GEMINI.md .github/copilot-instructions.md \
          .claude/settings.json .claude/settings.local.json .mcp.json; do
-  [ -e "$f" ] && printf '%-9s %5s  %s\n' \
+  [ -e "$f" ] && printf '%-9s %5s lines %8s bytes  %s\n' \
     "$(git ls-files --error-unmatch "$f" >/dev/null 2>&1 && echo tracked || echo UNTRACKED)" \
-    "$(wc -l < "$f")" "$f"
+    "$(wc -l < "$f")" "$(wc -c < "$f")" "$f"
 done
 ls .claude/rules/ 2>/dev/null
 ls .git/hooks/pre-commit 2>/dev/null || echo "pre-commit NOT INSTALLED"
@@ -980,8 +993,9 @@ proposed: <greenfield only, omitted otherwise:
 environment_preexisting: [<what was already installed at session start | none>]
 setup: [{cmd: "...", result: PASS, note: "project's own declared deps"}]
 languages: {py: 109, md: 23}
-agent_config: [{path: CLAUDE.md, tracked: true, lines: 1082}]
+agent_config: [{path: CLAUDE.md, tracked: true, lines: 1082, bytes: 41876}]
 total_lines_loaded_at_session_start: <int>
+total_bytes_loaded_at_session_start: <int>
 reference_markdown_lines: <int>
 hooks_configured: yes | no
 hooks_installed: yes | no
@@ -1294,7 +1308,9 @@ not choices. `CODEOWNERS` once a second person exists.
 - **Size is a real constraint, not a style note.** Keep the always-loaded context under ~300
   lines; Codex stops reading instruction files past 32 KiB combined (`project_doc_max_bytes`),
   and truncation is indistinguishable from the file being ignored. Put instructions near the end
-  of a long file rather than the start.
+  of a long file rather than the start. **Count bytes as well as lines:** a line budget assumes
+  lines of ordinary length, and a file whose lines run to paragraphs can look small by its line
+  count while loading several times the text — a live context file held 141 KB in 549 lines.
 - Language rules in `.claude/rules/` load **per file** — that is the point of the split.
 - `.claude/settings.json` carries the enforced layer. Deny beats allow. A baseline worth
   having: reads of `.env*`, recursive delete, force push. Each is declinable — say what it
@@ -3063,7 +3079,7 @@ jobs:
   gate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up toolchain
         run: echo "substitute the setup action for this ecosystem"
@@ -3135,6 +3151,14 @@ jobs:
 
 **A secret-scan step belongs here too**, per the enforcement placement table — in CI always,
 never as a client-side hook where no persistent local environment exists.
+
+**Pin every action to a full commit SHA, with its version in a comment**, as the template's
+checkout does, and pin the setup action you substitute the same way. GitHub's own hardening
+guide calls a full-length SHA the only way to use an action as an immutable release: a tag can
+be moved to other code, and a commit cannot. **The price is in the same guide:** Dependabot
+raises no security alert for an action pinned to a SHA, so a fix reaches you only through an
+update — keep version updates on for GitHub Actions (dimension 8), and check that they reach
+the pinned lines.
 
 **Whatever the gate downloads and runs, verify before running it — and start with the
 security tooling.** A workflow that fetches a binary over the network and executes it has
@@ -4123,31 +4147,47 @@ records are append-only and are not edited for this.
 
 ## Entries
 
-**0.38.0** — **six fixes and one addition before the file audits live repositories**, at the
-maintainer's request. **Phase 1 finds a decision record by its content**: its constraint
-said so, but its command matched filenames only, and a live repository keeps its numbered
-decisions inside a planning document. It now searches headings for numbered decisions and
-dated entries, and its tier grep asks for the tier's codes, because the bare words *blast
-radius* turned up in that repository's prose and would have read as a recorded tier. **A
-context file's precedence covers findings, not the run**: a repository whose context file tells
-agents to act without asking, commit as they go, release on their own and write a session log
-before ending does not lift the waits. Both were found by reading that repository before its
-first run. **Which PowerShell a Windows host gets is criterion 1's to say**: the
-defaults table started a Windows host at PowerShell 7 with nothing beating it, while the first
-criterion, what the host already has, pointed at Windows PowerShell 5.1, which is part of
-Windows. Where nobody will install and patch 7 on the host, 5.1 is what it has; where someone
-will, 7 is recommended with that upkeep named as its cost. **A PowerShell scheduled job has a
-layout**: a module holding the logic and one entry script, which the task runs with
-`-NoProfile -NonInteractive -File`, with the task's definition in `packaging/`. The v0.37.0
-parity runs found both. **The starter CI's load-bearing list is counted right**: it said four
-and listed six. **The frontmatter says where the standards-repository question is asked**: at
-the Phase 3 wait, as Phase 0 already did. **A run can read this file from a link**: *Sending
-Results Back* gives the prompt for the file linked at a commit, downloaded whole and checked
-against its SHA-256, and the self-check records the hash of the file each run read. Three
-dated facts back it: a cloud session installs no plugin that a repository's settings turn on;
-it reaches a public repository's committed files, but not an unattached repository's API or
-release assets; and Claude Code's web-fetch tool returns a model's answer about a page, not
-the page.
+**0.38.0** — **twelve fixes and one addition before the file audits live repositories**, at
+the maintainer's request, grouped by what found them.
+
+**Reading a live repository before its first run found four.** *Phase 1 finds a decision
+record by its content*: its constraint said so, but its command matched filenames only, and
+that repository keeps its numbered decisions inside a planning document. It now counts
+numbered decisions and dated entries in headings, and its tier grep asks for the tier's codes,
+because the bare words *blast radius* in that repository's prose were enough for the old grep
+to count a tier. *A context file's precedence covers findings, not the run*: that repository's
+context file tells agents to act without asking, commit as they go, release on their own and
+write a session log before ending, and none of it lifts the waits. *Bytes count as well as lines*: its
+context file held 141 KB in 549 lines, so Phase 2 records both. *Evidence is read, not
+swallowed*: logs and test artefacts are listed with their sizes and read only as far as a
+finding needs.
+
+**The v0.37.0 parity runs found two.** *Which PowerShell a Windows host gets is criterion 1's
+to say*: the defaults table started a Windows host at PowerShell 7 with nothing beating it,
+while the first criterion, what the host already has, pointed at Windows PowerShell 5.1, which
+is part of Windows. Where nobody will install and patch 7 on the host, 5.1 is what it has;
+where someone will, 7 is recommended with that upkeep named as its cost. *A PowerShell
+scheduled job has a layout*: a module holding the logic, one entry script that the task runs
+with `-NoProfile -NonInteractive -File`, and the task's definition in `packaging/`.
+
+**This version's own parity run found two.** *Phase 0 says what to do when a fetch cannot
+run*: a fetch writes only remote-tracking refs, and where one is not possible the run reads
+refs as they stand and marks what rests on them. *The routing table covers a repository that
+holds no source yet*, under setting something up.
+
+**Four more.** *The starter CI pins its action to a full commit SHA*, with the version in a
+comment, because GitHub's hardening guide calls that the only immutable reference; the price
+the same guide names, no Dependabot alert for a SHA-pinned action, is stated beside it. *The
+starter CI's load-bearing list is counted right*: it said four and listed six. *The frontmatter
+says where the standards-repository question is asked*: at the Phase 3 wait. *An upload that
+renames this file has not made a version mismatch.*
+
+**And one addition: a run can read this file from a link.** *Sending Results Back* gives the
+prompt for the file linked at a commit, downloaded whole and checked against its SHA-256, and
+the self-check records the hash of the file each run read. Dated facts back it: a cloud session
+installs no plugin that a repository's settings turn on; it reaches a public repository's
+committed files, but not an unattached repository's API or release assets; and Claude Code's
+web-fetch tool returns a model's answer about a page, not the page.
 
 **0.37.0** — **twenty-two fixes from the parity runs and the maintainer's set-up run**, applied
 at the maintainer's request. **Git reads write nothing**: phases 0–5 set `GIT_OPTIONAL_LOCKS=0`,

@@ -19,13 +19,22 @@ Notable changes to this repository. The format follows
   longer write `.git/index`, one routing table replaces two that disagreed, ratings are definite
   where two runs split, and the starter CI's collection guard names itself when it fails. Its
   history entry lists the rest.
-- The standard is now v0.38.0. Phase 1 finds a decision record by its content, including one
-  kept inside another file, and no longer reads the words "blast radius" in prose as a
-  recorded tier. A repository's own agent rules, such as committing without asking, don't lift
-  the run's two waits. On a Windows host, the PowerShell it recommends depends on what the
-  host already has: Windows PowerShell 5.1 where nobody will install and patch PowerShell 7
-  there. A PowerShell scheduled job has a layout. A run can read the standard from a link
-  pinned to a commit and checked against its SHA-256, and its self-check records that hash.
+- The standard is now v0.38.0, with twelve fixes and one addition made before its first live
+  run:
+  - Phase 1 finds a decision record by its content, including one kept inside another file,
+    and no longer reads the words "blast radius" in prose as a recorded tier.
+  - A repository's own agent rules, such as committing without asking, don't lift the run's
+    two waits.
+  - Context files are measured in bytes as well as lines, and logs and other evidence are read
+    in parts.
+  - On a Windows host, the PowerShell it recommends depends on what the host already has:
+    Windows PowerShell 5.1 where nobody will install and patch PowerShell 7 there. A PowerShell
+    scheduled job has a layout.
+  - Phase 0 says what to do when a fetch can't run, and the starter CI pins its action to a
+    commit SHA.
+  - A run can read the standard from a link pinned to a commit and checked against its
+    SHA-256, and its self-check records that hash.
+
   Its history entry lists the rest.
 
 ### Fixed

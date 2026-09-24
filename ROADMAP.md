@@ -171,6 +171,17 @@ Reading a live repository before its first run found two more, also applied in v
 - **F13:** a context file that tells agents to act without asking, commit as they go or write
   a session log before ending could read as lifting the run's waits (piece 1).
 
+The v0.38.0 parity runs found two more, applied before it merged:
+
+- **F14:** Phase 0 says nothing about a fetch that can't run, and its "read without writing"
+  sits beside a command that writes refs (piece 4).
+- **F15:** the routing table has no row for a repository that holds no source yet (piece 1).
+
+v0.38.0 also carries four changes the owner asked for before the first live run. Context
+files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
+pins its action to a commit SHA. An upload that renames the file isn't a version mismatch.
+Its history entry lists them.
+
 Live runs on the owner's repositories come between pieces. Each report is triaged as
 [docs/testing-the-skill.md](docs/testing-the-skill.md) describes, and what it finds is fixed
 before the next repository's run.
