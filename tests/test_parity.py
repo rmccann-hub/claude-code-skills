@@ -362,6 +362,58 @@ def test_grade_reports_a_missing_tally_as_unchecked():
     assert checks["tally"].detail == "no tally in the Phase 4 block"
 
 
+def not_proposed(amendments: str, *terms: str) -> dict[str, parity.Check]:
+    key = {**KEY, "not_proposed": list(terms)}
+    checks = parity.grade(report(amendments=amendments), key)
+    return {check.name: check for check in checks if check.name.startswith("does not propose")}
+
+
+def test_grade_reads_what_an_amendment_proposes_not_its_reasoning():
+    checks = not_proposed(
+        'amendments: [{id: A1, severity: recommended, change: "add a LICENSE file",\n'
+        '              evidence: "Dependabot stays declined", if_accepted: "x",\n'
+        '              if_declined: "no Dependabot either way"},\n'
+        '             {id: A2, change: "pin the scanner"}]\n',
+        "LICENSE",
+        "Dependabot",
+    )
+    assert checks["does not propose LICENSE"].passed is False
+    assert checks["does not propose LICENSE"].detail == "named in a change"
+    assert checks["does not propose Dependabot"].passed is True
+    assert checks["does not propose Dependabot"].detail == "absent from every change"
+
+
+def test_grade_reads_block_style_changes_across_wrapped_lines():
+    checks = not_proposed(
+        "amendments:\n"
+        "  - id: A1\n"
+        "    change: >-\n"
+        "      Require a pull request and turn on branch\n"
+        "      protection for main.\n"
+        "    evidence: >-\n"
+        "      Dependabot is declined, so nothing else gates a merge.\n"
+        "  - id: A2\n"
+        '    change: "Pin the scanner"\n',
+        "branch protection",
+        "Dependabot",
+    )
+    assert checks["does not propose branch protection"].passed is False
+    assert checks["does not propose Dependabot"].passed is True
+
+
+def test_grade_an_empty_list_of_amendments_proposes_nothing():
+    checks = not_proposed("amendments: []\n", "Dependabot")
+    assert checks["does not propose Dependabot"].passed is True
+
+
+def test_grade_cannot_read_amendments_with_no_change_field():
+    checks = not_proposed('amendments: [{id: A1, proposal: "add Dependabot"}]\n', "Dependabot")
+    assert checks["does not propose Dependabot"].passed is None
+    assert checks["does not propose Dependabot"].detail == (
+        "no change field in the Phase 6 amendments"
+    )
+
+
 # The baseline
 
 

@@ -36,6 +36,13 @@ STATUS_FIELD = re.compile(r"\bstatus:\s*\"?([A-Za-z][\w/-]*)")
 SECONDARY_FIELD = re.compile(r"\bsecondary:\s*\[([^\]]*)\]")
 STATUS_WORD = re.compile(r"\b(?:" + "|".join(re.escape(s) for s in STATUSES) + r")(?![\w/-])")
 COUNT = re.compile(r"([A-Z][A-Z/-]*)\s*:\s*(\d+)")
+# What an amendment proposes is its `change:` value. Its evidence and consequences can name
+# something the run is deliberately not proposing, so the value ends at the next field.
+CHANGE_FIELD = re.compile(r"(?:^|[,{\n])\s*(?:-\s*)?change:")
+AMENDMENT_FIELD = re.compile(
+    r"[,{\n]\s*(?:-\s*)?(?:id|dimension|severity|change|evidence|if_accepted|if_declined"
+    r"|gates_on|severity_depends_on|recommendation|class)\s*:"
+)
 AUTHOR = re.compile(r"^(?P<name>[^<>]+?) <(?P<email>[^<>]+)>$")
 MODES = {"re-check": "recheck"}
 
@@ -245,13 +252,18 @@ def grade(report: str, key: dict) -> list[Check]:
         found = word.lower() in lower
         checks.append(Check(f"mentions {word}", found, "found" if found else "not in the report"))
     amendments = _amendments(report)
+    changes = None if amendments is None else _changes(amendments)
     for term in key.get("not_proposed") or []:
+        name = f"does not propose {term}"
         if amendments is None:
-            checks.append(Check(f"does not propose {term}", None, "no Phase 6 amendments"))
+            checks.append(Check(name, None, "no Phase 6 amendments"))
+        elif changes is None:
+            checks.append(Check(name, None, "no change field in the Phase 6 amendments"))
         else:
-            proposed = term.lower() in amendments.lower()
-            detail = "named in the amendments" if proposed else "absent from the amendments"
-            checks.append(Check(f"does not propose {term}", not proposed, detail))
+            wanted = " ".join(term.lower().split())
+            proposed = any(wanted in change.lower() for change in changes)
+            detail = "named in a change" if proposed else "absent from every change"
+            checks.append(Check(name, not proposed, detail))
     return checks
 
 
@@ -301,6 +313,21 @@ def _amendments(report: str) -> str | None:
         if phase and phase.group(1) == "6":
             return _sections(match.group(1)).get("amendments", "")
     return None
+
+
+def _changes(amendments: str) -> list[str] | None:
+    """Each amendment's `change:` value, with its whitespace collapsed.
+
+    None when amendments are listed but none has a change field, so there is nothing to read.
+    """
+    starts = [match.end() for match in CHANGE_FIELD.finditer(amendments)]
+    if not starts:
+        return [] if amendments.strip() in ("", "[]") else None
+    changes = []
+    for start in starts:
+        end = AMENDMENT_FIELD.search(amendments, start)
+        changes.append(" ".join(amendments[start : end.start() if end else None].split()))
+    return changes
 
 
 def record(report: str, key: dict, label: str) -> dict:

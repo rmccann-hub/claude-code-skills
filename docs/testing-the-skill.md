@@ -128,8 +128,10 @@ this repository.
 ## When the grader and a reading disagree
 
 The grader matches words and status codes. It can miss a finding phrased another way, and credit
-a word used in passing. Where it disagrees with a careful reading of the report, the reading
-wins, and the pull request says which it was. The standard's triage still applies:
+a word used in passing. Its check that an item isn't proposed reads only each amendment's
+`change:`, so an amendment's reasoning can name a declined item without counting as proposing
+it. Where it disagrees with a careful reading of the report, the reading wins, and the pull
+request says which it was. The standard's triage still applies:
 - **the skill**, when two runs on the same sample disagree about a definition;
 - **the run**, when one run's reasoning is sound and another's isn't;
 - **a fact or the sample**, when every run agrees and all of them are wrong.
