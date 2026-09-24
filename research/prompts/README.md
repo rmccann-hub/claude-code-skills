@@ -1,6 +1,6 @@
 # Research runs
 
-Twenty prompts, one file each. Each file is the whole prompt: paste all of it into a new
+Twenty-one prompts, one file each. Each file is the whole prompt: paste all of it into a new
 claude.ai chat with Research turned on (or Web search, if Research isn't offered). Run them
 in any order, several at a time in separate chats. Priority 1 first.
 
@@ -29,6 +29,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R18 | 3 | [R18-accessibility-i18n-privacy-licensing.md](R18-accessibility-i18n-privacy-licensing.md) | Accessibility, internationalization, privacy and licensing compliance | accessibility, internationalization, privacy-and-compliance, documentation (licences and notices) |
 | R19 | 3 | [R19-architecture-api-planning-optimization.md](R19-architecture-api-planning-optimization.md) | Architecture, API design, planning, optimization and scheduling | architecture-and-design, api-design, optimization-and-scheduling |
 | R20 | 3 | [R20-design-dataviz-documents.md](R20-design-dataviz-documents.md) | Visual design, data visualization, documents and output formats | visual-theme, data-visualization, documentation (output), word-documents (styling) |
+| R21 | 1 | [R21-fewest-dependencies-newest-versions.md](R21-fewest-dependencies-newest-versions.md) | Fewest dependencies and newest versions: what a dependency costs, when to add or remove one, which runtime versions to target and test, and CI that checks less | project-bootstrap-and-audit (dimensions 2, 6 and 8), keeping-current, supply-chain-security, ci-cd, and the dependency advice in every language skill |
 
 Already covered in the building session, so there's no run for them: the skill-authoring
 rules; licensing and ownership; the licences of reference sources; this repository's own

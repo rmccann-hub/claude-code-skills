@@ -6,6 +6,12 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Research prompt R21, on running with the fewest dependencies at their newest versions. It asks
+  what a dependency costs, when to add or remove one, which runtime versions to target and
+  test, and how CI can check less. Its checked result goes into the standard.
+
 ### Changed
 
 - The standard is now v0.37.0, with twenty-two fixes: the nine the parity baseline found, the
@@ -13,6 +19,13 @@ Notable changes to this repository. The format follows
   longer write `.git/index`, one routing table replaces two that disagreed, ratings are definite
   where two runs split, and the starter CI's collection guard names itself when it fails. Its
   history entry lists the rest.
+
+### Fixed
+
+- CI's collection guard says why it failed. With nothing collected, it used to stop under the
+  runner's `bash -e` before printing anything.
+- The parity grader's check that a declined item isn't proposed reads only what each amendment
+  proposes. An amendment's reasoning can name the item without failing the run.
 
 ## [0.1.1] - 2026-09-23
 

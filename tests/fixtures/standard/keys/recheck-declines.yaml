@@ -35,8 +35,9 @@ planted:
     dimensions: [2, 6]
     rated: [BLOCKER, DRIFT, GAP]
     words: ["uv sync --locked"]
-# Terms that must not appear in any Phase 6 amendment. Dependabot's trigger, publishing to a
-# registry, has not fired, and branch protection is recorded as never to be proposed again.
+# Terms no Phase 6 amendment may propose. The grader reads each amendment's `change`, so its
+# reasoning can still name them. Dependabot's trigger, publishing to a registry, has not fired,
+# and branch protection is recorded as never to be proposed again.
 not_proposed: [Dependabot, branch protection]
 manual:
   - The Dependabot decline is shown as not fired, and is not proposed again

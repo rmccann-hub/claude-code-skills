@@ -76,7 +76,7 @@ planted:
     dimensions: [1, 10]
     rated: [GAP]
     words: ["decision record"]
-# Absent from every amendment: nothing here is settled, so nothing is listed.
+# Absent from every amendment's `change`: nothing here is settled, so nothing is listed.
 not_proposed: []
 # Checked by the person running the comparison, not by the grader.
 manual:
