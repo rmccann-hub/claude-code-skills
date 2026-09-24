@@ -180,6 +180,18 @@ The v0.38.0 parity runs found four more, applied before it merged:
   install is CI's first step, so the tally can read all `PASS` (piece 4).
 - **F17:** the Phase 6 block has no field for a `class: standard` amendment (piece 1).
 
+The final v0.38.0 greenfield run raised three more, each one run's evidence, left for the next
+revision because an audit never reads them:
+
+- **F18:** the "Choose a language" routing row assumes no repository exists, so choosing first
+  in a repository that holds only a README fits neither that row nor the set-up one (piece 1).
+- **F19:** the wiring rule reads configuration from environment variables, and a PowerShell
+  scheduled job may take its settings better as the entry script's parameters in the task's
+  definition (piece 5).
+- **F20:** the scheduled-job layout keeps the task's definition as a reviewable diff, which an
+  XML export in UTF-16 doesn't give without a `working-tree-encoding` rule or a registration
+  script instead (piece 5).
+
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
 pins its action to a commit SHA. An upload that renames the file isn't a version mismatch.
