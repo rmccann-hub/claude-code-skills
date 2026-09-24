@@ -36,10 +36,14 @@ jobs:
       - name: Guard the collection count
         run: |
           BASELINE=$(cat .test-baseline)
-          ACTUAL=$(uv run pytest --collect-only -q --no-cov 2>/dev/null | tail -1 | grep -oE '^[0-9]+')
-          echo "collected ${ACTUAL}, baseline ${BASELINE}"
-          if [ -z "$ACTUAL" ] || [ "$ACTUAL" -lt "$BASELINE" ]; then
-            echo "::error::collection fell below baseline"; exit 1
+          ACTUAL=$(uv run pytest --collect-only -q --no-cov 2>/dev/null | tail -1 | grep -oE '^[0-9]+' || true)
+          echo "collected ${ACTUAL:-nothing}, baseline ${BASELINE}"
+          if [ -z "$ACTUAL" ]; then
+            echo "::error::collection guard: the collection command reported no count"; exit 1
+          fi
+          if [ "$ACTUAL" -lt "$BASELINE" ]; then
+            echo "::error::collection guard: ${ACTUAL} collected, below the baseline of ${BASELINE}"
+            exit 1
           fi
 
       - name: Check skills and catalog
