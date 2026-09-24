@@ -2,6 +2,55 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-23 — The standard moves to v0.37.0
+
+- **Chosen:** twenty-two fixes to the standard, applied together at the owner's request, so
+  the one file can audit the owner's public repositories now and bring results back:
+  - the nine findings from the parity baseline, F1-F9 in `ROADMAP.md`;
+  - the set-up run's open amendments S2-S7 and S9-S11;
+  - four that this version's own parity runs found, below.
+
+  Each had been proposed and was waiting for approval. They land in the standard file rather
+  than piece by piece, and the rebuild's pieces move the fixed text.
+- **Chosen:** 0.37.0, a minor bump. The new rules and fields are additive (`owner: mixed`,
+  `recommended` and `pending` in the Phase 3 block, `shape_recommended`, `category_checks`), so
+  older reports stay readable.
+- **Not included:** S8, a Keep current mode for the standard. The roadmap's `keeping-current`
+  skill covers it.
+- **Checked:** the facts behind two new rules, against their primary sources on 2026-09-23.
+  GitHub's workflow syntax says a `run` step with no `shell:` runs `bash -e {0}`, and naming
+  `shell: bash` adds `-o pipefail`. Git's documentation says `GIT_OPTIONAL_LOCKS` set to false
+  "will prevent git status from refreshing the index". Under `bash -e` with nothing collected,
+  the old guard exited 1 and printed nothing; the new one names the failure.
+- **Not checked here:** the current `actions/checkout` release. This session can't reach that
+  repository, so v7.0.1 is the set-up run's reading, and the release this repository's
+  Dependabot pins.
+- **Parity:** one run of each sample on `8c18f51`, compared with the v0.36.0 baseline.
+  - The audit and greenfield samples passed every check, and no value moved.
+  - The re-check sample failed two checks, and its dimension 8 moved from `OK` to
+    `UNVERIFIABLE-HERE`. Reading the report settles all three. The run proposed neither
+    Dependabot nor branch protection, and lists both under `not_proposed` with the right
+    reasons; the grader matched the words in two amendments' reasoning. Dimension 8 rests on
+    the new dated fact that `actions/checkout` is at v7, which an offline run can't confirm,
+    so marking it is the rule working.
+  - No run changed `.git/index`, where every v0.36.0 run did.
+- **Chosen:** four more fixes the runs found, applied before this merged. A lockfile header
+  doesn't survive in `uv.lock`: two runs found it gone after `uv lock`, so the command goes in
+  the context file's commands. The CI conclusion takes `unknown`. Greenfield proposals get a
+  field in Phase 2. A run that stops at Phase 3 keeps its overrides in `notes`.
+- **Chosen:** the rule for a tracked `settings.local.json` moves into dimension 4. The audit
+  run never read *The Configuration File Map*, where it first went, because the routing table
+  doesn't send an audit there, and rated the sample's `pip install` grant `DRIFT`. A second
+  audit run, on `ecababf`, rated it `BLOCKER`, as the rule intends. Every planted problem was
+  still found, and dimension 4 was the only value that moved from the baseline.
+- **Deferred:** a release, at the owner's choice. The catalog stays at 0.1.1, so until the next
+  release `main` carries standard v0.37.0 while the 0.1.1 release carries v0.36.0, under one
+  version number, as the v0.36.0 entry recorded for 0.1.0. The `v0.1.1` tag goes on
+  `cbe163f`, the release's merge commit, not on `main`. *Trigger:* the next release.
+- **Deferred:** this repository's own CI guard copies the template's, and gets the same fix in
+  a change of its own. So does the grader's `not_proposed` check, which should read what an
+  amendment proposes rather than every word in it. *Trigger:* this change merges.
+
 ## 2026-09-23 — Release 0.1.1: the marketplace takes the repository's name
 
 - **Chosen:** the marketplace is renamed from `rmccann-skills` to `claude-code-skills`, so that
