@@ -17,7 +17,7 @@ than inside it.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.37.0 | shipped | core | none |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.38.0 | shipped | core | none |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -155,7 +155,8 @@ piece moves text that is already fixed. The piece named is where each one's sect
   without saying why when nothing is collected. Under GitHub's default `bash -e`, the `grep` in
   its command substitution exits first. It should name itself when it fails (piece 2).
 
-The v0.37.0 parity runs found two more, left for the piece named:
+The v0.37.0 parity runs found two more. The owner had them applied in standard v0.38.0, and
+the piece named is where each one's section goes:
 
 - **F10:** for Active Directory on a Windows host, the defaults say PowerShell 7, while the
   first criterion, what the target already has, points at Windows PowerShell 5.1, which ships

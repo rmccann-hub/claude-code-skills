@@ -19,6 +19,11 @@ Notable changes to this repository. The format follows
   longer write `.git/index`, one routing table replaces two that disagreed, ratings are definite
   where two runs split, and the starter CI's collection guard names itself when it fails. Its
   history entry lists the rest.
+- The standard is now v0.38.0. On a Windows host, the PowerShell it recommends depends on what
+  the host already has: Windows PowerShell 5.1 where nobody will install and patch PowerShell 7
+  there. A PowerShell scheduled job has a layout. A run can read the standard from a link
+  pinned to a commit and checked against its SHA-256, and its self-check records that hash.
+  Its history entry lists the rest.
 
 ### Fixed
 

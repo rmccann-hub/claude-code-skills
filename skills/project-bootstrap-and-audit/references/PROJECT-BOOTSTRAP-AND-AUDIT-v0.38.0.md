@@ -2,12 +2,12 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.37.0"
-  updated: "2026-09-23"
-  supersedes: "0.36.0"
+  version: "0.38.0"
+  updated: "2026-09-24"
+  supersedes: "0.37.0"
   reading: "One file, read in ranges. Start at How to Read This File; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
-  standards_repo: "<asked at Phase 0 — none is a valid answer>"
+  standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
   license: "CC0-1.0"
 ---
 
@@ -649,6 +649,9 @@ reads as diligence.
 | A plugin catalog entry whose skill paths all miss loads the plugin's whole skills folder, with no error | 2026-09 | Dimension 9. One typo ships everything |
 | Plugins enabled on a claude.ai account are documented to load in cloud sessions as `<name>@synced`. For one account, on 2026-09-23, none did, from any source, while its skills did: the sync ran and received an empty list | 2026-09 | *Standards Distribution*. Check a session before promising a plugin reaches cloud sessions |
 | An organisation's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards Distribution*. A public repository reaches an organisation's members only by upload |
+| A cloud session installs no plugin that a repository's `.claude/settings.json` turns on under `enabledPlugins`, including those from marketplaces it lists under `extraKnownMarketplaces` | 2026-09 | Dimension 4 and *Standards Distribution*. A repository that relies on its settings for a plugin gets none in cloud sessions |
+| In a cloud session, a public repository's committed files arrive through `raw.githubusercontent.com`, which is on the default Trusted network list, while GitHub API and release-asset requests reach only repositories attached to the session | 2026-09 | *Sending Results Back*. A file linked at a commit is reachable where a release asset is not |
+| Claude Code's web-fetch tool returns a small model's answer about a page, not the page. Its documentation calls that lossy by design and points to `curl` for the unprocessed page | 2026-09 | *Sending Results Back*. A file meant to be read whole is downloaded, not fetched |
 
 ### Scanners and formatters
 
@@ -665,7 +668,7 @@ pinning anything — and check what answered you, per the probe rule above.**
 | Stack | Current at 2026-09 | Lockfile | Notes |
 |---|---|---|---|
 | **Python** | 3.14.x, stable since 2025-10; 3.13.x still maintained; `uv` carries the momentum, Poetry fully supported, pip-tools for minimalists | `uv.lock` / `poetry.lock` | `ruff` for lint and format, `pytest`, `src/` layout. Dependency groups are standardised |
-| **PowerShell** | 7.6.x | none exists | Pester 5.7.x is the safe pin — 6 exists and breaks things. `PSScriptAnalyzer` for lint |
+| **PowerShell** | 7.6.x | none exists | Pester 5.7.x is the safe pin — 6 exists and breaks things. `PSScriptAnalyzer` for lint. **Windows PowerShell 5.1 is a component of Windows** and follows its support lifecycle; 7 installs beside it |
 | **.NET / C#** | 10, LTS | `packages.lock.json`, opt-in | `Directory.Build.props` for shared properties, `Directory.Packages.props` for central versions |
 | **JS / TS** | Node 22 and 24 both LTS | `package-lock.json` / `pnpm-lock.yaml` | Biome 2.x for a new project; ESLint plus Prettier where plugins already exist. Vitest for new tests |
 | **Go** | 1.27 | `go.mod` + `go.sum`, both committed | `go vet`, `go test -race`, `gofmt`. Pin `golangci-lint` by version in CI |
@@ -2384,6 +2387,7 @@ happened.
 ```yaml
 conformance:
   standard_version: "<metadata.version, read from the frontmatter>"
+  standard_sha256: "<sha256 of the file this run read | unknown>"   # shows which bytes ran
   job: <survey | set up | audit | release | prune | validate>
   sections_read: [<by name>]
   sections_skipped: [<by name>]
@@ -2664,7 +2668,7 @@ recommendation the criteria above can override, and each states what usually bea
 
 | If the project is | Start from | What beats it |
 |---|---|---|
-| **Windows host, Active Directory, Office, Exchange, or anything with an existing cmdlet** | **PowerShell 7.x** | Nothing, usually — a maintained cmdlet is criterion 2 answering itself. Move only when the work is data-shaped rather than administration-shaped |
+| **Windows host, Active Directory, Office, Exchange, or anything with an existing cmdlet** | **PowerShell 7.x** | **Windows PowerShell 5.1, where the host is not yours to change.** 5.1 is part of Windows and 7 is installed beside it, so criterion 1 decides: where nobody will install and patch 7 on the host, 5.1 is what it has; where someone will, recommend 7 and name that upkeep as its cost. Either way a maintained cmdlet is criterion 2 answering itself. Move off PowerShell only when the work is data-shaped rather than administration-shaped |
 | **ERP or REST integration, data transformation, reporting, anything numeric or tabular** | **Python** | A vendor SDK that exists only for another language |
 | **A desktop application or a Windows service needing .NET libraries** | **C#** | Nothing on Windows. On Linux, ask criterion 1 again |
 | **Anything that runs in a browser** | **TypeScript** | Nothing. It is not a choice |
@@ -2751,6 +2755,7 @@ be hand-updated when the code moves — it will not be.
 | **Python — CLI** | `src/<pkg>/` with `cli.py`, `core/` | `tests/` | `__main__.py`, thin; `[project.scripts]` in the manifest |
 | **Python — scheduled job** | `src/<pkg>/` with `job.py`, `steps/`, `config.py` | `tests/` | one idempotent `job.py` entry, re-runnable without harm |
 | **PowerShell module** | `<ModuleName>/` with `Public/`, `Private/` | `tests/<Name>.Tests.ps1` (Pester) | `.psd1` manifest + `.psm1` loader |
+| **PowerShell — scheduled job** | `<ModuleName>/` with `Public/`, `Private/`, holding the logic | `tests/<Name>.Tests.ps1` (Pester) | one idempotent `.ps1` beside the module that imports it and calls one exported function, re-runnable without harm |
 | **C# application** | `src/<Project>/` | `tests/<Project>.Tests/` | `Program.cs`; `.sln` at root, `Directory.Build.props` for shared properties |
 | **JS / TS** | `src/` | `tests/` or co-located `*.test.ts` | `src/index.ts`; `package.json` + `tsconfig.json` |
 | **C — meson** | `src/` with a `meson.build` per directory; `include/` for public headers | `tests/` with its own `meson.build` | root `meson.build` calling `project()` then `subdir()` |
@@ -2767,6 +2772,13 @@ version reconciliation already checks for.
 
 **PowerShell.** One file per exported function in `Public/`, **filename matching the function
 name**; helpers in `Private/`; exports listed explicitly in `FunctionsToExport` rather than `*`.
+
+**A PowerShell scheduled job is a module plus one entry script.** The logic stays in the
+module, where Pester can test it and a person can run it by hand; the entry script only imports
+it and calls one function. The scheduled task runs it with `-NoProfile -NonInteractive -File` —
+`pwsh` for 7, `powershell.exe` for 5.1 — because a profile on the host should not change what
+runs, and nobody is there to answer a prompt. **Keep the task's definition in `packaging/`**,
+so a change to the schedule is a reviewed diff like any other.
 
 **C with meson.** Every directory that builds something carries its own `meson.build`, and the
 root file only calls `project()` and `subdir()`. Build options go in a file, never hardcoded —
@@ -3069,7 +3081,7 @@ jobs:
           fi
 ```
 
-**Four things about this file are load-bearing and are not style:**
+**Six things about this file are load-bearing and are not style:**
 
 - **`permissions: contents: read`** at the top. The default token is broader than a test run
   needs, and narrowing it is free. **Every workflow, not most of them** — a live run found a
@@ -3722,7 +3734,8 @@ protocol is a two-element one.
 | CI logic | Reusable workflows — pull-based, change once |
 | Files that must physically exist | `copier` template — a session cannot fetch them |
 | Shared reference docs | `copier` template — one path, refreshed by `copier update` |
-| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under: plugins enabled there are documented to reach cloud sessions, but check *Facts with an Expiry Date* first. A stamped, checked copy under `.claude/skills/` where neither fits |
+| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under: plugins enabled there are documented to reach cloud sessions, but check *Facts with an Expiry Date* first, and a repository's own settings install none there. A stamped, checked copy under `.claude/skills/` where neither fits |
+| This standard, for one run | Attached, or linked at a fixed commit and checked against its SHA-256, as *Sending Results Back* shows |
 
 `.copier-answers.yml` records the template version. `copier update` re-applies changes and
 surfaces conflicts — **that is the drift detection**, and it needs the clean tree Phase 0
@@ -3762,6 +3775,19 @@ gate, I want to cut <version>* · *plan the order of what is left*.
 **State any constraint the environment imposes** — no local clone, a pinned branch, a tool
 other than Claude Code — because the run cannot infer them and will otherwise propose things
 that cannot be done.
+
+**The file can be linked instead of attached.** A link to it at a fixed commit gives every run
+the same bytes, with no copy changing hands. **Link a commit, never a branch**: a branch link
+reads whatever lands there next. The session downloads the file whole, with `curl` or `git` —
+a fetch tool that summarises pages returns an answer about the file, not the file — and checks
+its SHA-256 before reading on. The self-check's `standard_sha256` then shows which bytes ran.
+
+```
+Run the PROJECT-BOOTSTRAP-AND-AUDIT standard against this repository. <job>.
+Download it whole, with curl, from <link to the file at a commit>, and check that its
+SHA-256 is <hash> before using it. If it doesn't match, stop and tell me.
+Write the run report file and tell me where it is.
+```
 
 **What comes back is one file**: `RUN-REPORT-<repo>-<date>.md`, decisions first, every emission
 block appended. That file is the whole contribution — nothing needs assembling by hand.
@@ -4080,6 +4106,24 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.38.0** — **four fixes and one addition before the file audits live repositories**, at the
+maintainer's request. **Which PowerShell a Windows host gets is criterion 1's to say**: the
+defaults table started a Windows host at PowerShell 7 with nothing beating it, while the first
+criterion, what the host already has, pointed at Windows PowerShell 5.1, which is part of
+Windows. Where nobody will install and patch 7 on the host, 5.1 is what it has; where someone
+will, 7 is recommended with that upkeep named as its cost. **A PowerShell scheduled job has a
+layout**: a module holding the logic and one entry script, which the task runs with
+`-NoProfile -NonInteractive -File`, with the task's definition in `packaging/`. The v0.37.0
+parity runs found both. **The starter CI's load-bearing list is counted right**: it said four
+and listed six. **The frontmatter says where the standards-repository question is asked**: at
+the Phase 3 wait, as Phase 0 already did. **A run can read this file from a link**: *Sending
+Results Back* gives the prompt for the file linked at a commit, downloaded whole and checked
+against its SHA-256, and the self-check records the hash of the file each run read. Three
+dated facts back it: a cloud session installs no plugin that a repository's settings turn on;
+it reaches a public repository's committed files, but not an unattached repository's API or
+release assets; and Claude Code's web-fetch tool returns a model's answer about a page, not
+the page.
 
 **0.37.0** — **twenty-two fixes from the parity runs and the maintainer's set-up run**, applied
 at the maintainer's request. **Git reads write nothing**: phases 0–5 set `GIT_OPTIONAL_LOCKS=0`,
