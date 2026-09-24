@@ -7,7 +7,7 @@ without a `shipped` row here, or a `shipped` row with no skill behind it, fails 
 - **Status** (closed set): `shipped`, `building`, `researching`, `planned`.
 - **Coverage:** `core` is the owner's stack, covered deepest and built first. `standard` gets
   full coverage. `on request` is named now and built when a repository needs it.
-- **Research:** the run in `research/prompts/` whose results the skill is built from.
+- **Research:** the runs in `research/prompts/` whose results the skill is built from.
 
 The PROJECT-BOOTSTRAP-AND-AUDIT standard covers configuration and process, and says it doesn't
 judge code. The skills in sections B to F cover the code itself, beside the standard rather
@@ -18,7 +18,7 @@ than inside it.
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
 | `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.37.0 | shipped | core | none |
-| `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05 |
+| `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
 
@@ -32,14 +32,14 @@ than inside it.
 | `types` | Static and gradual typing, strictness, type checkers, types at trust boundaries | planned | core | R03 |
 | `input-handling` | Validation, sanitization and output encoding by context | planned | core | R04 |
 | `secure-coding` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modelling | planned | core | R04 |
-| `supply-chain-security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05 |
+| `supply-chain-security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21 |
 | `ai-agent-security` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
 | `error-handling` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
 | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06 |
 | `api-design` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
 | `data-and-sql` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
 | `git-and-review` | Branching, commits, pull requests, code review | planned | core | R08 |
-| `ci-cd` | Pipelines, Actions hardening, caching, environments, deployment | planned | core | R08 |
+| `ci-cd` | Pipelines, Actions hardening, caching, environments, deployment | planned | core | R08, R21 |
 | `versioning-and-releases` | SemVer, changelogs, release notes, deprecation policy, support windows | planned | core | R05 |
 | `legacy-modernization` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
 | `logging-and-observability` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | planned | standard | R07 |
@@ -162,6 +162,15 @@ The v0.37.0 parity runs found two more, left for the piece named:
   with Windows Server. The default should say which wins (piece 5).
 - **F11:** the shapes table has no row for a PowerShell scheduled job (piece 5).
 
+The owner asked for one more rule, researched before it's written:
+
+- **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
+  as few dependencies as possible, each at its newest version, so there's less to keep current
+  and less for CI and dependency tools to check. R21 tests the aim against the evidence, and
+  asks where it needs a limit. Its checked result goes into the standard as a change of its
+  own, in dimensions 2, 6 and 8 and in what a new project starts with, so the pieces move text
+  that already carries it.
+
 | Piece | What moves | Status |
 |---|---|---|
 | 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | shipped |
@@ -183,3 +192,4 @@ trigger.
 | `copier` template | The standard's starter files, so a new repository is set up without a session | planned | the first repository set up from this one |
 | Reusable workflows | This repository's CI gates, callable from other repositories | planned | a second repository wants this CI |
 | `upstream-defects.md` | The standard's register of upstream defects shared across repositories | planned | the first upstream defect found |
+| Fewest dependencies here | This repository's own dependencies and pins, in `pyproject.toml`, `package.json` and CI, held to the R21 rule | planned | the rule is in the standard |

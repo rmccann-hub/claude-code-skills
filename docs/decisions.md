@@ -2,6 +2,32 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-24 — Fewest dependencies, newest versions: researched before it's a rule
+
+- **Asked:** the owner wants every repository the standard sets up or audits to run on as few
+  dependencies as possible, each at its newest version. There's less to keep current, and
+  less for CI and dependency tools to check, so runs are shorter and the attack surface is
+  smaller.
+- **Chosen:** research first, at the owner's direction. R21
+  (`research/prompts/R21-fewest-dependencies-newest-versions.md`) tests the aim against the
+  evidence and asks where it needs a limit: a release taken the day it's published, and
+  hand-written code replacing a mature package. The result is taken in by `research/README.md`,
+  and only checked claims reach the standard, as a change of its own.
+- **Found:** what v0.37.0 already covers, read on 2026-09-24. Dimension 8 asks for grouped
+  weekly updates with security updates apart, and rates a cooldown against the three-day
+  default. Dimension 2 has the lockfile installs that fail on drift. *Choosing a Language and
+  Runtime* says every extra language multiplies the configuration, and `OVER` rates
+  configuration heavier than the tier needs. There's no rule on how many dependencies a
+  repository carries, on unused or duplicate ones, on backports its runtime floor makes
+  redundant, on how far behind a runtime or a dependency may fall, or on how many runtime
+  versions CI tests. Two defaults bear on it. The language table recommends Vitest for new
+  JavaScript and TypeScript tests, where Node.js has a built-in runner, and it holds Pester at
+  5.7.x because Pester 6 breaks things. R21 asks which runner a new project needs, and when
+  staying a major version behind is right.
+- **Deferred:** the rule. *Trigger:* R21's result is filed and checked.
+- **Deferred:** holding this repository to it: its dependencies and pins in `pyproject.toml`,
+  `package.json` and CI. *Trigger:* the rule is in the standard.
+
 ## 2026-09-23 — The standard moves to v0.37.0
 
 - **Chosen:** twenty-two fixes to the standard, applied together at the owner's request, so

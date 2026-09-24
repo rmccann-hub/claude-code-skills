@@ -6,6 +6,12 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Research prompt R21, on running with the fewest dependencies at their newest versions. It asks
+  what a dependency costs, when to add or remove one, which runtime versions to target and
+  test, and how CI can check less. Its checked result goes into the standard.
+
 ### Changed
 
 - The standard is now v0.37.0, with twenty-two fixes: the nine the parity baseline found, the
