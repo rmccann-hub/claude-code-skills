@@ -2,6 +2,124 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-24 — The standard moves to v0.38.0
+
+- **Asked:** the owner asked whether anything in the file should change before it audits their
+  repositories, and to make the change if so. Then they asked for everything to be checked
+  again before the first live run, and for anything new or valuable to be rolled in.
+- **Chosen:** fifteen fixes and one addition, applied together.
+  - **From the v0.37.0 parity runs:**
+    - **F10:** on a Windows host, the PowerShell recommended follows criterion 1. That's
+      Windows PowerShell 5.1 where nobody will install and patch PowerShell 7 on the host,
+      and 7, with that upkeep named as its cost, where someone will.
+    - **F11:** a PowerShell scheduled job has a layout: a module that holds the logic, one
+      entry script that the task runs with `-NoProfile -NonInteractive -File`, and the task's
+      definition in `packaging/`.
+  - **From reading the first live repository before its run.** Its name stays out of this
+    repository.
+    - **F12:** Phase 1 finds a decision record by content, as its constraint always said. It
+      counts numbered decisions and dated entries in headings, and its tier grep asks for the
+      tier's codes. That repository keeps its numbered decisions inside a planning document,
+      and the words "blast radius" in its prose were enough for the old grep to count a tier.
+      Tried on that repository, both samples and this one, the new commands find each record,
+      and the tier grep matches no prose.
+    - **F13:** a repository's precedence over this file covers findings, not the run. That
+      repository's context file tells agents to act without asking, commit as they go,
+      release on their own and write a session log before ending. None of that lifts the
+      waits.
+    - Context files are measured in bytes as well as lines, since that one held 141 KB in 549
+      lines.
+    - Evidence files are read in parts, and listed with their sizes.
+  - **From this version's own parity runs:**
+    - **F14:** Phase 0 says a fetch writes only remote-tracking refs, and what to do when one
+      can't run.
+    - **F15:** the routing table's set-up row covers a repository that holds no source yet.
+    - **F16:** an install that is itself a gate counts in `command_tally`. The setup
+      carve-out had let a failing lockfile install, CI's first step, sit beside a tally of
+      all `PASS`.
+    - **F17:** the Phase 6 block gains `standard_amendments`, because a run had nowhere to
+      put its `class: standard` amendment.
+    - **F21:** dimension 6 states that every workflow sets `permissions:`. The rule lived only in
+      the starter template, which an audit doesn't read, and one final audit missed the planted
+      workflow without it.
+  - **Found while reviewing:**
+    - The starter CI pins `actions/checkout` to its v7.0.1 commit, with the version in a
+      comment, and says what that costs.
+    - Its load-bearing list says six, which is how many it lists. It said four.
+    - The frontmatter's `standards_repo` placeholder says the question is asked at the
+      Phase 3 wait.
+    - An upload that renames the file isn't a version mismatch.
+  - **The addition:** a run can read the file from a link pinned to a commit, downloaded whole
+    and checked against its SHA-256.
+    - *Sending Results Back* gives the prompt.
+    - *Standards Distribution* names the option.
+    - The self-check records `standard_sha256`.
+- **Chosen:** 0.38.0, a minor bump. F10 changes a recommendation, and `standard_sha256`,
+  `bytes`, `total_bytes_loaded_at_session_start` and `standard_amendments` are new fields, so
+  older reports stay readable.
+- **Checked:** each new fact against its primary source, on 2026-09-24.
+  - **Claude Code's cloud environments page:**
+    - "A cloud session doesn't install the plugins a repository turns on under
+      `enabledPlugins`".
+    - "GitHub API and release-asset requests reach only repositories attached to the session".
+    - `raw.githubusercontent.com` "is in the default Trusted list".
+  - **Claude Code's tools reference,** on WebFetch: "For most fetches, Claude receives that
+    model's answer, not the raw page."
+  - **GitHub's secure-use reference:**
+    - "Pinning an action to a full-length commit SHA is currently the only way to use an
+      action as an immutable release".
+    - "Dependabot only creates alerts for vulnerable actions that use semantic versioning and
+      will not create alerts for actions pinned to SHA values."
+  - **`git ls-remote https://github.com/actions/checkout`:** `v7` and `v7.0.1` both resolve to
+    `3d3c42e5aac5ba805825da76410c181273ba90b1`.
+  - **Microsoft's PowerShell support lifecycle** (updated 2026-08-13): "Windows PowerShell is a
+    component of the Windows operating system and is subject to the Windows support lifecycle."
+  - **Microsoft's migration guide** (2024-04-02): "PowerShell 7 is designed to coexist with
+    Windows PowerShell 5.1".
+  - **`about_Pwsh` and `about_PowerShell_exe`:** both list `-NoProfile`, `-NonInteractive` and
+    `-File`.
+  - **In a cloud session:**
+    - Both skill files, downloaded from `raw.githubusercontent.com` at a pinned commit,
+      matched git's copies byte for byte.
+    - A file the owner attached arrived byte for byte, renamed with a prefix and underscores.
+- **Parity:** runs on the samples, graded and compared with the baseline. Runs on commits a
+  later fix superseded were stopped.
+  - **Greenfield:** two runs, on `224fc39` and `545f7b6`. Each passed every check with no value
+    moved, and the text it reads is unchanged at `488d89b`.
+  - **Audit:** five runs. Each found all thirteen planted problems but one. A full-file run on
+    `545f7b6` missed the workflow without a `permissions:` block, whose rule lived only in the
+    starter template; that became F21. The final run, on the trimmed file at `488d89b`, found
+    it in dimension 6, with its own amendment.
+  - **Every audit run moved one value:** dimension 4, from `DRIFT` to `BLOCKER`. That's the
+    v0.37.0 rule for a tracked `settings.local.json`, as that version's entry expected.
+  - **Re-check:** two runs, on `2322967` and `488d89b`. Both passed every check and kept the
+    declines and the do-not-re-propose item.
+    - Both moved dimension 3 off `OK`: they applied its `CODEOWNERS` rule, which the sample's
+      second committer triggers and the baseline run didn't. They split between `GAP` and
+      `UNVERIFIABLE-HERE` (F24).
+    - The final run moved dimension 8 to `GAP` for actions pinned by tag, following the new
+      fact on SHA pins, which dimension 8 doesn't yet rule on (F25).
+    - The first run found F16 and F17. The final one counted the failing lock install as
+      `FAIL`.
+  - **The trimmed file:** three runs, at `2322967`, `545f7b6` and `488d89b`, each given the file
+    the way the owner will give it. Each matched the full file's results, and recorded the
+    trimmed file's own SHA-256.
+  - **Cut off:** the full-file audit on `488d89b` was cut off by a usage limit and not rerun.
+    The trimmed-file run applies the same audit rules.
+  - **No run changed its sample.**
+- **Delivered:** an audit extract for the owner's first live run. It is this version without
+  the two sections no run reads, *Validating a Change to This Standard* and *Provenance*, and
+  a note at its top names the commit it came from. It isn't committed; the full file here is
+  the standard. Its SHA-256 is
+  `5980efd64233763d47b8531ca9f08c61ff82b34277df024f33c87bdfafaf1948`, from commit `488d89b`.
+- **Not included:**
+  - The rule on fewest dependencies at their newest versions: it waits for R21.
+  - F18-F20 and F22-F25, which the final runs raised. None changes an audit of a repository
+    that has a decision record and pins its actions, and each is one run's evidence, so they
+    wait for the next revision. The roadmap lists them.
+  - Splitting the file: that's the rebuild's pieces.
+  - The report format: it's decided at piece 1.
+
 ## 2026-09-24 — This repository's guard and grader get their fixes
 
 - **Done:** the two deferrals in the v0.37.0 entry below, whose trigger fired when that change

@@ -202,6 +202,11 @@ The final audit runs raised two more, also left for the next revision:
   (piece 1).
 - **F23:** the standard names no default path for a decision record when none exists, so two
   runs on a repository without one can propose different paths (piece 4).
+- **F24:** dimension 3's `CODEOWNERS` rule doesn't say which status a missing file gets once
+  its condition fires. Two re-check runs split between `GAP` and `UNVERIFIABLE-HERE` (piece 3).
+- **F25:** the dated fact on SHA pins names dimension 8, but dimension 8 doesn't say whether an
+  action pinned by tag is a finding, or at which tier. The final re-check rated one `GAP` and
+  offered the pin as optional (piece 3).
 
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
