@@ -2,12 +2,12 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.37.0"
-  updated: "2026-09-23"
-  supersedes: "0.36.0"
+  version: "0.38.0"
+  updated: "2026-09-24"
+  supersedes: "0.37.0"
   reading: "One file, read in ranges. Start at How to Read This File; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
-  standards_repo: "<asked at Phase 0 — none is a valid answer>"
+  standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
   license: "CC0-1.0"
 ---
 
@@ -58,7 +58,7 @@ heading index finds it in one match.
 |---|---|---|
 | **Survey** — look, change nothing | *The Run*, phases 0–5, then stop and report | Phases 6–9 |
 | **Audit or retrofit** | *The Run*, all phases, with the ten dimensions inside phase 4, plus *File Governance* | *The Release and Deploy Currency Gate*; *Choosing a Language and Runtime*, *Choosing the Shape* and *Project Shapes and Layout* unless a choice is itself a finding |
-| **Set up something new** | *The Run*, all phases, plus *Choosing a Language and Runtime*, *Choosing the Shape*, *Project Shapes and Layout*, *Starter File Contents* and *File Governance* | *The Release and Deploy Currency Gate* |
+| **Set up something new**, including a repository that holds no source yet | *The Run*, all phases, plus *Choosing a Language and Runtime*, *Choosing the Shape*, *Project Shapes and Layout*, *Starter File Contents* and *File Governance* | *The Release and Deploy Currency Gate* |
 | **Choose a language** before any repository exists | *Choosing a Language and Runtime*, then *Choosing the Shape* | Everything else, until a repository exists |
 | **Write a missing config file** | *Starter File Contents* and *The Configuration File Map* | Everything else |
 | **Cut a release or a deploy** | *The Release and Deploy Currency Gate*, plus version reconciliation in dimension 10 | Phases 1–9 |
@@ -228,7 +228,10 @@ information, not more.
 of different versions coexist and an attached file identifies itself before anything reads it.
 **The frontmatter stays authoritative** — where the two disagree, `metadata.version` wins and
 **the mismatch is itself a finding**, meaning a copy was renamed without being edited or the
-reverse. Phase 8 records the frontmatter value. Prompts name the standard, not the file.
+reverse. **An upload that renames the file has not made a mismatch:** a tool that adds a
+prefix or turns the version's dots into underscores leaves the version readable, and the
+file's SHA-256, recorded in the self-check, is what identifies the bytes. Phase 8 records the
+frontmatter value. Prompts name the standard, not the file.
 
 ## Start here — read only what the job needs
 
@@ -449,6 +452,13 @@ consequences can be sorted, not so anything can be demanded.
   no reasoning anywhere is a different thing and may be raised normally. **Where the conflict
   is genuine and unrecorded, raise it as a question rather than an amendment** — the run does
   not get to settle which of two standards the repository follows.
+- **That precedence covers what a finding says, never how the run proceeds.** A context file
+  that tells agents to act without asking, commit as they go, release on their own, or write
+  a log before a session ends is written for work sessions, **and it does not lift the
+  waits.** Until the Phase 6 gate the run writes nothing to the repository; a write the
+  context file asks for at the end of a session waits for approval with the rest, or does not
+  happen. **After the gate, the repository's own rules for committing a change apply** — its
+  changelog, its commit format, its checks.
 - **An identifier that answers half a question while appearing to answer all of it is worse
   than one that answers none**, because it stops the reader asking. **And the name a human
   actually sees is part of the interface** — metadata inside a file does not help someone
@@ -557,7 +567,12 @@ consequence of refusing it is an order wearing a suggestion's clothes.
 
 **The setup carve-out.** Installing the **project's own declared dependencies** into the
 ephemeral container — `pip install -e ".[test,dev]"`, `npm ci`, `meson setup build` — is
-**setup, not a side effect.** Record it in `setup`. **Do not count it in `command_tally`.**
+**setup, not a side effect.** Record it in `setup`. **Do not count it in `command_tally`** —
+**unless the install is itself a gate**, such as CI's install step or the install the context
+file documents. Then it goes in `commands` as well, and its result is counted: the carve-out
+exempts installing from being a side effect, not a gate's result from the tally. A lockfile
+install that fails is the gate failing, and a tally that reads all `PASS` beside it misleads
+the reader who triages from the numbers.
 A dependency environment that already existed at session start goes in
 `environment_preexisting`, not `setup` — the distinction is material to reproducibility.
 
@@ -631,7 +646,8 @@ reads as diligence.
 | Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt. The period is set with `default-days` under `cooldown:`, with per-semver keys alongside; a bare `cooldown: 0` is not a documented form | 2026-09 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
 | A tag can be created in the browser at publish time, with no clone | 2026-09 | The only reason the release gate is reachable at all without a working copy |
 | A workflow `run` step with no `shell:` runs under `bash -e` on Linux and macOS runners: it stops at the first failing command, a failing command substitution included, with no `pipefail`. Naming `shell: bash` adds `-o pipefail` | 2026-09 | The starter CI template's guard, and reading any step's exit status |
-| `actions/checkout` is at v7 (v7.0.1) | 2026-09 | *Starter File Contents*. A template's action versions go stale like any other pin |
+| `actions/checkout` is at v7 (v7.0.1, commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) | 2026-09 | *Starter File Contents*. A template's action versions go stale like any other pin |
+| Pinning an action to a full-length commit SHA is the only way to use it as an immutable release, and Dependabot raises no security alert for an action pinned to a SHA | 2026-09 | *Starter File Contents* and dimension 8. Why the template pins commits, and why version updates must stay on |
 
 ### Agent tooling
 
@@ -649,6 +665,9 @@ reads as diligence.
 | A plugin catalog entry whose skill paths all miss loads the plugin's whole skills folder, with no error | 2026-09 | Dimension 9. One typo ships everything |
 | Plugins enabled on a claude.ai account are documented to load in cloud sessions as `<name>@synced`. For one account, on 2026-09-23, none did, from any source, while its skills did: the sync ran and received an empty list | 2026-09 | *Standards Distribution*. Check a session before promising a plugin reaches cloud sessions |
 | An organisation's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards Distribution*. A public repository reaches an organisation's members only by upload |
+| A cloud session installs no plugin that a repository's `.claude/settings.json` turns on under `enabledPlugins`, including those from marketplaces it lists under `extraKnownMarketplaces` | 2026-09 | Dimension 4 and *Standards Distribution*. A repository that relies on its settings for a plugin gets none in cloud sessions |
+| In a cloud session, a public repository's committed files arrive through `raw.githubusercontent.com`, which is on the default Trusted network list, while GitHub API and release-asset requests reach only repositories attached to the session | 2026-09 | *Sending Results Back*. A file linked at a commit is reachable where a release asset is not |
+| Claude Code's web-fetch tool returns a small model's answer about a page, not the page. Its documentation calls that lossy by design and points to `curl` for the unprocessed page | 2026-09 | *Sending Results Back*. A file meant to be read whole is downloaded, not fetched |
 
 ### Scanners and formatters
 
@@ -665,7 +684,7 @@ pinning anything — and check what answered you, per the probe rule above.**
 | Stack | Current at 2026-09 | Lockfile | Notes |
 |---|---|---|---|
 | **Python** | 3.14.x, stable since 2025-10; 3.13.x still maintained; `uv` carries the momentum, Poetry fully supported, pip-tools for minimalists | `uv.lock` / `poetry.lock` | `ruff` for lint and format, `pytest`, `src/` layout. Dependency groups are standardised |
-| **PowerShell** | 7.6.x | none exists | Pester 5.7.x is the safe pin — 6 exists and breaks things. `PSScriptAnalyzer` for lint |
+| **PowerShell** | 7.6.x | none exists | Pester 5.7.x is the safe pin — 6 exists and breaks things. `PSScriptAnalyzer` for lint. **Windows PowerShell 5.1 is a component of Windows** and follows its support lifecycle; 7 installs beside it |
 | **.NET / C#** | 10, LTS | `packages.lock.json`, opt-in | `Directory.Build.props` for shared properties, `Directory.Packages.props` for central versions |
 | **JS / TS** | Node 22 and 24 both LTS | `package-lock.json` / `pnpm-lock.yaml` | Biome 2.x for a new project; ESLint plus Prettier where plugins already exist. Vitest for new tests |
 | **Go** | 1.27 | `go.mod` + `go.sum`, both committed | `go vet`, `go test -race`, `gofmt`. Pin `golangci-lint` by version in CI |
@@ -720,7 +739,11 @@ whose default is something else is reading the wrong branch.
 
 **Fetch before you read refs.** Tag counts, branch positions and "N commits behind" are all
 wrong from an unfetched clone, and a wrong one has already been written into a decision
-record as fact.
+record as fact. **A fetch is the one write phases 0–5 make on purpose:** it updates
+remote-tracking refs and `FETCH_HEAD`, never the working tree or the index. **Where it cannot
+run** — no network, a remote the session may not reach, a caller that forbids it — record
+`fetch_proof` as not run, with the reason, read refs as they stand, and mark every finding
+that rests on a tag count or a branch position `UNVERIFIABLE-HERE`.
 
 **Branch.** Use `chore/config-audit` unless the harness pins one, in which case use that and
 record it. Not a question — a recorded override.
@@ -782,6 +805,13 @@ notes: <anything the fields cannot hold | none>
 A **decision record** under any name or case satisfies the condition. **Its existence is not
 evidence of a prior audit** — grep it for a recorded **tier**.
 
+**The commands list candidates, and the run reads them.** A record can sit inside another
+file — numbered decisions in a planning document are one — so headings are searched as well
+as filenames. **The record is the file that states decisions and their reasons**; a changelog
+or a session log has dated headings too, but records what happened rather than what was
+chosen. **A tier match is a candidate as well:** a recorded tier names `T0`–`T3` with both
+axes, as Phase 8 writes it, and the same words turn up in ordinary prose.
+
 A **runbook** is content. **A README section — Production Deployment, Operations, Deploy,
 Maintenance — with ordered operational steps is a runbook.** Grep headings across all
 markdown before concluding one is absent. Existing-but-wrong is `DRIFT`, not missing.
@@ -790,7 +820,9 @@ markdown before concluding one is absent. Existing-but-wrong is `DRIFT`, not mis
 
 ```bash
 git ls-files | grep -iE '(^|/)(DECISIONS|ADR|decision-log|KDD)\.md$|(^|/)docs/adr/'
-git grep -icE 'tier:? *T[0-3]|blast radius|audience A[0-3]' -- <the record found>
+git grep -cE '^#+ .*(KDD|ADR)[- ]?[0-9]+' -- '*.md'        # numbered decisions, any filename
+git grep -cE '^#+ *[0-9]{4}-[0-9]{2}-[0-9]{2} ' -- '*.md'   # dated entries, any filename
+git grep -icE 'tier[:*]* *T[0-3]|blast radius:? *B[0-3]|audience:? *A[0-3]' -- <the record found>
 git grep -inE '^#+ *(production )?(deployment|deploy|operations|runbook|maintenance)' -- '*.md'
 ```
 
@@ -869,14 +901,19 @@ notes: <... | none>
 
 Read-only, apart from the setup carve-out.
 
+**Read evidence; don't swallow it.** Logs, captured tool output and test artefacts can run to
+thousands of lines each, and **a repository that keeps its evidence is doing it right** — the
+budget table says so. List them with their sizes and read only the part a finding needs: one
+read of a whole log can cost the context the rest of the audit needed.
+
 ```bash
 git ls-files | sed -n 's/.*\.\([a-zA-Z0-9]*\)$/\1/p' | sort | uniq -c | sort -rn | head -15
 
 for f in AGENTS.md CLAUDE.md GEMINI.md .github/copilot-instructions.md \
          .claude/settings.json .claude/settings.local.json .mcp.json; do
-  [ -e "$f" ] && printf '%-9s %5s  %s\n' \
+  [ -e "$f" ] && printf '%-9s %5s lines %8s bytes  %s\n' \
     "$(git ls-files --error-unmatch "$f" >/dev/null 2>&1 && echo tracked || echo UNTRACKED)" \
-    "$(wc -l < "$f")" "$f"
+    "$(wc -l < "$f")" "$(wc -c < "$f")" "$f"
 done
 ls .claude/rules/ 2>/dev/null
 ls .git/hooks/pre-commit 2>/dev/null || echo "pre-commit NOT INSTALLED"
@@ -961,8 +998,9 @@ proposed: <greenfield only, omitted otherwise:
 environment_preexisting: [<what was already installed at session start | none>]
 setup: [{cmd: "...", result: PASS, note: "project's own declared deps"}]
 languages: {py: 109, md: 23}
-agent_config: [{path: CLAUDE.md, tracked: true, lines: 1082}]
+agent_config: [{path: CLAUDE.md, tracked: true, lines: 1082, bytes: 41876}]
 total_lines_loaded_at_session_start: <int>
+total_bytes_loaded_at_session_start: <int>
 reference_markdown_lines: <int>
 hooks_configured: yes | no
 hooks_installed: yes | no
@@ -1275,7 +1313,9 @@ not choices. `CODEOWNERS` once a second person exists.
 - **Size is a real constraint, not a style note.** Keep the always-loaded context under ~300
   lines; Codex stops reading instruction files past 32 KiB combined (`project_doc_max_bytes`),
   and truncation is indistinguishable from the file being ignored. Put instructions near the end
-  of a long file rather than the start.
+  of a long file rather than the start. **Count bytes as well as lines:** a line budget assumes
+  lines of ordinary length, and a file whose lines run to paragraphs can look small by its line
+  count while loading several times the text — a live context file held 141 KB in 549 lines.
 - Language rules in `.claude/rules/` load **per file** — that is the point of the split.
 - `.claude/settings.json` carries the enforced layer. Deny beats allow. A baseline worth
   having: reads of `.env*`, recursive delete, force push. Each is declinable — say what it
@@ -1460,6 +1500,12 @@ Two things stand between a change and the default branch: what gates it, and wha
 **The gates must exist; the runner is not dictated.** A deliberate `repo: local` /
 `language: system` config with documented reasoning is not a finding. Required gates: secret
 scan, format check, lint, test.
+
+**Every workflow sets `permissions:`** — `contents: read` or narrower at the top, with any wider
+grant given only to the job that needs it. A workflow without the block runs with the
+repository's default token, which is broader than a test run needs. **One workflow missing it
+is the finding, however many others have it:** rate it `GAP` here and name the file. *Starter
+File Contents* shows the block, and says why a gate that checks only some workflows misleads.
 
 <constraints>
 
@@ -2114,12 +2160,14 @@ amendments: [{id: A1, dimension: 0, severity: recommended|optional, change: "...
               evidence: "...", if_accepted: "...", if_declined: "...",
               gates_on: [<H ids | none>], severity_depends_on: [<H ids | none>],
               recommendation: "not pre-selected"}]
+standard_amendments: [<S1…, in the shape *Proposing a change to this standard* gives | none>]
 human_actions: [{id: X1, action: "...", why_not_agent: "server-side | manual"}]
 not_proposed: [{finding: "...", why_not: "...", dimension: 0}]
 premise_check: {stated: "<what the prompt claimed>", found: "<what is actually true>",
                 evidence: "..."}
-counts: {human_decisions: 0, recommended: 0, optional: 0, amendments_total: 0, human_actions: 0}
-closure_check: "recommended + optional == amendments_total"
+counts: {human_decisions: 0, recommended: 0, optional: 0, amendments_total: 0, human_actions: 0,
+         standard_amendments: 0}
+closure_check: "recommended + optional == amendments_total"   # repository amendments only
 no_writes_proof: |
   $ git status --porcelain
   (empty)
@@ -2384,6 +2432,7 @@ happened.
 ```yaml
 conformance:
   standard_version: "<metadata.version, read from the frontmatter>"
+  standard_sha256: "<sha256 of the file this run read | unknown>"   # shows which bytes ran
   job: <survey | set up | audit | release | prune | validate>
   sections_read: [<by name>]
   sections_skipped: [<by name>]
@@ -2534,7 +2583,9 @@ fire because the environment cannot reach what it names. A dated fact that no lo
 definition two runs read differently. **A gap where you did the right thing and no rule told
 you to** — that is the most valuable kind and the easiest to leave unsaid.
 
-**How it arrives.** As a numbered amendment in the `standard` class, carrying:
+**How it arrives.** As a numbered amendment in the `standard` class, in the Phase 6 block's
+`standard_amendments` list, apart from the repository's amendments and outside their closure
+count, carrying:
 
 ```yaml
 - id: S1
@@ -2664,7 +2715,7 @@ recommendation the criteria above can override, and each states what usually bea
 
 | If the project is | Start from | What beats it |
 |---|---|---|
-| **Windows host, Active Directory, Office, Exchange, or anything with an existing cmdlet** | **PowerShell 7.x** | Nothing, usually — a maintained cmdlet is criterion 2 answering itself. Move only when the work is data-shaped rather than administration-shaped |
+| **Windows host, Active Directory, Office, Exchange, or anything with an existing cmdlet** | **PowerShell 7.x** | **Windows PowerShell 5.1, where the host is not yours to change.** 5.1 is part of Windows and 7 is installed beside it, so criterion 1 decides: where nobody will install and patch 7 on the host, 5.1 is what it has; where someone will, recommend 7 and name that upkeep as its cost. Either way a maintained cmdlet is criterion 2 answering itself. Move off PowerShell only when the work is data-shaped rather than administration-shaped |
 | **ERP or REST integration, data transformation, reporting, anything numeric or tabular** | **Python** | A vendor SDK that exists only for another language |
 | **A desktop application or a Windows service needing .NET libraries** | **C#** | Nothing on Windows. On Linux, ask criterion 1 again |
 | **Anything that runs in a browser** | **TypeScript** | Nothing. It is not a choice |
@@ -2751,6 +2802,7 @@ be hand-updated when the code moves — it will not be.
 | **Python — CLI** | `src/<pkg>/` with `cli.py`, `core/` | `tests/` | `__main__.py`, thin; `[project.scripts]` in the manifest |
 | **Python — scheduled job** | `src/<pkg>/` with `job.py`, `steps/`, `config.py` | `tests/` | one idempotent `job.py` entry, re-runnable without harm |
 | **PowerShell module** | `<ModuleName>/` with `Public/`, `Private/` | `tests/<Name>.Tests.ps1` (Pester) | `.psd1` manifest + `.psm1` loader |
+| **PowerShell — scheduled job** | `<ModuleName>/` with `Public/`, `Private/`, holding the logic | `tests/<Name>.Tests.ps1` (Pester) | one idempotent `.ps1` beside the module that imports it and calls one exported function, re-runnable without harm |
 | **C# application** | `src/<Project>/` | `tests/<Project>.Tests/` | `Program.cs`; `.sln` at root, `Directory.Build.props` for shared properties |
 | **JS / TS** | `src/` | `tests/` or co-located `*.test.ts` | `src/index.ts`; `package.json` + `tsconfig.json` |
 | **C — meson** | `src/` with a `meson.build` per directory; `include/` for public headers | `tests/` with its own `meson.build` | root `meson.build` calling `project()` then `subdir()` |
@@ -2767,6 +2819,13 @@ version reconciliation already checks for.
 
 **PowerShell.** One file per exported function in `Public/`, **filename matching the function
 name**; helpers in `Private/`; exports listed explicitly in `FunctionsToExport` rather than `*`.
+
+**A PowerShell scheduled job is a module plus one entry script.** The logic stays in the
+module, where Pester can test it and a person can run it by hand; the entry script only imports
+it and calls one function. The scheduled task runs it with `-NoProfile -NonInteractive -File` —
+`pwsh` for 7, `powershell.exe` for 5.1 — because a profile on the host should not change what
+runs, and nobody is there to answer a prompt. **Keep the task's definition in `packaging/`**,
+so a change to the schedule is a reviewed diff like any other.
 
 **C with meson.** Every directory that builds something carries its own `meson.build`, and the
 root file only calls `project()` and `subdir()`. Build options go in a file, never hardcoded —
@@ -3035,7 +3094,7 @@ jobs:
   gate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Set up toolchain
         run: echo "substitute the setup action for this ecosystem"
@@ -3069,7 +3128,7 @@ jobs:
           fi
 ```
 
-**Four things about this file are load-bearing and are not style:**
+**Six things about this file are load-bearing and are not style:**
 
 - **`permissions: contents: read`** at the top. The default token is broader than a test run
   needs, and narrowing it is free. **Every workflow, not most of them** — a live run found a
@@ -3107,6 +3166,14 @@ jobs:
 
 **A secret-scan step belongs here too**, per the enforcement placement table — in CI always,
 never as a client-side hook where no persistent local environment exists.
+
+**Pin every action to a full commit SHA, with its version in a comment**, as the template's
+checkout does, and pin the setup action you substitute the same way. GitHub's own hardening
+guide calls a full-length SHA the only way to use an action as an immutable release: a tag can
+be moved to other code, and a commit cannot. **The price is in the same guide:** Dependabot
+raises no security alert for an action pinned to a SHA, so a fix reaches you only through an
+update — keep version updates on for GitHub Actions (dimension 8), and check that they reach
+the pinned lines.
 
 **Whatever the gate downloads and runs, verify before running it — and start with the
 security tooling.** A workflow that fetches a binary over the network and executes it has
@@ -3722,7 +3789,8 @@ protocol is a two-element one.
 | CI logic | Reusable workflows — pull-based, change once |
 | Files that must physically exist | `copier` template — a session cannot fetch them |
 | Shared reference docs | `copier` template — one path, refreshed by `copier update` |
-| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under: plugins enabled there are documented to reach cloud sessions, but check *Facts with an Expiry Date* first. A stamped, checked copy under `.claude/skills/` where neither fits |
+| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under: plugins enabled there are documented to reach cloud sessions, but check *Facts with an Expiry Date* first, and a repository's own settings install none there. A stamped, checked copy under `.claude/skills/` where neither fits |
+| This standard, for one run | Attached, or linked at a fixed commit and checked against its SHA-256, as *Sending Results Back* shows |
 
 `.copier-answers.yml` records the template version. `copier update` re-applies changes and
 surfaces conflicts — **that is the drift detection**, and it needs the clean tree Phase 0
@@ -3762,6 +3830,19 @@ gate, I want to cut <version>* · *plan the order of what is left*.
 **State any constraint the environment imposes** — no local clone, a pinned branch, a tool
 other than Claude Code — because the run cannot infer them and will otherwise propose things
 that cannot be done.
+
+**The file can be linked instead of attached.** A link to it at a fixed commit gives every run
+the same bytes, with no copy changing hands. **Link a commit, never a branch**: a branch link
+reads whatever lands there next. The session downloads the file whole, with `curl` or `git` —
+a fetch tool that summarises pages returns an answer about the file, not the file — and checks
+its SHA-256 before reading on. The self-check's `standard_sha256` then shows which bytes ran.
+
+```
+Run the PROJECT-BOOTSTRAP-AND-AUDIT standard against this repository. <job>.
+Download it whole, with curl, from <link to the file at a commit>, and check that its
+SHA-256 is <hash> before using it. If it doesn't match, stop and tell me.
+Write the run report file and tell me where it is.
+```
 
 **What comes back is one file**: `RUN-REPORT-<repo>-<date>.md`, decisions first, every emission
 block appended. That file is the whole contribution — nothing needs assembling by hand.
@@ -4080,6 +4161,54 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.38.0** — **fifteen fixes and one addition before the file audits live repositories**,
+at the maintainer's request, grouped by what found them.
+
+**Reading a live repository before its first run found four.** *Phase 1 finds a decision
+record by its content*: its constraint said so, but its command matched filenames only, and
+that repository keeps its numbered decisions inside a planning document. It now counts
+numbered decisions and dated entries in headings, and its tier grep asks for the tier's codes,
+because the bare words *blast radius* in that repository's prose were enough for the old grep
+to count a tier. *A context file's precedence covers findings, not the run*: that repository's
+context file tells agents to act without asking, commit as they go, release on their own and
+write a session log before ending, and none of it lifts the waits. *Bytes count as well as lines*: its
+context file held 141 KB in 549 lines, so Phase 2 records both. *Evidence is read, not
+swallowed*: logs and test artefacts are listed with their sizes and read only as far as a
+finding needs.
+
+**The v0.37.0 parity runs found two.** *Which PowerShell a Windows host gets is criterion 1's
+to say*: the defaults table started a Windows host at PowerShell 7 with nothing beating it,
+while the first criterion, what the host already has, pointed at Windows PowerShell 5.1, which
+is part of Windows. Where nobody will install and patch 7 on the host, 5.1 is what it has;
+where someone will, 7 is recommended with that upkeep named as its cost. *A PowerShell
+scheduled job has a layout*: a module holding the logic, one entry script that the task runs
+with `-NoProfile -NonInteractive -File`, and the task's definition in `packaging/`.
+
+**This version's own parity runs found five.** *Phase 0 says what to do when a fetch cannot
+run*: a fetch writes only remote-tracking refs, and where one is not possible the run reads
+refs as they stand and marks what rests on them. *The routing table covers a repository that
+holds no source yet*, under setting something up. *An install that is itself a gate counts in
+the tally*: the setup carve-out kept a failing lockfile install out of `command_tally`, which
+then read all `PASS` while CI's first step failed. *A proposed change to this standard has a
+place in the gate's block*: `standard_amendments`, apart from the repository's amendments and
+their closure count, where a run had found nowhere to put one. *Dimension 6 says every
+workflow sets `permissions:`*: the rule lived only in the starter template, which an audit
+does not read, and one of the final audit runs missed the planted workflow that lacked it.
+
+**Four more.** *The starter CI pins its action to a full commit SHA*, with the version in a
+comment, because GitHub's hardening guide calls that the only immutable reference; the price
+the same guide names, no Dependabot alert for a SHA-pinned action, is stated beside it. *The
+starter CI's load-bearing list is counted right*: it said four and listed six. *The frontmatter
+says where the standards-repository question is asked*: at the Phase 3 wait. *An upload that
+renames this file has not made a version mismatch.*
+
+**And one addition: a run can read this file from a link.** *Sending Results Back* gives the
+prompt for the file linked at a commit, downloaded whole and checked against its SHA-256, and
+the self-check records the hash of the file each run read. Dated facts back it: a cloud session
+installs no plugin that a repository's settings turn on; it reaches a public repository's
+committed files, but not an unattached repository's API or release assets; and Claude Code's
+web-fetch tool returns a model's answer about a page, not the page.
 
 **0.37.0** — **twenty-two fixes from the parity runs and the maintainer's set-up run**, applied
 at the maintainer's request. **Git reads write nothing**: phases 0–5 set `GIT_OPTIONAL_LOCKS=0`,

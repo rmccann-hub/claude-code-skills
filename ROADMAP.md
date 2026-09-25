@@ -17,7 +17,7 @@ than inside it.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.37.0 | shipped | core | none |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.38.0 | shipped | core | none |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -155,12 +155,67 @@ piece moves text that is already fixed. The piece named is where each one's sect
   without saying why when nothing is collected. Under GitHub's default `bash -e`, the `grep` in
   its command substitution exits first. It should name itself when it fails (piece 2).
 
-The v0.37.0 parity runs found two more, left for the piece named:
+The v0.37.0 parity runs found two more. The owner had them applied in standard v0.38.0, and
+the piece named is where each one's section goes:
 
 - **F10:** for Active Directory on a Windows host, the defaults say PowerShell 7, while the
   first criterion, what the target already has, points at Windows PowerShell 5.1, which ships
   with Windows Server. The default should say which wins (piece 5).
 - **F11:** the shapes table has no row for a PowerShell scheduled job (piece 5).
+
+Reading a live repository before its first run found two more, also applied in v0.38.0:
+
+- **F12:** Phase 1 says a decision record is found by content, but its command matched
+  filenames only, and its tier grep counted the words "blast radius" in prose as a recorded
+  tier (piece 4).
+- **F13:** a context file that tells agents to act without asking, commit as they go or write
+  a session log before ending could read as lifting the run's waits (piece 1).
+
+The v0.38.0 parity runs found five more, applied before it merged:
+
+- **F14:** Phase 0 says nothing about a fetch that can't run, and its "read without writing"
+  sits beside a command that writes refs (piece 4).
+- **F15:** the routing table has no row for a repository that holds no source yet (piece 1).
+- **F16:** the setup carve-out keeps a failing install out of `command_tally` even when the
+  install is CI's first step, so the tally can read all `PASS` (piece 4).
+- **F17:** the Phase 6 block has no field for a `class: standard` amendment (piece 1).
+- **F21:** the rule that every workflow sets `permissions:` lived only in the starter
+  template, which an audit doesn't read, and one final audit run missed the planted workflow
+  that lacked it. Dimension 6 now states it (piece 3).
+
+The final v0.38.0 greenfield run raised three more, each one run's evidence, left for the next
+revision because an audit never reads them:
+
+- **F18:** the "Choose a language" routing row assumes no repository exists, so choosing first
+  in a repository that holds only a README fits neither that row nor the set-up one (piece 1).
+- **F19:** the wiring rule reads configuration from environment variables, and a PowerShell
+  scheduled job may take its settings better as the entry script's parameters in the task's
+  definition (piece 5).
+- **F20:** the scheduled-job layout keeps the task's definition as a reviewable diff, which an
+  XML export in UTF-16 doesn't give without a `working-tree-encoding` rule or a registration
+  script instead (piece 5).
+
+The final audit runs raised two more, also left for the next revision:
+
+- **F22:** the command results don't name a command the session's permission layer refuses.
+  Both runs that met one chose `UNVERIFIABLE-HERE`, which fits, but saying so settles it
+  (piece 1).
+- **F23:** the standard names no default path for a decision record when none exists, so two
+  runs on a repository without one can propose different paths (piece 4).
+- **F24:** dimension 3's `CODEOWNERS` rule doesn't say which status a missing file gets once
+  its condition fires. Two re-check runs split between `GAP` and `UNVERIFIABLE-HERE` (piece 3).
+- **F25:** the dated fact on SHA pins names dimension 8, but dimension 8 doesn't say whether an
+  action pinned by tag is a finding, or at which tier. The final re-check rated one `GAP` and
+  offered the pin as optional (piece 3).
+
+v0.38.0 also carries four changes the owner asked for before the first live run. Context
+files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
+pins its action to a commit SHA. An upload that renames the file isn't a version mismatch.
+Its history entry lists them.
+
+Live runs on the owner's repositories come between pieces. Each report is triaged as
+[docs/testing-the-skill.md](docs/testing-the-skill.md) describes, and what it finds is fixed
+before the next repository's run.
 
 The owner asked for one more rule, researched before it's written:
 
