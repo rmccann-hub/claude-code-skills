@@ -195,7 +195,7 @@ revision because an audit never reads them:
   XML export in UTF-16 doesn't give without a `working-tree-encoding` rule or a registration
   script instead (piece 5).
 
-The final audit runs raised two more, also left for the next revision:
+The final audit and re-check runs raised four more, also left for the next revision:
 
 - **F22:** the command results don't name a command the session's permission layer refuses.
   Both runs that met one chose `UNVERIFIABLE-HERE`, which fits, but saying so settles it
@@ -207,6 +207,26 @@ The final audit runs raised two more, also left for the next revision:
 - **F25:** the dated fact on SHA pins names dimension 8, but dimension 8 doesn't say whether an
   action pinned by tag is a finding, or at which tier. The final re-check rated one `GAP` and
   offered the pin as optional (piece 3).
+
+Preparing the first live run found four more, also left for the next revision:
+
+- **F26:** Phase 3 asks its questions in the abstract, and the first live repository's owner
+  couldn't answer them as asked. The repository's own records held nearly every answer except
+  where it runs: its registry page for exposure, its updater and release workflow for
+  production, its licence and manifest for the irreversible decisions. The wait could offer
+  those as drafts with their evidence for the owner to confirm, and still ask where it runs
+  (piece 1).
+- **F27:** a cloud container lacked `libEGL.so.1`, so no test in a Qt suite could import, and
+  the repository's CI installs that library with apt. The setup carve-out covers the project's
+  declared dependencies but doesn't say whether packages its CI workflow installs are declared,
+  so a run could rate the suite `UNVERIFIABLE-HERE` for the container's sake (piece 4).
+- **F28:** the time-box of about five minutes rates a longer suite `NOT-RUN-HERE`. That
+  repository's suite ran about eight minutes in a cloud container, so the gate CI relies on
+  most would never run. The run could start it in the background and rate it when it finishes
+  (piece 4).
+- **F29:** nothing compares the addresses in commit history with the owner's answer. A public
+  personal repository whose commits carry an employer's address raises the question the
+  provenance rule exists for, and the owner should see it at the gate (piece 3).
 
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
