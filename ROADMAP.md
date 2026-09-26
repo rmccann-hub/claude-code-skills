@@ -218,8 +218,10 @@ Preparing the first live run found four more, also left for the next revision:
   (piece 1).
 - **F27:** a cloud container lacked `libEGL.so.1`, so no test in a Qt suite could import, and
   the repository's CI installs that library with apt. The setup carve-out covers the project's
-  declared dependencies but doesn't say whether packages its CI workflow installs are declared,
-  so a run could rate the suite `UNVERIFIABLE-HERE` for the container's sake (piece 4).
+  declared dependencies but doesn't say whether what its CI workflow installs is declared: the
+  system packages, and tools such as `pip-audit` that its jobs install. A run could rate the
+  suite `UNVERIFIABLE-HERE` for the container's sake, and the dry run below counted those tools
+  one way where a stricter run would count them the other (piece 4).
 - **F28:** the time-box of about five minutes rates a longer suite `NOT-RUN-HERE`. That
   repository's suite ran about eight minutes in a cloud container, so the gate CI relies on
   most would never run. The run could start it in the background and rate it when it finishes
@@ -227,6 +229,36 @@ Preparing the first live run found four more, also left for the next revision:
 - **F29:** nothing compares the addresses in commit history with the owner's answer. A public
   personal repository whose commits carry an employer's address raises the question the
   provenance rule exists for, and the owner should see it at the gate (piece 3).
+
+A dry run of that audit, stopped at the Phase 3 wait, found six more, also left for the next
+revision:
+
+- **F30:** a run that stops at Phase 3 has nowhere to find its report's shape or its
+  self-check. The header, `lifecycle`, `expires` and the three lists are defined only in
+  Phase 6. `ten_statuses_emitted`, `tally_sums_to_ten` and `waits_observed` have no value for a
+  stop at Phase 3, and the header's `tally` has no "not yet rated" (piece 1).
+- **F31:** when a context file documents one command that runs every gate, and CI runs them
+  as separate steps, nothing says which the run executes. Either choice fits the rules, so two
+  runs can record different command lists (piece 4).
+- **F32:** the hook check, `ls .git/hooks/pre-commit`, misses a hook activated through
+  `core.hooksPath`, and fails in a worktree. `git rev-parse --git-path hooks` and
+  `git config core.hooksPath` cover both (piece 4).
+- **F33:** the dated fact on cloud sessions says release-asset requests reach only attached
+  repositories. On 2026-09-26, in this repository's session, an unattached public
+  repository's release asset downloaded with a 200, while its API returned 403. The fact needs
+  checking again, and narrowing to what holds (piece 4).
+- **F34:** a finding on the boundary between two repositories has no field for the side that
+  owns it, so which side carries the fix can go only in the finding's text (piece 3).
+- **F35:** smaller points in the schema and wording (pieces 1 and 4):
+  - answers given in the prompt have no `answers_source` value;
+  - copyright is worded three ways: the legal entity in Phase 0, the legal name if work-owned
+    in Phase 3, and a handle allowed in its schema;
+  - `settled` and `locked` aren't defined;
+  - `clock_delta_days` taken from `--date=short` reads the commit's own time zone;
+  - `reference_markdown_lines` isn't defined;
+  - `decision_entries` counts dated entries, where a record can number them instead;
+  - two counts in the prose are wrong: "Four of those matches…" and "The two optional
+    blocks".
 
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
