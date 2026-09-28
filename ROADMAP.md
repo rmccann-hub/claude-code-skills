@@ -278,7 +278,9 @@ next revision (piece 5, where the facts move):
   a `skillOverrides` key matches a synced skill, and its test 3 tries one. The changelog does
   document `Skill(anthropic-skills:…)` rules for synced skills: allow rules in 2.1.282, deny
   rules in 2.1.283. Neither has been tried on a synced skill. Plugins now have a key of their
-  own, `syncClaudeAiPlugins`, which the fact should name too.
+  own, `syncClaudeAiPlugins`, which the fact should name too. The first live audit found 49
+  account skills loading into the audited repository's sessions, two of them asking to be read
+  first, and rated that a dimension 4 secondary.
 
 Taking in R22's result found one more, for the next revision:
 
@@ -297,6 +299,31 @@ Its history entry lists them.
 Live runs on the owner's repositories come between pieces. Each report is triaged as
 [docs/testing-the-skill.md](docs/testing-the-skill.md) describes, and what it finds is fixed
 before the next repository's run.
+
+The first live audit ran on 2026-09-28, on v0.38.0 from the owner's run file, in a cloud
+session. It stopped at both waits and wrote nothing before approval. It confirmed F27, F30,
+F32, F34 and F35 on a real repository: the side that owns a boundary finding went into `notes`.
+F26's drafted answers worked: the owner confirmed the tier in one word. Its report up to the Phase 6 gate found five more, left for the next revision. The apply
+half is triaged when it comes back.
+
+- **F39:** a fetch moves `origin/<default>` but not the clone's local branch of the same name,
+  so a history scan that names `main` reads the history as old as the clone. The run caught it
+  only because a version reconciliation disagreed with the tag. After the fetch, read the
+  default branch through its remote-tracking ref (piece 4).
+- **F40:** no dated fact covers a secret-scan job's range. For a push, gitleaks-action scans
+  `--no-merges --first-parent <first>^..<head>`, so on a merge-commit workflow a push run scans
+  no commits and passes. A pull-request run skips merge commits and second-parent history. The
+  run rated it `BLOCKER`, as a check reporting success while measuring nothing. A secret-scan
+  job is read by its range and its scanned count, never by its conclusion (piece 5).
+- **F41:** a status command whose non-zero exit is its report can only be rated `FAIL` under
+  the closed vocabulary. One example is a command that exits 1 while a handshake round is open.
+  The tally then counts a failure that isn't one (piece 1).
+- **F42:** "write nothing to the repository" doesn't say whether the ignored artifacts that the
+  gates leave in the working tree count: caches, an egg-info directory, coverage data. The run
+  counted them as no write and listed them, and one of them changed a test's collected count
+  (piece 4).
+- **F43:** the Phase 6 schema has no field for an amendment the owner approves but holds. The
+  run added a `held` key and declared it under `fields_added_beyond_schema` (piece 1).
 
 The owner asked for one more rule, researched before it's written:
 
@@ -319,7 +346,8 @@ before it's built:
   passes, both filed and checked:
   [the first](research/runs/2026-09-27-R22-one-command-front-door.md) and
   [a deeper one](research/runs/2026-09-27-R22-deeper-pass.md). It goes into piece 1, with F18,
-  F26, F30 and F38, after the first live audit's report is triaged. What it adds to the plan:
+  F26, F30 and F38. The first live audit's report is triaged up to its approval gate, as above.
+  What it adds to the plan:
   - **Which copy ran:** the reference file's SHA-256 in `SKILL.md`'s metadata, checked by a
     standard-library script from a `` !`command` `` line, which a cloud session runs for a
     synced skill. The script needs tests of its own, since ruff and coverage don't reach
