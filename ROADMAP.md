@@ -303,8 +303,10 @@ before the next repository's run.
 The first live audit ran on 2026-09-28, on v0.38.0 from the owner's run file, in a cloud
 session. It stopped at both waits and wrote nothing before approval. It confirmed F27, F30,
 F32, F34 and F35 on a real repository: the side that owns a boundary finding went into `notes`.
-F26's drafted answers worked: the owner confirmed the tier in one word. Its report up to the Phase 6 gate found five more, left for the next revision. The apply
-half is triaged when it comes back.
+F26's drafted answers worked: the owner confirmed the tier in one word. Its report up to the
+Phase 6 gate found five more, left for the next revision. The apply half came back the same
+day: eleven approved changes on one pull request, eight held as asked, and nothing held was
+touched. It found seven more, after F43, and adds to F40 and F42.
 
 - **F39:** a fetch moves `origin/<default>` but not the clone's local branch of the same name,
   so a history scan that names `main` reads the history as old as the clone. The run caught it
@@ -314,16 +316,49 @@ half is triaged when it comes back.
   `--no-merges --first-parent <first>^..<head>`, so on a merge-commit workflow a push run scans
   no commits and passes. A pull-request run skips merge commits and second-parent history. The
   run rated it `BLOCKER`, as a check reporting success while measuring nothing. A secret-scan
-  job is read by its range and its scanned count, never by its conclusion (piece 5).
+  job is read by its range and its scanned count, never by its conclusion (piece 5). The run's
+  own full-history scan missed merge commits' changes too: gitleaks' default log options skip
+  them, and only `--log-opts="-m <ref>"` or `"--all -m"` reads them. The fact says so.
 - **F41:** a status command whose non-zero exit is its report can only be rated `FAIL` under
   the closed vocabulary. One example is a command that exits 1 while a handshake round is open.
   The tally then counts a failure that isn't one (piece 1).
 - **F42:** "write nothing to the repository" doesn't say whether the ignored artifacts that the
   gates leave in the working tree count: caches, an egg-info directory, coverage data. The run
-  counted them as no write and listed them, and one of them changed a test's collected count
-  (piece 4).
+  counted them as no write and listed them, and one of them changed a test's collected count.
+  In the apply half, a wheel built while replaying CI in the working tree left `build/lib/`
+  behind, and a test that CI failed passed locally because of it. A job that builds or installs
+  is replayed in a scratch clone (piece 4).
 - **F43:** the Phase 6 schema has no field for an amendment the owner approves but holds. The
   run added a `held` key and declared it under `fields_added_beyond_schema` (piece 1).
+
+The apply half found these:
+
+- **F44:** Phase 7 doesn't say to fetch the default branch before pushing. It had moved five
+  commits during the run, so the pull request conflicted with its base, and a conflicting pull
+  request gets no workflow run at all: zero check runs, not pending ones. If the base moved,
+  bring it in by the repository's convention and run the gate again. After pushing, read the
+  pull request's mergeability before reading its checks (piece 4).
+- **F45:** "commit by concern" doesn't say to run the full gate before each push. Targeted runs
+  of the tests naming the edited files missed the repository's own sweeps over the tree, so two
+  of eleven commits were red on their own until they were rebuilt (piece 4).
+- **F46:** the fresh-clone check doesn't say to clone from the remote. A clone of the working
+  copy took its stale branches as its remote-tracking refs, which is F39's trap by another
+  route, and part of the gate run there isn't the gate (piece 4).
+- **F47:** a human action has no state for "reported done, not observed". The owner reported a
+  setting done while the API still read it as off. Each action records what was seen beside
+  what was said: done and observed, reported but not observed, or not observable here
+  (piece 4).
+- **F48:** when the base moves between Phase 2 and the push, Phase 8's re-checks run again on
+  the merged tree, and the record names both base commits (piece 4).
+- **F49:** an approved check that runs an optional tool whenever the tool is present can refuse
+  good input when the tool is too old. The installer change ran `gh attestation verify`
+  whenever `gh` was on the path. The command arrived in gh 2.47.0, and Debian 13 packages
+  2.46.0 (sources.debian.org, read 2026-09-28). A check that uses an optional tool probes for
+  the capability, not the tool (piece 3).
+- **F50:** a report committed to a public repository at the owner's request got no privacy
+  pass. Its survey of the owner's other repositories named three private ones. A report
+  written for the owner can hold what a public tree mustn't, so committing it needs the check
+  any public write gets (piece 4).
 
 The owner asked for one more rule, researched before it's written:
 
@@ -346,7 +381,7 @@ before it's built:
   passes, both filed and checked:
   [the first](research/runs/2026-09-27-R22-one-command-front-door.md) and
   [a deeper one](research/runs/2026-09-27-R22-deeper-pass.md). It goes into piece 1, with F18,
-  F26, F30 and F38. The first live audit's report is triaged up to its approval gate, as above.
+  F26, F30 and F38. Both halves of the first live audit's report are triaged, as above.
   What it adds to the plan:
   - **Which copy ran:** the reference file's SHA-256 in `SKILL.md`'s metadata, checked by a
     standard-library script from a `` !`command` `` line, which a cloud session runs for a
