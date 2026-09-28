@@ -1,6 +1,6 @@
 # Research runs
 
-Twenty-one prompts, one file each. Each file is the whole prompt: paste all of it into a new
+Twenty-two prompts, one file each. Each file is the whole prompt: paste all of it into a new
 claude.ai chat with Research turned on (or Web search, if Research isn't offered). Run them
 in any order, several at a time in separate chats. Priority 1 first.
 
@@ -30,6 +30,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R19 | 3 | [R19-architecture-api-planning-optimization.md](R19-architecture-api-planning-optimization.md) | Architecture, API design, planning, optimization and scheduling | architecture-and-design, api-design, optimization-and-scheduling |
 | R20 | 3 | [R20-design-dataviz-documents.md](R20-design-dataviz-documents.md) | Visual design, data visualization, documents and output formats | visual-theme, data-visualization, documentation (output), word-documents (styling) |
 | R21 | 1 | [R21-fewest-dependencies-newest-versions.md](R21-fewest-dependencies-newest-versions.md) | Fewest dependencies and newest versions: what a dependency costs, when to add or remove one, which runtime versions to target and test, and CI that checks less | project-bootstrap-and-audit (dimensions 2, 6 and 8), keeping-current, supply-chain-security, ci-cd, and the dependency advice in every language skill |
+| R22 | 1 | [R22-one-command-front-door.md](R22-one-command-front-door.md) | One command from any repository: the route into sessions and knowing which copy ran, fewer and better questions for an existing repository, the new-project interview and recommendation, answers kept between runs, and testing the front door | project-bootstrap-and-audit (the routing table, Phases 1, 3 and 8, Choosing a Language and Runtime, Choosing the Shape, Starter File Contents, Standards Distribution, Cross-Repository Contracts), skill-builder (distribution, versions and trigger tests), agent-context-files, ai-agent-security (repository content as data) |
 
 Already covered in the building session, so there's no run for them: the skill-authoring
 rules; licensing and ownership; the licences of reference sources; this repository's own

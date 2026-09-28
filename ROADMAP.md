@@ -17,7 +17,7 @@ than inside it.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.38.0 | shipped | core | none |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.38.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -246,7 +246,7 @@ revision:
 - **F33:** the dated fact on cloud sessions says release-asset requests reach only attached
   repositories. On 2026-09-26, in this repository's session, an unattached public
   repository's release asset downloaded with a 200, while its API returned 403. The fact needs
-  checking again, and narrowing to what holds (piece 4).
+  checking again, and narrowing to what holds (piece 5).
 - **F34:** a finding on the boundary between two repositories has no field for the side that
   owns it, so which side carries the fix can go only in the finding's text (piece 3).
 - **F35:** smaller points in the schema and wording (pieces 1 and 4):
@@ -259,6 +259,20 @@ revision:
   - `decision_entries` counts dated entries, where a record can number them instead;
   - two counts in the prose are wrong: "Four of those matches…" and "The two optional
     blocks".
+
+Checking R22 before it was filed found two more dated facts to check again, also left for the
+next revision (piece 5, where the facts move):
+
+- **F36:** the dated fact on synced plugins says Claude Code's docs have them load in cloud
+  sessions. Read on 2026-09-28, the plugin docs say "Synced plugins load in Cowork sessions and
+  in terminal sessions where you sign in with your claude.ai account", and name no cloud
+  session, while the skills docs still name cloud sessions. What was seen on 2026-09-23 may now
+  be the documented behaviour.
+- **F37:** the dated fact on `syncClaudeAiSkills` concludes that a repository can't keep synced
+  skills out of its own sessions, and this repository's `CLAUDE.md` says the same. The settings
+  docs, read on 2026-09-28, let any settings file, the committed one included, hide a skill
+  with `skillOverrides` or block it with a `Skill(...)` deny rule. Neither has been tried on a
+  synced skill.
 
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
@@ -277,6 +291,19 @@ The owner asked for one more rule, researched before it's written:
   asks where it needs a limit. Its checked result goes into the standard as a change of its
   own, in dimensions 2, 6 and 8 and in what a new project starts with, so the pieces move text
   that already carries it.
+
+The owner also asked for one command that starts the standard from any repository, researched
+before it's built:
+
+- **The front door:** a short command, typed in a repository's session, starts a run. In an
+  existing repository it reads the repository first, drafts the Phase 3 answers with where it
+  found each, and asks only what no repository shows. In a new or nearly empty one it
+  interviews the owner and recommends a language, runtime and shape. Every run still stops
+  for approval before it writes anything. The skill reaches cloud sessions by upload to the
+  owner's claude.ai account, with the pinned link as a fallback. R22 tests the plan: the route
+  into sessions, knowing which copy ran, the questions, and where the answers are kept for the
+  next run. Its checked result goes into piece 1, with F18, F26 and F30, after the first live
+  audit's report is triaged.
 
 | Piece | What moves | Status |
 |---|---|---|

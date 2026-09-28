@@ -2,6 +2,48 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-28 — One command from any repository: researched before it's built
+
+- **Asked:** the owner wants one short command, typed in any repository's session, that starts
+  the standard. In an existing repository it reads the repository first and asks only what it
+  can't show. In a new one it interviews the owner and recommends a language, runtime and
+  shape. Every run stops for approval before it writes anything.
+- **Chosen:** research first. R22 (`research/prompts/R22-one-command-front-door.md`) tests the
+  building session's plan against the evidence: the route into sessions, knowing which copy
+  ran, drafted answers confirmed in one reply, the new-project interview, and keeping the
+  answers for the next run. The result is taken in by `research/README.md`, and only checked
+  claims reach the skill. The plan is in `ROADMAP.md`.
+- **Chosen:** the filed prompt names neither of the owner's two paired repositories, since the
+  v0.38.0 entry keeps the first live repository's name out of this repository. It doesn't
+  describe the systems that earlier runs audited, either. The owner's draft named both, and the
+  research needs neither.
+- **Checked:** the draft's statements about this repository and the standard, on 2026-09-27
+  and 2026-09-28, before filing. The filed prompt corrects them:
+  - F15 was fixed in v0.38.0, and F18 is the one still open.
+  - Phase 8 writes to whatever decision record Phase 1 found.
+  - The standard already has three things the draft didn't mention:
+    - a re-check that shows the recorded answers;
+    - a limit on the questions a new project is asked;
+    - a Scope line that rules out product direction.
+  - The testing plan is piece 0, already built.
+  - Each belief marked as the standard's now says what its dated fact says.
+- **Found:** by the owner's report, a claude.ai chat on 2026-09-27 loaded the plugin's skill as
+  `standards:project-bootstrap-and-audit` with standard v0.36.0, while `main` held v0.38.0.
+  The catalog has said 0.1.1 since 2026-09-23, as the v0.37.0 entry chose, and GitHub holds no
+  `v0.1.1` tag.
+- **Found:** read on 2026-09-28, Claude Code's plugin docs say synced plugins load in Cowork
+  sessions and in terminal sessions signed in with a claude.ai account, and name no cloud
+  session. The 2026-09-23 entry read them as naming cloud sessions. The settings docs also let
+  a committed settings file hide or deny a skill, which may reach a synced one. These are
+  `ROADMAP.md` items F36 and F37, for R22 to settle.
+- **Found:** the 2026-09-23 entry says the standard's versions up to v0.36.0 stay CC0-1.0.
+  v0.37.0 and v0.38.0 carry the CC0 dedication too. The rebuilt skill becomes Apache-2.0 at
+  piece 6, as that entry chose.
+- **Deferred:** the front door, in piece 1. *Trigger:* R22's result is filed and checked, and
+  the first live audit's report is triaged.
+- **Open:** whether colleagues will run it on work repositories. If they do, their company's
+  rules live in their own repositories or a private organization skill, never here.
+
 ## 2026-09-24 — The standard moves to v0.38.0
 
 - **Asked:** the owner asked whether anything in the file should change before it audits their
