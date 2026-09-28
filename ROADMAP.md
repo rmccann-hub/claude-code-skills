@@ -267,15 +267,18 @@ next revision (piece 5, where the facts move):
   sessions. Read on 2026-09-28, the plugin docs say "Synced plugins load in Cowork sessions and
   in terminal sessions where you sign in with your claude.ai account", and name no cloud
   session, while the skills docs name cloud sessions for synced skills. R22 found the same on
-  2026-09-27, and this session's folder for synced plugins held none on 2026-09-28. What was
-  seen on 2026-09-23 is now the documented behaviour, and the fact changes to say so.
+  2026-09-27, and this session's folder for synced plugins held none on 2026-09-28. R22's
+  deeper pass cites a French page that still named cloud sessions, but the French pages read
+  on 2026-09-28 say what the English one does. What was seen on 2026-09-23 is now the
+  documented behaviour, and the fact changes to say so.
 - **F37:** the dated fact on `syncClaudeAiSkills` concludes that a repository can't keep synced
   skills out of its own sessions, and this repository's `CLAUDE.md` says the same. The settings
   docs, read on 2026-09-28, let any settings file, the committed one included, hide a skill
   with `skillOverrides` or block it with a `Skill(...)` deny rule. R22 found nothing on whether
   a `skillOverrides` key matches a synced skill, and its test 3 tries one. The changelog does
   document `Skill(anthropic-skills:…)` rules for synced skills: allow rules in 2.1.282, deny
-  rules in 2.1.283. Neither has been tried on a synced skill.
+  rules in 2.1.283. Neither has been tried on a synced skill. Plugins now have a key of their
+  own, `syncClaudeAiPlugins`, which the fact should name too.
 
 Taking in R22's result found one more, for the next revision:
 
@@ -312,36 +315,57 @@ before it's built:
   found each, and asks only what no repository shows. In a new or nearly empty one it
   interviews the owner and recommends a language, runtime and shape. Every run still stops
   for approval before it writes anything. The skill reaches cloud sessions by upload to the
-  owner's claude.ai account, with the pinned link as a fallback. R22's result is filed and
-  checked, in [research/runs/2026-09-27-R22-one-command-front-door.md](research/runs/2026-09-27-R22-one-command-front-door.md).
-  It goes into piece 1, with F18, F26, F30 and F38, after the first live audit's report is
-  triaged. What it adds to the plan:
+  owner's claude.ai account, with the pinned link as a fallback. R22's result came in two
+  passes, both filed and checked:
+  [the first](research/runs/2026-09-27-R22-one-command-front-door.md) and
+  [a deeper one](research/runs/2026-09-27-R22-deeper-pass.md). It goes into piece 1, with F18,
+  F26, F30 and F38, after the first live audit's report is triaged. What it adds to the plan:
   - **Which copy ran:** the reference file's SHA-256 in `SKILL.md`'s metadata, checked by a
     standard-library script from a `` !`command` `` line, which a cloud session runs for a
     synced skill. The script needs tests of its own, since ruff and coverage don't reach
     `skills/`, and `skillcheck` should compare the hash with the file, so that no release
-    ships a mismatch that stops every run. A hash shows the copy is whole, not current, so the
-    run also compares its version with `main`'s. R22 has it ask whether to go on when `main`
-    is newer, a stop the standard's two waits don't include; a line in the report may be
-    enough.
+    ships a mismatch that stops every run. The deeper pass keeps the uploaded skill thin
+    instead: it fetches the reference at a pinned commit with `curl` and hashes that, so the
+    pin decides the version, at the cost of a fetch on every run. A hash shows that a copy is
+    whole, not that it's current, so the run also compares its version with `main`'s. The
+    first pass has it ask whether to go on when `main` is newer, a stop the standard's two
+    waits don't include; the deeper pass warns without stopping.
   - **The questions:** a draft of each answer the repository shows, with its evidence and one
-    word of confidence. Where it runs, production and dependents are asked outright every
-    run. Every question offers "Not sure", an option is marked recommended only beside its
-    evidence, and a re-check asks "Is that still the case?" (F38). The studies behind these
-    are checked, except R22's rows 56 and 58.
+    word of confidence. The first pass asks three outright every run: where it runs,
+    production and dependents. The deeper pass asks five, adding work or personal and how long
+    it must live, with no answer pre-selected. Every question offers "Not sure", an option is
+    marked recommended only beside its evidence, and a re-check asks "Is that still the
+    case?" (F38). `AskUserQuestion` takes at most four questions a call, and how it shows in
+    the mobile app isn't documented, so the questions also need a numbered list answered in
+    one reply. The studies behind these are checked, except the first pass's row 58.
   - **Where the answers are kept:** R22 proposes a dated block in the decision record, with no
     addresses, hostnames or names. The run report's Phase 3 block already defines those
     answers' fields, and one schema is easier to keep than two.
   - **When it loads:** a description narrowed to runs that name it, since an uploaded skill
     can't carry `disable-model-invocation`. That needs the trigger evaluations the authoring
-    review asks for.
+    review asks for. The Help Center gives an uploaded skill's description 200 characters at
+    most, where the specification allows 1,024. This skill's is 446.
+  - **Enforcing the waits:** a committed project skill can carry `disable-model-invocation`
+    and hooks, and a PreToolUse hook that exits with code 2 blocks the call. The deeper pass
+    has Phase 8 offer each repository such a skill after its first approved run, with a hook
+    that blocks writes until approval. That puts a skill and a hook into other repositories,
+    so it needs a review of its own.
+  - **A new project's recommendation:** at least two languages compared, each dependency
+    checked against its registry, and each version against current release notes. Code models
+    favour Python, name packages that don't exist (at least 5.2% of those from commercial
+    models) and use deprecated APIs: the first pass's rows 64 and 66, and the deeper pass's
+    F35. This joins R21's rule in piece 5.
   - **The plugin's version:** the catalog pins 0.1.1, and Claude Code updates an installed copy
     only when that string changes, so a copy installed before v0.37.0 still has v0.36.0. How
-    claude.ai decides that its copy changed isn't documented. Releasing at each standard
-    change, or leaving the version out so that installs follow `main`, is the owner's choice.
-  - **Three tests in the owner's browser,** in R22's section 10, settle what's left: what
-    refreshes claude.ai's copy, with Check for updates tried before any version change; what
-    a same-name upload does; and whether `skillOverrides` reaches a synced skill (F37).
+    claude.ai decides that a personal marketplace's copy changed isn't documented. By the Help
+    Center, an organisation's GitHub-synced marketplace syncs when a merged pull request
+    changes the version. Releasing at each standard change, or leaving the version out so
+    that installs follow `main`, is the owner's choice.
+  - **Tests in the owner's browser** settle what's left. Three are in the first pass's section
+    10: what refreshes claude.ai's copy, with Check for updates tried before any version
+    change; what a same-name upload does; and whether `skillOverrides` reaches a synced skill
+    (F37). A fourth comes with the first upload: whether a description over 200 characters
+    is accepted.
 
 | Piece | What moves | Status |
 |---|---|---|

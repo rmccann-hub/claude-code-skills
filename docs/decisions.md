@@ -2,6 +2,43 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-28 — R22's deeper pass is taken in
+
+- **Taken in:** a second R22 result, a deeper pass from the same day, filed as
+  `research/runs/2026-09-27-R22-deeper-pass.md` with its verification table. The filed copy
+  leaves out the first live repository's name and three model names from two study rows.
+- **Corrects the entry below:** its "Not established" bullet says some study figures aren't in
+  the abstracts cited, and that the current abstract contradicts row 65. Following the deeper
+  pass's sources to earlier versions and full texts, all of them check out: rows 56 and 66 in
+  the full papers, row 64 in its v1 abstract and row 65 in its v2 abstract. Later versions
+  changed or dropped those figures. The first pass's table now says so.
+- **Found, and checked:**
+  - The French page the deeper pass cites for synced plugins in cloud sessions now says what
+    the English one does, so F36 stays settled. This session also runs with
+    `SKIP_PLUGIN_MARKETPLACE=true`.
+  - Plugins have a sync key of their own, `syncClaudeAiPlugins` (F37).
+  - The Help Center gives an uploaded skill's description 200 characters at most, and the
+    Agent Skills specification 1,024. This skill's description is 446 characters, so an
+    upload may be refused.
+  - A committed project skill can carry `disable-model-invocation` and hooks, and a
+    PreToolUse hook blocks a call by exiting with code 2.
+  - At least 5.2% of the packages that commercial code models suggest don't exist, and 21.7%
+    for open-source models (USENIX Security 2025).
+  - `AskUserQuestion` takes at most four questions a call. How it shows in the mobile app isn't
+    documented.
+- **Not established:** the Android bug report the deeper pass cites, since github.com refused
+  this session.
+- **Chosen:** as with the first pass, nothing in the skill or the catalog changes. The deeper
+  pass's alternatives go into the front-door plan in `ROADMAP.md`, for piece 1 to weigh:
+  - a thin uploaded skill that fetches the reference at a pinned commit;
+  - five questions asked outright instead of three;
+  - a warning rather than a stop when `main` is newer;
+  - a committed project skill whose hook enforces the approval gate.
+- **Open, for the owner:** the entry below's three choices stand, with one change to the
+  first. An upload of the skill as it stands may be refused over its 446-character
+  description. If it is, a shorter description is a change to the skill, with the authoring
+  review.
+
 ## 2026-09-28 — R22's result is taken in: the route is an uploaded skill
 
 - **Taken in:** R22's result, filed as `research/runs/2026-09-27-R22-one-command-front-door.md`
