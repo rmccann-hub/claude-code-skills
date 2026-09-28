@@ -16,6 +16,9 @@ Notable changes to this repository. The format follows
   repository's answers for the owner to confirm, what a new project's interview asks before it
   recommends a language and shape, and where the answers are kept for the next run. Its checked
   result shapes the rebuild's first piece.
+- Research result R22, filed in `research/runs/` with a verification table. A skill uploaded to
+  the claude.ai account is the route into cloud sessions, where synced plugins are no longer
+  documented to load. The files it proposes wait for the rebuild's first piece.
 
 ### Changed
 

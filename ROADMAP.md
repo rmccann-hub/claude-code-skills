@@ -266,13 +266,25 @@ next revision (piece 5, where the facts move):
 - **F36:** the dated fact on synced plugins says Claude Code's docs have them load in cloud
   sessions. Read on 2026-09-28, the plugin docs say "Synced plugins load in Cowork sessions and
   in terminal sessions where you sign in with your claude.ai account", and name no cloud
-  session, while the skills docs still name cloud sessions. What was seen on 2026-09-23 may now
-  be the documented behaviour.
+  session, while the skills docs name cloud sessions for synced skills. R22 found the same on
+  2026-09-27, and this session's folder for synced plugins held none on 2026-09-28. What was
+  seen on 2026-09-23 is now the documented behaviour, and the fact changes to say so.
 - **F37:** the dated fact on `syncClaudeAiSkills` concludes that a repository can't keep synced
   skills out of its own sessions, and this repository's `CLAUDE.md` says the same. The settings
   docs, read on 2026-09-28, let any settings file, the committed one included, hide a skill
-  with `skillOverrides` or block it with a `Skill(...)` deny rule. Neither has been tried on a
-  synced skill.
+  with `skillOverrides` or block it with a `Skill(...)` deny rule. R22 found nothing on whether
+  a `skillOverrides` key matches a synced skill, and its test 3 tries one. The changelog does
+  document `Skill(anthropic-skills:…)` rules for synced skills: allow rules in 2.1.282, deny
+  rules in 2.1.283. Neither has been tried on a synced skill.
+
+Taking in R22's result found one more, for the next revision:
+
+- **F38:** a re-check shows the recorded answers with "nothing has changed" as the stated
+  default. R22's checked sources find that a large share of people confirm a wrong preloaded
+  answer (its row 61), that a default pulls hardest when it reads as a recommendation
+  (row 60), and that asking "Is that still the case?" of each answer gave the most accurate
+  reports of change (row 62). The standard already asks where it runs afresh every time.
+  Production and dependents may need the same (piece 1).
 
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
@@ -300,10 +312,36 @@ before it's built:
   found each, and asks only what no repository shows. In a new or nearly empty one it
   interviews the owner and recommends a language, runtime and shape. Every run still stops
   for approval before it writes anything. The skill reaches cloud sessions by upload to the
-  owner's claude.ai account, with the pinned link as a fallback. R22 tests the plan: the route
-  into sessions, knowing which copy ran, the questions, and where the answers are kept for the
-  next run. Its checked result goes into piece 1, with F18, F26 and F30, after the first live
-  audit's report is triaged.
+  owner's claude.ai account, with the pinned link as a fallback. R22's result is filed and
+  checked, in [research/runs/2026-09-27-R22-one-command-front-door.md](research/runs/2026-09-27-R22-one-command-front-door.md).
+  It goes into piece 1, with F18, F26, F30 and F38, after the first live audit's report is
+  triaged. What it adds to the plan:
+  - **Which copy ran:** the reference file's SHA-256 in `SKILL.md`'s metadata, checked by a
+    standard-library script from a `` !`command` `` line, which a cloud session runs for a
+    synced skill. The script needs tests of its own, since ruff and coverage don't reach
+    `skills/`, and `skillcheck` should compare the hash with the file, so that no release
+    ships a mismatch that stops every run. A hash shows the copy is whole, not current, so the
+    run also compares its version with `main`'s. R22 has it ask whether to go on when `main`
+    is newer, a stop the standard's two waits don't include; a line in the report may be
+    enough.
+  - **The questions:** a draft of each answer the repository shows, with its evidence and one
+    word of confidence. Where it runs, production and dependents are asked outright every
+    run. Every question offers "Not sure", an option is marked recommended only beside its
+    evidence, and a re-check asks "Is that still the case?" (F38). The studies behind these
+    are checked, except R22's rows 56 and 58.
+  - **Where the answers are kept:** R22 proposes a dated block in the decision record, with no
+    addresses, hostnames or names. The run report's Phase 3 block already defines those
+    answers' fields, and one schema is easier to keep than two.
+  - **When it loads:** a description narrowed to runs that name it, since an uploaded skill
+    can't carry `disable-model-invocation`. That needs the trigger evaluations the authoring
+    review asks for.
+  - **The plugin's version:** the catalog pins 0.1.1, and Claude Code updates an installed copy
+    only when that string changes, so a copy installed before v0.37.0 still has v0.36.0. How
+    claude.ai decides that its copy changed isn't documented. Releasing at each standard
+    change, or leaving the version out so that installs follow `main`, is the owner's choice.
+  - **Three tests in the owner's browser,** in R22's section 10, settle what's left: what
+    refreshes claude.ai's copy, with Check for updates tried before any version change; what
+    a same-name upload does; and whether `skillOverrides` reaches a synced skill (F37).
 
 | Piece | What moves | Status |
 |---|---|---|

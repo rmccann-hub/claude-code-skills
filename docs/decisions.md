@@ -2,6 +2,54 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-28 — R22's result is taken in: the route is an uploaded skill
+
+- **Taken in:** R22's result, filed as `research/runs/2026-09-27-R22-one-command-front-door.md`
+  with its verification table, under `research/README.md`. The filed copy leaves out three
+  phrases: the model its first line names, a company name, and the first live repository's
+  name.
+- **Found, and checked:**
+  - Skills on the owner's claude.ai account load in cloud sessions and routines. Synced plugins
+    are documented only for Cowork and signed-in terminal sessions, which settles F36.
+  - An uploaded skill may carry only the six Agent Skills fields, so `disable-model-invocation`
+    can't keep it from loading unasked. A narrower description is the lever the upload allows.
+  - In a cloud session a synced skill's `` !`command` `` lines run, so the skill can hash its
+    own reference file there.
+  - Claude Code updates an installed plugin only when the version its catalog entry pins
+    changes, and it has said 0.1.1 since 2026-09-23, so a copy installed before v0.37.0 still
+    has v0.36.0. The chat copy the owner found is, by the report's hash and timestamp, the
+    0.1.1 release's commit, `cbe163f`, with v0.36.0.
+- **Not established:** the report's reason for the chat copy, the unchanged version. claude.ai's
+  docs say a marketplace the owner added updates through Check for updates, or Sync
+  automatically, and don't say how claude.ai decides that a plugin changed. Some study figures
+  aren't in the abstracts cited (its rows 56 and 64), and the current abstract contradicts
+  row 65's 48% with 45%. None of them changes a file here.
+- **Chosen:** nothing in the skill or the catalog changes in this intake. The report's four
+  proposed files wait for piece 1, which moves the procedure into `SKILL.md`, and pass the
+  authoring review and parity runs there:
+  - its `SKILL.md` changes how Phase 3 asks, narrows when the skill loads, and asks whether to
+    go on when `main` is newer, a stop outside the standard's two waits;
+  - `scripts/verify_reference.py` has no tests, and ruff and coverage don't reach `skills/`;
+  - `assets/decisions-answers-block.md` adds a second answers schema beside the run
+    report's Phase 3 block, and changes what Phase 8 writes in other repositories;
+  - the `marketplace.json` version change is a release, which the v0.37.0 entry left to the
+    owner.
+
+  *Considered:* applying them now, as the report advises. In a scratch clone they passed
+  `skillcheck`, the tests and the catalog validator, but none of those checks runs the script
+  or the new questions.
+- **Chosen:** `ROADMAP.md` gets F38, from the report's checked survey sources: a re-check's
+  stated default, "nothing has changed", invites confirming a stale answer.
+- **Open, for the owner:**
+  - whether to upload the skill to the claude.ai account as it stands, which its frontmatter
+    allows, and turn the plugin off there, so chat doesn't carry two copies;
+  - whether installs follow releases, with a release at each standard change, or follow
+    `main`, with no pinned version;
+  - the report's three browser tests, with Check for updates tried before any version change,
+    so the first test can tell the two explanations apart.
+- **Deferred:** the front door, still in piece 1. *Trigger:* the first live audit's report is
+  triaged. R22's half of the earlier entry's trigger is met.
+
 ## 2026-09-28 — One command from any repository: researched before it's built
 
 - **Asked:** the owner wants one short command, typed in any repository's session, that starts
