@@ -2,6 +2,133 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-28 — R22's deeper pass is taken in
+
+- **Taken in:** a second R22 result, a deeper pass from the same day, filed as
+  `research/runs/2026-09-27-R22-deeper-pass.md` with its verification table. The filed copy
+  leaves out the first live repository's name and three model names from two study rows.
+- **Corrects the entry below:** its "Not established" bullet says some study figures aren't in
+  the abstracts cited, and that the current abstract contradicts row 65. Following the deeper
+  pass's sources to earlier versions and full texts, all of them check out: rows 56 and 66 in
+  the full papers, row 64 in its v1 abstract and row 65 in its v2 abstract. Later versions
+  changed or dropped those figures. The first pass's table now says so.
+- **Found, and checked:**
+  - The French page the deeper pass cites for synced plugins in cloud sessions now says what
+    the English one does, so F36 stays settled. This session also runs with
+    `SKIP_PLUGIN_MARKETPLACE=true`.
+  - Plugins have a sync key of their own, `syncClaudeAiPlugins` (F37).
+  - The Help Center gives an uploaded skill's description 200 characters at most, and the
+    Agent Skills specification 1,024. This skill's description is 446 characters, so an
+    upload may be refused.
+  - A committed project skill can carry `disable-model-invocation` and hooks, and a
+    PreToolUse hook blocks a call by exiting with code 2.
+  - At least 5.2% of the packages that commercial code models suggest don't exist, and 21.7%
+    for open-source models (USENIX Security 2025).
+  - `AskUserQuestion` takes at most four questions a call. How it shows in the mobile app isn't
+    documented.
+- **Not established:** the Android bug report the deeper pass cites, since github.com refused
+  this session.
+- **Chosen:** as with the first pass, nothing in the skill or the catalog changes. The deeper
+  pass's alternatives go into the front-door plan in `ROADMAP.md`, for piece 1 to weigh:
+  - a thin uploaded skill that fetches the reference at a pinned commit;
+  - five questions asked outright instead of three;
+  - a warning rather than a stop when `main` is newer;
+  - a committed project skill whose hook enforces the approval gate.
+- **Open, for the owner:** the entry below's three choices stand, with one change to the
+  first. An upload of the skill as it stands may be refused over its 446-character
+  description. If it is, a shorter description is a change to the skill, with the authoring
+  review.
+
+## 2026-09-28 — R22's result is taken in: the route is an uploaded skill
+
+- **Taken in:** R22's result, filed as `research/runs/2026-09-27-R22-one-command-front-door.md`
+  with its verification table, under `research/README.md`. The filed copy leaves out three
+  phrases: the model its first line names, a company name, and the first live repository's
+  name.
+- **Found, and checked:**
+  - Skills on the owner's claude.ai account load in cloud sessions and routines. Synced plugins
+    are documented only for Cowork and signed-in terminal sessions, which settles F36.
+  - An uploaded skill may carry only the six Agent Skills fields, so `disable-model-invocation`
+    can't keep it from loading unasked. A narrower description is the lever the upload allows.
+  - In a cloud session a synced skill's `` !`command` `` lines run, so the skill can hash its
+    own reference file there.
+  - Claude Code updates an installed plugin only when the version its catalog entry pins
+    changes, and it has said 0.1.1 since 2026-09-23, so a copy installed before v0.37.0 still
+    has v0.36.0. The chat copy the owner found is, by the report's hash and timestamp, the
+    0.1.1 release's commit, `cbe163f`, with v0.36.0.
+- **Not established:** the report's reason for the chat copy, the unchanged version. claude.ai's
+  docs say a marketplace the owner added updates through Check for updates, or Sync
+  automatically, and don't say how claude.ai decides that a plugin changed. Some study figures
+  aren't in the abstracts cited (its rows 56 and 64), and the current abstract contradicts
+  row 65's 48% with 45%. None of them changes a file here.
+- **Chosen:** nothing in the skill or the catalog changes in this intake. The report's four
+  proposed files wait for piece 1, which moves the procedure into `SKILL.md`, and pass the
+  authoring review and parity runs there:
+  - its `SKILL.md` changes how Phase 3 asks, narrows when the skill loads, and asks whether to
+    go on when `main` is newer, a stop outside the standard's two waits;
+  - `scripts/verify_reference.py` has no tests, and ruff and coverage don't reach `skills/`;
+  - `assets/decisions-answers-block.md` adds a second answers schema beside the run
+    report's Phase 3 block, and changes what Phase 8 writes in other repositories;
+  - the `marketplace.json` version change is a release, which the v0.37.0 entry left to the
+    owner.
+
+  *Considered:* applying them now, as the report advises. In a scratch clone they passed
+  `skillcheck`, the tests and the catalog validator, but none of those checks runs the script
+  or the new questions.
+- **Chosen:** `ROADMAP.md` gets F38, from the report's checked survey sources: a re-check's
+  stated default, "nothing has changed", invites confirming a stale answer.
+- **Open, for the owner:**
+  - whether to upload the skill to the claude.ai account as it stands, which its frontmatter
+    allows, and turn the plugin off there, so chat doesn't carry two copies;
+  - whether installs follow releases, with a release at each standard change, or follow
+    `main`, with no pinned version;
+  - the report's three browser tests, with Check for updates tried before any version change,
+    so the first test can tell the two explanations apart.
+- **Deferred:** the front door, still in piece 1. *Trigger:* the first live audit's report is
+  triaged. R22's half of the earlier entry's trigger is met.
+
+## 2026-09-28 — One command from any repository: researched before it's built
+
+- **Asked:** the owner wants one short command, typed in any repository's session, that starts
+  the standard. In an existing repository it reads the repository first and asks only what it
+  can't show. In a new one it interviews the owner and recommends a language, runtime and
+  shape. Every run stops for approval before it writes anything.
+- **Chosen:** research first. R22 (`research/prompts/R22-one-command-front-door.md`) tests the
+  building session's plan against the evidence: the route into sessions, knowing which copy
+  ran, drafted answers confirmed in one reply, the new-project interview, and keeping the
+  answers for the next run. The result is taken in by `research/README.md`, and only checked
+  claims reach the skill. The plan is in `ROADMAP.md`.
+- **Chosen:** the filed prompt names neither of the owner's two paired repositories, since the
+  v0.38.0 entry keeps the first live repository's name out of this repository. It doesn't
+  describe the systems that earlier runs audited, either. The owner's draft named both, and the
+  research needs neither.
+- **Checked:** the draft's statements about this repository and the standard, on 2026-09-27
+  and 2026-09-28, before filing. The filed prompt corrects them:
+  - F15 was fixed in v0.38.0, and F18 is the one still open.
+  - Phase 8 writes to whatever decision record Phase 1 found.
+  - The standard already has three things the draft didn't mention:
+    - a re-check that shows the recorded answers;
+    - a limit on the questions a new project is asked;
+    - a Scope line that rules out product direction.
+  - The testing plan is piece 0, already built.
+  - Each belief marked as the standard's now says what its dated fact says.
+- **Found:** by the owner's report, a claude.ai chat on 2026-09-27 loaded the plugin's skill as
+  `standards:project-bootstrap-and-audit` with standard v0.36.0, while `main` held v0.38.0.
+  The catalog has said 0.1.1 since 2026-09-23, as the v0.37.0 entry chose, and GitHub holds no
+  `v0.1.1` tag.
+- **Found:** read on 2026-09-28, Claude Code's plugin docs say synced plugins load in Cowork
+  sessions and in terminal sessions signed in with a claude.ai account, and name no cloud
+  session. The 2026-09-23 entry read them as naming cloud sessions. The settings docs also let
+  a committed settings file hide or deny a skill, which may reach a synced one. These are
+  `ROADMAP.md` items F36 and F37, for R22 to settle.
+- **Found:** the 2026-09-23 entry says the standard's versions up to v0.36.0 stay CC0-1.0.
+  v0.37.0 and v0.38.0 carry the CC0 dedication too. The rebuilt skill becomes Apache-2.0 at
+  piece 6, as that entry chose.
+- **Deferred:** the front door, in piece 1. *Trigger:* R22's result is filed and checked, and
+  the first live audit's report is triaged.
+- **Open:** whether colleagues will run it on work repositories. If they do, their company's
+  rules live in their own repositories or a private organization skill, never here.
+
 ## 2026-09-24 — The standard moves to v0.38.0
 
 - **Asked:** the owner asked whether anything in the file should change before it audits their

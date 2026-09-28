@@ -17,7 +17,7 @@ than inside it.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.38.0 | shipped | core | none |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.38.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -195,7 +195,7 @@ revision because an audit never reads them:
   XML export in UTF-16 doesn't give without a `working-tree-encoding` rule or a registration
   script instead (piece 5).
 
-The final audit runs raised two more, also left for the next revision:
+The final audit and re-check runs raised four more, also left for the next revision:
 
 - **F22:** the command results don't name a command the session's permission layer refuses.
   Both runs that met one chose `UNVERIFIABLE-HERE`, which fits, but saying so settles it
@@ -208,6 +208,89 @@ The final audit runs raised two more, also left for the next revision:
   action pinned by tag is a finding, or at which tier. The final re-check rated one `GAP` and
   offered the pin as optional (piece 3).
 
+Preparing the first live run found four more, also left for the next revision:
+
+- **F26:** Phase 3 asks its questions in the abstract, and the first live repository's owner
+  couldn't answer them as asked. The repository's own records held nearly every answer except
+  where it runs: its registry page for exposure, its updater and release workflow for
+  production, its licence and manifest for the irreversible decisions. The wait could offer
+  those as drafts with their evidence for the owner to confirm, and still ask where it runs
+  (piece 1).
+- **F27:** a cloud container lacked `libEGL.so.1`, so no test in a Qt suite could import, and
+  the repository's CI installs that library with apt. The setup carve-out covers the project's
+  declared dependencies but doesn't say whether what its CI workflow installs is declared: the
+  system packages, and tools such as `pip-audit` that its jobs install. A run could rate the
+  suite `UNVERIFIABLE-HERE` for the container's sake, and the dry run below counted those tools
+  one way where a stricter run would count them the other (piece 4).
+- **F28:** the time-box of about five minutes rates a longer suite `NOT-RUN-HERE`. That
+  repository's suite ran about eight minutes in a cloud container, so the gate CI relies on
+  most would never run. The run could start it in the background and rate it when it finishes
+  (piece 4).
+- **F29:** nothing compares the addresses in commit history with the owner's answer. A public
+  personal repository whose commits carry an employer's address raises the question the
+  provenance rule exists for, and the owner should see it at the gate (piece 3).
+
+A dry run of that audit, stopped at the Phase 3 wait, found six more, also left for the next
+revision:
+
+- **F30:** a run that stops at Phase 3 has nowhere to find its report's shape or its
+  self-check. The header, `lifecycle`, `expires` and the three lists are defined only in
+  Phase 6. `ten_statuses_emitted`, `tally_sums_to_ten` and `waits_observed` have no value for a
+  stop at Phase 3, and the header's `tally` has no "not yet rated" (piece 1).
+- **F31:** when a context file documents one command that runs every gate, and CI runs them
+  as separate steps, nothing says which the run executes. Either choice fits the rules, so two
+  runs can record different command lists (piece 4).
+- **F32:** the hook check, `ls .git/hooks/pre-commit`, misses a hook activated through
+  `core.hooksPath`, and fails in a worktree. `git rev-parse --git-path hooks` and
+  `git config core.hooksPath` cover both (piece 4).
+- **F33:** the dated fact on cloud sessions says release-asset requests reach only attached
+  repositories. On 2026-09-26, in this repository's session, an unattached public
+  repository's release asset downloaded with a 200, while its API returned 403. The fact needs
+  checking again, and narrowing to what holds (piece 5).
+- **F34:** a finding on the boundary between two repositories has no field for the side that
+  owns it, so which side carries the fix can go only in the finding's text (piece 3).
+- **F35:** smaller points in the schema and wording (pieces 1 and 4):
+  - answers given in the prompt have no `answers_source` value;
+  - copyright is worded three ways: the legal entity in Phase 0, the legal name if work-owned
+    in Phase 3, and a handle allowed in its schema;
+  - `settled` and `locked` aren't defined;
+  - `clock_delta_days` taken from `--date=short` reads the commit's own time zone;
+  - `reference_markdown_lines` isn't defined;
+  - `decision_entries` counts dated entries, where a record can number them instead;
+  - two counts in the prose are wrong: "Four of those matches…" and "The two optional
+    blocks".
+
+Checking R22 before it was filed found two more dated facts to check again, also left for the
+next revision (piece 5, where the facts move):
+
+- **F36:** the dated fact on synced plugins says Claude Code's docs have them load in cloud
+  sessions. Read on 2026-09-28, the plugin docs say "Synced plugins load in Cowork sessions and
+  in terminal sessions where you sign in with your claude.ai account", and name no cloud
+  session, while the skills docs name cloud sessions for synced skills. R22 found the same on
+  2026-09-27, and this session's folder for synced plugins held none on 2026-09-28. R22's
+  deeper pass cites a French page that still named cloud sessions, but the French pages read
+  on 2026-09-28 say what the English one does. What was seen on 2026-09-23 is now the
+  documented behaviour, and the fact changes to say so.
+- **F37:** the dated fact on `syncClaudeAiSkills` concludes that a repository can't keep synced
+  skills out of its own sessions, and this repository's `CLAUDE.md` says the same. The settings
+  docs, read on 2026-09-28, let any settings file, the committed one included, hide a skill
+  with `skillOverrides` or block it with a `Skill(...)` deny rule. R22 found nothing on whether
+  a `skillOverrides` key matches a synced skill, and its test 3 tries one. The changelog does
+  document `Skill(anthropic-skills:…)` rules for synced skills: allow rules in 2.1.282, deny
+  rules in 2.1.283. Neither has been tried on a synced skill. Plugins now have a key of their
+  own, `syncClaudeAiPlugins`, which the fact should name too. The first live audit found 49
+  account skills loading into the audited repository's sessions, two of them asking to be read
+  first, and rated that a dimension 4 secondary.
+
+Taking in R22's result found one more, for the next revision:
+
+- **F38:** a re-check shows the recorded answers with "nothing has changed" as the stated
+  default. R22's checked sources find that a large share of people confirm a wrong preloaded
+  answer (its row 61), that a default pulls hardest when it reads as a recommendation
+  (row 60), and that asking "Is that still the case?" of each answer gave the most accurate
+  reports of change (row 62). The standard already asks where it runs afresh every time.
+  Production and dependents may need the same (piece 1).
+
 v0.38.0 also carries four changes the owner asked for before the first live run. Context
 files are measured in bytes as well as lines. Evidence files are read in parts. The starter CI
 pins its action to a commit SHA. An upload that renames the file isn't a version mismatch.
@@ -217,6 +300,66 @@ Live runs on the owner's repositories come between pieces. Each report is triage
 [docs/testing-the-skill.md](docs/testing-the-skill.md) describes, and what it finds is fixed
 before the next repository's run.
 
+The first live audit ran on 2026-09-28, on v0.38.0 from the owner's run file, in a cloud
+session. It stopped at both waits and wrote nothing before approval. It confirmed F27, F30,
+F32, F34 and F35 on a real repository: the side that owns a boundary finding went into `notes`.
+F26's drafted answers worked: the owner confirmed the tier in one word. Its report up to the
+Phase 6 gate found five more, left for the next revision. The apply half came back the same
+day: eleven approved changes on one pull request, eight held as asked, and nothing held was
+touched. It found seven more, after F43, and adds to F40 and F42.
+
+- **F39:** a fetch moves `origin/<default>` but not the clone's local branch of the same name,
+  so a history scan that names `main` reads the history as old as the clone. The run caught it
+  only because a version reconciliation disagreed with the tag. After the fetch, read the
+  default branch through its remote-tracking ref (piece 4).
+- **F40:** no dated fact covers a secret-scan job's range. For a push, gitleaks-action scans
+  `--no-merges --first-parent <first>^..<head>`, so on a merge-commit workflow a push run scans
+  no commits and passes. A pull-request run skips merge commits and second-parent history. The
+  run rated it `BLOCKER`, as a check reporting success while measuring nothing. A secret-scan
+  job is read by its range and its scanned count, never by its conclusion (piece 5). The run's
+  own full-history scan missed merge commits' changes too: gitleaks' default log options skip
+  them, and only `--log-opts="-m <ref>"` or `"--all -m"` reads them. The fact says so.
+- **F41:** a status command whose non-zero exit is its report can only be rated `FAIL` under
+  the closed vocabulary. One example is a command that exits 1 while a handshake round is open.
+  The tally then counts a failure that isn't one (piece 1).
+- **F42:** "write nothing to the repository" doesn't say whether the ignored artifacts that the
+  gates leave in the working tree count: caches, an egg-info directory, coverage data. The run
+  counted them as no write and listed them, and one of them changed a test's collected count.
+  In the apply half, a wheel built while replaying CI in the working tree left `build/lib/`
+  behind, and a test that CI failed passed locally because of it. A job that builds or installs
+  is replayed in a scratch clone (piece 4).
+- **F43:** the Phase 6 schema has no field for an amendment the owner approves but holds. The
+  run added a `held` key and declared it under `fields_added_beyond_schema` (piece 1).
+
+The apply half found these:
+
+- **F44:** Phase 7 doesn't say to fetch the default branch before pushing. It had moved five
+  commits during the run, so the pull request conflicted with its base, and a conflicting pull
+  request gets no workflow run at all: zero check runs, not pending ones. If the base moved,
+  bring it in by the repository's convention and run the gate again. After pushing, read the
+  pull request's mergeability before reading its checks (piece 4).
+- **F45:** "commit by concern" doesn't say to run the full gate before each push. Targeted runs
+  of the tests naming the edited files missed the repository's own sweeps over the tree, so two
+  of eleven commits were red on their own until they were rebuilt (piece 4).
+- **F46:** the fresh-clone check doesn't say to clone from the remote. A clone of the working
+  copy took its stale branches as its remote-tracking refs, which is F39's trap by another
+  route, and part of the gate run there isn't the gate (piece 4).
+- **F47:** a human action has no state for "reported done, not observed". The owner reported a
+  setting done while the API still read it as off. Each action records what was seen beside
+  what was said: done and observed, reported but not observed, or not observable here
+  (piece 4).
+- **F48:** when the base moves between Phase 2 and the push, Phase 8's re-checks run again on
+  the merged tree, and the record names both base commits (piece 4).
+- **F49:** an approved check that runs an optional tool whenever the tool is present can refuse
+  good input when the tool is too old. The installer change ran `gh attestation verify`
+  whenever `gh` was on the path. The command arrived in gh 2.47.0, and Debian 13 packages
+  2.46.0 (sources.debian.org, read 2026-09-28). A check that uses an optional tool probes for
+  the capability, not the tool (piece 3).
+- **F50:** a report committed to a public repository at the owner's request got no privacy
+  pass. Its survey of the owner's other repositories named three private ones. A report
+  written for the owner can hold what a public tree mustn't, so committing it needs the check
+  any public write gets (piece 4).
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
@@ -225,6 +368,67 @@ The owner asked for one more rule, researched before it's written:
   asks where it needs a limit. Its checked result goes into the standard as a change of its
   own, in dimensions 2, 6 and 8 and in what a new project starts with, so the pieces move text
   that already carries it.
+
+The owner also asked for one command that starts the standard from any repository, researched
+before it's built:
+
+- **The front door:** a short command, typed in a repository's session, starts a run. In an
+  existing repository it reads the repository first, drafts the Phase 3 answers with where it
+  found each, and asks only what no repository shows. In a new or nearly empty one it
+  interviews the owner and recommends a language, runtime and shape. Every run still stops
+  for approval before it writes anything. The skill reaches cloud sessions by upload to the
+  owner's claude.ai account, with the pinned link as a fallback. R22's result came in two
+  passes, both filed and checked:
+  [the first](research/runs/2026-09-27-R22-one-command-front-door.md) and
+  [a deeper one](research/runs/2026-09-27-R22-deeper-pass.md). It goes into piece 1, with F18,
+  F26, F30 and F38. Both halves of the first live audit's report are triaged, as above.
+  What it adds to the plan:
+  - **Which copy ran:** the reference file's SHA-256 in `SKILL.md`'s metadata, checked by a
+    standard-library script from a `` !`command` `` line, which a cloud session runs for a
+    synced skill. The script needs tests of its own, since ruff and coverage don't reach
+    `skills/`, and `skillcheck` should compare the hash with the file, so that no release
+    ships a mismatch that stops every run. The deeper pass keeps the uploaded skill thin
+    instead: it fetches the reference at a pinned commit with `curl` and hashes that, so the
+    pin decides the version, at the cost of a fetch on every run. A hash shows that a copy is
+    whole, not that it's current, so the run also compares its version with `main`'s. The
+    first pass has it ask whether to go on when `main` is newer, a stop the standard's two
+    waits don't include; the deeper pass warns without stopping.
+  - **The questions:** a draft of each answer the repository shows, with its evidence and one
+    word of confidence. The first pass asks three outright every run: where it runs,
+    production and dependents. The deeper pass asks five, adding work or personal and how long
+    it must live, with no answer pre-selected. Every question offers "Not sure", an option is
+    marked recommended only beside its evidence, and a re-check asks "Is that still the
+    case?" (F38). `AskUserQuestion` takes at most four questions a call, and how it shows in
+    the mobile app isn't documented, so the questions also need a numbered list answered in
+    one reply. The studies behind these are checked, except the first pass's row 58.
+  - **Where the answers are kept:** R22 proposes a dated block in the decision record, with no
+    addresses, hostnames or names. The run report's Phase 3 block already defines those
+    answers' fields, and one schema is easier to keep than two.
+  - **When it loads:** a description narrowed to runs that name it, since an uploaded skill
+    can't carry `disable-model-invocation`. That needs the trigger evaluations the authoring
+    review asks for. The Help Center gives an uploaded skill's description 200 characters at
+    most, where the specification allows 1,024. This skill's is 446.
+  - **Enforcing the waits:** a committed project skill can carry `disable-model-invocation`
+    and hooks, and a PreToolUse hook that exits with code 2 blocks the call. The deeper pass
+    has Phase 8 offer each repository such a skill after its first approved run, with a hook
+    that blocks writes until approval. That puts a skill and a hook into other repositories,
+    so it needs a review of its own.
+  - **A new project's recommendation:** at least two languages compared, each dependency
+    checked against its registry, and each version against current release notes. Code models
+    favour Python, name packages that don't exist (at least 5.2% of those from commercial
+    models) and use deprecated APIs: the first pass's rows 64 and 66, and the deeper pass's
+    F35. This joins R21's rule in piece 5.
+  - **The plugin's version:** the catalog pins 0.1.1, and Claude Code updates an installed copy
+    only when that string changes, so a copy installed before v0.37.0 still has v0.36.0. How
+    claude.ai decides that a personal marketplace's copy changed isn't documented. By the Help
+    Center, an organisation's GitHub-synced marketplace syncs when a merged pull request
+    changes the version. Releasing at each standard change, or leaving the version out so
+    that installs follow `main`, is the owner's choice.
+  - **Tests in the owner's browser** settle what's left. Three are in the first pass's section
+    10: what refreshes claude.ai's copy, with Check for updates tried before any version
+    change; what a same-name upload does; and whether `skillOverrides` reaches a synced skill
+    (F37). A fourth comes with the first upload: whether a description over 200 characters
+    is accepted.
 
 | Piece | What moves | Status |
 |---|---|---|

@@ -11,6 +11,15 @@ Notable changes to this repository. The format follows
 - Research prompt R21, on running with the fewest dependencies at their newest versions. It asks
   what a dependency costs, when to add or remove one, which runtime versions to target and
   test, and how CI can check less. Its checked result goes into the standard.
+- Research prompt R22, on starting the standard with one command from any repository. It asks
+  which route reaches cloud sessions and how to tell which copy ran, how to draft an existing
+  repository's answers for the owner to confirm, what a new project's interview asks before it
+  recommends a language and shape, and where the answers are kept for the next run. Its checked
+  result shapes the rebuild's first piece.
+- Research result R22, in two passes, each filed in `research/runs/` with a verification table.
+  A skill uploaded to the claude.ai account is the route into cloud sessions, where synced
+  plugins are no longer documented to load. The files it proposes wait for the rebuild's first
+  piece.
 
 ### Changed
 
