@@ -552,8 +552,19 @@ repository and forces prose apologia the schema exists to remove.
 |---|---|
 | `PASS` | Ran, exit 0 |
 | `FAIL` | Ran, non-zero exit |
-| `UNVERIFIABLE-HERE` | **Cannot** run here — no network, no daemon, needs a credential, wrong host OS, or a side effect outside the container |
+| `UNVERIFIABLE-HERE` | **Cannot** run here — no network, no daemon, needs a credential, wrong host OS, a side effect outside the container, or the session refuses it |
 | `NOT-RUN-HERE` | **Could** run, but was time-boxed out |
+
+**A command the session refuses is `UNVERIFIABLE-HERE`**, whether its permission layer or
+the enforced layer refused it, and the refusal is recorded as it was worded. **Never re-spell
+the command to get past a refusal**, for the reason the deny layer is never routed around.
+
+**A command whose exit status is its report is not a gate, unless a workflow gates on it.** A
+status check that exits 1 while something is open, or `git diff --exit-code` asking whether
+anything differs, answers a question rather than passing or failing. Record its answer in the
+phase block's `notes`, not in `commands`, so the tally doesn't count a failure that isn't
+one. Where a workflow does gate on its exit, it is a gate like any other, and it goes in
+`commands` with its result.
 
 ### Amendment severity
 
@@ -574,6 +585,14 @@ file documents. Then it goes in `commands` as well, and its result is counted: t
 exempts installing from being a side effect, not a gate's result from the tally. A lockfile
 install that fails is the gate failing, and a tally that reads all `PASS` beside it misleads
 the reader who triages from the numbers.
+
+**What the project's CI installs counts as declared**, because its workflow is where the project
+declares it: the system packages a job installs, such as a library the test suite needs from
+`apt-get`; the tools a job installs, such as `pip-audit`; and a binary an action downloads,
+fetched here at the same version and checked against its published checksum. Installing any of
+them in the container is setup, recorded with the workflow line that declares it. **A suite
+that cannot import for want of one is not `UNVERIFIABLE-HERE` while the container can install
+it**: install it the way the workflow does, then run the suite.
 A dependency environment that already existed at session start goes in
 `environment_preexisting`, not `setup` — the distinction is material to reproducibility.
 
