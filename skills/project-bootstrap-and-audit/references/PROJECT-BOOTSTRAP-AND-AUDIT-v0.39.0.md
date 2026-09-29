@@ -681,12 +681,12 @@ reads as diligence.
 | Adherence to written instructions may decay within a session — about 5.6% lower odds of compliance per additional function generated, an exploratory, non-monotonic finding; the same study found no detectable effect of file size, position, structure or conflicts (`arXiv:2605.10039`) | 2026-09 | Why the gates exist, and why the conformance block sits last |
 | Audits of public skill marketplaces found between a quarter and a third of published skills flawed (Snyk: 36.82% of 3,984; `arXiv:2601.10338`: 26.1% of 42,447), with confirmed coordinated malicious campaigns | 2026-09 | Dimension 4's inventory of hooks, skills and plugins |
 | `claude plugin validate --strict` (2.1.280) checks manifests and agents, but reported none of five planted skill defects and accepted a reserved marketplace name | 2026-09 | Dimension 9. A passing validator is not a review of the skills |
-| `syncClaudeAiSkills: false` in a project's committed `.claude/settings.json` is ignored; user, local and managed settings honour it | 2026-09 | Dimension 4. A repository cannot keep synced skills out of its own sessions |
+| `syncClaudeAiSkills: false`, and `syncClaudeAiPlugins: false` for plugins, are read from user, local and managed settings only, so a project's committed `.claude/settings.json` can't stop the sync. Any settings file, the committed one included, can hide a skill with `skillOverrides`, which the docs say doesn't reach plugin skills and don't say of synced ones. The changelog documents `Skill(anthropic-skills:<name>)` permission rules that match synced skills (2.1.282, 2.1.283). Neither route had been tried on a synced skill as of 2026-09-28 | 2026-09 | Dimension 4. A repository can't stop the sync; whether it can hide or deny a synced skill in its own sessions is documented, not yet shown |
 | A plugin catalog entry whose skill paths all miss loads the plugin's whole skills folder, with no error | 2026-09 | Dimension 9. One typo ships everything |
-| Plugins enabled on a claude.ai account are documented to load in cloud sessions as `<name>@synced`. For one account, on 2026-09-23, none did, from any source, while its skills did: the sync ran and received an empty list | 2026-09 | *Standards Distribution*. Check a session before promising a plugin reaches cloud sessions |
+| Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Skills enabled on the account load in cloud sessions as well. For one account, on 2026-09-23 and again on 2026-09-28, a cloud session received no plugin while its skills arrived | 2026-09 | *Standards Distribution*. A skill reaches cloud sessions by upload to the account; a plugin doesn't |
 | An organisation's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards Distribution*. A public repository reaches an organisation's members only by upload |
 | A cloud session installs no plugin that a repository's `.claude/settings.json` turns on under `enabledPlugins`, including those from marketplaces it lists under `extraKnownMarketplaces` | 2026-09 | Dimension 4 and *Standards Distribution*. A repository that relies on its settings for a plugin gets none in cloud sessions |
-| In a cloud session, a public repository's committed files arrive through `raw.githubusercontent.com`, which is on the default Trusted network list, while GitHub API and release-asset requests reach only repositories attached to the session | 2026-09 | *Sending Results Back*. A file linked at a commit is reachable where a release asset is not |
+| In a cloud session, a public repository's committed files arrive through `raw.githubusercontent.com`, which is on the default Trusted network list, while GitHub API requests reach only repositories attached to the session. The docs say release-asset requests do too, with a 403 otherwise, but on 2026-09-26 and 2026-09-29 an unattached public repository's `releases/download/` link returned 200 while its API returned 403 | 2026-09 | *Sending Results Back*. A file linked at a commit is documented to arrive; a release asset is documented not to, whatever one download showed |
 | Claude Code's web-fetch tool returns a small model's answer about a page, not the page. Its documentation calls that lossy by design and points to `curl` for the unprocessed page | 2026-09 | *Sending Results Back*. A file meant to be read whole is downloaded, not fetched |
 
 ### Scanners and formatters
@@ -1474,8 +1474,9 @@ tier; one carrying such an instruction is a `BLOCKER` on dimension 7.**
 
 **Count the copies that never appear in the tree.** A session loads the skills and plugins
 enabled on its account, and none of them is a file in the repository. A repository's committed
-settings cannot turn synced skills off. Where the run can list what loaded, the inventory
-includes them; where it cannot, it says so.
+settings cannot stop the sync, and whether they can hide or deny a synced skill is documented
+but not yet shown: *Facts with an Expiry Date* has both. Where the run can list what loaded,
+the inventory includes them; where it cannot, it says so.
 
 **The files that instruct future sessions are the highest-risk write class, and they change
 only through the gate.** The context file, the enforced layer, hooks, and skills are the
@@ -3958,7 +3959,7 @@ protocol is a two-element one.
 | CI logic | Reusable workflows — pull-based, change once |
 | Files that must physically exist | `copier` template — a session cannot fetch them |
 | Shared reference docs | `copier` template — one path, refreshed by `copier update` |
-| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under: plugins enabled there are documented to reach cloud sessions, but check *Facts with an Expiry Date* first, and a repository's own settings install none there. A stamped, checked copy under `.claude/skills/` where neither fits |
+| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under, which is documented to load there. Plugins enabled on the account are documented for Cowork and signed-in terminal sessions only, and a repository's own settings install none in a cloud session. A stamped, checked copy under `.claude/skills/` where neither fits |
 | This standard, for one run | Attached, or linked at a fixed commit and checked against its SHA-256, as *Sending Results Back* shows |
 
 `.copier-answers.yml` records the template version. `copier update` re-applies changes and
