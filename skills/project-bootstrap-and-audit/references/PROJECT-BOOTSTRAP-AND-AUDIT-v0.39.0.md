@@ -1082,29 +1082,53 @@ notes: <... | none>
 
 **Six questions. Phase 3 always stops here — including on a re-check.**
 
-On a **first audit**, ask all six. If a reconnaissance report in this session carries answers
-1–4, use them verbatim, name the report, and do not re-ask.
+On a **first audit**, ask all six, **with a draft of each answer the repository shows.** Its
+own records usually hold most of them: the repository's visibility or a registry page for
+exposure, a licence and a manifest for the copyright holder and the irreversible decisions.
+**Each draft carries its evidence, as a path and a line, and one word of confidence:** `high`,
+`medium` or `low`. The human then confirms or corrects a draft, rather than answering in the
+abstract, which the first live repository's owner couldn't do as the questions were asked.
+**Three are never drafted: production, dependents and where it runs.** An updater or a release
+workflow is evidence about production, so show it beside the question, but nothing in a
+repository shows who relies on the output or what the machine it runs on is doing today.
+
+**Every question offers "Not sure"**, and an option is marked recommended only beside its
+evidence. A default pulls hardest when it reads as a recommendation, and a large share of
+people confirm a wrong answer that arrives filled in. **"Not sure" is an answer:** record it as
+`unknown`, and treat what depends on it as the deployment rule below does.
+
+**Answers already given are used, not re-asked.** Where the prompt that started the run
+carries them, or a reconnaissance report in this session carries answers 1–4, use them
+verbatim and say where they came from in `answers_source`. The run still stops here, to show
+the tier it computed from them.
 
 On a **re-check**, do not re-ask from scratch and do not silently carry forward either.
-**Show the recorded answers and ask what has changed**, with "nothing has changed" as the
-stated default. This costs one exchange and catches the thing a record cannot: a tier rated
-on the *imminent* state whose trigger has since fired. A record describes what was true when
-it was written, and only the human knows whether it still is.
+**Show each recorded answer and ask of it: "Is that still the case?"** — with no answer
+pre-selected and no stated default. Asked that way, people report change most accurately,
+where a stated "nothing has changed" invites them to confirm what no longer holds. Production
+and dependents change without a commit, as where it runs does, so none of the three is ever
+carried forward unasked. This costs one exchange and catches the thing a record cannot: a
+tier rated on the *imminent* state whose trigger has since fired. A record describes what was
+true when it was written, and only the human knows whether it still is.
 
 **Do not fold this into the Phase 6 gate.** A tier confirmation arriving after the dimensions
 have been rated is a confirmation of work already done.
 
-**A run that ends at this wait still hands over its report.** The file holds phases 0–3,
-the questions asked and any recommendation still waiting on a pick, under the same name as
-any other run's report. If the run continues after the answers, it appends to the same file.
-Its `overrides` go in the Phase 3 block's `notes`, since the Phase 4 block that holds them is
-never emitted.
+**A run that ends at this wait still hands over its report**, in the shape Phase 6 gives: the
+same name, `lifecycle: transient` with a concrete `expires:`, and the reconciliation header,
+whose `tally` reads `not yet rated`. **In place of Phase 6's three lists it holds the questions
+asked**, each with its draft and evidence, and any recommendation still waiting on a pick. The
+appendix holds the blocks from `phase: 0` to `phase: 3`, then the *Conformance Self-Check*,
+where `ten_statuses_emitted` and `tally_sums_to_ten` are `n/a` and `waits_observed` is 1. If the
+run continues after the answers, it appends to the same file. Its `overrides` go in the Phase 3
+block's `notes`, since the Phase 4 block that holds them is never emitted.
 
 1. **Owner** — work (employer-owned), personal, or mixed?
 2. **Exposure** — already public / possible later / never?
 3. **Production** — touches production **today, or one un-committed change away**?
 4. **Dependents** — does anyone else run it or depend on its output?
-5. **Copyright holder** — if work-owned, the exact legal name.
+5. **Copyright holder** — the person or legal entity, as the human names it: for work-owned
+   code, the employer's exact legal name.
 6. **Where it actually runs** — what machine runs it today, how it is started, what address
    it binds, and who can reach that address. **Four parts, asked every time, including on a
    re-check.**
@@ -1185,6 +1209,11 @@ the decisions that cannot be revisited cheaply, so a recorded "we chose this" is
 here than anywhere else. **Everything below rank 5 is deferred with a trigger rather than
 decided now.**
 
+**Each rank takes one state.** `decided now`: the human decides it at this wait. `settled`:
+already decided, by the code or an earlier record, and still changeable at the cost the table
+names. `locked`: fixed for what is already out, such as a released version's licence or a
+package name a registry holds, so a change to it is never proposed.
+
 <constraints>
 
 **In greenfield mode, ranks 1 and 5 are answered here.**
@@ -1216,9 +1245,11 @@ Record the answers in `inception`. **Do not ask a fourth question to be thorough
 
 ```yaml
 phase: 3
-answers_source: <recon report path | asked directly>
+answers_source: <recon report path | given in the prompt | asked directly>
+drafts: [{q: <1-6>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
+          reply: confirmed | corrected | not sure}]   # none on a re-check
 owner: work | personal | mixed   # mixed: provenance and copyright are decided per item
-copyright_holder: <legal name | account or handle | n/a>
+copyright_holder: <as the human names it: a legal name, or the name they publish under | n/a>
 exposure: already_public | possible_later | never
 production: today | one_change_away | no
 dependents: <who | none>
@@ -1235,7 +1266,7 @@ deployment:                   # asked, never read from the repository
   started_by: "<launcher, service manager, schedule, container | unknown>"
   binds: "<address:port | unknown>"
   reachable_from: "<who can reach that address | unknown>"
-  source: asked directly | recorded answer confirmed unchanged
+  source: asked directly | given in the prompt | recorded answer, still the case
   matches_documentation: yes | no | no documentation
 inception:                    # greenfield only; omit the key entirely otherwise
   purpose: "<one sentence>"
@@ -2489,14 +2520,15 @@ conformance:
   sections_skipped: [<by name>]
 
   # Structure
-  ten_statuses_emitted: yes | no        # exactly ten, numbered 1-10
-  tally_sums_to_ten: yes | no
+  ten_statuses_emitted: yes | no | n/a  # exactly ten, numbered 1-10; n/a when no Phase 4 ran
+  tally_sums_to_ten: yes | no | n/a
   new_vocabulary_coined: no | "<what was invented, if any>"
   fields_added_beyond_schema: no | "<which>"
 
   # Gates
   waits_observed: <int>                 # 2 on a full run OR an audit stopping at the gate;
-                                        # 1 on a survey. Count a wait when you STOP at it —
+                                        # 1 on a survey, or on a run that stops at Phase 3.
+                                        # Count a wait when you STOP at it —
                                         # arriving at Phase 6 and stopping is observing it,
                                         # not skipping it. Two runs disagreed on this.
   wrote_before_approval: no | "<what, and why>"
