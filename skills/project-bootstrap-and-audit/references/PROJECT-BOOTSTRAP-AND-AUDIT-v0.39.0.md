@@ -60,7 +60,7 @@ heading index finds it in one match.
 | **Survey** — look, change nothing | *The Run*, phases 0–5, then stop and report | Phases 6–9 |
 | **Audit or retrofit** | *The Run*, all phases, with the ten dimensions inside phase 4, plus *File Governance* | *The Release and Deploy Currency Gate*; *Choosing a Language and Runtime*, *Choosing the Shape* and *Project Shapes and Layout* unless a choice is itself a finding |
 | **Set up something new**, including a repository that holds no source yet | *The Run*, all phases, plus *Choosing a Language and Runtime*, *Choosing the Shape*, *Project Shapes and Layout*, *Starter File Contents* and *File Governance* | *The Release and Deploy Currency Gate* |
-| **Choose a language and a shape** before any source exists, with no repository yet or in one that holds no source | *Choosing a Language and Runtime*, then *Choosing the Shape*. In a repository, *The Run* as well, phases 0–3, stopping at the Phase 3 wait with the recommendation | Everything else, until the choice is made. Setting it up is then the row above |
+| **Choose a language and a shape** before any source exists, with no repository yet or in one that holds no source | *Choosing a Language and Runtime*, *Choosing the Shape* and *Project Shapes and Layout*. In a repository, *The Run* as well: phases 0–3, stopping at the Phase 3 wait with the recommendation, and Phase 6 for the shape of its report | Everything else, until the choice is made. Setting it up is then the row above |
 | **Write a missing config file** | *Starter File Contents* and *The Configuration File Map* | Everything else |
 | **Cut a release or a deploy** | *The Release and Deploy Currency Gate*, plus version reconciliation in dimension 10 | Phases 1–9 |
 | **Prune files** | *File Governance* | Everything else |
@@ -866,7 +866,7 @@ markdown before concluding one is absent. Existing-but-wrong is `DRIFT`, not mis
 git ls-files | grep -iE '(^|/)(DECISIONS|ADR|decision-log|KDD)\.md$|(^|/)docs/adr/'
 git grep -cE '^#+ .*(KDD|ADR)[- ]?[0-9]+' -- '*.md'        # numbered decisions, any filename
 git grep -cE '^#+ *[0-9]{4}-[0-9]{2}-[0-9]{2} ' -- '*.md'   # dated entries, any filename
-git grep -icE 'tier[:*]* *T[0-3]|blast radius:? *B[0-3]|audience:? *A[0-3]' -- <the record found>
+git grep -icE 'tier[:*]* *T[0-3]|blast radius:? *B[0-3]|audience:? *A[0-3]' -- <the record found, or '*.md' if none>
 git grep -inE '^#+ *(production )?(deployment|deploy|operations|runbook|maintenance)' -- '*.md'
 ```
 
@@ -2223,7 +2223,7 @@ without reading the body and can diff two runs mechanically:
 standard: PROJECT-BOOTSTRAP-AND-AUDIT v<metadata.version>
 tool: <agent, surface and version>
 repository: <owner/name> @ <commit>
-job: <survey | set up | audit | release | prune | validate>
+job: <survey | choose | set up | audit | release | prune | validate>
 mode: <greenfield | retrofit | audit | recheck>
 tier: <T0-T3> (blast radius <B>, audience <A>, basis <current|imminent>)
 tally: {BLOCKER: 0, DRIFT: 0, GAP: 0, OVER: 0, MIRROR: 0, UNVERIFIABLE-HERE: 0, OK: 0, N/A: 0}
@@ -2621,7 +2621,7 @@ happened.
 conformance:
   standard_version: "<metadata.version, read from the frontmatter>"
   standard_sha256: "<sha256 of the file this run read | unknown>"   # shows which bytes ran
-  job: <survey | set up | audit | release | prune | validate>
+  job: <survey | choose | set up | audit | release | prune | validate>
   sections_read: [<by name>]
   sections_skipped: [<by name>]
 
