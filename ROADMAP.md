@@ -392,6 +392,30 @@ The v0.39.0 parity runs found seven more, applied before it merged:
   that as a deviation, so the standard now says how the answers given in advance meet the wait
   (piece 1).
 
+The first live repository's re-check ran on 2026-09-29, on v0.39.0 from the owner's run file,
+in a fresh cloud session. It stopped at both waits, found the last audit's eleven fixes in place
+and its eight held amendments still held, and re-raised none of them. Its drafted re-check
+questions, the version it recorded and its per-commit secret-scan reading all worked as written.
+It found five more, left for the next revision:
+
+- **F60:** the rule to replay a gate in a scratch clone doesn't say to clone from the remote.
+  The run cloned its working copy, whose local `main` the fetch had left four days behind, so
+  the scratch clone read that as `origin/main` and failed ten tests that pass. Phase 7's
+  fresh-clone check already says to clone from the remote; Phase 2's needs the same, and a check
+  that the clone's `origin/<default>` matches the fetch (piece 4).
+- **F61:** a cloud session's clone can be shallow, 511 commits here, while CI checks out full
+  history. Nothing says to deepen it before gates and history counts run, so the run did it as
+  an override. A count read from a shallow history should say so beside it (piece 4).
+- **F62:** a result caused by the run's own mistake stayed in `command_tally` as a `FAIL`, with
+  the correction beside it. It belongs in `corrections`, and the tally counts the re-run
+  (piece 1).
+- **F63:** the address-domain command prints an author line and a committer line per commit, so
+  it counts addresses, not the commits dimension 10 asks for. A per-commit count needs each
+  commit's domains deduplicated (piece 3).
+- **F64:** nine overrides were recorded, and most were steps the standard directs: installing
+  what CI installs, running gates in a scratch clone, deepening a shallow clone. Counted as
+  deviations, they hide the few that are departures (piece 1).
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
