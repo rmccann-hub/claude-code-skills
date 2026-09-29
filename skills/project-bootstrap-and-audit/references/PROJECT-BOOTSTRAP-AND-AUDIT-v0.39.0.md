@@ -740,7 +740,8 @@ git remote -v
 git rev-parse --abbrev-ref HEAD
 git rev-parse --is-shallow-repository
 date -u
-git log -1 --format='%H %ad' --date=short
+TZ=UTC git log -1 --format='%H %cd' --date=iso-strict-local
+git status --porcelain --ignored | grep '^!!'   # ignored files already here: keep the list
 ```
 
 Refuse to continue unless the working tree is clean and it is a git repository with a remote
@@ -765,6 +766,12 @@ run** — no network, a remote the session may not reach, a caller that forbids 
 `fetch_proof` as not run, with the reason, read refs as they stand, and mark every finding
 that rests on a tag count or a branch position `UNVERIFIABLE-HERE`.
 
+**After the fetch, read the default branch as `origin/<default>`, never by its bare name.** A
+fetch moves the remote-tracking ref and leaves the clone's local branch of the same name where
+it was, so a history scan, a count or a version reconciliation that names `main` reads history
+as old as the clone. A live run caught this only because its reconciliation disagreed with a
+tag.
+
 **Branch.** Use `chore/config-audit` unless the harness pins one, in which case use that and
 record it. Not a question — a recorded override.
 
@@ -778,7 +785,8 @@ here:**
 1. **Is there a local working copy of this repository?** Decides tagging, hooks and desktop
    tooling. **Default if unanswered: no**, which is the more restrictive assumption.
 2. **Is there a standards repository these projects share?** Name it, or "none".
-3. **Who holds copyright?** The legal entity, not the account name.
+3. **Who holds copyright?** The person or legal entity, as the human names it: for
+   work-owned code, the employer's exact legal name. Never inferred from the account name.
 
 **Carry them forward rather than stopping here.** Two waits is both the floor and the
 ceiling, Phase 3 already stops and already asks the human about copyright, and a separate
@@ -795,7 +803,7 @@ capabilities: {shell: yes|no|unknown, write_outside_repo: yes|no|unknown,
 capability_proof: |
   <the probe output, one line each>
 asked: {local_working_copy: yes|no, standards_repo: "<name | none>",
-        copyright_holder: "<entity>"}
+        copyright_holder: "<as the human names it>"}
 degraded: [<what this run could not do, and what it recorded instead>]
 tool: "<which agent and surface this ran on>"
 clean_tree_proof: |
@@ -810,8 +818,9 @@ branch_used: <branch>
 branch_override: <none | "harness-pinned to X">
 shallow: yes | no
 clock_session: <date -u>
-clock_git: <git log -1 %ad>
-clock_delta_days: <int>
+clock_git: <the latest commit's committer date, in UTC>
+clock_delta_days: <int>   # whole days from clock_git to clock_session, both in UTC
+ignored_at_start: <count; the list kept outside the repository, for Phase 7>
 go: yes | no
 notes: <anything the fields cannot hold | none>
 ```
@@ -892,12 +901,16 @@ git grep -inE '^#+ *(production )?(deployment|deploy|operations|runbook|maintena
 </constraints>
 
 Record the decision-record alias once and use it everywhere. **Never propose a second path.**
+**Where no record exists, the alias is `docs/decisions.md`**: one append-only file, in the form
+*Starter File Contents* gives. Where the human wants a file per decision instead, it is MADR
+under `docs/decisions/`, as dimension 10 says. Two runs on a repository without a record then
+propose the same path.
 
 ```yaml
 phase: 1
 decision_record_found: <path | none>
 decision_record_alias: <path used for the rest of this run>
-decision_entries: <int>      # dated entries in the decision record
+decision_entries: <int>      # dated or numbered entries, whichever the record uses; notes say which
 adr_files: <int>             # files under docs/adr/ or equivalent; 0 is common
 recorded_tier: <T0-T3 | none>
 tier_grep_proof: |
@@ -936,7 +949,8 @@ for f in AGENTS.md CLAUDE.md GEMINI.md .github/copilot-instructions.md \
     "$(wc -l < "$f")" "$(wc -c < "$f")" "$f"
 done
 ls .claude/rules/ 2>/dev/null
-ls .git/hooks/pre-commit 2>/dev/null || echo "pre-commit NOT INSTALLED"
+git config --get core.hooksPath || echo "core.hooksPath unset"
+ls "$(git rev-parse --git-path hooks)/pre-commit" 2>/dev/null || echo "pre-commit NOT INSTALLED"
 
 git ls-files '*.md' | while read -r f; do
   printf '%6s  %s  %s\n' "$(wc -l < "$f")" \
@@ -946,6 +960,7 @@ done | sort -rn | head -25
 ls pyproject.toml package.json *.csproj go.mod Cargo.toml meson.build *.psd1 2>/dev/null
 ls uv.lock package-lock.json Cargo.lock go.sum poetry.lock requirements.lock 2>/dev/null
 git tag --sort=-v:refname | head -3        # AFTER the Phase 0 fetch
+git log --all --format='%ae%n%ce' | sed 's/.*@//' | sort | uniq -c | sort -rn   # domains only: dimension 10
 ls .github/workflows/ .gitignore .gitattributes .editorconfig \
    .pre-commit-config.yaml .githooks .copier-answers.yml LICENSE* 2>/dev/null
 ```
@@ -1002,13 +1017,29 @@ Phase 3 wait**, so nothing here is decided yet. Documented commands do not exist
 ### Execute the documented commands
 
 Read build, test, lint, format and run commands out of the manifests and scripts, then run
-them. **Fast gate first.** Time-box past roughly five minutes as `NOT-RUN-HERE`.
+them. **Fast gate first.** **A command that runs past roughly five minutes goes on in the
+background** while the inventory continues, and is rated when it finishes: the longest suite is
+often the gate CI relies on most. Only one that cannot finish in the time the run has is
+`NOT-RUN-HERE`, with how long it ran before it was stopped.
+
+**Where the context file documents one command that runs every gate**, and CI runs them as
+separate steps, run the documented command for the gates it covers, since it is what a
+contributor runs, and run each CI job it doesn't cover as the workflow runs it. Record each gate
+once, under the command that ran it.
 
 **Allowlist:** build, test, lint, format, type-check.
 **Never run:** deploy, publish, release, migrate, seed, drop, anything touching production.
 
 **Record the collection count, not only the exit code.** A suite that collects fewer tests
 than the project documents has failed even at exit 0 — silently skipped modules exit green.
+
+**What the gates leave in the working tree is not a write to the repository, but it is
+listed.** Caches, an `.egg-info` directory, coverage data and build output are ignored files,
+so `git status` stays empty. **They can change what a later gate measures:** a live run saw one
+change a test's collected count, and in its apply half a wheel built in the working tree left
+`build/lib/` behind, so a test that CI failed passed locally. **So a job that builds or
+installs the project is replayed in a scratch clone**, not the working tree, and the Phase 2
+block's `notes` names the ignored paths the gates created, beside Phase 0's list.
 
 ```yaml
 phase: 2
@@ -1021,7 +1052,7 @@ languages: {py: 109, md: 23}
 agent_config: [{path: CLAUDE.md, tracked: true, lines: 1082, bytes: 41876}]
 total_lines_loaded_at_session_start: <int>
 total_bytes_loaded_at_session_start: <int>
-reference_markdown_lines: <int>
+reference_markdown_lines: <int>   # tracked Markdown lines that don't load at session start
 hooks_configured: yes | no
 hooks_installed: yes | no
 hooks_proof: |
