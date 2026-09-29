@@ -17,7 +17,7 @@ than inside it.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.39.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.40.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -396,7 +396,7 @@ The first live repository's re-check ran on 2026-09-29, on v0.39.0 from the owne
 in a fresh cloud session. It stopped at both waits, found the last audit's eleven fixes in place
 and its eight held amendments still held, and re-raised none of them. Its drafted re-check
 questions, the version it recorded and its per-commit secret-scan reading all worked as written.
-It found five more, left for the next revision:
+It found five more, applied in v0.40.0:
 
 - **F60:** the rule to replay a gate in a scratch clone doesn't say to clone from the remote.
   The run cloned its working copy, whose local `main` the fetch had left four days behind, so
@@ -417,7 +417,8 @@ It found five more, left for the next revision:
   deviations, they hide the few that are departures (piece 1).
 
 Its apply half ran the same day. It applied the four amendments approved without a hold, in one
-pull request whose CI passed when read at log level, and found two more:
+pull request whose CI passed when read at log level, and found two more, also applied in
+v0.40.0:
 
 - **F65:** settings the session can't read were rated `UNVERIFIABLE-HERE`, and the last record
   had them done. The owner's screenshot, sent with the gate answers, showed three of them off,
@@ -428,7 +429,8 @@ pull request whose CI passed when read at log level, and found two more:
   Phase 7 runs (piece 1).
 
 After the gate, the owner asked the session to review and merge that pull request, and to check
-the branches before calling any safe to delete. That work found three more:
+the branches before calling any safe to delete. That work found three more, also applied in
+v0.40.0:
 
 - **F67:** a reviewer that hadn't written the change read the diff cold and found three defects.
   The run's tests, its revert probe, CI and a first review had all passed them: a test message

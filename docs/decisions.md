@@ -2,6 +2,50 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-29 — The standard moves to v0.40.0
+
+- **Asked:** after the first live re-check, the owner said to "update anything needed on your
+  side". The re-check ran on v0.39.0, from the owner's run file, against the repository of the
+  first live audit. After its gate, the owner asked it to review and merge its pull request,
+  and to check the branches before calling any safe to delete.
+- **Chosen:** ten fixes, F60 to F69. `ROADMAP.md` gives each one's evidence, and the version
+  history groups them by what found them:
+  - **Up to the gate,** F60 to F64. The scratch clone comes from the remote, or has its
+    remote-tracking refs checked against the working copy's. A shallow clone is deepened before
+    history is read. A result the run's own mistake produced goes in `corrections`. The
+    address-domain command counts commits. A step the standard directs isn't a deviation.
+  - **The apply half,** F65 and F66. Settings the run can't read are asked for at the Phase 3
+    wait, as a screenshot or a reading. Phase 7's block has `overrides`.
+  - **After the gate,** F67 to F69. A second reader reviews the diff before the pull request is
+    offered. Work asked for after Phase 9 has a `post_gate` block, and a merge the owner asks
+    for takes only the head that was checked. A branch is advised for deletion only after
+    checking what still needs it.
+- **Where the evidence left a choice, and what was chosen:**
+  - **F60:** where the run can't reach the remote, as in a parity run, it clones the working
+    copy and copies the working copy's remote-tracking refs across. Refusing to replay gates
+    without the remote would have stopped every parity run.
+  - **F65:** without a screenshot or a reading, a platform setting is `UNVERIFIABLE-HERE`. It is
+    never rated done because a record says so.
+  - **F67:** the second reader is a fresh session or subagent, given the diff and the approved
+    amendments and none of the run's reasoning. Where the tool can't start one, the human is
+    the second reader. The self-check no longer says it works "without a second reader".
+  - **F68:** the run merges only when the human asks. It passes the checked head to the merge
+    as the expected head, and reads the default branch's CI on the merge commit.
+- **Chosen:** 0.40.0, a minor bump. The new fields are `readings` in Phase 3, `review` and
+  `overrides` in Phase 7, the `post_gate` block, `second_reader` in the self-check, and
+  `deepened` for Phase 0's `shallow`. Older reports stay readable.
+- **Checked,** in this session on 2026-09-29:
+  - The corrected domain command, run with mawk 1.3.4 on the live repository's full history,
+    gives each commit one count per domain. Allowing for the eight commits merged since, it
+    matches the re-check's corrected per-commit counts, where the old command's didn't.
+  - The ref copy moved a scratch clone's `origin/main` from the working copy's stale local
+    branch to its fetched `origin/main`, in a throwaway repository.
+- **Parity:** not run before the pull request opened. The owner's account shows its weekly
+  limit warning, and the owner's working sessions start a round tonight on the same account.
+  The pull request merges after parity runs of the audit and re-check samples, the two that
+  reach the phases these fixes change. The greenfield sample stops at Phase 3, which gains only
+  the `readings` field.
+
 ## 2026-09-29 — The standard moves to v0.39.0
 
 - **Asked:** before the fork's first audit, the owner approved fixing the standard: "I approve

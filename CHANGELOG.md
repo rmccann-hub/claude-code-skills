@@ -70,6 +70,20 @@ Notable changes to this repository. The format follows
     first at the gate.
 
   Its history entry lists the rest.
+- The standard is now v0.40.0, with ten fixes from its first live re-check and from the
+  review, merge and branch check its owner asked for after the gate:
+  - A scratch clone for replaying gates comes from the remote, or has its remote-tracking refs
+    checked against the working copy's. A shallow clone is deepened before history is read.
+  - A result caused by the run's own mistake goes in `corrections`, and a step the standard
+    directs isn't counted as a deviation.
+  - The address-domain command counts commits, not address lines.
+  - Settings the run can't read are asked for at the Phase 3 wait, as a screenshot or a
+    reading.
+  - Before the pull request is offered, someone who didn't write the change reviews the diff.
+  - Work the owner asks for after the gate, such as a merge, has its own block, and a branch is
+    advised for deletion only after checking what still needs it.
+
+  Its history entry lists the rest.
 
 ### Fixed
 
