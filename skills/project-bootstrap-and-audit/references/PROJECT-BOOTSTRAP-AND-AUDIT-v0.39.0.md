@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.38.0"
-  updated: "2026-09-24"
-  supersedes: "0.37.0"
+  version: "0.39.0"
+  updated: "2026-09-29"
+  supersedes: "0.38.0"
   reading: "One file, read in ranges. Start at How to Read This File; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -34,9 +34,10 @@ index first** — one command, and it is authoritative where this table is only 
 grep -n '^# \|^## ' <this file>
 ```
 
-Four of those matches — `# <project name>` twice, `# Decisions`, `# Test Verification
-Checklist` — are **inside template code blocks, not sections.** The table below names every
-real section; anything the grep shows that is not in it is template content.
+Some of those matches are **inside template code blocks, not sections:** `# <project name>`
+twice, `# Decisions`, `# Test Verification Checklist` and the `## ` headings under each, and
+Phase 8's example entry, `## 2026-09-12 — Configuration audit`. A heading inside a code block
+is never a section, and the table below routes each job to the real ones.
 
 **Then read by range**, not by scrolling: `sed -n '<start>,<end>p'`, or your tool's read with an
 offset and a limit. Where a section turns out to continue past the range you took, take the next
@@ -59,7 +60,7 @@ heading index finds it in one match.
 | **Survey** — look, change nothing | *The Run*, phases 0–5, then stop and report | Phases 6–9 |
 | **Audit or retrofit** | *The Run*, all phases, with the ten dimensions inside phase 4, plus *File Governance* | *The Release and Deploy Currency Gate*; *Choosing a Language and Runtime*, *Choosing the Shape* and *Project Shapes and Layout* unless a choice is itself a finding |
 | **Set up something new**, including a repository that holds no source yet | *The Run*, all phases, plus *Choosing a Language and Runtime*, *Choosing the Shape*, *Project Shapes and Layout*, *Starter File Contents* and *File Governance* | *The Release and Deploy Currency Gate* |
-| **Choose a language** before any repository exists | *Choosing a Language and Runtime*, then *Choosing the Shape* | Everything else, until a repository exists |
+| **Choose a language and a shape** before any source exists, with no repository yet or in one that holds no source | *Choosing a Language and Runtime*, then *Choosing the Shape*. In a repository, *The Run* as well, phases 0–3, stopping at the Phase 3 wait with the recommendation | Everything else, until the choice is made. Setting it up is then the row above |
 | **Write a missing config file** | *Starter File Contents* and *The Configuration File Map* | Everything else |
 | **Cut a release or a deploy** | *The Release and Deploy Currency Gate*, plus version reconciliation in dimension 10 | Phases 1–9 |
 | **Prune files** | *File Governance* | Everything else |
@@ -4161,6 +4162,9 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.39.0** — **thirty-two fixes from the first live audit and the runs before it**, at the
+maintainer's request, grouped by what found them.
 
 **0.38.0** — **fifteen fixes and one addition before the file audits live repositories**,
 at the maintainer's request, grouped by what found them.
