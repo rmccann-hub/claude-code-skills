@@ -416,6 +416,17 @@ It found five more, left for the next revision:
   what CI installs, running gates in a scratch clone, deepening a shallow clone. Counted as
   deviations, they hide the few that are departures (piece 1).
 
+Its apply half ran the same day. It applied the four amendments approved without a hold, in one
+pull request whose CI passed when read at log level, and found two more:
+
+- **F65:** settings the session can't read were rated `UNVERIFIABLE-HERE`, and the last record
+  had them done. The owner's screenshot, sent with the gate answers, showed three of them off,
+  so two secondary ratings changed after the gate. Where nothing can be read, the first wait
+  should ask the owner for a screenshot or a reading, so the findings rest on it (piece 1).
+- **F66:** Phase 7's block has no `overrides` field, so the run put its two Phase 7 overrides
+  in its notes. Phase 4's field takes a `phase` key, but Phase 4's block is emitted before
+  Phase 7 runs (piece 1).
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
