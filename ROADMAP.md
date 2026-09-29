@@ -17,7 +17,7 @@ than inside it.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.38.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.39.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -183,8 +183,8 @@ The v0.38.0 parity runs found five more, applied before it merged:
   template, which an audit doesn't read, and one final audit run missed the planted workflow
   that lacked it. Dimension 6 now states it (piece 3).
 
-The final v0.38.0 greenfield run raised three more, each one run's evidence, left for the next
-revision because an audit never reads them:
+The final v0.38.0 greenfield run raised three more, each one run's evidence. They waited for the
+next revision because an audit never reads them, and v0.39.0 applies them:
 
 - **F18:** the "Choose a language" routing row assumes no repository exists, so choosing first
   in a repository that holds only a README fits neither that row nor the set-up one (piece 1).
@@ -195,7 +195,7 @@ revision because an audit never reads them:
   XML export in UTF-16 doesn't give without a `working-tree-encoding` rule or a registration
   script instead (piece 5).
 
-The final audit and re-check runs raised four more, also left for the next revision:
+The final audit and re-check runs raised four more, also applied in v0.39.0:
 
 - **F22:** the command results don't name a command the session's permission layer refuses.
   Both runs that met one chose `UNVERIFIABLE-HERE`, which fits, but saying so settles it
@@ -208,7 +208,7 @@ The final audit and re-check runs raised four more, also left for the next revis
   action pinned by tag is a finding, or at which tier. The final re-check rated one `GAP` and
   offered the pin as optional (piece 3).
 
-Preparing the first live run found four more, also left for the next revision:
+Preparing the first live run found four more, also applied in v0.39.0:
 
 - **F26:** Phase 3 asks its questions in the abstract, and the first live repository's owner
   couldn't answer them as asked. The repository's own records held nearly every answer except
@@ -230,8 +230,8 @@ Preparing the first live run found four more, also left for the next revision:
   personal repository whose commits carry an employer's address raises the question the
   provenance rule exists for, and the owner should see it at the gate (piece 3).
 
-A dry run of that audit, stopped at the Phase 3 wait, found six more, also left for the next
-revision:
+A dry run of that audit, stopped at the Phase 3 wait, found six more, also applied in
+v0.39.0:
 
 - **F30:** a run that stops at Phase 3 has nowhere to find its report's shape or its
   self-check. The header, `lifecycle`, `expires` and the three lists are defined only in
@@ -260,8 +260,8 @@ revision:
   - two counts in the prose are wrong: "Four of those matches…" and "The two optional
     blocks".
 
-Checking R22 before it was filed found two more dated facts to check again, also left for the
-next revision (piece 5, where the facts move):
+Checking R22 before it was filed found two more dated facts to check again. v0.39.0 checks
+and rewrites both (piece 5, where the facts move):
 
 - **F36:** the dated fact on synced plugins says Claude Code's docs have them load in cloud
   sessions. Read on 2026-09-28, the plugin docs say "Synced plugins load in Cowork sessions and
@@ -282,7 +282,7 @@ next revision (piece 5, where the facts move):
   account skills loading into the audited repository's sessions, two of them asking to be read
   first, and rated that a dimension 4 secondary.
 
-Taking in R22's result found one more, for the next revision:
+Taking in R22's result found one more, applied in v0.39.0:
 
 - **F38:** a re-check shows the recorded answers with "nothing has changed" as the stated
   default. R22's checked sources find that a large share of people confirm a wrong preloaded
@@ -304,9 +304,9 @@ The first live audit ran on 2026-09-28, on v0.38.0 from the owner's run file, in
 session. It stopped at both waits and wrote nothing before approval. It confirmed F27, F30,
 F32, F34 and F35 on a real repository: the side that owns a boundary finding went into `notes`.
 F26's drafted answers worked: the owner confirmed the tier in one word. Its report up to the
-Phase 6 gate found five more, left for the next revision. The apply half came back the same
-day: eleven approved changes on one pull request, eight held as asked, and nothing held was
-touched. It found seven more, after F43, and adds to F40 and F42.
+Phase 6 gate found five more. The apply half came back the same day: eleven approved changes
+on one pull request, eight held as asked, and nothing held was touched. It found seven more,
+after F43, and adds to F40 and F42. v0.39.0 applies all twelve.
 
 - **F39:** a fetch moves `origin/<default>` but not the clone's local branch of the same name,
   so a history scan that names `main` reads the history as old as the clone. The run caught it
@@ -352,13 +352,45 @@ The apply half found these:
   the merged tree, and the record names both base commits (piece 4).
 - **F49:** an approved check that runs an optional tool whenever the tool is present can refuse
   good input when the tool is too old. The installer change ran `gh attestation verify`
-  whenever `gh` was on the path. The command arrived in gh 2.47.0, and Debian 13 packages
-  2.46.0 (sources.debian.org, read 2026-09-28). A check that uses an optional tool probes for
-  the capability, not the tool (piece 3).
+  whenever `gh` was on the path. The command arrived in gh 2.47.0, and its `--signer-workflow`
+  flag, which the check passes, in 2.51.0. Debian 13 packages 2.46.0 (sources.debian.org, read
+  2026-09-28; gh's source, read 2026-09-29). A check that uses an optional tool probes for the
+  capability, every flag it passes included, not the tool (piece 3).
 - **F50:** a report committed to a public repository at the owner's request got no privacy
   pass. Its survey of the owner's other repositories named three private ones. A report
   written for the owner can hold what a public tree mustn't, so committing it needs the check
   any public write gets (piece 4).
+
+Reading the owner's public repositories on 2026-09-29, before the next audit, found two more,
+also applied in v0.39.0:
+
+- **F51:** a fork can keep its default branch as a clean mirror of upstream and land its work
+  on a branch named for its purpose. The one read here had a default untouched for five weeks
+  and a working branch more than a thousand commits ahead, holding the only context file. Every
+  rule that reads "the default branch" would audit the mirror, and a session started there
+  reads no instructions. The run records `working_branch` and reads it instead (piece 4).
+- **F52:** a long-lived session can run a Claude Code release far behind the current one: two
+  started in July still ran 2.1.233, while new ones ran 2.1.284. Several dated facts hold only
+  from a given version, so the run records its agent's version (piece 4).
+
+The v0.39.0 parity runs found seven more, applied before it merged:
+
+- **F53:** the routing row for choosing a language and a shape sent the run to neither *Project
+  Shapes and Layout*, where Phase 2 finds the shapes, nor Phase 6, which gives a Phase 3 stop's
+  report its shape (piece 1).
+- **F54:** the `job` vocabulary had no value for choosing, so the greenfield run recorded
+  "set up" (piece 1).
+- **F55:** Phase 1's tier grep named the record found, and had no target when none was
+  (piece 4).
+- **F56:** GitHub honours `CODEOWNERS` on a private repository only on a paid plan, so a missing
+  file there is `N/A` on a free one, as the re-check run proposed (piece 3).
+- **F57:** Claude Code's native `AGENTS.md` reading reaches third-party providers and
+  telemetry-off sessions from v2.1.281. The fact still said it didn't (piece 5).
+- **F58:** a `Read` deny rule now covers the file commands Claude Code recognises in Bash, such
+  as `cat`, so the example that it leaves `cat .env` open was out of date (piece 3).
+- **F59:** an unattended run can't stop at Phase 3. Both runs that went on to Phase 6 recorded
+  that as a deviation, so the standard now says how the answers given in advance meet the wait
+  (piece 1).
 
 The owner asked for one more rule, researched before it's written:
 
