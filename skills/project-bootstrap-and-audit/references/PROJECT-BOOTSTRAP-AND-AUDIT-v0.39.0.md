@@ -2266,6 +2266,12 @@ leaves exposed or costs later. Where the baseline's opinion is weak, say that to
 
 Decline must be as easy as accept, and every item carries its trigger.
 
+**Approving and holding is an answer too.** An amendment the human approves but holds, yes but
+not in this change, keeps its approval and carries `held`, with the reason and what releases
+it. Where a standing rule of the repository holds a class of change, such as edits to its
+workflows, the gate can mark those amendments `held` before the human answers. Phase 7 applies
+none of a held amendment, and lists it in `deferred` with its release as the trigger.
+
 Then wait. Not "proceeding unless told otherwise." Wait.
 
 **No credential appears in the instrument.** Ask the human to *check* a host, never to tell
@@ -2280,6 +2286,7 @@ human_decisions: [{id: H1, question: "...", default_if_unanswered: "...", gates:
 amendments: [{id: A1, dimension: 0, severity: recommended|optional, change: "...",
               evidence: "...", if_accepted: "...", if_declined: "...",
               gates_on: [<H ids | none>], severity_depends_on: [<H ids | none>],
+              held: "<no | why, and what releases it>",
               recommendation: "not pre-selected"}]
 standard_amendments: [<S1…, in the shape *Proposing a change to this standard* gives | none>]
 human_actions: [{id: X1, action: "...", why_not_agent: "server-side | manual"}]
@@ -2337,9 +2344,21 @@ tree-wide mechanical change alongside a semantic one; a large documentation rest
 blocker fix that should stay reviewable alone. **A mechanical reformat always gets its own
 commit.**
 
+**Run the full gate before every push, not only the tests that name the edited files.** A
+repository's own sweeps over the tree, such as a changelog check or a guard that reads every
+file, are gates too. A live run's targeted runs missed them, and two of its eleven commits were
+red on their own until they were rebuilt. **A commit not yet pushed that fails on its own is
+rebuilt**, not fixed by a later one, so every commit on the branch passes. Before each gate
+run, remove the ignored paths the run's own gates created, the ones not in Phase 0's list, so
+a leftover can't pass a test that CI fails. **Never with `git clean -X`**, which also deletes
+ignored files the person keeps, such as a `.env`.
+
 **Verify in a fresh clone wherever an amendment changes what a clone receives** — untracking
 a file, adding a seed step, changing bootstrap or a lockfile. Clone to a temporary path,
 follow the documented setup, run the gate, **and record what fails without the new step.**
+**Clone from the remote, once the branch is pushed, never from the working copy.** A clone of
+the working copy takes its stale local branches as its remote-tracking refs, which is Phase 0's
+trap by another route. Run the whole gate there, not a part of it.
 
 **Say where the work landed.** A branch is not the repository. Record the branch the commits
 are on, whether a pull request exists, and what remains for the work to reach the default
@@ -2355,15 +2374,27 @@ counterpart at all — a fetch has already pruned one whose commits lived only i
 remote ref rather than the local one. An unpushed branch also makes a remote CI read fail in a
 way that looks like a CI problem instead of a missing push.
 
+**A human action is recorded by what was seen beside what was said.** Where the human reports
+one done, read it back wherever the run can: a live run's owner reported a setting on while
+the API still read it as off. It is `done-observed` where the reading agrees,
+`reported-not-observed` where it doesn't, with what was read, and `not-observable-here` where
+nothing can be read. One nobody has reported stays outstanding.
+
 **Open a pull request rather than merging.** It gives the checks somewhere to run before the
 default branch moves and leaves a reviewable diff. **Merging is the human's**, and on a
 repository with a sibling contract it is theirs twice over. Where the tool cannot open one,
 that is a human action with the branch name and base named explicitly.
 
+**Fetch the base before pushing.** Where it has moved since Phase 2, bring it in by the
+repository's own convention, and run the gate again on the result. A live run's base moved five
+commits while it worked, so its pull request conflicted, and **a pull request that conflicts
+with its base gets no workflow run at all**: no check runs, rather than pending ones.
+
 **Read the remote CI conclusion after pushing, before reporting done.** Local gates are not
 evidence about the remote. A run that reports success without reading the remote conclusion
 has not finished — this has already let a default branch sit red for three days through a
-tagged release.
+tagged release. **Read the pull request's mergeability first**, since no checks at all is what
+a conflict looks like from the checks.
 
 </constraints>
 
@@ -2371,13 +2402,15 @@ tagged release.
 phase: 7
 applied: [<ids>]
 declined: [<ids>]
-deferred: [{id: <id>, trigger: "..."}]
+deferred: [{id: <id>, trigger: "..."}]   # held amendments too, each with its release
 not_applicable: [{id: <id>, why: "server-side | manual | unavailable on this plan"}]
+base: {at_phase_2: <sha>, at_push: <sha>, brought_in: yes | no | n/a}
 commits: [{sha: <sha>, scope: "<which ids and why grouped>"}]
 fresh_clone_verification: {done: yes | no | n/a, result: "...", without_fix: "..."}
 post_apply_commands: [{cmd: "...", result: PASS, collected: <int | n/a>}]
 pushed: {branch: <name>, head: <sha>, on_remote: yes | no, proof: "<remote ref read>"}
-pull_request: {opened: yes | no | n/a, url: "<url>", base: <branch>, merged: no}
+pull_request: {opened: yes | no | n/a, url: "<url>", base: <branch>, merged: no,
+               mergeable: yes | no | unknown}
 report_delivered: yes | no      # handed over, not merely written
 ci_remote_conclusion_after_push: {status: <success|failure|pending>, proof: "..."}
 corrections: [{claim: "...", actual: "...", where_corrected: "...", decision_affected: yes|no}]
@@ -2420,6 +2453,11 @@ moved a rating. **Scope is deliberately narrow: absolute negatives, and any clai
 amendment could have changed. This is not a re-audit** — anything wider costs attention on
 every future run, in every repository, for a narrow failure.
 
+**Where the base moved between Phase 2 and the push, the re-checks run on the merged tree**,
+not on the tree the audit read, and the entry names both base commits: the one the audit read
+and the one the work was merged onto. Work that landed on the base in the meantime can change
+an observation as surely as the run's own amendment can.
+
 **Nothing downstream catches this class.** A decision record is not executable, no guard
 reads one against the code, the entry is append-only by the rule above, and the re-check
 obligations exist precisely to make the next run treat the record as settled fact. The
@@ -2452,6 +2490,7 @@ phase: 8
 recorded_at: <the Phase 1 alias>
 entries: [<ids>]
 standard_version_recorded: "PROJECT-BOOTSTRAP-AND-AUDIT v0.13.0"
+base_commits: {audited: <sha>, merged_onto: <sha | same>}
 do_not_repropose_added: [<items>]
 notes: <... | none>
 ```
@@ -2516,10 +2555,18 @@ same file from Phase 6 — do not start a second one — and replace its decisio
 short outcome summary: what was applied, declined, deferred, what remains for the human, and
 the CI conclusion after the push. **Say where the file is and that it is ready to hand on.**
 
+**A report committed to a public repository gets the check any public write gets**, even when
+the owner asks for it. A report is written for the owner, so it can hold what a public tree
+mustn't: a live run's survey of the owner's other repositories named three private ones.
+Before committing one, take out the names of repositories that aren't public, account and
+session details, addresses and hostnames, and anything the repository's own rules keep out.
+
 ```yaml
 phase: 9
 next_trigger: <the event that should cause the next run>
-outstanding_human_actions: [<X ids still undone>]
+outstanding_human_actions: [<X ids still undone, reported-not-observed included>]
+human_action_states: [{id: X1, state: done-observed | reported-not-observed | not-observable-here,
+                       seen: "<what was read, and where | n/a>"}]
 sequence: [{step: 1, ids: [<amendment or action ids>], why_here: "<what it unblocks>"}]
 milestones: [{name: "<the state that becomes true>", ids: [<ids>],
               verified_by: "<the command that proves it>", done: yes | no}]
@@ -2606,7 +2653,7 @@ corrections:
     decision_affected: yes | no
 ```
 
-## The two optional blocks, and why they exist
+## The three optional blocks, and why they exist
 
 <constraints>
 
@@ -2643,7 +2690,7 @@ is `no`**, because an overconfident claim that changed no rating still misleads 
 that reads it. Where no rule caught the error, say so in `rule_that_caught_it` — a gap named
 is the most useful thing a run can send back.
 
-**Emitting either of these is a schema addition, so `fields_added_beyond_schema` says `yes`
+**Emitting any of these is a schema addition, so `fields_added_beyond_schema` says `yes`
 and names them.** A run that adds a block and reports no additions has contradicted itself in
 the one field that exists to catch that, which a live run did.
 
