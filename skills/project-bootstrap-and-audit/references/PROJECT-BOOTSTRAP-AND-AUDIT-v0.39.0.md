@@ -2997,6 +2997,14 @@ it and calls one function. The scheduled task runs it with `-NoProfile -NonInter
 runs, and nobody is there to answer a prompt. **Keep the task's definition in `packaging/`**,
 so a change to the schedule is a reviewed diff like any other.
 
+**Prefer a registration script to an exported XML file.** An export saved from Windows
+PowerShell 5.1 is UTF-16, since `Out-File` and `>` default to it there (Microsoft's `Out-File`
+reference, read 2026-09-29), and git treats UTF-16 as binary, so a change to it shows no diff
+at all. A script that calls `Register-ScheduledTask` with the trigger, the action and the
+account is text a reviewer can read. Where an export stays, a `.gitattributes` line such as
+`packaging/*.xml text working-tree-encoding=UTF-16LE-BOM eol=crlf` has git store it as UTF-8
+and diff it as text.
+
 **C with meson.** Every directory that builds something carries its own `meson.build`, and the
 root file only calls `project()` and `subdir()`. Build options go in a file, never hardcoded —
 **`meson.options` is the current filename and `meson_options.txt` is the older one**, which
@@ -3026,7 +3034,10 @@ fail in ways that look like anything but line endings.
 - **Business logic imports no framework.** `services/` should be callable from a test, a CLI
   and a job without a web request existing.
 - **Configuration is read once**, in one module, from environment variables, and passed down.
-  A module that reads its own environment cannot be tested without setting it.
+  A module that reads its own environment cannot be tested without setting it. **A PowerShell
+  scheduled job may take its settings as the entry script's parameters instead**, written in
+  the task's definition, so a change to a setting is the same reviewed diff as a change to the
+  schedule. Never a secret that way: anyone who can read the task can read its arguments.
 - **One entry point per shape.** Two ways to start the same program diverge.
 
 ---
