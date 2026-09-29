@@ -4346,6 +4346,51 @@ records are append-only and are not edited for this.
 **0.39.0** — **thirty-two fixes from the first live audit and the runs before it**, at the
 maintainer's request, grouped by what found them.
 
+**The first live audit found twelve**, on the repository of a public desktop application. Up to
+its gate, five. *A fetch doesn't move the local branch*, so a scan naming `main` read history as
+old as the clone, caught only because a version reconciliation disagreed with a tag; the run
+now reads `origin/<default>`. *A secret-scan job is read by what it scanned*: that repository's
+scan passed on every push to its default branch while scanning no commits, and a dated fact now
+says how the action builds its range, and that a scan of the whole history needs `-m` to read
+merges. *A status command's exit is its report*, not a failure for the tally. *What the gates
+leave behind is listed*, and a job that builds or installs is replayed in a scratch clone. *An
+amendment can be approved and held.* The apply half found seven more. *The base is fetched
+before pushing*: it had moved five commits, and a pull request that conflicts gets no check runs
+at all. *The full gate runs before every push*: two of eleven commits were red on their own.
+*The fresh clone comes from the remote.* *A human action records what was seen beside what was
+said*: a setting reported on still read as off. *Re-checks run on the merged tree* where the
+base moved. *A check that uses an optional tool probes the capability*: the approved installer
+check would have refused good input under the `gh` Debian 13 ships. *A report committed to a
+public repository gets a privacy pass*: one named three private repositories.
+
+**Preparing that run found four, and a dry run of it, stopped at the Phase 3 wait, six more.**
+*Phase 3 drafts what the repository shows*, with its evidence and a word of confidence, because
+the owner couldn't answer the questions as they were asked; production, dependents and where it
+runs are still asked outright. The live run bore it out: the owner confirmed the tier in one
+word. *What CI installs counts as declared*: the container lacked a library the suite needs,
+which the workflow installs. *A long suite runs in the background*, rather than being
+time-boxed out of the gate CI relies on most. *The history's address domains are compared with
+the owner answer.* From the dry run: *a report that stops at Phase 3 has a shape*; *a documented
+one-command gate runs for what it covers*; *the hook probe reads `core.hooksPath`* and works in
+a worktree; *the release-asset fact is checked again*, documented as refused and observed
+downloading; *a boundary finding names the side that fixes it*; and smaller points in the
+schema: answers given in the prompt, one wording for copyright, `settled` and `locked`
+defined, the clock compared in UTC, and two counts in the prose put right.
+
+**Checking and taking in research result R22 found three.** *Synced plugins are documented for
+Cowork and terminal sessions*, and no longer for cloud ones, which is what a cloud session
+received. *A repository's settings can't stop the sync, but may hide or deny a synced skill*:
+documented, and not yet tried. *A re-check asks "Is that still the case?" of each answer*,
+because a stated "nothing has changed" invites people to confirm what no longer holds.
+
+**The v0.38.0 parity runs raised seven, left for this version.** *Choosing first has a routing
+row* inside a repository that holds no source. *A scheduled job may take its settings as
+parameters*, and *its task's definition stays reviewable*, as a registration script or an
+export git reads as text. *A command the session refuses is `UNVERIFIABLE-HERE`*, and is never
+re-spelled. *A missing decision record has one default path*, `docs/decisions.md`. *`CODEOWNERS`
+is due from a second committer*, where two re-checks had split, and *a tag-pinned action is
+rated by what its workflow can reach*, where the dimension had said nothing.
+
 **0.38.0** — **fifteen fixes and one addition before the file audits live repositories**,
 at the maintainer's request, grouped by what found them.
 
