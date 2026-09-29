@@ -1550,10 +1550,13 @@ relying on it**, or assert on it, and keep the proof. This is not caught by muta
 mutating the subject changes nothing about a condition that was never reading it.
 
 **A check that uses an optional tool probes for the capability, not the tool.** An approved
-installer check ran `gh attestation verify` whenever `gh` was on the path, so it would refuse
-good input wherever `gh` predates the command: it arrived in gh 2.47.0, and Debian 13 packages
-2.46.0 (sources.debian.org, read 2026-09-29). So test for what the check needs, such as
-`gh attestation verify --help` exiting 0, and take the path without it when that fails.
+installer check ran `gh attestation verify --signer-workflow` whenever `gh` was on the path, so
+it would refuse good input wherever `gh` predates either part. The command arrived in gh 2.47.0
+and the flag in 2.51.0, while Debian 13 packages 2.46.0 (gh's source and sources.debian.org,
+read 2026-09-29). **So probe for everything the check uses**, the subcommand and each flag it
+passes, such as `--signer-workflow` in the output of `gh attestation verify --help`, and take
+the path without it when the probe fails. A probe for the subcommand alone passes on 2.47 to
+2.50, and the check still refuses there.
 
 **A scanner or gate reporting "clean" must first be shown to detect.** Before trusting a
 secret scan, a linter, or any sweep that reports finding nothing, **plant a positive and

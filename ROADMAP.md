@@ -352,9 +352,10 @@ The apply half found these:
   the merged tree, and the record names both base commits (piece 4).
 - **F49:** an approved check that runs an optional tool whenever the tool is present can refuse
   good input when the tool is too old. The installer change ran `gh attestation verify`
-  whenever `gh` was on the path. The command arrived in gh 2.47.0, and Debian 13 packages
-  2.46.0 (sources.debian.org, read 2026-09-28). A check that uses an optional tool probes for
-  the capability, not the tool (piece 3).
+  whenever `gh` was on the path. The command arrived in gh 2.47.0, and its `--signer-workflow`
+  flag, which the check passes, in 2.51.0. Debian 13 packages 2.46.0 (sources.debian.org, read
+  2026-09-28; gh's source, read 2026-09-29). A check that uses an optional tool probes for the
+  capability, every flag it passes included, not the tool (piece 3).
 - **F50:** a report committed to a public repository at the owner's request got no privacy
   pass. Its survey of the owner's other repositories named three private ones. A report
   written for the owner can hold what a public tree mustn't, so committing it needs the check
