@@ -373,6 +373,25 @@ also applied in v0.39.0:
   started in July still ran 2.1.233, while new ones ran 2.1.284. Several dated facts hold only
   from a given version, so the run records its agent's version (piece 4).
 
+The v0.39.0 parity runs found seven more, applied before it merged:
+
+- **F53:** the routing row for choosing a language and a shape sent the run to neither *Project
+  Shapes and Layout*, where Phase 2 finds the shapes, nor Phase 6, which gives a Phase 3 stop's
+  report its shape (piece 1).
+- **F54:** the `job` vocabulary had no value for choosing, so the greenfield run recorded
+  "set up" (piece 1).
+- **F55:** Phase 1's tier grep named the record found, and had no target when none was
+  (piece 4).
+- **F56:** GitHub honours `CODEOWNERS` on a private repository only on a paid plan, so a missing
+  file there is `N/A` on a free one, as the re-check run proposed (piece 3).
+- **F57:** Claude Code's native `AGENTS.md` reading reaches third-party providers and
+  telemetry-off sessions from v2.1.281. The fact still said it didn't (piece 5).
+- **F58:** a `Read` deny rule now covers the file commands Claude Code recognises in Bash, such
+  as `cat`, so the example that it leaves `cat .env` open was out of date (piece 3).
+- **F59:** an unattended run can't stop at Phase 3. Both runs that went on to Phase 6 recorded
+  that as a deviation, so the standard now says how the answers given in advance meet the wait
+  (piece 1).
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on

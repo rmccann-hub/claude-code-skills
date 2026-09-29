@@ -2,6 +2,139 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-29 — The standard moves to v0.39.0
+
+- **Asked:** before the fork's first audit, the owner approved fixing the standard: "I approve
+  you to do what you need to." Then they asked for their public repositories and branches to
+  be read, and for this repository to fix itself against what they show.
+- **Chosen:** forty-one fixes: F18 to F50 without F21, which v0.38.0 applied; F51 and F52
+  from reading the repositories; and F53 to F59 from this version's own parity runs.
+  `ROADMAP.md` gives each one's evidence, and the version history groups them by what found
+  them:
+  - **The first live audit,** F39 to F50. The default branch is read as `origin/<default>`
+    after the fetch. A secret-scan job is read by its range and its count. A status command's
+    exit goes in `notes`. What the gates leave behind is listed. An approved change can be
+    held. Before each push, the base is fetched and the full gate runs. The fresh clone
+    comes from the remote. Each human action records what was seen. Re-checks run on the
+    merged tree. An optional tool is probed by its capability. A report committed to a public
+    repository gets a privacy pass.
+  - **Preparing it, and its dry run,** F26 to F35. Phase 3 drafts answers with their
+    evidence. What CI installs counts as declared. A long suite runs in the background. The
+    history's address domains are compared with the owner answer. A Phase 3 stop has a report
+    shape. A documented one-command gate runs for what it covers. The hook probe reads
+    `core.hooksPath`. The release-asset fact is checked again. A boundary finding names its
+    side. Seven smaller schema points are settled.
+  - **R22,** F36 to F38: synced plugins, synced skills, and "Is that still the case?"
+  - **The v0.38.0 parity runs,** F18 to F20 and F22 to F25: the routing row for choosing
+    first, a scheduled job's settings and task definition, a refused command, a default record
+    path, `CODEOWNERS`, and actions pinned by tag.
+  - **Reading the owner's two public repositories and their sessions,** F51 and F52. The fork's
+    default branch mirrors upstream, untouched since 2026-08-21, and its working branch is 1,090
+    commits ahead with the only context file, so the run reads `working_branch` wherever the
+    standard says the default branch. Two sessions started in July still ran Claude Code
+    2.1.233, so the run records its agent's version. Private repositories weren't read.
+  - **This version's parity runs,** F53 to F59:
+    - The choosing row names the shapes section and Phase 6.
+    - `job` takes `choose`.
+    - The tier grep has a target without a record.
+    - `CODEOWNERS` is rated where the plan honours it.
+    - Native `AGENTS.md` reading reaches third-party providers from v2.1.281.
+    - A `Read` deny covers `cat`.
+    - An unattended run meets the Phase 3 wait with the answers it was given.
+- **Where the evidence left a choice, and what was chosen:**
+  - **F25:** an action pinned by tag is a `GAP` where its workflow reads a secret, grants its
+    token write access or publishes, or from T2. Elsewhere the pin is `optional`. The final
+    v0.38.0 re-check had rated one `GAP` at T1, with no secret, and offered the pin as
+    optional.
+  - **F24 and F56:** `CODEOWNERS` is due from a second committer, read from the history's
+    authors, where the plan honours the file. Where the plan can't be read, it stays `GAP`, with
+    its amendment gated on the human's answer, as the re-check run did.
+  - **F26:** the confidence words are `high`, `medium` and `low`. Production, dependents and
+    where it runs are never drafted, as R22's first pass has it. The deeper pass would also
+    ask work-or-personal and lifetime outright; piece 1 decides that with the front door.
+  - **F29:** the question goes to the gate's first list, naming domains and counts, never an
+    address, and the default is the owner answer as given.
+  - **F31:** the documented one-command gate runs for the gates it covers, and CI's other jobs
+    run as the workflow runs them.
+  - **F20:** a registration script is preferred, with an encoding rule as the fallback.
+  - **F42:** leftovers are removed by comparing with Phase 0's list, never with
+    `git clean -X`, which also deletes files such as a `.env`.
+  - **F59:** an unattended run's Phase 3 is met by the answers given in advance, and the tier
+    goes first at the Phase 6 gate. The other choice was to keep the stop and let every
+    unattended run record a deviation, which two runs did.
+- **Chosen:** 0.39.0, a minor bump. The new fields are `ignored_at_start`, `drafts`,
+  `fix_side`, `held`, `base`, `mergeable`, `base_commits` and `human_action_states`. There are
+  new values for `answers_source`, `deployment.source` and the self-check's structure lines.
+  Older reports stay readable.
+- **Checked,** in this session on 2026-09-29:
+  - **Cloud environments page:** it still says an unattached repository's release assets get
+    a 403.
+    - Downloads from `cli/cli` and `gitleaks/gitleaks` returned 200, through
+      `release-assets.githubusercontent.com`.
+    - Their API returned 403 (F33).
+  - **Plugin and skill docs:**
+    - The plugin-loading page names Cowork and signed-in terminal sessions for synced
+      plugins. The skills page names cloud sessions for synced skills.
+    - The settings reference gives `syncClaudeAiSkills` and `syncClaudeAiPlugins` the scopes
+      "User, local, or managed", and `skillOverrides` "Any file". It adds "Overrides don't
+      apply to plugin skills".
+    - The changelog's 2.1.282 and 2.1.283 entries change `Skill(anthropic-skills:…)` allow
+      and deny rules (F36, F37).
+  - **gitleaks-action and gitleaks:**
+    - gitleaks-action at v3.0.0 (`e0c47f4`) builds
+      `--log-opts=--no-merges --first-parent <base>^..<head>` for push and pull-request
+      events.
+    - gitleaks 8.24.3 and 8.30.1 run `git log -p -U0 --full-history --all` by default (F40).
+  - **gh and Debian:**
+    - gh's `pkg/cmd/attestation` exists at v2.47.0 and not at v2.46.0. Its `--signer-workflow`
+      flag is defined at v2.51.0 and not at v2.50.0. The first live run's installer check
+      passes that flag, so F49's example probes for it.
+    - sources.debian.org lists gh 2.46.0 for trixie and sid, and 2.23.0 for bookworm (F49).
+  - **git 2.43.0:**
+    - `git rev-parse --git-path hooks` follows `core.hooksPath` and resolves in a worktree,
+      where `.git/hooks` isn't a directory (F32).
+    - A UTF-16 file diffs as binary. With `working-tree-encoding=UTF-16LE-BOM`, it's stored as
+      UTF-8 and diffs as text (F20).
+    - `TZ=UTC` with `--date=iso-strict-local` prints the committer date in UTC (F35).
+  - **Microsoft's `Out-File` reference, for Windows PowerShell 5.1:** the default encoding is
+    `unicode`, "UTF-16 with the little-endian byte order" (F20).
+  - **GitHub's code owners page:** "You can define code owners in public repositories with
+    GitHub Free and GitHub Free for organizations, and in public and private repositories with
+    GitHub Pro, GitHub Team, GitHub Enterprise Cloud, and GitHub Enterprise Server" (F56).
+  - **Claude Code's docs:**
+    - The memory page: "Before v2.1.281, some sessions, such as those on Amazon Bedrock or with
+      telemetry disabled, read CLAUDE.md files only." The changelog has `AGENTS.md` support
+      "also work on Amazon Bedrock, Google Vertex AI, Microsoft Foundry, LLM gateways, and
+      sessions with telemetry disabled" (F57).
+    - The permissions page: `Read` and `Edit` deny rules "apply to Claude's built-in file tools,
+      to file commands Claude Code recognizes in Bash, such as cat, head, tail, sed, and tee",
+      but not to "a command that reads files without naming them" (F58).
+- **Parity:** one run of each sample, on `48c6ecd`, graded and compared with the baseline. Each
+  passed every check and left its sample unchanged.
+  - **Greenfield:** seven checks, and no difference from the baseline. It found F53 to F55. Its
+    fourth override, reading `core.hooksPath` with `--local`, came from the prompt's limit on
+    the directories a run may read.
+  - **Re-check:** thirteen checks. Two values moved:
+    - dimension 3 to `GAP`, which F24 was meant to do;
+    - dimension 8 to `UNVERIFIABLE-HERE`, because the run tried the existing licence check on
+      the dev tools and had no network.
+
+    It kept the declines and the item never to be proposed again. It rated tag-pinned actions
+    no finding at T1, as F25 says, and found F56.
+  - **Audit:** twenty checks, with all thirteen planted problems found. One value moved:
+    dimension 4 to `BLOCKER`. That's the v0.37.0 rule, which every v0.38.0 audit run also
+    moved. It found F57 to F59.
+  - **Not re-run** after the fixes the runs found, because the owner's account is near its
+    weekly limit. The fixes are text a run reads, and skillcheck, the tests and a reading
+    checked them.
+- **Not done:**
+  - `CLAUDE.md` here still says this repository's settings can't turn the synced skills off.
+    The standard now says hiding or denying one is documented but untried. The owner's browser
+    test 3 settles it, and `CLAUDE.md` changes then.
+  - The parity prompt doesn't say whether a run may use the network. The audit run read PyPI,
+    public repositories and vendor docs, while the other two made no network reads.
+    `docs/testing-the-skill.md` could say which, with a new baseline.
+
 ## 2026-09-28 — R22's deeper pass is taken in
 
 - **Taken in:** a second R22 result, a deeper pass from the same day, filed as

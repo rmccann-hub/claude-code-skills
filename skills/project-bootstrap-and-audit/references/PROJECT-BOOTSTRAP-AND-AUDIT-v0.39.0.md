@@ -4380,7 +4380,7 @@ records are append-only and are not edited for this.
 
 ## Entries
 
-**0.39.0** — **thirty-four fixes from the first live audit and the runs before it**, at the
+**0.39.0** — **forty-one fixes from the first live audit and the runs before it**, at the
 maintainer's request, grouped by what found them.
 
 **The first live audit found twelve**, on the repository of a public desktop application. Up to
@@ -4434,6 +4434,17 @@ its default as a mirror of upstream, untouched for five weeks, while its working
 the work and the only context file. *The agent's version is recorded with its name*: two
 long-lived sessions still ran a Claude Code release from July, older than several facts here
 assume.
+
+**This version's own parity runs found seven, applied before it merged.** The greenfield run
+found three: *the choosing row names the shapes section and Phase 6*, both of which a Phase 3
+stop needs; *the job vocabulary has `choose`*; and *the tier grep reads every Markdown file
+when no record exists*. The re-check run found that *`CODEOWNERS` is rated where the plan
+honours it*, since a private repository needs a paid plan for it. The audit run found three,
+each checked against Claude Code's docs. *Native `AGENTS.md` reading reaches third-party
+providers and telemetry-off sessions from v2.1.281.* *A `Read` deny now covers `cat`* and the
+other file commands Claude Code recognises in Bash, but not `grep -r` beside the file or a
+script. *An unattended run meets the Phase 3 wait with the answers it was given*, and shows
+the tier first at the gate.
 
 **0.38.0** — **fifteen fixes and one addition before the file audits live repositories**,
 at the maintainer's request, grouped by what found them.

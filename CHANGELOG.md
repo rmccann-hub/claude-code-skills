@@ -49,7 +49,7 @@ Notable changes to this repository. The format follows
     SHA-256, and its self-check records that hash.
 
   Its history entry lists the rest.
-- The standard is now v0.39.0, with thirty-four fixes from its first live audit and the runs
+- The standard is now v0.39.0, with forty-one fixes from its first live audit and the runs
   before it:
   - Phase 3 drafts each answer the repository shows, with its evidence, for the owner to
     confirm. It offers "Not sure" on every question, and asks production, dependents and
@@ -66,6 +66,8 @@ Notable changes to this repository. The format follows
     and release assets.
   - Where the work lands on a branch other than the default, as in a fork whose default
     mirrors upstream, the run audits that branch.
+  - An unattended run meets the Phase 3 wait with the answers it was given, and shows the tier
+    first at the gate.
 
   Its history entry lists the rest.
 
