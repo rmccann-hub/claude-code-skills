@@ -695,6 +695,7 @@ reads as diligence.
 |---|---|---|
 | gitleaks v8.30.1 missed 79 of 2,000 random `DB_PASSWORD=<20 alphanumerics>` lines in Markdown (never an all-letter value), and 3 of 5,000 random AWS-shaped keys | 2026-09 | Dimensions 5 and 7. A canary with random values is not a test, and a clean scan is a backstop, not a guarantee |
 | `ruff format --check` (0.16.8) also checks the code blocks inside Markdown files | 2026-09 | Dimension 6. A format gate can fail on documentation |
+| gitleaks-action (v3.0.0) builds its own range: `--no-merges --first-parent <first>^..<head>` over the commits a push or a pull request carries. So on a merge-commit workflow, the push of a merge scans no commits and passes, and a pull-request run skips merge commits and second-parent history. gitleaks itself (8.24.3, 8.30.1) runs `git log -p -U0 --full-history --all` by default, which shows no merge commit's own changes; `--log-opts="--all -m"` reads them | 2026-09 | Dimension 7. Why a secret-scan job is read by its range and its count, and a full-history scan names `-m` |
 
 ### Language toolchains
 
@@ -1365,7 +1366,11 @@ named in the module map that no longer exists; auxiliary files with no consisten
 unless the layout is actively causing the confusion.
 
 **Hygiene.** `.gitignore`, `.editorconfig`, `.gitattributes` with real EOL rules. Defaults,
-not choices. `CODEOWNERS` once a second person exists.
+not choices. `CODEOWNERS` once a second person commits. **Read that from the history's
+authors**, which every clone has, not from a collaborator list the run may not be able to
+read, and a bot is not a person. Once a second person's commits are there, a missing
+`CODEOWNERS` is `GAP`. Before then it is not rated, and one naming a single person is the
+ceremony dimension 8 describes.
 
 ### 4. Agent configuration
 
@@ -1526,6 +1531,12 @@ wrote `if: ${{ secrets.TOKEN == '' }}` at step level, where the secrets context 
 available, so the check it looked like was never performed. **Print the value once before
 relying on it**, or assert on it, and keep the proof. This is not caught by mutation —
 mutating the subject changes nothing about a condition that was never reading it.
+
+**A check that uses an optional tool probes for the capability, not the tool.** An approved
+installer check ran `gh attestation verify` whenever `gh` was on the path, so it would refuse
+good input wherever `gh` predates the command: it arrived in gh 2.47.0, and Debian 13 packages
+2.46.0 (sources.debian.org, read 2026-09-29). So test for what the check needs, such as
+`gh attestation verify --help` exiting 0, and take the path without it when that fails.
 
 **A scanner or gate reporting "clean" must first be shown to detect.** Before trusting a
 secret scan, a linter, or any sweep that reports finding nothing, **plant a positive and
@@ -1712,6 +1723,13 @@ variable, untracking defers the exposure rather than closing it — a separate f
 
 Secret scanning per the placement table. `SECURITY.md` at T3.
 
+**A secret-scan job is read by its range and its scanned count, never by its conclusion.** A
+scanner that looked at no commits reports success, which is the vocabulary's *check reporting
+success while measuring nothing*, a `BLOCKER`. Read the range and the number of commits from
+the job's log, and compare them with what the push or the pull request carried. *Facts with an
+Expiry Date* says how one common action builds its range, and what a scan of the whole history
+misses by default.
+
 <constraints>
 
 **Platform secret scanning is free on public repositories and paid on private ones**, as of
@@ -1780,6 +1798,16 @@ author, and a proposal process filed with yourself.
 **What is worth doing solo is the automated half**, none of which needs a second person:
 least-privilege workflow tokens, pinned dependencies, no dangerous workflow patterns, signed
 releases with provenance, a security policy, static analysis, and a license.
+
+**An action referenced by a tag or a branch is rated by what its workflow can reach.** A tag
+can be moved to other code, and a moved tag runs wherever it is named. **Where the workflow
+reads a secret beyond its own token, grants that token write access or publishes, or the tier is
+T2 or higher**, a tag-pinned action is a `GAP` here, and the remedy is its full commit SHA with
+the version in a comment, as *Starter File Contents* pins one. Elsewhere it is not a finding,
+and the pin may be offered as `optional`. **A SHA pin needs something to move it:** Dependabot
+raises no alert for an action pinned to a SHA, so the amendment keeps version updates on for
+`github-actions`. Where an update tool was declined, the amendment says what the pin costs
+without one, and doesn't propose the tool again.
 
 **Do not re-derive supply-chain hygiene from first principles.** OpenSSF Scorecard already
 specifies and automates nineteen checks over exactly this ground — pinned dependencies,
@@ -2046,7 +2074,18 @@ moment. Only after the Phase 1 content search found none.
 
 **Provenance:** a public repository must contain no work-origin code.
 
+**Compare the history's address domains with the Phase 3 owner answer.** Commits carrying an
+organisation's domain, rather than a personal mail provider's or the platform's no-reply
+address, in a repository answered as personal raise the question this rule exists for, and
+only the human can answer it. Put it in Phase 6's first list, naming each domain and how many
+commits carry it, never an address. It is not a status of its own, and the default if
+unanswered is the owner answer as given.
+
 **Non-code deliverables** are in scope: tier, secrets, distribution, documentation.
+
+**A finding on the boundary with another repository names the side that carries the fix**, in
+`fix_side`: this repository, the other by name, or both. The first live run had no field for
+it and put it in the finding's text.
 
 <constraints>
 
@@ -2084,7 +2123,7 @@ phase: 4
 dimensions:
   - {n: 1, name: stakes, status: GAP, finding: "...", evidence: "...",
      secondary: [], strength: "<... | none>"}
-  # ... through n: 10
+  # ... through n: 10. A boundary finding adds fix_side: <here | "<owner/name>" | both>
 tally: {BLOCKER: 0, DRIFT: 0, GAP: 0, OVER: 0, MIRROR: 0, UNVERIFIABLE-HERE: 0, OK: 0, N/A: 0}
 tally_sum: 10          # MUST equal 10
 secondaries: [{n: 0, status: GAP, note: "..."}]
