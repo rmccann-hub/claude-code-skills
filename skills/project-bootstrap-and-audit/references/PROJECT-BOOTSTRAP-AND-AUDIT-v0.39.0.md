@@ -674,7 +674,7 @@ reads as diligence.
 
 | Fact | As of | Why a run cares |
 |---|---|---|
-| Claude Code reads `AGENTS.md` natively from v2.1.277, **but only when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` exists** in the working directory or above it, and not in sessions without feature flags (Bedrock, other third-party providers, telemetry off), in the first session after an install or upgrade, or with the built-in `agents-md` plugin disabled. Keeping `@AGENTS.md` in `CLAUDE.md` works in all of them and "never makes Claude read `AGENTS.md` twice" | 2026-09 | Dimension 4 and *Any Agent, Any Tool*. Why the shim stays although native reading shipped |
+| Claude Code reads `AGENTS.md` natively from v2.1.277, **but by default only when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` exists** in the working directory or above it; the *Project instructions* setting in `/config` can make it read both. Before v2.1.281 it didn't on Bedrock and other third-party providers or with telemetry off. It can miss the first session after an upgrade from v2.1.276 or earlier, and doesn't read it with the built-in `agents-md` plugin disabled. Keeping `@AGENTS.md` in `CLAUDE.md` works in all of them, and Claude Code "skips an AGENTS.md it has already loaded" | 2026-09 | Dimension 4 and *Any Agent, Any Tool*. Why the shim stays although native reading shipped |
 | `AGENTS.md` is read directly by most other major agent tools; Gemini CLI and Aider need one config line | 2026-09 | Whether a shim is warranted per tool |
 | Anthropic's target is under 200 lines per `CLAUDE.md`; Claude Code loads one of up to 4 MiB in full and skips a larger one | 2026-09 | The budget table. The one published number behind it; the others are this file's heuristics |
 | Codex stops adding instruction files once their combined size reaches `project_doc_max_bytes`, 32 KiB by default | 2026-09 | The budget table. Truncation reads exactly like being ignored |
@@ -1119,6 +1119,13 @@ carries them, or a reconnaissance report in this session carries answers 1–4, 
 verbatim and say where they came from in `answers_source`. The run still stops here, to show
 the tier it computed from them.
 
+**An unattended run meets this wait with the answers it was given.** Where the prompt says the
+person won't be there and carries the answers, the run can't stop, so it goes on and records
+`answers_source: given in the prompt`. The tier it computed goes first among Phase 6's
+decisions only the human can supply, so a wrong tier is caught before anything is applied. That
+is the one case in which the confirmation moves to Phase 6. It isn't a deviation, and
+`waits_observed` counts it.
+
 On a **re-check**, do not re-ask from scratch and do not silently carry forward either.
 **Show each recorded answer and ask of it: "Is that still the case?"** — with no answer
 pre-selected and no stated default. Asked that way, people report change most accurately
@@ -1396,9 +1403,9 @@ is not rated, and one naming a single person is the ceremony dimension 8 describ
 
 - `AGENTS.md` canonical; `CLAUDE.md` a shim holding only what cannot be portable.
   **Claude Code reads `AGENTS.md` natively only in some sessions** (from v2.1.277, as of
-  2026-09): when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` exists, and not on
-  Bedrock or other third-party providers, with telemetry off, or in the first session after an
-  install or upgrade. **So keep the shim.** A one-line `CLAUDE.md` containing `@AGENTS.md`
+  2026-09): by default only when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md`
+  exists, not before v2.1.281 on Bedrock or other third-party providers or with telemetry off,
+  and not always in the first session after an upgrade. **So keep the shim.** A one-line `CLAUDE.md` containing `@AGENTS.md`
   works in every session, and the vendor documents that it never loads `AGENTS.md` twice;
   `ln -s AGENTS.md CLAUDE.md` is the other documented route. **Prefer the import** — a symlink
   is invisible in a file listing, survives badly on Windows checkouts, and this maintainer
@@ -1440,9 +1447,12 @@ is not rated, and one naming a single person is the ceremony dimension 8 describ
   commands without asking — `Bash(pip install:*)`, `Bash(npm install:*)`, a bare `Bash` — is a
   `BLOCKER` on this dimension in its own right, and a narrower allow nobody reviewed is
   `DRIFT`. Propose untracking it, and moving anything meant to be shared into `settings.json`.
-- **A deny rule names an access path, not just a file.** `Read(.env*)` leaves `Bash(cat .env)`
-  open — same file, different tool, no rule. For each thing that must not be reached, cover
-  every tool that could reach it. **Verify the matcher works rather than assuming it**; a rule
+- **A deny rule names an access path, not just a file.** Claude Code's docs, read 2026-09-29,
+  have `Read(.env*)` cover the file commands it recognises in Bash, such as `cat`, `head` and
+  `sed`, and redirections too. It doesn't cover `grep -r` run from the directory that holds the
+  file, or a script that opens the file itself: the same file, by a path the rule doesn't see.
+  Older releases left `Bash(cat .env)` open, so keep the explicit rule. For each thing that
+  must not be reached, cover every tool that could reach it. **Verify the matcher works rather than assuming it**; a rule
   that has never fired has not been shown to fire.
 - **State the ceiling on what deny can do, in the report.** Deny rules govern the agent's own
   file and shell tools. **They are not an operating-system sandbox:** a Python or Node script
@@ -2638,6 +2648,8 @@ conformance:
   # Gates
   waits_observed: <int>                 # 2 on a full run OR an audit stopping at the gate;
                                         # 1 on a survey, or on a run that stops at Phase 3.
+                                        # An unattended run's Phase 3, met by answers
+                                        # given in advance, counts.
                                         # Count a wait when you STOP at it —
                                         # arriving at Phase 6 and stopping is observing it,
                                         # not skipping it. Two runs disagreed on this.
@@ -3630,7 +3642,9 @@ beats the root one, and an explicit instruction in the session beats both. That 
 mechanism behind the scoped-rules row above, and it is portable, which `.claude/rules/` is not.
 
 **Re-check the Claude Code row before relying on it.** Native support shipped in v2.1.277 with
-conditions; if they are ever lifted, the shim becomes `OVER` and should come out. **Look, rather
+conditions, and v2.1.281 lifted two: third-party providers and telemetry off. While any
+remains, and while sessions on older releases still run, the shim stays. When none does, it
+becomes `OVER` and should come out. **Look, rather
 than repeating this table.**
 
 </constraints>
