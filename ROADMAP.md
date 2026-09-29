@@ -360,6 +360,18 @@ The apply half found these:
   written for the owner can hold what a public tree mustn't, so committing it needs the check
   any public write gets (piece 4).
 
+Reading the owner's public repositories on 2026-09-29, before the next audit, found two more,
+also applied in v0.39.0:
+
+- **F51:** a fork can keep its default branch as a clean mirror of upstream and land its work
+  on a branch named for its purpose. The one read here had a default untouched for five weeks
+  and a working branch more than a thousand commits ahead, holding the only context file. Every
+  rule that reads "the default branch" would audit the mirror, and a session started there
+  reads no instructions. The run records `working_branch` and reads it instead (piece 4).
+- **F52:** a long-lived session can run a Claude Code release far behind the current one: two
+  started in July still ran 2.1.233, while new ones ran 2.1.284. Several dated facts hold only
+  from a given version, so the run records its agent's version (piece 4).
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on

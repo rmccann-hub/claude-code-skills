@@ -49,7 +49,7 @@ Notable changes to this repository. The format follows
     SHA-256, and its self-check records that hash.
 
   Its history entry lists the rest.
-- The standard is now v0.39.0, with thirty-two fixes from its first live audit and the runs
+- The standard is now v0.39.0, with thirty-four fixes from its first live audit and the runs
   before it:
   - Phase 3 drafts each answer the repository shows, with its evidence, for the owner to
     confirm. It offers "Not sure" on every question, and asks production, dependents and
@@ -64,6 +64,8 @@ Notable changes to this repository. The format follows
     action pinned by tag is rated by what its workflow can reach.
   - Three dated facts about cloud sessions are checked again: synced plugins, synced skills
     and release assets.
+  - Where the work lands on a branch other than the default, as in a fork whose default
+    mirrors upstream, the run audits that branch.
 
   Its history entry lists the rest.
 
