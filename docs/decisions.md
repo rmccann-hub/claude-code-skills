@@ -127,13 +127,15 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   - **Not re-run** after the fixes the runs found, because the owner's account is near its
     weekly limit. The fixes are text a run reads, and skillcheck, the tests and a reading
     checked them.
-- **Not done:**
-  - `CLAUDE.md` here still says this repository's settings can't turn the synced skills off.
-    The standard now says hiding or denying one is documented but untried. The owner's browser
-    test 3 settles it, and `CLAUDE.md` changes then.
-  - The parity prompt doesn't say whether a run may use the network. The audit run read PyPI,
-    public repositories and vendor docs, while the other two made no network reads.
-    `docs/testing-the-skill.md` could say which, with a new baseline.
+- **Also changed, at the owner's word to fix everything open:**
+  - `CLAUDE.md` here no longer says this repository's settings can't turn the synced skills
+    off. It now says they can't stop the sync, and that hiding one is documented but untried.
+    The owner's browser test 3 settles which.
+  - `docs/testing-the-skill.md` names a second known limit of the parity prompt: it says
+    nothing about the network. The audit run read PyPI, public repositories and vendor docs,
+    while the other two made no network reads.
+- **Not done:** the prompt itself is unchanged, because settling either limit means a new
+  baseline.
 
 ## 2026-09-28 — R22's deeper pass is taken in
 

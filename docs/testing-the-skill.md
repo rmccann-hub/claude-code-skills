@@ -98,9 +98,18 @@ These come from the standard's own procedure for testing itself, and they still 
   on this repository. A copy uploaded as a claude.ai skill loads anyway, so turn it off on the
   account before a run.
 
-**A known limit of this prompt:** the sample's bare remote sits outside the three directories,
-so a run skips Phase 0's `git fetch` and records it as something it couldn't do. The baseline
-was taken that way. Changing the prompt to reach the remote means taking a new baseline.
+**Two known limits of this prompt:**
+
+- **The fetch.** The sample's bare remote sits outside the three directories, so a run skips
+  Phase 0's `git fetch` and records it as something it couldn't do. The baseline was taken that
+  way.
+- **The network.** The prompt limits what a run reads on disk, and says nothing about the
+  network. In the v0.39.0 runs, the audit run installed from PyPI and read public repositories
+  and vendor docs, and the other two made no network reads. So a status that rests on a network
+  check, such as a licence read from a dependency's repository, can differ between runs for
+  that reason alone.
+
+Changing the prompt to settle either means taking a new baseline.
 
 ## What counts as a difference
 
