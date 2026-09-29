@@ -436,8 +436,8 @@ v0.40.0:
   The run's tests, its revert probe, CI and a first review had all passed them: a test message
   that pytest cut short, a strict decode that crashed the gate script on output that wasn't
   UTF-8, and a false claim in the decision record. The self-check is said to catch failures
-  "without a second reader". Phase 7 should have a second reader go over the diff before the
-  pull request is offered (piece 1).
+  "without a second reader". A second reader should go over the whole branch before the run
+  hands over, after the decision record is written (piece 1).
 - **F68:** no block holds work the owner asks for after Phase 9, such as a review, a merge or a
   branch check, so the run added its own. When the owner asks the run to merge, the block
   should record the head it merged and the default branch's CI read afterwards (piece 1).

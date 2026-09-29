@@ -10,14 +10,15 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   and to check the branches before calling any safe to delete.
 - **Chosen:** ten fixes, F60 to F69. `ROADMAP.md` gives each one's evidence, and the version
   history groups them by what found them:
-  - **Up to the gate,** F60 to F64. The scratch clone comes from the remote, or has its
-    remote-tracking refs checked against the working copy's. A shallow clone is deepened before
-    history is read. A result the run's own mistake produced goes in `corrections`. The
-    address-domain command counts commits. A step the standard directs isn't a deviation.
+  - **Up to the gate,** F60 to F64. The scratch clone comes from the remote where it can, and
+    its `origin/<default>` is checked against the working copy's either way. A shallow clone is
+    deepened before history is read. A result the run's own mistake produced goes in
+    `corrections`. The address-domain command counts commits. A step the standard directs isn't
+    a deviation.
   - **The apply half,** F65 and F66. Settings the run can't read are asked for at the Phase 3
     wait, as a screenshot or a reading. Phase 7's block has `overrides`.
-  - **After the gate,** F67 to F69. A second reader reviews the diff before the pull request is
-    offered. Work asked for after Phase 9 has a `post_gate` block, and a merge the owner asks
+  - **After the gate,** F67 to F69. A second reader reviews the whole branch before the report
+    is handed over. Work asked for after Phase 9 has a `post_gate` block, and a merge the owner asks
     for takes only the head that was checked. A branch is advised for deletion only after
     checking what still needs it.
 - **Where the evidence left a choice, and what was chosen:**
@@ -26,25 +27,38 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
     without the remote would have stopped every parity run.
   - **F65:** without a screenshot or a reading, a platform setting is `UNVERIFIABLE-HERE`. It is
     never rated done because a record says so.
-  - **F67:** the second reader is a fresh session or subagent, given the diff and the approved
-    amendments and none of the run's reasoning. Where the tool can't start one, the human is
-    the second reader. The self-check no longer says it works "without a second reader".
+  - **F67:** the second reader is a fresh session or subagent, given the branch's diff and the
+    approved amendments and none of the run's reasoning. It reads in Phase 9, after the decision
+    record is pushed, because one of the three defects was in the record, and Phase 7's block is
+    closed before Phase 8 writes it. Where the tool can't start one, the human's review of the
+    pull request is the second reading, with no third wait. The self-check no longer says it
+    works "without a second reader".
+  - **F66:** each phase's overrides go in the next block it emits, so Phase 9's block holds
+    those of Phases 8 and 9.
+  - **F69:** where a sibling can't be read, the human is asked, or the check is recorded as not
+    made and no deletion is advised. A squash-merged branch qualifies when nothing cites its
+    commits.
   - **F68:** the run merges only when the human asks. It passes the checked head to the merge
     as the expected head, and reads the default branch's CI on the merge commit.
-- **Chosen:** 0.40.0, a minor bump. The new fields are `readings` in Phase 3, `review` and
-  `overrides` in Phase 7, the `post_gate` block, `second_reader` in the self-check, and
-  `deepened` for Phase 0's `shallow`. Older reports stay readable.
+- **Chosen:** 0.40.0, a minor bump. The new fields are `readings` in Phase 3, `overrides` in
+  Phase 7, `review` and `overrides` in Phase 9, the `post_gate` block, `second_reader` in the
+  self-check, and `deepened` for Phase 0's `shallow`. Older reports stay readable.
 - **Checked,** in this session on 2026-09-29:
   - The corrected domain command, run with mawk 1.3.4 on the live repository's full history,
     gives each commit one count per domain. Allowing for the eight commits merged since, it
     matches the re-check's corrected per-commit counts, where the old command's didn't.
   - The ref copy moved a scratch clone's `origin/main` from the working copy's stale local
     branch to its fetched `origin/main`, in a throwaway repository.
-- **Parity:** not run before the pull request opened. The owner's account shows its weekly
-  limit warning, and the owner's working sessions start a round tonight on the same account.
-  The pull request merges after parity runs of the audit and re-check samples, the two that
-  reach the phases these fixes change. The greenfield sample stops at Phase 3, which gains only
-  the `readings` field.
+- **Reviewed** cold, before the pull request opened, by a subagent that hadn't written the
+  change. It found four blocking defects, all fixed: the second reader read before the decision
+  record existed, Phase 7's `overrides` claimed later phases, the scratch clone didn't check out
+  the audited commit, and the branch check had no fallback where a sibling can't be read.
+- **Parity:** held. The runs draw on the same weekly allowance as the owner's working sessions,
+  which start a round on 2026-09-29, so they run later, and the pull request merges after them.
+  The audit and re-check samples reach the phases these fixes change. The greenfield sample
+  stops at Phase 3; of what changes before that, only the shallow rule and the `readings` ask
+  reach it, and neither applies to a new repository with its full history and no settings to
+  rate.
 
 ## 2026-09-29 — The standard moves to v0.39.0
 
