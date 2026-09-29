@@ -1094,8 +1094,9 @@ workflow is evidence about production, so show it beside the question, but nothi
 repository shows who relies on the output or what the machine it runs on is doing today.
 
 **Every question offers "Not sure"**, and an option is marked recommended only beside its
-evidence. A default pulls hardest when it reads as a recommendation, and a large share of
-people confirm a wrong answer that arrives filled in. **"Not sure" is an answer:** record it as
+evidence. A default pulls hardest when it reads as a recommendation (a 2019 meta-analysis of
+58 studies, `doi:10.1017/bpp.2018.43`), and a large share of people confirm a wrong answer that
+arrives filled in (ISER working paper 2014-32). **"Not sure" is an answer:** record it as
 `unknown`, and treat what depends on it as the deployment rule below does.
 
 **Answers already given are used, not re-asked.** Where the prompt that started the run
@@ -1105,8 +1106,9 @@ the tier it computed from them.
 
 On a **re-check**, do not re-ask from scratch and do not silently carry forward either.
 **Show each recorded answer and ask of it: "Is that still the case?"** — with no answer
-pre-selected and no stated default. Asked that way, people report change most accurately,
-where a stated "nothing has changed" invites them to confirm what no longer holds. Production
+pre-selected and no stated default. Asked that way, people report change most accurately
+(`doi:10.1093/jssam/smz021`), where a stated "nothing has changed" invites them to confirm what
+no longer holds. Production
 and dependents change without a commit, as where it runs does, so none of the three is ever
 carried forward unasked. This costs one exchange and catches the thing a record cannot: a
 tier rated on the *imminent* state whose trigger has since fired. A record describes what was
