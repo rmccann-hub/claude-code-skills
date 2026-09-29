@@ -662,6 +662,7 @@ reads as diligence.
 |---|---|---|
 | Classic branch protection **and** rulesets: public repositories on a free plan, or public and private on a paid one — **GitHub Pro suffices for a personal account**. Push rulesets need an organisation plan and apply only to private and internal repositories | 2026-09 | Dimension 6. Decides `GAP` against `N/A`, and whether the public-or-pay decision is raised at all |
 | Secret scanning and push protection: free and default-on for public repositories; a paid per-committer add-on for private | 2026-09 | Dimension 7. Decides whether the free remedy exists |
+| Code owners: public repositories on any plan, including GitHub Free; private repositories only on GitHub Pro, Team or Enterprise | 2026-09 | Dimension 3. Decides `GAP` against `N/A` for a missing `CODEOWNERS` |
 | Immutable releases are a **repository or organisation setting**, not a default. When on: tag and assets frozen at publish, title and notes still editable, and assets must be uploaded while the release is a draft | 2026-09 | The release gate. Read the setting; do not assume either way |
 | Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt. The period is set with `default-days` under `cooldown:`, with per-semver keys alongside; a bare `cooldown: 0` is not a documented form | 2026-09 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
 | A tag can be created in the browser at publish time, with no clone | 2026-09 | The only reason the release gate is reachable at all without a working copy |
@@ -1385,8 +1386,11 @@ unless the layout is actively causing the confusion.
 not choices. `CODEOWNERS` once a second person commits. **Read that from the history's
 authors**, which every clone has, not from a collaborator list the run may not be able to
 read, and a bot is not a person. Once a second person's commits are there, a missing
-`CODEOWNERS` is `GAP`. Before then it is not rated, and one naming a single person is the
-ceremony dimension 8 describes.
+`CODEOWNERS` is `GAP` **where the plan honours the file**: any public repository, and a private
+one only on a paid plan, as *Facts with an Expiry Date* records. On a private repository on a
+free plan it is `N/A`, a fact about the plan. Where the plan can't be read, it stays `GAP`, and
+its amendment is gated on the human's answer about the plan. Before a second person commits it
+is not rated, and one naming a single person is the ceremony dimension 8 describes.
 
 ### 4. Agent configuration
 
