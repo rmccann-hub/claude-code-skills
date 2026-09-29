@@ -759,6 +759,16 @@ keeps a branch named for its purpose. Every rule below that reasons about "the d
 means the one this repository actually has, and a finding that names `main` on a repository
 whose default is something else is reading the wrong branch.
 
+**Where the work lands on another branch, audit that one.** A fork can keep its default as a
+clean mirror of upstream and land every commit on a branch named for its purpose: a live
+fork's default had not moved in five weeks, while its working branch carried more than a
+thousand commits and the only context file. There the job, or the context file on that branch,
+names it. **Record it as `working_branch`, and read it wherever this file says the default
+branch:** the fetch, the history, the remote CI conclusion, protection, and the base of the
+pull request. **Start the session on the working branch**, since a session on the default reads
+none of its instructions and would find no agent configuration at all. The default's own state
+is a finding only where it misleads, such as a README badge that reports upstream's CI.
+
 **Fetch before you read refs.** Tag counts, branch positions and "N commits behind" are all
 wrong from an unfetched clone, and a wrong one has already been written into a decision
 record as fact. **A fetch is the one write phases 0–5 make on purpose:** it updates
@@ -779,6 +789,9 @@ record it. Not a question — a recorded override.
 **Probe capability before relying on it.** Try a harmless command, a scratch write, a remote
 CI read, and a tag listing. **Record each as yes / no / unknown.** A capability assumed and
 absent produces advice the human cannot follow; a capability present and unused wastes the run.
+**Record the agent's version with its name.** Several facts below hold only from a given
+Claude Code version, and a long-lived session can run one many releases behind the current
+one: on 2026-09-29, two sessions started in July still ran 2.1.233, while new ones ran 2.1.284.
 
 **Three things cannot be detected. Ask them once — and ask them at the Phase 3 wait, not
 here:**
@@ -806,7 +819,7 @@ capability_proof: |
 asked: {local_working_copy: yes|no, standards_repo: "<name | none>",
         copyright_holder: "<as the human names it>"}
 degraded: [<what this run could not do, and what it recorded instead>]
-tool: "<which agent and surface this ran on>"
+tool: "<which agent and surface this ran on, and its version>"
 clean_tree_proof: |
   $ GIT_OPTIONAL_LOCKS=0 git status --porcelain
   (empty)
@@ -815,6 +828,7 @@ fetch_proof: |
   <output>
 remote: <url | none>
 default_branch: <name as read, never assumed>
+working_branch: <the branch the work lands on, as the job or context file names it | same>
 branch_used: <branch>
 branch_override: <none | "harness-pinned to X">
 shallow: yes | no
@@ -2204,7 +2218,7 @@ without reading the body and can diff two runs mechanically:
 
 ```yaml
 standard: PROJECT-BOOTSTRAP-AND-AUDIT v<metadata.version>
-tool: <agent and surface>
+tool: <agent, surface and version>
 repository: <owner/name> @ <commit>
 job: <survey | set up | audit | release | prune | validate>
 mode: <greenfield | retrofit | audit | recheck>
@@ -4345,7 +4359,7 @@ records are append-only and are not edited for this.
 
 ## Entries
 
-**0.39.0** — **thirty-two fixes from the first live audit and the runs before it**, at the
+**0.39.0** — **thirty-four fixes from the first live audit and the runs before it**, at the
 maintainer's request, grouped by what found them.
 
 **The first live audit found twelve**, on the repository of a public desktop application. Up to
@@ -4392,6 +4406,13 @@ export git reads as text. *A command the session refuses is `UNVERIFIABLE-HERE`*
 re-spelled. *A missing decision record has one default path*, `docs/decisions.md`. *`CODEOWNERS`
 is due from a second committer*, where two re-checks had split, and *a tag-pinned action is
 rated by what its workflow can reach*, where the dimension had said nothing.
+
+**Reading the maintainer's public repositories, before the next audit, found two.** *Where the
+work lands on a branch other than the default, the run audits that branch*: a live fork keeps
+its default as a mirror of upstream, untouched for five weeks, while its working branch holds
+the work and the only context file. *The agent's version is recorded with its name*: two
+long-lived sessions still ran a Claude Code release from July, older than several facts here
+assume.
 
 **0.38.0** — **fifteen fixes and one addition before the file audits live repositories**,
 at the maintainer's request, grouped by what found them.
