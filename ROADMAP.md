@@ -427,6 +427,25 @@ pull request whose CI passed when read at log level, and found two more:
   in its notes. Phase 4's field takes a `phase` key, but Phase 4's block is emitted before
   Phase 7 runs (piece 1).
 
+After the gate, the owner asked the session to review and merge that pull request, and to check
+the branches before calling any safe to delete. That work found three more:
+
+- **F67:** a reviewer that hadn't written the change read the diff cold and found three defects.
+  The run's tests, its revert probe, CI and a first review had all passed them: a test message
+  that pytest cut short, a strict decode that crashed the gate script on output that wasn't
+  UTF-8, and a false claim in the decision record. The self-check is said to catch failures
+  "without a second reader". Phase 7 should have a second reader go over the diff before the
+  pull request is offered (piece 1).
+- **F68:** no block holds work the owner asks for after Phase 9, such as a review, a merge or a
+  branch check, so the run added its own. When the owner asks the run to merge, the block
+  should record the head it merged and the default branch's CI read afterwards (piece 1).
+- **F69:** nothing says what to check before advising that a branch be deleted. Asked to check
+  first, the run found a sibling repository's record naming one branch as staying, because
+  citations had broken once when it was deleted. Before a deletion is advised, the branch
+  should have no commits of its own and no open pull request. Every commit cited through it,
+  in the repository or a sibling, should be reachable from the default branch, and a sibling
+  promised the branch should be told (piece 4).
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
