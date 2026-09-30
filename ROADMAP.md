@@ -637,10 +637,13 @@ approval:
   sessions received none. Support said they are meant to load in cloud sessions too, that the
   docs' silence is a gap, and that an empty plugin list isn't expected. It named two causes to
   rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true`
-  in the cloud environment. A cloud session that day had the variable set, an empty synced
-  plugins folder, and no plugins enabled on the account. The fact should say both, and be
-  checked again once the variable is gone and a plugin is installed. Until then, a skill
-  uploaded to the account stays the route the standard names.
+  in the cloud environment. In a cloud session that day, the platform set the variable itself:
+  the process that launches Claude Code, the environment manager and Claude Code 2.1.280 all
+  carried it, while the environment's own variables were empty. The session's synced plugins
+  folder was empty too, and no plugins were enabled on the account. The fact should say what
+  support said and what the session showed, and be checked again once a plugin is installed
+  and the variable is gone. Until then, a skill uploaded to the account stays the route the
+  standard names.
 
 The owner asked for one more rule, researched before it's written:
 
