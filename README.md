@@ -1,7 +1,8 @@
 # claude-code-skills
 
-The reference for setting up, auditing and keeping repositories current with Claude Code:
-installable skills, the checks behind them, and the research they rest on.
+The owner's master reference for Claude Code, for Claude skills, and for coding practice in
+general: installable skills for setting up, auditing and keeping repositories current, the
+checks behind them, and the research they rest on.
 
 ## Install
 

@@ -20,8 +20,10 @@ Notable changes to this repository. The format follows
   A skill uploaded to the claude.ai account is the route into cloud sessions, where synced
   plugins are no longer documented to load. The files it proposes wait for the rebuild's first
   piece.
-- A reading of FFmpeg's practices, in `research/runs/`, taken from its tree and history, with
-  nine proposals for the standard that await the owner's approval.
+- A reading of FFmpeg's practices, in `research/runs/`, taken from its tree and history. The
+  owner approved its nine proposals, and v0.40.0 applies them.
+- `skillcheck` fails on a merge's conflict markers in any file a commit here carries, and on a
+  README or roadmap row stating a standard version other than the file's.
 
 ### Changed
 
@@ -103,6 +105,8 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
+- CI proves the test suite ran to the end. A run that stops early can still exit 0, so the
+  build now fails when the test report is missing or counts fewer tests than the baseline.
 - CI's collection guard says why it failed. With nothing collected, it used to stop under the
   runner's `bash -e` before printing anything.
 - The parity grader's check that a declined item isn't proposed reads only what each amendment

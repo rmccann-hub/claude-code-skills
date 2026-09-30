@@ -2,6 +2,46 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-30 — This repository, fixed against its own standard
+
+- **Asked:** told that the owner's synced claude.ai skills advise against lessons the live
+  repositories paid for, the owner said: "fix this repo first, then i can upload skills to fix.
+  this repo will be the master for claude code, claude skills, and gnenerall non-llm coding
+  practices, amungst other things".
+- **Scope:** it goes into the first lines of `AGENTS.md` and the README, as the owner's word. The synced skills are fixed by uploading this repository's skills once they're built,
+  not edited on their own.
+- **Found:** this repository, read against v0.40.0 and the lessons in `ROADMAP.md` (F81 to
+  F102), had five gaps:
+  - Its merge strategy was unrecorded, though every pull request so far merged with a merge
+    commit, and its commits are cited from outside. From T2 that is `GAP` (F74).
+  - Nothing proved the test suite ran to the end (F81).
+  - The standard's version is stated in the README's and the roadmap's rows as well as in the
+    file, and nothing compared those copies (F97). The changelog's line about FFmpeg's
+    proposals still said they awaited approval, which is the drift that rule is for.
+  - Nothing looked for a merge's conflict markers (F92).
+  - Its conventions didn't say which were checked and which were advice (F94).
+- **Chosen:**
+  - `AGENTS.md` records merge commits as the strategy, and says each convention's enforcement
+    or that nothing checks it. It also takes the waiting-on convention the starter file got in
+    v0.40.0 (F70), and asks a commit adding a Markdown file to name the homes it considered
+    (F102).
+  - `skillcheck` compares the README's and the roadmap's copies of the standard's version with
+    the file's, and fails on conflict markers in the files at the root and under the tracked
+    directories.
+  - CI writes pytest's report and fails where it is missing or counts fewer tests than
+    `.test-baseline`, which moves from 144 to 177.
+- **Human action:** the merge strategy is enforced only once the repository's settings allow
+  merge commits alone: Settings, General, Pull Requests, with squash merging and rebase merging
+  turned off.
+- **Checked,** on 2026-09-30:
+  - The 33 new tests: 27 fail against the checks before this change, restored afterwards from a
+    copy checked by its SHA-256. The other six assert that lookalikes and files outside the scan
+    pass.
+  - A pytest run whose second of three tests calls `os._exit(0)` exits 0 and writes no report.
+    The new CI step, extracted from the workflow and run under `bash -e`, fails that, fails a
+    report counting 133 tests against the baseline of 177, and passes the full report.
+  - `git log --first-parent origin/main`: every commit since the first is a merge commit.
+
 ## 2026-09-30 — The standard moves to v0.40.0
 
 - **Asked:**
