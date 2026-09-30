@@ -73,9 +73,9 @@ row was read from FFmpeg's own tree, or measured from its history, on 2026-09-30
   version. Its subjects are sentences rather than "area: summary", as about three quarters of
   upstream's last 300 are.
 
-## Proposals, awaiting the owner's approval
+## Proposals, approved on 2026-09-30
 
-Each is written up in `ROADMAP.md` as F71 to F79.
+Each is written up in `ROADMAP.md` as F71 to F79, and v0.40.0 applies them.
 
 - **F71:** find the canonical forge before reading CI and settings.
 - **F72:** accept a security contact the repository names, where there is no `SECURITY.md`.
@@ -91,7 +91,9 @@ Each is written up in `ROADMAP.md` as F71 to F79.
 - **F79:** where licences mix, each file names its own, and the licence file says which parts
   are which.
 
-**Not proposed:** mailing-list review, review waiting times, `MAINTAINERS`, the
-`Signed-off-by` sign-off (on 1,928 of the 3,004 commits) and naming prefixes by visibility.
-They serve many contributors, or one language. They are worth reading again when a second
-person commits, the trigger the standard already uses for `CODEOWNERS`.
+**Taken in at the owner's word, as F80:** a maintainers list, review before merging, review
+waiting times, the `Signed-off-by` sign-off (on 1,928 of the 3,004 commits) and a shared
+security contact. They are rated only where the human says more than one person maintains.
+
+**Not proposed:** mailing-list review, which is one project's route, and naming prefixes by
+visibility, which belong to a language's own conventions.

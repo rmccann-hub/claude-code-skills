@@ -2,14 +2,18 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
-## 2026-09-29 — The standard moves to v0.40.0
+## 2026-09-30 — The standard moves to v0.40.0
 
-- **Asked:** after the first live re-check, the owner said to "update anything needed on your
-  side". The re-check ran on v0.39.0, from the owner's run file, against the repository of the
-  first live audit. After its gate, the owner asked it to review and merge its pull request,
-  and to check the branches before calling any safe to delete.
-- **Chosen:** ten fixes, F60 to F69. `ROADMAP.md` gives each one's evidence, and the version
-  history groups them by what found them:
+- **Asked:**
+  - After the first live re-check, the owner said to "update anything needed on your side".
+    The re-check ran on v0.39.0 on 2026-09-29, from the owner's run file, against the
+    repository of the first live audit. After its gate, the owner asked it to review and merge
+    its pull request, and to check the branches before calling any safe to delete.
+  - On 2026-09-30 the owner raised one more (F70) and named FFmpeg as a model to read (F71 to
+    F79). Then: "Include the checks for more maintainers, but you need to ask if that's the
+    case. Fix everything else." (F80)
+- **Chosen:** twenty-one fixes, F60 to F80. `ROADMAP.md` gives each one's evidence, and the
+  version history groups them by what found them:
   - **Up to the gate,** F60 to F64. The scratch clone comes from the remote where it can, and
     its `origin/<default>` is checked against the working copy's either way. A shallow clone is
     deepened before history is read. A result the run's own mistake produced goes in
@@ -18,9 +22,17 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   - **The apply half,** F65 and F66. Settings the run can't read are asked for at the Phase 3
     wait, as a screenshot or a reading. Phase 7's block has `overrides`.
   - **After the gate,** F67 to F69. A second reader reviews the whole branch before the report
-    is handed over. Work asked for after Phase 9 has a `post_gate` block, and a merge the owner asks
-    for takes only the head that was checked. A branch is advised for deletion only after
+    is handed over. Work asked for after Phase 9 has a `post_gate` block, and a merge the owner
+    asks for takes only the head that was checked. A branch is advised for deletion only after
     checking what still needs it.
+  - **From the owner,** F70 and F80. A working session says what it's waiting on, and from
+    whom. Whether anyone else maintains, reviews or commits is asked at the Phase 3 wait,
+    drafted from the history's authors, and the checks for more than one maintainer apply only
+    once the human says so.
+  - **From reading FFmpeg,** F71 to F79: the canonical forge, a security contact outside
+    `SECURITY.md`, a checked commit grammar of either family, one merge strategy, annotated
+    tags, interfaces others build on, a second release line, damaged-input tests and mixed
+    licences.
 - **Where the evidence left a choice, and what was chosen:**
   - **F60:** where the run can't reach the remote, as in a parity run, it clones the working
     copy and copies the working copy's remote-tracking refs across. Refusing to replay gates
@@ -40,8 +52,28 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
     commits.
   - **F68:** the run merges only when the human asks. It passes the checked head to the merge
     as the expected head, and reads the default branch's CI on the merge commit.
-- **Chosen:** 0.40.0, a minor bump. The new fields are `readings` in Phase 3, `overrides` in
-  Phase 7, `review` and `overrides` in Phase 9, the `post_gate` block, `second_reader` in the
+  - **F80:** asked, not inferred, at the owner's word. It supersedes F24 and F56's reading of a
+    second committer from the history's authors, which are now the draft. Unanswered, the
+    default is no, and nothing that depends on it is rated. The checks: `CODEOWNERS`, a
+    maintainers list, review required before a merge, the contributing guide's review rules, a
+    sign-off or agreement for outside contributions, and a security contact that isn't one
+    inbox.
+  - **F73:** the grammar is checked in CI over a pull request's commits, and by a commit-msg hook
+    only where dimension 6 places client-side hooks, since a hook no session installs checks
+    nothing.
+  - **F74:** a strategy left unrecorded, or recorded while the platform allows the others, is
+    `GAP`. A choice the human recorded isn't re-raised.
+  - **F75:** a lightweight release tag is `GAP` from T2. The job creates the tag object with
+    `git tag -a` before the release names it, and where the Releases UI made a tag, the run
+    records what `git cat-file -t` says of it.
+  - **F76:** `N/A` where nobody builds on the interface, and `GAP` where others do and removals
+    arrive unannounced.
+  - **F78:** from T2. A fuzzer is the strong form, and a handful of damaged samples the floor.
+  - **F71:** the mirror's own platform settings are rated `MIRROR`, and the canonical forge's
+    CI is read where the run can reach it.
+- **Chosen:** 0.40.0, a minor bump. The new fields are `more_maintainers` in Phase 0's `asked`,
+  `forge` and `mirror_of` in Phase 2's `ci`, `readings` in Phase 3, `overrides` in Phase 7,
+  `review` and `overrides` in Phase 9, the `post_gate` block, `second_reader` in the
   self-check, and `deepened` for Phase 0's `shallow`. Older reports stay readable.
 - **Checked,** in this session on 2026-09-29:
   - The corrected domain command, run with mawk 1.3.4 on the live repository's full history,
@@ -49,16 +81,19 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
     matches the re-check's corrected per-commit counts, where the old command's didn't.
   - The ref copy moved a scratch clone's `origin/main` from the working copy's stale local
     branch to its fetched `origin/main`, in a throwaway repository.
+  - On 2026-09-30, with git 2.43.0: `git describe` fails outright where only lightweight tags
+    exist, and `git cat-file -t` reads `commit` for a lightweight tag and `tag` for an annotated
+    one.
+  - FFmpeg's facts, read from its tree and history on 2026-09-30, are in
+    `research/runs/2026-09-30-ffmpeg-reference.md`.
 - **Reviewed** cold, before the pull request opened, by a subagent that hadn't written the
   change. It found four blocking defects, all fixed: the second reader read before the decision
   record existed, Phase 7's `overrides` claimed later phases, the scratch clone didn't check out
   the audited commit, and the branch check had no fallback where a sibling can't be read.
-- **Parity:** held. The runs draw on the same weekly allowance as the owner's working sessions,
-  which start a round on 2026-09-29, so they run later, and the pull request merges after them.
-  The audit and re-check samples reach the phases these fixes change. The greenfield sample
-  stops at Phase 3; of what changes before that, only the shallow rule and the `readings` ask
-  reach it, and neither applies to a new repository with its full history and no settings to
-  rate.
+- **Parity:** held until the owner has seen the decisions and options, at the owner's word. The
+  runs draw on the same weekly allowance as the owner's working sessions, and the pull request
+  merges after them. F80's question is asked at the Phase 3 wait, so every sample reaches it,
+  the greenfield one included.
 
 ## 2026-09-29 — The standard moves to v0.39.0
 

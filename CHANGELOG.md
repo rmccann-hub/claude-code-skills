@@ -72,8 +72,9 @@ Notable changes to this repository. The format follows
     first at the gate.
 
   Its history entry lists the rest.
-- The standard is now v0.40.0, with ten fixes from its first live re-check and from the
-  review, merge and branch check its owner asked for after the gate:
+- The standard is now v0.40.0, with twenty-one fixes: ten from its first live re-check and the
+  review, merge and branch check its owner asked for after the gate, two the owner raised, and
+  nine from reading FFmpeg:
   - A scratch clone for replaying gates comes from the remote where it can, and its
     `origin/<default>` is checked against the working copy's either way. A shallow clone is
     deepened before history is read.
@@ -86,6 +87,17 @@ Notable changes to this repository. The format follows
     branch, decision record included.
   - Work the owner asks for after the gate, such as a merge, has its own block, and a branch is
     advised for deletion only after checking what still needs it.
+  - Whether anyone else maintains the repository is asked, not inferred. The checks for more
+    than one maintainer apply only once the owner says so.
+  - A mirror is recognised, and CI is read on the forge that is canonical. A security contact
+    named outside `SECURITY.md` counts.
+  - The commit grammar is stated and checked, from either the Conventional Commits or the
+    "area: summary" family, and one merge strategy is chosen, recorded and enforced.
+  - Release tags are annotated. An interface others build on logs its changes and deprecates
+    before it removes, and a second release line takes only compatible, cherry-picked fixes.
+  - Code that parses input it doesn't control gets damaged-input tests, and where licences mix,
+    each file names its own.
+  - The starter context file tells a session to say what it's waiting on.
 
   Its history entry lists the rest.
 

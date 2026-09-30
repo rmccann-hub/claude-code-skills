@@ -448,7 +448,7 @@ v0.40.0:
   cited through it, in the repository or a sibling, should be reachable from the default
   branch, and a sibling promised the branch should be told (piece 4).
 
-On 2026-09-30 the owner raised one more, left for the next revision: they had to ask a working
+On 2026-09-30 the owner raised one more, applied in v0.40.0: they had to ask a working
 session on another of their repositories what it was waiting on before its next release.
 
 - **F70:** a session that stops with work outstanding should say what it's waiting on, and from
@@ -457,7 +457,7 @@ session on another of their repositories what it was waiting on before its next 
 
 On 2026-09-30 the owner named FFmpeg as a model of open-source practice. Its tree and history,
 read that day, are in `research/runs/2026-09-30-ffmpeg-reference.md`. Reading it raised nine
-more, awaiting the owner's approval:
+more, which the owner approved the same day and v0.40.0 applies:
 
 - **F71:** the run looks for CI only in `.github/workflows/`. FFmpeg's is in
   `.forgejo/workflows/`, and its GitHub repository is a mirror whose pull requests are ignored,
@@ -493,6 +493,16 @@ more, awaiting the owner's approval:
 - **F79:** nothing covers mixed licences. FFmpeg's `LICENSE.md` lists which files are GPL, and
   the GPL parts stay off unless `--enable-gpl` is passed. Where licences mix, each file should
   name its own, and the licence file should say which parts are which (piece 3).
+
+Approving them, the owner asked for the practices of more than one maintainer as well, asked
+rather than inferred, also applied in v0.40.0:
+
+- **F80:** `CODEOWNERS` was due from a second committer, read from the history's authors, and
+  nothing else checked a team's practices. Whether anyone else maintains, reviews or commits is
+  now the fourth thing a run can't detect, asked at the Phase 3 wait and drafted from the
+  authors. Once the human says so, dimension 6 checks who reviews what, review before merging,
+  the contributing guide's review rules, sign-off for outside contributions, and a security
+  contact that isn't one inbox (pieces 3 and 4).
 
 The owner asked for one more rule, researched before it's written:
 
