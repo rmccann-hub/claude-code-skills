@@ -464,16 +464,17 @@ more, which the owner approved the same day and v0.40.0 applies:
   so a run would report no CI. Before reading CI and settings, the run should find the forge
   the contributing guide names as canonical, and read that one (piece 4).
 - **F72:** `SECURITY.md` is due at T3, and FFmpeg has none: its private list and page are
-  named in `MAINTAINERS`. A security contact the repository names elsewhere, and a reader can
-  find from the README or the contributing guide, should count (piece 3).
+  named in `MAINTAINERS`. A security contact named in a file a reader looks in, such as the
+  README, the contributing guide or a maintainers list, should count (piece 3).
 - **F73:** the standard names Conventional Commits as the commit grammar. FFmpeg's hook rejects
   it and requires "area: summary", which 2,970 of its last 3,004 subjects follow. A repository
   should state one grammar and check it with a commit-msg hook, and either family should count
   (piece 3).
 - **F74:** nothing says which merge strategy to use. FFmpeg's master rejects merge commits; the
-  first live repository keeps them, because its sibling cites branch commits. The context file
-  should name the strategy and why, the platform should allow only that one, and squash is out
-  where commits are cited from outside (piece 3).
+  first live repository keeps them, because its sibling cites branch commits: its record says
+  the cited commits became unreachable when a branch went four minutes after a squash merge.
+  The context file should name the strategy and why, the platform should allow only that one,
+  and where commits are cited from outside only a merge commit keeps them (piece 3).
 - **F75:** nothing says a release tag is annotated. FFmpeg's are, and `git describe` builds
   its version from them. The first live repository's 62 are all lightweight, made by
   `gh release create`, so they carry no tagger or date, and `git describe` passes over them

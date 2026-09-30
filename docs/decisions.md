@@ -53,21 +53,24 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   - **F68:** the run merges only when the human asks. It passes the checked head to the merge
     as the expected head, and reads the default branch's CI on the merge commit.
   - **F80:** asked, not inferred, at the owner's word. It supersedes F24 and F56's reading of a
-    second committer from the history's authors, which are now the draft. Unanswered, the
-    default is no, and nothing that depends on it is rated. The checks: `CODEOWNERS`, a
-    maintainers list, review required before a merge, the contributing guide's review rules, a
-    sign-off or agreement for outside contributions, and a security contact that isn't one
-    inbox.
+    second committer from the history's authors, which are now the draft. Unanswered or
+    `unknown`, the default is no, nothing that depends on it is rated, and a default taken goes
+    in Phase 6's first list. Phase 8 records the answer, and a re-check asks it again. The
+    checks are `CODEOWNERS`, a maintainers list, review required before a merge, the
+    contributing guide's review rules, a sign-off or agreement for outside contributions, and a
+    security contact that isn't one inbox, each `GAP` from T2.
   - **F73:** the grammar is checked in CI over a pull request's commits, and by a commit-msg hook
     only where dimension 6 places client-side hooks, since a hook no session installs checks
     nothing.
   - **F74:** a strategy left unrecorded, or recorded while the platform allows the others, is
     `GAP`. A choice the human recorded isn't re-raised.
-  - **F75:** a lightweight release tag is `GAP` from T2. The job creates the tag object with
-    `git tag -a` before the release names it, and where the Releases UI made a tag, the run
-    records what `git cat-file -t` says of it.
-  - **F76:** `N/A` where nobody builds on the interface, and `GAP` where others do and removals
-    arrive unannounced.
+  - **F75:** from T2, a route that makes lightweight release tags is `GAP`. The run rates how the
+    next tag gets made, not the tags already published, since immutable releases may not let
+    anyone replace them. The dispatch job makes the tag object, with a tagger identity set.
+  - **F76:** `N/A` where nobody builds on the interface. From 1.0.0 a removal needs a
+    deprecation in an earlier release; before it, the changelog names each removal.
+  - **F73 and F74:** both rated from T2. Under squash the pull request's title is the subject,
+    so the grammar check reads the title.
   - **F78:** from T2. A fuzzer is the strong form, and a handful of damaged samples the floor.
   - **F71:** the mirror's own platform settings are rated `MIRROR`, and the canonical forge's
     CI is read where the run can reach it.
@@ -75,7 +78,7 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   `forge` and `mirror_of` in Phase 2's `ci`, `readings` in Phase 3, `overrides` in Phase 7,
   `review` and `overrides` in Phase 9, the `post_gate` block, `second_reader` in the
   self-check, and `deepened` for Phase 0's `shallow`. Older reports stay readable.
-- **Checked,** in this session on 2026-09-29:
+- **Checked,** in this session on 2026-09-29 and 2026-09-30:
   - The corrected domain command, run with mawk 1.3.4 on the live repository's full history,
     gives each commit one count per domain. Allowing for the eight commits merged since, it
     matches the re-check's corrected per-commit counts, where the old command's didn't.
@@ -86,10 +89,20 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
     one.
   - FFmpeg's facts, read from its tree and history on 2026-09-30, are in
     `research/runs/2026-09-30-ffmpeg-reference.md`.
+  - GitHub's page on merge methods, read on 2026-09-30: "Rebase and merge on GitHub: Always
+    updates the committer information and creates new commit SHAs." So a rebase-merge strands
+    commits cited from outside, as a squash does.
 - **Reviewed** cold, before the pull request opened, by a subagent that hadn't written the
   change. It found four blocking defects, all fixed: the second reader read before the decision
   record existed, Phase 7's `overrides` claimed later phases, the scratch clone didn't check out
   the audited commit, and the branch check had no fallback where a sibling can't be read.
+- **Reviewed again,** cold, after F70 to F80, by another subagent. It found four blocking defects,
+  all fixed: F80's question wasn't recorded, shown again on a re-check or used by every rule it
+  gates; the checks for more maintainers had no tier; annotated tags clashed with the tag routes
+  the gate recommends; and three claims about FFmpeg went beyond what was read. Its smaller
+  points were fixed too. Among them: rebase-merge strands cited commits as squash does, the
+  forge is found before CI is read, and dimension 4 raises the waiting-on line. The sentence on
+  a licence-changing build option went, as beyond the approved text.
 - **Parity:** held until the owner has seen the decisions and options, at the owner's word. The
   runs draw on the same weekly allowance as the owner's working sessions, and the pull request
   merges after them. F80's question is asked at the Phase 3 wait, so every sample reaches it,

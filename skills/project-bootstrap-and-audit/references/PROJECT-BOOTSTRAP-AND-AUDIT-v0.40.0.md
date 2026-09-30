@@ -490,7 +490,7 @@ never a guess.
 | **Shell available** | Try one harmless command | **Without it, Phase 2 cannot execute documented commands.** Record them unrun; everything becomes `UNVERIFIABLE-HERE` and the run says so in its headline |
 | **Writes outside the repository** | Try writing to a scratch path | **Without it, greenfield cannot build-then-copy and the run report has nowhere to live.** Emit the report in the reply and say why |
 | **Remote CI readable** | Try reading a conclusion | Without it, "local green is not remote green" cannot be discharged. Record `unverifiable` |
-| **Tag creation** | Try, or read the tool list | Where refused, tagging is a human action via the host UI or a dispatch job — **never "tag locally"** |
+| **Tag creation** | Try, or read the tool list | Where refused, tagging is a human action via the host UI or a dispatch job, and from T2 the job, which can make the tag annotated — **never "tag locally"** |
 | **Local working copy exists** | **Ask. It cannot be detected** | Without one: no local tagging, no desktop tooling, and **client-side hooks gate nothing**, because every commit comes from an ephemeral container |
 | **Enforced layer** | See *Any Agent, Any Tool* | Where the tool has none, dimension 6 is `N/A`, never `GAP`, and the guarantee moves server-side |
 | **Branch protection available** | Read the plan, or ask | Unavailable on private repositories on free plans — **and rulesets carry the same gating**, so the newer mechanism is not an escape. Where unavailable, `N/A` with the reason — never a `GAP` re-proposed every run |
@@ -721,7 +721,7 @@ pinning anything — and check what answered you, per the probe rule above.**
 | **OpenSSF Scorecard** | Nineteen automated supply-chain and process checks, runnable as a workflow | Dimension 8, and parts of 6 and 7 |
 | **OpenSSF Best Practices Badge** | Self-attested practices a scanner cannot detect | A T3 project with external users |
 | **MADR** (4.x) | A published decision-record format, minimal and full variants | Dimension 10 |
-| **Keep a Changelog**, **Semantic Versioning**, a commit grammar such as **Conventional Commits** | Changelog shape, version meaning, commit grammar | Dimension 10 |
+| **Keep a Changelog**, **Semantic Versioning**, a commit grammar: **Conventional Commits** or *area: summary* | Changelog shape, version meaning, commit grammar | Dimension 10 |
 | **C4 model** | Context, container, component and code views | *Project Shapes and Layout*, where structure needs a diagram |
 
 **Where one of these already specifies something, cite it and move on.** A finding that
@@ -813,7 +813,9 @@ here:**
    Decides `CODEOWNERS` in dimension 3 and the review checks in dimension 6. Draft it from the
    history's authors, where a bot is not a person, but never take the draft as the answer: a
    past contributor may be gone, and a new one may not have committed yet. **Default if
-   unanswered: no**, and nothing that depends on it is rated.
+   unanswered, or `unknown`: no**, and nothing that depends on it is rated. A default taken
+   goes in Phase 6's first list, beside the tier. Phase 8 records the answer, and a re-check
+   shows it and asks "Is that still the case?", with any authors since as its evidence.
 
 **Carry them forward rather than stopping here.** Two waits is both the floor and the
 ceiling, Phase 3 already stops and already asks the human about copyright, and a separate
@@ -831,7 +833,7 @@ capability_proof: |
   <the probe output, one line each>
 asked: {local_working_copy: yes|no, standards_repo: "<name | none>",
         copyright_holder: "<as the human names it>",
-        more_maintainers: "<no | yes, and who | not sure>"}
+        more_maintainers: "<no | yes, and who | unknown>"}   # unknown counts as no
 degraded: [<what this run could not do, and what it recorded instead>]
 tool: "<which agent and surface this ran on, and its version>"
 clean_tree_proof: |
@@ -996,16 +998,17 @@ ls .github/workflows/ .forgejo/workflows/ .gitlab-ci.yml .gitignore .gitattribut
    .editorconfig .pre-commit-config.yaml .githooks .copier-answers.yml LICENSE* 2>/dev/null
 ```
 
-**Read the remote CI conclusion** for the current head and for the default branch. A red
-default branch nobody noticed is a finding in its own right, and local gates cannot see it.
-
 **Find the canonical forge before reading CI or settings.** A repository can be a mirror of
 one kept elsewhere: its contributing guide or README names where changes go, and its CI lives
 with that forge. FFmpeg's GitHub repository is a mirror whose pull requests "will be ignored",
 and its CI is in `.forgejo/workflows/`. **Where the repository read is a mirror, read the
 canonical forge's CI**, and its settings where the run can reach them, and rate the mirror's
-own platform settings `MIRROR` rather than missing. A run that read only `.github/workflows/`
-there would report no CI for a project that runs it on every change.
+own platform settings `MIRROR` rather than missing. Where the run can't reach the canonical
+forge, its CI is `UNVERIFIABLE-HERE`. A run that read only `.github/workflows/` there would
+report no CI for a project that runs it on every change.
+
+**Read the remote CI conclusion** for the current head and for the default branch. A red
+default branch nobody noticed is a finding in its own right, and local gates cannot see it.
 
 <constraints>
 
@@ -1112,7 +1115,7 @@ hooks_configured: yes | no
 hooks_installed: yes | no
 hooks_proof: |
   <literal output>
-ci: {forge: github | forgejo | gitlab | other, mirror_of: <canonical url | none>,
+ci: {forge: <where this CI runs: github | forgejo | gitlab | other>, mirror_of: <url | none>,
      workflows: [<paths>], jobs: [<names>]}
 ci_remote_conclusion: {head: <success|failure|none|unknown>,
                        default_branch: <success|failure|none|unknown>,
@@ -1136,7 +1139,8 @@ notes: <... | none>
 
 ## Phase 3 — Establish Tier — **WAIT**
 
-**Six questions. Phase 3 always stops here — including on a re-check.**
+**Six questions, with Phase 0's four beside them. Phase 3 always stops here — including on a
+re-check.**
 
 On a **first audit**, ask all six, **with a draft of each answer the repository shows.** Its
 own records usually hold most of them: the repository's visibility or a registry page for
@@ -1162,7 +1166,8 @@ the tier it computed from them.
 **An unattended run meets this wait with the answers it was given.** Where the prompt says the
 person won't be there and carries the answers, the run can't stop, so it goes on and records
 `answers_source: given in the prompt`. The tier it computed goes first among Phase 6's
-decisions only the human can supply, so a wrong tier is caught before anything is applied. That
+decisions only the human can supply, followed by any of Phase 0's four left at its default, so a
+wrong tier is caught before anything is applied. That
 is the one case in which the confirmation moves to Phase 6. It isn't a deviation, and
 `waits_observed` counts it.
 
@@ -1321,7 +1326,7 @@ Record the answers in `inception`. **Do not ask a fourth question to be thorough
 ```yaml
 phase: 3
 answers_source: <recon report path | given in the prompt | asked directly>
-drafts: [{q: <1-6>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
+drafts: [{q: <1-6 | p0-4>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
           reply: confirmed | corrected | not sure}]   # none on a re-check
 owner: work | personal | mixed   # mixed: provenance and copyright are decided per item
 copyright_holder: <as the human names it: a legal name, or the name they publish under | n/a>
@@ -1475,6 +1480,10 @@ and one naming a single person is the ceremony dimension 8 describes.
   Check the mechanism instead: the shim at the repository root, and an `@` import of the
   context file inside it rather than a markdown link. **Record the verdict as inferred**, in
   the finding's `evidence`, so a later run that can observe the load knows this one did not.
+- **The context file tells a session to say what it's waiting on.** A session that stops with
+  work outstanding names what it waits on, and from whom, as the starter file's conventions
+  say. Missing where agent sessions work the repository, it is `GAP`: a live owner had to ask a
+  working session what it was waiting on before its next release.
 - **Size is a real constraint, not a style note.** Keep the always-loaded context under ~300
   lines; Codex stops reading instruction files past 32 KiB combined (`project_doc_max_bytes`),
   and truncation is indistinguishable from the file being ignored. Put instructions near the end
@@ -1766,11 +1775,12 @@ raised again.
 each leave a different history, and each is right somewhere: FFmpeg's master rejects merge
 commits and stays linear, while a live repository keeps merge commits because a sibling cites
 its branch commits by hash. **The context file names the strategy and why, and the platform
-allows only that one**, a setting every plan has. **Squash is out where commits are cited from
-outside**, since it strands them once the branch goes: a live repository's cited commits became
-unreachable when its branch was deleted four minutes after a squash merge. Unrecorded, or
-recorded while the platform allows the others, it is `GAP`. A choice the human recorded is not
-re-raised.
+allows only that one**, a setting every plan has. **Where commits are cited from outside, only a
+merge commit keeps them.** Squash replaces them, and GitHub's rebase-merge writes new ones, so
+the cited commits are stranded once the branch goes: a live repository's became unreachable when
+its branch was deleted four minutes after a squash merge. From T2, a strategy left unrecorded is
+`GAP`, and so is one the platform doesn't enforce. A choice the human recorded isn't re-argued,
+but its enforcement is still rated.
 
 #### Review, with one maintainer
 
@@ -1798,8 +1808,8 @@ about rather than skipping, and every item below is a suggestion with a stated c
 
 **Only where the human says more than one person maintains, reviews or commits**, as Phase 0's
 fourth question asks. The history's authors are the draft, never the answer, and until the
-human says so nothing below is rated. FFmpeg, with 220 authors and 65 committers in six months,
-shows each of them at scale.
+human says so nothing below is rated. FFmpeg, with 220 authors and 65 committers across its
+last 3,004 commits, shows each of them at scale.
 
 - **Who reviews what is written down.** `CODEOWNERS` names the expected reviewers for each
   path, as dimension 3 says, and a maintainers list says who looks after each area and who may
@@ -1811,13 +1821,15 @@ shows each of them at scale.
   submission carries, that the author answers every comment, and how long a change nobody has
   reviewed waits before it may land, if ever. FFmpeg's waits are 12 hours for a build or
   security fix, 3 days for a small change and a week for a large one.
-- **Outside contributions carry a sign-off or an agreement.** A `Signed-off-by` line, meaning
-  the Developer Certificate of Origin, is the light form: 1,928 of FFmpeg's last 3,004 commits
-  carry one.
+- **Outside contributions carry a sign-off or an agreement.** A `Signed-off-by` line is the
+  light form, with its meaning stated in the contributing guide, often the Developer
+  Certificate of Origin: 1,928 of FFmpeg's last 3,004 commits carry one.
 - **Security reports reach more than one person**, through a list or a shared address rather
   than one maintainer's inbox.
 
-Where more than one person maintains, each one missing is `GAP`.
+Where more than one person maintains, each one missing is `GAP` from T2. The shared security
+contact is due only where dimension 7 wants a contact at all, and required approval is `N/A`
+where the plan can't enforce it, as the table above says.
 
 ### 7. Secrets, security and data classification
 
@@ -1850,9 +1862,9 @@ variable, untracking defers the exposure rather than closing it — a separate f
 </constraints>
 
 Secret scanning per the placement table. `SECURITY.md` at T3, **or a security contact the
-repository names elsewhere**, which a reader reaches from the README or the contributing
-guide: a private address or form, and what happens to a report. FFmpeg names its private
-list and page in `MAINTAINERS` and has no `SECURITY.md`, and that is not a finding.
+repository names in a file a reader looks in**, such as the README, the contributing guide or
+a maintainers list: where to report a vulnerability privately. FFmpeg names its security list
+and page in `MAINTAINERS`, with no `SECURITY.md`, and a contact named like that counts.
 
 **A secret-scan job is read by its range and its scanned count, never by its conclusion.** A
 scanner that looked at no commits reports success, which is the vocabulary's *check reporting
@@ -1912,6 +1924,8 @@ a failure. Where you find one group covering everything, check whether anything 
 landed from it recently before rating the dimension `OK`.
 
 **Some Scorecard checks cannot pass at one maintainer, and chasing them makes things worse.**
+One maintainer is what the human answered to Phase 0's fourth question, not what the history
+shows.
 Code-Review requires a second approver and its own documentation says the check is infeasible
 for projects with a single active participant. Contributors requires contributors from
 several organisations in recent history. Branch protection's higher tiers require one or two
@@ -2086,17 +2100,30 @@ reference is not distribution; a binary, wheel or installer that someone else ca
 it has fired, the changelog is written before the tag rather than backfilled after.
 
 **Version reconciliation:** manifest, tag, changelog head, **and installed distribution
-against in-tree**. Zero tags where none can exist is not `DRIFT`. **A lightweight release tag
-is `GAP` from T2**, for the reasons *The Release and Deploy Currency Gate* gives.
+against in-tree**. Zero tags where none can exist is not `DRIFT`.
+
+**From T2, release tags are annotated.** A lightweight tag carries no tagger, date or message
+and can't be signed, and `git describe` passes over it without `--tags`, failing outright where
+there are no others. `git cat-file -t <tag>` says which a tag is: `tag` for annotated, `commit`
+for lightweight. FFmpeg's release tags are all annotated. A live repository's 62, made by
+`gh release create`, were all lightweight. **Rate how the next tag gets made, not the tags
+already published**, which immutable releases may not let anyone replace: where the release
+workflow or the documented route makes a lightweight tag, it is `GAP`. *The Release and Deploy
+Currency Gate* gives the route.
+
+**Where more than one release line is kept**, *The Release and Deploy Currency Gate* says how:
+each line has its branch, and each backport names its source. From T2, a line without them is
+`GAP`.
 
 **An interface others build on changes by a recorded rule.** Where others depend on a
 library's API, a command's options, a config file's keys or a data format, the changelog
-records each change to it. A removal is deprecated in one release, with a warning where the
-code can give one, before a later release removes it. FFmpeg keeps each library's API
+records each change to it. From 1.0.0, a removal is deprecated in one release, with a warning
+where the code can give one, before a later release removes it. Before 1.0.0, where anything may
+change, the changelog still names each removal. FFmpeg keeps each library's API
 compatible within a major version, logs every change in `doc/APIchanges` with its date, version
 and header, and guards each deprecated API with a macro keyed to the major version that removes
-it. Where nobody builds on the interface this is `N/A`; where others do and removals arrive
-unannounced, it is `GAP`.
+it. Where nobody builds on the interface this is `N/A`. Where others do, a removal the
+changelog doesn't name is `GAP`, and so is one from 1.0.0 with no deprecation before it.
 
 <constraints>
 
@@ -2206,9 +2233,10 @@ pre-release grammar, and Keep a Changelog defines the sections. A commit grammar
 Conventional Commits, which can derive a bump, or the "area: summary" form that FFmpeg's hook
 enforces and 2,970 of its last 3,004 subjects follow. **Point at them and record which one
 this project follows**, then check the grammar the context file states: in CI over a pull
-request's commits, and by a commit-msg hook only where dimension 6 places client-side hooks. A
-house paraphrase of a published spec is a second source of truth that will drift from the
-first.
+request's commits, and by a commit-msg hook only where dimension 6 places client-side hooks.
+Where the merge strategy squashes, the pull request's title becomes the subject, so the check
+reads the title. From T2, a grammar unstated or unchecked is `GAP`. A house paraphrase of a
+published spec is a second source of truth that will drift from the first.
 
 </constraints>
 
@@ -2218,11 +2246,10 @@ moment. Only after the Phase 1 content search found none.
 
 **Provenance:** a public repository must contain no work-origin code.
 
-**Where licences mix, each file says which it is under**: an `SPDX-License-Identifier` line
-at the least, with the licence file saying which parts are under which. A build option that
-changes the output's licence stays off by default and is named for it. FFmpeg's `LICENSE.md`
-lists its GPL files by name, and they build only with `--enable-gpl`. Mixed and unmarked, it
-is `GAP`; under one licence throughout, the licence file alone is enough.
+**Where licences mix, each file says which it is under**, in a licence header or an
+`SPDX-License-Identifier` line, and the licence file says which parts are under which.
+FFmpeg's `LICENSE.md` lists its GPL files by name. Mixed and unmarked, it is `GAP`; under one
+licence throughout, the licence file alone is enough.
 
 **Compare the history's address domains with the Phase 3 owner answer.** Commits carrying an
 organisation's domain, rather than a personal mail provider's or the platform's no-reply
@@ -3599,6 +3626,7 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 
 - **Standard:** PROJECT-BOOTSTRAP-AND-AUDIT v<version>
 - **Tier:** T<n> (blast radius B<n>, audience A<n>) — <the reason, where it is not obvious>
+- **Maintainers:** <no | who, as the human answered Phase 0's fourth question>
 - **Chosen:** <what was decided, and the reason>
 - **Declined:** <what was turned down>. *Reopen when:* <the trigger>
 - **Deferred:** <what is waiting>. *Trigger:* <the condition>
@@ -3751,7 +3779,7 @@ home.** It answers one question per row: **why does this live exactly here?**
 | `.mcp.json` | Tool-server configuration | Yes | Living | Root. **Absent unless justified and recorded** — each server is reachable surface |
 | `.github/workflows/*.yml` | The gates that actually enforce | Yes | Living | Server-side, runs on every push, independent of any local machine |
 | `.github/dependabot.yml` | Dependency update policy | Yes | Living | Platform-read from this exact path; nowhere else works |
-| `CODEOWNERS` | Review routing | Yes | Living | `.github/`, root, or `docs/`. **Only once a second person exists** |
+| `CODEOWNERS` | Review routing | Yes | Living | `.github/`, root, or `docs/`. **Only once the human says more than one person maintains or reviews** |
 | `.gitignore` | What git does not track | Yes | Living | Root, plus per-directory where a subtree has its own noise |
 | `.gitattributes` | End-of-line and diff rules | Yes | Permanent | Root. Effectively never changes once right |
 | `.editorconfig` | Editor defaults | Yes | Permanent | Root. A default, not a decision |
@@ -4003,13 +4031,10 @@ maintainer has no working copy, so there are exactly two routes:
 2. **A `workflow_dispatch` job** that creates the tag server-side, which is the repeatable
    option and the one to propose where releases recur.
 
-**A release tag is annotated.** A lightweight tag carries no tagger, date or message and
-can't be signed, and `git describe` passes over it without `--tags`; with only lightweight
-tags, it fails outright. FFmpeg's release tags are all annotated. A live repository's 62, made
-by `gh release create`, were all lightweight. **So the job creates the tag object itself**,
-`git tag -a <tag> -m <message> <sha>` and a push, before the release names it. `git cat-file
--t <tag>` tells them apart: `tag` for annotated, `commit` for lightweight. Where the Releases UI
-made the tag, record what that check says.
+**From T2 the job is the route**, because it can make the annotated tag dimension 10 asks for.
+It creates the tag object itself, with a tagger identity set, before the release names it:
+`git -c user.name=<name> -c user.email=<address> tag -a <tag> -m <message> <sha>`, then a
+push.
 
 **Never instruct the maintainer to tag locally.** Verify after publishing: the title renders,
 the target SHA matches the release commit, the label is correct.
@@ -4426,6 +4451,7 @@ like a bad run.
 Local working copy:        <yes | no>
 Standards repository:      <name | none>
 Copyright holder:          <the legal entity, not the account name>
+More maintainers:          <no | yes, and who | unknown>
 Rank 1 — exposure:         <private | public | published>
 Rank 2 — <as asked>:       <answer>
 Rank 3 — <as asked>:       <answer>
