@@ -505,6 +505,101 @@ rather than inferred, also applied in v0.40.0:
   the contributing guide's review rules, sign-off for outside contributions, and a security
   contact that isn't one inbox (pieces 3 and 4).
 
+On 2026-09-30 the owner asked what the two live repositories had found through their own
+iteration, to leverage it. Their context files, decision logs, tools and the tests that guard
+their process were read that day, and each lesson was checked against the standard. Twenty-two
+are missing, awaiting the owner's approval:
+
+- **F81:** a test run that stops early can exit 0: a live repository merged a pull request
+  whose suite had run 76% of its tests. The suite should write a marker as its last act, and
+  CI should fail without it (piece 3).
+- **F82:** a check that sweeps a computed list passes when the list is empty, as a
+  parametrised test over nothing reports one skip; an audit there found 52 such gates beside
+  54 that worked. A sweep should assert a floor on what it examined, and that its data isn't
+  trivially empty. It should take its population from the tree, and keep an allowlist whose
+  every entry carries a reason, is checked for staleness and can only go. A scheduled audit
+  should be able to report that it measured nothing (piece 3).
+- **F83:** a revert proves a test only when it landed and built. A revert broken by a stray edit
+  didn't build and still read as proof, and a restore with `git checkout --` destroyed
+  uncommitted work. A revert probe should confirm the file changed and the build succeeded,
+  and restore from a copy checked by hash (piece 3).
+- **F84:** a stand-in more permissive than what it stands for hides the bug. A fixture stopped a
+  thread production never stopped, hiding a crash for five releases, and another passed only
+  on a record that couldn't occur. Fixtures, harnesses and test environments should be no more
+  permissive than production, able to occur, and able to tell the cases under test apart
+  (piece 3).
+- **F85:** "couldn't check" read as "passed": a guard whose listing command failed found no
+  offenders, a probe graded crashes as clean refusals, and a gate closed a round because files
+  existed. A check should have three outcomes, fail closed on the third, read declared
+  fields, count its matches, and be tested for each way it could wrongly say yes (piece 3).
+- **F86:** a check that only warns gates nothing: the rule cited most there, a regression test
+  for every bug, had no `exit 1`. An opt-out should carry a written reason, and a bare marker
+  should be refused (piece 3).
+- **F87:** an intermittent failure met with a wider timeout stays: a test timed out fourteen
+  times in full suites and took a second alone. One network call took 80 of a check's 137
+  seconds. A flaky test should get instrumentation and kept artifacts, and gates should run
+  against recorded responses rather than the network (piece 3).
+- **F88:** a mutation score can measure the edit rather than the defect: a first sweep scored
+  100% because one test hashed the source tree. A sweep should first run an inert edit, and
+  tools that write into the tree should share one lock that fails closed (piece 3).
+- **F89:** a gating tool was pinned in one file and installed from another, looser range, and a
+  stale global binary produced 118 phantom errors. Workflows should take the gating tools'
+  pins from the project's own file, and a run should record which binary and version ran
+  (piece 3).
+- **F90:** CI missed what it should cover. A job with no timeout runs to the platform's
+  360-minute default; CI fired only on a mirror branch nobody worked on; an advertised build
+  configuration failed the first time it was compiled; and a depth-1 checkout turned
+  history-reading tests red. Every job should set a timeout, CI should run on the branch where
+  work lands and build each configuration users are told to build, and a test that reads
+  history should fail rather than skip without it (piece 3).
+- **F91:** events a workflow makes with its default token start no other workflow, so four
+  releases never reached the package index. A release that must start another workflow should
+  hand off through `workflow_dispatch` (piece 5).
+- **F92:** a truncated merge output hid a conflict, and its markers shipped through nine green
+  jobs. Output that lists work to do should be read whole, and a sweep should refuse conflict
+  markers at the start of a line (piece 3).
+- **F93:** cloud sessions don't run a repository's setup script, so a pre-commit guard was off
+  in every web session. What a session needs, such as `core.hooksPath`, should come from a
+  committed SessionStart hook (piece 3).
+- **F94:** a rule nothing runs does nothing: of 187 rules audited there, 29% were gated, and a
+  third would fail no test if broken. Each rule in the context file should name what fails
+  when it's broken, or say it's advice, and a handover should be refused until the tree is
+  pushed and every hash and URL it quotes resolves (piece 3).
+- **F95:** sessions kept re-deriving settled facts, three of them four times in one session.
+  Where that happens, the facts should be indexed, each with the command that re-checks it,
+  and a tool should run the index (piece 3).
+- **F96:** agents' shell habits cost hours. Waiting on `pgrep -f` matched its own shell and
+  looped for 78 minutes, two suites in one build directory left a log that read as both pass
+  and fail, and a seven-lane fan-out lost 16 of 17 agents to usage limits. A run should wait
+  on a PID, run one suite per build directory, treat a subagent's finding as a lead to verify,
+  and read a fan-out's failures before its results (piece 1).
+- **F97:** a fact kept by hand in two places drifts: a sibling's sentence said "eight" while its
+  table held nine rows. A fact stated twice should be generated from one source, as the first
+  live repository generates its half of a shared contract, or a test should check the copies
+  agree in both directions (piece 3).
+- **F98:** a release was announced before it was proven: it failed 2 of 33 tests from a fresh
+  clone. Separately, a green suite with ten green checks still had three blocking defects that
+  an adversarial review found. A release should be proven from what users install, and at T3
+  a review told to refute it should read the release's diff (piece 5).
+- **F99:** cited commits were stranded three ways: a squash merge, the branch deleted after it,
+  and an amend of regenerated files. A test should fail when a cited commit isn't reachable, a
+  cited commit should never be amended, and regenerated files should go in their own commit
+  (piece 3).
+- **F100:** a sibling read a relayed message and concluded the other side's lap was unsent,
+  while it sat released on that side's `main`, one fetch and one grep away. A claim about
+  another repository should cite `repo@sha:path:line` from its committed files, shared files
+  should be checked byte for byte at a named commit, and a bug shape the peer reports should
+  be looked for at home (piece 5).
+- **F101:** a review loop between repositories ran to lap 39 by one side's recount, 37 by the
+  other's, and produced no release. Close conditions
+  should be fixed at the start, a new finding should go to the next round unless it breaks what
+  is under review, each agreed change should be tracked to the commit that lands it, and a
+  consumer's parser should be read, and taught both forms, before output it parses changes
+  (piece 5).
+- **F102:** a live repository's owner told its sessions to stop adding Markdown files for their
+  own sake. A commit that adds a document should name the existing homes it considered and
+  rejected, as that repository's rule now says (piece 5).
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
