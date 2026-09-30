@@ -54,6 +54,12 @@ MENTION = re.compile(r"(?<![\w./-])([\w-]+\.md)\b")
 LINK_TARGET = re.compile(r"\]\([^)\s]+\)")
 LOOKUP = "facts.md"
 
+# GitHub splits a table row on every pipe that isn't escaped, inside code spans too, so a command
+# with a pipe in a table cell breaks the row. Escaping it doesn't help an agent, which reads the
+# raw file and would copy the backslash. Rows are compared with their table's header.
+TABLE_CELL = re.compile(r"(?<!\\)\|")
+FENCE = re.compile(r"^\s*(```|~~~)")
+
 # Characters that render as nothing or reorder the text around them, so what a reviewer sees
 # differs from what an agent reads: zero-width characters and joiners, bidirectional controls
 # (the Trojan Source attack, CVE-2021-42574), the byte-order mark, the soft hyphen, and Unicode
@@ -188,6 +194,7 @@ def _check_skill(skill_dir: Path, report: Report, needs_rationale: bool) -> None
         report.add(where, "size", f"SKILL.md is {lines} lines; keep it under {MAX_SKILL_LINES}")
     _check_links(skill_dir, body, where, report)
     _check_reference_mentions(skill_dir, report)
+    _check_tables(skill_dir, report)
     if needs_rationale and RATIONALE not in _local_links(body):
         report.add(
             where,
@@ -282,6 +289,33 @@ def _check_reference_mentions(skill_dir: Path, report: Report) -> None:
                     f"{SKILLS_DIR}/{skill_dir.name}/references/{path.name}",
                     "reference-depth",
                     f"line {number} names {name}; keep references one level deep from SKILL.md",
+                )
+
+
+def _check_tables(skill_dir: Path, report: Report) -> None:
+    for path in sorted(skill_dir.rglob("*.md")):
+        if path == skill_dir / facts.FACTS:
+            continue  # its rows' cell counts are the facts check's to report
+        header = None
+        fenced = False
+        for number, line in enumerate(
+            path.read_text(encoding="utf-8", errors="replace").split("\n"), 1
+        ):
+            if FENCE.match(line):
+                fenced = not fenced
+            row = line.strip()
+            if fenced or not row.startswith("|"):
+                header = None
+                continue
+            cells = len(TABLE_CELL.split(row[1:].removesuffix("|")))
+            if header is None:
+                header = cells
+            elif cells != header:
+                report.add(
+                    f"{SKILLS_DIR}/{skill_dir.name}/{path.relative_to(skill_dir).as_posix()}",
+                    "table",
+                    f"line {number} has {cells} cells and its table {header}; GitHub splits a "
+                    "row on every pipe, even inside code",
                 )
 
 

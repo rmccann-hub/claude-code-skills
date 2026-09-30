@@ -22,7 +22,7 @@ run `/plugin marketplace remove rmccann-skills`, then add it again as above.
 | Skill | Plugin | What it does |
 |---|---|---|
 | `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.40.0) |
-| `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports |
+| `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill
@@ -42,6 +42,11 @@ uv run skillcheck .
 npm ci
 npx --no-install claude plugin validate --strict .
 ```
+
+Each skill's dated facts carry their source and a date to check them again by.
+`uv run skillcheck --due` lists the facts that are due, and `uv run skillcheck --verify` looks
+for each quote at its source, over the network. The Freshness workflow runs both every Monday,
+and keeps one issue open while anything is due.
 
 Parity runs check how the skill behaves on sample repositories, before and after a change.
 [docs/testing-the-skill.md](docs/testing-the-skill.md) says how to run one.

@@ -13,6 +13,12 @@ The PROJECT-BOOTSTRAP-AND-AUDIT standard covers configuration and process, and s
 judge code. The skills in sections B to F cover the code itself, beside the standard rather
 than inside it.
 
+Each skill says why, not only what: its `references/why.md` gives each rule's reasons, what
+other projects do and why, what each choice costs, and when to choose differently. Its dated
+facts, including what other projects do, are checked again by `skillcheck --due` and
+`skillcheck --verify`, which the weekly freshness workflow runs. `keeping-current` is the skill
+that will do the same for other repositories.
+
 ## A. How the work is done
 
 | Skill | Covers | Status | Coverage | Research |
@@ -599,6 +605,29 @@ are missing, awaiting the owner's approval:
 - **F102:** a live repository's owner told its sessions to stop adding Markdown files for their
   own sake. A commit that adds a document should name the existing homes it considered and
   rejected, as that repository's rule now says (piece 5).
+
+Building `git-workflows`, its cold review and the owner's question about slow CI found five more
+on 2026-09-30, each checked against its source that day. They await the owner's approval:
+
+- **F103:** dimension 2's lockfile table offers `uv sync --frozen` as well as `--locked`, but
+  `--frozen` installs from the lockfile without checking it, so drift passes. It should name
+  `--locked` only (uv's CLI reference).
+- **F104:** the facts table and dimension 7 say push protection is on by default for public
+  repositories. GitHub's docs split it in two. Push protection for users is on by default, and
+  stops a user's own pushes of secrets to public repositories. Push protection for the
+  repository has to be turned on, and only it raises alerts when someone bypasses it.
+- **F105:** the starter CI file has the collection guard only, which counts the tests
+  collected, not those that ran. It should add the completion guard this repository's CI and
+  `git-workflows`' `tests.yml` use: the test report must exist, and count at least the
+  baseline.
+- **F106:** dimension 10 says that under squash merging the pull request's title becomes the
+  subject, so the grammar check reads the title. GitHub's default squash message takes a
+  one-commit pull request's own commit message instead. The rule should also set the
+  repository's default squash title to the pull request's title, and audit that setting.
+- **F107:** the starter CI runs on `push` and `pull_request`, so each pull request's commits run
+  twice, once as the branch and once merged with its base. That costs little in a fast suite
+  and doubles a slow one. The starter should say so, and offer `push` on the default branch
+  with `pull_request` where CI is slow.
 
 The owner asked for one more rule, researched before it's written:
 

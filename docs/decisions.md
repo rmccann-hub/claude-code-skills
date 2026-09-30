@@ -2,6 +2,42 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-30 — The text, audited against the repository
+
+- **Asked:** the owner: "audit all text, readme, changelog, tasks, anything. we need this up to
+  date".
+- **How:** a reader agent was started for the sweep, but stopped at once when the account hit its
+  spend limit, so the sweep was done in this session instead. Every relative link in the
+  repository's Markdown was resolved, every table's rows were counted against their header, and
+  the text was searched for versions, counts, statuses and "pending" or "not yet" wording, each
+  compared with the repository and, for dated facts, their sources.
+- **Found and fixed:**
+  - a table row in `git-workflows`' audit that GitHub split in two, because a `|` in a command
+    ends a cell even inside code. Escaping it would give an agent reading the raw file a broken
+    command, so the command no longer uses a pipe, nor does a row of `SKILL.md` that had
+    escaped one. `skillcheck` now fails on a table row whose cell count differs from its
+    header's;
+  - `.claude/settings.json` turned off the `standards` plugin's copies but not the new
+    `engineering` plugin's, so a session here could load an installed `git-workflows` beside
+    the one being edited;
+  - `.claude/rules/python.md` said tests never read real skills, which the asset tests must;
+  - the changelog linked Keep a Changelog 1.1.0, and said "The standard is now" of three
+    versions it has since left;
+  - the research prompt index still named `git-and-review`, shipped as `git-workflows`;
+  - the README said nothing of the freshness checks, and its skill row nothing of the reasons.
+- **Found and left, with the reason:**
+  - `CHANGELOG.md` has a 0.1.1 section dated 2026-09-23, but the remote has only the tag
+    `v0.1.0`. The release route is the owner's open decision, so no tag was made;
+  - the plan was partly outside `ROADMAP.md`: this session's own planning notes numbered
+    proposals past F102. Five checked today are now F103 to F107 in the roadmap. Two others,
+    about the organisation marketplace and where GitHub looks for `SECURITY.md`, couldn't be
+    confirmed from pages that load here, and stay out until they are;
+  - this repository states no commit grammar and checks none, which the standard rates `GAP`
+    from T2. Its recent subjects mix "area: summary" with plain sentences. Which grammar to
+    adopt is the owner's call.
+- **Checked:** `skillcheck` reports 0 findings, and the suite runs 261 tests at 100% coverage.
+  `.test-baseline` moves from 259 to 261.
+
 ## 2026-09-30 — The repository keeps its facts current, and checks its own shape
 
 - **Asked:** the owner: "This also needs to have a way to be kept up to date and audit itself".

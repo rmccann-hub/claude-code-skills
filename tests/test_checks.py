@@ -320,6 +320,34 @@ def test_reference_naming_another_reference_fires_once_per_name(repo):
     ]
 
 
+def test_table_row_split_by_a_pipe_in_code_fires(repo):
+    body = (
+        "| Question | Command |\n|---|---|\n| Which? | `git branch -vv` |\n"
+        "| Gone? | `git branch -vv | grep gone` |\n"
+    )
+    repo.skill("table-skill", body=body)
+    repo.catalog(repo.plugin("example", "./skills/table-skill"))
+    report = check_repository(repo.root)
+    assert [(f.path, f.rule, f.message) for f in report.findings] == [
+        (
+            "skills/table-skill/SKILL.md",
+            "table",
+            "line 9 has 3 cells and its table 2; GitHub splits a row on every pipe, even inside "
+            "code",
+        )
+    ]
+
+
+def test_tables_pipes_in_fences_and_separate_tables_pass(repo):
+    body = (
+        "| A | B |\n|---|---|\n| x | `y \\| z` |\n\n| One |\n|---|\n| 1 |\n\n"
+        "```sh\n| not | a | table |\n```\n"
+    )
+    repo.skill("table-skill", body=body)
+    repo.catalog(repo.plugin("example", "./skills/table-skill"))
+    assert check_repository(repo.root).findings == []
+
+
 def test_naming_facts_itself_or_other_files_passes(repo):
     skill_dir = repo.skill("named-skill", body="See [a](references/a.md).\n")
     (skill_dir / "references" / "a.md").write_text(

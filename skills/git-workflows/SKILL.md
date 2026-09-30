@@ -83,7 +83,7 @@ Tested examples to copy:
 | Which merge methods does the repository allow? | `gh api repos/OWNER/REPO --jq '.allow_merge_commit, .allow_squash_merge, .allow_rebase_merge'` |
 | Is this cited commit still on the default branch? | `git merge-base --is-ancestor <commit> origin/main && echo reachable` |
 | Which branches hold this commit? | `git branch -r --contains <commit>` |
-| Which local branches lost their remote branch? | `git fetch --prune`, then `git branch -vv \| grep ': gone]'`; check each one's pull request before deleting it |
+| Which local branches lost their remote branch? | `git fetch --prune`, then `git for-each-ref --format='%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)' refs/heads`; check each one's pull request before deleting it |
 | Are the tags annotated? | `git for-each-ref refs/tags --format='%(refname:short) %(objecttype)'` (`tag` means annotated) |
 | Which rule ignores this file? | `git check-ignore -v <path>` |
 | Is the workflow valid? | `actionlint`, then `zizmor .` |

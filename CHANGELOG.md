@@ -1,7 +1,7 @@
 # Changelog
 
 Notable changes to this repository. The format follows
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow
+[Keep a Changelog](https://keepachangelog.com/en/2.0.0/), and versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
@@ -37,6 +37,8 @@ Notable changes to this repository. The format follows
   A weekly workflow runs both and keeps one issue open while anything is due. Every skill must
   link its `references/why.md`, and a reference that names another reference's file fails like
   a link to it.
+- `skillcheck` fails on a table row in a skill whose cell count differs from its header's.
+  GitHub ends a cell at every pipe, even inside code.
 
 ### Changed
 
@@ -126,6 +128,8 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
+- Sessions on this repository no longer load an installed copy of the `engineering` plugin
+  beside the files being edited, as they already didn't for `standards`.
 - CI proves the test suite ran to the end. A run that stops early can still exit 0, so the
   build now fails when the test report is missing or counts fewer tests than the baseline.
 - CI's collection guard says why it failed. With nothing collected, it used to stop under the
