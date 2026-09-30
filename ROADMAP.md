@@ -444,9 +444,16 @@ v0.40.0:
 - **F69:** nothing says what to check before advising that a branch be deleted. Asked to check
   first, the run found a sibling repository's record naming one branch as staying, because
   citations had broken once when it was deleted. Before a deletion is advised, the branch
-  should have no commits of its own and no open pull request. Every commit cited through it,
-  in the repository or a sibling, should be reachable from the default branch, and a sibling
-  promised the branch should be told (piece 4).
+  should have no open pull request and its work should be on the default branch. Every commit
+  cited through it, in the repository or a sibling, should be reachable from the default
+  branch, and a sibling promised the branch should be told (piece 4).
+
+On 2026-09-30 the owner raised one more, left for the next revision: they had to ask a working
+session on another of their repositories what it was waiting on before its next release.
+
+- **F70:** a session that stops with work outstanding should say what it's waiting on, and from
+  whom, without being asked. Run reports already list what remains for the human, but the
+  starter context file gives the working sessions it sets up no such rule (piece 5).
 
 The owner asked for one more rule, researched before it's written:
 
