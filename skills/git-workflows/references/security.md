@@ -29,10 +29,10 @@ or when a secret has reached a commit. Facts are named by ID from `facts.md`.
 
 ## Untrusted input
 
-Pull request titles, branch names, issue and comment bodies, and commit messages are all written
-by whoever opened them. Never put `${{ … }}` of any of them inside a `run:` script, because the
-shell runs whatever the text contains. Pass it through an environment variable instead (fact
-`injection`):
+Pull request titles, branch names (`github.head_ref` among them), issue and comment bodies, and
+commit messages are all written by whoever opened them. Never put `${{ … }}` of any of them
+inside a `run:` script, because the shell runs whatever the text contains. Pass it through an
+environment variable instead (fact `injection`):
 
 ```yaml
       - name: Greet the pull request
@@ -60,8 +60,9 @@ shell runs whatever the text contains. Pass it through an environment variable i
 - **actionlint** checks that a workflow is valid, and with ShellCheck it checks the scripts in
   `run:` steps (fact `actionlint`). It catches things like an unquoted `: ` in a step name,
   which makes the file invalid YAML.
-- **zizmor** looks for security problems: dangerous triggers, injection and over-broad
-  permissions (fact `zizmor`).
+- **zizmor** looks for security problems: dangerous triggers, template injection, credentials
+  left in a checkout, and over-broad permissions (fact `zizmor`). Its injection audit follows
+  more contexts than a search for `${{ github.event` can.
 - Run both in CI, with the tools pinned by version.
 
 ## A secret in a commit

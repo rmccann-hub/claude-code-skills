@@ -2,6 +2,92 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-30 — `git-workflows`: the cold review, the trigger check, and the reasons behind each rule
+
+- **Asked:** the owner: "It is about both, guidance and format. And how to use langusges, and
+  why, and how. It's everything. […] Why do we do it this way? Why is it logical? Could it be
+  better? What do other people do and why do they do it? Pros and cons, etc". And: "I have
+  repos with 15 minutes of ci before the can merge to main, then like another 25 minutes of ci
+  on main. I don't want to weaken tests, but is this needed?"
+- **Chosen:** every skill gets `references/why.md`. For each rule that matters it gives the
+  advice, the reason, what other projects do and why, what each choice costs, when to choose
+  differently, and what could be better. `git-workflows` has the first one. Its last section
+  answers the CI question: how GitHub decides what a pull request tested, when a second run on
+  the default branch repeats one already done, and how Rust, Google, Chromium, LLVM and
+  Kubernetes split the work. What other projects do goes in `facts.md` like any other dated
+  fact, so it is checked again when it falls due.
+- **The cold review** (a second reader, 2026-09-30): "ready after the listed fixes". Each
+  finding was checked against the files and the standard before it was fixed. It found four
+  blocking defects:
+  - B1: the release job tagged whatever commit the dispatched branch pointed at, and read no
+    CI. It now takes a SHA, checks the commit is on the default branch, reads its
+    `CHANGELOG.md` at that commit, and requires every check on it to have passed, with at
+    least one check present.
+  - B2: the release workflow granted `contents: write` to the whole workflow, and its
+    checkout kept credentials. It now reads at the top, writes only in its job, keeps no
+    credentials, and passes zizmor.
+  - B3: two references said the standard's starter CI has both test guards. It has only the
+    collection guard. The skill now ships `assets/workflows/tests.yml` with the completion
+    guard, and proposes it to the standard.
+  - B4: references pointed to other references 19 times, by name rather than link, which
+    skillcheck couldn't see. Each now says what the reader needs, and skillcheck now fails on
+    the named form too.
+
+  And eight to fix before the upload:
+  - S1, S2: the CI subject check refused `Revert "…"` commits, and the hook refused a message
+    that began with a template's comment. They now share one list of exemptions, CI refuses
+    `fixup!` commits that were never squashed, and the hook reads the subject after
+    `git stripspace`, tested through `git commit`.
+  - S3: `chmod +x` doesn't reach the commit from Windows. The skill now says
+    `git add --chmod=+x`, and to check for `100755`.
+  - S4: under squash, GitHub's default takes a one-commit pull request's own message. The
+    skill now says to set the squash title to the pull request's title.
+  - S5, S6: the audit's statuses now follow the standard, including `MIRROR` and
+    `UNVERIFIABLE-HERE`. Its searches cover `.yaml` and `github.head_ref`, and the
+    conflict-marker search has a CI form that fails when markers exist.
+  - S7: the rules the standard owns are cited, not restated: review with one maintainer,
+    point releases, the version scheme and deprecation, and when to propose a client-side hook.
+  - S8: the version check took `1..4` and refused `1.4.0-rc.1`. It now takes Semantic
+    Versioning with a pre-release label, reading the whole string.
+- **The review's minor points, fixed:**
+  - "stranded" now says the commits survive under the pull request's refs;
+  - an archive tag is pushed;
+  - `--delete-merged` skips most branches made with `git push -u`, so the skill says so and
+    gives the `gone` check;
+  - the local-refs caveat for shallow clones;
+  - the `^{}` line of an annotated action tag;
+  - `gh release create` and `--verify-tag`;
+  - `co-authored` needs the address tied to an account;
+  - the unused `setup-python-sha` fact is gone;
+  - the description names conflicts, recovery and secrets;
+  - a section on force-pushing safely, conflicts, `rerere` and the reflog;
+  - `git rm --cached` on shared files;
+  - `concurrency` and `merge_group` in the examples;
+  - the hook test runs in a subshell.
+- **Not fixed, and why:** that GitHub can restore a deleted head branch. The page that says so
+  didn't load here, so the claim was left out rather than stated unchecked.
+- **The trigger check,** judged by a model: all 22 requests routed as expected. Three positive
+  requests passed on thin margins: a secret that reached a commit, a changelog entry or a
+  version number, and a required check that never reports. The description now names all
+  three. Five requests were added: slow CI, a rebase conflict, a lost commit, the merge
+  strategy's reasons, and a near miss for the planned `ci-cd` skill. That makes 27, 9 of them
+  near misses.
+- **Sources:** 37 facts were added and one unused fact removed, 82 in all, each new quote found
+  at its source on 2026-09-30. 18 are about other projects' practice: the Linux kernel, Git,
+  CPython, Rust, Go, LLVM, Google, Chromium, Kubernetes, Fowler, Git Flow's author, towncrier,
+  pip and semantic-release. 14 are about GitHub, and 5 about Git. `sources.md` gives each
+  licence. Google's book is CC BY-NC-ND 4.0 and Fowler's article is copyrighted, so
+  both are quoted and never adapted.
+- **A new development dependency:** zizmor 1.30.1, locked, so the tests can scan the example
+  workflows as the skill tells every repository to.
+- **Checked:**
+  - actionlint 1.7.12 and ShellCheck 0.11.0 pass on the four workflows and two hooks.
+  - zizmor finds nothing with its default rules. Its pedantic rules leave only informational
+    notes.
+  - The asset tests grow from 18 to 51, and the suite runs 228 tests.
+  - `.test-baseline` moves from 195 to 228.
+- **Owner's step:** upload the changed `skills/git-workflows` to claude.ai again.
+
 ## 2026-09-30 — `git-workflows`: the first skill built from the owner's own skills
 
 - **Asked:** the owner: "The point of this is not to make Claude skills run in Claude code

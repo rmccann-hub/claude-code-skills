@@ -18,9 +18,12 @@ Two families work, and neither is the only right one:
   asks for it (fact `area-prefix`), and it suits a tree with clear components. FFmpeg uses it
   for nearly all its commits, and its commit-message check rejects Conventional Commits.
 
-Whichever it is, the repository's context file names it, and CI checks it: on each pull
-request's commits, or on the pull request's title where pull requests are squashed. A
-`commit-msg` hook helps only on a machine that installs it (`setup.md`, hooks).
+Whichever it is, the repository's context file names it, and CI checks it on each pull
+request's commits. Where pull requests are squashed, set the repository's default squash
+commit title to the pull request's title, and check the title. GitHub's default otherwise
+takes a one-commit pull request's own commit message (fact `squash-default`), and whoever
+merges can still edit it. A `commit-msg` hook helps only where a persistent local clone
+installs it.
 
 ### The subject line
 
@@ -76,13 +79,14 @@ the current default branch, fetched first.
 ## Pull requests
 
 - **Title:** in the repository's commit grammar. Under squash merging it becomes the commit's
-  subject.
+  subject once the repository's default squash title is the pull request's title (fact
+  `squash-default`).
 - **Description:** what changes and why; how it was tested, with the commands and what they
   showed; what's deliberately left out; breaking changes and the upgrade steps; linked issues.
   Say which files or commits to read first.
-- **Size:** small enough to review in one sitting. Split a mechanical change, such as a
-  reformat, a rename or a lockfile regeneration, from a change in behaviour. Mechanical diffs
-  look boring, and that's where silent breakage hides.
+- **Size:** small enough to review in one sitting, with a mechanical change, such as a
+  reformat, a rename or a lockfile regeneration, in a commit of its own. Why is
+  project-bootstrap-and-audit's *Review, with one maintainer*.
 - **Before asking for review,** read your own diff whole. Look for debug output, commented-out
   code, a TODO with no issue behind it, a secret, and files you didn't mean to change.
 
@@ -92,8 +96,8 @@ the current default branch, fetched first.
   what has to change before merging.
 - Review in this order: correctness, security, design, edge cases, performance, readability,
   style.
-- An agent reviewing its own change hasn't reviewed it. A fresh session, or a person who didn't
-  write it, reads the diff cold.
+- Review by the agent that wrote a change is the least independent reading there is.
+  project-bootstrap-and-audit's *Review, with one maintainer* says what to do instead.
 
 ## Changelog entries
 
@@ -114,17 +118,9 @@ Keep a Changelog 2.0.0 (fact `kac`) keeps the format that 1.1.0 had.
 
 ## Version numbers
 
-The versioning scheme is a recorded decision, and project-bootstrap-and-audit rates it
-(dimension 10, *Documentation, versioning and handoff*). Semantic Versioning (fact `semver`) is
-the default, and it only works once the project says what its public API is. How to choose each
-bump:
-
-| Change | From 1.0.0 | Before 1.0.0 |
-|---|---|---|
-| Breaks something users rely on | major | minor, and the changelog names it |
-| Adds something, and breaks nothing | minor | minor or patch |
-| Fixes something, and adds nothing | patch | patch |
-
-**Deprecate before you remove.** From 1.0.0: announce the removal in a **Deprecated** entry,
-naming the replacement and the earliest version that removes it. Then warn for at least one
-minor release, and remove it only in the next major.
+The scheme, what counts as a major change for this project, and how to deprecate before
+removing are project-bootstrap-and-audit's rules (dimension 10, *Documentation, versioning and
+handoff*). It uses Semantic Versioning (fact `semver`), which works only once the project says
+what its public API is. Other projects choose differently: pip numbers releases by the calendar
+(fact `pip-calver`), and semantic-release derives each version from Conventional Commits (fact
+`semantic-release`).

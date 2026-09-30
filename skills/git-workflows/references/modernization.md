@@ -8,14 +8,17 @@ on. Each move lists the steps in a safe order. Facts are named by ID from `facts
 1. Stop branching new work from `develop`; branch from the default branch instead.
 2. Merge `develop` into the default branch through one pull request, with a merge commit.
 3. Retarget the open pull requests at the default branch.
-4. Delete `develop` only after the checks in `setup.md` (*Delete a branch only after checking
-   what needs it*). Keep `release/X.Y` branches only for lines you still support.
+4. Delete `develop` only once no open pull request targets it, no release line needs it, and
+   no commit found only on it is cited anywhere. Keep `release/X.Y` branches only for lines you
+   still support.
 5. Update the context file and the contributing guide, so no one recreates it.
 
 ## From tag-pinned to SHA-pinned actions
 
 1. For each `uses:`, take the SHA of the version you use from the action's own repository:
-   `git ls-remote --tags https://github.com/OWNER/ACTION`.
+   `git ls-remote --tags https://github.com/OWNER/ACTION 'refs/tags/v7.0.1*'`. For an annotated
+   tag it prints two lines: the tag object's SHA, then the commit's, on the line ending `^{}`.
+   Pin the commit's.
 2. Replace `@v7` with `@<full SHA> # v7.0.1`.
 3. Turn on Dependabot version updates for `github-actions`, and check its pull requests reach
    the pinned lines.
@@ -49,7 +52,7 @@ IDs as 40 characters in scripts, regular expressions and database columns, and a
 
 ## From lightweight to annotated release tags
 
-Make every tag from now on annotated (`setup.md`, *Releases*). Don't replace tags already
+Make every tag from now on annotated, made on the release commit by its SHA. Don't replace tags already
 published: with immutable releases you can't (fact `immutable`), and other people's clones
 already have them.
 
@@ -65,9 +68,12 @@ already have them.
 
 For local branches, from Git 2.56: `git branch --dry-run --delete-merged 'origin/*'`, then
 without `--dry-run` (fact `delete-merged`). It deletes a branch only when its tip is on its
-upstream. Remote branches still need the checks in `setup.md`.
+upstream, and it leaves alone a branch whose push would update that upstream, or whose upstream
+is gone: most branches made with `git push -u`. Remote branches are still checked one at a
+time, against their pull requests and anything that cites their commits.
 
 ## From Keep a Changelog 1.1.0 to 2.0.0
 
 The format didn't change (fact `kac`), so an existing changelog stays valid. Update the link in
-its preamble if you like, and take up the new guidance in `style.md`.
+its preamble, and take up the new guidance, such as putting the changelog brief in the coding
+agents' context file (fact `kac-agents`).

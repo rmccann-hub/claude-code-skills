@@ -2,9 +2,11 @@
 # Refuses a commit whose subject doesn't read "area: summary", and warns past
 # git's 50-character soft limit. Install once per clone:
 #   git config core.hooksPath .githooks
-subject=$(head -n 1 "$1")
+# Git hands this hook the message before it strips comments and blank lines,
+# so the subject is the first line left once they are gone, as Git will see it.
+subject=$(git stripspace --strip-comments < "$1" | sed -n 1p)
 case "$subject" in
-  "Merge "* | "Revert "* | "fixup! "* | "squash! "* | "amend! "*) exit 0 ;;
+  "Merge "* | "Revert \""* | "Reapply \""* | "fixup! "* | "squash! "* | "amend! "*) exit 0 ;;
 esac
 if ! printf '%s\n' "$subject" | grep -Eq '^[A-Za-z0-9_./-]+(, ?[A-Za-z0-9_./-]+)*: [^ ]'; then
   echo "commit-msg: the subject should read 'area: summary', got: $subject" >&2

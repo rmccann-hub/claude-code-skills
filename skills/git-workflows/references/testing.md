@@ -45,23 +45,29 @@ Both run offline. Neither can tell you the workflow ran, only that it could.
 ## Test a hook in a throwaway repository
 
 ```sh
-set -eu
-work=$(mktemp -d)
-git init -q -b main "$work/repo"
-cp -r .githooks "$work/repo/"
-cd "$work/repo"
-git config core.hooksPath .githooks
-git config user.name test
-git config user.email test@example.com
-echo a > a
-git add a
-if git commit -q -m "fixed stuff"; then echo "hook let a bad subject through" >&2; exit 1; fi
-git commit -q -m "docs: add a"
-echo "commit-msg hook: refuses the bad subject, accepts the good one"
+(
+  set -eu
+  work=$(mktemp -d)
+  git init -q -b main "$work/repo"
+  cp -r .githooks "$work/repo/"
+  cd "$work/repo"
+  git config core.hooksPath .githooks
+  git config user.name test
+  git config user.email test@example.com
+  echo a > a
+  git add a
+  if git commit -q -m "fixed stuff"; then echo "hook let a bad subject through" >&2; exit 1; fi
+  git commit -q -m "docs: add a"
+  echo "commit-msg hook: refuses the bad subject, accepts the good one"
+)
 ```
 
-Run it from the repository root. The hooks in `assets/githooks/` are tested this way, and
-`tests/test_git_workflows_assets.py` in this skill's repository runs them on every change.
+Run it from the repository root. The parentheses keep `set -eu`, `cd` and `exit` inside a
+subshell, so pasting it into your own shell doesn't close that shell. Commit through Git, as
+here, rather than calling the hook directly: Git hands the hook the message before it strips
+comments, which is where a hook reading the first line goes wrong. The hooks in
+`assets/githooks/` are tested both ways, by `tests/test_git_workflows_assets.py` in this skill's
+repository, on every change.
 
 ## Test a release job without spending a tag
 
@@ -73,5 +79,7 @@ try a release job in a fork, or in a test repository, or with a pre-release vers
 
 A test run that stops early can still exit 0. A test job checks that its report exists, and that
 the number of tests it counts meets a recorded baseline. The standard's starter CI file
-(*Starter File Contents*) has both guards. Never read a test command's exit status through a
-pipe: `pytest | tail` reports `tail`'s status, not pytest's.
+(*Starter File Contents*) has only the collection guard, which counts what was collected.
+[assets/workflows/tests.yml](../assets/workflows/tests.yml) adds the completion guard. Never
+read a test command's exit status through a pipe: `pytest | tail` reports `tail`'s status, not
+pytest's.

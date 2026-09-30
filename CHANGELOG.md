@@ -34,12 +34,20 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
-- The standard is now v0.37.0, with twenty-two fixes: the nine the parity baseline found, the
+- `git-workflows` says why: each rule's reasons, what other projects do instead, and what each
+  choice costs, in a new `references/why.md`. It answers how long CI should take, and when a
+  second run on the default branch repeats one already done. A cold review's fixes: the release
+  job tags a commit named by SHA only once its checks have passed, and grants write only to its
+  own job. The subject check lets reverts through, and the hook reads the subject Git will use.
+  A test workflow proves the suite finished. The audit's statuses follow the standard's. It
+  covers rebasing, conflicts and recovering lost commits, and cites the rules the standard owns
+  instead of restating them.
+- The standard moved to v0.37.0, with twenty-two fixes: the nine the parity baseline found, the
   set-up run's open amendments, and four that its own parity runs found. Read-only phases no
   longer write `.git/index`, one routing table replaces two that disagreed, ratings are definite
   where two runs split, and the starter CI's collection guard names itself when it fails. Its
   history entry lists the rest.
-- The standard is now v0.38.0, with fifteen fixes and one addition made before its first live
+- The standard moved to v0.38.0, with fifteen fixes and one addition made before its first live
   run:
   - Phase 1 finds a decision record by its content, including one kept inside another file,
     and no longer reads the words "blast radius" in prose as a recorded tier.
@@ -60,7 +68,7 @@ Notable changes to this repository. The format follows
     SHA-256, and its self-check records that hash.
 
   Its history entry lists the rest.
-- The standard is now v0.39.0, with forty-one fixes from its first live audit and the runs
+- The standard moved to v0.39.0, with forty-one fixes from its first live audit and the runs
   before it:
   - Phase 3 drafts each answer the repository shows, with its evidence, for the owner to
     confirm. It offers "Not sure" on every question, and asks production, dependents and

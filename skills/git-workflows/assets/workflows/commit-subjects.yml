@@ -6,6 +6,11 @@ on:
 permissions:
   contents: read
 
+# A new push makes the last run's answer stale, so it stops.
+concurrency:
+  group: commit-subjects-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
   subjects:
     runs-on: ubuntu-latest
@@ -30,6 +35,16 @@ jobs:
           fi
           bad=0
           while IFS= read -r subject; do
+            case "$subject" in
+              # What git revert writes, and GitHub's Revert button too; the hook allows them.
+              "Revert \""* | "Reapply \""*) continue ;;
+              # The hook allows these so that --fixup works locally, but none should land.
+              "fixup! "* | "squash! "* | "amend! "*)
+                echo "::error::squash this before merging (git rebase -i --autosquash): $subject"
+                bad=1
+                continue
+                ;;
+            esac
             if ! printf '%s\n' "$subject" | grep -Eq '^[A-Za-z0-9_./-]+(, ?[A-Za-z0-9_./-]+)*: [^ ]'; then
               echo "::error::not 'area: summary': $subject"
               bad=1
