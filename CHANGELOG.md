@@ -20,6 +20,8 @@ Notable changes to this repository. The format follows
   A skill uploaded to the claude.ai account is the route into cloud sessions, where synced
   plugins are no longer documented to load. The files it proposes wait for the rebuild's first
   piece.
+- A reading of FFmpeg's practices, in `research/runs/`, taken from its tree and history, with
+  nine proposals for the standard that await the owner's approval.
 
 ### Changed
 

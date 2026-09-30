@@ -453,7 +453,46 @@ session on another of their repositories what it was waiting on before its next 
 
 - **F70:** a session that stops with work outstanding should say what it's waiting on, and from
   whom, without being asked. Run reports already list what remains for the human, but the
-  starter context file gives the working sessions it sets up no such rule (piece 5).
+  starter context file gives the working sessions it sets up no such rule (piece 2).
+
+On 2026-09-30 the owner named FFmpeg as a model of open-source practice. Its tree and history,
+read that day, are in `research/runs/2026-09-30-ffmpeg-reference.md`. Reading it raised nine
+more, awaiting the owner's approval:
+
+- **F71:** the run looks for CI only in `.github/workflows/`. FFmpeg's is in
+  `.forgejo/workflows/`, and its GitHub repository is a mirror whose pull requests are ignored,
+  so a run would report no CI. Before reading CI and settings, the run should find the forge
+  the contributing guide names as canonical, and read that one (piece 4).
+- **F72:** `SECURITY.md` is due at T3, and FFmpeg has none: its private list and page are
+  named in `MAINTAINERS`. A security contact the repository names elsewhere, and a reader can
+  find from the README or the contributing guide, should count (piece 3).
+- **F73:** the standard names Conventional Commits as the commit grammar. FFmpeg's hook rejects
+  it and requires "area: summary", which 2,970 of its last 3,004 subjects follow. A repository
+  should state one grammar and check it with a commit-msg hook, and either family should count
+  (piece 3).
+- **F74:** nothing says which merge strategy to use. FFmpeg's master rejects merge commits; the
+  first live repository keeps them, because its sibling cites branch commits. The context file
+  should name the strategy and why, the platform should allow only that one, and squash is out
+  where commits are cited from outside (piece 3).
+- **F75:** nothing says a release tag is annotated. FFmpeg's are, and `git describe` builds
+  its version from them. The first live repository's 62 are all lightweight, made by
+  `gh release create`, so they carry no tagger or date, and `git describe` passes over them
+  without `--tags` (piece 5).
+- **F76:** nothing covers an interface others build on. FFmpeg keeps each library's API
+  compatible within a major version, logs every change in `doc/APIchanges`, and deprecates
+  before it removes, on a schedule. A repository whose API, command-line options or config
+  keys others depend on should log changes to them, and deprecate in one release before
+  removing in a later one (piece 3).
+- **F77:** nothing covers keeping more than one release line. FFmpeg's point releases come from
+  `release/X.Y` branches, take only a security fix, a documented bug or documentation, and keep
+  compatibility; 78 of its last 80 backports name their source commit. Where a repository keeps
+  a second line, it should follow the same rules (piece 5).
+- **F78:** nothing asks for damaged-input tests. FFmpeg's checklist has every decoder and
+  demuxer fed damaged data, and it must not crash, loop or allocate without bound. Code that
+  parses input it doesn't control should have such a test (piece 3).
+- **F79:** nothing covers mixed licences. FFmpeg's `LICENSE.md` lists which files are GPL, and
+  the GPL parts stay off unless `--enable-gpl` is passed. Where licences mix, each file should
+  name its own, and the licence file should say which parts are which (piece 3).
 
 The owner asked for one more rule, researched before it's written:
 
