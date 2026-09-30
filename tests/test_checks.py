@@ -20,8 +20,8 @@ def test_empty_repository_says_nothing_was_checked(repo):
     report = check_repository(repo.root)
     assert report.findings == []
     assert report.summary() == (
-        "skillcheck: 0 skill(s), 0 description characters, no catalog, no roadmap, no standard, "
-        "0 finding(s)"
+        "skillcheck: 0 skill(s), 0 description characters, 0 fact(s), no catalog, no roadmap, "
+        "no standard, 0 finding(s)"
     )
 
 
@@ -31,7 +31,7 @@ def test_clean_repository_passes(repo):
     report = check_repository(repo.root)
     assert report.findings == []
     assert report.summary() == (
-        f"skillcheck: 1 skill(s), {len(DEFAULT_DESCRIPTION)} description characters, "
+        f"skillcheck: 1 skill(s), {len(DEFAULT_DESCRIPTION)} description characters, 0 fact(s), "
         "1 catalog plugin(s), no roadmap, no standard, 0 finding(s)"
     )
 
@@ -229,7 +229,7 @@ def test_links_that_resolve_or_point_elsewhere_pass(repo):
         "[here](#usage) [mail](mailto:someone@example.com) [absolute](/etc/hosts)\n"
     )
     skill_dir = repo.skill("example-skill", body=body)
-    (skill_dir / "references").mkdir()
+    (skill_dir / "references").mkdir(exist_ok=True)
     (skill_dir / "references" / "guide.md").write_text("guide\n", encoding="utf-8")
     repo.catalog(repo.plugin("example", "./skills/example-skill"))
     assert check_repository(repo.root).findings == []
@@ -248,9 +248,10 @@ def test_optional_fields_in_spec_form_pass(repo):
 
 
 def skill_of_lines(repo, total: int) -> None:
-    frontmatter = "---\nname: sized-skill\ndescription: d\n---\n"
-    body_lines = total - frontmatter.count("\n")
-    repo.skill_file("sized-skill", frontmatter + "line\n" * body_lines)
+    head = "---\nname: sized-skill\ndescription: d\n---\n[why](references/why.md)\n"
+    skill_dir = repo.skill_file("sized-skill", head + "line\n" * (total - head.count("\n")))
+    (skill_dir / "references").mkdir()
+    (skill_dir / "references" / "why.md").write_text("# Why\n", encoding="utf-8")
     repo.catalog(repo.plugin("example", "./skills/sized-skill"))
 
 
@@ -269,7 +270,7 @@ def test_skill_md_at_the_line_limit_fires(repo):
 
 def test_reference_that_links_to_another_reference_fires(repo):
     skill_dir = repo.skill("chained-skill", body="See [a](references/a.md).\n")
-    (skill_dir / "references").mkdir()
+    (skill_dir / "references").mkdir(exist_ok=True)
     (skill_dir / "references" / "a.md").write_text("Then [b](b.md).\n", encoding="utf-8")
     (skill_dir / "references" / "b.md").write_text("b\n", encoding="utf-8")
     repo.catalog(repo.plugin("example", "./skills/chained-skill"))
@@ -285,7 +286,7 @@ def test_reference_that_links_to_another_reference_fires(repo):
 
 def test_reference_links_back_out_or_to_scripts_pass(repo):
     skill_dir = repo.skill("flat-skill", body="See [a](references/a.md).\n")
-    (skill_dir / "references").mkdir()
+    (skill_dir / "references").mkdir(exist_ok=True)
     (skill_dir / "scripts").mkdir()
     (skill_dir / "scripts" / "run.py").write_text("print()\n", encoding="utf-8")
     (skill_dir / "references" / "a.md").write_text(
@@ -294,6 +295,68 @@ def test_reference_links_back_out_or_to_scripts_pass(repo):
         encoding="utf-8",
     )
     repo.catalog(repo.plugin("example", "./skills/flat-skill"))
+    assert check_repository(repo.root).findings == []
+
+
+def test_reference_naming_another_reference_fires_once_per_name(repo):
+    skill_dir = repo.skill("named-skill", body="See [a](references/a.md).\n")
+    (skill_dir / "references" / "a.md").write_text(
+        "Read `b.md` next.\nThen b.md again, and [b as a link](b.md).\n", encoding="utf-8"
+    )
+    (skill_dir / "references" / "b.md").write_text("b\n", encoding="utf-8")
+    repo.catalog(repo.plugin("example", "./skills/named-skill"))
+    report = check_repository(repo.root)
+    assert [(f.path, f.rule, f.message) for f in report.findings] == [
+        (
+            "skills/named-skill/references/a.md",
+            "reference-depth",
+            "links to references/b.md; keep references one level deep from SKILL.md",
+        ),
+        (
+            "skills/named-skill/references/a.md",
+            "reference-depth",
+            "line 1 names b.md; keep references one level deep from SKILL.md",
+        ),
+    ]
+
+
+def test_table_row_split_by_a_pipe_in_code_fires(repo):
+    body = (
+        "| Question | Command |\n|---|---|\n| Which? | `git branch -vv` |\n"
+        "| Gone? | `git branch -vv | grep gone` |\n"
+    )
+    repo.skill("table-skill", body=body)
+    repo.catalog(repo.plugin("example", "./skills/table-skill"))
+    report = check_repository(repo.root)
+    assert [(f.path, f.rule, f.message) for f in report.findings] == [
+        (
+            "skills/table-skill/SKILL.md",
+            "table",
+            "line 9 has 3 cells and its table 2; GitHub splits a row on every pipe, even inside "
+            "code",
+        )
+    ]
+
+
+def test_tables_pipes_in_fences_and_separate_tables_pass(repo):
+    body = (
+        "| A | B |\n|---|---|\n| x | `y \\| z` |\n\n| One |\n|---|\n| 1 |\n\n"
+        "```sh\n| not | a | table |\n```\n"
+    )
+    repo.skill("table-skill", body=body)
+    repo.catalog(repo.plugin("example", "./skills/table-skill"))
+    assert check_repository(repo.root).findings == []
+
+
+def test_naming_facts_itself_or_other_files_passes(repo):
+    skill_dir = repo.skill("named-skill", body="See [a](references/a.md).\n")
+    (skill_dir / "references" / "a.md").write_text(
+        "Facts are in `facts.md`. This is a.md. Your `README.md`, docs/setup.md, x.md.\n",
+        encoding="utf-8",
+    )
+    (skill_dir / "references" / "facts.md").write_text("# Facts\n", encoding="utf-8")
+    (skill_dir / "references" / "setup.md").write_text("setup\n", encoding="utf-8")
+    repo.catalog(repo.plugin("example", "./skills/named-skill"))
     assert check_repository(repo.root).findings == []
 
 

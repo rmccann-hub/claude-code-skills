@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.39.0"
-  updated: "2026-09-29"
-  supersedes: "0.38.0"
+  version: "0.40.0"
+  updated: "2026-09-30"
+  supersedes: "0.39.0"
   reading: "One file, read in ranges. Start at How to Read This File; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -490,7 +490,7 @@ never a guess.
 | **Shell available** | Try one harmless command | **Without it, Phase 2 cannot execute documented commands.** Record them unrun; everything becomes `UNVERIFIABLE-HERE` and the run says so in its headline |
 | **Writes outside the repository** | Try writing to a scratch path | **Without it, greenfield cannot build-then-copy and the run report has nowhere to live.** Emit the report in the reply and say why |
 | **Remote CI readable** | Try reading a conclusion | Without it, "local green is not remote green" cannot be discharged. Record `unverifiable` |
-| **Tag creation** | Try, or read the tool list | Where refused, tagging is a human action via the host UI or a dispatch job — **never "tag locally"** |
+| **Tag creation** | Try, or read the tool list | Where refused, tagging is a human action via the host UI or a dispatch job, and from T2 the job, which can make the tag annotated — **never "tag locally"** |
 | **Local working copy exists** | **Ask. It cannot be detected** | Without one: no local tagging, no desktop tooling, and **client-side hooks gate nothing**, because every commit comes from an ephemeral container |
 | **Enforced layer** | See *Any Agent, Any Tool* | Where the tool has none, dimension 6 is `N/A`, never `GAP`, and the guarantee moves server-side |
 | **Branch protection available** | Read the plan, or ask | Unavailable on private repositories on free plans — **and rulesets carry the same gating**, so the newer mechanism is not an escape. Where unavailable, `N/A` with the reason — never a `GAP` re-proposed every run |
@@ -721,7 +721,7 @@ pinning anything — and check what answered you, per the probe rule above.**
 | **OpenSSF Scorecard** | Nineteen automated supply-chain and process checks, runnable as a workflow | Dimension 8, and parts of 6 and 7 |
 | **OpenSSF Best Practices Badge** | Self-attested practices a scanner cannot detect | A T3 project with external users |
 | **MADR** (4.x) | A published decision-record format, minimal and full variants | Dimension 10 |
-| **Keep a Changelog**, **Semantic Versioning**, **Conventional Commits** | Changelog shape, version meaning, commit grammar | Dimension 10 |
+| **Keep a Changelog**, **Semantic Versioning**, a commit grammar: **Conventional Commits** or *area: summary* | Changelog shape, version meaning, commit grammar | Dimension 10 |
 | **C4 model** | Context, container, component and code views | *Project Shapes and Layout*, where structure needs a diagram |
 
 **Where one of these already specifies something, cite it and move on.** A finding that
@@ -740,7 +740,7 @@ git status --porcelain          # must be empty
 git fetch --tags --prune        # BEFORE any tag or branch claim
 git remote -v
 git rev-parse --abbrev-ref HEAD
-git rev-parse --is-shallow-repository
+git rev-parse --is-shallow-repository   # true: deepen it, below, before reading history
 date -u
 TZ=UTC git log -1 --format='%H %cd' --date=iso-strict-local
 git status --porcelain --ignored | grep '^!!'   # ignored files already here: keep the list
@@ -784,6 +784,13 @@ it was, so a history scan, a count or a version reconciliation that names `main`
 as old as the clone. A live run caught this only because its reconciliation disagreed with a
 tag.
 
+**Deepen a shallow clone before anything reads its history.** A cloud session's clone can be
+shallow where the project's CI fetches the full history: a live re-check saw 511 of 1,533
+commits, beside a checkout set to `fetch-depth: 0`. `git fetch --unshallow --tags` is a fetch,
+so it is allowed here, its output goes in `fetch_proof`, and every gate, history scan and count
+runs after it. **Where it can't run, `shallow` stays `yes`**, and every count read from the
+history says `shallow` beside it.
+
 **Branch.** Use `chore/config-audit` unless the harness pins one, in which case use that and
 record it. Not a question — a recorded override.
 
@@ -794,7 +801,7 @@ absent produces advice the human cannot follow; a capability present and unused 
 Claude Code version, and a long-lived session can run one many releases behind the current
 one: on 2026-09-29, two sessions started in July still ran 2.1.233, while new ones ran 2.1.284.
 
-**Three things cannot be detected. Ask them once — and ask them at the Phase 3 wait, not
+**Four things cannot be detected. Ask them once — and ask them at the Phase 3 wait, not
 here:**
 
 1. **Is there a local working copy of this repository?** Decides tagging, hooks and desktop
@@ -802,10 +809,17 @@ here:**
 2. **Is there a standards repository these projects share?** Name it, or "none".
 3. **Who holds copyright?** The person or legal entity, as the human names it: for
    work-owned code, the employer's exact legal name. Never inferred from the account name.
+4. **Does anyone else maintain, review or commit to this repository, or will they soon?**
+   Decides `CODEOWNERS` in dimension 3 and the review checks in dimension 6. Draft it from the
+   history's authors, where a bot is not a person, but never take the draft as the answer: a
+   past contributor may be gone, and a new one may not have committed yet. **Default if
+   unanswered, or `unknown`: no**, and nothing that depends on it is rated. A default taken
+   goes in Phase 6's first list, beside the tier. Phase 8 records the answer, and a re-check
+   shows it and asks "Is that still the case?", with any authors since as its evidence.
 
 **Carry them forward rather than stopping here.** Two waits is both the floor and the
 ceiling, Phase 3 already stops and already asks the human about copyright, and a separate
-round trip for three short questions costs more than it returns. **Three independent runs
+round trip for four short questions costs more than it returns. **Three independent runs
 each invented this same fold and recorded it as an override** — a deviation that recurs with
 the same reasoning is a rule waiting to be written, so it is written. Record the answers in
 the Phase 0 block as normal; they simply arrive one phase later.
@@ -818,7 +832,8 @@ capabilities: {shell: yes|no|unknown, write_outside_repo: yes|no|unknown,
 capability_proof: |
   <the probe output, one line each>
 asked: {local_working_copy: yes|no, standards_repo: "<name | none>",
-        copyright_holder: "<as the human names it>"}
+        copyright_holder: "<as the human names it>",
+        more_maintainers: "<no | yes, and who | unknown>"}   # unknown counts as no
 degraded: [<what this run could not do, and what it recorded instead>]
 tool: "<which agent and surface this ran on, and its version>"
 clean_tree_proof: |
@@ -832,7 +847,7 @@ default_branch: <name as read, never assumed>
 working_branch: <the branch the work lands on, as the job or context file names it | same>
 branch_used: <branch>
 branch_override: <none | "harness-pinned to X">
-shallow: yes | no
+shallow: no | deepened | yes   # yes: still shallow, so each history count says so
 clock_session: <date -u>
 clock_git: <the latest commit's committer date, in UTC>
 clock_delta_days: <int>   # whole days from clock_git to clock_session, both in UTC
@@ -976,10 +991,21 @@ done | sort -rn | head -25
 ls pyproject.toml package.json *.csproj go.mod Cargo.toml meson.build *.psd1 2>/dev/null
 ls uv.lock package-lock.json Cargo.lock go.sum poetry.lock requirements.lock 2>/dev/null
 git tag --sort=-v:refname | head -3        # AFTER the Phase 0 fetch
-git log --all --format='%ae%n%ce' | sed 's/.*@//' | sort | uniq -c | sort -rn   # domains only: dimension 10
-ls .github/workflows/ .gitignore .gitattributes .editorconfig \
-   .pre-commit-config.yaml .githooks .copier-answers.yml LICENSE* 2>/dev/null
+git log --all --format='%ae%n%ce%n' |   # commits per domain, never an address: dimension 10
+  awk 'NF == 0 { for (d in s) print d; split("", s); next }
+       { sub(/.*@/, ""); s[tolower($0)] = 1 }' | sort | uniq -c | sort -rn
+ls .github/workflows/ .forgejo/workflows/ .gitlab-ci.yml .gitignore .gitattributes \
+   .editorconfig .pre-commit-config.yaml .githooks .copier-answers.yml LICENSE* 2>/dev/null
 ```
+
+**Find the canonical forge before reading CI or settings.** A repository can be a mirror of
+one kept elsewhere: its contributing guide or README names where changes go, and its CI lives
+with that forge. FFmpeg's GitHub repository is a mirror whose pull requests "will be ignored",
+and its CI is in `.forgejo/workflows/`. **Where the repository read is a mirror, read the
+canonical forge's CI**, and its settings where the run can reach them, and rate the mirror's
+own platform settings `MIRROR` rather than missing. Where the run can't reach the canonical
+forge, its CI is `UNVERIFIABLE-HERE`. A run that read only `.github/workflows/` there would
+report no CI for a project that runs it on every change.
 
 **Read the remote CI conclusion** for the current head and for the default branch. A red
 default branch nobody noticed is a finding in its own right, and local gates cannot see it.
@@ -1049,6 +1075,12 @@ once, under the command that ran it.
 **Record the collection count, not only the exit code.** A suite that collects fewer tests
 than the project documents has failed even at exit 0 — silently skipped modules exit green.
 
+**A result the run's own mistake produced is not the repository's.** Where a gate fails because
+of how the run ran it, such as a clone from the wrong place or a mistyped path, run it again
+correctly and count the re-run in `command_tally`. The first result goes in the self-check's
+`corrections`, with `prior_run: this run, Phase 2`. A live re-check kept a `FAIL` in its tally
+with the correction beside it, so the tally reported a failure the repository doesn't have.
+
 **What the gates leave in the working tree is not a write to the repository, but it is
 listed.** Caches, an `.egg-info` directory, coverage data and build output are ignored files,
 so `git status` stays empty. **They can change what a later gate measures:** a live run saw one
@@ -1056,6 +1088,16 @@ change a test's collected count, and in its apply half a wheel built in the work
 `build/lib/` behind, so a test that CI failed passed locally. **So a job that builds or
 installs the project is replayed in a scratch clone**, not the working tree, and the Phase 2
 block's `notes` names the ignored paths the gates created, beside Phase 0's list.
+
+**Clone the scratch copy from the remote**, as Phase 7's fresh clone is, and check out the
+audited commit in it: `git -C <scratch> checkout --detach <sha>`. Where the run can't reach the
+remote, or the remote lacks that commit, clone the working copy. **Either way, before any gate
+runs, the clone's `origin/<default>` must be the working copy's `origin/<default>`:** compare
+`git -C <scratch> rev-parse origin/<default>` with `git rev-parse origin/<default>`. A clone of
+the working copy takes the working copy's local branches as its remote-tracking refs: a live
+re-check's scratch clone read a local `main` the fetch had left behind as `origin/main`, and
+failed ten tests that pass. Where the two differ, copy the working copy's across with
+`git -C <scratch> fetch <working copy> '+refs/remotes/origin/*:refs/remotes/origin/*'`.
 
 ```yaml
 phase: 2
@@ -1073,7 +1115,8 @@ hooks_configured: yes | no
 hooks_installed: yes | no
 hooks_proof: |
   <literal output>
-ci: {workflows: [<paths>], jobs: [<names>]}
+ci: {forge: <where this CI runs: github | forgejo | gitlab | other>, mirror_of: <url | none>,
+     workflows: [<paths>], jobs: [<names>]}
 ci_remote_conclusion: {head: <success|failure|none|unknown>,
                        default_branch: <success|failure|none|unknown>,
                        proof: "<how it was read>"}
@@ -1085,7 +1128,7 @@ tags: <int>
 repo_visibility: public | private | unknown
 plan_supports_branch_protection: yes | no | unknown
 collaborators: <int | unknown>
-history: {commits_visible: <int>, shallow: yes|no}
+history: {commits_visible: <int>, shallow: yes|no}   # read after Phase 0 deepens
 present: [<notable files found>]
 absent: [<notable files missing>]
 commands: [{cmd: "...", result: PASS, detail: "exit 0", collected: <int | n/a>}]
@@ -1096,7 +1139,8 @@ notes: <... | none>
 
 ## Phase 3 — Establish Tier — **WAIT**
 
-**Six questions. Phase 3 always stops here — including on a re-check.**
+**Six questions, with Phase 0's four beside them. Phase 3 always stops here — including on a
+re-check.**
 
 On a **first audit**, ask all six, **with a draft of each answer the repository shows.** Its
 own records usually hold most of them: the repository's visibility or a registry page for
@@ -1122,7 +1166,8 @@ the tier it computed from them.
 **An unattended run meets this wait with the answers it was given.** Where the prompt says the
 person won't be there and carries the answers, the run can't stop, so it goes on and records
 `answers_source: given in the prompt`. The tier it computed goes first among Phase 6's
-decisions only the human can supply, so a wrong tier is caught before anything is applied. That
+decisions only the human can supply, followed by any of Phase 0's four left at its default, so a
+wrong tier is caught before anything is applied. That
 is the one case in which the confirmation moves to Phase 6. It isn't a deviation, and
 `waits_observed` counts it.
 
@@ -1135,6 +1180,16 @@ and dependents change without a commit, as where it runs does, so none of the th
 carried forward unasked. This costs one exchange and catches the thing a record cannot: a
 tier rated on the *imminent* state whose trigger has since fired. A record describes what was
 true when it was written, and only the human knows whether it still is.
+
+**Ask here for what a rating needs and the run can't read.** Some settings live only on the
+platform, such as secret scanning, push protection and dependency alerts, and a session often
+can't read them. Where one bears on a rating, ask the human at this wait for a screenshot of the
+settings page, or failing that their reading of it. Phase 4 rates on that and names it as the
+source. A screenshot is what was seen; a reading is what was said, as with a human action, and
+a rating that rests on one says so. **Without either, the setting is `UNVERIFIABLE-HERE`**,
+never done because the last record said so. A live re-check rated such settings unverifiable,
+which the last record called done, and the owner's screenshot, sent with the gate answers,
+showed push protection and the dependency alerts off.
 
 **Do not fold this into the Phase 6 gate.** A tier confirmation arriving after the dimensions
 have been rated is a confirmation of work already done.
@@ -1271,7 +1326,7 @@ Record the answers in `inception`. **Do not ask a fourth question to be thorough
 ```yaml
 phase: 3
 answers_source: <recon report path | given in the prompt | asked directly>
-drafts: [{q: <1-6>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
+drafts: [{q: <1-6 | p0-4>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
           reply: confirmed | corrected | not sure}]   # none on a re-check
 owner: work | personal | mixed   # mixed: provenance and copyright are decided per item
 copyright_holder: <as the human names it: a legal name, or the name they publish under | n/a>
@@ -1286,6 +1341,7 @@ tier_reasoning: <required when basis is imminent, or when inbound and output dif
 tier_previous: <T0-T3 | none>
 irreversible_resolved: [{rank: 1, decision: "...", state: "decided now | settled | locked"}]
 irreversible_open: [<ranks still undecided>]
+readings: [{setting: "<name>", source: screenshot | reading | none, seen: "<what it shows>"}]
 deployment:                   # asked, never read from the repository
   runs_on: "<the machine, as the human names it | unknown>"
   started_by: "<launcher, service manager, schedule, container | unknown>"
@@ -1390,14 +1446,14 @@ named in the module map that no longer exists; auxiliary files with no consisten
 unless the layout is actively causing the confusion.
 
 **Hygiene.** `.gitignore`, `.editorconfig`, `.gitattributes` with real EOL rules. Defaults,
-not choices. `CODEOWNERS` once a second person commits. **Read that from the history's
-authors**, which every clone has, not from a collaborator list the run may not be able to
-read, and a bot is not a person. Once a second person's commits are there, a missing
+not choices. `CODEOWNERS` once more than one person maintains or reviews, **as the human
+answers Phase 0's fourth question.** The history's authors, which every clone has, are the
+draft, and a bot is not a person, but the answer is the human's. Once they say so, a missing
 `CODEOWNERS` is `GAP` **where the plan honours the file**: any public repository, and a private
 one only on a paid plan, as *Facts with an Expiry Date* records. On a private repository on a
 free plan it is `N/A`, a fact about the plan. Where the plan can't be read, it stays `GAP`, and
-its amendment is gated on the human's answer about the plan. Before a second person commits it
-is not rated, and one naming a single person is the ceremony dimension 8 describes.
+its amendment is gated on the human's answer about the plan. Until they say so it is not rated,
+and one naming a single person is the ceremony dimension 8 describes.
 
 ### 4. Agent configuration
 
@@ -1424,6 +1480,10 @@ is not rated, and one naming a single person is the ceremony dimension 8 describ
   Check the mechanism instead: the shim at the repository root, and an `@` import of the
   context file inside it rather than a markdown link. **Record the verdict as inferred**, in
   the finding's `evidence`, so a later run that can observe the load knows this one did not.
+- **The context file tells a session to say what it's waiting on.** A session that stops with
+  work outstanding names what it waits on, and from whom, as the starter file's conventions
+  say. Missing where agent sessions work the repository, it is `GAP`: a live owner had to ask a
+  working session what it was waiting on before its next release.
 - **Size is a real constraint, not a style note.** Keep the always-loaded context under ~300
   lines; Codex stops reading instruction files past 32 KiB combined (`project_doc_max_bytes`),
   and truncation is indistinguishable from the file being ignored. Put instructions near the end
@@ -1525,6 +1585,12 @@ describing something retired is deleted rather than relocated.
 
 `TEST-VERIFICATION-CHECKLIST.md` from T1. Coverage threshold at T3, **set from the currently
 measured number so it ratchets**. Mutation testing at T3 only.
+
+**Code that parses input it doesn't control gets a damaged-input test** from T2: a file
+format, a network response, a device's output, a log. Fed truncated and corrupted samples, it
+must not crash, hang or allocate without bound. A fuzzer is the strong form, and a handful of
+damaged samples in the suite is the floor. FFmpeg's checklist asks it of every decoder and
+demuxer. Where such code has none, it is `GAP`.
 
 **A step that cannot fail is rated by whether anything counts on it.** Where the
 documentation, the checklist or a required status check treats it as a gate or a working
@@ -1703,6 +1769,19 @@ users. Elsewhere `GAP` — **or `N/A` where the plan does not support protection
 a fact about the plan and not a failing. Where recorded "do not re-propose", `N/A`, never
 raised again.
 
+#### Merging
+
+**One merge strategy, chosen, written down and enforced.** Merge commits, squash and rebase
+each leave a different history, and each is right somewhere: FFmpeg's master rejects merge
+commits and stays linear, while a live repository keeps merge commits because a sibling cites
+its branch commits by hash. **The context file names the strategy and why, and the platform
+allows only that one**, a setting every plan has. **Where commits are cited from outside, only a
+merge commit keeps them.** Squash replaces them, and GitHub's rebase-merge writes new ones, so
+the cited commits are stranded once the branch goes: a live repository's became unreachable when
+its branch was deleted four minutes after a squash merge. From T2, a strategy left unrecorded is
+`GAP`, and so is one the platform doesn't enforce. A choice the human recorded isn't re-argued,
+but its enforcement is still rated.
+
 #### Review, with one maintainer
 
 There is no second reviewer, so review means something different here. Worth being explicit
@@ -1724,6 +1803,33 @@ about rather than skipping, and every item below is a suggestion with a stated c
   contrast test which had stopped asserting anything.
 - **An agent reviewing its own work is not review.** A fresh session reading the diff cold,
   with no memory of having written it, is the closest available substitute.
+
+#### Review, with more than one maintainer
+
+**Only where the human says more than one person maintains, reviews or commits**, as Phase 0's
+fourth question asks. The history's authors are the draft, never the answer, and until the
+human says so nothing below is rated. FFmpeg, with 220 authors and 65 committers across its
+last 3,004 commits, shows each of them at scale.
+
+- **Who reviews what is written down.** `CODEOWNERS` names the expected reviewers for each
+  path, as dimension 3 says, and a maintainers list says who looks after each area and who may
+  merge and release. FFmpeg's `MAINTAINERS` gives each area a status, from looked after to
+  unmaintained.
+- **Review comes before the merge, and the platform enforces it** where the plan allows: a
+  required approval on the default branch, with the plan limits in the table above.
+- **The contributing guide says how a change is reviewed**: where changes go, what a
+  submission carries, that the author answers every comment, and how long a change nobody has
+  reviewed waits before it may land, if ever. FFmpeg's waits are 12 hours for a build or
+  security fix, 3 days for a small change and a week for a large one.
+- **Outside contributions carry a sign-off or an agreement.** A `Signed-off-by` line is the
+  light form, with its meaning stated in the contributing guide, often the Developer
+  Certificate of Origin: 1,928 of FFmpeg's last 3,004 commits carry one.
+- **Security reports reach more than one person**, through a list or a shared address rather
+  than one maintainer's inbox.
+
+Where more than one person maintains, each one missing is `GAP` from T2. The shared security
+contact is due only where dimension 7 wants a contact at all, and required approval is `N/A`
+where the plan can't enforce it, as the table above says.
 
 ### 7. Secrets, security and data classification
 
@@ -1755,7 +1861,10 @@ variable, untracking defers the exposure rather than closing it — a separate f
 
 </constraints>
 
-Secret scanning per the placement table. `SECURITY.md` at T3.
+Secret scanning per the placement table. `SECURITY.md` at T3, **or a security contact the
+repository names in a file a reader looks in**, such as the README, the contributing guide or
+a maintainers list: where to report a vulnerability privately. FFmpeg names its security list
+and page in `MAINTAINERS`, with no `SECURITY.md`, and a contact named like that counts.
 
 **A secret-scan job is read by its range and its scanned count, never by its conclusion.** A
 scanner that looked at no commits reports success, which is the vocabulary's *check reporting
@@ -1815,6 +1924,8 @@ a failure. Where you find one group covering everything, check whether anything 
 landed from it recently before rating the dimension `OK`.
 
 **Some Scorecard checks cannot pass at one maintainer, and chasing them makes things worse.**
+One maintainer is what the human answered to Phase 0's fourth question, not what the history
+shows.
 Code-Review requires a second approver and its own documentation says the check is infeasible
 for projects with a single active participant. Contributors requires contributors from
 several organisations in recent history. Branch protection's higher tiers require one or two
@@ -1991,6 +2102,29 @@ it has fired, the changelog is written before the tag rather than backfilled aft
 **Version reconciliation:** manifest, tag, changelog head, **and installed distribution
 against in-tree**. Zero tags where none can exist is not `DRIFT`.
 
+**From T2, release tags are annotated.** A lightweight tag carries no tagger, date or message
+and can't be signed, and `git describe` passes over it without `--tags`, failing outright where
+there are no others. `git cat-file -t <tag>` says which a tag is: `tag` for annotated, `commit`
+for lightweight. FFmpeg's release tags are all annotated. A live repository's 62, made by
+`gh release create`, were all lightweight. **Rate how the next tag gets made, not the tags
+already published**, which immutable releases may not let anyone replace: where the release
+workflow or the documented route makes a lightweight tag, it is `GAP`. *The Release and Deploy
+Currency Gate* gives the route.
+
+**Where more than one release line is kept**, *The Release and Deploy Currency Gate* says how:
+each line has its branch, and each backport names its source. From T2, a line without them is
+`GAP`.
+
+**An interface others build on changes by a recorded rule.** Where others depend on a
+library's API, a command's options, a config file's keys or a data format, the changelog
+records each change to it. From 1.0.0, a removal is deprecated in one release, with a warning
+where the code can give one, before a later release removes it. Before 1.0.0, where anything may
+change, the changelog still names each removal. FFmpeg keeps each library's API
+compatible within a major version, logs every change in `doc/APIchanges` with its date, version
+and header, and guards each deprecated API with a macro keyed to the major version that removes
+it. Where nobody builds on the interface this is `N/A`. Where others do, a removal the
+changelog doesn't name is `GAP`, and so is one from 1.0.0 with no deprecation before it.
+
 <constraints>
 
 **A field recording that something was reviewed names what was examined, and never silently
@@ -2095,10 +2229,14 @@ nothing and settles nothing** — reach it when the interface stops moving, not 
 project feels finished.
 
 **Mechanics are cited, not restated here.** Semantic Versioning defines the fields and the
-pre-release grammar, Keep a Changelog defines the sections, Conventional Commits defines the
-commit grammar that can derive a bump. **Point at them and record which one this project
-follows.** A house paraphrase of a published spec is a second source of truth that will drift
-from the first.
+pre-release grammar, and Keep a Changelog defines the sections. A commit grammar is either
+Conventional Commits, which can derive a bump, or the "area: summary" form that FFmpeg's hook
+enforces and 2,970 of its last 3,004 subjects follow. **Point at them and record which one
+this project follows**, then check the grammar the context file states: in CI over a pull
+request's commits, and by a commit-msg hook only where dimension 6 places client-side hooks.
+Where the merge strategy squashes, the pull request's title becomes the subject, so the check
+reads the title. From T2, a grammar unstated or unchecked is `GAP`. A house paraphrase of a
+published spec is a second source of truth that will drift from the first.
 
 </constraints>
 
@@ -2108,12 +2246,19 @@ moment. Only after the Phase 1 content search found none.
 
 **Provenance:** a public repository must contain no work-origin code.
 
+**Where licences mix, each file says which it is under**, in a licence header or an
+`SPDX-License-Identifier` line, and the licence file says which parts are under which.
+FFmpeg's `LICENSE.md` lists its GPL files by name. Mixed and unmarked, it is `GAP`; under one
+licence throughout, the licence file alone is enough.
+
 **Compare the history's address domains with the Phase 3 owner answer.** Commits carrying an
 organisation's domain, rather than a personal mail provider's or the platform's no-reply
 address, in a repository answered as personal raise the question this rule exists for, and
 only the human can answer it. Put it in Phase 6's first list, naming each domain and how many
-commits carry it, never an address. It is not a status of its own, and the default if
-unanswered is the owner answer as given.
+commits carry it, never an address. **Count commits, not address lines:** each commit has an
+author and a committer, so a count of lines counts most commits twice. Phase 2's command counts
+each commit once per domain, on a clone already deepened or marked `shallow`. It is not a
+status of its own, and the default if unanswered is the owner answer as given.
 
 **Non-code deliverables** are in scope: tier, secrets, distribution, documentation.
 
@@ -2167,7 +2312,7 @@ corrections:           # verdicts from a PRIOR run that this run overturns
      rule_that_caught_it: "<quoted>", decision_affected: yes | no}
 validated: [{rule: "<quoted>", caught: "<what it found>"}]
 constrained: [{rule: "<quoted>", stopped: "<what you would have done>"}]
-overrides: [{phase: 0, saw: "...", did: "...", why: "..."}]
+overrides: [{phase: 0, saw: "...", did: "...", why: "..."}]   # Phases 0 to 4
 notes: <... | none>
 ```
 
@@ -2254,6 +2399,15 @@ it in `overrides` with what was seen, what was done, and why. **A run that devia
 so is more useful than one that complied and learned nothing**, because each deviation is a
 place the standard was wrong or silent. A reader reconciling two reports works from
 `deviations` first.
+
+**A step this file directs is not a deviation**, however unusual it looks: installing what CI
+installs, replaying a gate in a scratch clone, deepening a shallow clone. The exceptions are the
+steps it says to record as overrides: a harness-pinned branch, a substitute for a path the tool
+doesn't have, and something the model can't do. `overrides` holds those and departures from
+the rule as written, so a reader can find them. A live re-check recorded nine overrides, most
+of them steps this file asks for. **Each phase's overrides go in the next block emitted:** Phase
+4's holds those of Phases 0 to 4, the Phase 6 block's `notes` those of 5 and 6, Phase 7's its own,
+Phase 9's those of 8 and 9, and `post_gate`'s `notes` any after the gate.
 
 **Then structure it for two readers, in this order:**
 
@@ -2412,12 +2566,23 @@ way that looks like a CI problem instead of a missing push.
 one done, read it back wherever the run can: a live run's owner reported a setting on while
 the API still read it as off. It is `done-observed` where the reading agrees,
 `reported-not-observed` where it doesn't, with what was read, and `not-observable-here` where
-nothing can be read. One nobody has reported stays outstanding.
+nothing can be read. **A screenshot the human sends counts as seen**, and `seen` names it. One
+nobody has reported stays outstanding.
+
+**Advise deleting a branch only after checking what still needs it.** It has no open pull
+request, and its work has reached the default branch: its commits are ancestors of it, or its
+pull request was merged by squash or rebase. Every commit cited through it, here or in a sibling
+repository, is reachable from the default branch, and a sibling that was promised the branch is
+told before it goes. **Where a sibling can't be read, ask the human**, or record the check as
+not made and don't advise the deletion. Telling a sibling is a human action unless the session
+can reach it. A live run, asked to check first, found a sibling's record naming a branch as one
+that stays, because citations had once broken when it was deleted.
 
 **Open a pull request rather than merging.** It gives the checks somewhere to run before the
 default branch moves and leaves a reviewable diff. **Merging is the human's**, and on a
 repository with a sibling contract it is theirs twice over. Where the tool cannot open one,
-that is a human action with the branch name and base named explicitly.
+that is a human action with the branch name and base named explicitly. **The run merges only
+when the human asks it to**, after Phase 9, and records it in the `post_gate` block.
 
 **Fetch the base before pushing.** Where it has moved since Phase 2, bring it in by the
 repository's own convention, and run the gate again on the result. A live run's base moved five
@@ -2448,6 +2613,7 @@ pull_request: {opened: yes | no | n/a, url: "<url>", base: <branch>, merged: no,
 report_delivered: yes | no      # handed over, not merely written
 ci_remote_conclusion_after_push: {status: <success|failure|pending>, proof: "..."}
 corrections: [{claim: "...", actual: "...", where_corrected: "...", decision_affected: yes|no}]
+overrides: [{phase: 7, saw: "...", did: "...", why: "..."}]   # Phase 7
 notes: <... | none>
 ```
 
@@ -2584,6 +2750,17 @@ carries the amendment id it came from so the next run can tell what was already 
 
 </constraints>
 
+**Before the report is handed over, a second reader goes over the whole branch.** Once Phase
+8's entry is pushed, start a fresh session or subagent that didn't write the change. Give it the
+diff from the base to the branch's head and the approved amendments, and none of the run's
+reasoning. Reproduce each blocking defect it finds, fix it, run the gate, push, and read the
+remote CI again. It reads after Phase 8 because a decision record can be wrong too: a live
+run's reviewer found three defects that the run's tests, a revert probe, CI and a first review
+had all passed. One was a claim in the decision record that wasn't true, one a test message that
+pytest cut short, and one a strict decode that crashed the gate script on output that wasn't
+UTF-8. **Where the tool can't start one, say so in `review`.** The human's review of the pull
+request is then the second reading, before they merge it, and the run doesn't wait for it.
+
 **Then finish the run report.** Append the `phase: 7`, `phase: 8` and `phase: 9` blocks to the
 same file from Phase 6 — do not start a second one — and replace its decisions section with a
 short outcome summary: what was applied, declined, deferred, what remains for the human, and
@@ -2606,7 +2783,32 @@ milestones: [{name: "<the state that becomes true>", ids: [<ids>],
               verified_by: "<the command that proves it>", done: yes | no}]
 plan_home: platform issues | ROADMAP.md | decision record | none needed
 plan_home_why: <one line; required whenever it is not platform issues>
+review: {by: "<who read the branch, and that it didn't write it | the human, and why>",
+         blocking: <int>, fixed_in: <sha | none>, left: [<a finding, and why it stays>]}
+overrides: [{phase: 8, saw: "...", did: "...", why: "..."}]   # Phases 8 and 9
 notes: <... | none>
+```
+
+**Work the human asks for after Phase 9 goes in one more block, `post_gate`**, appended to the
+same report: a review, a merge, a check of the branches. **Merging is still the human's**, so the
+run merges only when asked, and then only the head the gate and the second reader last checked.
+It passes that head to the merge as the expected head, so a push that lands in between makes the
+merge fail rather than go in unchecked. Afterwards it reads the default branch's CI on the merge
+commit, at job level. A live re-check's owner asked for all three after the gate, and the run
+had to invent the block.
+
+```yaml
+post_gate:
+  asked: "<the human's words>"
+  review: {by: "...", blocking: <int>, fixed_in: <sha | none>, left: [...]}
+  merge: {method: merge | squash | rebase, expected_head: <sha>, base_at_merge: <sha>,
+          result: "<the merge commit | not merged, and why>",
+          default_branch_ci: {status: <success|failure|pending>, proof: "..."}}
+  branches: [{ref: <name>, own_commits: <int>, open_pr: <url | none>,
+              cited_by: [<path:line, here or in a sibling>],
+              cited_reachable: yes | no | not checked, sibling_told: yes | no | n/a,
+              verdict: "..."}]
+  notes: <... | none>
 ```
 
 ---
@@ -2619,7 +2821,8 @@ notes: <... | none>
 
 **This exists because the same file is run on different models, and they fail differently.** A
 report that looks complete tells you nothing about whether the rules were followed; this block
-makes the common failures visible in one place, cheaply, without a second reader.
+makes the common failures visible in one place, cheaply. **It reports on the run, not on the
+change**, so it doesn't replace the second reader Phase 9 asks for.
 
 **Answer from what you actually did, not from what the file says to do.** A `yes` that means "the
 instruction was there" rather than "I did it" makes this block worse than absent — it
@@ -2659,6 +2862,7 @@ conformance:
   proof_fields_hold_literal_output: yes | no | n/a
   unverified_facts_relied_on: [<any dated fact used without checking it>]
   premise_verified: yes | no | n/a      # a claim in the prompt was reproduced, not assumed
+  second_reader: yes | the human | no | n/a   # Phase 9's review; n/a when nothing was applied
 
   # Posture
   amendments_pre_selected: no | yes
@@ -3129,6 +3333,8 @@ empty because nothing applies or because nobody filled it in.
 
 - <A convention a reader could not infer from the code.>
 - <Another. Three to six of these, not twenty.>
+- A session that stops with work outstanding ends by saying what it is waiting on, and from
+  whom.
 
 ## Invariants
 
@@ -3138,6 +3344,10 @@ empty because nothing applies or because nobody filled it in.
 
 - <A specific action that has caused a problem before.>
 ```
+
+**The last convention is the one every repository gets.** A live owner had to ask a working
+session what it was waiting on before its next release, and nothing in its context file said
+to tell them.
 
 **The Commands section is the part that measurably gets used** — write the exact command
 including its flags, not a description of it. **The Conventions section is where bloat starts:**
@@ -3416,6 +3626,7 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 
 - **Standard:** PROJECT-BOOTSTRAP-AND-AUDIT v<version>
 - **Tier:** T<n> (blast radius B<n>, audience A<n>) — <the reason, where it is not obvious>
+- **Maintainers:** <no | who, as the human answered Phase 0's fourth question>
 - **Chosen:** <what was decided, and the reason>
 - **Declined:** <what was turned down>. *Reopen when:* <the trigger>
 - **Deferred:** <what is waiting>. *Trigger:* <the condition>
@@ -3568,7 +3779,7 @@ home.** It answers one question per row: **why does this live exactly here?**
 | `.mcp.json` | Tool-server configuration | Yes | Living | Root. **Absent unless justified and recorded** — each server is reachable surface |
 | `.github/workflows/*.yml` | The gates that actually enforce | Yes | Living | Server-side, runs on every push, independent of any local machine |
 | `.github/dependabot.yml` | Dependency update policy | Yes | Living | Platform-read from this exact path; nowhere else works |
-| `CODEOWNERS` | Review routing | Yes | Living | `.github/`, root, or `docs/`. **Only once a second person exists** |
+| `CODEOWNERS` | Review routing | Yes | Living | `.github/`, root, or `docs/`. **Only once the human says more than one person maintains or reviews** |
 | `.gitignore` | What git does not track | Yes | Living | Root, plus per-directory where a subtree has its own noise |
 | `.gitattributes` | End-of-line and diff rules | Yes | Permanent | Root. Effectively never changes once right |
 | `.editorconfig` | Editor defaults | Yes | Permanent | Root. A default, not a decision |
@@ -3576,7 +3787,7 @@ home.** It answers one question per row: **why does this live exactly here?**
 | The manifest | `pyproject.toml`, `package.json`, `*.csproj`, `go.mod`, `Cargo.toml`, `meson.build`, `*.psd1` | Yes | Living | Root, where the ecosystem's tooling looks |
 | The lockfile | Pinned resolution | **Yes from T1** | Generated | Beside the manifest. **Never hand-edited**, and the CI must install from it in a mode that fails on drift |
 | `LICENSE` | The outbound grant | Yes | Permanent | Root, where the platform detects it. Keys on exposure, not on owner |
-| `SECURITY.md` | How to report a vulnerability | Yes, at T3 | Living | Root or `.github/` |
+| `SECURITY.md` | How to report a vulnerability | Yes, at T3, or a contact named elsewhere (dimension 7) | Living | Root or `.github/` |
 | `CHANGELOG.md` | What changed, per version | Yes from T2 | Append-only | Root. Written before the tag, never backfilled after |
 | The decision record | Why things are as they are | Yes from T1 | Append-only | At the Phase 1 alias — **one path, discovered not invented** |
 | `docs/decisions/NNNN-*.md` | Per-decision records, MADR form | Optional | Append-only | An alternative to the single log, never a companion to it |
@@ -3761,6 +3972,12 @@ be read against this one.
 8. Classify anything outside the taxonomy once; record the answer.
 9. Commit by concern.
 
+**Where more than one release line is kept**, each has a branch, `release/X.Y` as FFmpeg names
+them, and a fix reaches it as a cherry-pick with `-x`, so the commit names its source: 78 of the
+last 80 commits on FFmpeg's `release/9.0` do. A point release takes only a security fix, a
+documented bug or documentation, and keeps source and binary compatibility with the line's
+earlier releases. One line, released from the default branch, needs none of this.
+
 <constraints>
 
 **Release UI traps, both already hit — and the cost of both has gone up:**
@@ -3813,6 +4030,11 @@ maintainer has no working copy, so there are exactly two routes:
    Target the exact release commit, not a branch whose tip may have moved.
 2. **A `workflow_dispatch` job** that creates the tag server-side, which is the repeatable
    option and the one to propose where releases recur.
+
+**From T2 the job is the route**, because it can make the annotated tag dimension 10 asks for.
+It creates the tag object itself, with a tagger identity set, before the release names it:
+`git -c user.name=<name> -c user.email=<address> tag -a <tag> -m <message> <sha>`, then a
+push.
 
 **Never instruct the maintainer to tag locally.** Verify after publishing: the title renders,
 the target SHA matches the release commit, the label is correct.
@@ -4229,6 +4451,7 @@ like a bad run.
 Local working copy:        <yes | no>
 Standards repository:      <name | none>
 Copyright holder:          <the legal entity, not the account name>
+More maintainers:          <no | yes, and who | unknown>
 Rank 1 — exposure:         <private | public | published>
 Rank 2 — <as asked>:       <answer>
 Rank 3 — <as asked>:       <answer>
@@ -4379,6 +4602,46 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.40.0** — **twenty-one fixes**: ten from the first live re-check, which ran on 0.39.0
+against the repository of the first live audit, and from the review, merge and branch check its
+owner asked for after the gate; two the owner raised; and nine from reading FFmpeg, which the
+owner named as a model.
+
+**Up to its gate, five.** *The scratch clone comes from the remote*: one cloned from the working
+copy took a stale local branch as `origin/main` and failed ten tests that pass. *A shallow clone
+is deepened before its history is read*, and a count from one that stays shallow says so. *A
+result the run's own mistake produced goes in `corrections`*, and the tally counts the re-run.
+*The address-domain command counts commits*, where it had counted an author line and a
+committer line for each. *A step this file directs is not a deviation*: nine overrides were
+recorded, most of them steps this file asks for.
+
+**The apply half found two.** *What a rating needs and the run can't read is asked for at the
+Phase 3 wait*: three settings the last record called done were rated unverifiable, and the
+owner's screenshot showed them off. *Each phase's overrides have a home*, where Phase 7's two had
+none.
+
+**After the gate, three more.** *A second reader goes over the whole branch before the report is
+handed over*, after the decision record is written: the review the owner asked for found three
+defects that the run's tests, a revert probe, CI and a first review had passed, one of them in
+the decision record. *Work asked for after Phase 9 has a block, `post_gate`*, and a merge the
+human asks for takes only the head that was checked. *A branch is advised for deletion only
+after checking what still needs it*: a sibling's record named one as staying.
+
+**The owner raised two more.** *A working session says what it's waiting on*, and from whom,
+without being asked, and the starter context file now carries that line. *Whether anyone else
+maintains is asked, not inferred*: it is the fourth thing a run can't detect, drafted from the
+history's authors, and the checks for more than one maintainer apply only once the human says
+so.
+
+**Reading FFmpeg found nine.** *The run finds the canonical forge before reading CI*: FFmpeg's
+GitHub repository is a mirror, with its CI on another forge. *A security contact named outside
+`SECURITY.md` counts.* *The commit grammar is stated and checked*, and "area: summary" counts as
+much as Conventional Commits. *One merge strategy is chosen, recorded and enforced*, and never
+squash where commits are cited from outside. *Release tags are annotated.* *An interface others
+build on logs its changes and deprecates before it removes.* *A second release line takes
+cherry-picks that name their source, and only compatible fixes.* *Code that parses input it
+doesn't control gets a damaged-input test.* *Where licences mix, each file names its own.*
 
 **0.39.0** — **forty-one fixes from the first live audit and the runs before it**, at the
 maintainer's request, grouped by what found them.

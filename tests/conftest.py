@@ -5,6 +5,7 @@ import pytest
 
 DEFAULT_DESCRIPTION = "A fixture skill for tests. Use when testing."
 DEFAULT_FRONTMATTER = "name: {name}\ndescription: " + DEFAULT_DESCRIPTION + "\n"
+RATIONALE_LINK = "\nWhy: [the reasons](references/why.md).\n"
 
 
 class RepoBuilder:
@@ -13,10 +14,23 @@ class RepoBuilder:
     def __init__(self, root: Path) -> None:
         self.root = root
 
-    def skill(self, directory: str, frontmatter: str | None = None, body: str = "Body.\n") -> Path:
+    def skill(
+        self,
+        directory: str,
+        frontmatter: str | None = None,
+        body: str = "Body.\n",
+        rationale: bool = True,
+    ) -> Path:
+        """A skill that passes every rule, unless told to leave out its rationale file."""
         if frontmatter is None:
             frontmatter = DEFAULT_FRONTMATTER.format(name=directory)
-        return self.skill_file(directory, f"---\n{frontmatter}---\n\n{body}")
+        skill_dir = self.skill_file(
+            directory, f"---\n{frontmatter}---\n\n{body}{RATIONALE_LINK if rationale else ''}"
+        )
+        if rationale:
+            (skill_dir / "references").mkdir()
+            (skill_dir / "references" / "why.md").write_text("# Why\n", encoding="utf-8")
+        return skill_dir
 
     def skill_file(self, directory: str, text: str) -> Path:
         skill_dir = self.root / "skills" / directory
@@ -104,7 +118,10 @@ def add_standard(repo: RepoBuilder, text: str | None = None, version: str = "0.2
         f'metadata:\n  standard-version: "{version}"\n'
     )
     reference = f"references/PROJECT-BOOTSTRAP-AND-AUDIT-v{version}.md"
-    skill_dir = repo.skill(STANDARD_SKILL, frontmatter, body=f"Read [the standard]({reference}).\n")
+    # The skill carrying the standard needs no rationale file: the standard gives its reasons.
+    skill_dir = repo.skill(
+        STANDARD_SKILL, frontmatter, body=f"Read [the standard]({reference}).\n", rationale=False
+    )
     (skill_dir / "references").mkdir()
     (skill_dir / reference).write_text(
         standard_text(version) if text is None else text, encoding="utf-8"

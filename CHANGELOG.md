@@ -1,13 +1,20 @@
 # Changelog
 
 Notable changes to this repository. The format follows
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow
+[Keep a Changelog](https://keepachangelog.com/en/2.0.0/), and versions follow
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
 ### Added
 
+- The `git-workflows` skill, in a new `engineering` plugin: commit messages and trailers,
+  pull requests and review, choosing and enforcing a merge strategy, deleting branches safely,
+  GitHub Actions CI and its hardening, hooks, `.gitignore`, annotated release tags, changelogs,
+  versions, release lines and backports. Its facts are dated and sourced, and its example hooks
+  and workflows are tested in CI. It is built from the owner's earlier skill of the same name,
+  from lessons the live repositories paid for, from FFmpeg's practice and from research R08 and
+  R05.
 - Research prompt R21, on running with the fewest dependencies at their newest versions. It asks
   what a dependency costs, when to add or remove one, which runtime versions to target and
   test, and how CI can check less. Its checked result goes into the standard.
@@ -20,15 +27,35 @@ Notable changes to this repository. The format follows
   A skill uploaded to the claude.ai account is the route into cloud sessions, where synced
   plugins are no longer documented to load. The files it proposes wait for the rebuild's first
   piece.
+- A reading of FFmpeg's practices, in `research/runs/`, taken from its tree and history. The
+  owner approved its nine proposals, and v0.40.0 applies them.
+- `skillcheck` fails on a merge's conflict markers in any file a commit here carries, and on a
+  README or roadmap row stating a standard version other than the file's.
+- `skillcheck` checks every dated fact in a skill's `references/facts.md` for its ID, source,
+  quote and dates, and that every fact a skill names exists. `skillcheck --due` lists the
+  facts due to be checked again, and `skillcheck --verify` looks for each quote at its source.
+  A weekly workflow runs both and keeps one issue open while anything is due. Every skill must
+  link its `references/why.md`, and a reference that names another reference's file fails like
+  a link to it.
+- `skillcheck` fails on a table row in a skill whose cell count differs from its header's.
+  GitHub ends a cell at every pipe, even inside code.
 
 ### Changed
 
-- The standard is now v0.37.0, with twenty-two fixes: the nine the parity baseline found, the
+- `git-workflows` says why: each rule's reasons, what other projects do instead, and what each
+  choice costs, in a new `references/why.md`. It answers how long CI should take, and when a
+  second run on the default branch repeats one already done. A cold review's fixes: the release
+  job tags a commit named by SHA only once its checks have passed, and grants write only to its
+  own job. The subject check lets reverts through, and the hook reads the subject Git will use.
+  A test workflow proves the suite finished. The audit's statuses follow the standard's. It
+  covers rebasing, conflicts and recovering lost commits, and cites the rules the standard owns
+  instead of restating them.
+- The standard moved to v0.37.0, with twenty-two fixes: the nine the parity baseline found, the
   set-up run's open amendments, and four that its own parity runs found. Read-only phases no
   longer write `.git/index`, one routing table replaces two that disagreed, ratings are definite
   where two runs split, and the starter CI's collection guard names itself when it fails. Its
   history entry lists the rest.
-- The standard is now v0.38.0, with fifteen fixes and one addition made before its first live
+- The standard moved to v0.38.0, with fifteen fixes and one addition made before its first live
   run:
   - Phase 1 finds a decision record by its content, including one kept inside another file,
     and no longer reads the words "blast radius" in prose as a recorded tier.
@@ -49,7 +76,7 @@ Notable changes to this repository. The format follows
     SHA-256, and its self-check records that hash.
 
   Its history entry lists the rest.
-- The standard is now v0.39.0, with forty-one fixes from its first live audit and the runs
+- The standard moved to v0.39.0, with forty-one fixes from its first live audit and the runs
   before it:
   - Phase 3 drafts each answer the repository shows, with its evidence, for the owner to
     confirm. It offers "Not sure" on every question, and asks production, dependents and
@@ -70,9 +97,41 @@ Notable changes to this repository. The format follows
     first at the gate.
 
   Its history entry lists the rest.
+- The standard is now v0.40.0, with twenty-one fixes: ten from its first live re-check and the
+  review, merge and branch check its owner asked for after the gate, two the owner raised, and
+  nine from reading FFmpeg:
+  - A scratch clone for replaying gates comes from the remote where it can, and its
+    `origin/<default>` is checked against the working copy's either way. A shallow clone is
+    deepened before history is read.
+  - A result caused by the run's own mistake goes in `corrections`, and a step the standard
+    directs isn't counted as a deviation.
+  - The address-domain command counts commits, not address lines.
+  - Settings the run can't read are asked for at the Phase 3 wait, as a screenshot or a
+    reading.
+  - Before the report is handed over, someone who didn't write the change reviews the whole
+    branch, decision record included.
+  - Work the owner asks for after the gate, such as a merge, has its own block, and a branch is
+    advised for deletion only after checking what still needs it.
+  - Whether anyone else maintains the repository is asked, not inferred. The checks for more
+    than one maintainer apply only once the owner says so.
+  - A mirror is recognised, and CI is read on the forge that is canonical. A security contact
+    named outside `SECURITY.md` counts.
+  - The commit grammar is stated and checked, from either the Conventional Commits or the
+    "area: summary" family, and one merge strategy is chosen, recorded and enforced.
+  - Release tags are annotated. An interface others build on logs its changes and deprecates
+    before it removes, and a second release line takes only compatible, cherry-picked fixes.
+  - Code that parses input it doesn't control gets damaged-input tests, and where licences mix,
+    each file names its own.
+  - The starter context file tells a session to say what it's waiting on.
+
+  Its history entry lists the rest.
 
 ### Fixed
 
+- Sessions on this repository no longer load an installed copy of the `engineering` plugin
+  beside the files being edited, as they already didn't for `standards`.
+- CI proves the test suite ran to the end. A run that stops early can still exit 0, so the
+  build now fails when the test report is missing or counts fewer tests than the baseline.
 - CI's collection guard says why it failed. With nothing collected, it used to stop under the
   runner's `bash -e` before printing anything.
 - The parity grader's check that a declined item isn't proposed reads only what each amendment

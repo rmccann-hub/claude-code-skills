@@ -1,0 +1,106 @@
+name: Freshness
+
+# Once a week, and on demand: lists the facts in the skills' references/facts.md that are due to
+# be checked again, and the quotes no longer found at their sources, in one open issue, and
+# closes that issue once everything is current. It never runs on a pull request, because its
+# answers change with the date and the web, and a pull request's checks should depend only on
+# the commit. In a public repository GitHub turns a schedule off after 60 days with no activity,
+# so the date of its last run is worth a glance.
+
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  facts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      issues: write # to open, update and close the one freshness issue
+    env:
+      TITLE: Facts to check again
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.18"
+
+      - name: Install from the lockfile, failing on drift
+        run: uv sync --locked
+
+      - name: List the facts that are due, and the quotes no longer at their source
+        id: report
+        run: |
+          set +e
+          uv run skillcheck --due > "$RUNNER_TEMP/due.txt"
+          due=$?
+          uv run skillcheck --verify > "$RUNNER_TEMP/verify.txt"
+          verify=$?
+          set -e
+          # Each mode ends with its summary line, so a crash can't pass for a clean result.
+          for mode in due verify; do
+            if ! tail -n 1 "$RUNNER_TEMP/$mode.txt" | grep -q '^skillcheck: '; then
+              echo "::error::skillcheck --$mode did not finish"
+              cat "$RUNNER_TEMP/$mode.txt"
+              exit 1
+            fi
+          done
+          cat "$RUNNER_TEMP/due.txt" "$RUNNER_TEMP/verify.txt"
+          {
+            echo "Found by the freshness run of $(date -u +%Y-%m-%d):"
+            echo "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo
+            echo "## Due to be checked again"
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/due.txt"
+            echo '```'
+            echo
+            echo "## Quotes no longer at their source, or sources that could not be read"
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/verify.txt"
+            echo '```'
+            echo
+            echo "For each fact, read its source again. Update the fact, its quote and its two"
+            echo "dates, or correct what cites it, and close this issue from that pull request."
+          } > "$RUNNER_TEMP/freshness.md"
+          if [ "$due" -ne 0 ] || [ "$verify" -ne 0 ]; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open the freshness issue, or add this run to it
+        if: steps.report.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "in:title $TITLE" \
+            --json number,title --jq '.[] | select(.title == env.TITLE) | .number' | head -n 1)
+          if [ -n "$number" ]; then
+            gh issue comment "$number" --repo "$GITHUB_REPOSITORY" --body-file "$RUNNER_TEMP/freshness.md"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" --title "$TITLE" --body-file "$RUNNER_TEMP/freshness.md"
+          fi
+
+      - name: Close the freshness issue once every fact is current
+        if: steps.report.outputs.found == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          number=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open --search "in:title $TITLE" \
+            --json number,title --jq '.[] | select(.title == env.TITLE) | .number' | head -n 1)
+          if [ -n "$number" ]; then
+            gh issue close "$number" --repo "$GITHUB_REPOSITORY" \
+              --comment "Every fact is current, as of the run of $(date -u +%Y-%m-%d)."
+          fi
