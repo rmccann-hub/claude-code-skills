@@ -17,9 +17,19 @@ and dependencies. A second version of a published rule drifts from the first.
    skill stays out.
 2. **Sources.** Every fact comes from a primary source: official documentation, a standard, or
    the project's own release notes. Each one carries its URL and the date it was checked. Put
-   facts that can go stale (versions, support dates, defaults) in `references/facts.md`, each
-   with a check-by date. Research results are leads until each claim is checked against its
-   source.
+   facts that can go stale (versions, support dates, defaults, and what other projects do) in
+   `references/facts.md`, in tables with the columns ID, Fact, Source, Quote, Checked and
+   Check by:
+   - the source is an https link, or the `git ls-remote --tags <https URL>` command that shows
+     the fact;
+   - the quote is the source's own words in double quotes, or a command's output in backticks.
+     A row with neither is checked by hand when it falls due;
+   - other files name a fact by its ID, such as fact `node20`, rather than repeating it.
+
+   `skillcheck` checks every row's shape and every fact a skill names. `skillcheck --due` lists
+   the facts due to be checked again, and `skillcheck --verify` fetches each source and looks
+   for its quote. The freshness workflow runs both each week, and keeps one issue open while
+   anything is due. Research results are leads until each claim is checked against its source.
 3. **Licences.** Quote, paraphrase or adapt a source only as its licence allows. The licences of
    common sources are in `research/runs/2026-09-23-A-source-licences.md`. Broadly:
    - **Adaptable with a notice:** CC0, MIT, Apache-2.0, BSD, CC BY, OGL and PSF sources. Examples
@@ -52,15 +62,19 @@ and dependencies. A second version of a published rule drifts from the first.
    rather than a keyword list, in 1,024 characters or fewer.
 7. **Shape.** `SKILL.md` is a router under 500 lines: scope, the rules that matter most, how to
    check, how to audit, and where to go next. Detail goes in `references/`, one level deep: a
-   reference never sends the reader on to another reference. Each reference stands alone:
+   reference never sends the reader on to another reference, by link or by naming its file.
+   Naming a fact by its ID is the one exception, because a fact is looked up, not read on to.
+   `skillcheck` checks both forms. Each reference stands alone:
    - a title that says what it is, and one line on when to read it;
    - a table of contents once it passes 300 lines;
    - a checked date if it holds facts.
 
-   A category skill uses these references, keeping only the ones it needs:
+   A category skill uses these references, keeping only the ones it needs, except `why.md`,
+   which every skill has:
 
    | File | Holds |
    |---|---|
+   | `why.md` | For each rule that matters: the advice, the reason, what other projects do and why, what each choice costs, when to choose differently, and what could be better. `skillcheck` fails a skill whose `SKILL.md` doesn't link it |
    | `facts.md` | Versions, support dates and defaults, each with its source, quote, checked date and check-by date |
    | `setup.md` | Starting a project: structure, config files, toolchain commands |
    | `style.md` | Naming, formatting, comments and docstrings, types |

@@ -12,7 +12,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from skillcheck.core import frontmatter, standard
+from skillcheck.core import facts, frontmatter, standard
 
 SKILLS_DIR = "skills"
 CATALOG = ".claude-plugin/marketplace.json"
@@ -47,6 +47,13 @@ WHOLE_FOLDER = {"./skills", "./skills/"}
 # advice usually means the reader's repository, not a file bundled with the skill.
 LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 
+# A reference that names another by its file, as `setup.md` rather than as a link, still sends
+# the reader on, and the link check can't see it. Naming facts.md is the one exception: a fact is
+# looked up by its ID, not read on to.
+MENTION = re.compile(r"(?<![\w./-])([\w-]+\.md)\b")
+LINK_TARGET = re.compile(r"\]\([^)\s]+\)")
+LOOKUP = "facts.md"
+
 # Characters that render as nothing or reorder the text around them, so what a reviewer sees
 # differs from what an agent reads: zero-width characters and joiners, bidirectional controls
 # (the Trojan Source attack, CVE-2021-42574), the byte-order mark, the soft hyphen, and Unicode
@@ -77,6 +84,11 @@ SCANNED_DIRS = (
     ".github",
 )
 
+# Every skill says why it advises what it does, what others do instead, and what each choice
+# costs (docs/authoring-a-skill.md). The skill carrying the standard is exempt: the standard
+# gives its reasons inline, and it changes only on its own.
+RATIONALE = "references/why.md"
+
 # The version the README and the roadmap state for the standard, in the rows of the skill that
 # ships it. A copy kept by hand drifts, so each is compared with the standard file's own.
 STANDARD_VERSION = re.compile(r"standard\W{0,3}v(\d+\.\d+\.\d+)", re.IGNORECASE)
@@ -95,6 +107,8 @@ class Report:
     # Every installed skill's description is listed to the model, and the listing has a budget:
     # in one session 50 skills' 26,620 characters left the last 9 with no description at all.
     description_chars: int = 0
+    # Rows in the skills' references/facts.md, each checked for its source, quote and dates.
+    facts: int = 0
     catalog_plugins: int | None = None
     roadmap_entries: int | None = None
     readme_entries: int | None = None
@@ -118,22 +132,26 @@ class Report:
         )
         return (
             f"skillcheck: {self.skills} skill(s), {self.description_chars} description "
-            f"characters, {catalog}, {roadmap}, {stamp}, {len(self.findings)} finding(s)"
+            f"characters, {self.facts} fact(s), {catalog}, {roadmap}, {stamp}, "
+            f"{len(self.findings)} finding(s)"
         )
 
 
 def check_repository(root: Path) -> Report:
     report = Report()
     skills = _discover_skills(root, report)
+    standards = standard.find(root)
+    carriers = {path.parent.parent for path in standards}
     for skill_dir in skills:
-        _check_skill(skill_dir, report)
+        _check_skill(skill_dir, report, needs_rationale=skill_dir not in carriers)
+        report.facts += facts.check(root, skill_dir, report.add)
     _check_catalog(root, skills, report)
     names = {skill.name for skill in skills}
     _check_roadmap(root, names, report)
     _check_readme(root, names, report)
     _check_agent_files(root, report)
     _check_conflict_markers(root, report)
-    for path in standard.find(root):
+    for path in standards:
         report.standard_version = standard.check(root, path, report.add)
         _check_version_copies(root, path.parent.parent.name, report.standard_version, report)
     return report
@@ -156,7 +174,7 @@ def _discover_skills(root: Path, report: Report) -> list[Path]:
     return found
 
 
-def _check_skill(skill_dir: Path, report: Report) -> None:
+def _check_skill(skill_dir: Path, report: Report, needs_rationale: bool) -> None:
     where = f"{SKILLS_DIR}/{skill_dir.name}/SKILL.md"
     _check_hidden_characters(skill_dir.parent.parent, _files_under(skill_dir), report)
     try:
@@ -169,6 +187,14 @@ def _check_skill(skill_dir: Path, report: Report) -> None:
     if lines >= MAX_SKILL_LINES:
         report.add(where, "size", f"SKILL.md is {lines} lines; keep it under {MAX_SKILL_LINES}")
     _check_links(skill_dir, body, where, report)
+    _check_reference_mentions(skill_dir, report)
+    if needs_rationale and RATIONALE not in _local_links(body):
+        report.add(
+            where,
+            "rationale",
+            f"SKILL.md doesn't link {RATIONALE}, which says why the skill advises what it does, "
+            "what others do instead, and the trade-offs",
+        )
     _check_optional_fields(data, where, report)
 
     extra = sorted(str(key) for key in data if key not in ALLOWED_KEYS)
@@ -238,6 +264,25 @@ def _check_reference_depth(skill_dir: Path, reference: Path, report: Report) -> 
                 "reference-depth",
                 f"links to {shown}; keep references one level deep from SKILL.md",
             )
+
+
+def _check_reference_mentions(skill_dir: Path, report: Report) -> None:
+    references = sorted((skill_dir / "references").glob("*.md"))
+    names = {path.name for path in references}
+    for path in references:
+        # Links are the depth check's to report, so their targets are taken out first.
+        text = LINK_TARGET.sub("]", path.read_text(encoding="utf-8", errors="replace"))
+        named = set()
+        for match in MENTION.finditer(text):
+            name = match.group(1)
+            if name in names and name not in (path.name, LOOKUP) and name not in named:
+                named.add(name)
+                number = text.count("\n", 0, match.start()) + 1
+                report.add(
+                    f"{SKILLS_DIR}/{skill_dir.name}/references/{path.name}",
+                    "reference-depth",
+                    f"line {number} names {name}; keep references one level deep from SKILL.md",
+                )
 
 
 def _check_optional_fields(data: dict, where: str, report: Report) -> None:

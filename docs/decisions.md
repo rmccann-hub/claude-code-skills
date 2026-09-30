@@ -2,6 +2,45 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-30 — The repository keeps its facts current, and checks its own shape
+
+- **Asked:** the owner: "This also needs to have a way to be kept up to date and audit itself".
+  Then, later: "audit all text, readme, changelog, tasks, anything. we need this up to date".
+- **Chosen:** what can be checked from the commit is checked on every pull request. What
+  depends on the date or the web is checked on a schedule, so a pull request's result depends
+  only on the commit.
+  - `skillcheck` now reads every row of each skill's `references/facts.md`. A row needs one ID
+    in backticks, used once; an https link, or the `git ls-remote --tags` command that shows
+    the fact; a quote; and a check-by date after its checked date. Every fact another file
+    names by ID must exist. It found three rows whose source was a command, which it now
+    accepts, and prose in the standard that looked like a fact ID, which it now ignores.
+  - `skillcheck --due [DATE]` lists the facts due to be checked again. `skillcheck --verify`
+    fetches each source and looks for its quote, and runs `git ls-remote` for a tag's commit,
+    which is how a moved tag gets caught.
+  - `.github/workflows/freshness.yml` runs both every Monday and on demand. It keeps one issue
+    open while anything is due, adds each run to it, and closes it once everything is current.
+    Both modes end with a summary line, and a run without one fails, so a crash can't pass for
+    a clean result.
+  - Every skill except the standard's must link `references/why.md`. The standard gives its
+    reasons inline, and changes only on its own.
+  - A reference that names another reference's file, as the cold review found 19 times, now
+    fails like a link to it. Naming `facts.md` is allowed, because a fact is looked up rather
+    than read on to.
+  - A test scans this repository's own workflows with zizmor.
+- **Checked:**
+  - The verifier ran against the live sources: 79 of the 82 facts have a quote, and every
+    one was found. That includes the pinned action SHAs, read again with `git ls-remote`.
+  - Three github.com pages couldn't be fetched from this container, which refuses them, so
+    their facts now cite the same files on raw.githubusercontent.com.
+  - PyPI serves a plain client a browser check. The three version rows it backs have no quote
+    to look for, and are checked by hand when they fall due.
+  - The new code is at 100% coverage. Each new rule has a test that plants the defect and
+    asserts the rule fires alone.
+  - `.test-baseline` moves from 228 to 259.
+- **Not done:** a periodic self-audit by a Claude session, which would run this repository's own
+  standard against it, and spend the account's usage each time. It is offered to the owner, not
+  set up.
+
 ## 2026-09-30 — `git-workflows`: the cold review, the trigger check, and the reasons behind each rule
 
 - **Asked:** the owner: "It is about both, guidance and format. And how to use langusges, and

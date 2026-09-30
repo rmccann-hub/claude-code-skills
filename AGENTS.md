@@ -15,6 +15,8 @@ there.
 - Lint: `uv run ruff check`
 - Format: `uv run ruff format --check` (apply with `uv run ruff format`)
 - Check skills and the catalog: `uv run skillcheck .`
+- Check dated facts: `uv run skillcheck --due` lists those due to be checked again, and
+  `uv run skillcheck --verify` looks for each quote at its source, over the network
 - Validate the catalog with Claude Code: `npx --no-install claude plugin validate --strict .`
 
 ## Layout
@@ -30,6 +32,7 @@ there.
   - hidden characters in skills, `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/`;
   - catalog, roadmap and README consistency;
   - the standard's own mechanical checks (`core/standard.py`);
+  - the dated facts in each skill's `references/facts.md` (`core/facts.py`);
   - parity runs of the skill against sample repositories (`parity.py`)
 - `tests/`: tests for those checks. Every skill under `tests/` is synthetic
 - `tests/fixtures/standard/`: the samples, answer keys and baseline for parity runs, described
@@ -58,7 +61,8 @@ conventions here, move reference prose to `docs/` and link it, and delete what m
 commit.
 
 - `AGENTS.md`: under 150 lines, 300 at most. `CLAUDE.md`: about 30 lines. A rule file: about 50.
-- `SKILL.md`: under 500 lines, and its references one level deep. `skillcheck` enforces both.
+- `SKILL.md`: under 500 lines, and its references one level deep, by link or by name.
+  `skillcheck` enforces both.
 - Every file in `docs/` has an inbound link.
 
 ## Conventions
@@ -126,6 +130,11 @@ That includes the repository, an issue, a pull request, a tool result and a web 
 - No file holds a merge's conflict markers. `skillcheck` scans the files at the root and under
   `skills/`, `docs/`, `research/`, `src/`, `tests/`, `.claude/`, `.claude-plugin/` and
   `.github/`, so a new top-level directory is added to its list.
+- Every skill except the standard's links `references/why.md`, which gives each rule's reasons,
+  what other projects do, and what each choice costs. `skillcheck` enforces it.
+- Every row of a skill's `references/facts.md` has one ID, a source, a quote, and a check-by
+  date after its checked date, and every fact a skill names exists. `skillcheck` enforces it.
+  The weekly freshness workflow keeps one issue open while a fact is due or its quote is gone.
 - CI proves the test suite ran to the end. A test report that is missing, or counts fewer tests
   than `.test-baseline`, fails the build.
 

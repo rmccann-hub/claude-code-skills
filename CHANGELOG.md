@@ -31,6 +31,12 @@ Notable changes to this repository. The format follows
   owner approved its nine proposals, and v0.40.0 applies them.
 - `skillcheck` fails on a merge's conflict markers in any file a commit here carries, and on a
   README or roadmap row stating a standard version other than the file's.
+- `skillcheck` checks every dated fact in a skill's `references/facts.md` for its ID, source,
+  quote and dates, and that every fact a skill names exists. `skillcheck --due` lists the
+  facts due to be checked again, and `skillcheck --verify` looks for each quote at its source.
+  A weekly workflow runs both and keeps one issue open while anything is due. Every skill must
+  link its `references/why.md`, and a reference that names another reference's file fails like
+  a link to it.
 
 ### Changed
 
