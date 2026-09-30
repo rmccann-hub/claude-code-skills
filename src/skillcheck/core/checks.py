@@ -59,6 +59,28 @@ HIDDEN = re.compile(
 AGENT_FILES = ("AGENTS.md", "CLAUDE.md")
 AGENT_DIRS = (".claude", "research")
 
+# A merge's conflict markers. Nothing parses Markdown, so markers in it pass every test: a live
+# repository shipped them through nine green jobs. Git writes the opening, closing and diff3 base
+# markers with a label after a space. A line of seven equals signs is also a Markdown heading
+# underline, so it isn't matched, and a conflict always leaves the other two.
+CONFLICT_MARKER = re.compile(r"^(?:<{7}|>{7}|\|{7})(?: |$)", re.MULTILINE)
+# Everything a commit here carries: the files at the root, and these directories. The other
+# dot-directories hold tools' caches.
+SCANNED_DIRS = (
+    "skills",
+    "docs",
+    "research",
+    "src",
+    "tests",
+    ".claude",
+    ".claude-plugin",
+    ".github",
+)
+
+# The version the README and the roadmap state for the standard, in the rows of the skill that
+# ships it. A copy kept by hand drifts, so each is compared with the standard file's own.
+STANDARD_VERSION = re.compile(r"standard\W{0,3}v(\d+\.\d+\.\d+)", re.IGNORECASE)
+
 
 @dataclass(frozen=True)
 class Finding:
@@ -110,8 +132,10 @@ def check_repository(root: Path) -> Report:
     _check_roadmap(root, names, report)
     _check_readme(root, names, report)
     _check_agent_files(root, report)
+    _check_conflict_markers(root, report)
     for path in standard.find(root):
         report.standard_version = standard.check(root, path, report.add)
+        _check_version_copies(root, path.parent.parent.name, report.standard_version, report)
     return report
 
 
@@ -281,6 +305,44 @@ def _check_hidden_characters(root: Path, files: list[Path], report: Report) -> N
             "unicode",
             f"line {number} holds U+{ord(char):04X}, which is invisible or reorders text{more}",
         )
+
+
+def _check_conflict_markers(root: Path, report: Report) -> None:
+    files = sorted(p for p in root.iterdir() if p.is_file())
+    for directory in SCANNED_DIRS:
+        if (root / directory).is_dir():
+            files += _files_under(root / directory)
+    for path in files:
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue  # a binary file is merged whole, never marked
+        match = CONFLICT_MARKER.search(text)
+        if match:
+            number = text.count("\n", 0, match.start()) + 1
+            report.add(
+                path.relative_to(root).as_posix(),
+                "conflict",
+                f"line {number} is a merge's conflict marker",
+            )
+
+
+def _check_version_copies(root: Path, skill: str, version: str, report: Report) -> None:
+    for name in (README, ROADMAP):
+        path = root / name
+        if not path.is_file():
+            continue
+        for table in _skill_tables(path.read_text(encoding="utf-8")):
+            for row_name, cells in table:
+                if row_name != skill:
+                    continue
+                for stated in STANDARD_VERSION.findall(" | ".join(cells.values())):
+                    if stated != version:
+                        report.add(
+                            name,
+                            "standard",
+                            f"the `{skill}` row says standard v{stated}; the file is v{version}",
+                        )
 
 
 def _check_catalog(root: Path, skills: list[Path], report: Report) -> None:
