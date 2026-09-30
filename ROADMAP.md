@@ -629,6 +629,19 @@ on 2026-09-30, each checked against its source that day. They await the owner's 
   and doubles a slow one. The starter should say so, and offer `push` on the default branch
   with `pull_request` where CI is slow.
 
+One more, from Anthropic support's reply to the owner on 2026-09-30, awaiting the owner's
+approval:
+
+- **F108:** the facts table says plugins enabled on a claude.ai account load in Cowork and
+  terminal sessions, that the docs name no cloud session for them, and that one account's cloud
+  sessions received none. Support said they are meant to load in cloud sessions too, that the
+  docs' silence is a gap, and that an empty plugin list isn't expected. It named two causes to
+  rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true`
+  in the cloud environment. A cloud session that day had the variable set, an empty synced
+  plugins folder, and no plugins enabled on the account. The fact should say both, and be
+  checked again once the variable is gone and a plugin is installed. Until then, a skill
+  uploaded to the account stays the route the standard names.
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
