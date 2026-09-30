@@ -11,6 +11,7 @@ In Claude Code:
 ```
 /plugin marketplace add rmccann-hub/claude-code-skills
 /plugin install standards@claude-code-skills
+/plugin install engineering@claude-code-skills
 ```
 
 Before 0.1.1 the marketplace was called `rmccann-skills`. If you added it under that name,
@@ -21,6 +22,7 @@ run `/plugin marketplace remove rmccann-skills`, then add it again as above.
 | Skill | Plugin | What it does |
 |---|---|---|
 | `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.40.0) |
+| `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill

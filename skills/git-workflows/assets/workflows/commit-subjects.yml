@@ -1,0 +1,39 @@
+name: Commit subjects
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  subjects:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: 'Check that each commit subject reads "area: summary"'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # A failed git log ends the step under bash -e, so "couldn't read the
+          # commits" fails rather than passing with nothing checked.
+          subjects=$(git log --no-merges --format=%s "$BASE..$HEAD")
+          if [ -z "$subjects" ]; then
+            echo "::error::no commits found between $BASE and $HEAD"
+            exit 1
+          fi
+          bad=0
+          while IFS= read -r subject; do
+            if ! printf '%s\n' "$subject" | grep -Eq '^[A-Za-z0-9_./-]+(, ?[A-Za-z0-9_./-]+)*: [^ ]'; then
+              echo "::error::not 'area: summary': $subject"
+              bad=1
+            fi
+          done <<< "$subjects"
+          echo "checked $(printf '%s\n' "$subjects" | wc -l) commit subject(s)"
+          exit "$bad"

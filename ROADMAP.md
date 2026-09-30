@@ -38,9 +38,9 @@ than inside it.
 | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06 |
 | `api-design` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
 | `data-and-sql` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
-| `git-and-review` | Branching, commits, pull requests, code review | planned | core | R08 |
-| `ci-cd` | Pipelines, Actions hardening, caching, environments, deployment | planned | core | R08, R21 |
-| `versioning-and-releases` | SemVer, changelogs, release notes, deprecation policy, support windows | planned | core | R05 |
+| `git-workflows` | Commits and trailers, branches, pull requests and review, the merge strategy, safe branch deletion, GitHub Actions CI and its hardening, hooks, `.gitignore`, annotated tags, changelogs, versions, release lines and backports | shipped | core | R08, R05 |
+| `ci-cd` | Caching, environments and deployment, beyond the CI that `git-workflows` covers | planned | core | R08, R21 |
+| `versioning-and-releases` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `git-workflows` covers | planned | core | R05 |
 | `legacy-modernization` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
 | `logging-and-observability` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | planned | standard | R07 |
 | `performance-and-concurrency` | Profiling, complexity, caching, async and threads | planned | standard | R07 |

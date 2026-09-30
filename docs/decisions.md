@@ -2,6 +2,72 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-09-30 — `git-workflows`: the first skill built from the owner's own skills
+
+- **Asked:** the owner: "The point of this is not to make Claude skills run in Claude code
+  sessions, but for you to assimilate the knowledge and information they already have and
+  leverage in the repo." Asked how to start, the owner chose one area end to end, said all four
+  areas are in daily use, and said company information comes here as generic knowledge only.
+- **Chosen:** `git-workflows`, with the same name as the owner's claude.ai skill, so an upload
+  replaces it. It ships in a new `engineering` plugin. It takes the ROADMAP's `git-and-review`
+  row. `ci-cd` and `versioning-and-releases` stay planned, narrowed to caching, environments
+  and deployment, and to release notes and support windows.
+- **Built from:**
+  - the owner's `git-workflows`, as topics, checks and lessons, with nothing copied. Its
+    company examples were left out: a work scheduling project, ERP export names, the owner's
+    machines. So was its advice against lessons the live repositories paid for: squash-merging
+    feature branches, bulk-deleting merged branches, `--no-verify`, a "Current State" section in
+    `CLAUDE.md`, and Conventional Commits as the only grammar.
+  - its bugs, fixed rather than carried: `.gitignore` comments after patterns, a `!` under an
+    ignored directory, a pre-push hook that checked the current branch, `paths` with
+    `paths-ignore`, and `Cargo.lock` left out of libraries.
+  - the lessons in `ROADMAP.md` from the live repositories (F74, F81, F85, F92, F93, F99),
+    FFmpeg's practice (`research/runs/2026-09-30-ffmpeg-reference.md`), and research R08 and R05
+    as leads.
+  - the standard, cited by section rather than restated.
+- **Sources:** every dated fact is in the skill's `references/facts.md`, with its source, a short
+  quote, the date checked (2026-09-30) and a date to check it again. Three leads were out of date
+  when checked: Git 2.56.0 was released 2026-09-28, where R08 had 2.55.0; Keep a Changelog 2.0.0
+  was released 2026-06-07, where R05 had 1.1.0; prek is at 0.5.4, where R08 had 0.5.1. GitHub's
+  rule on `GITHUB_TOKEN` now has a third exception: a pull request the token opens or updates
+  gets runs that wait for approval.
+- **Licences:** nothing is copied beyond short quotes, and `references/sources.md` names each
+  source's licence, checked at its licence file on 2026-09-30. The skill is Apache-2.0, with no
+  third-party notice needed.
+- **Whose work:** the owner's skill is an organisation skill. Only generic, non-confidential
+  knowledge came in, under the organisation's written permission recorded in the inception
+  entry.
+- **Reviewed** against `docs/authoring-a-skill.md`:
+  - Items 1 to 4: whose work, sources, licences, and no company detail. See above; the
+    examples use placeholders.
+  - Item 5: no claude.ai paths, and destructive commands come with a dry run or confirmation.
+  - Item 6: frontmatter fields from the spec only, with a 707-character description in the
+    third person.
+  - Item 7: `SKILL.md` is a 98-line router. Its references are one level deep, each with a
+    title and a line on when to read it.
+  - Item 8: every example lints or runs.
+  - Item 9: `tests/fixtures/skills/git-workflows.json` holds 22 requests, 8 of them near misses
+    for neighbouring skills.
+  - Item 10: the skill is in the catalog, the ROADMAP and the README.
+  - Item 11: the changelog has the entry, and `metadata.reviewed` is 2026-09-30.
+  - Item 12, turning off the old copy, is the owner's step once the skill is uploaded.
+- **Checked,** on 2026-09-30:
+  - The two hooks and the two workflow scripts:
+    - they pass ShellCheck 0.11.0 and actionlint 1.7.12, which found an unquoted `: ` in a step
+      name that made the workflow invalid YAML;
+    - they run in scratch repositories: the hooks refuse and accept what they should, the
+      subject check fails when it has nothing to check, and the release job refuses a
+      malformed version and makes and pushes an annotated tag.
+  - `tests/test_git_workflows_assets.py` repeats those runs in CI, with 18 tests. They caught
+    both planted breakages: a pre-push hook that checked the current branch, and a job without
+    a timeout.
+  - Every `facts.md` quote was found on its source page.
+  - `.test-baseline` moves from 177 to 195.
+- **Still running when this was committed:** a second reader's cold review, and a model-judged
+  run of the trigger set. Their findings, and what changes, go in the next entry.
+- **Owner's step:** upload `skills/git-workflows` to claude.ai, and turn off the old synced
+  `git-workflows`, so sessions don't load two.
+
 ## 2026-09-30 — This repository, fixed against its own standard
 
 - **Asked:** told that the owner's synced claude.ai skills advise against lessons the live

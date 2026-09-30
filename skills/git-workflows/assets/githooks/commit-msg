@@ -1,0 +1,15 @@
+#!/bin/sh
+# Refuses a commit whose subject doesn't read "area: summary", and warns past
+# git's 50-character soft limit. Install once per clone:
+#   git config core.hooksPath .githooks
+subject=$(head -n 1 "$1")
+case "$subject" in
+  "Merge "* | "Revert "* | "fixup! "* | "squash! "* | "amend! "*) exit 0 ;;
+esac
+if ! printf '%s\n' "$subject" | grep -Eq '^[A-Za-z0-9_./-]+(, ?[A-Za-z0-9_./-]+)*: [^ ]'; then
+  echo "commit-msg: the subject should read 'area: summary', got: $subject" >&2
+  exit 1
+fi
+if [ "${#subject}" -gt 50 ]; then
+  echo "commit-msg: note: the subject is ${#subject} characters; git's soft limit is 50" >&2
+fi

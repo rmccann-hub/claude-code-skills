@@ -8,6 +8,13 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- The `git-workflows` skill, in a new `engineering` plugin: commit messages and trailers,
+  pull requests and review, choosing and enforcing a merge strategy, deleting branches safely,
+  GitHub Actions CI and its hardening, hooks, `.gitignore`, annotated release tags, changelogs,
+  versions, release lines and backports. Its facts are dated and sourced, and its example hooks
+  and workflows are tested in CI. It is built from the owner's earlier skill of the same name,
+  from lessons the live repositories paid for, from FFmpeg's practice and from research R08 and
+  R05.
 - Research prompt R21, on running with the fewest dependencies at their newest versions. It asks
   what a dependency costs, when to add or remove one, which runtime versions to target and
   test, and how CI can check less. Its checked result goes into the standard.
