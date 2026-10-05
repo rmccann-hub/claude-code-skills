@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-10-05
+
 ### Changed
 
 - The standard is v0.41.0. It applies the thirty-four fixes, F81 to F114, that the owner
