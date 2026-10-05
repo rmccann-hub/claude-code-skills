@@ -743,7 +743,7 @@ def to_markdown(inventory: Inventory) -> str:
             f"Exact versions from `{lockfile}`. A development-only package isn't part of what the",
             "plugins ship.",
             "",
-            "```",
+            "```text",
             *_tree(inventory, ecosystem),
             "```",
         ]

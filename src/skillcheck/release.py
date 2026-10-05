@@ -132,7 +132,7 @@ def notes(root: Path, version: str) -> str:
     lines = [
         "Install in Claude Code:",
         "",
-        "```",
+        "```text",
         f"/plugin marketplace add {repository}",
         *[f"/plugin install {p['name']}@{catalog['name']}" for p in catalog["plugins"]],
         "```",

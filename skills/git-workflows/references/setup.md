@@ -261,7 +261,7 @@ Only its job may write, and checkout keeps no credentials.
   fix's `Fixes:` trailer names where the author knew it. Then run
   `git branch -r --contains <commit>` and `git tag --contains <commit>`.
 
-## .gitignore
+## `.gitignore`
 
 - **Start from GitHub's template for your language** (github/gitignore, CC0; fact
   `gitignore-templates`), and cut what doesn't apply.

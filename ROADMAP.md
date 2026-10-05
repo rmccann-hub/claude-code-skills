@@ -154,6 +154,7 @@ What it becomes:
 - **`scripts/`:** the mechanical checks, in Python with the standard library only.
 
 Rules for the rebuild:
+
 - Nothing is lost: each piece's pull request lists every rule it moved and where it went.
 - A reference never links to another reference.
 - No rule lives in two places.
@@ -533,7 +534,7 @@ rather than inferred, also applied in v0.40.0:
   contact that isn't one inbox (pieces 3 and 4).
 
 On 2026-09-30 the owner asked what the two live repositories had found through their own
-iteration, to leverage it. Their context files, decision logs, tools and the tests that guard
+iteration, to build on it. Their context files, decision logs, tools and the tests that guard
 their process were read that day, and each lesson was checked against the standard. Twenty-two
 are missing. The owner approved them on 2026-10-05:
 

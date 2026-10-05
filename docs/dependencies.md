@@ -47,7 +47,7 @@ freshness run and the release workflow both run it.
 Exact versions from `uv.lock`. A development-only package isn't part of what the
 plugins ship.
 
-```
+```text
 skillcheck 0.0.0 (this repository's checks)
 ├── pytest 9.1.1 (dev)
 │   ├── colorama 0.4.6 (dev; only when sys_platform == 'win32')
@@ -69,7 +69,7 @@ skillcheck 0.0.0 (this repository's checks)
 Exact versions from `package-lock.json`. A development-only package isn't part of what the
 plugins ship.
 
-```
+```text
 package.json
 └── @anthropic-ai/claude-code 2.1.283 (dev)
     ├── @anthropic-ai/claude-code-darwin-arm64 2.1.283 (dev; optional)

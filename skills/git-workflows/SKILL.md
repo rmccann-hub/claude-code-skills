@@ -67,6 +67,7 @@ Dated facts, such as versions, defaults and platform changes, live in
 | asking why a rule is what it is, what other projects do instead, whether it fits your project, or how long CI should take and where it should run | [references/why.md](references/why.md) |
 
 Tested examples to copy:
+
 - [assets/githooks/commit-msg](assets/githooks/commit-msg) checks the "area: summary" grammar.
 - [assets/githooks/pre-push](assets/githooks/pre-push) blocks direct pushes to `main`.
 - [assets/workflows/commit-subjects.yml](assets/workflows/commit-subjects.yml) checks a pull

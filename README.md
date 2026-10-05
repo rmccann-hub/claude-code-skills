@@ -8,7 +8,7 @@ checks behind them, and the research they rest on.
 
 In Claude Code:
 
-```
+```text
 /plugin marketplace add rmccann-hub/claude-code-skills
 /plugin install standards@claude-code-skills
 /plugin install engineering@claude-code-skills
@@ -43,7 +43,7 @@ that is planned, with its status.
 You need [uv](https://docs.astral.sh/uv/) 0.12 or later, which installs the Python version named
 in `.python-version`. You also need Node.js, to run Claude Code's own catalog validator.
 
-```
+```sh
 uv sync --locked
 uv run pytest
 uv run ruff check
@@ -110,7 +110,7 @@ If a skill here gives wrong or harmful instructions, take it out of circulation 
    - **Plugin installs:** a third-party marketplace updates automatically only if the user
      turned that on. Ask users to run these in a terminal:
 
-     ```
+     ```sh
      claude plugin marketplace update claude-code-skills
      claude plugin update <plugin>@claude-code-skills
      ```
