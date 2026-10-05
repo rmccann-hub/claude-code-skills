@@ -1,9 +1,14 @@
-"""Command-line entry point: ``skillcheck [ROOT] [--due [DATE] | --verify]``."""
+"""Command-line entry point: ``skillcheck [ROOT] [MODE]``.
+
+The modes are ``--due [DATE]``, ``--verify``, ``--bom``, ``--bom-check`` and
+``--release-assets VERSION DIR``, one at a time. With none, it runs every rule on the repository.
+"""
 
 import argparse
 from datetime import date
 from pathlib import Path
 
+from skillcheck import bom, release
 from skillcheck.core import facts
 from skillcheck.core.checks import check_repository
 
@@ -31,6 +36,24 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="fetch each fact's source and look for its quote (uses the network)",
     )
+    # The dependency map changes whenever a lockfile does, and a Dependabot pull request can't
+    # rebuild it, so these two run by hand, weekly and at release rather than on pull requests.
+    mode.add_argument(
+        "--bom",
+        action="store_true",
+        help=f"write the dependency map: {bom.BOM} and {bom.MAP}",
+    )
+    mode.add_argument(
+        "--bom-check",
+        action="store_true",
+        help="name each dependency-map file that no longer matches the repository",
+    )
+    mode.add_argument(
+        "--release-assets",
+        nargs=2,
+        metavar=("VERSION", "DIR"),
+        help="build what a release of VERSION publishes beside its tag, into DIR",
+    )
     args = parser.parse_args(argv)
     if not args.root.is_dir():
         # A missing root would otherwise report zero findings, which reads as a pass.
@@ -39,6 +62,19 @@ def main(argv: list[str] | None = None) -> int:
         return _due(args.root, args.due)
     if args.verify:
         return _verify(args.root)
+    if args.bom:
+        for path in bom.write(args.root):
+            print(f"wrote {path}")
+        print(f"skillcheck: dependency map written, {_summary(args.root)}")
+        return 0
+    if args.release_assets:
+        return _release(args.root, *args.release_assets)
+    if args.bom_check:
+        old = bom.stale(args.root)
+        for path in old:
+            print(f"{path}: bom: out of date; run `uv run skillcheck --bom`")
+        print(f"skillcheck: dependency map, {_summary(args.root)}, {len(old)} file(s) out of date")
+        return 1 if old else 0
 
     report = check_repository(args.root)
     for finding in report.findings:
@@ -46,6 +82,27 @@ def main(argv: list[str] | None = None) -> int:
     # Always printed, so a run that checked nothing says so rather than looking like a pass.
     print(report.summary())
     return 1 if report.findings else 0
+
+
+def _release(root: Path, version: str, out: str) -> int:
+    found = release.problems(root, version)
+    for problem in found:
+        print(f"release: {problem}")
+    if not found:
+        try:
+            for name in release.build(root, version, Path(out)):
+                print(f"wrote {Path(out) / name}")
+        except release.ReleaseError as error:
+            print(f"release: {error}")
+            found = [str(error)]
+    print(f"skillcheck: release {version}, {len(found)} problem(s)")
+    return 1 if found else 0
+
+
+def _summary(root: Path) -> str:
+    inventory = bom.collect(root)
+    parts = len(inventory.packages) + len(inventory.tools) + len(inventory.actions)
+    return f"{parts} dependencies, {len(inventory.services)} services"
 
 
 def _day(text: str) -> date:

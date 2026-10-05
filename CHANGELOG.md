@@ -6,12 +6,34 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-10-05
+
 ### Added
 
 - A release workflow, `.github/workflows/release.yml`, run from the Actions tab with a version
-  and a commit's SHA. It checks that the version is Semantic Versioning, that the commit is on
-  `main`, that its changelog has the version's section and that every check on it passed, then
-  makes the annotated tag. It's the `git-workflows` skill's tested example.
+  and a commit's SHA. Its first job, the `git-workflows` skill's tested example, checks the
+  version, that the commit is on `main`, its changelog section, its workflow files and its
+  checks, then makes the annotated tag. The next builds the release's files from that commit,
+  with no write access, and the last publishes the release page from the tag with them attached.
+- Each release's page carries `KICKSTART.md`, the standard as one file a session can be handed
+  in any repository with no message: it audits an existing repository, re-checks one it has seen,
+  or helps choose a language and a shape for a new one, and stops twice before changing anything.
+  The page also carries each skill packaged to upload to claude.ai, and `bom.json`.
+  `uv run skillcheck --release-assets VERSION DIR` builds them, refusing a catalog, changelog or
+  dependency map that disagrees with the version.
+- A dependency map: `docs/dependencies.md` for people, and `bom.json`, in CycloneDX 1.7, for
+  tools. It lists the languages, runtimes and tools, every package at its exact version, the
+  pinned GitHub Actions, the services, and the sources the skills' facts cite.
+  `uv run skillcheck --bom` writes both from the lockfiles, the workflows and the catalog, and
+  `uv run skillcheck --bom-check` names one out of date. The Freshness workflow checks it weekly.
+
+### Fixed
+
+- The `git-workflows` skill's example release job failed to tag a commit whose workflow file no
+  branch still had as it was: GitHub refused the push, as the job's token can't be given the
+  workflows permission. The job now says so before making anything. An earlier attempt that
+  failed no longer counts against the commit's checks, and a run that fails after pushing the
+  tag can be run again.
 
 ## [0.1.2] - 2026-10-05
 

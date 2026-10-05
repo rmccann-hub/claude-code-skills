@@ -1,8 +1,12 @@
 name: Release
 
-# Makes an annotated release tag on one commit, named by its SHA, once that commit is on the
-# default branch, its CHANGELOG.md has the version's section, and every check on it has passed.
-# Run it from the Actions tab, or: gh workflow run release.yml -f version=1.4.0 -f sha=<SHA>
+# This repository's releases. The tag job is the git-workflows skill's tested example: it makes an
+# annotated tag on one commit, named by its SHA, once that commit is on the default branch, its
+# CHANGELOG.md has the version's section, a branch has its workflow files, and every check on it
+# has passed. The next job builds the release's files from that commit, with no write access: the
+# kickstart file, each skill packaged for claude.ai, and the dependency map. The last publishes the
+# release page from the tag, with those files attached. A run that fails part way can be run again.
+# Run it from the Actions tab, or: gh workflow run release.yml -f version=0.1.3 -f sha=<SHA>
 
 on:
   workflow_dispatch:
@@ -24,6 +28,8 @@ concurrency:
 
 jobs:
   tag:
+    # Named in OWN_JOBS below, with every other job in this workflow.
+    name: Release tag
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -33,6 +39,9 @@ jobs:
       VERSION: ${{ inputs.version }}
       SHA: ${{ inputs.sha }}
       DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+      # Every job in this workflow, by name, separated by commas. Their runs are checks on the
+      # commit too, and an earlier attempt that failed mustn't stop the next one.
+      OWN_JOBS: Release tag,Release files,Release page
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -59,15 +68,44 @@ jobs:
             echo "::error::CHANGELOG.md at $SHA has no section for $VERSION"; exit 1
           fi
 
+      - name: Check that a branch has the commit's workflow files
+        run: |
+          # This job's token can't be given the workflows permission, and without it GitHub
+          # refuses a ref whose commit carries a workflow file that no branch has with the same
+          # path and contents (fact `workflow-scope`). An older commit does, once a later one
+          # changes a workflow, so that's said here, before anything is made.
+          listing=$(git ls-tree -r --format='%(objectname) %(path)' "$SHA" -- .github/workflows)
+          branches=$(git for-each-ref --format='%(refname)' refs/remotes/origin)
+          missing=""
+          while read -r blob path; do
+            [ -n "$blob" ] || continue
+            found=no
+            while read -r branch; do
+              if [ "$(git rev-parse -q --verify "$branch:$path" || true)" = "$blob" ]; then
+                found=yes
+                break
+              fi
+            done <<< "$branches"
+            if [ "$found" = no ]; then
+              missing="$missing $path"
+            fi
+          done <<< "$listing"
+          if [ -n "$missing" ]; then
+            echo "::error::no branch has these workflow files as $SHA has them, so GitHub would refuse its tag:$missing"
+            echo "Tag a release before a later commit changes its workflows, or have someone whose token has the workflows permission make the tag."
+            exit 1
+          fi
+
       - name: Check that every check on the commit has passed
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # This run's own jobs are checks on the commit too, so they are left out. A commit with
-          # no checks at all fails: a gate that read nothing has proved nothing. CI that reports
-          # commit statuses instead of check runs needs repos/.../commits/$SHA/status as well.
+          # This workflow's own runs are checks on the commit too: this one, and any earlier
+          # attempt, which may have failed. So every run of a job named in OWN_JOBS is left out.
+          # A commit with no checks at all fails: a gate that read nothing has proved nothing. CI
+          # that reports commit statuses instead of check runs needs .../commits/$SHA/status too.
           runs=$(gh api --paginate "repos/$GITHUB_REPOSITORY/commits/$SHA/check-runs" \
-            --jq ".check_runs[] | select((.details_url // \"\") | contains(\"/runs/$GITHUB_RUN_ID/\") | not) | \"\(.conclusion) \(.name)\"")
+            --jq '.check_runs[] | select(.name as $job | $ENV.OWN_JOBS // "" | split(",") | any(. == $job) | not) | "\(.conclusion) \(.name)"')
           if [ -z "$runs" ]; then
             echo "::error::no checks have run on $SHA"; exit 1
           fi
@@ -81,6 +119,15 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # An attempt that failed after pushing the tag leaves it there. Running again carries
+          # on only if it's the tag this run would make.
+          if existing=$(git rev-parse -q --verify "refs/tags/v$VERSION^{commit}"); then
+            if [ "$existing" = "$SHA" ] && [ "$(git cat-file -t "v$VERSION")" = tag ]; then
+              echo "v$VERSION is already an annotated tag on $SHA"
+              exit 0
+            fi
+            echo "::error::v$VERSION already exists, and isn't an annotated tag on $SHA"; exit 1
+          fi
           git -c user.name="github-actions[bot]" \
               -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
               tag -a "v$VERSION" -m "Release $VERSION" "$SHA"
@@ -93,3 +140,66 @@ jobs:
           GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
           GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
             git push origin "refs/tags/v$VERSION"
+
+  files:
+    name: Release files
+    needs: tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.sha }}
+          persist-credentials: false
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: "0.12.18"
+
+      - name: Install from the lockfile, failing on drift
+        run: uv sync --locked --no-dev
+
+      - name: Build the files, refusing a catalog, changelog or map that disagrees with the version
+        run: uv run skillcheck --release-assets "$VERSION" "$RUNNER_TEMP/release"
+
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release
+          path: ${{ runner.temp }}/release
+          if-no-files-found: error
+          retention-days: 7
+
+  page:
+    name: Release page
+    needs: files
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # to publish the release
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: release
+          path: release
+
+      - name: Publish the release page from the tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          files=(release/KICKSTART.md release/bom.json release/*.zip)
+          # An attempt that published the page and then failed leaves it there, so this updates
+          # it. --verify-tag refuses to make the tag itself, which wouldn't be annotated.
+          if gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "v$VERSION" "${files[@]}" --repo "$GITHUB_REPOSITORY" --clobber
+            gh release edit "v$VERSION" --repo "$GITHUB_REPOSITORY" --notes-file release/notes.md
+          else
+            gh release create "v$VERSION" "${files[@]}" --repo "$GITHUB_REPOSITORY" \
+              --verify-tag --title "v$VERSION" --notes-file release/notes.md
+          fi

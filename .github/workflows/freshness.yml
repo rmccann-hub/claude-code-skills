@@ -1,11 +1,12 @@
 name: Freshness
 
 # Once a week, and on demand: lists the facts in the skills' references/facts.md that are due to
-# be checked again, and the quotes no longer found at their sources, in one open issue, and
-# closes that issue once everything is current. It never runs on a pull request, because its
-# answers change with the date and the web, and a pull request's checks should depend only on
-# the commit. In a public repository GitHub turns a schedule off after 60 days with no activity,
-# so the date of its last run is worth a glance.
+# be checked again, the quotes no longer found at their sources, and a dependency map that no
+# longer matches the lockfiles, in one open issue, and closes that issue once everything is
+# current. It never runs on a pull request: the facts' answers change with the date and the web,
+# and a Dependabot update changes a lockfile but can't rebuild the map. In a public repository
+# GitHub turns a schedule off after 60 days with no activity, so the date of its last run is
+# worth a glance.
 
 on:
   schedule:
@@ -37,7 +38,7 @@ jobs:
       - name: Install from the lockfile, failing on drift
         run: uv sync --locked
 
-      - name: List the facts that are due, and the quotes no longer at their source
+      - name: List the facts that are due, the quotes no longer at their source, and the map
         id: report
         run: |
           set +e
@@ -45,16 +46,18 @@ jobs:
           due=$?
           uv run skillcheck --verify > "$RUNNER_TEMP/verify.txt"
           verify=$?
+          uv run skillcheck --bom-check > "$RUNNER_TEMP/bom-check.txt"
+          map=$?
           set -e
           # Each mode ends with its summary line, so a crash can't pass for a clean result.
-          for mode in due verify; do
+          for mode in due verify bom-check; do
             if ! tail -n 1 "$RUNNER_TEMP/$mode.txt" | grep -q '^skillcheck: '; then
               echo "::error::skillcheck --$mode did not finish"
               cat "$RUNNER_TEMP/$mode.txt"
               exit 1
             fi
           done
-          cat "$RUNNER_TEMP/due.txt" "$RUNNER_TEMP/verify.txt"
+          cat "$RUNNER_TEMP/due.txt" "$RUNNER_TEMP/verify.txt" "$RUNNER_TEMP/bom-check.txt"
           {
             echo "Found by the freshness run of $(date -u +%Y-%m-%d):"
             echo "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
@@ -71,10 +74,17 @@ jobs:
             cat "$RUNNER_TEMP/verify.txt"
             echo '```'
             echo
+            echo "## The dependency map"
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/bom-check.txt"
+            echo '```'
+            echo
             echo "For each fact, read its source again. Update the fact, its quote and its two"
-            echo "dates, or correct what cites it, and close this issue from that pull request."
+            echo "dates, or correct what cites it. Rebuild an out-of-date map with"
+            echo "\`uv run skillcheck --bom\`. Close this issue from that pull request."
           } > "$RUNNER_TEMP/freshness.md"
-          if [ "$due" -ne 0 ] || [ "$verify" -ne 0 ]; then
+          if [ "$due" -ne 0 ] || [ "$verify" -ne 0 ] || [ "$map" -ne 0 ]; then
             echo "found=true" >> "$GITHUB_OUTPUT"
           else
             echo "found=false" >> "$GITHUB_OUTPUT"
@@ -102,5 +112,5 @@ jobs:
             --json number,title --jq '.[] | select(.title == env.TITLE) | .number' | head -n 1)
           if [ -n "$number" ]; then
             gh issue close "$number" --repo "$GITHUB_REPOSITORY" \
-              --comment "Every fact is current, as of the run of $(date -u +%Y-%m-%d)."
+              --comment "Every fact and the dependency map are current, as of the run of $(date -u +%Y-%m-%d)."
           fi

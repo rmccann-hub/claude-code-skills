@@ -206,7 +206,9 @@ Examples, tested:
 2. **Read CI's conclusion on the exact commit you're releasing.** A green run on another commit
    proves nothing about this one.
 3. **Tag that commit by its SHA,** never a branch: a branch's tip may have moved past the
-   release commit.
+   release commit. Tag it before a later commit changes a workflow. A job's token can't push a
+   tag whose commit carries a workflow file that no branch still has as it was
+   (fact `workflow-scope`).
 4. **Make an annotated tag.** Git's docs mean annotated tags for releases, and `git describe`
    uses nothing else by default (facts `tag-kinds`, `describe`). `gh release create` with a new
    tag name makes the tag itself, and it isn't annotated (fact `gh-release-tag`). So push the
@@ -223,10 +225,12 @@ Examples, tested:
 
 Example, tested: [assets/workflows/release.yml](../assets/workflows/release.yml) takes a version
 and a commit SHA. It refuses a version that isn't Semantic Versioning, a commit that isn't on
-the default branch, a commit whose `CHANGELOG.md` has no section for the version, and a commit
-with a check that hasn't passed, or with no checks at all. Then it makes the annotated tag on
-that commit as `github-actions[bot]` (fact `bot-identity`), and pushes it. Only its job may
-write, and checkout keeps no credentials.
+the default branch, a commit whose `CHANGELOG.md` has no section for the version, a commit
+carrying a workflow file no branch has as it is, and a commit with a check that hasn't passed,
+or with no checks at all. Its own earlier attempts don't count as checks. Then it makes the
+annotated tag on that commit as `github-actions[bot]` (fact `bot-identity`), and pushes it. A
+run that fails after pushing can be run again: it carries on from a tag it would have made.
+Only its job may write, and checkout keeps no credentials.
 
 ## Release lines and backports
 

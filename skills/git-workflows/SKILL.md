@@ -3,7 +3,7 @@ name: git-workflows
 description: Sets up and runs a repository's Git and GitHub workflow, with the reasons, what other projects do, and the trade-offs. It covers commit messages and trailers, branch names, pull requests and review, the merge strategy, deleting branches safely, rebasing, conflicts and recovering lost commits, GitHub Actions CI (permissions, timeouts, SHA-pinned actions, path filters, required checks that never report, pull_request_target, slow CI), hooks, .gitignore, secrets that reached a commit, annotated release tags, changelogs, versions, release lines and backports. Use when writing a commit message, pull request, changelog entry or version number, deciding squash against merge commits, cleaning up branches, resolving a conflict, writing or fixing a workflow, speeding up CI without weakening it, adding a hook, responding to a committed secret, cutting a release or backporting a fix. For a full audit or first-time setup of a repository against the standard, use project-bootstrap-and-audit.
 license: Apache-2.0
 metadata:
-  reviewed: "2026-09-30"
+  reviewed: "2026-10-05"
 ---
 
 # Git workflows

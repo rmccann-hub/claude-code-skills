@@ -19,6 +19,7 @@ SHA_PIN = re.compile(r"uses: [\w.-]+/[\w.-]+@[0-9a-f]{40} # v\d+\.\d+\.\d+$")
 SUBJECTS_STEP = 'Check that each commit subject reads "area: summary"'
 RELEASE_CHECK = "Check the version, the commit and its changelog"
 RELEASE_CHECKS_PASSED = "Check that every check on the commit has passed"
+RELEASE_WORKFLOWS = "Check that a branch has the commit's workflow files"
 RELEASE_TAG = "Make the annotated tag and push it"
 COMPLETION_GUARD = "Prove the suite ran to the end"
 
@@ -258,6 +259,34 @@ def test_release_reads_the_changelog_at_the_commit_not_the_working_tree(repo):
     assert "has no section for 1.4.0" in result.stdout
 
 
+def workflow_commit(repo: Path, text: str, branch: str = "main") -> str:
+    (repo / ".github" / "workflows").mkdir(parents=True, exist_ok=True)
+    (repo / ".github" / "workflows" / "ci.yml").write_text(text, encoding="utf-8")
+    git(repo, "add", ".github")
+    git(repo, "commit", "-q", "-m", "ci: change the workflow")
+    git(repo, "push", "-q", "origin", branch)
+    return git(repo, "rev-parse", "HEAD")
+
+
+def test_release_takes_a_commit_whose_workflows_a_branch_has(repo):
+    assert release_step(repo, RELEASE_WORKFLOWS, SHA=git(repo, "rev-parse", "HEAD")).returncode == 0
+    sha = workflow_commit(repo, "name: CI\n")
+    result = release_step(repo, RELEASE_WORKFLOWS, SHA=sha)
+    assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_release_refuses_a_commit_whose_workflow_no_branch_still_has(repo):
+    old = workflow_commit(repo, "name: CI\n")
+    workflow_commit(repo, "name: CI, changed\n")
+    result = release_step(repo, RELEASE_WORKFLOWS, SHA=old)
+    assert result.returncode == 1
+    assert "so GitHub would refuse its tag: .github/workflows/ci.yml" in result.stdout
+    # Once any branch has the old file as it was, GitHub takes the tag, and so does the check.
+    git(repo, "push", "-q", "origin", f"{old}:refs/heads/release-1.x")
+    git(repo, "fetch", "-q", "origin")
+    assert release_step(repo, RELEASE_WORKFLOWS, SHA=old).returncode == 0
+
+
 def test_release_tags_the_named_commit_not_the_branch_tip(repo):
     sha = changelog_commit(repo)
     commit(repo, "core: a later change")
@@ -300,15 +329,39 @@ def checks_step(tmp_path: Path, runs: list[dict], code: int = 0):
         "GITHUB_REPOSITORY": "example/repo",
         "GITHUB_RUN_ID": "4242",
         "SHA": "a" * 40,
+        "OWN_JOBS": "Release tag,Release page",
     }
     return release_step(tmp_path, RELEASE_CHECKS_PASSED, **env)
+
+
+def test_release_goes_on_from_a_tag_an_earlier_attempt_pushed(repo):
+    sha = changelog_commit(repo)
+    git(repo, "tag", "-a", "v1.4.0", "-m", "Release 1.4.0", sha)
+    result = release_step(repo, RELEASE_TAG, VERSION="1.4.0", SHA=sha, GH_TOKEN="CHANGEME")
+    assert result.returncode == 0, result.stderr
+    assert "already an annotated tag" in result.stdout
+
+
+@pytest.mark.parametrize("kind", ["elsewhere", "lightweight"])
+def test_release_refuses_a_tag_that_is_not_the_one_it_would_make(repo, kind):
+    first = changelog_commit(repo)
+    sha = commit(repo, "core: a later change")
+    if kind == "elsewhere":
+        git(repo, "tag", "-a", "v1.4.0", "-m", "Release 1.4.0", first)
+    else:
+        git(repo, "tag", "v1.4.0", sha)
+    result = release_step(repo, RELEASE_TAG, VERSION="1.4.0", SHA=sha, GH_TOKEN="CHANGEME")
+    assert result.returncode == 1
+    assert "isn't an annotated tag on" in result.stdout
 
 
 def test_release_passes_when_every_other_check_has_passed(tmp_path):
     runs = [
         check_run("success", "test"),
         check_run("skipped", "docs"),
-        check_run(None, "tag", OWN_RUN),  # this run's own job, still going
+        check_run(None, "Release tag", OWN_RUN),  # this run's own job, still going
+        check_run("failure", "Release tag"),  # an earlier attempt
+        check_run("failure", "Release page"),  # another job of the same workflow
     ]
     result = checks_step(tmp_path, runs)
     assert result.returncode == 0, result.stdout + result.stderr
@@ -318,7 +371,7 @@ def test_release_passes_when_every_other_check_has_passed(tmp_path):
 @pytest.mark.parametrize(
     ("runs", "message"),
     [
-        ([check_run(None, "tag", OWN_RUN)], "no checks have run"),
+        ([check_run(None, "Release tag", OWN_RUN)], "no checks have run"),
         ([check_run("success", "lint"), check_run("failure", "test")], "not every check"),
         ([check_run("success", "lint"), check_run(None, "test")], "not every check"),
         ([check_run("cancelled", "test")], "not every check"),
