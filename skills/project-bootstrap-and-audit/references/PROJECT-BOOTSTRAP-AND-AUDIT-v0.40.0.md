@@ -2378,6 +2378,12 @@ directions, so neither drifts alone. Two copies that already disagree are `DRIFT
 `fix_side`: this repository, the other by name, or both. The first live run had no field for
 it and put it in the finding's text.
 
+**A handover is refused until it can be followed.** A session that hands work to another, or
+to the human, pushes first, and every commit hash and URL the handover quotes resolves before
+it goes. A live repository's audit of its own rules found handovers citing what nobody could
+fetch, and its sessions now check both. Where sessions hand work to each other and nothing
+checks a handover, the check is an `optional` amendment.
+
 <constraints>
 
 **In greenfield mode Phase 4 generates rather than audits.** Walk the same ten dimensions,
@@ -4042,6 +4048,10 @@ the tool in use, substitute from the table and record the substitution as an ove
 Name **who reads it**, **when**, and **what decision it changes**. Failing any one, do not
 create it.
 
+**A commit that adds a document names the existing homes it considered, and why none fit.** A
+live repository's owner told its sessions to stop adding Markdown files for their own sake,
+and that repository's rule now asks exactly this.
+
 ## Lifecycle classes
 
 | Class | Behavior | Death |
@@ -4125,6 +4135,12 @@ be read against this one.
 7. Update where reality moved. **Do not restyle, reorder or rephrase.**
 8. Classify anything outside the taxonomy once; record the answer.
 9. Commit by concern.
+10. **Prove the release from what users install**, before publishing: the built artifact
+    installed into a clean environment, or the release commit cloned fresh, with the tests run
+    there. A live release passed its own CI and failed 2 of its 33 tests from a fresh clone.
+11. **At T3, a reviewer told to refute the release reads its diff** from the last release, in
+    a session that didn't make it. A live release had a green suite and ten green checks, and an
+    adversarial review still found three blocking defects.
 
 **Where more than one release line is kept**, each has a branch, `release/X.Y` as FFmpeg names
 them, and a fix reaches it as a cherry-pick with `-x`, so the commit names its source: 78 of the
@@ -4192,6 +4208,13 @@ push.
 
 **Never instruct the maintainer to tag locally.** Verify after publishing: the title renders,
 the target SHA matches the release commit, the label is correct.
+
+**A release that must start another workflow hands off through `workflow_dispatch`.** Events a
+workflow makes with its default token start no other workflow, apart from `workflow_dispatch`
+and `repository_dispatch`, so a tag pushed or a release published with that token never starts
+the workflow waiting for it: four of a live repository's releases never reached its package
+index. The release job starts the next one by name, with `gh workflow run <file> --ref <tag>`
+and `actions: write` granted to that job alone, or does the work in its own workflow.
 
 </constraints>
 
@@ -4276,6 +4299,18 @@ the hash and the size against their published tree, and **re-derive every commit
 in their tree rather than accepting the citation.** The same concern appears in distribution
 packaging, where the guidance is to avoid fetching a pull request's diff because it can
 change while the request is open, and to pin to an immutable reference instead.
+
+**A claim about another repository cites where it was read: `owner/repo@sha:path:line`, from
+that side's committed files.** A live session read a relayed message and concluded the other
+side's lap was unsent, while it sat released on that side's default branch, one fetch and one
+grep away. **Shared files are compared byte for byte at a named commit**, and a bug shape the
+other side reports is looked for at home before the reply goes back.
+
+**A review loop between repositories fixes its close conditions before the first lap.** One
+ran to lap 39 by one side's count and 37 by the other's, and produced no release. A new finding
+goes to the next round unless it breaks what is under review, each agreed change is tracked to
+the commit that lands it, and **before output a consumer parses changes, the consumer's parser
+is read, and taught both forms first.**
 
 </constraints>
 
