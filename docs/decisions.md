@@ -2,6 +2,38 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — v0.40.0's parity runs
+
+- **Asked:** the v0.40.0 entry held its parity runs until the owner had seen the decisions and
+  options. The owner has, and asked to "update all".
+- **Runs:** one run of each sample, each by a fresh subagent given the documented prompt, on the
+  skill as committed at `c3da657`. Its standard last changed at `983b783`, and its SHA-256 starts
+  `8f46f927`. Each run was graded with `python -m skillcheck.parity` and compared with the
+  baseline. Each passed every check, and left its sample's working tree clean and its refs where
+  they started.
+  - **Audit:** twenty checks, and both manual checks hold. One value moved: dimension 4 to
+    `BLOCKER`. That's the v0.37.0 rule for a tracked `settings.local.json`, which every audit run
+    since has moved.
+  - **Re-check:** thirteen checks, and all three manual checks hold. No value moved.
+  - **Greenfield:** seven checks, and no difference from the baseline. Both manual checks hold:
+    the recommendation names a runner-up and what each option costs, and leaves the pick to the
+    person, and nothing was generated.
+- **Found:**
+  - The samples' prepared replies predate F80's question on co-maintainers, so every run took its
+    default, "no", and showed it at the gate, as the text says. Settling that means changing the
+    replies, which takes a new baseline.
+  - Five gaps in the text, now F109 to F113 in `ROADMAP.md`, which wait with F81 to F108. Every
+    run met F109.
+- **Departures the runs recorded,** none touching a sample or a graded value:
+  - the audit and greenfield runs each listed the file names in the sample's bare remote, which
+    sits beside the sample, outside the directories the prompt allows. Neither opened anything
+    there;
+  - the audit run read PyPI, the known limit `docs/testing-the-skill.md` names, and kept a pip
+    cache in `/tmp` while it ran.
+- **Not done:** the procedure is unchanged. Moving each bare remote out of its sample's parent
+  directory would prevent the first departure. It touches no graded value, so it can wait for
+  the next baseline.
+
 ## 2026-10-05 — The repositories the skills run on go unnamed
 
 - **Asked:** the owner asked that this repository name nothing a skill has been run on or

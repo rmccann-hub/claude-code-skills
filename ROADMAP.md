@@ -666,12 +666,13 @@ approval:
   and the variable is gone. Until then, a skill uploaded to the account stays the route the
   standard names.
 
-The parity runs of v0.40.0's final text found four more on 2026-10-05, each checked against the
-text that day. Each rests on one run's evidence. They await the owner's approval:
+The parity runs of v0.40.0's final text found five more on 2026-10-05, each checked against the
+text that day. All three runs met F109, and each of the others rests on one run's evidence. They
+await the owner's approval:
 
 - **F109:** Phase 3's `drafts.reply` takes `confirmed`, `corrected` or `not sure`, and nothing
   says no reply was given. An unattended run whose prompt leaves out a question can't record
-  that without putting "not sure" in a person's mouth: both runs met it, for v0.40.0's new
+  that without putting "not sure" in a person's mouth: every run met it, for v0.40.0's new
   question on co-maintainers. `reply` should gain `unanswered`, with the question's default
   applied and the draft carried to Phase 6's first list.
 - **F110:** the self-check says `actions_requiring_a_local_clone` must be 0, while Phase 6
@@ -685,6 +686,10 @@ text that day. Each rests on one run's evidence. They await the owner's approval
   required from T2, or earlier once a built artifact reaches someone. The text should say
   whether that rating applies below that point, where a tag alone doesn't make the project
   versioned.
+- **F113:** Phase 3 says an unattended run given its answers can't stop at the wait, so it goes
+  on. The routing table's `choose` job ends at that wait with its recommendation, and the
+  language is never picked by default. The greenfield run followed the job, which is right,
+  but the text should say that a job ending at the wait ends there.
 
 The owner asked for one more rule, researched before it's written:
 
