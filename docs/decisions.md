@@ -2,6 +2,29 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — Release 0.1.2
+
+- **Asked:** the owner: "get everything ready for the next release/version/commit, etc.", and
+  then: "after you merge and make a new version and release".
+- **Chosen:** this pull request's merge is release 0.1.2, carrying standard v0.40.0 and the
+  `git-workflows` skill. The owner asked for the merge from this session, and it takes a merge
+  commit, as `AGENTS.md` says. A version that reaches `main` is published, tag or no tag, so the
+  release is written before the merge: the changelog's unreleased entries move under
+  `[0.1.2]`, and both catalog entries say 0.1.2. Claude Code updates an installed copy only
+  when that string changes, so copies installed since 2026-09-23 move on from v0.36.0.
+  - *Why 0.1.2:* the 2026-09-23 release entry keeps 0.2.0 for the rebuild's release, and under
+    0.x anything may change. Nothing in the release is breaking: no skill is renamed or
+    removed, and the new plugin is added beside the old one.
+  - *The date* is the day the changelog was written. If the merge falls on a later day, the
+    heading takes the merge's date in the same pull request.
+- **Waiting on the owner:** the tags. The `v0.1.1` tag, which the v0.37.0 entry deferred to this
+  release, goes on `cbe163f`, that release's merge commit, and `v0.1.2` on this pull
+  request's merge commit. Both are annotated, as the standard asks from T2. This session's
+  permission settings refused making a tag through GitHub's API, so the standard's route from
+  T2 applies: a `workflow_dispatch` job makes each annotated tag, as `git-workflows`' tested
+  example does. The Releases UI would make a lightweight tag. Each tag's GitHub release follows
+  it, as v0.1.0's did.
+
 ## 2026-10-05 — v0.40.0's parity runs
 
 - **Asked:** the v0.40.0 entry held its parity runs until the owner had seen the decisions and

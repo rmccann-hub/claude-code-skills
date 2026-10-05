@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-10-05
+
 ### Added
 
 - The `git-workflows` skill, in a new `engineering` plugin: commit messages and trailers,

@@ -10,7 +10,7 @@
       "source": "./",
       "strict": false,
       "description": "Repository setup and audit: the PROJECT-BOOTSTRAP-AND-AUDIT standard as a skill.",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": {
         "name": "rmccann-hub"
       },
@@ -25,7 +25,7 @@
       "source": "./",
       "strict": false,
       "description": "Engineering practice: Git, pull requests, CI, hooks and releases.",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "author": {
         "name": "rmccann-hub"
       },

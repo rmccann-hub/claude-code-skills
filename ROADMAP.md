@@ -749,8 +749,9 @@ before it's built:
     favour Python, name packages that don't exist (at least 5.2% of those from commercial
     models) and use deprecated APIs: the first pass's rows 64 and 66, and the deeper pass's
     F35. This joins R21's rule in piece 5.
-  - **The plugin's version:** the catalog pins 0.1.1, and Claude Code updates an installed copy
-    only when that string changes, so a copy installed before v0.37.0 still has v0.36.0. How
+  - **The plugin's version:** Claude Code updates an installed copy only when the version the
+    catalog pins changes. It said 0.1.1 from 2026-09-23 until release 0.1.2, so a copy
+    installed before v0.37.0 kept v0.36.0 until then. How
     claude.ai decides that a personal marketplace's copy changed isn't documented. By the Help
     Center, an organisation's GitHub-synced marketplace syncs when a merged pull request
     changes the version. Releasing at each standard change, or leaving the version out so
