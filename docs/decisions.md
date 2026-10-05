@@ -2,6 +2,92 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — Standard v0.41.0, reviewed cold and in the house style, and release 0.1.7
+
+- **Asked:** the owner's answer 6 approved F81 to F114, to be applied as v0.41.0 in groups, each
+  reviewed cold, with parity runs. Answers 11 to 13 put the standard into the house style.
+- **Applied:** seven groups, one commit each, mapped first to the sections they change:
+  - tests that report more than they ran, F81 to F88 and F105, in dimension 5 and the starter
+    CI file;
+  - CI and the context file, F89, F90, F92 to F95, F97, F99, F103, F106 and F107;
+  - releases and other repositories, F91, F94's handoff half, F98 and F100 to F102;
+  - the run's own shell habits, F96;
+  - two facts corrected, F104 and F108, each read again at its source on 2026-10-05;
+  - what the parity runs of v0.40.0 found, F109 to F113;
+  - the platform settings, F114, which move from the kickstart file into the standard's dated
+    facts.
+- **Reviewed cold:** three sessions that hadn't written the text each read one group's diff
+  against the approval and the rest of the file. They found 39 defects, 11 of them blocking:
+  - one condition given two statuses, or none, in seven rules;
+  - two rules that contradicted dimensions 6 and 8: a SessionStart hook against "documented as
+    session setup", and grouped security updates against "security PRs ungrouped";
+  - incidents nobody had reported, added to F94, F96 and F98;
+  - a reachability test that would fail every correct pull request;
+  - a recorded binary read the wrong way: a bare `command -v ruff` found a global ruff 0.15.8
+    in this session while the gate ran the project's 0.16.10;
+  - page links, a plan check and two of support's observations lost in moves.
+
+  Each was checked against the text, and against its source where it named one, before it was
+  applied, as F96 now asks.
+- **A fourth review** read those fixes and found ten more, three of them blocking: a SessionStart
+  hook runs only in a session holding one repository, a client-side hook still read as a gate
+  where dimension 6 says it isn't one, and a tier that couldn't be computed from an unknown
+  answer. They were checked and applied the same way.
+- **The house style:** a commit of its own. 28 headings take sentence case, with 113 citations
+  of them, among them the marker the release code cuts the kickstart file at. 59 spellings
+  become American, and 12 filler words go. A first pass missed 12 citations that a line break
+  splits or that name a section in short. It also left the release test's check that the
+  kickstart file drops the validation section looking for the old heading, so the check
+  couldn't fail. Both were fixed before the pull request, and a cut planted in the wrong place
+  now fails the test. Past entries in the version history keep their spelling and section
+  names, as this record's do, and the prose check skips them.
+- **Security updates stay ungrouped.** Release 0.1.5's kickstart file said to group them, for
+  each repository and for new ones on the account, against dimension 8. The standard's text
+  wins. The owner is asked to turn grouped security updates off where they turned it on.
+- **Not chosen:**
+  - applying each review's proposed wording as written. Where a proposal claimed more than this
+    session could check, the text says only what was seen: support's report that no plugin was
+    enabled is dated 2026-09-30 alone. Where one would have changed a rule beyond its finding,
+    it was narrowed: dimension 6 installs by SessionStart hook only a hook sessions already
+    rely on, and proposes none where no local clone exists;
+  - bringing past entries into the style, which would rewrite what each version said when it
+    shipped.
+- **Parity runs:** one fresh session for each of the three samples, given the documented prompt
+  and the skill as committed at `a685e3b`, whose standard's SHA-256 starts `b36028ad`. Each was
+  graded with `python -m skillcheck.parity` and compared with the baseline:
+  - **Audit:** twenty checks, with all thirteen planted problems found, and both manual checks
+    hold. One value moved: dimension 4 to `BLOCKER`, the v0.37.0 rule, which every audit run
+    since has moved. The new rules showed: it proposed a job timeout, recorded the unanswered
+    question with its default, weighed a SessionStart hook and proposed none, and counted no
+    action needing a local clone.
+  - **Re-check:** thirteen checks, and all three manual checks hold: the Dependabot decline
+    stays, as its trigger hasn't fired, branch protection stays `N/A`, and the sample is
+    unchanged. One value moved: dimension 6, from `DRIFT` to `GAP`. Both runs found the same
+    stale lock; this one rated it in dimension 2 and the job's missing timeout in dimension 6.
+    The key accepts either, and F117 asks the text to settle it.
+  - **Greenfield:** seven checks, and no difference from the baseline. Both manual checks hold.
+  - **What they found:** the re-check run proposed three changes to the standard. Two were gaps
+    this version's own fixes opened, so they're closed here, as the run itself had handled them:
+    a setting never re-proposes a recorded decline, and a re-check asks a question its record
+    predates. The third waits as F116. Those two were not re-run: the text now says what the run
+    did.
+  - **The runs' own slips,** each disclosed in its report: the greenfield run's first, plain
+    `git status` rewrote the sample's index, with no content changed, and the other two listed
+    file names beside their directories or wrote temporary files outside them. The re-check run
+    fetched from the sample's remote through git and used the network, the prompt's known limit.
+- **Checked:** `uv run pytest` passes 320 tests, with 100% line and branch coverage. ruff,
+  `skillcheck` with 0 findings, Vale on all 69 tracked Markdown files, and Claude Code 2.1.288's
+  validator all pass. The kickstart file builds from the tree, and the release test fails on a
+  cut planted in the wrong place.
+- **Found on the way, for the owner:** four candidates, F115 to F118, wait in the roadmap for
+  approval: the starter CI checkout's credentials, gates after a failed locked install, the
+  dimension a blocked CI job belongs to, and the README template's sections (question 18).
+  Dependabot's pull request 20 left the dependency map stale on main, since pull request CI
+  doesn't check it. This pull request refreshes it, and the roadmap asks the owner how to keep
+  it fresh.
+- **Release 0.1.7:** this pull request's merge, released by the Release workflow once CI passes
+  on the merge commit. Both catalog entries say 0.1.7.
+
 ## 2026-10-05 — `house-style`: one style for prose, checked by Vale, and release 0.1.6
 
 - **Asked:** the owner asked for every repository and file to share one format and language,

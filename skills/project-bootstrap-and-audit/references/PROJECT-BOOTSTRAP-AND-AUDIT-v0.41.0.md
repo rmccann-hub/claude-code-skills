@@ -4945,12 +4945,14 @@ records are append-only and are not edited for this.
 
 ## Entries
 
-**0.41.0** — **thirty-four fixes**, F81 to F114, which the owner approved on 2026-10-05: lessons
-the two live repositories paid for, five checks of this file against its sources, a support
-reply, the parity runs of 0.40.0, and the settings list the kickstart file carried. Each group
-was reviewed cold, and the three reviews found 39 defects in the first text, among them two
-rules that contradicted dimensions 6 and 8. The file also moves into its house style: American
-spelling, sentence-case headings and no filler, checked by Vale.
+**0.41.0** — **thirty-four fixes**, F81 to F114, which the owner approved on 2026-10-05: lessons the
+two live repositories paid for, five checks of this file against its sources, a support reply, the
+parity runs of 0.40.0, and the settings list the kickstart file carried. Each group was reviewed
+cold, and the three reviews found 39 defects in the first text, among them two rules that
+contradicted dimensions 6 and 8. A fourth review of those fixes found ten more, and this version's
+parity runs found two gaps its own fixes opened: *a setting never re-proposes a recorded decline*,
+and *a re-check asks a question its record predates*. The file also moves into its house style:
+American spelling, sentence-case headings and no filler, checked by Vale.
 
 **Tests that report more than they ran, eight.** *A suite writes a report as its last act, and
 CI fails without it*: one merged a pull request that had run 76% of its tests. *A sweep asserts

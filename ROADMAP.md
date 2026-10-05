@@ -703,6 +703,24 @@ repositories, approved by the owner on 2026-10-05 and applied in v0.41.0:
   among its dated facts, so the full file and the kickstart file agree. The run instructions
   then go back to choosing the job.
 
+Applying them found four more on 2026-10-05, each checked that day. They wait for the owner's
+approval:
+
+- **F115:** the starter CI file's checkout keeps its credentials, which zizmor flags as
+  `artipacked`. This repository's workflows set `persist-credentials: false`, and the template
+  should too.
+- **F116:** where the documented install that fails on drift fails, a run's later gates can
+  resolve the dependencies afresh, as `uv run` does, so two runs on one tree report passes or
+  failures by how they typed the command. The re-check sample's run proposed running the gates
+  as documented and saying each ran on a fresh resolution, with the versions, which CI never
+  reaches.
+- **F117:** runs place a CI job that can't get past its locked install in different dimensions.
+  The re-check sample's baseline run rated dimension 6 `DRIFT`, and v0.41.0's run rated the stale
+  lock in dimension 2 and the job's missing timeout in dimension 6. The text should say which
+  dimension owns it.
+- **F118:** the README template has no Operations or Security section, which the house style
+  asks every README for (question 18).
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
@@ -795,4 +813,5 @@ trigger.
 | `copier` template | The standard's starter files, so a new repository is set up without a session | planned | the first repository set up from this one |
 | Reusable workflows | This repository's CI gates, callable from other repositories | planned | a second repository wants this CI |
 | `upstream-defects.md` | The standard's register of upstream defects shared across repositories | planned | the first upstream defect found |
+| Map refresh on dependency updates | Dependabot's pull requests change the lockfiles but not `bom.json` or `docs/dependencies.md`, and pull request CI doesn't check the map, so main's goes stale until the weekly check or a release refuses it. A session can regenerate it in each such pull request before merging, or CI can check it and fail them until then | planned | the owner chooses between the two |
 | Fewest dependencies here | This repository's own dependencies and pins, in `pyproject.toml`, `package.json` and CI, held to the R21 rule | planned | the rule is in the standard |
