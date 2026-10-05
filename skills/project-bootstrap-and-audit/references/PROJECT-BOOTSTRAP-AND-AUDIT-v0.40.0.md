@@ -1586,6 +1586,12 @@ describing something retired is deleted rather than relocated.
 `TEST-VERIFICATION-CHECKLIST.md` from T1. Coverage threshold at T3, **set from the currently
 measured number so it ratchets**. Mutation testing at T3 only.
 
+**A mutation score can measure the edit rather than the defect.** A first live sweep scored
+100% because one test hashed the source tree, so every mutant failed it, whatever the mutant
+did. **So a sweep first makes an edit that changes no behavior**, such as a comment, and every
+test must still pass before any score counts. Tools that write into the tree, a mutation run
+among them, share one lock that fails closed, so two never edit it at once.
+
 **Code that parses input it doesn't control gets a damaged-input test** from T2: a file
 format, a network response, a device's output, a log. Fed truncated and corrupted samples, it
 must not crash, hang or allocate without bound. A fuzzer is the strong form, and a handful of
@@ -1622,6 +1628,18 @@ one unseen state, it is always available, and it costs a checkout. **A gate intr
 alongside its subject and never run against the state before it has not been tested, it has
 been observed.**
 
+**A revert proves a test only when it landed and built.** A live revert, broken by a stray
+edit, didn't build, and its red run still read as proof that the test caught the defect. The
+restore that followed, with `git checkout --`, destroyed work nobody had committed. **So a
+revert probe confirms that the file changed and the build succeeded** before it reads the
+test's result, and it restores from a copy it made first and checked by hash.
+
+**A stand-in more permissive than what it stands for hides the bug it was built to find.** A
+live fixture stopped a thread that production never stops, which hid a crash for five
+releases, and another test passed only on a record that couldn't occur. **Fixtures, harnesses
+and test environments are no more permissive than production**, build only states that can
+occur, and can tell apart the cases under test. Where a run reads one that isn't, it is `GAP`.
+
 **A gate's condition must also be proven to see what it tests.** A condition that references
 something unavailable in its context evaluates to nothing and reads as a gate: a live run
 wrote `if: ${{ secrets.TOKEN == '' }}` at step level, where the secrets context is not
@@ -1645,6 +1663,19 @@ anything has not been shown to work, and "clean over 22 files" from a scanner th
 detect is indistinguishable from coverage. Do this when the gate is installed and whenever
 its configuration changes.
 
+**A check has three outcomes, not two: pass, fail, and couldn't check.** Live gates read the
+third as a pass three ways: a guard whose listing command failed found no offenders, a probe
+graded crashes as clean refusals, and a gate closed a review round because the files it
+wanted existed, without reading them. **So a check fails closed on the third outcome**, reads
+declared fields rather than matching text, counts what it matched, and is tested for each way
+it could wrongly say yes. Where anything counts on a check that can read the third as a pass,
+it is `BLOCKER`, the vocabulary's *check reporting success while measuring nothing*.
+
+**A check that only warns gates nothing.** The rule cited most often in one live repository, a
+regression test for every bug, was enforced by a script with no `exit 1`. It is rated as a step
+that can't fail, above. Where a check allows an opt-out, the opt-out carries a written reason,
+and the check refuses a bare marker.
+
 **Plant the shape that actually occurs, not the shape the tool advertises — coverage is
 shape-dependent, and proving one shape proves one shape.** A live run discharged this rule
 honestly, planting a canonical provider key, watching the scan fail, and recording the gate
@@ -1663,6 +1694,27 @@ collapse and misses the partial fall it exists to catch. Record the expected cou
 when the actual drops below it. **Where a test discovers its own inputs, it carries a guard
 that fails when it stops finding what it should. Collection count is part of a passing
 result.**
+
+**And a suite that collected everything can still stop before the end.** A collection count
+says what was found, not what ran: a live repository merged a pull request whose suite had run
+76% of its tests and exited 0. **So the suite writes a report as its last act, and CI fails
+without it**, and when the report counts fewer tests than the baseline. *Starter File Contents*
+shows the guard. From T2, a suite whose CI can't tell a finished run from one that stopped is
+`GAP`.
+
+**A sweep over a computed list passes when the list is empty**, and nothing in its output says
+so: a parameterized test over nothing reports one skip, and an audit of one live repository
+found 52 such gates beside 54 that worked. **So a sweep asserts a floor on what it examined**,
+and that its data isn't trivially empty. It takes its population from the tree rather than a
+list kept by hand, and an allowlist beside it carries a reason on every entry, is checked for
+entries that no longer match anything, and can only shrink. **A scheduled audit can report that
+it measured nothing**, rather than reporting clean. A sweep that can pass on nothing is `GAP`
+where anything counts on it, and one that has passed on nothing is `BLOCKER`.
+
+**An intermittent failure met with a wider timeout stays.** A live test timed out fourteen
+times in full suites and took a second when run alone, and one network call took 80 of a
+check's 137 seconds. **A flaky test gets instrumentation and kept artifacts**, so its next
+failure says why, and a gate runs against recorded responses rather than the network.
 
 **The verifier is independent of the thing verified, or it is not a verifier.** Two published
 failure cases carry this rule: an agent that removed the markers its own checker looked for
@@ -3538,7 +3590,27 @@ jobs:
         run: echo "substitute, or delete this step"
 
       - name: Test
-        run: echo "substitute"
+        run: echo "substitute, writing a JUnit XML report to $RUNNER_TEMP/junit.xml"
+
+      - name: Prove the suite ran to the end
+        run: |
+          python3 - "$RUNNER_TEMP/junit.xml" "$(cat .test-baseline)" <<'EOF'
+          import sys
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          report, baseline = Path(sys.argv[1]), int(sys.argv[2])
+          if not report.is_file():
+              print("::error::completion guard: the test run wrote no report, so it did not finish")
+              sys.exit(1)
+          root = ET.parse(report).getroot()
+          suites = [root] if root.tag == "testsuite" else root.findall("testsuite")
+          ran = sum(int(suite.get("tests", 0)) for suite in suites)
+          print(f"the report counts {ran} tests, baseline {baseline}")
+          if ran < baseline:
+              print(f"::error::completion guard: {ran} tests reported, below the baseline of {baseline}")
+              sys.exit(1)
+          EOF
 
       - name: Guard the collection count
         run: |
@@ -3554,7 +3626,7 @@ jobs:
           fi
 ```
 
-**Six things about this file are load-bearing and are not style:**
+**Seven things about this file are load-bearing and are not style:**
 
 - **`permissions: contents: read`** at the top. The default token is broader than a test run
   needs, and narrowing it is free. **Every workflow, not most of them** — a live run found a
@@ -3581,6 +3653,12 @@ jobs:
   step with no `shell:` runs under `bash -e`, so a command substitution whose last command
   fails ends the step before any message prints, and a `grep` that matches nothing does
   exactly that. The `|| true` keeps the step alive long enough to say which check failed.
+- **The completion guard reads what ran, where the collection guard reads what was found.** A
+  suite that stops early can still exit 0, so the test run writes a JUnit XML report as its
+  session ends, and the guard fails when the report is missing or counts fewer tests than the
+  same baseline. Most ecosystems' runners write one: pytest's `--junitxml`, or a reporter for
+  the others. A test that calls `os._exit(0)` after the first of three tests ends the run at
+  exit 0 with no report written: the collection guard passes it, and this one doesn't.
 - **Make the gate's absence legible.** A gate that skips silently is indistinguishable from
   one that passed, and the reader has no way to tell them apart afterwards. **Write it so
   that not running says so by name** — a skip reason naming the check, a printed marker
