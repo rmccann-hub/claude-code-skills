@@ -23,3 +23,7 @@ CLAUDE.local.md
 # Working space: its contents are ignored, the directory itself is kept
 scratch/*
 !scratch/.gitkeep
+
+# What vale sync installs from the house style. The vocabulary under .vale/ is tracked.
+.vale/styles/HouseStyle/
+.vale/styles/.vale-config/

@@ -90,7 +90,7 @@
     "should_trigger": false
   },
   {
-    "query": "Summarise the open issues in this repository.",
+    "query": "Summarize the open issues in this repository.",
     "should_trigger": false
   },
   {

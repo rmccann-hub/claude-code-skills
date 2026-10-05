@@ -6,11 +6,29 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-10-05
+
+### Added
+
+- The `house-style` skill, in the `engineering` plugin: one style for prose and Markdown in
+  every repository. Its thirteen rules cover the answer first, plain words, no filler, checked
+  facts, American spelling, sentence-case headings, wrapped lines and the same README sections,
+  each with its reasons and what other guides do.
+- HouseStyle, a Vale style that checks three of the rules: the filler words, sentence-case
+  headings and American spelling. Each release carries it as `HouseStyle.zip`, for a
+  repository's `.vale.ini` to name by URL. The skill ships a CI job that installs Vale, proves
+  the style catches each kind of mistake, then checks every tracked Markdown file.
+- The kickstart file has a session write in the house style, and propose its check where a
+  repository has none.
+
 ### Changed
 
 - Commit subjects here read "area: summary", and a check fails any pull request whose commits
   don't, with merge commits and reverts allowed. Dependabot's subjects carry a `deps:` prefix,
   so they pass.
+- This repository's prose follows the house style, and CI checks it with the same job. Its
+  text, `skillcheck`'s messages and the dependency map use American spelling, apart from
+  quotes, names and past entries in its records.
 
 ## [0.1.5] - 2026-10-05
 
@@ -192,13 +210,13 @@ Notable changes to this repository. The format follows
     advised for deletion only after checking what still needs it.
   - Whether anyone else maintains the repository is asked, not inferred. The checks for more
     than one maintainer apply only once the owner says so.
-  - A mirror is recognised, and CI is read on the forge that is canonical. A security contact
+  - A mirror is recognized, and CI is read on the forge that is canonical. A security contact
     named outside `SECURITY.md` counts.
   - The commit grammar is stated and checked, from either the Conventional Commits or the
     "area: summary" family, and one merge strategy is chosen, recorded and enforced.
   - Release tags are annotated. An interface others build on logs its changes and deprecates
     before it removes, and a second release line takes only compatible, cherry-picked fixes.
-  - Code that parses input it doesn't control gets damaged-input tests, and where licences mix,
+  - Code that parses input it doesn't control gets damaged-input tests, and where licenses mix,
     each file names its own.
   - The starter context file tells a session to say what it's waiting on.
 
@@ -265,5 +283,5 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
-- The repository's licence is now Apache-2.0, replacing the CC0-1.0 file it was created with.
+- The repository's license is now Apache-2.0, replacing the CC0-1.0 file it was created with.
   The standard keeps its own CC0-1.0 dedication.

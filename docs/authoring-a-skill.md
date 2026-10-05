@@ -2,7 +2,7 @@
 
 Every new or rebuilt skill passes this review, one skill per change. Record the outcome in
 `docs/decisions.md`: the skill, what it was built from, the sources it rests on, and anything
-reused under another licence.
+reused under another license.
 
 The owner's old claude.ai skills are a list of topics, checks and lessons. Nothing is copied from
 them.
@@ -30,16 +30,16 @@ and dependencies. A second version of a published rule drifts from the first.
    the facts due to be checked again, and `skillcheck --verify` fetches each source and looks
    for its quote. The freshness workflow runs both each week, and keeps one issue open while
    anything is due. Research results are leads until each claim is checked against its source.
-3. **Licences.** Quote, paraphrase or adapt a source only as its licence allows. The licences of
+3. **Licenses.** Quote, paraphrase or adapt a source only as its license allows. The licenses of
    common sources are in `research/runs/2026-09-23-A-source-licences.md`. Broadly:
    - **Adaptable with a notice:** CC0, MIT, Apache-2.0, BSD, CC BY, OGL and PSF sources. Examples
      are the GitHub gitignore templates, the Agent Skills spec, Microsoft's PowerShell docs, the
      Python docs, Google's style guides, SemVer and Keep a Changelog.
    - **Share-alike** (OWASP, MDN prose, the Arch Wiki): quote briefly with attribution, and
-     write everything else in our own words. An adaptation would carry their licence.
+     write everything else in our own words. An adaptation would carry their license.
    - **Restricted** (Epicor's help, SOLIDWORKS API samples, Anthropic's documentation): state
      facts in our own words and link to the source. Copy nothing beyond a short quote.
-   - Material under another licence comes in with its notice: name the licence in the `license`
+   - Material under another license comes in with its notice: name the license in the `license`
      field and keep a `THIRD-PARTY-NOTICES.md` in the skill's directory.
    - Anthropic's Apache-2.0 skills may be adapted, keeping their notice and marking the changes.
    - Nothing from Anthropic's source-available document skills (docx, pdf, pptx, xlsx).
@@ -83,11 +83,11 @@ and dependencies. A second version of a published rule drifts from the first.
    | `audit.md` | Every check: what to look for, its severity (the standard's status words), and the fix |
    | `mistakes.md` | Common mistakes, including those AI assistants make |
    | `modernization.md` | Moving off older versions and idioms |
-   | `sources.md` | Every source, with its licence |
+   | `sources.md` | Every source, with its license |
 8. **Every link resolves and every example works.** Each code example compiles, lints or runs
    under its language's own tools.
 9. **Trigger evaluations.** Write `tests/fixtures/skills/<name>.json` with requests that should
-   and should not activate the skill. Include near misses that belong to a neighbouring skill.
+   and should not activate the skill. Include near misses that belong to a neighboring skill.
 10. **Catalog, roadmap, README.** List the skill in exactly one plugin entry. Set its
     `ROADMAP.md` row to `shipped`, and add it to the README's skill table. Then run
     `uv run skillcheck .` and `npx --no-install claude plugin validate --strict .`.

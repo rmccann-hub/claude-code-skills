@@ -1,0 +1,12 @@
+# Rule 3: no filler, hype or unearned hedging.
+extends: existence
+message: "Cut '%s': it adds nothing, or claims what the text should show."
+level: error
+ignorecase: true
+tokens:
+  - just
+  - simply
+  - very
+  - seamless(?:ly)?
+  - robust(?:ly|ness)?
+  - leverag(?:e|es|ed|ing)

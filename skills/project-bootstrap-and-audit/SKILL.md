@@ -6,7 +6,7 @@ metadata:
   standard-version: "0.40.0"
 ---
 
-# Project Bootstrap and Audit
+# Project bootstrap and audit
 
 The standard is one long reference file beside this one:
 [references/PROJECT-BOOTSTRAP-AND-AUDIT-v0.40.0.md](references/PROJECT-BOOTSTRAP-AND-AUDIT-v0.40.0.md).

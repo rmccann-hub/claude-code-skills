@@ -2,6 +2,89 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — `house-style`: one style for prose, checked by Vale, and release 0.1.6
+
+- **Asked:** the owner asked for every repository and file to share one format and language,
+  recognizable as theirs because it's plain, free of filler, and correct. Their answers 11 to
+  13 chose American spelling, a Vale check whose style each release carries, and the draft
+  rules as written.
+- **Chosen:**
+  - **A skill, `house-style`,** with thirteen rules: seven on voice and six on format. It ships
+    in the `engineering` plugin, whose Apache-2.0 license it shares. The `standards` plugin is
+    CC0-1.0. `.claude/settings.json` already turns off both plugins' copies here.
+  - **Vale checks three of the rules:** the six filler words, sentence-case headings and
+    American spelling. No linter can tell whether the answer comes first or a fact was
+    checked, so the other ten are for review.
+  - **Each release carries `HouseStyle.zip`,** and other repositories name the latest by URL. A
+    change to the style reaches each one at its next CI run, and a new rule can fail a
+    repository that passed the day before. Pinning a release was the alternative: no surprises,
+    and a pin to move in every repository for each fix.
+  - **This repository loads the style from its source,** so a changed rule meets this
+    repository's text in the same pull request. The decision record, dated research, the
+    parity fixtures and, until v0.41.0, the standard's references are left out. Tables of
+    facts and sources skip their quotes.
+  - **The roadmap:** `house-style` takes the `markdown` row, for Markdown that people read.
+    Markdown for agents stays with `agent-context-files` and the standard. `documentation`
+    narrows to docs sites, diagrams, and file size and splitting.
+  - **README sections:** rule 10 uses the standard's README headings, Usage and Development.
+    The standard's template also has Requirements and Configuration, which fit the order. It
+    has no Operations or Security section, which the house style asks for. Adding them is for
+    the standard's next version, as a proposal to the owner.
+- **Built from:**
+  - the owner's draft rules, approved as written;
+  - Google's, Microsoft's and GOV.UK's style guides, for sentence case and the words to cut;
+  - research R02's lead on Vale, checked at its source: v3.24.0, where R02 had v3.22.0;
+  - the owner's claude.ai `markdown-standards` skill, as topics only. Its heading depth, list
+    nesting and blank lines around blocks came in. Its XML tags for agents belong to
+    `agent-context-files`, and its README template gave way to the standard's.
+- **Sources and licenses:** short quotes only, each a dated fact in `references/facts.md`, and
+  all 13 were found at their sources on 2026-10-05. Google's guide is CC BY 4.0, GOV.UK's is
+  under the Open Government Licence v3.0, Microsoft's is under its terms of use, and Vale is
+  MIT. With nothing copied beyond short quotes, no third-party notice is needed. The skill is
+  Apache-2.0.
+- **Whose work:** the rules are the owner's, written here. `markdown-standards` is an
+  organization skill, and only generic topics came from it, under the organization's written
+  permission recorded in the inception entry.
+- **Reviewed** against `docs/authoring-a-skill.md`:
+  - Items 1 to 4: see above. There's no company detail, and no example that needs a
+    placeholder.
+  - Item 5: no claude.ai paths and no destructive commands. Vale installs with `go install`
+    from its module, which Go checks against its checksum database. Nothing is fetched and run.
+  - Item 6: spec fields only, with a 780-character description in the third person.
+  - Item 7: `SKILL.md` is a 94-line router. Its five references are one level deep, each with
+    a title and a line on when to read it.
+  - Item 8: the style and the CI job run. Vale v3.24.0 passes all 69 tracked Markdown files
+    here, and the canary trips all three rules. `HouseStyle.zip`, built by the release code and
+    served over HTTP to a scratch repository, installed with `vale sync`. It passed a clean
+    file there, and failed a bad one on all three rules. actionlint and zizmor are clean.
+  - Item 9: `tests/fixtures/skills/house-style.json` holds 23 requests, 10 of them near misses
+    for neighboring skills.
+  - Item 10: the skill is in the catalog, the roadmap and the README.
+  - Item 11: the changelog has the entry, and `metadata.reviewed` is 2026-10-05.
+  - Item 12: the claude.ai `markdown-standards` skill has another name, so an upload won't
+    replace it. Turning it off is the owner's step once `house-style` is uploaded.
+- **American spelling:** converted in a commit of its own. Quotes, names, file names, URLs,
+  code and API values keep their own spelling: the Open Government Licence, the research result
+  `2026-09-23-A-source-licences.md`, and GitHub's `cancelled` conclusion. `skillcheck`'s
+  messages and the dependency map changed with it.
+- **Also in this change:**
+  - **Action pins:** each action is pinned to one commit across this repository's workflows and
+    the ones its skills ship. Dependabot updates only `.github/workflows/`, so a test fails
+    until a skill's copy follows, in the same pull request.
+  - **Release files:** `release.py` packs each skill's Vale style as its own ZIP, and stops a
+    release in which two files would share a name.
+  - **The kickstart file** has a session write in the house style, and propose its check where
+    a repository has none.
+  - **The conflict-marker scan** covers `.vale/`, the new top-level directory, which holds the
+    tracked vocabulary.
+  - **Planted breakages:** a drifted pin, a canary missing a rule, a word swapped twice and a
+    style not run on Markdown were each caught by the test meant for it.
+- **Checked:** `uv run pytest` passes 320 tests, with 100% line and branch coverage, and
+  `.test-baseline` moves from 293 to 320. ruff, `skillcheck` with 0 findings, Claude Code's
+  validator, and `skillcheck --verify` with 105 quotes and 0 not confirmed all pass.
+- **Release 0.1.6:** this pull request's merge, released by the Release workflow once CI passes
+  on the merge commit. Both catalog entries say 0.1.6.
+
 ## 2026-10-05 — The owner's answers to questions 1 to 17
 
 - **Answered:** the owner took every recommended option: "Do the recommended. And do the

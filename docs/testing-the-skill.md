@@ -34,7 +34,7 @@ repository's own. `pytest` checks that every sample builds and every key matches
 1. **Build the sample, with a copy of the skill beside it,** in a scratch folder outside this
    repository:
 
-   ```
+   ```sh
    uv run python -m skillcheck.parity materialize tests/fixtures/standard/samples/<name>.yaml <dir>
    git archive --format=tar HEAD skills/project-bootstrap-and-audit | tar -x -C <dir>
    ```
@@ -68,7 +68,7 @@ repository's own. `pytest` checks that every sample builds and every key matches
 
 3. **Grade the report** against the key:
 
-   ```
+   ```sh
    uv run python -m skillcheck.parity grade <report> tests/fixtures/standard/keys/<name>.yaml
    ```
 
@@ -78,7 +78,7 @@ repository's own. `pytest` checks that every sample builds and every key matches
    content, but it isn't nothing.
 5. **Compare with the baseline:**
 
-   ```
+   ```sh
    uv run python -m skillcheck.parity compare <report> tests/fixtures/standard/keys/<name>.yaml \
      tests/fixtures/standard/baseline/<name>.yaml
    ```
@@ -106,7 +106,7 @@ These come from the standard's own procedure for testing itself, and they still 
 - **The network.** The prompt limits what a run reads on disk, and says nothing about the
   network. In the v0.39.0 runs, the audit run installed from PyPI and read public repositories
   and vendor docs, and the other two made no network reads. So a status that rests on a network
-  check, such as a licence read from a dependency's repository, can differ between runs for
+  check, such as a license read from a dependency's repository, can differ between runs for
   that reason alone.
 
 Changing the prompt to settle either means taking a new baseline.
@@ -119,13 +119,14 @@ It also names any check that passed in every baseline run and not in this one.
 A sample with two baseline runs shows the noise. A status the two runs disagree on isn't a
 regression when it moves again. **Every difference in a pull request gets one of three
 explanations:**
+
 - the change was meant to move it;
 - it's noise the baseline already shows;
 - it's a regression, which gets fixed before merging.
 
 ## Recording a baseline
 
-```
+```sh
 uv run python -m skillcheck.parity record <report> tests/fixtures/standard/keys/<name>.yaml \
   --label "<skill commit>, run <n>"
 ```
@@ -141,6 +142,7 @@ a word used in passing. Its check that an item isn't proposed reads only each am
 `change:`, so an amendment's reasoning can name a declined item without counting as proposing
 it. Where it disagrees with a careful reading of the report, the reading wins, and the pull
 request says which it was. The standard's triage still applies:
+
 - **the skill**, when two runs on the same sample disagree about a definition;
 - **the run**, when one run's reasoning is sound and another's isn't;
 - **a fact or the sample**, when every run agrees and all of them are wrong.

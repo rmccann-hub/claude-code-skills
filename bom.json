@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:e94fcd3b-0c5a-51fa-9e3c-7d43e8c2f424",
+  "serialNumber": "urn:uuid:31119f82-eb9e-5e54-b044-d6f8cde16d83",
   "version": 1,
   "metadata": {
     "tools": {
@@ -18,7 +18,7 @@
       "type": "application",
       "bom-ref": "claude-code-skills",
       "name": "claude-code-skills",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "licenses": [
         {
           "expression": "Apache-2.0"
@@ -33,19 +33,19 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 63 file(s)"
+          "value": "Markdown: 69 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "Python: 25 file(s)"
+          "value": "Python: 26 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "YAML: 17 file(s)"
+          "value": "YAML: 22 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 8 file(s)"
+          "value": "JSON: 9 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -68,7 +68,7 @@
       "properties": [
         {
           "name": "claude-code-skills:used-in",
-          "value": ".github/workflows/ci.yml, .github/workflows/commit-subjects.yml, .github/workflows/freshness.yml, .github/workflows/release.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/commit-subjects.yml, .github/workflows/freshness.yml, .github/workflows/prose.yml, .github/workflows/release.yml"
         },
         {
           "name": "claude-code-skills:pinned-commit",
@@ -102,7 +102,7 @@
       "properties": [
         {
           "name": "claude-code-skills:used-in",
-          "value": ".github/workflows/ci.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/prose.yml"
         },
         {
           "name": "claude-code-skills:pinned-commit",
@@ -158,6 +158,19 @@
         {
           "name": "claude-code-skills:pinned-commit",
           "value": "c18668ad3cf93ea998bef934396af7bb5c839dc7"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.24.0",
+      "name": "vale",
+      "version": "v3.24.0",
+      "purl": "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.24.0",
+      "properties": [
+        {
+          "name": "claude-code-skills:set-in",
+          "value": ".github/workflows/prose.yml"
         }
       ]
     },
@@ -428,9 +441,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:engineering@0.1.5",
+      "bom-ref": "plugin:engineering@0.1.6",
       "name": "engineering",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -558,14 +571,51 @@
               "value": "www.conventionalcommits.org: 1 fact(s)"
             }
           ]
+        },
+        {
+          "type": "data",
+          "bom-ref": "skill:house-style",
+          "name": "house-style",
+          "description": "reviewed 2026-10-05",
+          "licenses": [
+            {
+              "expression": "Apache-2.0"
+            }
+          ],
+          "properties": [
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "developers.google.com: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "vale.sh: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "github.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "learn.microsoft.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.gov.uk: 1 fact(s)"
+            }
+          ]
         }
       ]
     },
     {
       "type": "application",
-      "bom-ref": "plugin:standards@0.1.5",
+      "bom-ref": "plugin:standards@0.1.6",
       "name": "standards",
-      "version": "0.1.5",
+      "version": "0.1.6",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -602,7 +652,7 @@
       "properties": [
         {
           "name": "claude-code-skills:set-in",
-          "value": ".github/workflows/ci.yml, .github/workflows/commit-subjects.yml, .github/workflows/freshness.yml, .github/workflows/release.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/commit-subjects.yml, .github/workflows/freshness.yml, .github/workflows/prose.yml, .github/workflows/release.yml"
         }
       ]
     },
@@ -614,7 +664,7 @@
       "properties": [
         {
           "name": "claude-code-skills:set-in",
-          "value": ".github/workflows/ci.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/prose.yml"
         }
       ]
     },
@@ -693,7 +743,7 @@
         "name": "GitHub"
       },
       "name": "GitHub Actions",
-      "description": "Runs the workflows: ci, commit-subjects, freshness, release.",
+      "description": "Runs the workflows: ci, commit-subjects, freshness, prose, release.",
       "endpoints": [
         "https://github.com/rmccann-hub/claude-code-skills/actions"
       ]
@@ -782,10 +832,11 @@
         "pkg:github/actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
         "pkg:github/actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
         "pkg:github/astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7",
+        "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.24.0",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
         "pkg:npm/%40anthropic-ai/claude-code@2.1.283",
-        "plugin:engineering@0.1.5",
-        "plugin:standards@0.1.5",
+        "plugin:engineering@0.1.6",
+        "plugin:standards@0.1.6",
         "project:skillcheck@0.0.0",
         "tool:GitHub-hosted runner@ubuntu-latest",
         "tool:Go@1.27",

@@ -19,7 +19,7 @@ instruction (see `AGENTS.md`).
    text. Leave the original text unedited.
 4. Update the `references/facts.md` of each affected skill. Every row carries the value, the
    source URL, the exact quote, the date it was checked and a check-by date.
-5. Quote or adapt a source only as its licence allows. The report names each source's licence;
+5. Quote or adapt a source only as its license allows. The report names each source's license;
    check it before relying on it.
 6. Tell the owner what changed, what was contradicted, and what couldn't be verified.
 
