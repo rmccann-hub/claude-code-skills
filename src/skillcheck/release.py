@@ -4,6 +4,7 @@
   session can be handed it with no message. The standard's text is unchanged; only the two
   sections no run reads are left out.
 - ``<skill>.zip``: each skill, packaged to upload to claude.ai.
+- ``<Package>.zip``: each Vale package a skill ships, for a repository's ``.vale.ini`` to name.
 - ``ruleset-<name>.json``: each ruleset a skill ships, to import into a repository's settings.
 - ``bom.json``: the dependency map, which must already match the commit.
 - ``notes.md``: the release page's text: how to install, what each file is, and the changelog's
@@ -36,6 +37,8 @@ END = "**End of the kickstart file.** If you can read this line, the whole file 
 EPOCH = (1980, 1, 1, 0, 0, 0)
 # A skill's rulesets, attached on their own because GitHub imports a ruleset from one JSON file.
 RULESETS = "skills/*/assets/rulesets/*.json"
+# A skill's Vale packages, one folder each, attached on their own because Vale fetches by URL.
+VALE = ":(glob)skills/*/assets/vale/**"
 
 
 class ReleaseError(Exception):
@@ -59,13 +62,21 @@ def problems(root: Path, version: str) -> list[str]:
 
 def build(root: Path, version: str, out: Path) -> list[str]:
     """Write the release's files to ``out`` and return their names."""
-    files: dict[str, bytes] = {
-        KICKSTART: kickstart(root, version).encode("utf-8"),
-        NOTES: notes(root, version).encode("utf-8"),
-        bom.BOM: (root / bom.BOM).read_bytes(),
-        **packages(root),
-        **rulesets(root),
-    }
+    files: dict[str, bytes] = {}
+    for part in (
+        {
+            KICKSTART: kickstart(root, version).encode("utf-8"),
+            NOTES: notes(root, version).encode("utf-8"),
+            bom.BOM: (root / bom.BOM).read_bytes(),
+        },
+        packages(root),
+        vale_packages(root),
+        rulesets(root),
+    ):
+        for name, data in part.items():
+            if name in files:
+                raise ReleaseError(f"two of the release's files would be called {name}")
+            files[name] = data
     out.mkdir(parents=True, exist_ok=True)
     for name, data in files.items():
         (out / name).write_bytes(data)
@@ -129,6 +140,7 @@ def notes(root: Path, version: str) -> str:
     if section is None:
         raise ReleaseError(f"CHANGELOG.md has no section for {version}")
     sets = {name: json.loads(data) for name, data in rulesets(root).items()}
+    styles = sorted(vale_packages(root))
     lines = [
         "Install in Claude Code:",
         "",
@@ -159,6 +171,11 @@ def notes(root: Path, version: str) -> str:
             for name in skills
         ],
         *[
+            f"| `{name}` | The {Path(name).stem} Vale style, which a repository's `.vale.ini` "
+            "names by URL |"
+            for name in styles
+        ],
+        *[
             f'| `{name}` | A {ruleset["target"]} ruleset, "{ruleset["name"]}", to import |'
             for name, ruleset in sets.items()
         ],
@@ -176,43 +193,60 @@ def packages(root: Path) -> dict[str, bytes]:
     for plugin in _catalog(root)["plugins"]:
         for path in plugin["skills"]:
             name = Path(path).name
-            # Each entry reads "<mode> <object> <stage>\t<path>"; a hook keeps its mode 100755.
-            listed = subprocess.run(
-                ["git", "-C", str(root), "ls-files", "-s", "-z", "--", f"skills/{name}"],
-                capture_output=True,
-                text=True,
-                check=True,
-            ).stdout
-            entries = sorted(
-                (path, mode.split()[0])
-                for mode, path in (e.split("\t", 1) for e in listed.split("\0") if e)
-            )
-            buffer = BytesIO()
-            with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
-                for tracked, mode in entries:
-                    entry = zipfile.ZipInfo(Path(tracked).relative_to("skills").as_posix(), EPOCH)
-                    entry.external_attr = (0o755 if mode == "100755" else 0o644) << 16
-                    entry.compress_type = zipfile.ZIP_DEFLATED
-                    archive.writestr(entry, (root / tracked).read_bytes())
-            out[f"{name}.zip"] = buffer.getvalue()
+            out[f"{name}.zip"] = _archive(root, _tracked(root, f"skills/{name}"), "skills")
     return out
+
+
+def vale_packages(root: Path) -> dict[str, bytes]:
+    """Each Vale package a skill ships, as a ZIP holding one folder named for the package."""
+    found: dict[str, tuple[str, list[tuple[str, str]]]] = {}
+    for tracked, mode in _tracked(root, VALE):
+        parts = Path(tracked).parts
+        if len(parts) < 6:
+            raise ReleaseError(f"{tracked} isn't inside a Vale package's folder")
+        base, name = Path(*parts[:4]).as_posix(), parts[4]
+        if found.setdefault(name, (base, []))[0] != base:
+            raise ReleaseError(f"two skills ship a Vale package called {name}")
+        found[name][1].append((tracked, mode))
+    return {f"{name}.zip": _archive(root, files, base) for name, (base, files) in found.items()}
 
 
 def rulesets(root: Path) -> dict[str, bytes]:
     """Each tracked ruleset a skill ships, under the name the release gives it."""
-    listed = subprocess.run(
-        ["git", "-C", str(root), "ls-files", "-z", "--", RULESETS],
-        capture_output=True,
-        text=True,
-        check=True,
-    ).stdout
     out: dict[str, bytes] = {}
-    for tracked in sorted(path for path in listed.split("\0") if path):
+    for tracked, _mode in _tracked(root, RULESETS):
         name = f"ruleset-{Path(tracked).stem}.json"
         if name in out:
             raise ReleaseError(f"two skills ship a ruleset called {Path(tracked).name}")
         out[name] = (root / tracked).read_bytes()
     return out
+
+
+def _tracked(root: Path, pathspec: str) -> list[tuple[str, str]]:
+    """Each tracked file the pathspec matches, with its mode, so a hook keeps its 100755."""
+    # Each entry reads "<mode> <object> <stage>\t<path>".
+    listed = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-s", "-z", "--", pathspec],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    return sorted(
+        (path, mode.split()[0])
+        for mode, path in (entry.split("\t", 1) for entry in listed.split("\0") if entry)
+    )
+
+
+def _archive(root: Path, files: list[tuple[str, str]], base: str) -> bytes:
+    """A ZIP of tracked files, each named from ``base``, the same bytes for the same commit."""
+    buffer = BytesIO()
+    with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
+        for tracked, mode in files:
+            entry = zipfile.ZipInfo(Path(tracked).relative_to(base).as_posix(), EPOCH)
+            entry.external_attr = (0o755 if mode == "100755" else 0o644) << 16
+            entry.compress_type = zipfile.ZIP_DEFLATED
+            archive.writestr(entry, (root / tracked).read_bytes())
+    return buffer.getvalue()
 
 
 def _catalog(root: Path) -> dict:
