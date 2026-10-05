@@ -1,14 +1,14 @@
 """Command-line entry point: ``skillcheck [ROOT] [MODE]``.
 
-The modes are ``--due [DATE]``, ``--verify``, ``--bom`` and ``--bom-check``, one at a time. With
-none, it runs every rule on the repository.
+The modes are ``--due [DATE]``, ``--verify``, ``--bom``, ``--bom-check`` and
+``--release-assets VERSION DIR``, one at a time. With none, it runs every rule on the repository.
 """
 
 import argparse
 from datetime import date
 from pathlib import Path
 
-from skillcheck import bom
+from skillcheck import bom, release
 from skillcheck.core import facts
 from skillcheck.core.checks import check_repository
 
@@ -48,6 +48,12 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="name each dependency-map file that no longer matches the repository",
     )
+    mode.add_argument(
+        "--release-assets",
+        nargs=2,
+        metavar=("VERSION", "DIR"),
+        help="build what a release of VERSION publishes beside its tag, into DIR",
+    )
     args = parser.parse_args(argv)
     if not args.root.is_dir():
         # A missing root would otherwise report zero findings, which reads as a pass.
@@ -61,6 +67,8 @@ def main(argv: list[str] | None = None) -> int:
             print(f"wrote {path}")
         print(f"skillcheck: dependency map written, {_summary(args.root)}")
         return 0
+    if args.release_assets:
+        return _release(args.root, *args.release_assets)
     if args.bom_check:
         old = bom.stale(args.root)
         for path in old:
@@ -74,6 +82,21 @@ def main(argv: list[str] | None = None) -> int:
     # Always printed, so a run that checked nothing says so rather than looking like a pass.
     print(report.summary())
     return 1 if report.findings else 0
+
+
+def _release(root: Path, version: str, out: str) -> int:
+    found = release.problems(root, version)
+    for problem in found:
+        print(f"release: {problem}")
+    if not found:
+        try:
+            for name in release.build(root, version, Path(out)):
+                print(f"wrote {Path(out) / name}")
+        except release.ReleaseError as error:
+            print(f"release: {error}")
+            found = [str(error)]
+    print(f"skillcheck: release {version}, {len(found)} problem(s)")
+    return 1 if found else 0
 
 
 def _summary(root: Path) -> str:

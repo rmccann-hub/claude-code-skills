@@ -2,6 +2,41 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — Releases publish their files, and the release job's defects are fixed
+
+- **Asked:** the owner asked that what a release gives them be "the kickstart/bootstrap files",
+  not only release notes and the plugin commands, and that everything since 0.1.2 be released
+  as 0.1.3.
+- **Found:** the Release workflow's first run, for `v0.1.1` on `cbe163f`, failed at the push:
+  "refusing to allow a GitHub App to create or update workflow `.github/workflows/ci.yml`
+  without `workflows` permission" (run 37258285607). GitHub's page on the workflow scope says
+  why: "Workflow files can be committed without this scope if the same file (with both the
+  same path and contents) exists on another branch in the same repository." No branch still has
+  `cbe163f`'s `ci.yml`, and the job's token can't be given that permission. The run showed two
+  more defects in the example. A failed attempt leaves a failing check on the commit, which the
+  next attempt reads as a failed check. And a tag pushed by an attempt that then failed stops
+  the next one.
+- **Changed, in the `git-workflows` skill:** its example release job checks, before making
+  anything, that a branch has each of the commit's workflow files as it is, and says what to do
+  when none does. It leaves out the runs of its own jobs, named in `OWN_JOBS`, when it reads the
+  commit's checks, and it carries on from a tag it would have made itself. The new fact
+  `workflow-scope` holds the documentation's words, and `setup.md` says to tag before a later
+  commit changes a workflow. Tests cover each change, and the skill's review date moves to
+  2026-10-05.
+- **Chosen, for this repository:**
+  - The Release workflow keeps that job and adds two. `Release files` checks out the commit
+    with no write access and runs `skillcheck --release-assets`. That refuses a catalog,
+    changelog or dependency map that disagrees with the version, then builds `KICKSTART.md`, a
+    ZIP of each skill and the page's notes. `Release page` publishes the page from the tag with
+    those files attached, or updates it where an earlier attempt published it.
+  - `KICKSTART.md` is the standard as one file, built the way the run files for the owner's
+    live runs were, but naming no repository: it picks its job from what the repository holds.
+    Its run instructions are in `src/skillcheck/kickstart.md`. GitHub serves the newest
+    release's files at a fixed address, so one link always reaches the current kickstart file.
+- **`v0.1.1` stays untagged.** The job can't make it while no branch has `cbe163f`'s workflow
+  files, and the release it would mark has been superseded twice. Its changelog section and its
+  merge commit remain its record.
+
 ## 2026-10-05 — A dependency map, kept in CycloneDX
 
 - **Asked:** the owner asked for a full map of the projects, languages, versions, applications

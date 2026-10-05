@@ -17,16 +17,16 @@ freshness run and the release workflow both run it.
 | Plugin | Version | Licence | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.2 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.40.0 |
-| `engineering` | 0.1.2 | Apache-2.0 | `git-workflows` | reviewed 2026-09-30 |
+| `engineering` | 0.1.2 | Apache-2.0 | `git-workflows` | reviewed 2026-10-05 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 61 |
-| Python | 20 |
+| Markdown | 62 |
+| Python | 22 |
 | YAML | 16 |
-| JSON | 5 |
+| JSON | 6 |
 | Shell | 2 |
 | TOML | 2 |
 
@@ -40,7 +40,7 @@ freshness run and the release workflow both run it.
 | Go | 1.27 | `.github/workflows/ci.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
-| uv | 0.12.18 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml` | — |
+| uv | 0.12.18 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
 
 ## Python packages
 
@@ -87,9 +87,11 @@ package.json
 | Action | Version | Pinned commit | Used in |
 |---|---|---|---|
 | `actions/checkout` | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
+| `actions/download-artifact` | v8.0.1 | `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` | `.github/workflows/release.yml` |
 | `actions/setup-go` | v7.0.0 | `b7ad1dad31e06c5925ef5d2fc7ad053ef454303e` | `.github/workflows/ci.yml` |
 | `actions/setup-node` | v7.0.0 | `820762786026740c76f36085b0efc47a31fe5020` | `.github/workflows/ci.yml` |
-| `astral-sh/setup-uv` | v10.2.0 | `c18668ad3cf93ea998bef934396af7bb5c839dc7` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml` |
+| `actions/upload-artifact` | v7.0.1 | `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` | `.github/workflows/release.yml` |
+| `astral-sh/setup-uv` | v10.2.0 | `c18668ad3cf93ea998bef934396af7bb5c839dc7` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
 
 ## Services
 
@@ -112,7 +114,7 @@ weekly freshness run looks for every quote at its source again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no `references/facts.md` | — |
-| `git-workflows` | docs.github.com | 25 |
+| `git-workflows` | docs.github.com | 26 |
 | `git-workflows` | git-scm.com | 17 |
 | `git-workflows` | raw.githubusercontent.com | 6 |
 | `git-workflows` | github.blog | 5 |

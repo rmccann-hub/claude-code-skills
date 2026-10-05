@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:b07b6d06-a998-52cc-b680-42e7ccd6c084",
+  "serialNumber": "urn:uuid:76d7b137-1ab0-53fc-831f-4700e99b34d8",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,11 +33,11 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 61 file(s)"
+          "value": "Markdown: 62 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "Python: 20 file(s)"
+          "value": "Python: 22 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -45,7 +45,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 5 file(s)"
+          "value": "JSON: 6 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -73,6 +73,23 @@
         {
           "name": "claude-code-skills:pinned-commit",
           "value": "3d3c42e5aac5ba805825da76410c181273ba90b1"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "pkg:github/actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "name": "actions/download-artifact",
+      "version": "v8.0.1",
+      "purl": "pkg:github/actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "properties": [
+        {
+          "name": "claude-code-skills:used-in",
+          "value": ".github/workflows/release.yml"
+        },
+        {
+          "name": "claude-code-skills:pinned-commit",
+          "value": "3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c"
         }
       ]
     },
@@ -112,6 +129,23 @@
     },
     {
       "type": "application",
+      "bom-ref": "pkg:github/actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+      "name": "actions/upload-artifact",
+      "version": "v7.0.1",
+      "purl": "pkg:github/actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+      "properties": [
+        {
+          "name": "claude-code-skills:used-in",
+          "value": ".github/workflows/release.yml"
+        },
+        {
+          "name": "claude-code-skills:pinned-commit",
+          "value": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+        }
+      ]
+    },
+    {
+      "type": "application",
       "bom-ref": "pkg:github/astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7",
       "name": "astral-sh/setup-uv",
       "version": "v10.2.0",
@@ -119,7 +153,7 @@
       "properties": [
         {
           "name": "claude-code-skills:used-in",
-          "value": ".github/workflows/ci.yml, .github/workflows/freshness.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/freshness.yml, .github/workflows/release.yml"
         },
         {
           "name": "claude-code-skills:pinned-commit",
@@ -408,7 +442,7 @@
           "type": "data",
           "bom-ref": "skill:git-workflows",
           "name": "git-workflows",
-          "description": "reviewed 2026-09-30",
+          "description": "reviewed 2026-10-05",
           "licenses": [
             {
               "expression": "Apache-2.0"
@@ -417,7 +451,7 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "docs.github.com: 25 fact(s)"
+              "value": "docs.github.com: 26 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -616,7 +650,7 @@
       "properties": [
         {
           "name": "claude-code-skills:set-in",
-          "value": ".github/workflows/ci.yml, .github/workflows/freshness.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/freshness.yml, .github/workflows/release.yml"
         }
       ]
     },
@@ -739,8 +773,10 @@
       "ref": "claude-code-skills",
       "dependsOn": [
         "pkg:github/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+        "pkg:github/actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
         "pkg:github/actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e",
         "pkg:github/actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+        "pkg:github/actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
         "pkg:github/astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
         "pkg:npm/%40anthropic-ai/claude-code@2.1.283",
