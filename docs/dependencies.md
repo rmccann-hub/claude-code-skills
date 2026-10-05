@@ -73,15 +73,15 @@ plugins ship.
 
 ```text
 package.json
-└── @anthropic-ai/claude-code 2.1.283 (dev)
-    ├── @anthropic-ai/claude-code-darwin-arm64 2.1.283 (dev; optional)
-    ├── @anthropic-ai/claude-code-darwin-x64 2.1.283 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-arm64 2.1.283 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-arm64-musl 2.1.283 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-x64 2.1.283 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-x64-musl 2.1.283 (dev; optional)
-    ├── @anthropic-ai/claude-code-win32-arm64 2.1.283 (dev; optional)
-    └── @anthropic-ai/claude-code-win32-x64 2.1.283 (dev; optional)
+└── @anthropic-ai/claude-code 2.1.288 (dev)
+    ├── @anthropic-ai/claude-code-darwin-arm64 2.1.288 (dev; optional)
+    ├── @anthropic-ai/claude-code-darwin-x64 2.1.288 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-arm64 2.1.288 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-arm64-musl 2.1.288 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-x64 2.1.288 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-x64-musl 2.1.288 (dev; optional)
+    ├── @anthropic-ai/claude-code-win32-arm64 2.1.288 (dev; optional)
+    └── @anthropic-ai/claude-code-win32-x64 2.1.288 (dev; optional)
 ```
 
 ## GitHub Actions
