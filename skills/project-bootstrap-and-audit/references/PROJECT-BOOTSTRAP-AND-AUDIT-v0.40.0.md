@@ -668,7 +668,8 @@ reads as diligence.
 | Fact | As of | Why a run cares |
 |---|---|---|
 | Classic branch protection **and** rulesets: public repositories on a free plan, or public and private on a paid one — **GitHub Pro suffices for a personal account**. Push rulesets need an organisation plan and apply only to private and internal repositories | 2026-09 | Dimension 6. Decides `GAP` against `N/A`, and whether the public-or-pay decision is raised at all |
-| Secret scanning and push protection: free and default-on for public repositories; a paid per-committer add-on for private | 2026-09 | Dimension 7. Decides whether the free remedy exists |
+| Secret scanning: free for public repositories; for private ones, a paid per-committer add-on | 2026-09 | Dimension 7. Decides whether the free remedy exists |
+| Push protection comes in two kinds. **For users**, it is on by default and stops a user's own pushes of secrets to public repositories, with no alert when they bypass it. **For the repository**, it is off until someone turns it on, it blocks pushes containing secrets from reaching that repository, and only it raises an alert for a bypass | 2026-10 | Dimension 7. The users' default isn't the repository's control |
 | Code owners: public repositories on any plan, including GitHub Free; private repositories only on GitHub Pro, Team or Enterprise | 2026-09 | Dimension 3. Decides `GAP` against `N/A` for a missing `CODEOWNERS` |
 | Immutable releases are a **repository or organisation setting**, not a default. When on: tag and assets frozen at publish, title and notes still editable, and assets must be uploaded while the release is a draft | 2026-09 | The release gate. Read the setting; do not assume either way |
 | Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt. The period is set with `default-days` under `cooldown:`, with per-semver keys alongside; a bare `cooldown: 0` is not a documented form | 2026-09 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
@@ -691,7 +692,7 @@ reads as diligence.
 | `claude plugin validate --strict` (2.1.280) checks manifests and agents, but reported none of five planted skill defects and accepted a reserved marketplace name | 2026-09 | Dimension 9. A passing validator is not a review of the skills |
 | `syncClaudeAiSkills: false`, and `syncClaudeAiPlugins: false` for plugins, are read from user, local and managed settings only, so a project's committed `.claude/settings.json` can't stop the sync. Any settings file, the committed one included, can hide a skill with `skillOverrides`, which the docs say doesn't reach plugin skills and don't say of synced ones. The changelog documents `Skill(anthropic-skills:<name>)` permission rules that match synced skills (2.1.282, 2.1.283). Neither route had been tried on a synced skill as of 2026-09-28 | 2026-09 | Dimension 4. A repository can't stop the sync; whether it can hide or deny a synced skill in its own sessions is documented, not yet shown |
 | A plugin catalog entry whose skill paths all miss loads the plugin's whole skills folder, with no error | 2026-09 | Dimension 9. One typo ships everything |
-| Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Skills enabled on the account load in cloud sessions as well. For one account, on 2026-09-23 and again on 2026-09-28, a cloud session received no plugin while its skills arrived | 2026-09 | *Standards Distribution*. A skill reaches cloud sessions by upload to the account; a plugin doesn't |
+| Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Anthropic support said on 2026-09-30 that they are meant to load in cloud sessions too, that the docs' silence is a gap, and that an empty plugin list isn't expected, and named two causes to rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true` in the cloud environment. In one account's cloud sessions on 2026-09-30 and 2026-10-05, the platform set that variable itself, in the process that launches Claude Code, the environment manager and Claude Code (2.1.280, then 2.1.289), and the synced plugins folder was empty. Skills enabled on the account arrived in its cloud sessions on 2026-09-23, 2026-09-28 and 2026-10-05 | 2026-10 | *Standards Distribution*. Until a plugin enabled on the account is seen in a cloud session, with the variable gone, a skill uploaded to the account is the route that reaches one |
 | An organisation's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards Distribution*. A public repository reaches an organisation's members only by upload |
 | A cloud session installs no plugin that a repository's `.claude/settings.json` turns on under `enabledPlugins`, including those from marketplaces it lists under `extraKnownMarketplaces` | 2026-09 | Dimension 4 and *Standards Distribution*. A repository that relies on its settings for a plugin gets none in cloud sessions |
 | In a cloud session, a public repository's committed files arrive through `raw.githubusercontent.com`, which is on the default Trusted network list, while GitHub API requests reach only repositories attached to the session. The docs say release-asset requests do too, with a 403 otherwise, but on 2026-09-26 and 2026-09-29 an unattached public repository's `releases/download/` link returned 200 while its API returned 403 | 2026-09 | *Sending Results Back*. A file linked at a commit is documented to arrive; a release asset is documented not to, whatever one download showed |
@@ -1987,14 +1988,20 @@ misses by default.
 <constraints>
 
 **Platform secret scanning is free on public repositories and paid on private ones**, as of
-2026-09. Push protection is on by default for public repositories and blocks the push itself,
-which is the only control in this file that stops a credential before it reaches the remote.
-On a private repository the equivalent is a paid add-on, priced per active committer.
+2026-09. **Push protection comes in two kinds** (GitHub's push protection page, read
+2026-10-05). **For users**, it is on by default and stops a user's own pushes of secrets to
+public repositories, but it alerts nobody when they bypass it, and it covers only those who
+kept it on. **For the repository**, it is off until someone turns it on, it blocks pushes
+containing secrets from reaching that repository whoever makes them, and only it raises an
+alert for a bypass. **The repository's kind is the only control in this file that stops any
+contributor's credential before it reaches the remote.** On a private repository the
+equivalent is a paid add-on, priced per active committer.
 
 **So the finding differs by visibility, and both halves matter:**
 
-- **Public repository, push protection off** — a `GAP` with a free remedy, which makes it one
-  of the few amendments with no trade to weigh. Turn it on.
+- **Public repository, the repository's push protection off** — a `GAP` with a free remedy,
+  which makes it one of the few amendments with no trade to weigh. Turn it on. The users'
+  default doesn't discharge it.
 - **Private repository, no platform scanning** — `N/A` on the platform control, and the
   in-repository scanner in CI is then the whole of the defence rather than a second layer.
   Say which it is, because a CI scanner catches a credential **after** it is on the remote,
@@ -4427,7 +4434,7 @@ protocol is a two-element one.
 | CI logic | Reusable workflows — pull-based, change once |
 | Files that must physically exist | `copier` template — a session cannot fetch them |
 | Shared reference docs | `copier` template — one path, refreshed by `copier update` |
-| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under, which is documented to load there. Plugins enabled on the account are documented for Cowork and signed-in terminal sessions only, and a repository's own settings install none in a cloud session. A stamped, checked copy under `.claude/skills/` where neither fits |
+| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under, which is documented to load there. Plugins enabled on the account are documented for Cowork and signed-in terminal sessions, and support says they are meant to reach cloud sessions too, but none has been seen there while the platform sets `SKIP_PLUGIN_MARKETPLACE`, as *Facts with an Expiry Date* records. A repository's own settings install none in a cloud session. A stamped, checked copy under `.claude/skills/` where neither fits |
 | This standard, for one run | Attached, or linked at a fixed commit and checked against its SHA-256, as *Sending Results Back* shows |
 
 `.copier-answers.yml` records the template version. `copier update` re-applies changes and
