@@ -159,7 +159,7 @@ def notes(root: Path, version: str) -> str:
             for name in skills
         ],
         *[
-            f"| `{name}` | The {ruleset['name']} {ruleset['target']} ruleset, to import |"
+            f'| `{name}` | A {ruleset["target"]} ruleset, "{ruleset["name"]}", to import |'
             for name, ruleset in sets.items()
         ],
         f"| `{bom.BOM}` | The dependency map in CycloneDX {bom.SPEC_VERSION}; "

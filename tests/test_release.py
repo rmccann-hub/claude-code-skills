@@ -141,7 +141,7 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     assert "/plugin install beta@fixture-skills\n```" in notes
     assert "| `tool.zip` | The `tool` skill, packaged to upload to claude.ai |" in notes
     assert "choose Import a ruleset.\n\n| File |" in notes
-    assert "| `ruleset-tags.json` | The Tags tag ruleset, to import |" in notes
+    assert '| `ruleset-tags.json` | A tag ruleset, "Tags", to import |' in notes
     assert notes.endswith("### Added\n\n- A thing.\n")
     assert (out / "bom.json").read_bytes() == (root / "bom.json").read_bytes()
     assert (out / "ruleset-tags.json").read_text(encoding="utf-8") == RULESET
