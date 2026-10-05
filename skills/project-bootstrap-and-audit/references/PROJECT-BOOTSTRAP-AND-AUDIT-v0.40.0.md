@@ -5,21 +5,21 @@ metadata:
   version: "0.40.0"
   updated: "2026-09-30"
   supersedes: "0.39.0"
-  reading: "One file, read in ranges. Start at How to Read This File; take only the sections your job names."
+  reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
   license: "CC0-1.0"
 ---
 
-# Project Bootstrap and Audit
+# Project bootstrap and audit
 
-**Licence: CC0 1.0 Universal.** Dedicated to the public domain — copy it, change it, sell it,
+**License: CC0 1.0 Universal.** Dedicated to the public domain — copy it, change it, sell it,
 publish it, no attribution needed. If a jurisdiction does not permit dedication, treat it as a
-licence to do all of the above unconditionally. No warranty of any kind.
+license to do all of the above unconditionally. No warranty of any kind.
 
 ---
 
-# How to Read This File
+# How to read this file
 
 <constraints>
 
@@ -47,9 +47,9 @@ range — do not guess at what was cut off.
 
 ## What to read, by job
 
-**Always, first:** this section, then all of **Before You Start** — one H1, so the heading
+**Always, first:** this section, then all of **Before you start** — one H1, so the heading
 index finds it in one match. It holds *Scope*, *How to read a finding* with the standing
-rules, *Environment — detected, not assumed*, *Vocabularies* and *Facts with an Expiry Date*.
+rules, *Environment — detected, not assumed*, *Vocabularies* and *Facts with an expiry date*.
 **Everything else is on demand.**
 
 **This is the one routing table.** Each section is named exactly as it is headed, so the
@@ -57,20 +57,20 @@ heading index finds it in one match.
 
 | Job | Then read | Skip |
 |---|---|---|
-| **Survey** — look, change nothing | *The Run*, phases 0–5, then stop and report | Phases 6–9 |
-| **Audit or retrofit** | *The Run*, all phases, with the ten dimensions inside phase 4, plus *File Governance* | *The Release and Deploy Currency Gate*; *Choosing a Language and Runtime*, *Choosing the Shape* and *Project Shapes and Layout* unless a choice is itself a finding |
-| **Set up something new**, including a repository that holds no source yet | *The Run*, all phases, plus *Choosing a Language and Runtime*, *Choosing the Shape*, *Project Shapes and Layout*, *Starter File Contents* and *File Governance* | *The Release and Deploy Currency Gate* |
-| **Choose a language and a shape** before any source exists, with no repository yet or in one that holds no source | *Choosing a Language and Runtime*, *Choosing the Shape* and *Project Shapes and Layout*. In a repository, *The Run* as well: phases 0–3, stopping at the Phase 3 wait with the recommendation, and Phase 6 for the shape of its report | Everything else, until the choice is made. Setting it up is then the row above |
-| **Write a missing config file** | *Starter File Contents* and *The Configuration File Map* | Everything else |
-| **Cut a release or a deploy** | *The Release and Deploy Currency Gate*, plus version reconciliation in dimension 10 | Phases 1–9 |
-| **Prune files** | *File Governance* | Everything else |
-| **Two repositories are involved, or more** | *Cross-Repository Contracts* — including the fleet case, and the copied-file trade | Nothing extra |
-| **Plan what happens next** | *The Run*, phase 9 | Everything else, if the audit is already done |
-| **Running on a tool that is not Claude Code** | *Any Agent, Any Tool*, then your job's row | Nothing extra |
-| **Contribute a run to whoever maintains this** | *Sending Results Back* | Nothing extra |
-| **Test this standard** | *Validating a Change to This Standard* | Everything else |
+| **Survey** — look, change nothing | *The run*, phases 0–5, then stop and report | Phases 6–9 |
+| **Audit or retrofit** | *The run*, all phases, with the ten dimensions inside phase 4, plus *File governance* | *The release and deploy currency gate*; *Choosing a language and runtime*, *Choosing the shape* and *Project shapes and layout* unless a choice is itself a finding |
+| **Set up something new**, including a repository that holds no source yet | *The run*, all phases, plus *Choosing a language and runtime*, *Choosing the shape*, *Project shapes and layout*, *Starter file contents* and *File governance* | *The release and deploy currency gate* |
+| **Choose a language and a shape** before any source exists, with no repository yet or in one that holds no source | *Choosing a language and runtime*, *Choosing the shape* and *Project shapes and layout*. In a repository, *The run* as well: phases 0–3, stopping at the Phase 3 wait with the recommendation, and Phase 6 for the shape of its report | Everything else, until the choice is made. Setting it up is then the row above |
+| **Write a missing config file** | *Starter file contents* and *The configuration file map* | Everything else |
+| **Cut a release or a deploy** | *The release and deploy currency gate*, plus version reconciliation in dimension 10 | Phases 1–9 |
+| **Prune files** | *File governance* | Everything else |
+| **Two repositories are involved, or more** | *Cross-repository contracts* — including the fleet case, and the copied-file trade | Nothing extra |
+| **Plan what happens next** | *The run*, phase 9 | Everything else, if the audit is already done |
+| **Running on a tool that is not Claude Code** | *Any agent, any tool*, then your job's row | Nothing extra |
+| **Contribute a run to whoever maintains this** | *Sending results back* | Nothing extra |
+| **Test this standard** | *Validating a change to this standard* | Everything else |
 
-**Every job ends with the *Conformance Self-Check*.** It is short and it is the only part of this
+**Every job ends with the *Conformance self-check*.** It is short and it is the only part of this
 file that asks the run to report on itself.
 
 ## What not to read during a run
@@ -78,15 +78,15 @@ file that asks the run to report on itself.
 | Section | Why |
 |---|---|
 | *Provenance* | The incident behind every rule. Read it when a rule looks arbitrary and you want to know what produced it — **never to be thorough** |
-| *Validating a Change to This Standard* | For testing this file, not for running it |
-| *Proposing a Change to This Standard* | Read it only when you have found this file wrong |
+| *Validating a change to this standard* | For testing this file, not for running it |
+| *Proposing a change to this standard* | Read it only when you have found this file wrong |
 
 **If your tool gave you this whole file in context and you cannot read selectively, that is
 fine** — the routing above still tells you which parts to attend to, and which to skip.
 
 ---
 
-# Before You Start
+# Before you start
 
 **Everything in this section is read on every job, whatever the job is.** It is the shortest
 part of the file that cannot be skipped: what this covers and does not, how to read a finding,
@@ -104,21 +104,21 @@ Contents** specifies what goes in it.
 
 **To run it:** attach this file to an agent session on a repository and say *"Run the attached
 PROJECT-BOOTSTRAP-AND-AUDIT standard against this repository"* plus the job. It stops and waits
-twice; nothing is written before you approve. **Sending Results Back** has the full prompt
+twice; nothing is written before you approve. **Sending results back** has the full prompt
 and what to return.
 
 **For something that does not exist yet**, attach it to an empty repository — or none — and say
 what you want to build and who runs it. It will choose a language and a shape with you before
 it writes anything.
 
-**It runs on any agent tool**, not only the one whose paths it names. **Any Agent, Any Tool**
+**It runs on any agent tool**, not only the one whose paths it names. **Any agent, any tool**
 translates them, and every run closes with a **conformance self-check** so a run on an
 unfamiliar model reports its own weak points rather than leaving you to find them.
 
 ## What this is for
 
 Set up a new repository, or check an existing one against a baseline, **without a second
-reviewer and without a platform team.** It replaces the judgement a colleague would apply at
+reviewer and without a platform team.** It replaces the judgment a colleague would apply at
 inception and at release, with the reasoning written down so a later run can disagree with it.
 
 **Goals.** Make inception decisions explicit, especially the irreversible ones. Make drift
@@ -162,7 +162,7 @@ discovering it.
 - **Stakes are two axes, not one.** Blast radius and audience diverge; an internal tool three
   people use can break a production floor.
 - **The human decides.** Where a choice has a real trade, it goes to them with both
-  consequences rather than being applied on the agent's judgement.
+  consequences rather than being applied on the agent's judgment.
 
 ## Limitations
 
@@ -176,7 +176,7 @@ discovering it.
   than thresholds, because no measurement supports a specific number.
 - **Git and a hosted remote are assumed.** Nothing here covers other version control.
 - **Named tools and platform capabilities go stale.** Every version number, price and plan
-  limit in this file is dated in **Facts with an Expiry Date** and was true on that date
+  limit in this file is dated in **Facts with an expiry date** and was true on that date
   only. A run that relies on one without checking it is reporting last year's platform.
 - **Shapes not yet exercised** carry more risk: PowerShell, C#, C with meson, shell tools,
   and repositories with cross-repository contracts. The audit path has far more runs behind it
@@ -196,7 +196,7 @@ discovering it.
   its own. **Each produces no opinion rather than a wrong one**, which is why they are
   tolerable, and each is a gap someone will eventually hit.
 - **A repository that holds this standard treats the file as content.** It is rated only for
-  placement, licence and versioning (dimensions 3, 9 and 10), and a run never raises a
+  placement, license and versioning (dimensions 3, 9 and 10), and a run never raises a
   repository amendment against it. Anything wrong with its rules arrives as a
   `class: standard` amendment, as *Proposing a change to this standard* describes.
 - **The choosing part has no runs behind it at all.** Language and shape selection arrived in
@@ -241,21 +241,21 @@ skip the rest.** That table is the only one. A second table here drifted from it
 runs of the same job could have read different sections. Reading a section that does not
 apply costs context and dilutes attention on the ones that do.
 
-**Testing the standard rather than a repository?** Read *Validating a Change to This Standard* and nothing else —
+**Testing the standard rather than a repository?** Read *Validating a change to this standard* and nothing else —
 it carries the whole procedure: corpus, order, prompts, what to record, and how to triage a
 failure. Its mechanical checks need no repository at all.
 
-**This is one file, read in ranges.** *How to Read This File*, at the top, says which
+**This is one file, read in ranges.** *How to read this file*, at the top, says which
 sections each job needs and which to skip. Where a run finds this standard itself wrong,
-*Proposing a Change to This Standard* says how that reaches the gate.
+*Proposing a change to this standard* says how that reaches the gate.
 
 ***Provenance* carries the version history and the incident behind every rule. It is never
 read during a run** — only when a rule looks arbitrary and you want to know what produced it. It is the record of why rules exist, for
 whoever maintains this file. Skip it unless you are changing the standard.
 Within a run, skip further:
 
-- ***The Release and Deploy Currency Gate*, *Cross-Repository Contracts*,
-  *Standards Distribution*** — only when cutting a release or a deploy, where this repository
+- ***The release and deploy currency gate*, *Cross-repository contracts*,
+  *Standards distribution*** — only when cutting a release or a deploy, where this repository
   provides to or consumes from another, or when proposing how a standard reaches many
   repositories. Most runs need none of the three.
 - **A dimension that is `N/A` at this tier** — record it and move on. Do not argue it.
@@ -382,7 +382,7 @@ consequences can be sorted, not so anything can be demanded.
   level **a job or a test that silently did not run looks exactly like one that passed**, and
   a green tick is the sum of both. A skipped test is not a passing test; a conditional job
   whose condition went false reports nothing and subtracts nothing from the conclusion. This
-  matters most for the gates an amendment just changed, which is precisely when the rollup is
+  matters most for the gates an amendment changed, which is precisely when the rollup is
   least informative: a live run read a green conclusion at job and log level and confirmed
   three things the tick could not have told it — that the downloaded scanner really was
   checksum-verified before execution, that a newly added guard ran rather than skipping, and
@@ -446,7 +446,7 @@ consequences can be sorted, not so anything can be demanded.
   rated.
 - **Unfamiliar is not wrong.** These ten dimensions encode practice that is known to work;
   they do not encode everything that works. **An approach, tool, algorithm or layout you do
-  not recognise is not evidence of a defect**, and the absence of a rule covering it is a
+  not recognize is not evidence of a defect**, and the absence of a rule covering it is a
   fact about this file rather than about the repository. Where something is unusual and you
   cannot establish that it is wrong, **say that it is unusual and unverified, rate on what
   you could establish, and put the question to the human** — who may well have chosen it
@@ -470,10 +470,10 @@ consequences can be sorted, not so anything can be demanded.
 - **An identifier that answers half a question while appearing to answer all of it is worse
   than one that answers none**, because it stops the reader asking. **And the name a human
   actually sees is part of the interface** — metadata inside a file does not help someone
-  looking at a directory listing. A live protocol stamped artefacts with their sender and
+  looking at a directory listing. A live protocol stamped artifacts with their sender and
   nothing else, which read as complete while leaving the recipient unstated; the fix put both
   in the envelope **and in the filename**, because a file manager shows the filename. Where
-  an artefact moves between parties, its name places it in both directions.
+  an artifact moves between parties, its name places it in both directions.
 - **Report over-configuration as loudly as under-configuration.** `OVER` is a real finding,
   **and it applies to enforcement this file itself installed.**
 
@@ -499,7 +499,7 @@ never a guess.
 | **Remote CI readable** | Try reading a conclusion | Without it, "local green is not remote green" cannot be discharged. Record `unverifiable` |
 | **Tag creation** | Try, or read the tool list | Where refused, tagging is a human action via the host UI or a dispatch job, and from T2 the job, which can make the tag annotated — **never "tag locally"** |
 | **Local working copy exists** | **Ask. It cannot be detected** | Without one: no local tagging, no desktop tooling, and **client-side hooks gate nothing** unless a committed SessionStart hook installs them, because every commit comes from an ephemeral container |
-| **Enforced layer** | See *Any Agent, Any Tool* | Where the tool has none, dimension 6 is `N/A`, never `GAP`, and the guarantee moves server-side |
+| **Enforced layer** | See *Any agent, any tool* | Where the tool has none, dimension 6 is `N/A`, never `GAP`, and the guarantee moves server-side |
 | **Branch protection available** | Read the plan, or ask | Unavailable on private repositories on free plans — **and rulesets carry the same gating**, so the newer mechanism is not an escape. Where unavailable, `N/A` with the reason — never a `GAP` re-proposed every run |
 | **Third-party repositories readable** | Try one | Often scoped to the maintainer's own. An upstream fix status is then `unverifiable`, **never "no fix coming"** |
 | **Clock agreement** | Compare `date -u` with `git log` | They can differ by days. Record both; anything written takes the session date |
@@ -510,7 +510,7 @@ never a guess.
 
 ### Agent-layer terms
 
-The body uses these names; *Any Agent, Any Tool* maps each to a filename per tool. Shell
+The body uses these names; *Any agent, any tool* maps each to a filename per tool. Shell
 blocks below name Claude Code paths because a command must be concrete — substitute your
 tool's and record the substitution.
 
@@ -608,7 +608,7 @@ project does not declare, or writing outside the container.
 
 </constraints>
 
-## Facts with an Expiry Date
+## Facts with an expiry date
 
 <constraints>
 
@@ -637,7 +637,7 @@ reads as diligence.
 
 **So a probe that contradicts this table is checked before it is believed:**
 
-- **Date the answer, not just the version.** An index that gives a version without a release
+- **Date the answer, not only the version.** An index that gives a version without a release
   date has told you what it holds, not what exists. Where the probe cannot produce a date,
   it has not verified anything.
 - **Ask whether the source is in a position to know.** This is the crux, and it is a stronger
@@ -646,7 +646,7 @@ reads as diligence.
   authoritatively, and be arbitrarily old. That is precisely what happened: a pinned resolver
   was asked what Python exists, and it reported what its bundled download index shipped with,
   thirteen months earlier. The same holds for a container image's package lists, a vendored
-  catalogue, an offline mirror, and any resolver's view of what it can install, which is a
+  catalog, an offline mirror, and any resolver's view of what it can install, which is a
   statement about reachability rather than about existence.
 - **Sanity-check against upstream.** A vendor's own release history is the source of truth for
   its versions. Where the environment cannot reach upstream, **say so and mark the finding
@@ -654,7 +654,7 @@ reads as diligence.
 - **Corroborate from inside the repository where you can.** The strongest evidence in that run
   came from neither API: wheels for the newer interpreter were already sitting in the
   committed lockfile, which proved the dependency graph had moved while the gate had not. **A
-  lockfile, a manifest or a vendored artefact is a dated fact the repository is carrying
+  lockfile, a manifest or a vendored artifact is a dated fact the repository is carrying
   already**, and it needs no network at all.
 - **A stale source is itself a finding.** A build environment resolving a year-old index is a
   dimension 2 concern in its own right and gets recorded, not silently worked around.
@@ -668,17 +668,17 @@ reads as diligence.
 
 | Fact | As of | Why a run cares |
 |---|---|---|
-| Classic branch protection **and** rulesets: public repositories on a free plan, or public and private on a paid one — **GitHub Pro suffices for a personal account**. Push rulesets need an organisation plan and apply only to private and internal repositories | 2026-09 | Dimension 6. Decides `GAP` against `N/A`, and whether the public-or-pay decision is raised at all |
+| Classic branch protection **and** rulesets: public repositories on a free plan, or public and private on a paid one — **GitHub Pro suffices for a personal account**. Push rulesets need an organization plan and apply only to private and internal repositories | 2026-09 | Dimension 6. Decides `GAP` against `N/A`, and whether the public-or-pay decision is raised at all |
 | Secret scanning runs automatically, free, on public repositories. An organization's private ones need a paid per-committer add-on, and a personal account's private ones can't have it (GitHub's secret scanning page) | 2026-10 | Dimension 7. Decides whether the free remedy exists |
 | Push protection comes in two kinds. **For users**, it is on by default and stops a user's own pushes of secrets to public repositories, with no alert when they bypass it. **For the repository**, it is off until someone turns it on, it blocks pushes containing secrets from reaching that repository, and only it raises an alert for a bypass | 2026-10 | Dimension 7. The users' default isn't the repository's control |
 | Code owners: public repositories on any plan, including GitHub Free; private repositories only on GitHub Pro, Team or Enterprise | 2026-09 | Dimension 3. Decides `GAP` against `N/A` for a missing `CODEOWNERS` |
-| Immutable releases are a **repository or organisation setting**, not a default. When on: tag and assets frozen at publish, title and notes still editable, and assets must be uploaded while the release is a draft | 2026-09 | The release gate. Read the setting; do not assume either way |
+| Immutable releases are a **repository or organization setting**, not a default. When on: tag and assets frozen at publish, title and notes still editable, and assets must be uploaded while the release is a draft | 2026-09 | The release gate. Read the setting; do not assume either way |
 | Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt. The period is set with `default-days` under `cooldown:`, with per-semver keys alongside; a bare `cooldown: 0` is not a documented form | 2026-09 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
 | A tag can be created in the browser at publish time, with no clone | 2026-09 | The only reason the release gate is reachable at all without a working copy |
 | A workflow `run` step with no `shell:` runs under `bash -e` on Linux and macOS runners: it stops at the first failing command, a failing command substitution included, with no `pipefail`. Naming `shell: bash` adds `-o pipefail` | 2026-09 | The starter CI template's guard, and reading any step's exit status |
-| `actions/checkout` is at v7 (v7.0.1, commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) | 2026-09 | *Starter File Contents*. A template's action versions go stale like any other pin |
-| Pinning an action to a full-length commit SHA is the only way to use it as an immutable release, and Dependabot raises no security alert for an action pinned to a SHA | 2026-09 | *Starter File Contents* and dimension 8. Why the template pins commits, and why version updates must stay on |
-| A job with no `timeout-minutes` runs for up to 360 minutes before GitHub cancels it (GitHub's workflow syntax page) | 2026-10 | Dimension 6 and *Starter File Contents*. What a job that hangs costs |
+| `actions/checkout` is at v7 (v7.0.1, commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) | 2026-09 | *Starter file contents*. A template's action versions go stale like any other pin |
+| Pinning an action to a full-length commit SHA is the only way to use it as an immutable release, and Dependabot raises no security alert for an action pinned to a SHA | 2026-09 | *Starter file contents* and dimension 8. Why the template pins commits, and why version updates must stay on |
+| A job with no `timeout-minutes` runs for up to 360 minutes before GitHub cancels it (GitHub's workflow syntax page) | 2026-10 | Dimension 6 and *Starter file contents*. What a job that hangs costs |
 | GitHub's default squash message is the commit's title and message for a one-commit pull request, and the pull request's title and list of commits for two or more. The API returns the title's setting as `squash_merge_commit_title`: `COMMIT_OR_PR_TITLE` by default, and `PR_TITLE` where the pull request's title is always the subject (GitHub's pull request merge settings page and REST reference) | 2026-10 | Dimension 10. Under squash, whether the grammar check reads the subject |
 | Events a workflow makes with its `GITHUB_TOKEN` create no new workflow run, apart from `workflow_dispatch` and `repository_dispatch`, and a pull request it opens or updates, whose runs then wait for approval (GitHub's `GITHUB_TOKEN` page) | 2026-10 | The release gate. Why a release hands off through `workflow_dispatch` |
 
@@ -740,7 +740,7 @@ action, once. Each is in the account's Settings, under the profile picture:
 
 | Fact | As of | Why a run cares |
 |---|---|---|
-| Claude Code reads `AGENTS.md` natively from v2.1.277, **but by default only when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` exists** in the working directory or above it; the *Project instructions* setting in `/config` can make it read both. Before v2.1.281 it didn't on Bedrock and other third-party providers or with telemetry off. It can miss the first session after an upgrade from v2.1.276 or earlier, and doesn't read it with the built-in `agents-md` plugin disabled. Keeping `@AGENTS.md` in `CLAUDE.md` works in all of them, and Claude Code "skips an AGENTS.md it has already loaded" | 2026-09 | Dimension 4 and *Any Agent, Any Tool*. Why the shim stays although native reading shipped |
+| Claude Code reads `AGENTS.md` natively from v2.1.277, **but by default only when no `CLAUDE.md`, `.claude/CLAUDE.md` or `CLAUDE.local.md` exists** in the working directory or above it; the *Project instructions* setting in `/config` can make it read both. Before v2.1.281 it didn't on Bedrock and other third-party providers or with telemetry off. It can miss the first session after an upgrade from v2.1.276 or earlier, and doesn't read it with the built-in `agents-md` plugin disabled. Keeping `@AGENTS.md` in `CLAUDE.md` works in all of them, and Claude Code "skips an AGENTS.md it has already loaded" | 2026-09 | Dimension 4 and *Any agent, any tool*. Why the shim stays although native reading shipped |
 | `AGENTS.md` is read directly by most other major agent tools; Gemini CLI and Aider need one config line | 2026-09 | Whether a shim is warranted per tool |
 | Anthropic's target is under 200 lines per `CLAUDE.md`; Claude Code loads one of up to 4 MiB in full and skips a larger one | 2026-09 | The budget table. The one published number behind it; the others are this file's heuristics |
 | Codex stops adding instruction files once their combined size reaches `project_doc_max_bytes`, 32 KiB by default | 2026-09 | The budget table. Truncation reads exactly like being ignored |
@@ -750,12 +750,12 @@ action, once. Each is in the account's Settings, under the profile picture:
 | `claude plugin validate --strict` (2.1.280) checks manifests and agents, but reported none of five planted skill defects and accepted a reserved marketplace name | 2026-09 | Dimension 9. A passing validator is not a review of the skills |
 | `syncClaudeAiSkills: false`, and `syncClaudeAiPlugins: false` for plugins, are read from user, local and managed settings only, so a project's committed `.claude/settings.json` can't stop the sync. Any settings file, the committed one included, can hide a skill with `skillOverrides`, which the docs say doesn't reach plugin skills and don't say of synced ones. The changelog documents `Skill(anthropic-skills:<name>)` permission rules that match synced skills (2.1.282, 2.1.283). Neither route had been tried on a synced skill as of 2026-09-28 | 2026-09 | Dimension 4. A repository can't stop the sync; whether it can hide or deny a synced skill in its own sessions is documented, not yet shown |
 | A plugin catalog entry whose skill paths all miss loads the plugin's whole skills folder, with no error | 2026-09 | Dimension 9. One typo ships everything |
-| Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Skills enabled on the account load in cloud sessions as well, and one account's arrived there on 2026-09-23, 2026-09-28 and 2026-10-05. Anthropic support said on 2026-09-30 that plugins are meant to load in cloud sessions too, that the docs' silence is a gap, and that an empty plugin list isn't expected, and named two causes to rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true` in the cloud environment. In that account's cloud sessions on 2026-09-30 and 2026-10-05, the platform set that variable itself, in the process that launches Claude Code, the environment manager and Claude Code (2.1.280, then 2.1.289), and the synced plugins folder was empty. On 2026-09-30 the environment's own variables were empty, and no plugin was enabled on the account | 2026-10 | *Standards Distribution*. Check again once a plugin is installed on the account and the variable is gone. Until then, a skill uploaded to the account is the route that reaches a cloud session |
-| An organisation's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards Distribution*. A public repository reaches an organisation's members only by upload |
-| A cloud session installs no plugin that a repository's `.claude/settings.json` turns on under `enabledPlugins`, including those from marketplaces it lists under `extraKnownMarketplaces` | 2026-09 | Dimension 4 and *Standards Distribution*. A repository that relies on its settings for a plugin gets none in cloud sessions |
+| Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Skills enabled on the account load in cloud sessions as well, and one account's arrived there on 2026-09-23, 2026-09-28 and 2026-10-05. Anthropic support said on 2026-09-30 that plugins are meant to load in cloud sessions too, that the docs' silence is a gap, and that an empty plugin list isn't expected, and named two causes to rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true` in the cloud environment. In that account's cloud sessions on 2026-09-30 and 2026-10-05, the platform set that variable itself, in the process that launches Claude Code, the environment manager and Claude Code (2.1.280, then 2.1.289), and the synced plugins folder was empty. On 2026-09-30 the environment's own variables were empty, and no plugin was enabled on the account | 2026-10 | *Standards distribution*. Check again once a plugin is installed on the account and the variable is gone. Until then, a skill uploaded to the account is the route that reaches a cloud session |
+| An organization's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards distribution*. A public repository reaches an organization's members only by upload |
+| A cloud session installs no plugin that a repository's `.claude/settings.json` turns on under `enabledPlugins`, including those from marketplaces it lists under `extraKnownMarketplaces` | 2026-09 | Dimension 4 and *Standards distribution*. A repository that relies on its settings for a plugin gets none in cloud sessions |
 | A cloud environment's setup script is set in the environment, not the repository. It runs before Claude Code launches, in cloud sessions only, and is skipped when a cached environment exists. A SessionStart hook in the repository's `.claude/settings.json` runs after launch in every session, local and cloud, resumed ones included (Claude Code's cloud environments page) | 2026-10 | Dimension 4. Why what a session needs comes from a committed hook |
-| In a cloud session, a public repository's committed files arrive through `raw.githubusercontent.com`, which is on the default Trusted network list, while GitHub API requests reach only repositories attached to the session. The docs say release-asset requests do too, with a 403 otherwise, but on 2026-09-26 and 2026-09-29 an unattached public repository's `releases/download/` link returned 200 while its API returned 403 | 2026-09 | *Sending Results Back*. A file linked at a commit is documented to arrive; a release asset is documented not to, whatever one download showed |
-| Claude Code's web-fetch tool returns a small model's answer about a page, not the page. Its documentation calls that lossy by design and points to `curl` for the unprocessed page | 2026-09 | *Sending Results Back*. A file meant to be read whole is downloaded, not fetched |
+| In a cloud session, a public repository's committed files arrive through `raw.githubusercontent.com`, which is on the default Trusted network list, while GitHub API requests reach only repositories attached to the session. The docs say release-asset requests do too, with a 403 otherwise, but on 2026-09-26 and 2026-09-29 an unattached public repository's `releases/download/` link returned 200 while its API returned 403 | 2026-09 | *Sending results back*. A file linked at a commit is documented to arrive; a release asset is documented not to, whatever one download showed |
+| Claude Code's web-fetch tool returns a small model's answer about a page, not the page. Its documentation calls that lossy by design and points to `curl` for the unprocessed page | 2026-09 | *Sending results back*. A file meant to be read whole is downloaded, not fetched |
 
 ### Scanners and formatters
 
@@ -767,12 +767,12 @@ action, once. Each is in the account's Settings, under the profile picture:
 
 ### Language toolchains
 
-**Used by *Choosing a Language and Runtime* and dimension 2. Check the current release before
+**Used by *Choosing a language and runtime* and dimension 2. Check the current release before
 pinning anything — and check what answered you, per the probe rule above.**
 
 | Stack | Current at 2026-09 | Lockfile | Notes |
 |---|---|---|---|
-| **Python** | 3.14.x, stable since 2025-10; 3.13.x still maintained; `uv` carries the momentum, Poetry fully supported, pip-tools for minimalists | `uv.lock` / `poetry.lock` | `ruff` for lint and format, `pytest`, `src/` layout. Dependency groups are standardised |
+| **Python** | 3.14.x, stable since 2025-10; 3.13.x still maintained; `uv` carries the momentum, Poetry fully supported, pip-tools for minimalists | `uv.lock` / `poetry.lock` | `ruff` for lint and format, `pytest`, `src/` layout. Dependency groups are standardized |
 | **PowerShell** | 7.6.x | none exists | Pester 5.7.x is the safe pin — 6 exists and breaks things. `PSScriptAnalyzer` for lint. **Windows PowerShell 5.1 is a component of Windows** and follows its support lifecycle; 7 installs beside it |
 | **.NET / C#** | 10, LTS | `packages.lock.json`, opt-in | `Directory.Build.props` for shared properties, `Directory.Packages.props` for central versions |
 | **JS / TS** | Node 22 and 24 both LTS | `package-lock.json` / `pnpm-lock.yaml` | Biome 2.x for a new project; ESLint plus Prettier where plugins already exist. Vitest for new tests |
@@ -789,7 +789,7 @@ pinning anything — and check what answered you, per the probe rule above.**
 | **OpenSSF Best Practices Badge** | Self-attested practices a scanner cannot detect | A T3 project with external users |
 | **MADR** (4.x) | A published decision-record format, minimal and full variants | Dimension 10 |
 | **Keep a Changelog**, **Semantic Versioning**, a commit grammar: **Conventional Commits** or *area: summary* | Changelog shape, version meaning, commit grammar | Dimension 10 |
-| **C4 model** | Context, container, component and code views | *Project Shapes and Layout*, where structure needs a diagram |
+| **C4 model** | Context, container, component and code views | *Project shapes and layout*, where structure needs a diagram |
 
 **Where one of these already specifies something, cite it and move on.** A finding that
 re-derives a published check by hand costs the reader the chance to use the tooling that
@@ -797,9 +797,9 @@ already implements it.
 
 ---
 
-# The Run
+# The run
 
-## Phase 0 — Preflight
+## Phase 0 — preflight
 
 ```bash
 export GIT_OPTIONAL_LOCKS=0     # reads write nothing, not even .git/index
@@ -889,7 +889,7 @@ ceiling, Phase 3 already stops and already asks the human about copyright, and a
 round trip for four short questions costs more than it returns. **Three independent runs
 each invented this same fold and recorded it as an override** — a deviation that recurs with
 the same reasoning is a rule waiting to be written, so it is written. Record the answers in
-the Phase 0 block as normal; they simply arrive one phase later.
+the Phase 0 block as normal; they arrive one phase later.
 
 ```yaml
 phase: 0
@@ -923,7 +923,7 @@ go: yes | no
 notes: <anything the fields cannot hold | none>
 ```
 
-## Phase 1 — Detect Mode
+## Phase 1 — detect mode
 
 <constraints>
 
@@ -1006,7 +1006,7 @@ git grep -inE '^#+ *(production )?(deployment|deploy|operations|runbook|maintena
 
 Record the decision-record alias once and use it everywhere. **Never propose a second path.**
 **Where no record exists, the alias is `docs/decisions.md`**: one append-only file, in the form
-*Starter File Contents* gives. Where the human wants a file per decision instead, it is MADR
+*Starter file contents* gives. Where the human wants a file per decision instead, it is MADR
 under `docs/decisions/`, as dimension 10 says. Two runs on a repository without a record then
 propose the same path.
 
@@ -1034,11 +1034,11 @@ do_not_repropose: [<items recorded as settled>]
 notes: <... | none>
 ```
 
-## Phase 2 — Inventory
+## Phase 2 — inventory
 
 Read-only, apart from the setup carve-out.
 
-**Read evidence; don't swallow it.** Logs, captured tool output and test artefacts can run to
+**Read evidence; don't swallow it.** Logs, captured tool output and test artifacts can run to
 thousands of lines each, and **a repository that keeps its evidence is doing it right** — the
 budget table says so. List them with their sizes and read only the part a finding needs: one
 read of a whole log can cost the context the rest of the audit needed.
@@ -1084,7 +1084,7 @@ report no CI for a project that runs it on every change.
 default branch nobody noticed is a finding in its own right, and local gates cannot see it.
 
 **Read the platform's settings with read-only calls**, against *Platform settings, and where
-each is* in *Facts with an Expiry Date*. On GitHub that is `gh api repos/<owner>/<repo>` and its
+each is* in *Facts with an expiry date*. On GitHub that is `gh api repos/<owner>/<repo>` and its
 `rulesets`, `immutable-releases`, `private-vulnerability-reporting` and
 `code-scanning/default-setup` paths. A session often can't read the Actions settings, and Phase
 3 asks for what it can't read. **On a private repository, a `rulesets` call that answers 403 and
@@ -1134,7 +1134,7 @@ fails its purpose. **Where its content cannot be confirmed, say so rather than c
 against it, not a re-run.**
 
 **In greenfield mode there is nothing to inventory.** Phase 2 instead **proposes the shape**:
-which project shape from *Project Shapes and Layout*, which languages, which auxiliary file
+which project shape from *Project shapes and layout*, which languages, which auxiliary file
 types are expected. Emit them in the block's `proposed` field. **The human picks at the
 Phase 3 wait**, so nothing here is decided yet. Documented commands do not exist yet, so
 `command_tally` is all zeroes and `setup` records what the proposed toolchain will need.
@@ -1232,14 +1232,14 @@ template: {copier_answers: present | none}
 notes: <... | none>
 ```
 
-## Phase 3 — Establish Tier — **WAIT**
+## Phase 3 — establish tier — **WAIT**
 
 **Six questions, with Phase 0's four beside them. Phase 3 always stops here — including on a
 re-check.**
 
 On a **first audit**, ask all six, **with a draft of each answer the repository shows.** Its
 own records usually hold most of them: the repository's visibility or a registry page for
-exposure, a licence and a manifest for the copyright holder and the irreversible decisions.
+exposure, a license and a manifest for the copyright holder and the irreversible decisions.
 **Each draft carries its evidence, as a path and a line, and one word of confidence:** `high`,
 `medium` or `low`. The human then confirms or corrects a draft, rather than answering in the
 abstract, which the first live repository's owner couldn't do as the questions were asked.
@@ -1309,7 +1309,7 @@ have been rated is a confirmation of work already done.
 same name, `lifecycle: transient` with a concrete `expires:`, and the reconciliation header,
 whose `tally` reads `not yet rated`. **In place of Phase 6's three lists it holds the questions
 asked**, each with its draft and evidence, and any recommendation still waiting on a pick. The
-appendix holds the blocks from `phase: 0` to `phase: 3`, then the *Conformance Self-Check*,
+appendix holds the blocks from `phase: 0` to `phase: 3`, then the *Conformance self-check*,
 where `ten_statuses_emitted` and `tally_sums_to_ten` are `n/a` and `waits_observed` is 1. If the
 run continues after the answers, it appends to the same file. Its `overrides` go in the Phase 3
 block's `notes`, since the Phase 4 block that holds them is never emitted.
@@ -1366,7 +1366,7 @@ exactly as the tier questions are asked.
 | Blast radius | | Audience | |
 |---|---|---|---|
 | **B0** | Nothing breaks | **A0** | Nobody |
-| **B1** | Only my machine | **A1** | Just me |
+| **B1** | Only my machine | **A1** | Only me |
 | **B2** | My or others' data | **A2** | Colleagues, a team, a floor |
 | **B3** | Production, the business, or the public | **A3** | External or public |
 
@@ -1389,7 +1389,7 @@ what a leaked credential reaches; it does not bound what depends on what the too
 
 | Rank | Decision | Why it cannot be undone |
 |---|---|---|
-| 1 | **Outbound licence** | Irrevocable for released versions |
+| 1 | **Outbound license** | Irrevocable for released versions |
 | 2 | **Published package name** | Registries permanently reserve a used name |
 | 3 | **Public API / wire contract** | Every consumer multiplies the cost |
 | 4 | **Data model semantics** | Reversible in code, not in data already written |
@@ -1402,14 +1402,14 @@ decided now.**
 
 **Each rank takes one state.** `decided now`: the human decides it at this wait. `settled`:
 already decided, by the code or an earlier record, and still changeable at the cost the table
-names. `locked`: fixed for what is already out, such as a released version's licence or a
+names. `locked`: fixed for what is already out, such as a released version's license or a
 package name a registry holds, so a change to it is never proposed.
 
 <constraints>
 
 **In greenfield mode, ranks 1 and 5 are answered here.**
 A run that picks a language without saying why has made the least reversible decision in the
-project silently. Read *Choosing a Language and Runtime* and *Choosing the Shape*, then
+project silently. Read *Choosing a language and runtime* and *Choosing the shape*, then
 bring back a recommendation with its trade — not a decision. The human picks. **Until they
 do, the block says so**: `chosen` and `shape` are `pending`, and the recommendation sits in
 `recommended` and `shape_recommended`.
@@ -1473,7 +1473,7 @@ inception:                    # greenfield only; omit the key entirely otherwise
 notes: <... | none>
 ```
 
-## Phase 4 — Audit the Ten Dimensions
+## Phase 4 — audit the ten dimensions
 
 ### 1. Stakes and lifecycle
 
@@ -1544,7 +1544,7 @@ file already documents and the one that has bitten. **Name the exact regeneratio
 where the rule above records it, so the next person does not guess.
 
 **The language choice itself is recorded here.** Rank 5 of the irreversibility gate is
-language and runtime; *Choosing a Language and Runtime* is where
+language and runtime; *Choosing a language and runtime* is where
 the reasoning is made, and this dimension is where a repository is checked against it. A repository whose
 recorded choice and actual manifest disagree is `DRIFT` on this dimension, not a curiosity.
 
@@ -1568,7 +1568,7 @@ not choices. `CODEOWNERS` once more than one person maintains or reviews, **as t
 answers Phase 0's fourth question.** The history's authors, which every clone has, are the
 draft, and a bot is not a person, but the answer is the human's. Once they say so, a missing
 `CODEOWNERS` is `GAP` **where the plan honours the file**: any public repository, and a private
-one only on a paid plan, as *Facts with an Expiry Date* records. On a private repository on a
+one only on a paid plan, as *Facts with an expiry date* records. On a private repository on a
 free plan it is `N/A`, a fact about the plan. Where the plan can't be read, it stays `GAP`, and
 its amendment is gated on the human's answer about the plan. Until they say so it is not rated,
 and one naming a single person is the ceremony dimension 8 describes.
@@ -1643,8 +1643,8 @@ and one naming a single person is the ceremony dimension 8 describes.
   commands without asking — `Bash(pip install:*)`, `Bash(npm install:*)`, a bare `Bash` — is a
   `BLOCKER` on this dimension in its own right, and a narrower allow nobody reviewed is
   `DRIFT`. Propose untracking it, and moving anything meant to be shared into `settings.json`.
-- **A deny rule names an access path, not just a file.** Claude Code's docs, read 2026-09-29,
-  have `Read(.env*)` cover the file commands it recognises in Bash, such as `cat`, `head` and
+- **A deny rule names an access path, not only a file.** Claude Code's docs, read 2026-09-29,
+  have `Read(.env*)` cover the file commands it recognizes in Bash, such as `cat`, `head` and
   `sed`, and redirections too. It doesn't cover `grep -r` run from the directory that holds the
   file, or a script that opens the file itself: the same file, by a path the rule doesn't see.
   Older releases left `Bash(cat .env)` open, so keep the explicit rule. For each thing that
@@ -1701,7 +1701,7 @@ tier; one carrying such an instruction is a `BLOCKER` on dimension 7.**
 **Count the copies that never appear in the tree.** A session loads the skills and plugins
 enabled on its account, and none of them is a file in the repository. A repository's committed
 settings cannot stop the sync, and whether they can hide or deny a synced skill is documented
-but not yet shown: *Facts with an Expiry Date* has both. Where the run can list what loaded,
+but not yet shown: *Facts with an expiry date* has both. Where the run can list what loaded,
 the inventory includes them; where it cannot, it says so.
 
 **The files that instruct future sessions are the highest-risk write class, and they change
@@ -1745,7 +1745,7 @@ its log or recorded as unrun, as the standing rules say. **Two runs on one repos
 **A gate that matches text can be satisfied by its own documentation, so match structure
 instead.** A live run wrote a gate to prove a downloaded binary was checksum-verified before
 execution. It searched the raw workflow file for the verification command — and found it **in
-the comment the same commit had just added explaining the verification.** The gate passed 23
+the comment the same commit had added explaining the verification.** The gate passed 23
 checks with the real check moved to *after* the binary ran. Parsing the YAML and comparing
 executable lines fixed it. **The general form: a gate reading a file as text sees comments,
 documentation, disabled blocks and its own explanation, all of which satisfy a match and none
@@ -1836,7 +1836,7 @@ result.**
 **And a suite that collected everything can still stop before the end.** A collection count
 says what was found, not what ran: a live repository merged a pull request whose suite had run
 76% of its tests and exited 0. **So the suite writes a report as its last act, and CI fails
-without it**, and when the report counts fewer tests than the baseline. *Starter File Contents*
+without it**, and when the report counts fewer tests than the baseline. *Starter file contents*
 shows the guard. From T2, a suite whose CI can't tell a finished run from one that stopped is
 `GAP`.
 
@@ -1878,7 +1878,7 @@ Two things stand between a change and the default branch: what gates it, and wha
 | CI required checks | Merge gating | Yes — server-side |
 | Branch protection | Force-push, direct commit | Server-side, **and unavailable on private repos on free plans** |
 | Repository rulesets | The same, plus tag rules | Server-side, **and gated on exactly the same plans** — not a free-tier substitute |
-| Push rulesets | Blocks pushes across a repository and its fork network | **Gated higher still** — organisation plans only, not personal paid ones, and private or internal repositories only. Usually `N/A` here |
+| Push rulesets | Blocks pushes across a repository and its fork network | **Gated higher still** — organization plans only, not personal paid ones, and private or internal repositories only. Usually `N/A` here |
 
 **The gates must exist; the runner is not dictated.** A deliberate `repo: local` /
 `language: system` config with documented reasoning is not a finding. Required gates: secret
@@ -1961,7 +1961,7 @@ this dimension with a real remedy, and the remedy is a decision only the human c
 | Route | What it buys | What it costs |
 |---|---|---|
 | **Make the repository public** | Rulesets, required checks, secret scanning and push protection, all free | The code is public. Irreversible in practice — history is cloned before it can be withdrawn. Gate it on the Phase 3 `exposure` answer and on the provenance rule in dimension 10 |
-| **Move to a paid plan** | The same controls on a private repository. For a personal account this is **GitHub Pro**, which is the cheap route and is often missed — organisation plans are not the only option | A recurring cost |
+| **Move to a paid plan** | The same controls on a private repository. For a personal account this is **GitHub Pro**, which is the cheap route and is often missed — organization plans are not the only option | A recurring cost |
 | **Accept no gate** | Nothing to pay, nothing to change | CI still runs and still reports; nothing stops a push that ignores it. Record it as an accepted risk with a reopen trigger, not as a `GAP` to re-raise every run |
 
 **Verify the current state before reporting it.** Plan gating on these features has moved
@@ -2108,7 +2108,7 @@ the remote.** An organization's private repository gets it with the same paid ad
   which makes it one of the few amendments with no trade to weigh. Turn it on. The users'
   default doesn't discharge it.
 - **Private repository, no platform scanning** — `N/A` on the platform control, and the
-  in-repository scanner in CI is then the whole of the defence rather than a second layer.
+  in-repository scanner in CI is then the whole of the defense rather than a second layer.
   Say which it is, because a CI scanner catches a credential **after** it is on the remote,
   and the remedy for a pushed credential is rotation, never deletion of the commit.
 
@@ -2126,7 +2126,7 @@ security PRs ungrouped.
 
 **A three-day release cooldown is now the platform default** — version-update pull requests
 wait until a release has been on its registry that long before opening, with no configuration,
-as of 2026-07. Security updates are exempt and still open immediately, which is the behaviour
+as of 2026-07. Security updates are exempt and still open immediately, which is the behavior
 you want and a second reason not to group them.
 
 **Read an existing `cooldown` setting against the default before rating it**, because the
@@ -2151,7 +2151,7 @@ One maintainer is what the human answered to Phase 0's fourth question, not what
 shows.
 Code-Review requires a second approver and its own documentation says the check is infeasible
 for projects with a single active participant. Contributors requires contributors from
-several organisations in recent history. Branch protection's higher tiers require one or two
+several organizations in recent history. Branch protection's higher tiers require one or two
 reviewers and code-owner review. **Mark each `N/A` with the reason, deliberately, the same
 way a dated fact that cannot be checked here is marked `UNVERIFIABLE-HERE`** — a gap left
 unexplained reads as neglect on every future run.
@@ -2171,7 +2171,7 @@ releases with provenance, a security policy, static analysis, and a license.
 can be moved to other code, and a moved tag runs wherever it is named. **Where the workflow
 reads a secret beyond its own token, grants that token write access or publishes, or the tier is
 T2 or higher**, a tag-pinned action is a `GAP` here, and the remedy is its full commit SHA with
-the version in a comment, as *Starter File Contents* pins one. Elsewhere it is not a finding,
+the version in a comment, as *Starter file contents* pins one. Elsewhere it is not a finding,
 and the pin may be offered as `optional`. **A SHA pin needs something to move it:** Dependabot
 raises no alert for an action pinned to a SHA, so the amendment keeps version updates on for
 `github-actions`. Where an update tool was declined, the amendment says what the pin costs
@@ -2186,9 +2186,9 @@ Its own caveat travels with it: the score measures process, and published work f
 correlation between a high score and fewer vulnerabilities. It is a hygiene signal, not a
 security guarantee, and saying so is part of proposing it.
 
-**Inbound licence allowlist:** MIT/BSD/Apache/ISC fine · MPL/LGPL fine · GPL fine **with a
+**Inbound license allowlist:** MIT/BSD/Apache/ISC fine · MPL/LGPL fine · GPL fine **with a
 recorded internal-only decision** · AGPL and BSL/SSPL/Elastic need explicit approval ·
-**no licence, never**. Where the dependency is public, **verify the licence against the
+**no license, never**. Where the dependency is public, **verify the license against the
 repository rather than trusting package metadata** — they disagree more often than they should.
 
 #### The upstream defect register
@@ -2251,7 +2251,7 @@ tag, an open pull request, an unreleased entry in their changelog. **Say what yo
 what you did not** — "no open issue matches" is a finding; "I did not look" is not.
 
 **Then it is the human's decision, not yours.** Put it in Phase 6 List 1 with both
-consequences, never as an amendment you apply on your own judgement:
+consequences, never as an amendment you apply on your own judgment:
 
 | Option | What it costs |
 |---|---|
@@ -2266,7 +2266,7 @@ the local code comes back out** — usually a named upstream release.
 
 **On every re-check, re-examine each recorded mitigation.** Has upstream fixed it? If yes, the
 local workaround is now `DRIFT` — it is code guarding against something that no longer exists,
-and leaving it is how a codebase accumulates defences nobody can explain. Propose removing it,
+and leaving it is how a codebase accumulates defenses nobody can explain. Propose removing it,
 with the upstream fix cited. If no, say so and leave it alone; a mitigation re-litigated every
 run is as bad as one never revisited.
 
@@ -2287,7 +2287,7 @@ it as an ordinary project:
 - **Whether anything local should go upstream.** A fix carried privately is a mitigation with
   no removal condition — the same liability as a pinned dependency.
 
-**Never propose re-syncing, rebasing or merging upstream.** That is a judgement about the
+**Never propose re-syncing, rebasing or merging upstream.** That is a judgment about the
 project's direction, not its configuration, and it belongs to the human. Record the state and
 stop.
 
@@ -2297,9 +2297,9 @@ stop.
 
 Publish to a registry only when something else consumes it.
 
-**Outbound licence keys on `exposure`, not on owner.**
+**Outbound license keys on `exposure`, not on owner.**
 
-| Exposure | Licence |
+| Exposure | License |
 |---|---|
 | **never** | A real `LICENSE` with an all-rights-reserved proprietary notice, naming the Phase 3 holder. **Work or personal alike** — an open-source grant on something that will never be published grants rights to nobody and misstates the intent |
 | **possible later** | Decide now; it is rank 1. Apache-2.0 if it may be published, proprietary if not |
@@ -2334,7 +2334,7 @@ already published**, which immutable releases may not let anyone replace: where 
 workflow or the documented route makes a lightweight tag, it is `GAP`. *The Release and Deploy
 Currency Gate* gives the route.
 
-**Where more than one release line is kept**, *The Release and Deploy Currency Gate* says how:
+**Where more than one release line is kept**, *The release and deploy currency gate* says how:
 each line has its branch, and each backport names its source. From T2, a line without them is
 `GAP`.
 
@@ -2360,7 +2360,7 @@ that is where someone will be tempted to fix the lag.
 
 **This is the as-built bill of materials, and the hardware world codified it first.** The
 as-designed, as-built and as-maintained distinction — recording which specific revisions were
-actually assembled and verified together, rather than which are current — is standardised in
+actually assembled and verified together, rather than which are current — is standardized in
 configuration-management practice. **The approved pair is a two-element as-built record.**
 
 **And the breaking-change test has an older and better name: form, fit and function.** A part
@@ -2477,13 +2477,13 @@ moment. Only after the Phase 1 content search found none.
 
 **Provenance:** a public repository must contain no work-origin code.
 
-**Where licences mix, each file says which it is under**, in a licence header or an
-`SPDX-License-Identifier` line, and the licence file says which parts are under which.
+**Where licenses mix, each file says which it is under**, in a license header or an
+`SPDX-License-Identifier` line, and the license file says which parts are under which.
 FFmpeg's `LICENSE.md` lists its GPL files by name. Mixed and unmarked, it is `GAP`; under one
-licence throughout, the licence file alone is enough.
+license throughout, the license file alone is enough.
 
 **Compare the history's address domains with the Phase 3 owner answer.** Commits carrying an
-organisation's domain, rather than a personal mail provider's or the platform's no-reply
+organization's domain, rather than a personal mail provider's or the platform's no-reply
 address, in a repository answered as personal raise the question this rule exists for, and
 only the human can answer it. Put it in Phase 6's first list, naming each domain and how many
 commits carry it, never an address. **Count commits, not address lines:** each commit has an
@@ -2525,7 +2525,7 @@ naming a package that has no directory is not a project.
    expects.
 3. **One entry point and one passing test**, so the documented commands have something to run.
 4. **Hygiene and enforcement** — `.gitignore`, `.gitattributes`, `.editorconfig`, CI, deny rules.
-5. **Documents** — `README.md`, `AGENTS.md` with the module map, the decision record, licence.
+5. **Documents** — `README.md`, `AGENTS.md` with the module map, the decision record, license.
 
 **The run ends runnable.** Before Phase 5, execute the documented build, test and lint
 commands and paste the output. **A greenfield run whose own documented commands do not pass
@@ -2560,7 +2560,7 @@ overrides: [{phase: 0, saw: "...", did: "...", why: "..."}]   # Phases 0 to 4
 notes: <... | none>
 ```
 
-## Phase 5 — Report
+## Phase 5 — report
 
 **Installed skills that check code add a list, never a dimension.** This standard does not
 judge code, but a session may carry skills that do, one per language or practice. Where the
@@ -2581,7 +2581,7 @@ category_checks: [{skill: "<name>", item: "...", result: "..."}]   # empty unles
 notes: <... | none>
 ```
 
-## Phase 6 — Approval Gate — **WAIT**
+## Phase 6 — approval gate — **WAIT**
 
 <constraints>
 
@@ -2638,7 +2638,7 @@ sections_skipped: [...]
 ```
 
 **Deviating is allowed; hiding it is not.** Where the run departed from this file — a rule
-that did not fit, a capability that was missing, a judgement the text did not cover — record
+that did not fit, a capability that was missing, a judgment the text did not cover — record
 it in `overrides` with what was seen, what was done, and why. **A run that deviated and said
 so is more useful than one that complied and learned nothing**, because each deviation is a
 place the standard was wrong or silent. A reader reconciling two reports works from
@@ -2666,7 +2666,7 @@ standard. **They must not have to copy blocks out of the conversation to do that
 1. **Decisions only the human can supply**, each with **what happens by default if
    unanswered**, and which amendments each gates. A Phase 3 question recorded `unanswered` is
    one, with its draft and the default the run applied, or `unknown` where there's none.
-2. **Numbered amendments**, recommendation **labelled but never pre-selected.**
+2. **Numbered amendments**, recommendation **labeled but never pre-selected.**
 3. **Actions only the human can take** — server-side or manual. **Each is achievable in a
    browser by default.** Where Phase 0 recorded no local working copy, "run this command on
    your machine" is not an action they can take, and a step needing a working copy is either
@@ -2738,7 +2738,7 @@ no_writes_proof: |
 notes: <... | none>
 ```
 
-## Phase 7 — Apply
+## Phase 7 — apply
 
 Only what was approved, and only what its human decisions unblocked.
 
@@ -2746,7 +2746,7 @@ Only what was approved, and only what its human decisions unblocked.
 
 **Approval is per mechanism, not per goal — so a substitution returns to the gate.** Where
 the approved change turns out to be unimplementable, unsafe, or worse than an alternative
-you find while applying it, **that discovery is a new amendment, not a licence to solve the
+you find while applying it, **that discovery is a new amendment, not a license to solve the
 problem another way.** The gate approved a specific change with a stated consequence; a
 different mechanism carries a different consequence, and the human accepted the first one.
 
@@ -2867,7 +2867,7 @@ overrides: [{phase: 7, saw: "...", did: "...", why: "..."}]   # Phase 7
 notes: <... | none>
 ```
 
-## Phase 8 — Record
+## Phase 8 — record
 
 Append to the **Phase 1 alias**. **Never create a canonical filename alongside an existing
 equivalent.** Append-only: supersede with a pointer. **Dates from the session clock.**
@@ -2892,7 +2892,7 @@ and it was the sentence that made an open question read as unanswerable.
 
 **Re-run the command that established the observation and record what it says now.** Where
 the two readings differ, the entry states the Phase 8 reading and the earlier one goes in **the
-Conformance Self-Check's `corrections`** — not Phase 7's, which is closed before this phase
+Conformance self-check's `corrections`** — not Phase 7's, which is closed before this phase
 runs, and not Phase 4's, which is for a prior run's verdicts. That block is emitted after this
 phase in every job, its `prior_run` takes `this run` with the phase, and `rule_that_caught_it`
 is this rule. **It is the right home for the general reason rather than the mechanical one:**
@@ -2945,7 +2945,7 @@ do_not_repropose_added: [<items>]
 notes: <... | none>
 ```
 
-## Phase 9 — Plan Forward
+## Phase 9 — plan forward
 
 Name the next trigger. Then sequence what is left, **and nothing beyond it.**
 
@@ -3063,7 +3063,7 @@ post_gate:
 
 ---
 
-# Conformance Self-Check
+# Conformance self-check
 
 **Emit this at the end of every run, after the last phase block, whatever the job was.**
 
@@ -3079,7 +3079,7 @@ instruction was there" rather than "I did it" makes this block worse than absent
 manufactures assurance. **Where the honest answer is `no`, that is a useful run**, and the reason
 belongs beside it.
 
-**Never pre-fill this from the template.** Each line is checked against the run that just
+**Never pre-fill this from the template.** Each line is checked against the run that
 happened.
 
 </constraints>
@@ -3150,7 +3150,7 @@ corrections:
 **`validated` is how this file learns which of its rules earn their place.** Every rule here
 was added because something went wrong once, and **nothing currently records whether a rule
 has ever caught anything since.** A rule that catches nothing across many runs is `OVER` by
-this file's own logic and should come out — but that judgement needs evidence, and this block
+this file's own logic and should come out — but that judgment needs evidence, and this block
 is the only place it accumulates. Quote the rule and say what it found **that reading the
 repository would not have.** Three or four entries, not a transcript; a run that lists every
 rule it followed has recorded compliance rather than value.
@@ -3203,7 +3203,7 @@ the one field that exists to catch that, which a live run did.
 <constraints>
 
 **Nothing in this file requires a particular model or tool.** It names Claude Code paths because
-a command has to be concrete, and *Any Agent, Any Tool* maps every one of them. Where a path
+a command has to be concrete, and *Any agent, any tool* maps every one of them. Where a path
 does not exist for the tool in use, substitute and record the substitution as an override.
 
 **Three failure modes show up specifically when the model changes**, and they are worth watching
@@ -3216,7 +3216,7 @@ for rather than discovering in the output:
 - **Instruction decay across a long run.** Adherence may drop as the session lengthens — one
   study found about 5.6% lower odds of compliance per additional function generated, though as
   an exploratory, non-monotonic finding — which is why there are gates rather than a single
-  approval at the end, and why this block sits at the very end where any drop is worst. **A
+  approval at the end, and why this block sits at the end where any drop is worst. **A
   run that was careful in Phase 2 and loose in Phase 7 is the normal shape of this failure**,
   not an unusual one.
 - **Helpful ordering.** Presenting amendments with a recommendation already selected, or
@@ -3280,7 +3280,7 @@ costs attention on every future run, in every repository, forever.
 
 ---
 
-# Choosing a Language and Runtime
+# Choosing a language and runtime
 
 **Read this in greenfield mode, or when the language itself is the finding. Skip it otherwise —
 on an existing repository the language is settled and re-opening it is not an audit.**
@@ -3293,7 +3293,7 @@ decision on that list that every other file in the repository is written in.
 
 **Recommend, with the trade. Never decide.** This section produces a recommendation and a
 runner-up for the human, in Phase 3, alongside what each costs. A run that picks a language and
-proceeds has made the project's least reversible decision on its own judgement, in a session
+proceeds has made the project's least reversible decision on its own judgment, in a session
 that will not be there to live with it.
 
 **Eliminate before you prefer.** The first two criteria below are constraints and remove options
@@ -3397,7 +3397,7 @@ argument is made for or against it.
 
 ---
 
-# Choosing the Shape
+# Choosing the shape
 
 **Read this in greenfield mode, or when structure is a finding.**
 
@@ -3416,7 +3416,7 @@ layouts in the same language, and getting it wrong costs a restructure later.
 
 **Two shapes in one repository is normal and fine** — a library with a CLI over it, a service
 with a job that shares its models. **What is not fine is two entry points into the same
-behaviour**, which diverge quietly. One shape owns the logic; the others call it.
+behavior**, which diverge quietly. One shape owns the logic; the others call it.
 
 ## The decisions inside the shape
 
@@ -3449,7 +3449,7 @@ be hand-updated when the code moves — it will not be.
 
 ---
 
-# Project Shapes and Layout
+# Project shapes and layout
 
 **The layouts themselves. Choosing between them is the section above.**
 
@@ -3531,7 +3531,7 @@ fail in ways that look like anything but line endings.
 
 ---
 
-# Starter File Contents
+# Starter file contents
 
 **Read this in greenfield mode, or when a file named here is missing or being rewritten.**
 
@@ -3543,7 +3543,7 @@ because it reads as considered when it was not.
 
 **Why literal content exists here at all.** An agent asked to "generate an `AGENTS.md`" writes a
 different one every run, which makes two runs on an unchanged repository disagree, and the
-determinism test in **Validating a Change to This Standard** is what that breaks. **A fixed starting point makes
+determinism test in **Validating a change to this standard** is what that breaks. **A fixed starting point makes
 the diff meaningful.** Only the files where that mattered are here; everything else is described
 by rule and generated to fit.
 
@@ -3611,7 +3611,7 @@ rule nothing runs does nothing, and saying so lets a reader weigh it as advice.
 ## `CLAUDE.md` — the shim
 
 One line. **It is a shim because Claude Code reads `AGENTS.md` natively only in some sessions**
-(the conditions are in *Facts with an Expiry Date*), **and the import works in all of them without
+(the conditions are in *Facts with an expiry date*), **and the import works in all of them without
 loading the file twice.** It becomes `OVER` only if native reading stops having conditions.
 
 ```markdown
@@ -3685,7 +3685,7 @@ stranger than that.
 ```
 
 **Adding this to an existing repository does nothing on its own** — files already committed keep
-their stored endings. The normalisation step is a separate commit that re-stages everything, and
+their stored endings. The normalization step is a separate commit that re-stages everything, and
 it is a mechanical diff, so it gets that commit to itself under the review rules.
 
 **Where PowerShell files are UTF-16**, add `working-tree-encoding=UTF-16LE` to those lines;
@@ -3897,11 +3897,11 @@ the pinned lines.
 security tooling.** A workflow that fetches a binary over the network and executes it has
 made whoever serves that URL a maintainer of this repository, with the workflow's token. A
 live run found both workflows in a repository doing exactly that for their secret scanner:
-**the control that is the primary credential defence, installed with no integrity check at
+**the control that is the primary credential defense, installed with no integrity check at
 all.** Pin the version — that repository did — and then verify what arrives: a published
 checksum or signature, or an action that does it, or a container digest. **A pinned version
-with no checksum pins what you asked for, not what you got.** This is the highest-leverage
-instance of a general rule, so where a run finds it in the scanner job, say that plainly
+with no checksum pins what you asked for, not what you got.** This is where a general rule
+matters most, so where a run finds it in the scanner job, say that plainly
 rather than filing it beside ordinary dependency hygiene.
 
 ## The decision record
@@ -3944,14 +3944,14 @@ again from scratch.
 
 **It only works if the reasoning was written at decision time.** A record of *what* was
 decided, with no *why*, gives future-you nothing to be held to. So the entry carries the
-argument, not just the verdict — and on a re-check, **read the prior reasoning before
+argument, not only the verdict — and on a re-check, **read the prior reasoning before
 forming a new opinion**, in that order. A run that reasons first and reads second has
 consulted the record for permission rather than for review.
 
 **And one refusal criterion is available to a solo maintainer that needs no second opinion:
 unbounded refactor cost.** A change worth making, whose mechanism would require restructuring
 something with no clear edge, can be declined on that ground alone — without disputing its
-value. It is the specific antidote to the solo failure mode of *I could just do it*, which a
+value. It is the specific antidote to the solo failure mode of *I'll do it myself*, which a
 second reviewer would normally arrest and nobody here will. **Record it as the reason, with
 the trigger being that the refactor becomes bounded** — a rewrite already planned, an
 interface that has to move anyway.
@@ -4047,7 +4047,7 @@ agent needs is in `AGENTS.md`; duplicating it here means two files that disagree
 
 ## License
 
-<The licence, matching the LICENSE file.>
+<The license, matching the LICENSE file.>
 ```
 
 **An operations or deployment section in here is a runbook** and satisfies the runbook
@@ -4056,7 +4056,7 @@ than looking for a file called `RUNBOOK.md`.
 
 ---
 
-# The Configuration File Map
+# The configuration file map
 
 **Read this when deciding where something goes, or when a file has turned up with no obvious
 home.** It answers one question per row: **why does this live exactly here?**
@@ -4107,7 +4107,7 @@ question is not asked again.
 
 ---
 
-# Any Agent, Any Tool
+# Any agent, any tool
 
 **Read this when the agent is not Claude Code, or when more than one tool reads the repository.**
 
@@ -4136,7 +4136,7 @@ is indistinguishable from no context file, and the failure is silent in both dir
 | Tool | How it gets `AGENTS.md` |
 |---|---|
 | Codex, Cursor, Windsurf, Jules, Copilot coding agent, Zed, Warp and most others | Directly, no configuration |
-| **Claude Code** | **Natively only in some sessions** (see *Facts with an Expiry Date*). A one-line `CLAUDE.md` containing `@AGENTS.md` covers every session, or a symlink |
+| **Claude Code** | **Natively only in some sessions** (see *Facts with an expiry date*). A one-line `CLAUDE.md` containing `@AGENTS.md` covers every session, or a symlink |
 | Gemini CLI | `{"context": {"fileName": "AGENTS.md"}}` in `.gemini/settings.json` |
 | Aider | `read: AGENTS.md` in `.aider.conf.yml` |
 
@@ -4173,7 +4173,7 @@ the tool in use, substitute from the table and record the substitution as an ove
 
 ---
 
-# File Governance
+# File governance
 
 ## The core test
 
@@ -4254,7 +4254,7 @@ be read against this one.
 
 ---
 
-# The Release and Deploy Currency Gate
+# The release and deploy currency gate
 
 **Trigger: a release, or a deploy to production.**
 
@@ -4293,8 +4293,8 @@ earlier releases. One line, released from the default branch, needs none of this
   untitled release.
 
 **Immutable releases change what publishing costs, and they are a setting rather than a
-default — so read it before assuming either way.** Enabled at the repository or organisation
-level. **Check the setting and record what you found;** a run that asserts the behaviour
+default — so read it before assuming either way.** Enabled at the repository or organization
+level. **Check the setting and record what you found;** a run that asserts the behavior
 without looking has guessed at the one thing on this page that cannot be undone.
 
 **When immutability is on**, publishing is the point of no return: the tag cannot be moved
@@ -4317,9 +4317,9 @@ upload, then publish.
 **Worth proposing rather than merely checking, from T2.** Immutable releases also carry a
 signed attestation, and **build attestation on the artifacts themselves is the other half and
 costs about as little** — the platform can attest what built an artifact, from which source,
-with no key to manage and nothing to run locally. That reaches a recognised supply-chain
+with no key to manage and nothing to run locally. That reaches a recognized supply-chain
 level on its own; the level above it needs the build logic isolated in a reusable workflow,
-which is a larger change and rarely worth it at these tiers. **This is the highest-leverage
+which is a larger change and rarely worth it at these tiers. **This is the highest-value
 release-side step available to a maintainer with no local machine**, and it composes with
 trusted publishing where the ecosystem offers it. Signed attestation is the cheapest
 provenance any of these projects can get. Where
@@ -4345,7 +4345,7 @@ the target SHA matches the release commit, the label is correct.
 
 **A release that must start another workflow hands off through `workflow_dispatch`.** Events a
 workflow makes with its default token start no other workflow, apart from `workflow_dispatch`,
-`repository_dispatch` and a pull request it opens, as *Facts with an Expiry Date* records, so a
+`repository_dispatch` and a pull request it opens, as *Facts with an expiry date* records, so a
 tag pushed or a release published with that token never starts the workflow waiting for it:
 four of a live repository's releases never reached its package index. The release job starts
 the next one by name, with `gh workflow run <file> --ref <tag> --repo "$GITHUB_REPOSITORY"`,
@@ -4357,7 +4357,7 @@ workflow.
 
 ---
 
-# Cross-Repository Contracts
+# Cross-repository contracts
 
 An agent in one repository cannot see another. **A contract must be complete standing alone:**
 schema inline, example payloads, enumerated failure modes.
@@ -4395,7 +4395,7 @@ older than the provider's current version is drift.**
 **A defect found near a contract boundary is yours until proven otherwise.** When something
 fails at a seam, establish which side owns it **before reporting it**, and derive that from
 the other side's actual tree or published spec rather than from your model of their
-behaviour. A live project came within one step of reporting its own defect to its upstream as
+behavior. A live project came within one step of reporting its own defect to its upstream as
 theirs; the cause was a false docstring naming one function as the dispatcher when another
 did the dispatching. **Misattribution costs more than the defect** — it spends the other
 side's time and your credibility, and the correction is public.
@@ -4529,7 +4529,7 @@ first — one more copied file with the drift problem above, except now it is th
 central record exists, **it is generated from the endpoints rather than maintained beside
 them**, or it is not worth having.
 
-**This is established practice, not a preference.** Catalogue systems that model software
+**This is established practice, not a preference.** Catalog systems that model software
 relationships state it explicitly: entity files are not supposed to declare relations;
 processors deduce them from the endpoints, and **where relations are produced they are the
 authoritative source** for that data. Contract-testing brokers work the same way — the
@@ -4549,15 +4549,15 @@ protocol is a two-element one.
 
 ---
 
-# Standards Distribution
+# Standards distribution
 
 | Content | Channel |
 |---|---|
 | CI logic | Reusable workflows — pull-based, change once |
 | Files that must physically exist | `copier` template — a session cannot fetch them |
 | Shared reference docs | `copier` template — one path, refreshed by `copier update` |
-| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under, which is documented to load there. Plugins enabled on the account are documented for Cowork and signed-in terminal sessions, and support says they are meant to reach cloud sessions too, but no session has shown it yet: the ones *Facts with an Expiry Date* records had no synced plugin, and the platform set `SKIP_PLUGIN_MARKETPLACE` in them. A repository's own settings install none in a cloud session. A stamped, checked copy under `.claude/skills/` where neither fits |
-| This standard, for one run | Attached, or linked at a fixed commit and checked against its SHA-256, as *Sending Results Back* shows |
+| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under, which is documented to load there. Plugins enabled on the account are documented for Cowork and signed-in terminal sessions, and support says they are meant to reach cloud sessions too, but no session has shown it yet: the ones *Facts with an expiry date* records had no synced plugin, and the platform set `SKIP_PLUGIN_MARKETPLACE` in them. A repository's own settings install none in a cloud session. A stamped, checked copy under `.claude/skills/` where neither fits |
+| This standard, for one run | Attached, or linked at a fixed commit and checked against its SHA-256, as *Sending results back* shows |
 
 `.copier-answers.yml` records the template version. `copier update` re-applies changes and
 surfaces conflicts — **that is the drift detection**, and it needs the clean tree Phase 0
@@ -4577,7 +4577,7 @@ a desktop `copier update` proposes something that cannot happen.
 
 ---
 
-# Sending Results Back
+# Sending results back
 
 **Read this when running the standard for someone else, or to contribute a run to whoever
 maintains it.**
@@ -4601,7 +4601,7 @@ that cannot be done.
 **The file can be linked instead of attached.** A link to it at a fixed commit gives every run
 the same bytes, with no copy changing hands. **Link a commit, never a branch**: a branch link
 reads whatever lands there next. The session downloads the file whole, with `curl` or `git` —
-a fetch tool that summarises pages returns an answer about the file, not the file — and checks
+a fetch tool that summarizes pages returns an answer about the file, not the file — and checks
 its SHA-256 before reading on. The self-check's `standard_sha256` then shows which bytes ran.
 
 ```
@@ -4635,12 +4635,12 @@ a surprise carries no information.
 
 - Both reports, when two runs are being compared. A single report cannot show divergence.
 - The emission blocks rather than prose, since only the blocks diff.
-- The one judgement no schema captures: **reading the gate, was the reader informed or
+- The one judgment no schema captures: **reading the gate, was the reader informed or
   instructed?** A file that reads as orders has drifted from its own posture.
 
 ---
 
-# Validating a Change to This Standard
+# Validating a change to this standard
 
 **Read this only when testing the standard itself.**
 
@@ -4663,7 +4663,7 @@ returns it.
 | **F — cross-model** | The same commit and the same prompt on a different model, each in a fresh session | `tier` and its axes, all ten statuses and `tally` match. **Prose, ordering and wording are expected to differ.** Read the two conformance blocks against each other — a clean block whose `_proof` fields hold summaries rather than literal output is the failure |
 | **G — mechanical** | The checks below, on the file itself, needing no run at all | Every invariant holds. Cheapest test here and the only one that catches a defect in the standard rather than in a run of it |
 
-**D ends with a judgement no schema captures: reading the gate, was the human informed or
+**D ends with a judgment no schema captures: reading the gate, was the human informed or
 instructed?** A file that reads as orders has drifted from its own posture, and saying so is
 worth more than a clean schema pass.
 
@@ -4712,7 +4712,7 @@ first.
 **Three rounds of mechanical and factual testing were run against v0.18.0 and it passed.** Six
 defects were found and fixed: a `yaml` fence opening early, three orphaned fragments, a version
 history out of order, a comment splitting the dimension-status table, and four factual errors
-about platform behaviour. Byte stability, the structural invariants, and numeric consistency all
+about platform behavior. Byte stability, the structural invariants, and numeric consistency all
 hold.
 
 **None of that involved an agent.** Tests A through F have never been run on any version.
@@ -4920,7 +4920,8 @@ every rule. Never read during a run.**
 
 **The current version is in the frontmatter `metadata.version`, not in this section.** The
 entries below are newest-first; the oldest heading is not the version of the file. Record
-`metadata.version` when Phase 8 names the standard.
+`metadata.version` when Phase 8 names the standard. **Past entries keep the spelling and the
+section names they were written with**, so the prose check skips them.
 
 **Renumbered to 0.x at 0.12.1.** This began at 1.0.0, which promises a stable interface it
 never had — the schema changed at nearly every version, and major-zero is what initial
@@ -4929,6 +4930,8 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+<!-- vale off -->
 
 **0.40.0** — **twenty-one fixes**: ten from the first live re-check, which ran on 0.39.0
 against the repository of the first live audit, and from the review, merge and branch check its
@@ -6014,3 +6017,5 @@ amendments emitted as objects. **`environment_preexisting`** split from `setup`.
 traps** recorded. **Ignore rule without its directory** is inert too. **Already-released
 licences are locked** and never proposed for change. **Byte-identical shared files** are never
 edited unilaterally.
+
+<!-- vale on -->

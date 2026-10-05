@@ -34,7 +34,7 @@ installs hooks, runs CI, cuts releases or keeps release lines. Facts are named b
 
 - Require a pull request, require the CI checks, and block force pushes and deletion. Use
   rulesets or classic branch protection. Which your plan allows is in
-  project-bootstrap-and-audit's *Facts with an Expiry Date*.
+  project-bootstrap-and-audit's *Facts with an expiry date*.
 - **Import the rulesets rather than building them by hand.** Each imports from a JSON file,
   through the New ruleset menu under Settings, Rules, Rulesets (fact `ruleset-import`), in the
   shape GitHub's own starter rulesets use (fact `ruleset-recipes`):
@@ -167,7 +167,7 @@ CRLF line endings.
 
 ## CI on GitHub Actions
 
-project-bootstrap-and-audit's *Starter File Contents* has the full CI template. These are the
+project-bootstrap-and-audit's *Starter file contents* has the full CI template. These are the
 properties that matter, each with its reason:
 
 - **`permissions: contents: read` at the top of every workflow** (fact `permissions`). Widen it

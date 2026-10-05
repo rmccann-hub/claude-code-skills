@@ -15,7 +15,7 @@ It is written to be read in ranges, never end to end.
 1. Build its heading index first:
    `grep -n '^# \|^## ' references/PROJECT-BOOTSTRAP-AND-AUDIT-v0.40.0.md`, run from this skill's
    directory.
-2. Read its "How to Read This File" section, then only the ranges your job needs.
+2. Read its "How to read this file" section, then only the ranges your job needs.
 3. Follow it as written, including both waits: Phase 3, and the Phase 6 approval gate. Nothing is
    written to the repository before explicit approval.
 4. The run's report goes outside the repository, as the standard's Phase 6 describes, and is

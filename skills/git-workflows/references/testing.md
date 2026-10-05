@@ -79,7 +79,7 @@ try a release job in a fork, or in a test repository, or with a pre-release vers
 
 A test run that stops early can still exit 0. A test job checks that its report exists, and that
 the number of tests it counts meets a recorded baseline. The standard's starter CI file
-(*Starter File Contents*) has only the collection guard, which counts what was collected.
+(*Starter file contents*) has only the collection guard, which counts what was collected.
 [assets/workflows/tests.yml](../assets/workflows/tests.yml) adds the completion guard. Never
 read a test command's exit status through a pipe: `pytest | tail` reports `tail`'s status, not
 pytest's.

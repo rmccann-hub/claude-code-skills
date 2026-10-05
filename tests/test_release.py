@@ -24,13 +24,13 @@ metadata:
 
 ---
 
-# How to Read This File
+# How to read this file
 
 Read it in ranges.
 
 ---
 
-# Validating a Change to This Standard
+# Validating a change to this standard
 
 Not for runs.
 
@@ -134,10 +134,10 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     assert "release 1.0.0 of\n> example/fixture." in kick
     assert "RELEASE_VERSION" not in kick and "STANDARD_SHA256" not in kick
     assert (
-        'extract: "Validating a Change to This Standard and Provenance left out; the full' in kick
+        'extract: "Validating a change to this standard and Provenance left out; the full' in kick
     )
     assert "No warranty of any kind.\n\n> **About this file.**" in kick
-    assert "\n---\n\n# How to Read This File\n" in kick
+    assert "\n---\n\n# How to read this file\n" in kick
     assert "# Validating a Change" not in kick and "# Provenance" not in kick
     assert kick.endswith(f"\n\n{release.END}\n")
     notes = (out / "notes.md").read_text(encoding="utf-8")

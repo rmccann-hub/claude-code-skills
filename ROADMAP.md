@@ -777,12 +777,12 @@ before it's built:
 | Piece | What moves | Status |
 |---|---|---|
 | 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | shipped |
-| 1 | The procedure into `SKILL.md`, from How to Read This File, the routing table, What this is for, Scope, Assumptions, Limitations and the stop rules. Standing rules, vocabularies, environment and the conformance self-check into references, with `other-tools.md`. The report's skeleton and schema, and `check_report.py`. `skillcheck` checks the new structure. | planned |
-| 2 | Starter File Contents into `assets/templates/`, each file tested, with `starter-files.md`. | planned |
+| 1 | The procedure into `SKILL.md`, from How to read this file, the routing table, What this is for, Scope, Assumptions, Limitations and the stop rules. Standing rules, vocabularies, environment and the conformance self-check into references, with `other-tools.md`. The report's skeleton and schema, and `check_report.py`. `skillcheck` checks the new structure. | planned |
+| 2 | Starter file contents into `assets/templates/`, each file tested, with `starter-files.md`. | planned |
 | 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. | planned |
 | 4 | Phases 0 to 3 and 5 to 9 into four phase files, with `preflight.py` and `inventory.py`. | planned |
-| 5 | Choosing a Language and Runtime, Choosing the Shape and Project Shapes into `new-project.md`. The Configuration File Map, Standards Distribution, File Governance, the Release and Deploy Currency Gate, Cross-Repository Contracts, Any Agent, Any Tool and the facts into their references. | planned |
-| 6 | Versioning, Proposing a Change, Sending Results Back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's license becomes Apache-2.0. Release 0.2.0 | planned |
+| 5 | Choosing a language and runtime, Choosing the shape and Project Shapes into `new-project.md`. The configuration file map, Standards distribution, File governance, the Release and Deploy Currency Gate, Cross-repository contracts, Any agent, any tool and the facts into their references. | planned |
+| 6 | Versioning, Proposing a Change, Sending results back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's license becomes Apache-2.0. Release 0.2.0 | planned |
 
 ## Repository
 

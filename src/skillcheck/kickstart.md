@@ -2,7 +2,7 @@
 > REPOSITORY. It holds standard vSTANDARD_VERSION, whose full file has this SHA-256:
 > `STANDARD_SHA256`
 >
-> The two sections no run reads are left out: *Validating a Change to This Standard* and
+> The two sections no run reads are left out: *Validating a change to this standard* and
 > *Provenance*. The standard's text is otherwise unchanged. Around it, this file adds its first
 > lines, these run instructions, the frontmatter's `extract` and `run_file` lines, and the end
 > marker. The routing table and a few sentences still name the two sections; a job that needs

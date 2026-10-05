@@ -1,6 +1,6 @@
 """The standard's own mechanical checks, run on the copy this repository ships.
 
-PROJECT-BOOTSTRAP-AND-AUDIT lists them under "Validating a Change to This Standard" as Test G:
+PROJECT-BOOTSTRAP-AND-AUDIT lists them under "Validating a change to this standard" as Test G:
 properties of the file checkable by reading it, each added because it once failed. Its version
 history shows them run by hand. Here they run in CI on every change.
 """

@@ -30,8 +30,8 @@ KICKSTART = "KICKSTART.md"
 NOTES = "notes.md"
 INSTRUCTIONS = Path(__file__).with_name("kickstart.md")
 # The two sections no run reads come last, from the first of them to the end of the file.
-CUT = "\n---\n\n# Validating a Change to This Standard"
-AFTER_LICENSE = "No warranty of any kind.\n\n---\n\n# How to Read This File"
+CUT = "\n---\n\n# Validating a change to this standard"
+AFTER_LICENSE = "No warranty of any kind.\n\n---\n\n# How to read this file"
 END = "**End of the kickstart file.** If you can read this line, the whole file arrived."
 # A fixed time for every entry, so the same commit always packs the same bytes.
 EPOCH = (1980, 1, 1, 0, 0, 0)
@@ -107,7 +107,7 @@ def kickstart(root: Path, version: str) -> str:
     text = text.replace(
         frontmatter_version,
         frontmatter_version
-        + '  extract: "Validating a Change to This Standard and Provenance left out; the full'
+        + '  extract: "Validating a change to this standard and Provenance left out; the full'
         f' file is in release {version} of {repository}"\n'
         + '  run_file: "the kickstart file: run instructions follow the license, and the last'
         ' line is its end marker"\n',
@@ -115,7 +115,7 @@ def kickstart(root: Path, version: str) -> str:
     text = text.replace(
         AFTER_LICENSE,
         "No warranty of any kind.\n\n" + instructions.rstrip("\n") + "\n\n---\n\n"
-        "# How to Read This File",
+        "# How to read this file",
     )
     first = (
         "RUN-FILE-FOR: the repository this session works in · JOB: chosen by what it holds · "
