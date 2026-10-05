@@ -666,6 +666,26 @@ approval:
   and the variable is gone. Until then, a skill uploaded to the account stays the route the
   standard names.
 
+The parity runs of v0.40.0's final text found four more on 2026-10-05, each checked against the
+text that day. Each rests on one run's evidence. They await the owner's approval:
+
+- **F109:** Phase 3's `drafts.reply` takes `confirmed`, `corrected` or `not sure`, and nothing
+  says no reply was given. An unattended run whose prompt leaves out a question can't record
+  that without putting "not sure" in a person's mouth: both runs met it, for v0.40.0's new
+  question on co-maintainers. `reply` should gain `unanswered`, with the question's default
+  applied and the draft carried to Phase 6's first list.
+- **F110:** the self-check says `actions_requiring_a_local_clone` must be 0, while Phase 6
+  allows a local command where Phase 0 recorded a local working copy, after the browser route.
+  The self-check should require 0 only where Phase 0 recorded none.
+- **F111:** a re-check judges each recorded trigger `fired: yes | no`. Where the fetch can't run,
+  a trigger that names a tag or a release can only be judged from local refs, which may be
+  stale. The text should say to judge it from what's local, say so, and offer the human the
+  remote's tag list as a browser action.
+- **F112:** dimension 10 rates a version scheme never chosen as `DRIFT`, while versioning is
+  required from T2, or earlier once a built artifact reaches someone. The text should say
+  whether that rating applies below that point, where a tag alone doesn't make the project
+  versioned.
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
