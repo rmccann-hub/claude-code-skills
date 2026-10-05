@@ -82,8 +82,8 @@ are numbered as in `SKILL.md`. Facts are named by ID from `facts.md`.
 ## A README's sections
 
 Every README has at least these, in this order, under these headings (rule 10). Others go
-where they fit. project-bootstrap-and-audit's README template, in the standard's Starter File
-Contents, also has Requirements before Install, and Configuration after Usage.
+where they fit. project-bootstrap-and-audit's README template, in the standard's Starter file
+contents, also has Requirements before Install, and Configuration after Usage.
 
 | Section | Holds |
 |---|---|

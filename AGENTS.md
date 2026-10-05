@@ -54,7 +54,7 @@ change here changes what agents do there.
 
 ## Budgets
 
-The standard's figures (File Governance, Starter File Contents) and the Agent Skills spec's,
+The standard's figures (File governance, Starter file contents) and the Agent Skills spec's,
 as smells, not thresholds. Split by the standard's recipe: enforced conventions stay here,
 reference prose moves to `docs/` with a link, and what moved is deleted in the same commit.
 

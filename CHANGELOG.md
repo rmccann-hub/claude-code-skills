@@ -6,6 +6,27 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.7] - 2026-10-05
+
+### Changed
+
+- The standard is v0.41.0. It applies the thirty-four fixes, F81 to F114, that the owner
+  approved on 2026-10-05, in groups, each reviewed cold:
+  - eight on tests that report more than they ran, such as a suite that writes its report as
+    its last act, with CI failing without it;
+  - eleven on CI and the context file, such as a timeout on every job, and a committed
+    SessionStart hook for what sessions need;
+  - six on releases and other repositories, one on the run's own habits, two corrected facts,
+    and five from the parity runs of v0.40.0;
+  - the platform settings, which move from the kickstart file into the standard.
+- The standard follows the house style: sentence-case headings, American spelling and no
+  filler. The prose check covers it, apart from the past entries in its version history.
+
+### Fixed
+
+- Security updates stay ungrouped, as the standard's dimension 8 says. Release 0.1.5's
+  kickstart file said to group them, for each repository and for new ones on the account.
+
 ## [0.1.6] - 2026-10-05
 
 ### Added

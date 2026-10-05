@@ -23,7 +23,7 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.40.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.41.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -404,7 +404,7 @@ also applied in v0.39.0:
 The v0.39.0 parity runs found seven more, applied before it merged:
 
 - **F53:** the routing row for choosing a language and a shape sent the run to neither *Project
-  Shapes and Layout*, where Phase 2 finds the shapes, nor Phase 6, which gives a Phase 3 stop's
+  shapes and layout*, where Phase 2 finds the shapes, nor Phase 6, which gives a Phase 3 stop's
   report its shape (piece 1).
 - **F54:** the `job` vocabulary had no value for choosing, so the greenfield run recorded
   "set up" (piece 1).
@@ -536,7 +536,7 @@ rather than inferred, also applied in v0.40.0:
 On 2026-09-30 the owner asked what the two live repositories had found through their own
 iteration, to build on it. Their context files, decision logs, tools and the tests that guard
 their process were read that day, and each lesson was checked against the standard. Twenty-two
-are missing. The owner approved them on 2026-10-05:
+are missing. The owner approved them on 2026-10-05, and v0.41.0 applies them:
 
 - **F81:** a test run that stops early can exit 0: a live repository merged a pull request
   whose suite had run 76% of its tests. The suite should write a marker as its last act, and
@@ -630,7 +630,7 @@ are missing. The owner approved them on 2026-10-05:
 
 Building `git-workflows`, its cold review and the owner's question about slow CI found five more
 on 2026-09-30, each checked against its source that day. The owner approved them on
-2026-10-05:
+2026-10-05, and v0.41.0 applies them:
 
 - **F103:** dimension 2's lockfile table offers `uv sync --frozen` as well as `--locked`, but
   `--frozen` installs from the lockfile without checking it, so drift passes. It should name
@@ -653,7 +653,7 @@ on 2026-09-30, each checked against its source that day. The owner approved them
   with `pull_request` where CI is slow.
 
 One more, from Anthropic support's reply to the owner on 2026-09-30, approved by the owner on
-2026-10-05:
+2026-10-05 and applied in v0.41.0:
 
 - **F108:** the facts table says plugins enabled on a claude.ai account load in Cowork and
   terminal sessions, that the docs name no cloud session for them, and that one account's cloud
@@ -670,7 +670,7 @@ One more, from Anthropic support's reply to the owner on 2026-09-30, approved by
 
 The parity runs of v0.40.0's final text found five more on 2026-10-05, each checked against the
 text that day. All three runs met F109, and each of the others rests on one run's evidence. The
-owner approved them on 2026-10-05:
+owner approved them on 2026-10-05, and v0.41.0 applies them:
 
 - **F109:** Phase 3's `drafts.reply` takes `confirmed`, `corrected` or `not sure`, and nothing
   says no reply was given. An unattended run whose prompt leaves out a question can't record
@@ -694,7 +694,7 @@ owner approved them on 2026-10-05:
   but the text should say that a job ending at the wait ends there.
 
 One more, from the owner's request on 2026-10-05 for one settings checklist across their
-repositories, approved by the owner on 2026-10-05:
+repositories, approved by the owner on 2026-10-05 and applied in v0.41.0:
 
 - **F114:** Phase 3 asks for the platform settings a run can't read, and dimensions 6 to 8 and
   the release gate rate some of them. But the standard lists neither the settings to read nor
@@ -702,6 +702,24 @@ repositories, approved by the owner on 2026-10-05:
   run instructions carry that list. The standard should carry it itself, with its click paths
   among its dated facts, so the full file and the kickstart file agree. The run instructions
   then go back to choosing the job.
+
+Applying them found four more on 2026-10-05, each checked that day. They wait for the owner's
+approval:
+
+- **F115:** the starter CI file's checkout keeps its credentials, which zizmor flags as
+  `artipacked`. This repository's workflows set `persist-credentials: false`, and the template
+  should too.
+- **F116:** where the documented install that fails on drift fails, a run's later gates can
+  resolve the dependencies afresh, as `uv run` does, so two runs on one tree report passes or
+  failures by how they typed the command. The re-check sample's run proposed running the gates
+  as documented and saying each ran on a fresh resolution, with the versions, which CI never
+  reaches.
+- **F117:** runs place a CI job that can't get past its locked install in different dimensions.
+  The re-check sample's baseline run rated dimension 6 `DRIFT`, and v0.41.0's run rated the stale
+  lock in dimension 2 and the job's missing timeout in dimension 6. The text should say which
+  dimension owns it.
+- **F118:** the README template has no Operations or Security section, which the house style
+  asks every README for (question 18).
 
 The owner asked for one more rule, researched before it's written:
 
@@ -777,12 +795,12 @@ before it's built:
 | Piece | What moves | Status |
 |---|---|---|
 | 0 | Parity checks: sample repositories, answer keys, the grader, and the current skill's results as the baseline | shipped |
-| 1 | The procedure into `SKILL.md`, from How to Read This File, the routing table, What this is for, Scope, Assumptions, Limitations and the stop rules. Standing rules, vocabularies, environment and the conformance self-check into references, with `other-tools.md`. The report's skeleton and schema, and `check_report.py`. `skillcheck` checks the new structure. | planned |
-| 2 | Starter File Contents into `assets/templates/`, each file tested, with `starter-files.md`. | planned |
+| 1 | The procedure into `SKILL.md`, from How to read this file, the routing table, What this is for, Scope, Assumptions, Limitations and the stop rules. Standing rules, vocabularies, environment and the conformance self-check into references, with `other-tools.md`. The report's skeleton and schema, and `check_report.py`. `skillcheck` checks the new structure. | planned |
+| 2 | Starter file contents into `assets/templates/`, each file tested, with `starter-files.md`. | planned |
 | 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. | planned |
 | 4 | Phases 0 to 3 and 5 to 9 into four phase files, with `preflight.py` and `inventory.py`. | planned |
-| 5 | Choosing a Language and Runtime, Choosing the Shape and Project Shapes into `new-project.md`. The Configuration File Map, Standards Distribution, File Governance, the Release and Deploy Currency Gate, Cross-Repository Contracts, Any Agent, Any Tool and the facts into their references. | planned |
-| 6 | Versioning, Proposing a Change, Sending Results Back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's license becomes Apache-2.0. Release 0.2.0 | planned |
+| 5 | Choosing a language and runtime, Choosing the shape and Project shapes and layout into `new-project.md`. The configuration file map, Standards distribution, File governance, the release and deploy currency gate, Cross-repository contracts, Any agent, any tool and the facts into their references. | planned |
+| 6 | Versioning, Proposing a change, Sending results back, Validating a change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's license becomes Apache-2.0. Release 0.2.0 | planned |
 
 ## Repository
 
@@ -795,4 +813,5 @@ trigger.
 | `copier` template | The standard's starter files, so a new repository is set up without a session | planned | the first repository set up from this one |
 | Reusable workflows | This repository's CI gates, callable from other repositories | planned | a second repository wants this CI |
 | `upstream-defects.md` | The standard's register of upstream defects shared across repositories | planned | the first upstream defect found |
+| Map refresh on dependency updates | Dependabot's pull requests change the lockfiles but not `bom.json` or `docs/dependencies.md`, and pull request CI doesn't check the map, so main's goes stale until the weekly check or a release refuses it. A session can regenerate it in each such pull request before merging, or CI can check it and fail them until then | planned | the owner chooses between the two |
 | Fewest dependencies here | This repository's own dependencies and pins, in `pyproject.toml`, `package.json` and CI, held to the R21 rule | planned | the rule is in the standard |
