@@ -909,6 +909,10 @@ git grep -inE '^#+ *(production )?(deployment|deploy|operations|runbook|maintena
   re-check that re-raises a decline as a fresh amendment has failed — it destroys the value
   of recording declines and makes the human re-litigate a settled question.
 - **A deferred item is re-proposed only when its trigger has fired.** Say which fired.
+- **A trigger that names a tag or a release is judged from the refs the run could read.** Where
+  Phase 0's fetch couldn't run, local refs may be stale. Judge it from what's local, say so in
+  the block's `notes`, and put the remote's tag list, `https://<forge>/<owner>/<repo>/tags`, in
+  Phase 6's third list as a browser action that settles it.
 - **A trigger only watches what it is worded about, and the tier has two axes.** Blast
   radius asks what breaks; audience asks who is affected. **A trigger phrased about the
   repository — "a second person commits", "a second person gets repository access" — cannot
@@ -1188,6 +1192,16 @@ wrong tier is caught before anything is applied. That
 is the one case in which the confirmation moves to Phase 6. It isn't a deviation, and
 `waits_observed` counts it.
 
+**A question the given answers leave out is `unanswered`, never `not sure`.** "Not sure" is an
+answer someone gave, and recording it for a person who wasn't asked puts words in their mouth:
+every parity run of 0.40.0 met this, on its new question about co-maintainers. The run applies
+that question's default, records `reply: unanswered` beside the draft, and carries the draft to
+Phase 6's first list, where the human confirms or corrects it.
+
+**A job that ends at this wait still ends here.** Choosing a language and a shape stops at this
+wait with the recommendation, as the routing table says, and nothing is picked by default. An
+unattended run of that job hands over its report here, as below, and goes no further.
+
 On a **re-check**, do not re-ask from scratch and do not silently carry forward either.
 **Show each recorded answer and ask of it: "Is that still the case?"** — with no answer
 pre-selected and no stated default. Asked that way, people report change most accurately
@@ -1344,7 +1358,7 @@ Record the answers in `inception`. **Do not ask a fourth question to be thorough
 phase: 3
 answers_source: <recon report path | given in the prompt | asked directly>
 drafts: [{q: <1-6 | p0-4>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
-          reply: confirmed | corrected | not sure}]   # none on a re-check
+          reply: confirmed | corrected | not sure | unanswered}]   # none on a re-check
 owner: work | personal | mixed   # mixed: provenance and copyright are decided per item
 copyright_holder: <as the human names it: a legal name, or the name they publish under | n/a>
 exposure: already_public | possible_later | never
@@ -2282,7 +2296,10 @@ decided what they mean. **A project whose numbers reconcile perfectly and whose 
 never chosen is `DRIFT` on this dimension**, because the next person to bump it is guessing,
 and the guess is where the reconciliation breaks. One entry in the decision record answers
 it: which scheme, what counts as a major change **for this project**, whether pre-release
-labels are used, and what leaving one requires.
+labels are used, and what leaving one requires. **This applies where versioning is required:**
+from T2, or earlier once a built artifact reaches someone, as the start of this dimension says.
+Below that point a tag alone doesn't make the project versioned, and an unchosen scheme is
+`N/A`.
 
 **The scheme is semantic versioning — `MAJOR.MINOR.PATCH`.** This file does not offer a
 choice, and the reason is not that dated schemes are wrong. It is that **a version scheme is
@@ -2554,7 +2571,8 @@ standard. **They must not have to copy blocks out of the conversation to do that
 **Three lists, in this order:**
 
 1. **Decisions only the human can supply**, each with **what happens by default if
-   unanswered**, and which amendments each gates.
+   unanswered**, and which amendments each gates. A Phase 3 question recorded `unanswered` is
+   one, with its draft and the default the run applied.
 2. **Numbered amendments**, recommendation **labelled but never pre-selected.**
 3. **Actions only the human can take** — server-side or manual. **Each is achievable in a
    browser by default.** Where Phase 0 recorded no local working copy, "run this command on
@@ -3003,7 +3021,7 @@ conformance:
   # Posture
   amendments_pre_selected: no | yes
   both_consequences_on_every_amendment: yes | no
-  actions_requiring_a_local_clone: <int>   # must be 0
+  actions_requiring_a_local_clone: <int>   # must be 0 where Phase 0 recorded no local copy
   declines_reproposed_without_a_fired_trigger: <int>   # must be 0
 
   # Delivery
@@ -3079,7 +3097,7 @@ the one field that exists to catch that, which a live run did.
 | `tally_sums_to_ten` | Phase 4 did not finish. Recount before emitting anything else — this has been wrong twice, both times by inventing a combined status for a dimension that was partly fine |
 | `new_vocabulary_coined` | The vocabularies are closed. Use `secondary`, `strength` or `notes` and re-emit |
 | `waits_observed` | Fewer than two on a full run means a gate was skipped, and a gate skipped is approval assumed. More than two means waits were invented, which costs the human round trips the file could have answered |
-| `actions_requiring_a_local_clone` | Anything above zero is unusable by a maintainer who has none. Rewrite each as a browser action or a dispatch job |
+| `actions_requiring_a_local_clone` | Where Phase 0 recorded no local working copy, anything above zero is unusable by a maintainer who has none: rewrite each as a browser action or a dispatch job. Where it recorded one, Phase 6 allows a local command after the browser route, and the count is reported, not failed |
 | `declines_reproposed_without_a_fired_trigger` | The re-check obligations were not honoured, and the decision record is being ignored. This is the failure that makes people stop reading the gate |
 | `report_handed_over` | A report written to an ephemeral container and not handed over is the same as no report, and it is the one artifact with no copy anywhere else |
 | `unverified_facts_relied_on` | Not a failure by itself. **A non-empty list with no matching `UNVERIFIABLE-HERE` in the findings is** — it means a dated fact was used as though it had been checked |
@@ -4536,7 +4554,7 @@ returns it.
 | **A — before/after** | Survey mode on an audited repository, against its earlier survey | A field that did not move where an amendment claimed to move it is an applied amendment that did not take |
 | **B — determinism** | Two fresh sessions, same commit, same answers, both stopping at the gate | `mode`, `decision_record_alias`, `tier` and its axes, all ten statuses, `tally` identical. Prose, timings, `overrides` and ordering may differ |
 | **C — re-check** | From the same captures | `mode: recheck`, `tier_previous` populated, and **no declined or deferred item re-proposed unless its trigger fired** |
-| **D — posture** | From the gate file | No `required` severity; `if_accepted` and `if_declined` populated with real content; `recommended + optional == amendments_total`; no action needs a local clone |
+| **D — posture** | From the gate file | No `required` severity; `if_accepted` and `if_declined` populated with real content; `recommended + optional == amendments_total`; no action needs a local clone where Phase 0 recorded none |
 | **E — self-correction** | A repository where an earlier version installed something now painful | It finds it, names it `OVER`, and removes the cause — without asking for a hand-edit or proposing to weaken an enforced rule |
 | **F — cross-model** | The same commit and the same prompt on a different model, each in a fresh session | `tier` and its axes, all ten statuses and `tally` match. **Prose, ordering and wording are expected to differ.** Read the two conformance blocks against each other — a clean block whose `_proof` fields hold summaries rather than literal output is the failure |
 | **G — mechanical** | The checks below, on the file itself, needing no run at all | Every invariant holds. Cheapest test here and the only one that catches a defect in the standard rather than in a run of it |
@@ -4703,7 +4721,7 @@ re-reading the table it came from is not confirmed.
 | Check | Where | What a surprise would change |
 |---|---|---|
 | Create a ruleset on a **free private** repository | Settings, rules | If it offers rather than upsells, dimension 6 is wrong and the public-or-pay decision should not be raised at all |
-| Push protection on a **public** repository | Settings, security | Confirms the free remedy exists, which is what makes that finding actionable |
+| The repository's push protection on a **public** repository | Settings, security | Confirms the free remedy exists, which is what makes that finding actionable. The users' kind is on by default and isn't this setting |
 | **Immutable releases**, on or off for you | Repository settings, or a published release's detail | This file says *read the setting*. Confirm the setting is where it says it is |
 | A recent **dependency-update PR** lagging its release by about three days | Any repository with it enabled | Confirms the default cooldown, and therefore the `OVER` rule built on it |
 | **Canonical context file with no tool shim** — start the agent, ask it something only that file says | A session | If it knows, native reading worked in that session. **Repeat it in a first session after an upgrade, and with telemetry off**, before calling the shim `OVER`: those are the conditions that keep it |
