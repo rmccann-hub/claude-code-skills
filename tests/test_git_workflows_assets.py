@@ -29,7 +29,6 @@ PULL_REQUEST_PARAMETERS = {
     "required_approving_review_count",
     "required_review_thread_resolution",
 }
-SHA_PIN = re.compile(r"uses: [\w.-]+/[\w.-]+@[0-9a-f]{40} # v\d+\.\d+\.\d+$")
 SUBJECTS_STEP = 'Check that each commit subject reads "area: summary"'
 RELEASE_CHECK = "Check the version, the commit and its changelog"
 RELEASE_CHECKS_PASSED = "Check that every check on the commit has passed"
@@ -133,25 +132,8 @@ def test_pre_push_hook_reads_the_pushed_refs(pushed, code):
     assert run(["sh", HOOKS / "pre-push", "origin", "url"], stdin=pushed).returncode == code
 
 
-@pytest.mark.parametrize("path", sorted(WORKFLOWS.glob("*.y*ml")), ids=lambda p: p.name)
-def test_workflow_is_narrow_bounded_and_pinned(path):
-    text = path.read_text(encoding="utf-8")
-    workflow = yaml.safe_load(text)
-    # Wider grants belong to the job that needs them, never to the whole workflow.
-    assert workflow["permissions"] == {"contents": "read"}
-    steps = [step for job in workflow["jobs"].values() for step in job["steps"]]
-    assert all("timeout-minutes" in job for job in workflow["jobs"].values())
-    uses = [line.strip().removeprefix("- ") for line in text.splitlines() if "uses:" in line]
-    assert uses, "each example checks out code"
-    assert all(SHA_PIN.fullmatch(line) for line in uses), uses
-    checkouts = [step for step in steps if step.get("uses", "").startswith("actions/checkout@")]
-    assert all(step["with"]["persist-credentials"] is False for step in checkouts)
-
-
-def test_workflows_pass_zizmor():
-    paths = sorted(str(path) for path in WORKFLOWS.glob("*.y*ml"))
-    result = run(["zizmor", "--offline", *paths])
-    assert result.returncode == 0, result.stdout + result.stderr
+# Each example is narrow, bounded, pinned and clean under zizmor: tests/test_repository.py
+# holds every workflow a skill ships to that, with the ones this repository runs.
 
 
 def ruleset(name: str) -> dict:
