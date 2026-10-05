@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.40.0"
-  updated: "2026-09-30"
-  supersedes: "0.39.0"
+  version: "0.41.0"
+  updated: "2026-10-05"
+  supersedes: "0.40.0"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -4930,6 +4930,60 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.41.0** — **thirty-four fixes**, F81 to F114, which the owner approved on 2026-10-05: lessons
+the two live repositories paid for, five checks of this file against its sources, a support
+reply, the parity runs of 0.40.0, and the settings list the kickstart file carried. Each group
+was reviewed cold, and the three reviews found 39 defects in the first text, among them two
+rules that contradicted dimensions 6 and 8. The file also moves into its house style: American
+spelling, sentence-case headings and no filler, checked by Vale.
+
+**Tests that report more than they ran, eight.** *A suite writes a report as its last act, and
+CI fails without it*: one merged a pull request that had run 76% of its tests. *A sweep asserts
+a floor on what it examined*: an audit found 52 gates that could pass on nothing. *A revert
+proves a test only when it landed and built.* *A stand-in is no more permissive than
+production*: a fixture hid a crash for five releases. *A check has three outcomes, and fails
+closed on the third.* *A check that only warns gates nothing.* *A flaky test gets
+instrumentation, not a wider timeout.* *A mutation sweep first makes an edit that changes
+nothing*: one scored 100% because a test hashed the tree.
+
+**CI and the context file, eleven.** *A workflow installs the project's pin of each gating tool,
+and a run records the binary the gate ran.* *Every job sets a timeout, and CI covers the branch
+where work lands and what users are told to build.* *Output that lists work is read whole, and
+a sweep refuses conflict markers*: a cut-short merge shipped them through nine green jobs.
+*What a session needs comes from a committed SessionStart hook*, since cloud sessions don't run
+a repository's setup script. *Each context-file rule names what fails when it's broken, or says
+nothing checks it.* *Facts sessions keep deriving again go in an index.* *A fact stated twice
+is generated from one copy, or tested.* *A test keeps cited commits reachable, and a cited
+commit is never amended.* *uv installs with `--locked`, never `--frozen`.* *Under squash, the
+default squash message starts with the pull request's title.* *The starter CI says its two
+triggers run each pull request twice.*
+
+**Releases and other repositories, six.** *A release that must start another workflow hands off
+through `workflow_dispatch`*: four releases never reached a package index. *A release is proven
+from what users install*, and at T3 a review told to refute it reads its diff. *A claim about
+another repository cites `owner/repo@sha:path:line`.* *A review loop fixes its close conditions
+first*: one ran to lap 39 by one count and 37 by the other. *A commit that adds a document names
+the homes it considered.* *A handoff waits until what it quotes resolves.*
+
+**The run's own habits, one.** *It waits on a process ID, runs one suite per build directory,
+verifies a subagent's finding, and reads a fan-out's failures first.*
+
+**Two facts corrected.** *Push protection has two kinds*, and only the repository's checks every
+contributor's push and alerts on a bypass. *Plugins enabled on an account are meant to reach
+cloud sessions*, by support's account, and no session has shown it yet: the platform set
+`SKIP_PLUGIN_MARKETPLACE` in each one recorded.
+
+**The parity runs of 0.40.0 found five.** *A question the given answers leave out is
+`unanswered`*, and takes its stated default or `unknown`. *The local-clone count fails only
+where Phase 0 recorded no local copy.* *A tag trigger is judged from the refs the run could
+read.* *An unchosen version scheme is `N/A` below the point where versioning is required.* *A
+job that ends at the Phase 3 wait ends there.*
+
+**And one move.** *The platform settings live in the standard*, in *Facts with an expiry date*,
+with Phases 2, 3 and 6 saying how they're read, asked for and reported. The kickstart file's run
+instructions go back to choosing the job. On the way, *security updates stay ungrouped*, as
+dimension 8 says, where release 0.1.5's kickstart file said to group them.
 
 <!-- vale off -->
 

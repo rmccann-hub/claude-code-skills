@@ -23,7 +23,7 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.40.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.41.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -536,7 +536,7 @@ rather than inferred, also applied in v0.40.0:
 On 2026-09-30 the owner asked what the two live repositories had found through their own
 iteration, to build on it. Their context files, decision logs, tools and the tests that guard
 their process were read that day, and each lesson was checked against the standard. Twenty-two
-are missing. The owner approved them on 2026-10-05:
+are missing. The owner approved them on 2026-10-05, and v0.41.0 applies them:
 
 - **F81:** a test run that stops early can exit 0: a live repository merged a pull request
   whose suite had run 76% of its tests. The suite should write a marker as its last act, and
@@ -630,7 +630,7 @@ are missing. The owner approved them on 2026-10-05:
 
 Building `git-workflows`, its cold review and the owner's question about slow CI found five more
 on 2026-09-30, each checked against its source that day. The owner approved them on
-2026-10-05:
+2026-10-05, and v0.41.0 applies them:
 
 - **F103:** dimension 2's lockfile table offers `uv sync --frozen` as well as `--locked`, but
   `--frozen` installs from the lockfile without checking it, so drift passes. It should name
@@ -653,7 +653,7 @@ on 2026-09-30, each checked against its source that day. The owner approved them
   with `pull_request` where CI is slow.
 
 One more, from Anthropic support's reply to the owner on 2026-09-30, approved by the owner on
-2026-10-05:
+2026-10-05 and applied in v0.41.0:
 
 - **F108:** the facts table says plugins enabled on a claude.ai account load in Cowork and
   terminal sessions, that the docs name no cloud session for them, and that one account's cloud
@@ -670,7 +670,7 @@ One more, from Anthropic support's reply to the owner on 2026-09-30, approved by
 
 The parity runs of v0.40.0's final text found five more on 2026-10-05, each checked against the
 text that day. All three runs met F109, and each of the others rests on one run's evidence. The
-owner approved them on 2026-10-05:
+owner approved them on 2026-10-05, and v0.41.0 applies them:
 
 - **F109:** Phase 3's `drafts.reply` takes `confirmed`, `corrected` or `not sure`, and nothing
   says no reply was given. An unattended run whose prompt leaves out a question can't record
@@ -694,7 +694,7 @@ owner approved them on 2026-10-05:
   but the text should say that a job ending at the wait ends there.
 
 One more, from the owner's request on 2026-10-05 for one settings checklist across their
-repositories, approved by the owner on 2026-10-05:
+repositories, approved by the owner on 2026-10-05 and applied in v0.41.0:
 
 - **F114:** Phase 3 asks for the platform settings a run can't read, and dimensions 6 to 8 and
   the release gate rate some of them. But the standard lists neither the settings to read nor

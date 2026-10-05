@@ -37,7 +37,7 @@ To check another repository's prose against the house style, follow the house-st
 
 | Skill | Plugin | What it does |
 |---|---|---|
-| `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.40.0) |
+| `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.41.0) |
 | `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
 | `house-style` | `engineering` | One style for prose and Markdown in every repository, with the reasons for each rule, and the Vale style and CI job that check it |
 
