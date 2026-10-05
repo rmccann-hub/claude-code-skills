@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-10-05
+
 ### Added
 
 - The `house-style` skill, in the `engineering` plugin: one style for prose and Markdown in
