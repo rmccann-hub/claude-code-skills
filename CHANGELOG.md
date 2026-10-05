@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-10-05
+
 ### Added
 
 - A release workflow, `.github/workflows/release.yml`, run from the Actions tab with a version

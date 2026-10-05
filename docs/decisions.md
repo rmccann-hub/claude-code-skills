@@ -2,6 +2,18 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — Release 0.1.3
+
+- **Asked:** the owner: "plan on release all as the next 0.1.3 release", then asked for GitHub
+  to be tested by doing it.
+- **Chosen:** this pull request's merge is release 0.1.3. It carries the dependency map,
+  the release workflow that publishes the kickstart file, the skill packages and the map, and
+  the `git-workflows` skill's fixed release example. Both catalog entries say 0.1.3, because
+  the `git-workflows` skill changed and an installed copy updates only when the version does.
+  Nothing is breaking, so it's a patch release.
+- **Released by:** the Release workflow, run on this pull request's merge commit once CI passes
+  there. It makes the annotated tag and publishes the release page with its files.
+
 ## 2026-10-05 — Releases publish their files, and the release job's defects are fixed
 
 - **Asked:** the owner asked that what a release gives them be "the kickstart/bootstrap files",
