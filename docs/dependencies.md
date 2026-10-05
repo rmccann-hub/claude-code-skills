@@ -114,7 +114,7 @@ weekly freshness run looks for every quote at its source again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no `references/facts.md` | — |
-| `git-workflows` | docs.github.com | 32 |
+| `git-workflows` | docs.github.com | 36 |
 | `git-workflows` | git-scm.com | 17 |
 | `git-workflows` | raw.githubusercontent.com | 7 |
 | `git-workflows` | github.blog | 5 |

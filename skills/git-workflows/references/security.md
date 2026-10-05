@@ -11,6 +11,8 @@ or when a secret has reached a commit. Facts are named by ID from `facts.md`.
 - **Set the repository's default to read-only too,** under Settings, Actions, General, Workflow
   permissions, and leave "Allow GitHub Actions to create and approve pull requests" off (fact
   `workflow-permissions`). A workflow that forgets its block then gets read access, not write.
+  A new repository in a personal account starts that way (fact `token-default`). Check an older
+  one, and one an organisation owns.
 - **`persist-credentials: false` on checkout,** unless a later step in that job pushes. Otherwise
   the token stays in the checkout for every later step, including third-party ones (fact
   `persist-creds`).
@@ -26,6 +28,9 @@ or when a secret has reached a commit. Facts are named by ID from `facts.md`.
 - **Keep the pins moving:** turn on Dependabot version updates for `github-actions`, and check
   that its pull requests reach the pinned lines. A pinned action gets no backported fix, so a
   pin nobody updates goes stale (fact `checkout-v7`).
+- **Leave "Dependabot on self-hosted runners" off** unless a runner labelled for Dependabot
+  exists. Its jobs wait for one, and fail after 24 hours (fact `dependabot-runners`), so no
+  update arrives.
 - **Enforce pinning by policy** where you can (fact `sha-policy`), so an unpinned action fails
   instead of relying on review. The policy covers GitHub's own actions too, and lets a reusable
   workflow keep a tag (fact `sha-policy-scope`). It also fails an action that calls an unpinned

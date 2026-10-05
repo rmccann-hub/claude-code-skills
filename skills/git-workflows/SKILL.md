@@ -55,7 +55,7 @@ Dated facts, such as versions, defaults and platform changes, live in
 
 | When you're | Read |
 |---|---|
-| writing a commit message, branch name, pull request, review comment, changelog entry or version number | [references/style.md](references/style.md) |
+| writing a commit message, branch name, pull request, review comment, changelog entry or version number, or choosing the address commits carry | [references/style.md](references/style.md) |
 | setting up or changing branching, protection, the merge strategy, branch deletion, hooks, CI, releases, release lines or `.gitignore`; rebasing your own branch, resolving a conflict, or recovering a lost commit | [references/setup.md](references/setup.md) |
 | writing or reviewing workflow triggers, permissions or third-party actions, or handling a secret that reached a commit | [references/security.md](references/security.md) |
 | proving that a workflow, hook or gate works | [references/testing.md](references/testing.md) |

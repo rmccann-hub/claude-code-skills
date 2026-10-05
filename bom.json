@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:f46d5d45-5881-5a63-a951-480e8d51f226",
+  "serialNumber": "urn:uuid:1d34a611-072a-52a0-b81e-dbd521e07fdc",
   "version": 1,
   "metadata": {
     "tools": {
@@ -451,7 +451,7 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "docs.github.com: 32 fact(s)"
+              "value": "docs.github.com: 36 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",

@@ -56,6 +56,19 @@ A closing keyword such as `Fixes #42`, in the message or the pull request's desc
 the issue only when the pull request merges into the default branch (fact `close-keywords`). A
 trailer naming a commit closes nothing.
 
+### The author's address
+
+- **A commit's author address is public** once the commit is in a public repository, and it
+  stays with the commit. So commit with the account's noreply address, set in each clone's
+  `git config user.email`, and turn on the account's "Keep my email addresses private" for
+  merges and edits made on GitHub (fact `commit-email`).
+- **Then turn on "Block command line pushes that expose my email".** It refuses a push whose
+  newest commit carries the private address (fact `email-push-block`), which catches a clone
+  still set to it.
+- **An address already in published history stays there.** Changing it means rewriting every
+  commit after it, which strands every clone and every citation. Fix the settings, and leave the
+  history.
+
 ### One change per commit
 
 - A commit does one thing, and the build passes at each one, so `git bisect` can land on it.
