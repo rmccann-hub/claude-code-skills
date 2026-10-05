@@ -13,6 +13,8 @@ from pathlib import Path
 import pytest
 import yaml
 
+from skillcheck import release
+
 ASSETS = Path(__file__).resolve().parent.parent / "skills" / "git-workflows" / "assets"
 HOOKS = ASSETS / "githooks"
 WORKFLOWS = ASSETS / "workflows"
@@ -191,6 +193,11 @@ def test_release_tag_ruleset_covers_the_tag_the_release_job_makes(repo):
     refs = git(repo, "ls-remote", "--tags", "origin").splitlines()
     [made] = [line.split()[1] for line in refs if not line.endswith("^{}")]
     assert any(fnmatch.fnmatchcase(made, p) for p in rules["conditions"]["ref_name"]["include"])
+
+
+def test_the_kickstart_file_names_each_ruleset_a_release_carries():
+    named = set(re.findall(r"ruleset-[\w-]+\.json", release.INSTRUCTIONS.read_text("utf-8")))
+    assert named == {f"ruleset-{path.stem}.json" for path in RULESETS.glob("*.json")}
 
 
 def step_script(workflow: str, job: str, name: str) -> str:

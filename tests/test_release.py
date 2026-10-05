@@ -41,6 +41,8 @@ Where it came from.
 STANDARD_PATH = (
     "skills/project-bootstrap-and-audit/references/PROJECT-BOOTSTRAP-AND-AUDIT-v1.0.0.md"
 )
+RULESET_PATH = "skills/tool/assets/rulesets/tags.json"
+RULESET = '{"name": "Tags", "target": "tag", "rules": [{"type": "deletion"}]}\n'
 CHANGELOG = """\
 # Changelog
 
@@ -88,6 +90,7 @@ def fixture(root: Path) -> Path:
         STANDARD_PATH: STANDARD,
         "skills/tool/SKILL.md": "---\nname: tool\n---\nBody.\n",
         "skills/tool/hooks/run": "#!/bin/sh\nexit 0\n",
+        RULESET_PATH: RULESET,
         "CHANGELOG.md": CHANGELOG,
         "pyproject.toml": "[project]\n",
     }
@@ -113,6 +116,7 @@ def test_a_release_is_built_from_the_commit(tmp_path):
         "bom.json",
         "notes.md",
         "project-bootstrap-and-audit.zip",
+        "ruleset-tags.json",
         "tool.zip",
     ]
     kick = (out / "KICKSTART.md").read_text(encoding="utf-8")
@@ -136,11 +140,18 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     )
     assert "/plugin install beta@fixture-skills\n```" in notes
     assert "| `tool.zip` | The `tool` skill, packaged to upload to claude.ai |" in notes
+    assert "choose Import a ruleset.\n\n| File |" in notes
+    assert "| `ruleset-tags.json` | The Tags tag ruleset, to import |" in notes
     assert notes.endswith("### Added\n\n- A thing.\n")
     assert (out / "bom.json").read_bytes() == (root / "bom.json").read_bytes()
+    assert (out / "ruleset-tags.json").read_text(encoding="utf-8") == RULESET
     archive = zipfile.ZipFile(io.BytesIO((out / "tool.zip").read_bytes()))
     modes = {info.filename: info.external_attr >> 16 for info in archive.infolist()}
-    assert modes == {"tool/SKILL.md": 0o644, "tool/hooks/run": 0o755}
+    assert modes == {
+        "tool/SKILL.md": 0o644,
+        "tool/assets/rulesets/tags.json": 0o644,
+        "tool/hooks/run": 0o755,
+    }
     # The same commit packs the same bytes.
     assert release.packages(root) == release.packages(root)
 
@@ -156,6 +167,24 @@ def test_nothing_is_built_until_the_catalog_the_changelog_and_the_map_agree(tmp_
     assert release.problems(root, "1.0.0") == [
         "docs/dependencies.md is out of date: run `uv run skillcheck --bom`"
     ]
+
+
+def test_a_ruleset_needs_a_name_no_other_skill_uses(tmp_path):
+    root = fixture(tmp_path)
+    other = root / "skills/project-bootstrap-and-audit/assets/rulesets/tags.json"
+    other.parent.mkdir(parents=True)
+    other.write_text(RULESET, encoding="utf-8")
+    git(root, "add", "-A")
+    with pytest.raises(release.ReleaseError, match="two skills ship a ruleset called tags.json"):
+        release.rulesets(root)
+
+
+def test_the_page_says_how_to_import_a_ruleset_only_when_it_carries_one(tmp_path):
+    root = fixture(tmp_path)
+    # The fixture stages its files without committing them, so git rm needs -f.
+    git(root, "rm", "-q", "-f", RULESET_PATH)
+    page = release.notes(root, "1.0.0")
+    assert "ruleset" not in page
 
 
 def test_the_changelog_section_ends_at_the_next_version_or_the_file(tmp_path):
