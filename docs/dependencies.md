@@ -14,7 +14,7 @@ freshness run and the release workflow both run it.
 
 ## What it ships
 
-| Plugin | Version | Licence | Skill | What it carries |
+| Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.5 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.40.0 |
 | `engineering` | 0.1.5 | Apache-2.0 | `git-workflows` | reviewed 2026-10-05 |

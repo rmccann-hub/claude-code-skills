@@ -106,7 +106,7 @@ These come from the standard's own procedure for testing itself, and they still 
 - **The network.** The prompt limits what a run reads on disk, and says nothing about the
   network. In the v0.39.0 runs, the audit run installed from PyPI and read public repositories
   and vendor docs, and the other two made no network reads. So a status that rests on a network
-  check, such as a licence read from a dependency's repository, can differ between runs for
+  check, such as a license read from a dependency's repository, can differ between runs for
   that reason alone.
 
 Changing the prompt to settle either means taking a new baseline.

@@ -322,7 +322,7 @@ def _check_tables(skill_dir: Path, report: Report) -> None:
 def _check_optional_fields(data: dict, where: str, report: Report) -> None:
     """The spec's optional fields, in the form claude.ai accepts at upload."""
     if "license" in data and not _is_text(data["license"]):
-        report.add(where, "license", "license must name a licence or a bundled licence file")
+        report.add(where, "license", "license must name a license or a bundled license file")
     if "compatibility" in data:
         value = data["compatibility"]
         if not _is_text(value):

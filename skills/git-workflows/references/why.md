@@ -251,7 +251,7 @@ what lands. Weaken no test to save time: change where and how often it runs.
 - Without them, two pull requests can each pass and fail together once merged (fact
   `loose-checks`). Then the run on the default branch is what catches it.
 - A merge queue gives strict's guarantee without making every author update their branch, but
-  only in organisation-owned repositories (fact `merge-queue`).
+  only in organization-owned repositories (fact `merge-queue`).
 
 **Is the run on the default branch needed?** Compare its jobs with the pull request's:
 

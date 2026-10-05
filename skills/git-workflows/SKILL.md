@@ -63,7 +63,7 @@ Dated facts, such as versions, defaults and platform changes, live in
 | about to do something risky, or checking an assistant's advice | [references/mistakes.md](references/mistakes.md) |
 | moving off Git Flow, tag pins, Node 20 actions, `master`, `pull_request_target` or lightweight tags | [references/modernization.md](references/modernization.md) |
 | checking a version, date or default | [references/facts.md](references/facts.md) |
-| checking where a rule comes from, or a source's licence | [references/sources.md](references/sources.md) |
+| checking where a rule comes from, or a source's license | [references/sources.md](references/sources.md) |
 | asking why a rule is what it is, what other projects do instead, whether it fits your project, or how long CI should take and where it should run | [references/why.md](references/why.md) |
 
 Tested examples to copy:
@@ -111,4 +111,4 @@ copy uncommitted work before any command that touches the working tree.
   - its starter CI file.
 - **How to design and write the tests CI runs:** that belongs to a testing skill. This one
   covers the job that runs them, and proving that job ran.
-- **Git hosting administration:** servers, organisations, teams and Git LFS configuration.
+- **Git hosting administration:** servers, organizations, teams and Git LFS configuration.

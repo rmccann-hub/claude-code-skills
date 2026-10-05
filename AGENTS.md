@@ -78,7 +78,7 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
 - **The plan lives in `ROADMAP.md` and nowhere else:** no `PROGRESS.md`, `HANDOFF.md` or plan
   files, which the standard's file governance forbids. A handoff for another session lives
   outside the repository, marked transient with an expiry date. Nothing checks it.
-- **Third-party material comes in only under its licence,** named in the skill's `license`
+- **Third-party material comes in only under its license,** named in the skill's `license`
   field, with a `THIRD-PARTY-NOTICES.md` beside it and the reuse in `docs/decisions.md`. Nothing
   comes from Anthropic's source-available document skills. Nothing checks it.
 - **This repository is public.** Nothing work-owned is committed without an entry in

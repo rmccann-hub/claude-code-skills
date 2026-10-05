@@ -536,7 +536,7 @@ def to_cyclonedx(inventory: Inventory) -> str:
                 "name": plugin.name,
                 "version": plugin.version,
                 "description": "A Claude Code plugin from this repository's catalog.",
-                **_licence(plugin.license),
+                **_license(plugin.license),
                 "components": [_skill(skill) for skill in plugin.skills],
             }
         )
@@ -628,7 +628,7 @@ def to_cyclonedx(inventory: Inventory) -> str:
                 "bom-ref": root_ref,
                 "name": inventory.name,
                 "version": inventory.version,
-                **_licence(inventory.license),
+                **_license(inventory.license),
                 "externalReferences": [{"type": "vcs", "url": inventory.repository}],
                 "properties": [
                     {"name": f"{PROPERTY}language", "value": f"{language}: {count} file(s)"}
@@ -670,7 +670,7 @@ def _ref(inventory: Inventory, ecosystem: str, name: str) -> str:
     return package.purl
 
 
-def _licence(expression: str) -> dict:
+def _license(expression: str) -> dict:
     return {"licenses": [{"expression": expression}]} if expression else {}
 
 
@@ -680,7 +680,7 @@ def _skill(skill: Skill) -> dict:
         "bom-ref": f"skill:{skill.name}",
         "name": skill.name,
         **({"description": skill.detail} if skill.detail else {}),
-        **_licence(skill.license),
+        **_license(skill.license),
         "properties": [
             {"name": f"{PROPERTY}fact-source", "value": f"{host}: {count} fact(s)"}
             for host, count in skill.sources
@@ -708,7 +708,7 @@ def to_markdown(inventory: Inventory) -> str:
         "",
         "## What it ships",
         "",
-        "| Plugin | Version | Licence | Skill | What it carries |",
+        "| Plugin | Version | License | Skill | What it carries |",
         "|---|---|---|---|---|",
     ]
     for plugin in inventory.plugins:

@@ -192,13 +192,13 @@ Notable changes to this repository. The format follows
     advised for deletion only after checking what still needs it.
   - Whether anyone else maintains the repository is asked, not inferred. The checks for more
     than one maintainer apply only once the owner says so.
-  - A mirror is recognised, and CI is read on the forge that is canonical. A security contact
+  - A mirror is recognized, and CI is read on the forge that is canonical. A security contact
     named outside `SECURITY.md` counts.
   - The commit grammar is stated and checked, from either the Conventional Commits or the
     "area: summary" family, and one merge strategy is chosen, recorded and enforced.
   - Release tags are annotated. An interface others build on logs its changes and deprecates
     before it removes, and a second release line takes only compatible, cherry-picked fixes.
-  - Code that parses input it doesn't control gets damaged-input tests, and where licences mix,
+  - Code that parses input it doesn't control gets damaged-input tests, and where licenses mix,
     each file names its own.
   - The starter context file tells a session to say what it's waiting on.
 
@@ -265,5 +265,5 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
-- The repository's licence is now Apache-2.0, replacing the CC0-1.0 file it was created with.
+- The repository's license is now Apache-2.0, replacing the CC0-1.0 file it was created with.
   The standard keeps its own CC0-1.0 dedication.

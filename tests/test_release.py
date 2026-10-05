@@ -20,7 +20,7 @@ metadata:
   version: "1.0.0"
 ---
 
-**Licence.** Free to use. No warranty of any kind.
+**License.** Free to use. No warranty of any kind.
 
 ---
 

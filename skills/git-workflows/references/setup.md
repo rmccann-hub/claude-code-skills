@@ -21,7 +21,7 @@ installs hooks, runs CI, cuts releases or keeps release lines. Facts are named b
 
 - **Short-lived branches off the default branch are the default,** each merged through a pull
   request within a day or two. This is GitHub Flow (fact `github-flow`), a form of trunk-based
-  development, and DORA's research favours it (fact `dora`). Why a pull request earns its place
+  development, and DORA's research favors it (fact `dora`). Why a pull request earns its place
   even with one maintainer is project-bootstrap-and-audit's *Review, with one maintainer*.
 - **Add release lines only when you support more than one released version** (see *Release
   lines and backports*).
@@ -54,7 +54,7 @@ installs hooks, runs CI, cuts releases or keeps release lines. Facts are named b
   that skips the tests passes the pull request with nothing tested. Where tests are skipped by
   path, require one final job that `needs:` the others and fails if any of them failed.
 - **A merge queue** needs `merge_group` in the workflow's `on:`, and exists only on
-  organisation-owned repositories (fact `merge-queue`).
+  organization-owned repositories (fact `merge-queue`).
 
 ## Choose one merge strategy, and enforce it
 

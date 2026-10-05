@@ -37,7 +37,7 @@ that will do the same for other repositories.
 | `code-style` | Naming, formatting, structure, comments and docstrings | planned | core | R03 |
 | `types` | Static and gradual typing, strictness, type checkers, types at trust boundaries | planned | core | R03 |
 | `input-handling` | Validation, sanitization and output encoding by context | planned | core | R04 |
-| `secure-coding` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modelling | planned | core | R04 |
+| `secure-coding` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | planned | core | R04 |
 | `supply-chain-security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21 |
 | `ai-agent-security` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
 | `error-handling` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
@@ -54,7 +54,7 @@ that will do the same for other repositories.
 | `architecture-and-design` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
 | `accessibility` | WCAG 2.2, ARIA, contrast, testing tools | planned | standard | R18 |
 | `internationalization` | Unicode, locales, time zones, formats, right-to-left text | planned | standard | R18 |
-| `privacy-and-compliance` | Personal data, retention, licences and notices, obligations on software publishers | planned | standard | R18 |
+| `privacy-and-compliance` | Personal data, retention, licenses and notices, obligations on software publishers | planned | standard | R18 |
 
 ## C. Languages in current use
 
@@ -120,9 +120,9 @@ lessons in when it's built, and its `why.md` cites them.
   live repository's acceptance step passed an identification because rows had loaded. They were
   the placeholders its app loads when a lookup finds nothing. A sibling check, re-keyed onto the
   identifier after the same symptom fooled it once before, caught it two steps later.
-- **L2, `testing`:** a test that needs outside data, such as an entry in a public catalogue,
+- **L2, `testing`:** a test that needs outside data, such as an entry in a public catalog,
   names the fixture it expects, and says so when the fixture is the cause. The same rig made
-  three acceptance runs in 40 minutes, on two inputs the catalogue didn't know. Each one read as
+  three acceptance runs in 40 minutes, on two inputs the catalog didn't know. Each one read as
   a failed step, not as the wrong input.
 - **L3, `logging-and-observability`:** every timestamp carries its offset. The same app logged
   in local time and wrote its evidence bundle in UTC, so one event sat four hours apart in the
@@ -240,7 +240,7 @@ Preparing the first live run found four more, also applied in v0.39.0:
 - **F26:** Phase 3 asks its questions in the abstract, and the first live repository's owner
   couldn't answer them as asked. The repository's own records held nearly every answer except
   where it runs: its registry page for exposure, its updater and release workflow for
-  production, its licence and manifest for the irreversible decisions. The wait could offer
+  production, its license and manifest for the irreversible decisions. The wait could offer
   those as drafts with their evidence for the owner to confirm, and still ask where it runs
   (piece 1).
 - **F27:** a cloud container lacked `libEGL.so.1`, so no test in a Qt suite could import, and
@@ -297,7 +297,7 @@ and rewrites both (piece 5, where the facts move):
   2026-09-27, and this session's folder for synced plugins held none on 2026-09-28. R22's
   deeper pass cites a French page that still named cloud sessions, but the French pages read
   on 2026-09-28 say what the English one does. What was seen on 2026-09-23 is now the
-  documented behaviour, and the fact changes to say so.
+  documented behavior, and the fact changes to say so.
 - **F37:** the dated fact on `syncClaudeAiSkills` concludes that a repository can't keep synced
   skills out of its own sessions, and this repository's `CLAUDE.md` says the same. The settings
   docs, read on 2026-09-28, let any settings file, the committed one included, hide a skill
@@ -413,7 +413,7 @@ The v0.39.0 parity runs found seven more, applied before it merged:
   file there is `N/A` on a free one, as the re-check run proposed (piece 3).
 - **F57:** Claude Code's native `AGENTS.md` reading reaches third-party providers and
   telemetry-off sessions from v2.1.281. The fact still said it didn't (piece 5).
-- **F58:** a `Read` deny rule now covers the file commands Claude Code recognises in Bash, such
+- **F58:** a `Read` deny rule now covers the file commands Claude Code recognizes in Bash, such
   as `cat`, so the example that it leaves `cat .env` open was out of date (piece 3).
 - **F59:** an unattended run can't stop at Phase 3. Both runs that went on to Phase 6 recorded
   that as a deviation, so the standard now says how the answers given in advance meet the wait
@@ -518,9 +518,9 @@ more, which the owner approved the same day and v0.40.0 applies:
 - **F78:** nothing asks for damaged-input tests. FFmpeg's checklist has every decoder and
   demuxer fed damaged data, and it must not crash, loop or allocate without bound. Code that
   parses input it doesn't control should have such a test (piece 3).
-- **F79:** nothing covers mixed licences. FFmpeg's `LICENSE.md` lists which files are GPL, and
-  the GPL parts stay off unless `--enable-gpl` is passed. Where licences mix, each file should
-  name its own, and the licence file should say which parts are which (piece 3).
+- **F79:** nothing covers mixed licenses. FFmpeg's `LICENSE.md` lists which files are GPL, and
+  the GPL parts stay off unless `--enable-gpl` is passed. Where licenses mix, each file should
+  name its own, and the license file should say which parts are which (piece 3).
 
 Approving them, the owner asked for the practices of more than one maintainer as well, asked
 rather than inferred, also applied in v0.40.0:
@@ -541,7 +541,7 @@ are missing. The owner approved them on 2026-10-05:
   whose suite had run 76% of its tests. The suite should write a marker as its last act, and
   CI should fail without it (piece 3).
 - **F82:** a check that sweeps a computed list passes when the list is empty, as a
-  parametrised test over nothing reports one skip; an audit there found 52 such gates beside
+  parameterized test over nothing reports one skip; an audit there found 52 such gates beside
   54 that worked. A sweep should assert a floor on what it examined, and that its data isn't
   trivially empty. It should take its population from the tree, and keep an allowlist whose
   every entry carries a reason, is checked for staleness and can only go. A scheduled audit
@@ -757,14 +757,14 @@ before it's built:
     so it needs a review of its own.
   - **A new project's recommendation:** at least two languages compared, each dependency
     checked against its registry, and each version against current release notes. Code models
-    favour Python, name packages that don't exist (at least 5.2% of those from commercial
+    favor Python, name packages that don't exist (at least 5.2% of those from commercial
     models) and use deprecated APIs: the first pass's rows 64 and 66, and the deeper pass's
     F35. This joins R21's rule in piece 5.
   - **The plugin's version:** Claude Code updates an installed copy only when the version the
     catalog pins changes. It said 0.1.1 from 2026-09-23 until release 0.1.2, so a copy
     installed before v0.37.0 kept v0.36.0 until then. How
     claude.ai decides that a personal marketplace's copy changed isn't documented. By the Help
-    Center, an organisation's GitHub-synced marketplace syncs when a merged pull request
+    Center, an organization's GitHub-synced marketplace syncs when a merged pull request
     changes the version. Releasing at each standard change, or leaving the version out so
     that installs follow `main`, is the owner's choice.
   - **Tests in the owner's browser** settle what's left. Three are in the first pass's section
@@ -781,7 +781,7 @@ before it's built:
 | 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. | planned |
 | 4 | Phases 0 to 3 and 5 to 9 into four phase files, with `preflight.py` and `inventory.py`. | planned |
 | 5 | Choosing a Language and Runtime, Choosing the Shape and Project Shapes into `new-project.md`. The Configuration File Map, Standards Distribution, File Governance, the Release and Deploy Currency Gate, Cross-Repository Contracts, Any Agent, Any Tool and the facts into their references. | planned |
-| 6 | Versioning, Proposing a Change, Sending Results Back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's licence becomes Apache-2.0. Release 0.2.0 | planned |
+| 6 | Versioning, Proposing a Change, Sending Results Back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's license becomes Apache-2.0. Release 0.2.0 | planned |
 
 ## Repository
 

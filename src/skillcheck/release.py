@@ -30,7 +30,7 @@ NOTES = "notes.md"
 INSTRUCTIONS = Path(__file__).with_name("kickstart.md")
 # The two sections no run reads come last, from the first of them to the end of the file.
 CUT = "\n---\n\n# Validating a Change to This Standard"
-AFTER_LICENCE = "No warranty of any kind.\n\n---\n\n# How to Read This File"
+AFTER_LICENSE = "No warranty of any kind.\n\n---\n\n# How to Read This File"
 END = "**End of the kickstart file.** If you can read this line, the whole file arrived."
 # A fixed time for every entry, so the same commit always packs the same bytes.
 EPOCH = (1980, 1, 1, 0, 0, 0)
@@ -81,7 +81,7 @@ def kickstart(root: Path, version: str) -> str:
     text = path.read_text(encoding="utf-8")
     number = standard.FILENAME.fullmatch(path.name)[1]
     frontmatter_version = f'  version: "{number}"\n'
-    for marker in (CUT, AFTER_LICENCE, frontmatter_version):
+    for marker in (CUT, AFTER_LICENSE, frontmatter_version):
         if text.count(marker) != 1:
             raise ReleaseError(f"the standard doesn't hold {marker.strip()!r} exactly once")
     repository = _repository(root)
@@ -98,11 +98,11 @@ def kickstart(root: Path, version: str) -> str:
         frontmatter_version
         + '  extract: "Validating a Change to This Standard and Provenance left out; the full'
         f' file is in release {version} of {repository}"\n'
-        + '  run_file: "the kickstart file: run instructions follow the licence, and the last'
+        + '  run_file: "the kickstart file: run instructions follow the license, and the last'
         ' line is its end marker"\n',
     )
     text = text.replace(
-        AFTER_LICENCE,
+        AFTER_LICENSE,
         "No warranty of any kind.\n\n" + instructions.rstrip("\n") + "\n\n---\n\n"
         "# How to Read This File",
     )
@@ -110,7 +110,7 @@ def kickstart(root: Path, version: str) -> str:
         "RUN-FILE-FOR: the repository this session works in · JOB: chosen by what it holds · "
         f"FROM: {repository}, release {version}\n\n"
         "This file is the whole request, and it may arrive with no message. Read the run\n"
-        "instructions below the licence, then run the standard that follows them.\n\n"
+        "instructions below the license, then run the standard that follows them.\n\n"
     )
     whole = first + text.rstrip("\n") + "\n\n" + END + "\n"
     hidden = HIDDEN.search(whole)
