@@ -2,6 +2,31 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — Release 0.1.2 is tagged, and releases get a workflow
+
+- **Asked:** after the merge, the owner asked for everything to be merged and the release made,
+  then agreed to a pull request that adds a release workflow and corrects this record.
+- **Merged:** Dependabot's three open pull requests, #12 to #14, after they were tested together
+  on `main`: ruff 0.16.10, `uv_build` from 0.12.19, and Claude Code 2.1.283 for the catalog
+  validator. Every check passed before and after.
+- **Found:** this session can't make a tag. Auto mode refused it as publishing. Once the owner
+  turned auto mode off, the session's GitHub access refused writes to the tag API with a 403.
+- **Released by the owner:** `v0.1.2`, from GitHub's release form, aimed at `main`. Its tag is
+  lightweight, on `bc683ca`: the release commit `29bbaa1` plus the three tool updates, which
+  change nothing an installed copy uses. Its notes are the changelog's 0.1.2 section, under the
+  install commands. A published tag stays where it is, so this supersedes the Release 0.1.2
+  entry's plan of an annotated tag on `29bbaa1`.
+- **Chosen:** `.github/workflows/release.yml`, a copy of `git-workflows`' tested example, makes
+  each release's tag from now on, the route the standard gives from T2. It runs from the Actions
+  tab with a version and a commit's full SHA. It refuses a version that isn't Semantic
+  Versioning, a commit not on `main`, a commit whose changelog has no section for the version,
+  and a commit with a check that hasn't passed. Then it makes the annotated tag as
+  `github-actions[bot]`, and only its one job can write. The release page is then published from
+  that tag in GitHub's form, as the README's operations section now says.
+- **Next:** one run of it makes `v0.1.1`, which the v0.37.0 entry deferred: version `0.1.1`, SHA
+  `cbe163fe384d92025ca40d3981ae3dbff75b703a`. That commit's changelog has the section, and its
+  three checks passed.
+
 ## 2026-10-05 — Release 0.1.2
 
 - **Asked:** the owner: "get everything ready for the next release/version/commit, etc.", and

@@ -71,8 +71,10 @@ If a skill here gives wrong or harmful instructions, take it out of circulation 
 
    `skillcheck` fails the pull request if the catalog, the roadmap, the README and `skills/`
    disagree.
-2. **Merge it, then tag the release** from the Releases page. Aim the tag at the merge commit,
-   not at the branch.
+2. **Merge it, then release it.** Run the Release workflow from the Actions tab, with the new
+   version and the merge commit's full SHA, not a branch. It checks the version, the changelog
+   and CI, then makes the annotated tag. Publish the release from the Releases page, choosing
+   that tag.
 3. **Reach the copies already installed.**
    - **claude.ai:** delete or replace the uploaded skill under Customize, then Skills. If an
      admin uploaded it for an organization, an admin removes it.

@@ -6,6 +6,13 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- A release workflow, `.github/workflows/release.yml`, run from the Actions tab with a version
+  and a commit's SHA. It checks that the version is Semantic Versioning, that the commit is on
+  `main`, that its changelog has the version's section and that every check on it passed, then
+  makes the annotated tag. It's the `git-workflows` skill's tested example.
+
 ## [0.1.2] - 2026-10-05
 
 ### Added
