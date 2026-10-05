@@ -193,7 +193,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          files=(release/KICKSTART.md release/bom.json release/*.zip)
+          # Every file the build wrote goes on the page, except the page's own text, so a new
+          # kind of file can't be left behind.
+          files=()
+          for path in release/*; do
+            if [ "$path" != release/notes.md ]; then files+=("$path"); fi
+          done
           # An attempt that published the page and then failed leaves it there, so this updates
           # it. --verify-tag refuses to make the tag itself, which wouldn't be annotated.
           if gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then

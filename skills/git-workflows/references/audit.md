@@ -12,7 +12,7 @@ where the two differ. The status words are the standard's:
 - **`MIRROR`:** the truth is outside the repository, such as a platform setting you've read
   rather than a file.
 - **`UNVERIFIABLE-HERE`:** can't be established from this session, such as a settings page
-  without admin access. Checks 2, 4, 13 and 23 need that access.
+  without admin access. Checks 2, 4, 13, 23 and 28 need that access.
 - **`OK`**, and **`N/A`**.
 
 Facts are named by ID from `facts.md`. Workflows may end in `.yml` or `.yaml`, so every search
@@ -45,6 +45,9 @@ here covers both.
 | 23 | A second release line with no branch, or backports without `-x` | `git log release/X.Y --grep 'cherry picked from'` | `GAP` | A `release/X.Y` branch, and `git cherry-pick -x` for each backport (fact `cherry-x`) |
 | 24 | A scheduled scan in a public repository last ran over 60 days ago | Its run history | `GAP`: it has stopped (fact `schedule-60`) | Re-enable it; watch the date |
 | 25 | The context file has a "current state" or status section | Read it | `DRIFT`: it goes stale | Move plans to one planning file, and status to the pull request or issue |
+| 26 | The default branch can be pushed to directly, deleted or force-pushed | `gh api repos/OWNER/REPO/rulesets`, each ruleset's rules, and `gh api repos/OWNER/REPO/branches/BRANCH/protection` for classic protection | `GAP` where the plan allows rulesets; `N/A` where it doesn't | Import `assets/rulesets/default-branch.json` (fact `ruleset-import`), then add the CI checks |
+| 27 | Release tags can be moved or deleted | The same rulesets, for a tag ruleset matching the release tags | `GAP` where releases are tagged and the plan allows rulesets | Import `assets/rulesets/release-tags.json` |
+| 28 | The token's default is read and write | Settings, Actions, General, Workflow permissions | `GAP`, whatever the workflows declare: one that forgets its block gets write access | The read-only setting (fact `workflow-permissions`) |
 
 The conflict-marker search for check 20 lists every line that starts with a merge's opening,
 closing or base marker. It exits 0 when it finds some, 1 when the tree is clean, and 2 or more

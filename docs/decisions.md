@@ -2,6 +2,47 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — Repository settings in the kickstart file, two rulesets, and release 0.1.4
+
+- **Asked:** the owner asked:
+  - what they had missed in this repository's settings, with steps to check each;
+  - what to do in their other repositories and across their account;
+  - that all of it be part of the bootstrap file.
+- **Read, through the API on 2026-10-05:**
+  - As recommended: merge commits only, auto-merge, release immutability, secret scanning, push
+    protection, Dependabot security updates, private vulnerability reporting and the
+    `Release tags` ruleset.
+  - Missing: `protect-main` has no pull request rule, and code scanning isn't set up.
+  - Unread: this session's GitHub access can't read the Actions settings, so the owner checks
+    those.
+  - Not available: secret scanning's validity checks and generic patterns read as disabled.
+    GitHub's documentation says neither exists outside an organisation on GitHub Team.
+
+  The owner got the checklist as a file kept outside the repository.
+- **Chosen:**
+  - **The kickstart file's run instructions carry the settings checklist.** A session in any
+    repository reads the settings it can, and asks for the rest at the Phase 3 wait. At the gate
+    it lists each change as an action only the person can take. It changes no setting itself: a
+    setting can't go on a branch for review, and the person keeps that control. The standard
+    is unchanged, and F114 proposes moving the list into it.
+  - **The `git-workflows` skill ships the two rulesets as JSON,** in the shape GitHub's own
+    starter rulesets use, though none of their text. Each release attaches every ruleset a
+    skill ships, because GitHub imports a ruleset from one file. The release-tag ruleset is
+    this repository's own `Release tags` ruleset.
+  - **Eight new facts in `git-workflows`.** `skillcheck --verify` found each quote at its source
+    on 2026-10-05. Seven quote GitHub's documentation, or its starter rulesets' README.
+    - The eighth is a practitioner's report: Semgrep found the SHA-pinning policy also fails an
+      action that calls an unpinned one. It sits under practice in other projects. The advice
+      built on it says to read each action's own `uses:` lines first, then watch the next runs.
+  - **The SHA-pinning policy can be turned on here.** Each action this repository's workflows
+    use is pinned to a full SHA and calls no other action, which reading each one's
+    `action.yml` at its pinned commit showed. No documentation says whether GitHub's own
+    Dependabot and CodeQL jobs pass the policy, so the owner watches the next run.
+- **Release 0.1.4:** this pull request's merge, released by the Release workflow once CI passes
+  on the merge commit. Both catalog entries say 0.1.4, because `git-workflows` changed. Nothing
+  is breaking, so it's a patch release. It's the first release since release immutability was
+  turned on, and the first under the `Release tags` ruleset, which leaves tag creation open.
+
 ## 2026-10-05 — Release 0.1.3
 
 - **Asked:** the owner: "plan on release all as the next 0.1.3 release", then asked for GitHub

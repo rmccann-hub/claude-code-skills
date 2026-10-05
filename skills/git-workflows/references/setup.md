@@ -35,6 +35,18 @@ installs hooks, runs CI, cuts releases or keeps release lines. Facts are named b
 - Require a pull request, require the CI checks, and block force pushes and deletion. Use
   rulesets or classic branch protection. Which your plan allows is in
   project-bootstrap-and-audit's *Facts with an Expiry Date*.
+- **Import the rulesets rather than building them by hand.** Each imports from a JSON file,
+  through the New ruleset menu under Settings, Rules, Rulesets (fact `ruleset-import`), in the
+  shape GitHub's own starter rulesets use (fact `ruleset-recipes`):
+  - [assets/rulesets/default-branch.json](../assets/rulesets/default-branch.json) blocks
+    deletion and force pushes, and requires a pull request with no approval, which suits one
+    maintainer (fact `pr-rule`). After importing it, add the CI checks under "Require status
+    checks to pass", by the names their jobs report, which a template can't know. It leaves
+    the merge method to the repository's Pull Requests setting (see *Choose one merge
+    strategy*).
+  - [assets/rulesets/release-tags.json](../assets/rulesets/release-tags.json) stops a `v*` tag
+    being moved, deleted or force-pushed. It leaves creation open, so the release job below can
+    still make the tag.
 - **A required check must report on every pull request.** A workflow skipped by a path filter
   leaves its check pending, and the pull request can't merge (fact `skipped-pending`). So never
   put a path filter on a workflow that provides a required check. A job skipped by its `if:`

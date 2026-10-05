@@ -8,6 +8,9 @@ or when a secret has reached a commit. Facts are named by ID from `facts.md`.
 - **Every workflow narrows its token at the top,** with `permissions: contents: read`, and a job
   that needs more asks for it by name (fact `permissions`). One workflow without the block is a
   finding, however many others have it.
+- **Set the repository's default to read-only too,** under Settings, Actions, General, Workflow
+  permissions, and leave "Allow GitHub Actions to create and approve pull requests" off (fact
+  `workflow-permissions`). A workflow that forgets its block then gets read access, not write.
 - **`persist-credentials: false` on checkout,** unless a later step in that job pushes. Otherwise
   the token stays in the checkout for every later step, including third-party ones (fact
   `persist-creds`).
@@ -24,7 +27,10 @@ or when a secret has reached a commit. Facts are named by ID from `facts.md`.
   that its pull requests reach the pinned lines. A pinned action gets no backported fix, so a
   pin nobody updates goes stale (fact `checkout-v7`).
 - **Enforce pinning by policy** where you can (fact `sha-policy`), so an unpinned action fails
-  instead of relying on review.
+  instead of relying on review. The policy covers GitHub's own actions too, and lets a reusable
+  workflow keep a tag (fact `sha-policy-scope`). It also fails an action that calls an unpinned
+  one (fact `sha-policy-nested`), so read each action's `action.yml` for its own `uses:` lines
+  before turning it on, and watch the next runs.
 - **Read what an action runs before adopting it.** It runs with the job's token and secrets.
 
 ## Untrusted input
@@ -54,6 +60,9 @@ environment variable instead (fact `injection`):
   request's code in it.
 - **`workflow_run` carries the same risk** when it acts on the output of a pull request's run.
   Treat what that run produced as untrusted input.
+- **On a public repository, require approval for all external contributors** before their pull
+  requests' workflows run. The default asks only first-time contributors, and one merged
+  change, however small, ends that (fact `fork-approval`).
 
 ## Scanning workflows
 
@@ -64,6 +73,9 @@ environment variable instead (fact `injection`):
   left in a checkout, and over-broad permissions (fact `zizmor`). Its injection audit follows
   more contexts than a search for `${{ github.event` can.
 - Run both in CI, with the tools pinned by version.
+- **CodeQL's default setup** is available on every public repository, under Settings, Advanced
+  Security (fact `codeql-default`). It adds a check to each pull request, and a release job that
+  waits on every check then waits on it too.
 
 ## A secret in a commit
 

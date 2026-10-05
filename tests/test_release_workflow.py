@@ -18,7 +18,7 @@ def publish(tmp_path: Path, page_exists: bool) -> list[list[str]]:
     [script] = [s["run"] for s in jobs["page"]["steps"] if s.get("name") == PUBLISH]
     files = tmp_path / "release"
     files.mkdir()
-    for name in ("KICKSTART.md", "bom.json", "notes.md", "one.zip", "two.zip"):
+    for name in ("KICKSTART.md", "bom.json", "notes.md", "one.zip", "ruleset-a.json", "two.zip"):
         (files / name).write_text(name, encoding="utf-8")
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir()
@@ -39,6 +39,8 @@ def publish(tmp_path: Path, page_exists: bool) -> list[list[str]]:
         "PATH": f"{bin_dir}{os.pathsep}{os.environ['PATH']}",
         "GITHUB_REPOSITORY": "example/repo",
         "VERSION": "1.4.0",
+        # The C locale sorts a glob's matches the same way on every machine.
+        "LC_ALL": "C",
     }
     result = subprocess.run(
         ["bash", "-e", "-c", script], cwd=tmp_path, env=env, capture_output=True, text=True
@@ -47,7 +49,14 @@ def publish(tmp_path: Path, page_exists: bool) -> list[list[str]]:
     return [line.split("\t") for line in log.read_text(encoding="utf-8").splitlines()]
 
 
-FILES = ["release/KICKSTART.md", "release/bom.json", "release/one.zip", "release/two.zip"]
+# Every file the build wrote, except the page's own text.
+FILES = [
+    "release/KICKSTART.md",
+    "release/bom.json",
+    "release/one.zip",
+    "release/ruleset-a.json",
+    "release/two.zip",
+]
 REPO = ["--repo", "example/repo"]
 
 

@@ -4,6 +4,7 @@
   session can be handed it with no message. The standard's text is unchanged; only the two
   sections no run reads are left out.
 - ``<skill>.zip``: each skill, packaged to upload to claude.ai.
+- ``ruleset-<name>.json``: each ruleset a skill ships, to import into a repository's settings.
 - ``bom.json``: the dependency map, which must already match the commit.
 - ``notes.md``: the release page's text: how to install, what each file is, and the changelog's
   section for the version.
@@ -33,6 +34,8 @@ AFTER_LICENCE = "No warranty of any kind.\n\n---\n\n# How to Read This File"
 END = "**End of the kickstart file.** If you can read this line, the whole file arrived."
 # A fixed time for every entry, so the same commit always packs the same bytes.
 EPOCH = (1980, 1, 1, 0, 0, 0)
+# A skill's rulesets, attached on their own because GitHub imports a ruleset from one JSON file.
+RULESETS = "skills/*/assets/rulesets/*.json"
 
 
 class ReleaseError(Exception):
@@ -61,6 +64,7 @@ def build(root: Path, version: str, out: Path) -> list[str]:
         NOTES: notes(root, version).encode("utf-8"),
         bom.BOM: (root / bom.BOM).read_bytes(),
         **packages(root),
+        **rulesets(root),
     }
     out.mkdir(parents=True, exist_ok=True)
     for name, data in files.items():
@@ -124,6 +128,7 @@ def notes(root: Path, version: str) -> str:
     section = _section(root, version)
     if section is None:
         raise ReleaseError(f"CHANGELOG.md has no section for {version}")
+    sets = {name: json.loads(data) for name, data in rulesets(root).items()}
     lines = [
         "Install in Claude Code:",
         "",
@@ -137,12 +142,25 @@ def notes(root: Path, version: str) -> str:
         "stops twice for answers before it changes anything. A session can also be told to read",
         f"the newest one at https://github.com/{repository}/releases/latest/download/{KICKSTART}.",
         "",
+        *(
+            [
+                "A ruleset file imports into any repository: in its Settings, Rules,",
+                "Rulesets, open the New ruleset menu and choose Import a ruleset.",
+                "",
+            ]
+            if sets
+            else []
+        ),
         "| File | What it is |",
         "|---|---|",
         f"| `{KICKSTART}` | Standard v{number} as one file, for a session in any repository |",
         *[
             f"| `{name}.zip` | The `{name}` skill, packaged to upload to claude.ai |"
             for name in skills
+        ],
+        *[
+            f'| `{name}` | A {ruleset["target"]} ruleset, "{ruleset["name"]}", to import |'
+            for name, ruleset in sets.items()
         ],
         f"| `{bom.BOM}` | The dependency map in CycloneDX {bom.SPEC_VERSION}; "
         f"`{bom.MAP}` is the same for people |",
@@ -177,6 +195,23 @@ def packages(root: Path) -> dict[str, bytes]:
                     entry.compress_type = zipfile.ZIP_DEFLATED
                     archive.writestr(entry, (root / tracked).read_bytes())
             out[f"{name}.zip"] = buffer.getvalue()
+    return out
+
+
+def rulesets(root: Path) -> dict[str, bytes]:
+    """Each tracked ruleset a skill ships, under the name the release gives it."""
+    listed = subprocess.run(
+        ["git", "-C", str(root), "ls-files", "-z", "--", RULESETS],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
+    out: dict[str, bytes] = {}
+    for tracked in sorted(path for path in listed.split("\0") if path):
+        name = f"ruleset-{Path(tracked).stem}.json"
+        if name in out:
+            raise ReleaseError(f"two skills ship a ruleset called {Path(tracked).name}")
+        out[name] = (root / tracked).read_bytes()
     return out
 
 
