@@ -345,6 +345,9 @@ consequences can be sorted, not so anything can be demanded.
   `${PIPESTATUS[0]}`. **The tell is output that was shortened for readability** — `tail`,
   `head`, `grep`, `less`, `| jq`. Where a `_proof` field holds trimmed output, the status
   beside it was taken unpiped or the field says how it was obtained.
+- **Output that lists work to do is read whole.** Shortening is for output read for a status.
+  A list of conflicts, failures or files to change is the work itself: a live merge's output,
+  cut short, hid a conflict, and its markers shipped through nine green jobs.
 - **Local green is not remote green.** A locally passing gate says nothing about the
   repository's actual CI conclusion. Where a remote exists, read it.
 - **Enabling a feature is not the same as satisfying what it needs, and the gap is silent.** A
@@ -1075,6 +1078,10 @@ once, under the command that ran it.
 **Record the collection count, not only the exit code.** A suite that collects fewer tests
 than the project documents has failed even at exit 0 — silently skipped modules exit green.
 
+**Record which binary ran each gate, and its version**, in the command's `detail`, from
+`command -v` and the tool's own version flag. A stale copy installed globally answers to the
+same name as the pinned one, and its errors read as the repository's.
+
 **A result the run's own mistake produced is not the repository's.** Where a gate fails because
 of how the run ran it, such as a clone from the wrong place or a mistyped path, run it again
 correctly and count the re-run in `command_tally`. The first result goes in the self-check's
@@ -1398,6 +1405,12 @@ file's commands instead. Two runs found a header added to `uv.lock` gone after t
 **Where a tool is configured in more than one place, compare them. A divergence is `DRIFT`
 even when every location is individually pinned.**
 
+**The gating tools are the place this bites.** A live repository pinned its linter in one
+file while CI installed it from another, looser range, and a stale copy installed globally
+produced 118 errors that weren't in the code. **So a workflow takes the gating tools' versions
+from the project's own pins**, through the install that fails on drift below, rather than naming
+its own, and Phase 2 records which binary ran each gate, and its version.
+
 <constraints>
 
 **A lockfile the CI does not install from is decoration.** Committing the lock is half the
@@ -1406,7 +1419,7 @@ lock and the manifest disagree. Check the CI command, not the presence of the fi
 
 | Ecosystem | Lockfile | The install that fails on drift |
 |---|---|---|
-| Python — uv | `uv.lock` | `uv sync --frozen` (or `--locked`) |
+| Python — uv | `uv.lock` | `uv sync --locked`. Never `--frozen`, which installs from the lock without checking it, so drift passes |
 | Python — Poetry | `poetry.lock` | `poetry install` — errors when the lock is stale |
 | Python — pip-tools | `requirements.txt` compiled | `pip install --require-hashes -r` |
 | JS / TS — npm | `package-lock.json` | `npm ci` — never `npm install` |
@@ -1484,6 +1497,21 @@ and one naming a single person is the ceremony dimension 8 describes.
   work outstanding names what it waits on, and from whom, as the starter file's conventions
   say. Missing where agent sessions work the repository, it is `GAP`: a live owner had to ask a
   working session what it was waiting on before its next release.
+- **Each rule in the context file names what fails when it's broken, or says it's advice.** A
+  rule nothing runs does nothing: of 187 rules audited in one live repository, 29% were gated,
+  and a third would have failed no test if broken. A rule that names its check can be found
+  broken, and one marked "nothing checks it" is weighed as advice, which is what it is. From
+  T2, a context file whose rules name nothing is `GAP`.
+- **What a session needs comes from a committed SessionStart hook, not a setup script.** Cloud
+  sessions don't run a repository's setup script, so a live repository's pre-commit guard,
+  switched on there by setting `core.hooksPath`, was off in every web session. A SessionStart
+  hook in the committed settings runs in every session, and it is read like any other hook,
+  below. Where agent sessions work the repository and something they rely on is set only by a
+  setup script, it is `GAP`.
+- **Facts that sessions keep re-deriving belong in an index**, each beside the command that
+  re-checks it, with a tool that runs the whole index. Sessions in one live repository
+  re-derived settled facts again and again, three of them four times in one session. Where a run
+  sees that, the index is an `optional` amendment.
 - **Size is a real constraint, not a style note.** Keep the always-loaded context under ~300
   lines; Codex stops reading instruction files past 32 KiB combined (`project_doc_max_bytes`),
   and truncation is indistinguishable from the file being ignored. Put instructions near the end
@@ -1752,6 +1780,21 @@ repository's default token, which is broader than a test run needs. **One workfl
 is the finding, however many others have it:** rate it `GAP` here and name the file. *Starter
 File Contents* shows the block, and says why a gate that checks only some workflows misleads.
 
+**Every job sets `timeout-minutes`.** Without it, a job that hangs runs to the platform's
+360-minute default, holding a runner and the merge behind it. **And CI covers what it should.**
+It runs on the branch where work lands: a live repository's CI fired only on a mirror branch
+nobody worked on. It builds each configuration the documentation tells users to build: a live
+repository's advertised configuration failed the first time anyone compiled it. And a test that
+reads history fails rather than skips when the checkout has none: a depth-1 checkout turned a
+live repository's history tests red. A job with no timeout is `GAP`, and so is a configuration
+users are told to build that CI never builds.
+
+**A merge's conflict markers pass every test that doesn't parse the file they're in.** A live
+merge's output was cut short, hiding a conflict, and its markers shipped through nine green
+jobs. So a sweep over the tree refuses any line that starts with seven `<`, `>` or `|`. Seven
+`=` also underline a Markdown heading, and a conflict always leaves the other two. From T2,
+where merges are resolved by hand, a tree with no such sweep is `GAP`.
+
 <constraints>
 
 **Enforcement placement is a tier decision, not a default.**
@@ -1833,6 +1876,13 @@ the cited commits are stranded once the branch goes: a live repository's became 
 its branch was deleted four minutes after a squash merge. From T2, a strategy left unrecorded is
 `GAP`, and so is one the platform doesn't enforce. A choice the human recorded isn't re-argued,
 but its enforcement is still rated.
+
+**A cited commit stays reachable, and only a test shows it.** One live repository stranded cited
+commits three ways: a squash merge, the branch deleted after it, and an amend of regenerated
+files. **So a test fails when a commit the repository cites can't be reached from the default
+branch**, a cited commit is never amended, and regenerated files go in a commit of their own, so
+regenerating them never rewrites one that's cited. Where commits are cited and nothing checks
+they stay reachable, it is `GAP` from T2.
 
 #### Review, with one maintainer
 
@@ -2286,8 +2336,12 @@ Conventional Commits, which can derive a bump, or the "area: summary" form that 
 enforces and 2,970 of its last 3,004 subjects follow. **Point at them and record which one
 this project follows**, then check the grammar the context file states: in CI over a pull
 request's commits, and by a commit-msg hook only where dimension 6 places client-side hooks.
-Where the merge strategy squashes, the pull request's title becomes the subject, so the check
-reads the title. From T2, a grammar unstated or unchecked is `GAP`. A house paraphrase of a
+Where the merge strategy squashes, the check reads the pull request's title, **and the
+repository makes the title the subject**: GitHub's default squash message takes a one-commit
+pull request's own commit message, and the title only for two or more. The default is set in
+Settings, General, Pull Requests, in the menu under *Allow squash merging*, and a run reads it
+there or asks for it at the Phase 3 wait. Under squash, a default that isn't the title is
+`GAP`. From T2, a grammar unstated or unchecked is `GAP`. A house paraphrase of a
 published spec is a second source of truth that will drift from the first.
 
 </constraints>
@@ -2313,6 +2367,12 @@ each commit once per domain, on a clone already deepened or marked `shallow`. It
 status of its own, and the default if unanswered is the owner answer as given.
 
 **Non-code deliverables** are in scope: tier, secrets, distribution, documentation.
+
+**A fact stated in two places is generated from one, or a test holds them together.** A live
+repository's sentence said "eight" while its table held nine rows. This is the standing rule on
+two surfaces, applied to prose: generate the second copy from the first, as the first live
+repository generates its half of a shared contract, or test that the copies agree in both
+directions, so neither drifts alone. Two copies that already disagree are `DRIFT`.
 
 **A finding on the boundary with another repository names the side that carries the fix**, in
 `fix_side`: this repository, the other by name, or both. The first live run had no field for
@@ -2582,7 +2642,8 @@ reported as one.
 **Commit by concern, not all at once.** Split when: more than roughly eight amendments; a
 tree-wide mechanical change alongside a semantic one; a large documentation restructure; or a
 blocker fix that should stay reviewable alone. **A mechanical reformat always gets its own
-commit.**
+commit**, and so do regenerated files. **Never amend a commit anything already cites**, here or
+in a sibling: an amend writes a new commit, and the cited one is stranded.
 
 **Run the full gate before every push, not only the tests that name the edited files.** A
 repository's own sweeps over the tree, such as a changelog check or a guard that reads every
@@ -2637,7 +2698,8 @@ that is a human action with the branch name and base named explicitly. **The run
 when the human asks it to**, after Phase 9, and records it in the `post_gate` block.
 
 **Fetch the base before pushing.** Where it has moved since Phase 2, bring it in by the
-repository's own convention, and run the gate again on the result. A live run's base moved five
+repository's own convention, read the merge's output whole, and run the gate again on the
+result. A live run's base moved five
 commits while it worked, so its pull request conflicted, and **a pull request that conflicts
 with its base gets no workflow run at all**: no check runs, rather than pending ones.
 
@@ -3383,7 +3445,8 @@ empty because nothing applies or because nobody filled it in.
 
 ## Conventions
 
-- <A convention a reader could not infer from the code.>
+- <A convention a reader could not infer from the code, and what fails when it's broken: the
+  check that catches it, or "Nothing checks it.">
 - <Another. Three to six of these, not twenty.>
 - A session that stops with work outstanding ends by saying what it is waiting on, and from
   whom.
@@ -3404,7 +3467,9 @@ to tell them.
 **The Commands section is the part that measurably gets used** — write the exact command
 including its flags, not a description of it. **The Conventions section is where bloat starts:**
 anything a reader could work out by opening two files does not belong, and a convention that a
-formatter or linter already enforces belongs in that tool's config, not in prose.
+formatter or linter already enforces belongs in that tool's config, not in prose. **Each
+convention names its check, or says nothing checks it**, as dimension 4 asks: a rule nothing
+runs does nothing, and saying so lets a reader weigh it as advice.
 
 ## `CLAUDE.md` — the shim
 
@@ -3571,6 +3636,7 @@ permissions:
 jobs:
   gate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -3578,7 +3644,7 @@ jobs:
         run: echo "substitute the setup action for this ecosystem"
 
       - name: Install from the lockfile, failing on drift
-        run: echo "substitute the frozen install from dimension 2"
+        run: echo "substitute the install from dimension 2 that fails on drift"
 
       - name: Format check
         run: echo "substitute"
@@ -3626,8 +3692,11 @@ jobs:
           fi
 ```
 
-**Seven things about this file are load-bearing and are not style:**
+**Eight things about this file are load-bearing and are not style:**
 
+- **`timeout-minutes` on the job.** Without it, a job that hangs runs for the platform's
+  default of 360 minutes. Set it a few times above the job's usual run, and raise it in a
+  reviewed change when the suite grows.
 - **`permissions: contents: read`** at the top. The default token is broader than a test run
   needs, and narrowing it is free. **Every workflow, not most of them** — a live run found a
   repository with a custom gate enforcing exactly this, and the one workflow missing the
@@ -3667,6 +3736,13 @@ jobs:
   and neither appeared. **That property is worth more than the assertion itself**, because an
   assertion that never runs is a gate in name only, and this is the one thing about a gate
   worth telling a future reader.
+
+**The two triggers run each pull request's commits twice**: `push` runs the branch, and
+`pull_request` runs it merged with its base. A fast suite barely notices, and a slow one doubles
+its wait. **Where CI is slow, narrow `push` to the default branch**, with
+`branches: [<default>]` under it, and leave `pull_request` to run every branch that has one. A
+branch with no pull request then gets no run at all, as the standing rules warn, so the run
+opens its pull request before it reads CI.
 
 **A secret-scan step belongs here too**, per the enforcement placement table — in CI always,
 never as a client-side hook where no persistent local environment exists.
