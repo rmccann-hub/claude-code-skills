@@ -33,7 +33,8 @@ that will do the same for other repositories.
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
 | `repo-structure` | Layouts by project type, where each file goes, naming files and folders | planned | core | R02 |
-| `documentation` | READMEs, decision records, docs sites, diagrams, file size and splitting | planned | core | R02 |
+| `documentation` | Docs sites, diagrams, file size and splitting, beyond the README sections, records and prose that `house-style` covers | planned | core | R02 |
+| `house-style` | One style for prose and Markdown in every repository: the answer first, plain words, checked facts, American spelling, sentence-case headings and the same README sections, with a Vale style that CI loads from each release | shipped | core | R02 |
 | `code-style` | Naming, formatting, structure, comments and docstrings | planned | core | R03 |
 | `types` | Static and gradual typing, strictness, type checkers, types at trust boundaries | planned | core | R03 |
 | `input-handling` | Validation, sanitization and output encoding by context | planned | core | R04 |
@@ -76,7 +77,6 @@ that will do the same for other repositories.
 | `php` | PHP | planned | standard | R13 |
 | `ruby` | Ruby | planned | standard | R13 |
 | `config-formats` | YAML, JSON, TOML, XML | planned | standard | R15 |
-| `markdown` | Markdown for people and for agents | planned | standard | R02 |
 
 ## D. Languages from the past: read, maintain, modernize
 

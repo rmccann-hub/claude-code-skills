@@ -1,0 +1,43 @@
+# Rule 8: sentence-case headings. A repository adds its own proper nouns to its vocabulary.
+extends: capitalization
+message: "Use sentence case for '%s'."
+level: error
+scope: heading
+match: $sentence
+indicators:
+  - ":"
+  - "."
+exceptions:
+  - API
+  - APIs
+  - Anthropic
+  - CI
+  - CLI
+  - Claude
+  - Claude Code
+  - CodeQL
+  - Dependabot
+  - Docker
+  - Git
+  - GitHub
+  - GitHub Actions
+  - JSON
+  - JavaScript
+  - Keep a Changelog
+  - Linux
+  - Markdown
+  - Node.js
+  - PowerShell
+  - PyPI
+  - Python
+  - README
+  - Rust
+  - SHA
+  - SHA-256
+  - Semantic Versioning
+  - TOML
+  - TypeScript
+  - Vale
+  - Windows
+  - YAML
+  - macOS

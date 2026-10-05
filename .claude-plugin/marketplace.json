@@ -24,7 +24,7 @@
       "name": "engineering",
       "source": "./",
       "strict": false,
-      "description": "Engineering practice: Git, pull requests, CI, hooks and releases.",
+      "description": "Engineering practice: Git, pull requests, CI, hooks, releases, and the house style for prose and Markdown.",
       "version": "0.1.5",
       "author": {
         "name": "rmccann-hub"
@@ -32,7 +32,8 @@
       "repository": "https://github.com/rmccann-hub/claude-code-skills",
       "license": "Apache-2.0",
       "skills": [
-        "./skills/git-workflows"
+        "./skills/git-workflows",
+        "./skills/house-style"
       ]
     }
   ]

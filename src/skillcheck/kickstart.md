@@ -41,6 +41,14 @@ wins. Otherwise:
 - Write for readers other than the person running this. Everything proposed for the repository,
   from documentation and the decision record to commit messages and the pull request, is
   neutral and exact, with no personal or session detail and no shorthand a reader can't look up.
+- **Write in the house style,** the rules in the `house-style` skill:
+  https://github.com/REPOSITORY/tree/vRELEASE_VERSION/skills/house-style
+  Where the context file records another style, propose the change and leave the choice to the
+  person. Where the repository has no prose check, propose the one the skill's setup reference
+  describes: the skill's `prose.yml` workflow, and a `.vale.ini` whose `Packages` names
+  https://github.com/REPOSITORY/releases/latest/download/HouseStyle.zip
+  Bringing existing text into the style is a commit of its own, and it leaves alone what the
+  skill says to.
 - After the gate, apply only what the person approved, on a branch, and open a pull request for
   it. Don't merge it or cut a release unless the person asks.
 

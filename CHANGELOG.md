@@ -6,11 +6,27 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- The `house-style` skill, in the `engineering` plugin: one style for prose and Markdown in
+  every repository. Its thirteen rules cover the answer first, plain words, no filler, checked
+  facts, American spelling, sentence-case headings, wrapped lines and the same README sections,
+  each with its reasons and what other guides do.
+- HouseStyle, a Vale style that checks three of the rules: the filler words, sentence-case
+  headings and American spelling. Each release carries it as `HouseStyle.zip`, for a
+  repository's `.vale.ini` to name by URL. The skill ships a CI job that installs Vale, proves
+  the style catches each kind of mistake, then checks every tracked Markdown file.
+- The kickstart file has a session write in the house style, and propose its check where a
+  repository has none.
+
 ### Changed
 
 - Commit subjects here read "area: summary", and a check fails any pull request whose commits
   don't, with merge commits and reverts allowed. Dependabot's subjects carry a `deps:` prefix,
   so they pass.
+- This repository's prose follows the house style, and CI checks it with the same job. Its
+  text, `skillcheck`'s messages and the dependency map use American spelling, apart from
+  quotes, names and past entries in its records.
 
 ## [0.1.5] - 2026-10-05
 

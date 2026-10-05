@@ -17,9 +17,12 @@ In Claude Code:
 Before 0.1.1 the marketplace was called `rmccann-skills`. If you added it under that name,
 run `/plugin marketplace remove rmccann-skills`, then add it again as above.
 
-## Start another repository
+## Usage
 
-Attach the latest release's
+Once the plugins are installed, Claude Code loads a skill when a request matches what its
+description says it's for. The skills are listed below.
+
+To start another repository, attach the latest release's
 [`KICKSTART.md`](https://github.com/rmccann-hub/claude-code-skills/releases/latest/download/KICKSTART.md)
 to a Claude Code session in that repository, with no message. It reads the repository, asks
 only what it can't find out, and stops twice for answers before it changes anything. It also
@@ -27,12 +30,16 @@ reads the repository's GitHub settings, and lists each one to change with where 
 same release's `ruleset-default-branch.json` and `ruleset-release-tags.json` import under
 Settings, Rules, Rulesets, from the New ruleset menu.
 
+To check another repository's prose against the house style, follow the house-style skill's
+[setup reference](skills/house-style/references/setup.md).
+
 ## Skills
 
 | Skill | Plugin | What it does |
 |---|---|---|
 | `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.40.0) |
 | `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
+| `house-style` | `engineering` | One style for prose and Markdown in every repository, with the reasons for each rule, and the Vale style and CI job that check it |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill
@@ -51,6 +58,14 @@ uv run ruff format --check
 uv run skillcheck .
 npm ci
 npx --no-install claude plugin validate --strict .
+```
+
+The prose check runs [Vale](https://vale.sh) with the house-style skill's own style, from its
+source here. Install Vale at the version `.github/workflows/prose.yml` names, then:
+
+```sh
+vale sync
+git ls-files -z '*.md' | xargs -0 vale
 ```
 
 Each skill's dated facts carry their source and a date to check them again by.
