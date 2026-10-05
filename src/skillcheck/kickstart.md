@@ -54,10 +54,9 @@ wins. Otherwise:
 
 **The repository's settings.** The standard's *Platform settings, and where each is*, among its
 dated facts, lists each one, and its phases say how a run reads, asks for and reports them.
-Release RELEASE_VERSION also carries `ruleset-default-branch.json` and
-`ruleset-release-tags.json`, which import into any repository, on its page:
+Release RELEASE_VERSION carries the ruleset files that section's import refers to,
+`ruleset-default-branch.json` and `ruleset-release-tags.json`, on its page:
 https://github.com/REPOSITORY/releases/tag/vRELEASE_VERSION
-In Settings, Rules, Rulesets, the New ruleset menu has Import a ruleset. Where either ruleset is
-missing, its action in the gate's third list offers the import. Then the repository's CI jobs
-go into the default-branch ruleset, under Require status checks to pass, by the names their
-checks report.
+They import into a repository whose ruleset rows apply. In Settings, Rules, Rulesets, the New
+ruleset menu has Import a ruleset. Then the repository's CI jobs go into the default-branch
+ruleset, under Require status checks to pass, by the names their checks report.

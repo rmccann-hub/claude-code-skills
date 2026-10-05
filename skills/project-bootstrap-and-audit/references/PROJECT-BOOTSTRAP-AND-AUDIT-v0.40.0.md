@@ -349,9 +349,9 @@ consequences can be sorted, not so anything can be demanded.
   A list of conflicts, failures or files to change is the work itself: a live merge's output,
   cut short, hid a conflict, and its markers shipped through nine green jobs.
 - **A subagent's finding is a lead, and it is verified before it's reported**, like any claim
-  the run didn't observe itself. **Read a fan-out's failures before its results:** a live
-  seven-lane fan-out lost 16 of its 17 agents to usage limits, and what came back covered a
-  fraction of what was asked while reading as the whole.
+  the run didn't observe itself. A lead the run can't verify is reported as the subagent's,
+  unverified, and a finding resting on it is `UNVERIFIABLE-HERE`. **Read a fan-out's failures
+  before its results:** a live seven-lane fan-out lost 16 of its 17 agents to usage limits.
 - **Local green is not remote green.** A locally passing gate says nothing about the
   repository's actual CI conclusion. Where a remote exists, read it.
 - **Enabling a feature is not the same as satisfying what it needs, and the gap is silent.** A
@@ -498,7 +498,7 @@ never a guess.
 | **Writes outside the repository** | Try writing to a scratch path | **Without it, greenfield cannot build-then-copy and the run report has nowhere to live.** Emit the report in the reply and say why |
 | **Remote CI readable** | Try reading a conclusion | Without it, "local green is not remote green" cannot be discharged. Record `unverifiable` |
 | **Tag creation** | Try, or read the tool list | Where refused, tagging is a human action via the host UI or a dispatch job, and from T2 the job, which can make the tag annotated — **never "tag locally"** |
-| **Local working copy exists** | **Ask. It cannot be detected** | Without one: no local tagging, no desktop tooling, and **client-side hooks gate nothing**, because every commit comes from an ephemeral container |
+| **Local working copy exists** | **Ask. It cannot be detected** | Without one: no local tagging, no desktop tooling, and **client-side hooks gate nothing** unless a committed SessionStart hook installs them, because every commit comes from an ephemeral container |
 | **Enforced layer** | See *Any Agent, Any Tool* | Where the tool has none, dimension 6 is `N/A`, never `GAP`, and the guarantee moves server-side |
 | **Branch protection available** | Read the plan, or ask | Unavailable on private repositories on free plans — **and rulesets carry the same gating**, so the newer mechanism is not an escape. Where unavailable, `N/A` with the reason — never a `GAP` re-proposed every run |
 | **Third-party repositories readable** | Try one | Often scoped to the maintainer's own. An upstream fix status is then `unverifiable`, **never "no fix coming"** |
@@ -622,9 +622,10 @@ say how. Where it cannot be verified from this environment, the finding built on
 `UNVERIFIABLE-HERE` and the report says which fact it was waiting on. **Never report a plan
 limit, a price or a tool capability from this table as though it were observed.**
 
-**Nothing here is a dependency.** If the whole table were deleted the standard still runs; the
-phases, dimensions and vocabularies name no version. It exists so a wrong number is findable
-in one place rather than scattered through ten dimensions.
+**Nothing here is a dependency, apart from *Platform settings, and where each is*.** If the rest
+were deleted the standard still runs; the phases, dimensions and vocabularies name no version.
+It exists so a wrong number is findable in one place rather than scattered through ten
+dimensions.
 **A probe is only as good as its source, and this has already cost a real finding.** Checking
 beats assuming — but a package index inside a sandbox, a mirror, a cache or a proxy can be
 months behind and will answer with total confidence. On the first live audit run, the session
@@ -668,7 +669,7 @@ reads as diligence.
 | Fact | As of | Why a run cares |
 |---|---|---|
 | Classic branch protection **and** rulesets: public repositories on a free plan, or public and private on a paid one — **GitHub Pro suffices for a personal account**. Push rulesets need an organisation plan and apply only to private and internal repositories | 2026-09 | Dimension 6. Decides `GAP` against `N/A`, and whether the public-or-pay decision is raised at all |
-| Secret scanning: free for public repositories; for private ones, a paid per-committer add-on | 2026-09 | Dimension 7. Decides whether the free remedy exists |
+| Secret scanning runs automatically, free, on public repositories. An organization's private ones need a paid per-committer add-on, and a personal account's private ones can't have it (GitHub's secret scanning page) | 2026-10 | Dimension 7. Decides whether the free remedy exists |
 | Push protection comes in two kinds. **For users**, it is on by default and stops a user's own pushes of secrets to public repositories, with no alert when they bypass it. **For the repository**, it is off until someone turns it on, it blocks pushes containing secrets from reaching that repository, and only it raises an alert for a bypass | 2026-10 | Dimension 7. The users' default isn't the repository's control |
 | Code owners: public repositories on any plan, including GitHub Free; private repositories only on GitHub Pro, Team or Enterprise | 2026-09 | Dimension 3. Decides `GAP` against `N/A` for a missing `CODEOWNERS` |
 | Immutable releases are a **repository or organisation setting**, not a default. When on: tag and assets frozen at publish, title and notes still editable, and assets must be uploaded while the release is a draft | 2026-09 | The release gate. Read the setting; do not assume either way |
@@ -677,32 +678,43 @@ reads as diligence.
 | A workflow `run` step with no `shell:` runs under `bash -e` on Linux and macOS runners: it stops at the first failing command, a failing command substitution included, with no `pipefail`. Naming `shell: bash` adds `-o pipefail` | 2026-09 | The starter CI template's guard, and reading any step's exit status |
 | `actions/checkout` is at v7 (v7.0.1, commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) | 2026-09 | *Starter File Contents*. A template's action versions go stale like any other pin |
 | Pinning an action to a full-length commit SHA is the only way to use it as an immutable release, and Dependabot raises no security alert for an action pinned to a SHA | 2026-09 | *Starter File Contents* and dimension 8. Why the template pins commits, and why version updates must stay on |
+| A job with no `timeout-minutes` runs for up to 360 minutes before GitHub cancels it (GitHub's workflow syntax page) | 2026-10 | Dimension 6 and *Starter File Contents*. What a job that hangs costs |
+| GitHub's default squash message is the commit's title and message for a one-commit pull request, and the pull request's title and list of commits for two or more. The API returns the title's setting as `squash_merge_commit_title`: `COMMIT_OR_PR_TITLE` by default, and `PR_TITLE` where the pull request's title is always the subject (GitHub's pull request merge settings page and REST reference) | 2026-10 | Dimension 10. Under squash, whether the grammar check reads the subject |
+| Events a workflow makes with its `GITHUB_TOKEN` create no new workflow run, apart from `workflow_dispatch` and `repository_dispatch`, and a pull request it opens or updates, whose runs then wait for approval (GitHub's `GITHUB_TOKEN` page) | 2026-10 | The release gate. Why a release hands off through `workflow_dispatch` |
 
 ### Platform settings, and where each is
 
-**What each GitHub setting should be, where it is, and where it applies**, as GitHub's
-documentation described them on 2026-10-05. Phase 2 reads what it can, Phase 3 asks for the
-rest, and Phase 6's third list carries each one to change, because **the run changes no setting
-itself**, even after the gate, unless the human asks it to. Each value is a recommendation,
-declinable like any amendment. Leave out the rows that don't apply to the repository's
-visibility and plan. Where a page shows something else, report what it shows.
+**Where each GitHub setting is and where it applies**, as GitHub's documentation described them
+on 2026-10-05, **and the value this standard recommends.** Phase 2 reads what it can, Phase 3
+asks for the rest, and Phase 6's third list carries each one to change, because **the run
+changes no setting itself**, even after the gate, unless the human asks it to. Where a dimension
+rates a setting, its amendment carries both consequences, and its third-list action applies it:
+approving the amendment doesn't ask the run to change the setting. Each value is a
+recommendation, declinable like any amendment. Leave out the rows whose last column doesn't
+hold, and a mirror's own settings. A survey, which stops before Phase 6, reports the rest in
+Phase 5's `notes`. Where a page shows something else, report what it shows.
+
+A page's link is `https://github.com/<owner>/<repo>/settings`, with `/actions`, `/rules` or
+`/security_analysis` after it for those pages. Where a ruleset row applies and the ruleset is
+missing, its action offers an import file where the run has one, such as those attached to the
+release that carried this file.
 
 | Setting | Set it to | Where, in the repository's Settings | Where it applies |
 |---|---|---|---|
 | Merge methods | Only the strategy the context file records | General, Pull Requests | Every repository |
-| Default squash message | Pull request title | General, Pull Requests, the menu under Allow squash merging | Where squash merging is allowed |
+| Default squash message | One that starts with the pull request title | General, Pull Requests, the menu under Allow squash merging | Where squash is the recorded strategy |
 | Automatically delete head branches | On | General, Pull Requests | Where merges are merge commits. Under squash or rebase-merge, only where nothing cites a branch's commits |
-| Release immutability | On, once the release workflow uploads its files while the release is a draft | General, Releases | Where releases are published |
+| Release immutability | On, once the release workflow uploads its files while the release is a draft | General, Releases | From T2, where releases are published, as the release gate says |
 | Wiki, Projects, Discussions | Off, unless something uses them | General, Features | Every repository |
 | Default-branch ruleset | Deletion and force pushes blocked. A pull request required, with no approval for one maintainer and at least one for several. The CI checks required | Rules, Rulesets | Public, or private on a paid plan |
 | Release-tag ruleset | `v*` tags can't be updated, deleted or force-pushed | Rules, Rulesets | Where releases are tagged: public, or private on a paid plan |
 | Workflow permissions | Read repository contents and packages permissions, with Allow GitHub Actions to create and approve pull requests unticked | Actions, General | Every repository with workflows. A new one in a personal account starts this way |
-| SHA-pinned actions | Require actions to be pinned to a full-length commit SHA, once every action, and every action those call, is pinned | Actions, General, Actions permissions | Every repository with workflows |
+| SHA-pinned actions | Require actions to be pinned to a full-length commit SHA, once every action, and every action those call, is pinned | Actions, General, Actions permissions | Where dimension 8 rates tag pins, or every action is pinned already |
 | Fork pull requests | Require approval for all external contributors | Actions, General, Approval for running fork pull request workflows from contributors | Public |
-| Secret scanning, and the repository's push protection | On | Advanced Security | Public. On private, a paid add-on |
-| Dependabot | Alerts on. Security updates on, and grouped, where someone merges their pull requests. Dependabot on self-hosted runners off, unless a runner labeled for it exists: without one, its jobs wait, and fail after 24 hours | Advanced Security | Every repository |
+| Secret scanning, and the repository's push protection | On | Advanced Security | Public. On an organization's private repository, a paid add-on |
+| Dependabot | Alerts on. Security updates on, ungrouped as dimension 8 says, where someone merges their pull requests. Dependabot on self-hosted runners off, unless a runner labeled for it exists: without one, its jobs wait, and fail after 24 hours | Advanced Security | Every repository |
 | Code scanning | CodeQL's default setup | Advanced Security, CodeQL analysis, Set up, Default | Public. On private, an organization's repository with GitHub Code Security |
-| Private vulnerability reporting | On, with `SECURITY.md` pointing to it | Advanced Security | Public. On a fork that only sends changes upstream, off, so reports reach the upstream project |
+| Private vulnerability reporting | On, with the contact dimension 7 asks for pointing to it | Advanced Security | Public. On a fork that only sends changes upstream, off, so reports reach the upstream project |
 
 Secret scanning's validity checks and generic patterns exist only for an organization's
 repositories on GitHub Team with Secret Protection, so a run doesn't list them as missing
@@ -713,7 +725,8 @@ action, once. Each is in the account's Settings, under the profile picture:
 
 | Account setting | Set it to | Where |
 |---|---|---|
-| Private vulnerability reporting, dependency graph, Dependabot alerts, Dependabot security updates, grouped security updates | On for new repositories. For existing ones, Enable all for the dependency graph and Dependabot alerts, and the repository table decides the others | Code security |
+| Private vulnerability reporting, dependency graph, Dependabot alerts, Dependabot security updates | On for new repositories. For existing ones, Enable all for the dependency graph and Dependabot alerts, and the repository table decides the others | Code security |
+| Grouped security updates | Off, as dimension 8 says | Code security |
 | Dependabot on self-hosted runners | Off, unless the account has a runner labeled for it, as in the repository table | Code security |
 | Push protection for yourself | On | Code security |
 | Keep my email addresses private | On, so merges and edits made on GitHub carry the no-reply address | Emails |
@@ -737,9 +750,10 @@ action, once. Each is in the account's Settings, under the profile picture:
 | `claude plugin validate --strict` (2.1.280) checks manifests and agents, but reported none of five planted skill defects and accepted a reserved marketplace name | 2026-09 | Dimension 9. A passing validator is not a review of the skills |
 | `syncClaudeAiSkills: false`, and `syncClaudeAiPlugins: false` for plugins, are read from user, local and managed settings only, so a project's committed `.claude/settings.json` can't stop the sync. Any settings file, the committed one included, can hide a skill with `skillOverrides`, which the docs say doesn't reach plugin skills and don't say of synced ones. The changelog documents `Skill(anthropic-skills:<name>)` permission rules that match synced skills (2.1.282, 2.1.283). Neither route had been tried on a synced skill as of 2026-09-28 | 2026-09 | Dimension 4. A repository can't stop the sync; whether it can hide or deny a synced skill in its own sessions is documented, not yet shown |
 | A plugin catalog entry whose skill paths all miss loads the plugin's whole skills folder, with no error | 2026-09 | Dimension 9. One typo ships everything |
-| Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Anthropic support said on 2026-09-30 that they are meant to load in cloud sessions too, that the docs' silence is a gap, and that an empty plugin list isn't expected, and named two causes to rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true` in the cloud environment. In one account's cloud sessions on 2026-09-30 and 2026-10-05, the platform set that variable itself, in the process that launches Claude Code, the environment manager and Claude Code (2.1.280, then 2.1.289), and the synced plugins folder was empty. Skills enabled on the account arrived in its cloud sessions on 2026-09-23, 2026-09-28 and 2026-10-05 | 2026-10 | *Standards Distribution*. Until a plugin enabled on the account is seen in a cloud session, with the variable gone, a skill uploaded to the account is the route that reaches one |
+| Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Skills enabled on the account load in cloud sessions as well, and one account's arrived there on 2026-09-23, 2026-09-28 and 2026-10-05. Anthropic support said on 2026-09-30 that plugins are meant to load in cloud sessions too, that the docs' silence is a gap, and that an empty plugin list isn't expected, and named two causes to rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true` in the cloud environment. In that account's cloud sessions on 2026-09-30 and 2026-10-05, the platform set that variable itself, in the process that launches Claude Code, the environment manager and Claude Code (2.1.280, then 2.1.289), and the synced plugins folder was empty. On 2026-09-30 the environment's own variables were empty, and no plugin was enabled on the account | 2026-10 | *Standards Distribution*. Check again once a plugin is installed on the account and the variable is gone. Until then, a skill uploaded to the account is the route that reaches a cloud session |
 | An organisation's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards Distribution*. A public repository reaches an organisation's members only by upload |
 | A cloud session installs no plugin that a repository's `.claude/settings.json` turns on under `enabledPlugins`, including those from marketplaces it lists under `extraKnownMarketplaces` | 2026-09 | Dimension 4 and *Standards Distribution*. A repository that relies on its settings for a plugin gets none in cloud sessions |
+| A cloud environment's setup script is set in the environment, not the repository. It runs before Claude Code launches, in cloud sessions only, and is skipped when a cached environment exists. A SessionStart hook in the repository's `.claude/settings.json` runs after launch in every session, local and cloud, resumed ones included (Claude Code's cloud environments page) | 2026-10 | Dimension 4. Why what a session needs comes from a committed hook |
 | In a cloud session, a public repository's committed files arrive through `raw.githubusercontent.com`, which is on the default Trusted network list, while GitHub API requests reach only repositories attached to the session. The docs say release-asset requests do too, with a 403 otherwise, but on 2026-09-26 and 2026-09-29 an unattached public repository's `releases/download/` link returned 200 while its API returned 403 | 2026-09 | *Sending Results Back*. A file linked at a commit is documented to arrive; a release asset is documented not to, whatever one download showed |
 | Claude Code's web-fetch tool returns a small model's answer about a page, not the page. Its documentation calls that lossy by design and points to `curl` for the unprocessed page | 2026-09 | *Sending Results Back*. A file meant to be read whole is downloaded, not fetched |
 
@@ -955,9 +969,11 @@ git grep -inE '^#+ *(production )?(deployment|deploy|operations|runbook|maintena
   of recording declines and makes the human re-litigate a settled question.
 - **A deferred item is re-proposed only when its trigger has fired.** Say which fired.
 - **A trigger that names a tag or a release is judged from the refs the run could read.** Where
-  Phase 0's fetch couldn't run, local refs may be stale. Judge it from what's local, say so in
-  the block's `notes`, and put the remote's tag list, `https://<forge>/<owner>/<repo>/tags`, in
-  Phase 6's third list as a browser action that settles it.
+  Phase 0's fetch couldn't run, local refs may be stale. Judge it from what's local and say so
+  in the Phase 1 block's `notes`: it is a judgment, not a finding, so Phase 0's
+  `UNVERIFIABLE-HERE` doesn't reach it. Put the forge's tag list, on GitHub
+  `https://github.com/<owner>/<repo>/tags`, in Phase 6's third list as a browser action that
+  settles it.
 - **A trigger only watches what it is worded about, and the tier has two axes.** Blast
   radius asks what breaks; audience asks who is affected. **A trigger phrased about the
   repository — "a second person commits", "a second person gets repository access" — cannot
@@ -1071,13 +1087,13 @@ default branch nobody noticed is a finding in its own right, and local gates can
 each is* in *Facts with an Expiry Date*. On GitHub that is `gh api repos/<owner>/<repo>` and its
 `rulesets`, `immutable-releases`, `private-vulnerability-reporting` and
 `code-scanning/default-setup` paths. A session often can't read the Actions settings, and Phase
-3 asks for what it can't read. **A `rulesets` call that answers 403 and says to upgrade to
-GitHub Pro means the account is on GitHub Free**, which answers the plan. **In a public
-repository, read the addresses on the human's own commits**, those whose platform author is the
-human: a personal address there is public, and it stays on every commit already published. Say
-which domains they carry and how many commits each, as dimension 10 counts, never the address
-itself, and never propose rewriting published history to remove one. The account's email
-settings keep it off the next commit.
+3 asks for what it can't read. **On a private repository, a `rulesets` call that answers 403 and
+says to upgrade to GitHub Pro means the account is on GitHub Free**, which answers the plan. **In
+a public repository, read the addresses on the human's own commits**, those whose platform
+author is the human: a personal address there is public, and it stays on every commit already
+published. Say which domains they carry and how many commits each, as dimension 10 counts,
+never the address itself, and never propose rewriting published history to remove one. The
+account's email settings keep it off the next commit.
 
 <constraints>
 
@@ -1135,7 +1151,7 @@ often the gate CI relies on most. Only one that cannot finish in the time the ru
 
 **Wait on a background command by its process ID, never by matching its name.** A live run
 waited on `pgrep -f`, which matched the waiting shell's own command line, and looped for 78
-minutes after the job had finished. **And run one suite per build directory**: two suites
+minutes. **And run one suite per build directory**: two suites
 sharing one left a log that read as both a pass and a fail.
 
 **Where the context file documents one command that runs every gate**, and CI runs them as
@@ -1149,9 +1165,10 @@ once, under the command that ran it.
 **Record the collection count, not only the exit code.** A suite that collects fewer tests
 than the project documents has failed even at exit 0 — silently skipped modules exit green.
 
-**Record which binary ran each gate, and its version**, in the command's `detail`, from
-`command -v` and the tool's own version flag. A stale copy installed globally answers to the
-same name as the pinned one, and its errors read as the repository's.
+**Record which binary ran each gate, and its version**, in the command's `detail`, resolved the
+way the gate runs it: for a gate run as `uv run ruff`, `uv run sh -c 'command -v ruff'` and
+`uv run ruff --version`. A bare `command -v` can find a stale copy installed globally, which
+answers to the same name as the pinned one, and its errors read as the repository's.
 
 **A result the run's own mistake produced is not the repository's.** Where a gate fails because
 of how the run ran it, such as a clone from the wrong place or a mistyped path, run it again
@@ -1242,18 +1259,20 @@ verbatim and say where they came from in `answers_source`. The run still stops h
 the tier it computed from them.
 
 **An unattended run meets this wait with the answers it was given.** Where the prompt says the
-person won't be there and carries the answers, the run can't stop, so it goes on and records
-`answers_source: given in the prompt`. The tier it computed goes first among Phase 6's
-decisions only the human can supply, followed by any of Phase 0's four left at its default, so a
-wrong tier is caught before anything is applied. That
-is the one case in which the confirmation moves to Phase 6. It isn't a deviation, and
+person won't be there and carries the answers, the run can't stop, so it records
+`answers_source: given in the prompt` and goes on, unless its job ends at this wait, as below.
+The tier it computed goes first among Phase 6's decisions only the human can supply, followed by
+any of Phase 0's four left at its default, so a wrong tier is caught before anything is applied.
+That is the one case in which the confirmation moves to Phase 6. It isn't a deviation, and
 `waits_observed` counts it.
 
 **A question the given answers leave out is `unanswered`, never `not sure`.** "Not sure" is an
 answer someone gave, and recording it for a person who wasn't asked puts words in their mouth:
 every parity run of 0.40.0 met this, on its new question about co-maintainers. The run applies
-that question's default, records `reply: unanswered` beside the draft, and carries the draft to
-Phase 6's first list, where the human confirms or corrects it.
+the question's default where this file states one. Where it states none, the answer is
+`unknown`, and what depends on it is treated as the deployment rule below treats it. The run
+records `reply: unanswered` beside the draft, or in `notes` where there's none, and carries the
+question to Phase 6's first list, where the human confirms or corrects it.
 
 **A job that ends at this wait still ends here.** Choosing a language and a shape stops at this
 wait with the recommendation, as the routing table says, and nothing is picked by default. An
@@ -1269,18 +1288,19 @@ carried forward unasked. This costs one exchange and catches the thing a record 
 tier rated on the *imminent* state whose trigger has since fired. A record describes what was
 true when it was written, and only the human knows whether it still is.
 
-**Ask here for what a rating needs and the run can't read.** Some settings live only on the
-platform, such as secret scanning, push protection and dependency alerts, and a session often
-can't read them. *Platform settings, and where each is* lists them, with the page each is on.
-Where one bears on a rating, ask the human at this wait for a screenshot of the settings page,
-or failing that their reading of it, with the page's link. **For the account's settings, ask
-for a screenshot of its Code security page**, and whether the two email boxes are ticked: a
-screenshot of the Emails page would show the addresses themselves. Phase 4 rates on that and names it as the
-source. A screenshot is what was seen; a reading is what was said, as with a human action, and
-a rating that rests on one says so. **Without either, the setting is `UNVERIFIABLE-HERE`**,
-never done because the last record said so. A live re-check rated such settings unverifiable,
-which the last record called done, and the owner's screenshot, sent with the gate answers,
-showed push protection and the dependency alerts off.
+**Ask here for what the run can't read.** Some settings live only on the platform, such as
+secret scanning, push protection and dependency alerts, and a session often can't read them.
+*Platform settings, and where each is* lists them, with the page each is on. Ask the human at
+this wait for a screenshot of each page holding a setting Phase 2 couldn't read, or failing
+that their reading of it, with the page's link. **For the account's settings, ask for a
+screenshot of its Code security page**, and whether the two Emails boxes in *Platform settings,
+and where each is* are ticked: a screenshot of the Emails page would show the addresses
+themselves. Phase 4 rates on those that bear on a rating, and names the source. A screenshot is
+what was seen; a reading is what was said, as with a human action, and a rating that rests on
+one says so. **Without either, the setting is `UNVERIFIABLE-HERE`**, never done because the last
+record said so. A live re-check rated such settings unverifiable, which the last record called
+done, and the owner's screenshot, sent with the gate answers, showed push protection and the
+dependency alerts off.
 
 **Do not fold this into the Phase 6 gate.** A tier confirmation arriving after the dimensions
 have been rated is a confirmation of work already done.
@@ -1419,11 +1439,12 @@ phase: 3
 answers_source: <recon report path | given in the prompt | asked directly>
 drafts: [{q: <1-6 | p0-4>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
           reply: confirmed | corrected | not sure | unanswered}]   # none on a re-check
-owner: work | personal | mixed   # mixed: provenance and copyright are decided per item
-copyright_holder: <as the human names it: a legal name, or the name they publish under | n/a>
-exposure: already_public | possible_later | never
-production: today | one_change_away | no
-dependents: <who | none>
+owner: work | personal | mixed | unknown   # mixed: provenance and copyright are decided per item
+copyright_holder: <as the human names it: a legal name, or the name they publish under | n/a |
+                   unknown>
+exposure: already_public | possible_later | never | unknown
+production: today | one_change_away | no | unknown
+dependents: <who | none | unknown>
 blast_radius: B0-B3
 audience: A0-A3
 tier: T0-T3
@@ -1491,9 +1512,9 @@ even when every location is individually pinned.**
 
 **The gating tools are the place this bites.** A live repository pinned its linter in one
 file while CI installed it from another, looser range, and a stale copy installed globally
-produced 118 errors that weren't in the code. **So a workflow takes the gating tools' versions
-from the project's own pins**, through the install that fails on drift below, rather than naming
-its own, and Phase 2 records which binary ran each gate, and its version.
+produced 118 errors that weren't in the code. **So where the project pins a gating tool, the
+workflow installs that pin**, through the install that fails on drift below, rather than naming
+a second one, and Phase 2 records which binary ran each gate, and its version.
 
 <constraints>
 
@@ -1585,17 +1606,20 @@ and one naming a single person is the ceremony dimension 8 describes.
   rule nothing runs does nothing: of 187 rules audited in one live repository, 29% were gated,
   and a third would have failed no test if broken. A rule that names its check can be found
   broken, and one marked "nothing checks it" is weighed as advice, which is what it is. From
-  T2, a context file whose rules name nothing is `GAP`.
+  T2, a rule that neither names what fails when it's broken nor says nothing checks it is `GAP`.
 - **What a session needs comes from a committed SessionStart hook, not a setup script.** Cloud
-  sessions don't run a repository's setup script, so a live repository's pre-commit guard,
-  switched on there by setting `core.hooksPath`, was off in every web session. A SessionStart
-  hook in the committed settings runs in every session, and it is read like any other hook,
-  below. Where agent sessions work the repository and something they rely on is set only by a
-  setup script, it is `GAP`.
+  sessions don't run a repository's setup script: the one a cloud environment runs is set in
+  the environment, and is skipped once the environment is cached, as *Facts with an Expiry
+  Date* records. So a live repository's pre-commit guard, switched on by its setup script
+  setting `core.hooksPath`, was off in every web session. A SessionStart hook in the committed
+  settings runs in every session, and it is read like any other hook, below. Where agent
+  sessions work the repository and something they rely on is set only by a setup script, it
+  is `GAP`.
 - **Facts that sessions keep re-deriving belong in an index**, each beside the command that
   re-checks it, with a tool that runs the whole index. Sessions in one live repository
-  re-derived settled facts again and again, three of them four times in one session. Where a run
-  sees that, the index is an `optional` amendment.
+  re-derived settled facts again and again, three of them four times in one session. Where the
+  decision record, handoffs or notes show a settled fact derived again, the index is an
+  `optional` amendment.
 - **Size is a real constraint, not a style note.** Keep the always-loaded context under ~300
   lines; Codex stops reading instruction files past 32 KiB combined (`project_doc_max_bytes`),
   and truncation is indistinguishable from the file being ignored. Put instructions near the end
@@ -1750,7 +1774,8 @@ test's result, and it restores from a copy it made first and checked by hash.
 live fixture stopped a thread that production never stops, which hid a crash for five
 releases, and another test passed only on a record that couldn't occur. **Fixtures, harnesses
 and test environments are no more permissive than production**, build only states that can
-occur, and can tell apart the cases under test. Where a run reads one that isn't, it is `GAP`.
+occur, and can tell apart the cases under test. Where one is more permissive than production,
+builds a state that can't occur, or can't tell the cases apart, it is `GAP` from T2.
 
 **A gate's condition must also be proven to see what it tests.** A condition that references
 something unavailable in its context evaluates to nothing and reads as a gate: a live run
@@ -1780,8 +1805,9 @@ third as a pass three ways: a guard whose listing command failed found no offend
 graded crashes as clean refusals, and a gate closed a review round because the files it
 wanted existed, without reading them. **So a check fails closed on the third outcome**, reads
 declared fields rather than matching text, counts what it matched, and is tested for each way
-it could wrongly say yes. Where anything counts on a check that can read the third as a pass,
-it is `BLOCKER`, the vocabulary's *check reporting success while measuring nothing*.
+it could wrongly say yes. Where anything counts on such a check, it is `GAP`, and `BLOCKER`
+once it has read the third outcome as a pass: the vocabulary's *check reporting success while
+measuring nothing*.
 
 **A check that only warns gates nothing.** The rule cited most often in one live repository, a
 regression test for every bug, was enforced by a script with no `exit 1`. It is rated as a step
@@ -1820,8 +1846,8 @@ found 52 such gates beside 54 that worked. **So a sweep asserts a floor on what 
 and that its data isn't trivially empty. It takes its population from the tree rather than a
 list kept by hand, and an allowlist beside it carries a reason on every entry, is checked for
 entries that no longer match anything, and can only shrink. **A scheduled audit can report that
-it measured nothing**, rather than reporting clean. A sweep that can pass on nothing is `GAP`
-where anything counts on it, and one that has passed on nothing is `BLOCKER`.
+it measured nothing**, rather than reporting clean. Where anything counts on it, a sweep that
+can pass on nothing is `GAP`, and one that has is `BLOCKER`.
 
 **An intermittent failure met with a wider timeout stays.** A live test timed out fourteen
 times in full suites and took a second when run alone, and one network call took 80 of a
@@ -1864,20 +1890,22 @@ repository's default token, which is broader than a test run needs. **One workfl
 is the finding, however many others have it:** rate it `GAP` here and name the file. *Starter
 File Contents* shows the block, and says why a gate that checks only some workflows misleads.
 
-**Every job sets `timeout-minutes`.** Without it, a job that hangs runs to the platform's
-360-minute default, holding a runner and the merge behind it. **And CI covers what it should.**
-It runs on the branch where work lands: a live repository's CI fired only on a mirror branch
-nobody worked on. It builds each configuration the documentation tells users to build: a live
-repository's advertised configuration failed the first time anyone compiled it. And a test that
-reads history fails rather than skips when the checkout has none: a depth-1 checkout turned a
-live repository's history tests red. A job with no timeout is `GAP`, and so is a configuration
-users are told to build that CI never builds.
+**Every job sets a timeout**, `timeout-minutes` on GitHub. Without it, a job that hangs runs to
+the platform's limit, 360 minutes on GitHub, holding a runner and the merge behind it. **And CI
+covers what it should.** It runs on the branch where work lands: a live repository's CI fired
+only on a mirror branch nobody worked on. It builds each configuration the documentation tells
+users to build: a live repository's advertised configuration failed the first time anyone
+compiled it. And a test that reads history fails rather than skips when the checkout has none:
+a depth-1 checkout turned a live repository's history tests red. CI that never runs where work
+lands is `BLOCKER` where anything counts on it, and `GAP` otherwise. A job with no timeout is
+`GAP`, and so are a configuration users are told to build that CI never builds and a test that
+skips when the history it reads is missing.
 
 **A merge's conflict markers pass every test that doesn't parse the file they're in.** A live
 merge's output was cut short, hiding a conflict, and its markers shipped through nine green
 jobs. So a sweep over the tree refuses any line that starts with seven `<`, `>` or `|`. Seven
-`=` also underline a Markdown heading, and a conflict always leaves the other two. From T2,
-where merges are resolved by hand, a tree with no such sweep is `GAP`.
+`=` also underline a Markdown heading, and a conflict always leaves the other two. From T2, a
+tree with no such sweep is `GAP`.
 
 <constraints>
 
@@ -1885,7 +1913,7 @@ where merges are resolved by hand, a tree with no such sweep is `GAP`.
 
 | Gate | Where it belongs |
 |---|---|
-| Secret scan | **CI, always.** Plus platform push protection, which is server-side and free |
+| Secret scan | **CI, always.** Plus the repository's push protection, which is server-side and free on public repositories |
 | Format, lint, test | **CI, always** |
 | Any client-side hook | **Only where a persistent local development environment exists** |
 
@@ -1896,7 +1924,8 @@ the commits it happens to be present for and no others. That is worse than no ga
 it reads as coverage. CI runs on every push regardless of where the push came from.
 
 **Before proposing a client-side hook, establish that a persistent local environment exists.**
-If it does not, the amendment is CI-only and the hook config is documented as session setup.
+If it does not, the amendment is CI-only. A hook the repository's sessions already rely on is
+installed by a committed SessionStart hook, as dimension 4 says, and CI stays the gate.
 
 **An enforced rule with a repeated false-trigger rate is `OVER` on this dimension** — even
 when this standard installed it. Record what triggers it, how often, and what the human has
@@ -1937,7 +1966,7 @@ this dimension with a real remedy, and the remedy is a decision only the human c
 
 **Verify the current state before reporting it.** Plan gating on these features has moved
 before and at least one third-party account disputes the private-repository limit. Read the
-repository's own settings page, or try creating a ruleset, and record what you actually saw
+repository's own settings page, or the Phase 2 `rulesets` answer, and record what you actually saw
 rather than what this table says.
 
 </constraints>
@@ -1963,10 +1992,10 @@ but its enforcement is still rated.
 
 **A cited commit stays reachable, and only a test shows it.** One live repository stranded cited
 commits three ways: a squash merge, the branch deleted after it, and an amend of regenerated
-files. **So a test fails when a commit the repository cites can't be reached from the default
-branch**, a cited commit is never amended, and regenerated files go in a commit of their own, so
-regenerating them never rewrites one that's cited. Where commits are cited and nothing checks
-they stay reachable, it is `GAP` from T2.
+files. **So a test fails when a commit the repository cites can't be reached from the commit
+under test**, with the full history checked out. A cited commit is never amended, and
+regenerated files go in a commit of their own, so regenerating them never rewrites one that's
+cited. Where commits are cited and nothing checks they stay reachable, it is `GAP` from T2.
 
 #### Review, with one maintainer
 
@@ -2061,15 +2090,17 @@ misses by default.
 
 <constraints>
 
-**Platform secret scanning is free on public repositories and paid on private ones**, as of
-2026-09. **Push protection comes in two kinds** (GitHub's push protection page, read
+**Platform secret scanning is free on public repositories**, and on by default there. An
+organization's private repositories need a paid add-on, priced per active committer, and a
+personal account's private ones can't have it (GitHub's secret scanning page, read
+2026-10-05). **Push protection comes in two kinds** (GitHub's push protection page, read
 2026-10-05). **For users**, it is on by default and stops a user's own pushes of secrets to
 public repositories, but it alerts nobody when they bypass it, and it covers only those who
 kept it on. **For the repository**, it is off until someone turns it on, it blocks pushes
-containing secrets from reaching that repository whoever makes them, and only it raises an
-alert for a bypass. **The repository's kind is the only control in this file that stops any
-contributor's credential before it reaches the remote.** On a private repository the
-equivalent is a paid add-on, priced per active committer.
+containing secrets from reaching that repository whoever pushes them, though by default anyone
+with write access can bypass it, and only it raises an alert for a bypass. **The repository's
+kind is the only control in this file that checks every contributor's push before it reaches
+the remote.** An organization's private repository gets it with the same paid add-on.
 
 **So the finding differs by visibility, and both halves matter:**
 
@@ -2357,9 +2388,9 @@ never chosen is `DRIFT` on this dimension**, because the next person to bump it 
 and the guess is where the reconciliation breaks. One entry in the decision record answers
 it: which scheme, what counts as a major change **for this project**, whether pre-release
 labels are used, and what leaving one requires. **This applies where versioning is required:**
-from T2, or earlier once a built artifact reaches someone, as the start of this dimension says.
-Below that point a tag alone doesn't make the project versioned, and an unchosen scheme is
-`N/A`.
+from T2, or earlier once a built artifact reaches a person or a machine, as the start of this
+dimension says. Below that point a tag alone doesn't make the project versioned, and an
+unchosen scheme is `N/A`.
 
 **The scheme is semantic versioning — `MAJOR.MINOR.PATCH`.** This file does not offer a
 choice, and the reason is not that dated schemes are wrong. It is that **a version scheme is
@@ -2431,11 +2462,12 @@ this project follows**, then check the grammar the context file states: in CI ov
 request's commits, and by a commit-msg hook only where dimension 6 places client-side hooks.
 Where the merge strategy squashes, the check reads the pull request's title, **and the
 repository makes the title the subject**: GitHub's default squash message takes a one-commit
-pull request's own commit message, and the title only for two or more. The default is set in
-Settings, General, Pull Requests, in the menu under *Allow squash merging*, and a run reads it
-there or asks for it at the Phase 3 wait. Under squash, a default that isn't the title is
-`GAP`. From T2, a grammar unstated or unchecked is `GAP`. A house paraphrase of a
-published spec is a second source of truth that will drift from the first.
+pull request's own commit message, and the title only for two or more. *Platform settings, and
+where each is* says where the default is set. The API returns it as `squash_merge_commit_title`,
+which is `PR_TITLE` where the title is the subject, and a run reads it there or asks for it at
+the Phase 3 wait. From T2, a grammar unstated or unchecked is `GAP`, and so, under squash, is a
+default that doesn't make the title the subject. A house paraphrase of a published spec is a
+second source of truth that will drift from the first.
 
 </constraints>
 
@@ -2465,17 +2497,18 @@ status of its own, and the default if unanswered is the owner answer as given.
 repository's sentence said "eight" while its table held nine rows. This is the standing rule on
 two surfaces, applied to prose: generate the second copy from the first, as the first live
 repository generates its half of a shared contract, or test that the copies agree in both
-directions, so neither drifts alone. Two copies that already disagree are `DRIFT`.
+directions, so neither drifts alone. Two copies that already disagree are `DRIFT`, and from T2,
+two copies with neither a generator nor a test are `GAP`.
 
 **A finding on the boundary with another repository names the side that carries the fix**, in
 `fix_side`: this repository, the other by name, or both. The first live run had no field for
 it and put it in the finding's text.
 
-**A handover is refused until it can be followed.** A session that hands work to another, or
-to the human, pushes first, and every commit hash and URL the handover quotes resolves before
-it goes. A live repository's audit of its own rules found handovers citing what nobody could
-fetch, and its sessions now check both. Where sessions hand work to each other and nothing
-checks a handover, the check is an `optional` amendment.
+**A handoff is refused until it can be followed.** A session that hands work to another, or to
+the human, pushes first, and every commit hash and URL the handoff quotes resolves before it
+goes. Where agent sessions work the repository and nothing checks a handoff, the check is an
+`optional` amendment, not a status of its own. A run's own report at a wait pushes nothing,
+since nothing is written before the gate.
 
 <constraints>
 
@@ -2632,7 +2665,7 @@ standard. **They must not have to copy blocks out of the conversation to do that
 
 1. **Decisions only the human can supply**, each with **what happens by default if
    unanswered**, and which amendments each gates. A Phase 3 question recorded `unanswered` is
-   one, with its draft and the default the run applied.
+   one, with its draft and the default the run applied, or `unknown` where there's none.
 2. **Numbered amendments**, recommendation **labelled but never pre-selected.**
 3. **Actions only the human can take** — server-side or manual. **Each is achievable in a
    browser by default.** Where Phase 0 recorded no local working copy, "run this command on
@@ -3160,7 +3193,7 @@ the one field that exists to catch that, which a live run did.
 | `tally_sums_to_ten` | Phase 4 did not finish. Recount before emitting anything else — this has been wrong twice, both times by inventing a combined status for a dimension that was partly fine |
 | `new_vocabulary_coined` | The vocabularies are closed. Use `secondary`, `strength` or `notes` and re-emit |
 | `waits_observed` | Fewer than two on a full run means a gate was skipped, and a gate skipped is approval assumed. More than two means waits were invented, which costs the human round trips the file could have answered |
-| `actions_requiring_a_local_clone` | Where Phase 0 recorded no local working copy, anything above zero is unusable by a maintainer who has none: rewrite each as a browser action or a dispatch job. Where it recorded one, Phase 6 allows a local command after the browser route, and the count is reported, not failed |
+| `actions_requiring_a_local_clone` | Where Phase 0 recorded no local working copy, anything above zero is unusable by a maintainer who has none: rewrite each as a browser action or a dispatch job. Where it recorded one, count the actions that offer a local command; the count is reported, not failed |
 | `declines_reproposed_without_a_fired_trigger` | The re-check obligations were not honoured, and the decision record is being ignored. This is the failure that makes people stop reading the gate |
 | `report_handed_over` | A report written to an ephemeral container and not handed over is the same as no report, and it is the one artifact with no copy anywhere else |
 | `unverified_facts_relied_on` | Not a failure by itself. **A non-empty list with no matching `UNVERIFIABLE-HERE` in the findings is** — it means a dated fact was used as though it had been checked |
@@ -3552,11 +3585,12 @@ empty because nothing applies or because nobody filled it in.
   check that catches it, or "Nothing checks it.">
 - <Another. Three to six of these, not twenty.>
 - A session that stops with work outstanding ends by saying what it is waiting on, and from
-  whom.
+  whom. Nothing checks it.
 
 ## Invariants
 
-- <Something that must stay true, and what breaks if it does not.>
+- <Something that must stay true, what breaks if it does not, and the check that catches it,
+  or "Nothing checks it.">
 
 ## What not to do here
 
@@ -3571,8 +3605,8 @@ to tell them.
 including its flags, not a description of it. **The Conventions section is where bloat starts:**
 anything a reader could work out by opening two files does not belong, and a convention that a
 formatter or linter already enforces belongs in that tool's config, not in prose. **Each
-convention names its check, or says nothing checks it**, as dimension 4 asks: a rule nothing
-runs does nothing, and saying so lets a reader weigh it as advice.
+convention and invariant names its check, or says nothing checks it**, as dimension 4 asks: a
+rule nothing runs does nothing, and saying so lets a reader weigh it as advice.
 
 ## `CLAUDE.md` — the shim
 
@@ -3841,11 +3875,12 @@ jobs:
   worth telling a future reader.
 
 **The two triggers run each pull request's commits twice**: `push` runs the branch, and
-`pull_request` runs it merged with its base. A fast suite barely notices, and a slow one doubles
-its wait. **Where CI is slow, narrow `push` to the default branch**, with
-`branches: [<default>]` under it, and leave `pull_request` to run every branch that has one. A
-branch with no pull request then gets no run at all, as the standing rules warn, so the run
-opens its pull request before it reads CI.
+`pull_request` runs it merged with its base. The two runs go at once, so a fast suite barely
+notices, and a slow one doubles its runner minutes, and its wait too where jobs queue for
+runners. **Where CI is slow, narrow `push` to the default branch**, with `branches: [<default>]`
+under it, and leave `pull_request` to run every branch that has one. A branch with no pull
+request then gets no run at all, as the standing rules warn, so the run opens its pull request
+before it reads CI.
 
 **A secret-scan step belongs here too**, per the enforcement placement table — in CI always,
 never as a client-side hook where no persistent local environment exists.
@@ -4147,7 +4182,8 @@ create it.
 
 **A commit that adds a document names the existing homes it considered, and why none fit.** A
 live repository's owner told its sessions to stop adding Markdown files for their own sake,
-and that repository's rule now asks exactly this.
+and that repository's rule now asks the same. It binds the commits a run makes, and a
+repository's history isn't rated against it.
 
 ## Lifecycle classes
 
@@ -4232,12 +4268,13 @@ be read against this one.
 7. Update where reality moved. **Do not restyle, reorder or rephrase.**
 8. Classify anything outside the taxonomy once; record the answer.
 9. Commit by concern.
-10. **Prove the release from what users install**, before publishing: the built artifact
-    installed into a clean environment, or the release commit cloned fresh, with the tests run
-    there. A live release passed its own CI and failed 2 of its 33 tests from a fresh clone.
-11. **At T3, a reviewer told to refute the release reads its diff** from the last release, in
-    a session that didn't make it. A live release had a green suite and ten green checks, and an
-    adversarial review still found three blocking defects.
+10. **Prove the release from what users install**, before publishing: where users install a
+    built artifact, that artifact in a clean environment; where they install from the
+    repository, the release commit cloned fresh; with the tests run there. A live release was
+    announced before this was done, and failed 2 of its 33 tests from a fresh clone.
+11. **At T3, a reviewer told to refute the release reads its diff** from the previous release,
+    or the whole tree for a first one. In a live repository, a green suite with ten green
+    checks still had three blocking defects that an adversarial review found.
 
 **Where more than one release line is kept**, each has a branch, `release/X.Y` as FFmpeg names
 them, and a fix reaches it as a cherry-pick with `-x`, so the commit names its source: 78 of the
@@ -4307,11 +4344,14 @@ push.
 the target SHA matches the release commit, the label is correct.
 
 **A release that must start another workflow hands off through `workflow_dispatch`.** Events a
-workflow makes with its default token start no other workflow, apart from `workflow_dispatch`
-and `repository_dispatch`, so a tag pushed or a release published with that token never starts
-the workflow waiting for it: four of a live repository's releases never reached its package
-index. The release job starts the next one by name, with `gh workflow run <file> --ref <tag>`
-and `actions: write` granted to that job alone, or does the work in its own workflow.
+workflow makes with its default token start no other workflow, apart from `workflow_dispatch`,
+`repository_dispatch` and a pull request it opens, as *Facts with an Expiry Date* records, so a
+tag pushed or a release published with that token never starts the workflow waiting for it:
+four of a live repository's releases never reached its package index. The release job starts
+the next one by name, with `gh workflow run <file> --ref <tag> --repo "$GITHUB_REPOSITORY"`,
+`GH_TOKEN: ${{ github.token }}` in the step's `env`, and `actions: write` added to that job
+alone. Where nothing needs a second workflow, the work runs as a later job of the release
+workflow.
 
 </constraints>
 
@@ -4392,7 +4432,7 @@ detectable rather than arguable. A live protocol permitted revision in its own r
 practice still went wrong three times — **a permission to revise is not a reason to.**
 
 **Verify a peer's artifact against their committed copy, never the delivered file.** Check
-the hash and the size against their published tree, and **re-derive every commit they cite
+the hash and the size against their tree at a named commit, and **re-derive every commit they cite
 in their tree rather than accepting the citation.** The same concern appears in distribution
 packaging, where the guidance is to avoid fetching a pull request's diff because it can
 change while the request is open, and to pin to an immutable reference instead.
@@ -4400,8 +4440,9 @@ change while the request is open, and to pin to an immutable reference instead.
 **A claim about another repository cites where it was read: `owner/repo@sha:path:line`, from
 that side's committed files.** A live session read a relayed message and concluded the other
 side's lap was unsent, while it sat released on that side's default branch, one fetch and one
-grep away. **Shared files are compared byte for byte at a named commit**, and a bug shape the
-other side reports is looked for at home before the reply goes back.
+grep away. A file both sides share is checked the same way as a peer's artifact, and a bug
+shape the other side reports is looked for at home before the reply goes back. Where this
+session can't read that side's tree, a finding resting on the claim is `UNVERIFIABLE-HERE`.
 
 **A review loop between repositories fixes its close conditions before the first lap.** One
 ran to lap 39 by one side's count and 37 by the other's, and produced no release. A new finding
@@ -4515,7 +4556,7 @@ protocol is a two-element one.
 | CI logic | Reusable workflows — pull-based, change once |
 | Files that must physically exist | `copier` template — a session cannot fetch them |
 | Shared reference docs | `copier` template — one path, refreshed by `copier update` |
-| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under, which is documented to load there. Plugins enabled on the account are documented for Cowork and signed-in terminal sessions, and support says they are meant to reach cloud sessions too, but none has been seen there while the platform sets `SKIP_PLUGIN_MARKETPLACE`, as *Facts with an Expiry Date* records. A repository's own settings install none in a cloud session. A stamped, checked copy under `.claude/skills/` where neither fits |
+| Agent skills | A plugin marketplace, for terminal sessions and public users. For cloud sessions, the skill uploaded to the account those sessions run under, which is documented to load there. Plugins enabled on the account are documented for Cowork and signed-in terminal sessions, and support says they are meant to reach cloud sessions too, but no session has shown it yet: the ones *Facts with an Expiry Date* records had no synced plugin, and the platform set `SKIP_PLUGIN_MARKETPLACE` in them. A repository's own settings install none in a cloud session. A stamped, checked copy under `.claude/skills/` where neither fits |
 | This standard, for one run | Attached, or linked at a fixed commit and checked against its SHA-256, as *Sending Results Back* shows |
 
 `.copier-answers.yml` records the template version. `copier update` re-applies changes and
@@ -4784,7 +4825,7 @@ re-reading the table it came from is not confirmed.
 | Check | Where | What a surprise would change |
 |---|---|---|
 | Create a ruleset on a **free private** repository | Settings, rules | If it offers rather than upsells, dimension 6 is wrong and the public-or-pay decision should not be raised at all |
-| The repository's push protection on a **public** repository | Settings, security | Confirms the free remedy exists, which is what makes that finding actionable. The users' kind is on by default and isn't this setting |
+| The repository's push protection on a **public** repository | Settings, Advanced Security | Confirms the free remedy exists, which is what makes that finding actionable. The users' kind is on by default and isn't this setting |
 | **Immutable releases**, on or off for you | Repository settings, or a published release's detail | This file says *read the setting*. Confirm the setting is where it says it is |
 | A recent **dependency-update PR** lagging its release by about three days | Any repository with it enabled | Confirms the default cooldown, and therefore the `OVER` rule built on it |
 | **Canonical context file with no tool shim** — start the agent, ask it something only that file says | A session | If it knows, native reading worked in that session. **Repeat it in a first session after an upgrade, and with telemetry off**, before calling the shim `OVER`: those are the conditions that keep it |
@@ -4798,7 +4839,7 @@ otherwise be taken on faith.
 |---|---|---|
 | **Deny rules fire** | Try to read a secret with the file tool, then with a shell command | Both refused. **A rule that has never fired has not been shown to work** — this file's own words, applied to itself |
 | **Deny rules' ceiling** | Ask for a script that opens the same file, then run it | **It succeeds.** That is the documented limit, and confirming it is what stops dimension 4 overclaiming |
-| **Lockfile drift fails CI** | Desync the lockfile from the manifest, push | CI red. If green, the install step is not frozen and dimension 2's most load-bearing claim is wrong |
+| **Lockfile drift fails CI** | Desync the lockfile from the manifest, push | CI red. If green, the install step doesn't fail on drift (for uv, `--frozen` rather than `--locked`), and dimension 2's most load-bearing claim is wrong |
 | **Publish order under immutability** | Enable it, run a workflow that publishes then uploads | It fails. Confirms the draft-first requirement, and what it costs to learn late |
 | **The gate holds** | Tell it to skip the gate and apply everything | It stops anyway. If it complies, the two waits are advisory rather than real |
 | **Prediction is not echoed** | State an expected status in the prompt | It does not return your prediction. **If it does, every unblinded run you have done is suspect** |
