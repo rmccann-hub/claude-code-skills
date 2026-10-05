@@ -12,7 +12,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from skillcheck.core import frontmatter, standard
+from skillcheck.core import facts, frontmatter, standard
 
 SKILLS_DIR = "skills"
 CATALOG = ".claude-plugin/marketplace.json"
@@ -47,6 +47,19 @@ WHOLE_FOLDER = {"./skills", "./skills/"}
 # advice usually means the reader's repository, not a file bundled with the skill.
 LINK = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
 
+# A reference that names another by its file, as `setup.md` rather than as a link, still sends
+# the reader on, and the link check can't see it. Naming facts.md is the one exception: a fact is
+# looked up by its ID, not read on to.
+MENTION = re.compile(r"(?<![\w./-])([\w-]+\.md)\b")
+LINK_TARGET = re.compile(r"\]\([^)\s]+\)")
+LOOKUP = "facts.md"
+
+# GitHub splits a table row on every pipe that isn't escaped, inside code spans too, so a command
+# with a pipe in a table cell breaks the row. Escaping it doesn't help an agent, which reads the
+# raw file and would copy the backslash. Rows are compared with their table's header.
+TABLE_CELL = re.compile(r"(?<!\\)\|")
+FENCE = re.compile(r"^\s*(```|~~~)")
+
 # Characters that render as nothing or reorder the text around them, so what a reviewer sees
 # differs from what an agent reads: zero-width characters and joiners, bidirectional controls
 # (the Trojan Source attack, CVE-2021-42574), the byte-order mark, the soft hyphen, and Unicode
@@ -58,6 +71,33 @@ HIDDEN = re.compile(
 # in from outside the repository, so they get the same scan as a skill.
 AGENT_FILES = ("AGENTS.md", "CLAUDE.md")
 AGENT_DIRS = (".claude", "research")
+
+# A merge's conflict markers. Nothing parses Markdown, so markers in it pass every test: a live
+# repository shipped them through nine green jobs. Git writes the opening, closing and diff3 base
+# markers with a label after a space. A line of seven equals signs is also a Markdown heading
+# underline, so it isn't matched, and a conflict always leaves the other two.
+CONFLICT_MARKER = re.compile(r"^(?:<{7}|>{7}|\|{7})(?: |$)", re.MULTILINE)
+# Everything a commit here carries: the files at the root, and these directories. The other
+# dot-directories hold tools' caches.
+SCANNED_DIRS = (
+    "skills",
+    "docs",
+    "research",
+    "src",
+    "tests",
+    ".claude",
+    ".claude-plugin",
+    ".github",
+)
+
+# Every skill says why it advises what it does, what others do instead, and what each choice
+# costs (docs/authoring-a-skill.md). The skill carrying the standard is exempt: the standard
+# gives its reasons inline, and it changes only on its own.
+RATIONALE = "references/why.md"
+
+# The version the README and the roadmap state for the standard, in the rows of the skill that
+# ships it. A copy kept by hand drifts, so each is compared with the standard file's own.
+STANDARD_VERSION = re.compile(r"standard\W{0,3}v(\d+\.\d+\.\d+)", re.IGNORECASE)
 
 
 @dataclass(frozen=True)
@@ -73,6 +113,8 @@ class Report:
     # Every installed skill's description is listed to the model, and the listing has a budget:
     # in one session 50 skills' 26,620 characters left the last 9 with no description at all.
     description_chars: int = 0
+    # Rows in the skills' references/facts.md, each checked for its source, quote and dates.
+    facts: int = 0
     catalog_plugins: int | None = None
     roadmap_entries: int | None = None
     readme_entries: int | None = None
@@ -96,22 +138,28 @@ class Report:
         )
         return (
             f"skillcheck: {self.skills} skill(s), {self.description_chars} description "
-            f"characters, {catalog}, {roadmap}, {stamp}, {len(self.findings)} finding(s)"
+            f"characters, {self.facts} fact(s), {catalog}, {roadmap}, {stamp}, "
+            f"{len(self.findings)} finding(s)"
         )
 
 
 def check_repository(root: Path) -> Report:
     report = Report()
     skills = _discover_skills(root, report)
+    standards = standard.find(root)
+    carriers = {path.parent.parent for path in standards}
     for skill_dir in skills:
-        _check_skill(skill_dir, report)
+        _check_skill(skill_dir, report, needs_rationale=skill_dir not in carriers)
+        report.facts += facts.check(root, skill_dir, report.add)
     _check_catalog(root, skills, report)
     names = {skill.name for skill in skills}
     _check_roadmap(root, names, report)
     _check_readme(root, names, report)
     _check_agent_files(root, report)
-    for path in standard.find(root):
+    _check_conflict_markers(root, report)
+    for path in standards:
         report.standard_version = standard.check(root, path, report.add)
+        _check_version_copies(root, path.parent.parent.name, report.standard_version, report)
     return report
 
 
@@ -132,7 +180,7 @@ def _discover_skills(root: Path, report: Report) -> list[Path]:
     return found
 
 
-def _check_skill(skill_dir: Path, report: Report) -> None:
+def _check_skill(skill_dir: Path, report: Report, needs_rationale: bool) -> None:
     where = f"{SKILLS_DIR}/{skill_dir.name}/SKILL.md"
     _check_hidden_characters(skill_dir.parent.parent, _files_under(skill_dir), report)
     try:
@@ -145,6 +193,15 @@ def _check_skill(skill_dir: Path, report: Report) -> None:
     if lines >= MAX_SKILL_LINES:
         report.add(where, "size", f"SKILL.md is {lines} lines; keep it under {MAX_SKILL_LINES}")
     _check_links(skill_dir, body, where, report)
+    _check_reference_mentions(skill_dir, report)
+    _check_tables(skill_dir, report)
+    if needs_rationale and RATIONALE not in _local_links(body):
+        report.add(
+            where,
+            "rationale",
+            f"SKILL.md doesn't link {RATIONALE}, which says why the skill advises what it does, "
+            "what others do instead, and the trade-offs",
+        )
     _check_optional_fields(data, where, report)
 
     extra = sorted(str(key) for key in data if key not in ALLOWED_KEYS)
@@ -216,6 +273,52 @@ def _check_reference_depth(skill_dir: Path, reference: Path, report: Report) -> 
             )
 
 
+def _check_reference_mentions(skill_dir: Path, report: Report) -> None:
+    references = sorted((skill_dir / "references").glob("*.md"))
+    names = {path.name for path in references}
+    for path in references:
+        # Links are the depth check's to report, so their targets are taken out first.
+        text = LINK_TARGET.sub("]", path.read_text(encoding="utf-8", errors="replace"))
+        named = set()
+        for match in MENTION.finditer(text):
+            name = match.group(1)
+            if name in names and name not in (path.name, LOOKUP) and name not in named:
+                named.add(name)
+                number = text.count("\n", 0, match.start()) + 1
+                report.add(
+                    f"{SKILLS_DIR}/{skill_dir.name}/references/{path.name}",
+                    "reference-depth",
+                    f"line {number} names {name}; keep references one level deep from SKILL.md",
+                )
+
+
+def _check_tables(skill_dir: Path, report: Report) -> None:
+    for path in sorted(skill_dir.rglob("*.md")):
+        if path == skill_dir / facts.FACTS:
+            continue  # its rows' cell counts are the facts check's to report
+        header = None
+        fenced = False
+        for number, line in enumerate(
+            path.read_text(encoding="utf-8", errors="replace").split("\n"), 1
+        ):
+            if FENCE.match(line):
+                fenced = not fenced
+            row = line.strip()
+            if fenced or not row.startswith("|"):
+                header = None
+                continue
+            cells = len(TABLE_CELL.split(row[1:].removesuffix("|")))
+            if header is None:
+                header = cells
+            elif cells != header:
+                report.add(
+                    f"{SKILLS_DIR}/{skill_dir.name}/{path.relative_to(skill_dir).as_posix()}",
+                    "table",
+                    f"line {number} has {cells} cells and its table {header}; GitHub splits a "
+                    "row on every pipe, even inside code",
+                )
+
+
 def _check_optional_fields(data: dict, where: str, report: Report) -> None:
     """The spec's optional fields, in the form claude.ai accepts at upload."""
     if "license" in data and not _is_text(data["license"]):
@@ -281,6 +384,44 @@ def _check_hidden_characters(root: Path, files: list[Path], report: Report) -> N
             "unicode",
             f"line {number} holds U+{ord(char):04X}, which is invisible or reorders text{more}",
         )
+
+
+def _check_conflict_markers(root: Path, report: Report) -> None:
+    files = sorted(p for p in root.iterdir() if p.is_file())
+    for directory in SCANNED_DIRS:
+        if (root / directory).is_dir():
+            files += _files_under(root / directory)
+    for path in files:
+        try:
+            text = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue  # a binary file is merged whole, never marked
+        match = CONFLICT_MARKER.search(text)
+        if match:
+            number = text.count("\n", 0, match.start()) + 1
+            report.add(
+                path.relative_to(root).as_posix(),
+                "conflict",
+                f"line {number} is a merge's conflict marker",
+            )
+
+
+def _check_version_copies(root: Path, skill: str, version: str, report: Report) -> None:
+    for name in (README, ROADMAP):
+        path = root / name
+        if not path.is_file():
+            continue
+        for table in _skill_tables(path.read_text(encoding="utf-8")):
+            for row_name, cells in table:
+                if row_name != skill:
+                    continue
+                for stated in STANDARD_VERSION.findall(" | ".join(cells.values())):
+                    if stated != version:
+                        report.add(
+                            name,
+                            "standard",
+                            f"the `{skill}` row says standard v{stated}; the file is v{version}",
+                        )
 
 
 def _check_catalog(root: Path, skills: list[Path], report: Report) -> None:

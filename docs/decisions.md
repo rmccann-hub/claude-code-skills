@@ -2,6 +2,449 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — Release 0.1.2
+
+- **Asked:** the owner: "get everything ready for the next release/version/commit, etc.", and
+  then: "after you merge and make a new version and release".
+- **Chosen:** this pull request's merge is release 0.1.2, carrying standard v0.40.0 and the
+  `git-workflows` skill. The owner asked for the merge from this session, and it takes a merge
+  commit, as `AGENTS.md` says. A version that reaches `main` is published, tag or no tag, so the
+  release is written before the merge: the changelog's unreleased entries move under
+  `[0.1.2]`, and both catalog entries say 0.1.2. Claude Code updates an installed copy only
+  when that string changes, so copies installed since 2026-09-23 move on from v0.36.0.
+  - *Why 0.1.2:* the 2026-09-23 release entry keeps 0.2.0 for the rebuild's release, and under
+    0.x anything may change. Nothing in the release is breaking: no skill is renamed or
+    removed, and the new plugin is added beside the old one.
+  - *The date* is the day the changelog was written. If the merge falls on a later day, the
+    heading takes the merge's date in the same pull request.
+- **Waiting on the owner:** the tags. The `v0.1.1` tag, which the v0.37.0 entry deferred to this
+  release, goes on `cbe163f`, that release's merge commit, and `v0.1.2` on this pull
+  request's merge commit. Both are annotated, as the standard asks from T2. This session's
+  permission settings refused making a tag through GitHub's API, so the standard's route from
+  T2 applies: a `workflow_dispatch` job makes each annotated tag, as `git-workflows`' tested
+  example does. The Releases UI would make a lightweight tag. Each tag's GitHub release follows
+  it, as v0.1.0's did.
+
+## 2026-10-05 — v0.40.0's parity runs
+
+- **Asked:** the v0.40.0 entry held its parity runs until the owner had seen the decisions and
+  options. The owner has, and asked to "update all".
+- **Runs:** one run of each sample, each by a fresh subagent given the documented prompt, on the
+  skill as committed at `c3da657`. Its standard last changed at `983b783`, and its SHA-256 starts
+  `8f46f927`. Each run was graded with `python -m skillcheck.parity` and compared with the
+  baseline. Each passed every check, and left its sample's working tree clean and its refs where
+  they started.
+  - **Audit:** twenty checks, and both manual checks hold. One value moved: dimension 4 to
+    `BLOCKER`. That's the v0.37.0 rule for a tracked `settings.local.json`, which every audit run
+    since has moved.
+  - **Re-check:** thirteen checks, and all three manual checks hold. No value moved.
+  - **Greenfield:** seven checks, and no difference from the baseline. Both manual checks hold:
+    the recommendation names a runner-up and what each option costs, and leaves the pick to the
+    person, and nothing was generated.
+- **Found:**
+  - The samples' prepared replies predate F80's question on co-maintainers, so every run took its
+    default, "no", and showed it at the gate, as the text says. Settling that means changing the
+    replies, which takes a new baseline.
+  - Five gaps in the text, now F109 to F113 in `ROADMAP.md`, which wait with F81 to F108. Every
+    run met F109.
+- **Departures the runs recorded,** none touching a sample or a graded value:
+  - the audit and greenfield runs each listed the file names in the sample's bare remote, which
+    sits beside the sample, outside the directories the prompt allows. Neither opened anything
+    there;
+  - the audit run read PyPI, the known limit `docs/testing-the-skill.md` names, and kept a pip
+    cache in `/tmp` while it ran.
+- **Not done:** the procedure is unchanged. Moving each bare remote out of its sample's parent
+  directory would prevent the first departure. It touches no graded value, so it can wait for
+  the next baseline.
+
+## 2026-10-05 — The repositories the skills run on go unnamed
+
+- **Asked:** the owner asked that this repository name nothing a skill has been run on or
+  tested against, unless it's a dependency or a research source, and that it read
+  professionally, since people other than the owner may use it.
+- **Chosen:** `AGENTS.md`'s convention for a public repository now says so. Such a repository
+  is "a live repository" here, and goes unnamed even by a quote a search would find. Nothing
+  checks it, since a check would have to name what it looks for.
+- **Checked:** the tracked files, every commit message in the history, and every pull
+  request's title and body. None names such a repository. The products named in research
+  files are research sources.
+- **Changed:** one lesson in `ROADMAP.md` quoted a live repository's own words, which a code
+  search would find. It now describes the step instead, and the lesson after it no longer says
+  what kind of input the catalogue lacked.
+
+## 2026-09-30 — The text, audited against the repository
+
+- **Asked:** the owner: "audit all text, readme, changelog, tasks, anything. we need this up to
+  date".
+- **How:** a reader agent was started for the sweep, but stopped at once when the account hit its
+  spend limit, so the sweep was done in this session instead. Every relative link in the
+  repository's Markdown was resolved, every table's rows were counted against their header, and
+  the text was searched for versions, counts, statuses and "pending" or "not yet" wording, each
+  compared with the repository and, for dated facts, their sources.
+- **Found and fixed:**
+  - a table row in `git-workflows`' audit that GitHub split in two, because a `|` in a command
+    ends a cell even inside code. Escaping it would give an agent reading the raw file a broken
+    command, so the command no longer uses a pipe, nor does a row of `SKILL.md` that had
+    escaped one. `skillcheck` now fails on a table row whose cell count differs from its
+    header's;
+  - `.claude/settings.json` turned off the `standards` plugin's copies but not the new
+    `engineering` plugin's, so a session here could load an installed `git-workflows` beside
+    the one being edited;
+  - `.claude/rules/python.md` said tests never read real skills, which the asset tests must;
+  - the changelog linked Keep a Changelog 1.1.0, and said "The standard is now" of three
+    versions it has since left;
+  - the research prompt index still named `git-and-review`, shipped as `git-workflows`;
+  - the README said nothing of the freshness checks, and its skill row nothing of the reasons.
+- **Found and left, with the reason:**
+  - `CHANGELOG.md` has a 0.1.1 section dated 2026-09-23, but the remote has only the tag
+    `v0.1.0`. The release route is the owner's open decision, so no tag was made;
+  - the plan was partly outside `ROADMAP.md`: this session's own planning notes numbered
+    proposals past F102. Five checked today are now F103 to F107 in the roadmap. Two others,
+    about the organisation marketplace and where GitHub looks for `SECURITY.md`, couldn't be
+    confirmed from pages that load here, and stay out until they are;
+  - this repository states no commit grammar and checks none, which the standard rates `GAP`
+    from T2. Its recent subjects mix "area: summary" with plain sentences. Which grammar to
+    adopt is the owner's call.
+- **Checked:** `skillcheck` reports 0 findings, and the suite runs 261 tests at 100% coverage.
+  `.test-baseline` moves from 259 to 261.
+
+## 2026-09-30 — The repository keeps its facts current, and checks its own shape
+
+- **Asked:** the owner: "This also needs to have a way to be kept up to date and audit itself".
+  Then, later: "audit all text, readme, changelog, tasks, anything. we need this up to date".
+- **Chosen:** what can be checked from the commit is checked on every pull request. What
+  depends on the date or the web is checked on a schedule, so a pull request's result depends
+  only on the commit.
+  - `skillcheck` now reads every row of each skill's `references/facts.md`. A row needs one ID
+    in backticks, used once; an https link, or the `git ls-remote --tags` command that shows
+    the fact; a quote; and a check-by date after its checked date. Every fact another file
+    names by ID must exist. It found three rows whose source was a command, which it now
+    accepts, and prose in the standard that looked like a fact ID, which it now ignores.
+  - `skillcheck --due [DATE]` lists the facts due to be checked again. `skillcheck --verify`
+    fetches each source and looks for its quote, and runs `git ls-remote` for a tag's commit,
+    which is how a moved tag gets caught.
+  - `.github/workflows/freshness.yml` runs both every Monday and on demand. It keeps one issue
+    open while anything is due, adds each run to it, and closes it once everything is current.
+    Both modes end with a summary line, and a run without one fails, so a crash can't pass for
+    a clean result.
+  - Every skill except the standard's must link `references/why.md`. The standard gives its
+    reasons inline, and changes only on its own.
+  - A reference that names another reference's file, as the cold review found 19 times, now
+    fails like a link to it. Naming `facts.md` is allowed, because a fact is looked up rather
+    than read on to.
+  - A test scans this repository's own workflows with zizmor.
+- **Checked:**
+  - The verifier ran against the live sources: 79 of the 82 facts have a quote, and every
+    one was found. That includes the pinned action SHAs, read again with `git ls-remote`.
+  - Three github.com pages couldn't be fetched from this container, which refuses them, so
+    their facts now cite the same files on raw.githubusercontent.com.
+  - PyPI serves a plain client a browser check. The three version rows it backs have no quote
+    to look for, and are checked by hand when they fall due.
+  - The new code is at 100% coverage. Each new rule has a test that plants the defect and
+    asserts the rule fires alone.
+  - `.test-baseline` moves from 228 to 259.
+- **Not done:** a periodic self-audit by a Claude session, which would run this repository's own
+  standard against it, and spend the account's usage each time. It is offered to the owner, not
+  set up.
+
+## 2026-09-30 — `git-workflows`: the cold review, the trigger check, and the reasons behind each rule
+
+- **Asked:** the owner: "It is about both, guidance and format. And how to use langusges, and
+  why, and how. It's everything. […] Why do we do it this way? Why is it logical? Could it be
+  better? What do other people do and why do they do it? Pros and cons, etc". And: "I have
+  repos with 15 minutes of ci before the can merge to main, then like another 25 minutes of ci
+  on main. I don't want to weaken tests, but is this needed?"
+- **Chosen:** every skill gets `references/why.md`. For each rule that matters it gives the
+  advice, the reason, what other projects do and why, what each choice costs, when to choose
+  differently, and what could be better. `git-workflows` has the first one. Its last section
+  answers the CI question: how GitHub decides what a pull request tested, when a second run on
+  the default branch repeats one already done, and how Rust, Google, Chromium, LLVM and
+  Kubernetes split the work. What other projects do goes in `facts.md` like any other dated
+  fact, so it is checked again when it falls due.
+- **The cold review** (a second reader, 2026-09-30): "ready after the listed fixes". Each
+  finding was checked against the files and the standard before it was fixed. It found four
+  blocking defects:
+  - B1: the release job tagged whatever commit the dispatched branch pointed at, and read no
+    CI. It now takes a SHA, checks the commit is on the default branch, reads its
+    `CHANGELOG.md` at that commit, and requires every check on it to have passed, with at
+    least one check present.
+  - B2: the release workflow granted `contents: write` to the whole workflow, and its
+    checkout kept credentials. It now reads at the top, writes only in its job, keeps no
+    credentials, and passes zizmor.
+  - B3: two references said the standard's starter CI has both test guards. It has only the
+    collection guard. The skill now ships `assets/workflows/tests.yml` with the completion
+    guard, and proposes it to the standard.
+  - B4: references pointed to other references 19 times, by name rather than link, which
+    skillcheck couldn't see. Each now says what the reader needs, and skillcheck now fails on
+    the named form too.
+
+  And eight to fix before the upload:
+  - S1, S2: the CI subject check refused `Revert "…"` commits, and the hook refused a message
+    that began with a template's comment. They now share one list of exemptions, CI refuses
+    `fixup!` commits that were never squashed, and the hook reads the subject after
+    `git stripspace`, tested through `git commit`.
+  - S3: `chmod +x` doesn't reach the commit from Windows. The skill now says
+    `git add --chmod=+x`, and to check for `100755`.
+  - S4: under squash, GitHub's default takes a one-commit pull request's own message. The
+    skill now says to set the squash title to the pull request's title.
+  - S5, S6: the audit's statuses now follow the standard, including `MIRROR` and
+    `UNVERIFIABLE-HERE`. Its searches cover `.yaml` and `github.head_ref`, and the
+    conflict-marker search has a CI form that fails when markers exist.
+  - S7: the rules the standard owns are cited, not restated: review with one maintainer,
+    point releases, the version scheme and deprecation, and when to propose a client-side hook.
+  - S8: the version check took `1..4` and refused `1.4.0-rc.1`. It now takes Semantic
+    Versioning with a pre-release label, reading the whole string.
+- **The review's minor points, fixed:**
+  - "stranded" now says the commits survive under the pull request's refs;
+  - an archive tag is pushed;
+  - `--delete-merged` skips most branches made with `git push -u`, so the skill says so and
+    gives the `gone` check;
+  - the local-refs caveat for shallow clones;
+  - the `^{}` line of an annotated action tag;
+  - `gh release create` and `--verify-tag`;
+  - `co-authored` needs the address tied to an account;
+  - the unused `setup-python-sha` fact is gone;
+  - the description names conflicts, recovery and secrets;
+  - a section on force-pushing safely, conflicts, `rerere` and the reflog;
+  - `git rm --cached` on shared files;
+  - `concurrency` and `merge_group` in the examples;
+  - the hook test runs in a subshell.
+- **Not fixed, and why:** that GitHub can restore a deleted head branch. The page that says so
+  didn't load here, so the claim was left out rather than stated unchecked.
+- **The trigger check,** judged by a model: all 22 requests routed as expected. Three positive
+  requests passed on thin margins: a secret that reached a commit, a changelog entry or a
+  version number, and a required check that never reports. The description now names all
+  three. Five requests were added: slow CI, a rebase conflict, a lost commit, the merge
+  strategy's reasons, and a near miss for the planned `ci-cd` skill. That makes 27, 9 of them
+  near misses.
+- **Sources:** 37 facts were added and one unused fact removed, 82 in all, each new quote found
+  at its source on 2026-09-30. 18 are about other projects' practice: the Linux kernel, Git,
+  CPython, Rust, Go, LLVM, Google, Chromium, Kubernetes, Fowler, Git Flow's author, towncrier,
+  pip and semantic-release. 14 are about GitHub, and 5 about Git. `sources.md` gives each
+  licence. Google's book is CC BY-NC-ND 4.0 and Fowler's article is copyrighted, so
+  both are quoted and never adapted.
+- **A new development dependency:** zizmor 1.30.1, locked, so the tests can scan the example
+  workflows as the skill tells every repository to.
+- **Checked:**
+  - actionlint 1.7.12 and ShellCheck 0.11.0 pass on the four workflows and two hooks.
+  - zizmor finds nothing with its default rules. Its pedantic rules leave only informational
+    notes.
+  - The asset tests grow from 18 to 51, and the suite runs 228 tests.
+  - `.test-baseline` moves from 195 to 228.
+- **Owner's step:** upload the changed `skills/git-workflows` to claude.ai again.
+
+## 2026-09-30 — `git-workflows`: the first skill built from the owner's own skills
+
+- **Asked:** the owner: "The point of this is not to make Claude skills run in Claude code
+  sessions, but for you to assimilate the knowledge and information they already have and
+  leverage in the repo." Asked how to start, the owner chose one area end to end, said all four
+  areas are in daily use, and said company information comes here as generic knowledge only.
+- **Chosen:** `git-workflows`, with the same name as the owner's claude.ai skill, so an upload
+  replaces it. It ships in a new `engineering` plugin. It takes the ROADMAP's `git-and-review`
+  row. `ci-cd` and `versioning-and-releases` stay planned, narrowed to caching, environments
+  and deployment, and to release notes and support windows.
+- **Built from:**
+  - the owner's `git-workflows`, as topics, checks and lessons, with nothing copied. Its
+    company examples were left out: a work scheduling project, ERP export names, the owner's
+    machines. So was its advice against lessons the live repositories paid for: squash-merging
+    feature branches, bulk-deleting merged branches, `--no-verify`, a "Current State" section in
+    `CLAUDE.md`, and Conventional Commits as the only grammar.
+  - its bugs, fixed rather than carried: `.gitignore` comments after patterns, a `!` under an
+    ignored directory, a pre-push hook that checked the current branch, `paths` with
+    `paths-ignore`, and `Cargo.lock` left out of libraries.
+  - the lessons in `ROADMAP.md` from the live repositories (F74, F81, F85, F92, F93, F99),
+    FFmpeg's practice (`research/runs/2026-09-30-ffmpeg-reference.md`), and research R08 and R05
+    as leads.
+  - the standard, cited by section rather than restated.
+- **Sources:** every dated fact is in the skill's `references/facts.md`, with its source, a short
+  quote, the date checked (2026-09-30) and a date to check it again. Three leads were out of date
+  when checked: Git 2.56.0 was released 2026-09-28, where R08 had 2.55.0; Keep a Changelog 2.0.0
+  was released 2026-06-07, where R05 had 1.1.0; prek is at 0.5.4, where R08 had 0.5.1. GitHub's
+  rule on `GITHUB_TOKEN` now has a third exception: a pull request the token opens or updates
+  gets runs that wait for approval.
+- **Licences:** nothing is copied beyond short quotes, and `references/sources.md` names each
+  source's licence, checked at its licence file on 2026-09-30. The skill is Apache-2.0, with no
+  third-party notice needed.
+- **Whose work:** the owner's skill is an organisation skill. Only generic, non-confidential
+  knowledge came in, under the organisation's written permission recorded in the inception
+  entry.
+- **Reviewed** against `docs/authoring-a-skill.md`:
+  - Items 1 to 4: whose work, sources, licences, and no company detail. See above; the
+    examples use placeholders.
+  - Item 5: no claude.ai paths, and destructive commands come with a dry run or confirmation.
+  - Item 6: frontmatter fields from the spec only, with a 707-character description in the
+    third person.
+  - Item 7: `SKILL.md` is a 98-line router. Its references are one level deep, each with a
+    title and a line on when to read it.
+  - Item 8: every example lints or runs.
+  - Item 9: `tests/fixtures/skills/git-workflows.json` holds 22 requests, 8 of them near misses
+    for neighbouring skills.
+  - Item 10: the skill is in the catalog, the ROADMAP and the README.
+  - Item 11: the changelog has the entry, and `metadata.reviewed` is 2026-09-30.
+  - Item 12, turning off the old copy, is the owner's step once the skill is uploaded.
+- **Checked,** on 2026-09-30:
+  - The two hooks and the two workflow scripts:
+    - they pass ShellCheck 0.11.0 and actionlint 1.7.12, which found an unquoted `: ` in a step
+      name that made the workflow invalid YAML;
+    - they run in scratch repositories: the hooks refuse and accept what they should, the
+      subject check fails when it has nothing to check, and the release job refuses a
+      malformed version and makes and pushes an annotated tag.
+  - `tests/test_git_workflows_assets.py` repeats those runs in CI, with 18 tests. They caught
+    both planted breakages: a pre-push hook that checked the current branch, and a job without
+    a timeout.
+  - Every `facts.md` quote was found on its source page.
+  - `.test-baseline` moves from 177 to 195.
+- **Still running when this was committed:** a second reader's cold review, and a model-judged
+  run of the trigger set. Their findings, and what changes, go in the next entry.
+- **Owner's step:** upload `skills/git-workflows` to claude.ai, and turn off the old synced
+  `git-workflows`, so sessions don't load two.
+
+## 2026-09-30 — This repository, fixed against its own standard
+
+- **Asked:** told that the owner's synced claude.ai skills advise against lessons the live
+  repositories paid for, the owner said: "fix this repo first, then i can upload skills to fix.
+  this repo will be the master for claude code, claude skills, and gnenerall non-llm coding
+  practices, amungst other things".
+- **Scope:** it goes into the first lines of `AGENTS.md` and the README, as the owner's word. The synced skills are fixed by uploading this repository's skills once they're built,
+  not edited on their own.
+- **Found:** this repository, read against v0.40.0 and the lessons in `ROADMAP.md` (F81 to
+  F102), had five gaps:
+  - Its merge strategy was unrecorded, though every pull request so far merged with a merge
+    commit, and its commits are cited from outside. From T2 that is `GAP` (F74).
+  - Nothing proved the test suite ran to the end (F81).
+  - The standard's version is stated in the README's and the roadmap's rows as well as in the
+    file, and nothing compared those copies (F97). The changelog's line about FFmpeg's
+    proposals still said they awaited approval, which is the drift that rule is for.
+  - Nothing looked for a merge's conflict markers (F92).
+  - Its conventions didn't say which were checked and which were advice (F94).
+- **Chosen:**
+  - `AGENTS.md` records merge commits as the strategy, and says each convention's enforcement
+    or that nothing checks it. It also takes the waiting-on convention the starter file got in
+    v0.40.0 (F70), and asks a commit adding a Markdown file to name the homes it considered
+    (F102).
+  - `skillcheck` compares the README's and the roadmap's copies of the standard's version with
+    the file's, and fails on conflict markers in the files at the root and under the tracked
+    directories.
+  - CI writes pytest's report and fails where it is missing or counts fewer tests than
+    `.test-baseline`, which moves from 144 to 177.
+- **Human action:** the merge strategy is enforced only once the repository's settings allow
+  merge commits alone: Settings, General, Pull Requests, with squash merging and rebase merging
+  turned off.
+- **Checked,** on 2026-09-30:
+  - The 33 new tests: 27 fail against the checks before this change, restored afterwards from a
+    copy checked by its SHA-256. The other six assert that lookalikes and files outside the scan
+    pass.
+  - A pytest run whose second of three tests calls `os._exit(0)` exits 0 and writes no report.
+    The new CI step, extracted from the workflow and run under `bash -e`, fails that, fails a
+    report counting 133 tests against the baseline of 177, and passes the full report.
+  - `git log --first-parent origin/main`: every commit since the first is a merge commit.
+
+## 2026-09-30 — The standard moves to v0.40.0
+
+- **Asked:**
+  - After the first live re-check, the owner said to "update anything needed on your side".
+    The re-check ran on v0.39.0 on 2026-09-29, from the owner's run file, against the
+    repository of the first live audit. After its gate, the owner asked it to review and merge
+    its pull request, and to check the branches before calling any safe to delete.
+  - On 2026-09-30 the owner raised one more (F70) and named FFmpeg as a model to read (F71 to
+    F79). Then: "Include the checks for more maintainers, but you need to ask if that's the
+    case. Fix everything else." (F80)
+- **Chosen:** twenty-one fixes, F60 to F80. `ROADMAP.md` gives each one's evidence, and the
+  version history groups them by what found them:
+  - **Up to the gate,** F60 to F64. The scratch clone comes from the remote where it can, and
+    its `origin/<default>` is checked against the working copy's either way. A shallow clone is
+    deepened before history is read. A result the run's own mistake produced goes in
+    `corrections`. The address-domain command counts commits. A step the standard directs isn't
+    a deviation.
+  - **The apply half,** F65 and F66. Settings the run can't read are asked for at the Phase 3
+    wait, as a screenshot or a reading. Phase 7's block has `overrides`.
+  - **After the gate,** F67 to F69. A second reader reviews the whole branch before the report
+    is handed over. Work asked for after Phase 9 has a `post_gate` block, and a merge the owner
+    asks for takes only the head that was checked. A branch is advised for deletion only after
+    checking what still needs it.
+  - **From the owner,** F70 and F80. A working session says what it's waiting on, and from
+    whom. Whether anyone else maintains, reviews or commits is asked at the Phase 3 wait,
+    drafted from the history's authors, and the checks for more than one maintainer apply only
+    once the human says so.
+  - **From reading FFmpeg,** F71 to F79: the canonical forge, a security contact outside
+    `SECURITY.md`, a checked commit grammar of either family, one merge strategy, annotated
+    tags, interfaces others build on, a second release line, damaged-input tests and mixed
+    licences.
+- **Where the evidence left a choice, and what was chosen:**
+  - **F60:** where the run can't reach the remote, as in a parity run, it clones the working
+    copy and copies the working copy's remote-tracking refs across. Refusing to replay gates
+    without the remote would have stopped every parity run.
+  - **F65:** without a screenshot or a reading, a platform setting is `UNVERIFIABLE-HERE`. It is
+    never rated done because a record says so.
+  - **F67:** the second reader is a fresh session or subagent, given the branch's diff and the
+    approved amendments and none of the run's reasoning. It reads in Phase 9, after the decision
+    record is pushed, because one of the three defects was in the record, and Phase 7's block is
+    closed before Phase 8 writes it. Where the tool can't start one, the human's review of the
+    pull request is the second reading, with no third wait. The self-check no longer says it
+    works "without a second reader".
+  - **F66:** each phase's overrides go in the next block it emits, so Phase 9's block holds
+    those of Phases 8 and 9.
+  - **F69:** where a sibling can't be read, the human is asked, or the check is recorded as not
+    made and no deletion is advised. A squash-merged branch qualifies when nothing cites its
+    commits.
+  - **F68:** the run merges only when the human asks. It passes the checked head to the merge
+    as the expected head, and reads the default branch's CI on the merge commit.
+  - **F80:** asked, not inferred, at the owner's word. It supersedes F24 and F56's reading of a
+    second committer from the history's authors, which are now the draft. Unanswered or
+    `unknown`, the default is no, nothing that depends on it is rated, and a default taken goes
+    in Phase 6's first list. Phase 8 records the answer, and a re-check asks it again. The
+    checks are `CODEOWNERS`, a maintainers list, review required before a merge, the
+    contributing guide's review rules, a sign-off or agreement for outside contributions, and a
+    security contact that isn't one inbox, each `GAP` from T2.
+  - **F73:** the grammar is checked in CI over a pull request's commits, and by a commit-msg hook
+    only where dimension 6 places client-side hooks, since a hook no session installs checks
+    nothing.
+  - **F74:** a strategy left unrecorded, or recorded while the platform allows the others, is
+    `GAP`. A choice the human recorded isn't re-raised.
+  - **F75:** from T2, a route that makes lightweight release tags is `GAP`. The run rates how the
+    next tag gets made, not the tags already published, since immutable releases may not let
+    anyone replace them. The dispatch job makes the tag object, with a tagger identity set.
+  - **F76:** `N/A` where nobody builds on the interface. From 1.0.0 a removal needs a
+    deprecation in an earlier release; before it, the changelog names each removal.
+  - **F73 and F74:** both rated from T2. Under squash the pull request's title is the subject,
+    so the grammar check reads the title.
+  - **F78:** from T2. A fuzzer is the strong form, and a handful of damaged samples the floor.
+  - **F71:** the mirror's own platform settings are rated `MIRROR`, and the canonical forge's
+    CI is read where the run can reach it.
+- **Chosen:** 0.40.0, a minor bump. The new fields are `more_maintainers` in Phase 0's `asked`,
+  `forge` and `mirror_of` in Phase 2's `ci`, `readings` in Phase 3, `overrides` in Phase 7,
+  `review` and `overrides` in Phase 9, the `post_gate` block, `second_reader` in the
+  self-check, and `deepened` for Phase 0's `shallow`. Older reports stay readable.
+- **Checked,** in this session on 2026-09-29 and 2026-09-30:
+  - The corrected domain command, run with mawk 1.3.4 on the live repository's full history,
+    gives each commit one count per domain. Allowing for the eight commits merged since, it
+    matches the re-check's corrected per-commit counts, where the old command's didn't.
+  - The ref copy moved a scratch clone's `origin/main` from the working copy's stale local
+    branch to its fetched `origin/main`, in a throwaway repository.
+  - On 2026-09-30, with git 2.43.0: `git describe` fails outright where only lightweight tags
+    exist, and `git cat-file -t` reads `commit` for a lightweight tag and `tag` for an annotated
+    one.
+  - FFmpeg's facts, read from its tree and history on 2026-09-30, are in
+    `research/runs/2026-09-30-ffmpeg-reference.md`.
+  - GitHub's page on merge methods, read on 2026-09-30: "Rebase and merge on GitHub: Always
+    updates the committer information and creates new commit SHAs." So a rebase-merge strands
+    commits cited from outside, as a squash does.
+- **Reviewed** cold, before the pull request opened, by a subagent that hadn't written the
+  change. It found four blocking defects, all fixed: the second reader read before the decision
+  record existed, Phase 7's `overrides` claimed later phases, the scratch clone didn't check out
+  the audited commit, and the branch check had no fallback where a sibling can't be read.
+- **Reviewed again,** cold, after F70 to F80, by another subagent. It found four blocking defects,
+  all fixed: F80's question wasn't recorded, shown again on a re-check or used by every rule it
+  gates; the checks for more maintainers had no tier; annotated tags clashed with the tag routes
+  the gate recommends; and three claims about FFmpeg went beyond what was read. Its smaller
+  points were fixed too. Among them: rebase-merge strands cited commits as squash does, the
+  forge is found before CI is read, and dimension 4 raises the waiting-on line. The sentence on
+  a licence-changing build option went, as beyond the approved text.
+- **Parity:** held until the owner has seen the decisions and options, at the owner's word. The
+  runs draw on the same weekly allowance as the owner's working sessions, and the pull request
+  merges after them. F80's question is asked at the Phase 3 wait, so every sample reaches it,
+  the greenfield one included.
+
 ## 2026-09-29 — The standard moves to v0.39.0
 
 - **Asked:** before the fork's first audit, the owner approved fixing the standard: "I approve

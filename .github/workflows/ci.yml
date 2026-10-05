@@ -31,7 +31,30 @@ jobs:
         run: uv run ruff check
 
       - name: Test
-        run: uv run pytest
+        run: uv run pytest --junitxml="$RUNNER_TEMP/junit.xml"
+
+      - name: Prove the suite ran to the end
+        # pytest writes the report as its session finishes. A run that stops early can still exit
+        # 0: a test that called os._exit(0) stopped one here after the first of three tests, with
+        # no report written. So a missing report fails, and so does one counting too few tests.
+        run: |
+          uv run python - "$RUNNER_TEMP/junit.xml" "$(cat .test-baseline)" <<'EOF'
+          import sys
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          report, baseline = Path(sys.argv[1]), int(sys.argv[2])
+          if not report.is_file():
+              print("::error::completion guard: the test run wrote no report, so it did not finish")
+              sys.exit(1)
+          root = ET.parse(report).getroot()
+          suites = [root] if root.tag == "testsuite" else root.findall("testsuite")
+          ran = sum(int(suite.get("tests", 0)) for suite in suites)
+          print(f"the report counts {ran} tests, baseline {baseline}")
+          if ran < baseline:
+              print(f"::error::completion guard: {ran} tests reported, below the baseline of {baseline}")
+              sys.exit(1)
+          EOF
 
       - name: Guard the collection count
         run: |

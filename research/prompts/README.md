@@ -16,7 +16,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R05 | 1 | [R05-supply-chain-versioning-releases.md](R05-supply-chain-versioning-releases.md) | Supply chain, dependencies, versioning, changelogs, releases, deprecation, and keeping current | supply-chain-security, versioning-and-releases, keeping-current, ci-cd |
 | R06 | 2 | [R06-testing.md](R06-testing.md) | Testing | testing, and the testing file of every language skill |
 | R07 | 2 | [R07-errors-logging-performance.md](R07-errors-logging-performance.md) | Error handling, logging, observability, performance, concurrency, and log analysis | error-handling, logging-and-observability, performance-and-concurrency, log-analysis |
-| R08 | 1 | [R08-git-github-cicd.md](R08-git-github-cicd.md) | Git, GitHub, code review, and CI/CD | git-and-review, ci-cd, and the standard's CI, dependency and security dimensions |
+| R08 | 1 | [R08-git-github-cicd.md](R08-git-github-cicd.md) | Git, GitHub, code review, and CI/CD | git-workflows (shipped), ci-cd, and the standard's CI, dependency and security dimensions |
 | R09 | 2 | [R09-python.md](R09-python.md) | Python and Python for data | python, and the Python side of data-and-sql and excel |
 | R10 | 2 | [R10-typescript-web.md](R10-typescript-web.md) | TypeScript, JavaScript, Node.js, HTML, CSS and the web front end | typescript-javascript, html-css, accessibility (web), visual-theme (CSS) |
 | R11 | 2 | [R11-dotnet-powershell-windows.md](R11-dotnet-powershell-windows.md) | C# and .NET, PowerShell, Windows Server and Active Directory | csharp-dotnet, powershell, windows-server, and legacy-languages (.NET Framework, Windows PowerShell 5.1, VBScript) |

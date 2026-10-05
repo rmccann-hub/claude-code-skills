@@ -116,3 +116,42 @@ def test_an_unreadable_skill_md_is_left_to_the_skill_checks(repo):
     report = check_repository(repo.root)
     assert standard_findings(report) == []
     assert "frontmatter" in {f.rule for f in report.findings}
+
+
+README_ROW = (
+    "| Skill | Plugin | What it does |\n|---|---|---|\n| `standard-skill` | `standards` | {} |\n"
+)
+ROADMAP_ROW = "| Skill | Covers | Status |\n|---|---|---|\n| `standard-skill` | {} | shipped |\n"
+
+
+@pytest.mark.parametrize(
+    ("name", "table", "cell"),
+    [
+        ("README.md", README_ROW, "Runs the synthetic standard (v0.1.0)"),
+        ("ROADMAP.md", ROADMAP_ROW, "the standard, v0.1.0"),
+    ],
+)
+def test_a_stale_copy_of_the_version_fires(repo, name, table, cell):
+    add_standard(repo)
+    (repo.root / name).write_text(table.format(cell), encoding="utf-8")
+    assert [(f.path, f.message) for f in check_repository(repo.root).findings] == [
+        (name, "the `standard-skill` row says standard v0.1.0; the file is v0.2.0")
+    ]
+
+
+def test_copies_that_agree_pass_and_other_rows_are_not_compared(repo):
+    add_standard(repo)
+    repo.skill("other-skill")
+    repo.catalog(
+        repo.plugin("standards", "./skills/standard-skill"),
+        repo.plugin("others", "./skills/other-skill"),
+    )
+    other = "| `other-skill` | `others` | Quotes the standard v9.9.9 |\n"
+    readme = README_ROW.format("Runs the synthetic standard (v0.2.0)") + other
+    (repo.root / "README.md").write_text(readme, encoding="utf-8")
+    roadmap = (
+        ROADMAP_ROW.format("the standard, v0.2.0")
+        + "| `other-skill` | the standard v9.9.9 | shipped |\n"
+    )
+    (repo.root / "ROADMAP.md").write_text(roadmap, encoding="utf-8")
+    assert check_repository(repo.root).findings == []

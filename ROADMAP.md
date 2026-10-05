@@ -13,11 +13,17 @@ The PROJECT-BOOTSTRAP-AND-AUDIT standard covers configuration and process, and s
 judge code. The skills in sections B to F cover the code itself, beside the standard rather
 than inside it.
 
+Each skill says why, not only what: its `references/why.md` gives each rule's reasons, what
+other projects do and why, what each choice costs, and when to choose differently. Its dated
+facts, including what other projects do, are checked again by `skillcheck --due` and
+`skillcheck --verify`, which the weekly freshness workflow runs. `keeping-current` is the skill
+that will do the same for other repositories.
+
 ## A. How the work is done
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.39.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.40.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -38,9 +44,9 @@ than inside it.
 | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06 |
 | `api-design` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
 | `data-and-sql` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
-| `git-and-review` | Branching, commits, pull requests, code review | planned | core | R08 |
-| `ci-cd` | Pipelines, Actions hardening, caching, environments, deployment | planned | core | R08, R21 |
-| `versioning-and-releases` | SemVer, changelogs, release notes, deprecation policy, support windows | planned | core | R05 |
+| `git-workflows` | Commits and trailers, branches, pull requests and review, the merge strategy, safe branch deletion, GitHub Actions CI and its hardening, hooks, `.gitignore`, annotated tags, changelogs, versions, release lines and backports | shipped | core | R08, R05 |
+| `ci-cd` | Caching, environments and deployment, beyond the CI that `git-workflows` covers | planned | core | R08, R21 |
+| `versioning-and-releases` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `git-workflows` covers | planned | core | R05 |
 | `legacy-modernization` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
 | `logging-and-observability` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | planned | standard | R07 |
 | `performance-and-concurrency` | Profiling, complexity, caching, async and threads | planned | standard | R07 |
@@ -103,6 +109,27 @@ than inside it.
 |---|---|---|---|---|
 | `visual-theme` | Design tokens, palettes, typography, dark mode | planned | standard | R20 |
 | `data-visualization` | Choosing charts, accessible charts, charting libraries | planned | standard | R20 |
+
+## Lessons waiting for their skill
+
+What live repositories taught that belongs to a skill not built yet. Each skill takes its
+lessons in when it's built, and its `why.md` cites them.
+
+- **L1, `testing`:** check the fact, not a symptom the failure path shares. When one check is
+  re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
+  live repository's acceptance step passed an identification because rows had loaded. They were
+  the placeholders its app loads when a lookup finds nothing. A sibling check, re-keyed onto the
+  identifier after the same symptom fooled it once before, caught it two steps later.
+- **L2, `testing`:** a test that needs outside data, such as an entry in a public catalogue,
+  names the fixture it expects, and says so when the fixture is the cause. The same rig made
+  three acceptance runs in 40 minutes, on two inputs the catalogue didn't know. Each one read as
+  a failed step, not as the wrong input.
+- **L3, `logging-and-observability`:** every timestamp carries its offset. The same app logged
+  in local time and wrote its evidence bundle in UTC, so one event sat four hours apart in the
+  two.
+- **L4, `logging-and-observability`:** an evidence bundle lists what it left out, and the raw
+  facts each verdict was computed from. That bundle did both, so "nothing was missing" could be
+  told from "nothing was collected", and a wrong label could be checked against its inputs.
 
 ## Rebuilding `project-bootstrap-and-audit`
 
@@ -392,6 +419,278 @@ The v0.39.0 parity runs found seven more, applied before it merged:
   that as a deviation, so the standard now says how the answers given in advance meet the wait
   (piece 1).
 
+The first live repository's re-check ran on 2026-09-29, on v0.39.0 from the owner's run file,
+in a fresh cloud session. It stopped at both waits, found the last audit's eleven fixes in place
+and its eight held amendments still held, and re-raised none of them. Its drafted re-check
+questions, the version it recorded and its per-commit secret-scan reading all worked as written.
+It found five more, applied in v0.40.0:
+
+- **F60:** the rule to replay a gate in a scratch clone doesn't say to clone from the remote.
+  The run cloned its working copy, whose local `main` the fetch had left four days behind, so
+  the scratch clone read that as `origin/main` and failed ten tests that pass. Phase 7's
+  fresh-clone check already says to clone from the remote; Phase 2's needs the same, and a check
+  that the clone's `origin/<default>` matches the fetch (piece 4).
+- **F61:** a cloud session's clone can be shallow, 511 commits here, while CI checks out full
+  history. Nothing says to deepen it before gates and history counts run, so the run did it as
+  an override. A count read from a shallow history should say so beside it (piece 4).
+- **F62:** a result caused by the run's own mistake stayed in `command_tally` as a `FAIL`, with
+  the correction beside it. It belongs in `corrections`, and the tally counts the re-run
+  (piece 1).
+- **F63:** the address-domain command prints an author line and a committer line per commit, so
+  it counts addresses, not the commits dimension 10 asks for. A per-commit count needs each
+  commit's domains deduplicated (piece 3).
+- **F64:** nine overrides were recorded, and most were steps the standard directs: installing
+  what CI installs, running gates in a scratch clone, deepening a shallow clone. Counted as
+  deviations, they hide the few that are departures (piece 1).
+
+Its apply half ran the same day. It applied the four amendments approved without a hold, in one
+pull request whose CI passed when read at log level, and found two more, also applied in
+v0.40.0:
+
+- **F65:** settings the session can't read were rated `UNVERIFIABLE-HERE`, and the last record
+  had them done. The owner's screenshot, sent with the gate answers, showed three of them off,
+  so two secondary ratings changed after the gate. Where nothing can be read, the first wait
+  should ask the owner for a screenshot or a reading, so the findings rest on it (piece 1).
+- **F66:** Phase 7's block has no `overrides` field, so the run put its two Phase 7 overrides
+  in its notes. Phase 4's field takes a `phase` key, but Phase 4's block is emitted before
+  Phase 7 runs (piece 1).
+
+After the gate, the owner asked the session to review and merge that pull request, and to check
+the branches before calling any safe to delete. That work found three more, also applied in
+v0.40.0:
+
+- **F67:** a reviewer that hadn't written the change read the diff cold and found three defects.
+  The run's tests, its revert probe, CI and a first review had all passed them: a test message
+  that pytest cut short, a strict decode that crashed the gate script on output that wasn't
+  UTF-8, and a false claim in the decision record. The self-check is said to catch failures
+  "without a second reader". A second reader should go over the whole branch before the run
+  hands over, after the decision record is written (piece 1).
+- **F68:** no block holds work the owner asks for after Phase 9, such as a review, a merge or a
+  branch check, so the run added its own. When the owner asks the run to merge, the block
+  should record the head it merged and the default branch's CI read afterwards (piece 1).
+- **F69:** nothing says what to check before advising that a branch be deleted. Asked to check
+  first, the run found a sibling repository's record naming one branch as staying, because
+  citations had broken once when it was deleted. Before a deletion is advised, the branch
+  should have no open pull request and its work should be on the default branch. Every commit
+  cited through it, in the repository or a sibling, should be reachable from the default
+  branch, and a sibling promised the branch should be told (piece 4).
+
+On 2026-09-30 the owner raised one more, applied in v0.40.0: they had to ask a working
+session on another of their repositories what it was waiting on before its next release.
+
+- **F70:** a session that stops with work outstanding should say what it's waiting on, and from
+  whom, without being asked. Run reports already list what remains for the human, but the
+  starter context file gives the working sessions it sets up no such rule (piece 2).
+
+On 2026-09-30 the owner named FFmpeg as a model of open-source practice. Its tree and history,
+read that day, are in `research/runs/2026-09-30-ffmpeg-reference.md`. Reading it raised nine
+more, which the owner approved the same day and v0.40.0 applies:
+
+- **F71:** the run looks for CI only in `.github/workflows/`. FFmpeg's is in
+  `.forgejo/workflows/`, and its GitHub repository is a mirror whose pull requests are ignored,
+  so a run would report no CI. Before reading CI and settings, the run should find the forge
+  the contributing guide names as canonical, and read that one (piece 4).
+- **F72:** `SECURITY.md` is due at T3, and FFmpeg has none: its private list and page are
+  named in `MAINTAINERS`. A security contact named in a file a reader looks in, such as the
+  README, the contributing guide or a maintainers list, should count (piece 3).
+- **F73:** the standard names Conventional Commits as the commit grammar. FFmpeg's hook rejects
+  it and requires "area: summary", which 2,970 of its last 3,004 subjects follow. A repository
+  should state one grammar and check it with a commit-msg hook, and either family should count
+  (piece 3).
+- **F74:** nothing says which merge strategy to use. FFmpeg's master rejects merge commits; the
+  first live repository keeps them, because its sibling cites branch commits: its record says
+  the cited commits became unreachable when a branch went four minutes after a squash merge.
+  The context file should name the strategy and why, the platform should allow only that one,
+  and where commits are cited from outside only a merge commit keeps them (piece 3).
+- **F75:** nothing says a release tag is annotated. FFmpeg's are, and `git describe` builds
+  its version from them. The first live repository's 62 are all lightweight, made by
+  `gh release create`, so they carry no tagger or date, and `git describe` passes over them
+  without `--tags` (piece 5).
+- **F76:** nothing covers an interface others build on. FFmpeg keeps each library's API
+  compatible within a major version, logs every change in `doc/APIchanges`, and deprecates
+  before it removes, on a schedule. A repository whose API, command-line options or config
+  keys others depend on should log changes to them, and deprecate in one release before
+  removing in a later one (piece 3).
+- **F77:** nothing covers keeping more than one release line. FFmpeg's point releases come from
+  `release/X.Y` branches, take only a security fix, a documented bug or documentation, and keep
+  compatibility; 78 of its last 80 backports name their source commit. Where a repository keeps
+  a second line, it should follow the same rules (piece 5).
+- **F78:** nothing asks for damaged-input tests. FFmpeg's checklist has every decoder and
+  demuxer fed damaged data, and it must not crash, loop or allocate without bound. Code that
+  parses input it doesn't control should have such a test (piece 3).
+- **F79:** nothing covers mixed licences. FFmpeg's `LICENSE.md` lists which files are GPL, and
+  the GPL parts stay off unless `--enable-gpl` is passed. Where licences mix, each file should
+  name its own, and the licence file should say which parts are which (piece 3).
+
+Approving them, the owner asked for the practices of more than one maintainer as well, asked
+rather than inferred, also applied in v0.40.0:
+
+- **F80:** `CODEOWNERS` was due from a second committer, read from the history's authors, and
+  nothing else checked a team's practices. Whether anyone else maintains, reviews or commits is
+  now the fourth thing a run can't detect, asked at the Phase 3 wait and drafted from the
+  authors. Once the human says so, dimension 6 checks who reviews what, review before merging,
+  the contributing guide's review rules, sign-off for outside contributions, and a security
+  contact that isn't one inbox (pieces 3 and 4).
+
+On 2026-09-30 the owner asked what the two live repositories had found through their own
+iteration, to leverage it. Their context files, decision logs, tools and the tests that guard
+their process were read that day, and each lesson was checked against the standard. Twenty-two
+are missing, awaiting the owner's approval:
+
+- **F81:** a test run that stops early can exit 0: a live repository merged a pull request
+  whose suite had run 76% of its tests. The suite should write a marker as its last act, and
+  CI should fail without it (piece 3).
+- **F82:** a check that sweeps a computed list passes when the list is empty, as a
+  parametrised test over nothing reports one skip; an audit there found 52 such gates beside
+  54 that worked. A sweep should assert a floor on what it examined, and that its data isn't
+  trivially empty. It should take its population from the tree, and keep an allowlist whose
+  every entry carries a reason, is checked for staleness and can only go. A scheduled audit
+  should be able to report that it measured nothing (piece 3).
+- **F83:** a revert proves a test only when it landed and built. A revert broken by a stray edit
+  didn't build and still read as proof, and a restore with `git checkout --` destroyed
+  uncommitted work. A revert probe should confirm the file changed and the build succeeded,
+  and restore from a copy checked by hash (piece 3).
+- **F84:** a stand-in more permissive than what it stands for hides the bug. A fixture stopped a
+  thread production never stopped, hiding a crash for five releases, and another passed only
+  on a record that couldn't occur. Fixtures, harnesses and test environments should be no more
+  permissive than production, able to occur, and able to tell the cases under test apart
+  (piece 3).
+- **F85:** "couldn't check" read as "passed": a guard whose listing command failed found no
+  offenders, a probe graded crashes as clean refusals, and a gate closed a round because files
+  existed. A check should have three outcomes, fail closed on the third, read declared
+  fields, count its matches, and be tested for each way it could wrongly say yes (piece 3).
+- **F86:** a check that only warns gates nothing: the rule cited most there, a regression test
+  for every bug, had no `exit 1`. An opt-out should carry a written reason, and a bare marker
+  should be refused (piece 3).
+- **F87:** an intermittent failure met with a wider timeout stays: a test timed out fourteen
+  times in full suites and took a second alone. One network call took 80 of a check's 137
+  seconds. A flaky test should get instrumentation and kept artifacts, and gates should run
+  against recorded responses rather than the network (piece 3).
+- **F88:** a mutation score can measure the edit rather than the defect: a first sweep scored
+  100% because one test hashed the source tree. A sweep should first run an inert edit, and
+  tools that write into the tree should share one lock that fails closed (piece 3).
+- **F89:** a gating tool was pinned in one file and installed from another, looser range, and a
+  stale global binary produced 118 phantom errors. Workflows should take the gating tools'
+  pins from the project's own file, and a run should record which binary and version ran
+  (piece 3).
+- **F90:** CI missed what it should cover. A job with no timeout runs to the platform's
+  360-minute default; CI fired only on a mirror branch nobody worked on; an advertised build
+  configuration failed the first time it was compiled; and a depth-1 checkout turned
+  history-reading tests red. Every job should set a timeout, CI should run on the branch where
+  work lands and build each configuration users are told to build, and a test that reads
+  history should fail rather than skip without it (piece 3).
+- **F91:** events a workflow makes with its default token start no other workflow, so four
+  releases never reached the package index. A release that must start another workflow should
+  hand off through `workflow_dispatch` (piece 5).
+- **F92:** a truncated merge output hid a conflict, and its markers shipped through nine green
+  jobs. Output that lists work to do should be read whole, and a sweep should refuse conflict
+  markers at the start of a line (piece 3).
+- **F93:** cloud sessions don't run a repository's setup script, so a pre-commit guard was off
+  in every web session. What a session needs, such as `core.hooksPath`, should come from a
+  committed SessionStart hook (piece 3).
+- **F94:** a rule nothing runs does nothing: of 187 rules audited there, 29% were gated, and a
+  third would fail no test if broken. Each rule in the context file should name what fails
+  when it's broken, or say it's advice, and a handover should be refused until the tree is
+  pushed and every hash and URL it quotes resolves (piece 3).
+- **F95:** sessions kept re-deriving settled facts, three of them four times in one session.
+  Where that happens, the facts should be indexed, each with the command that re-checks it,
+  and a tool should run the index (piece 3).
+- **F96:** agents' shell habits cost hours. Waiting on `pgrep -f` matched its own shell and
+  looped for 78 minutes, two suites in one build directory left a log that read as both pass
+  and fail, and a seven-lane fan-out lost 16 of 17 agents to usage limits. A run should wait
+  on a PID, run one suite per build directory, treat a subagent's finding as a lead to verify,
+  and read a fan-out's failures before its results (piece 1).
+- **F97:** a fact kept by hand in two places drifts: a sibling's sentence said "eight" while its
+  table held nine rows. A fact stated twice should be generated from one source, as the first
+  live repository generates its half of a shared contract, or a test should check the copies
+  agree in both directions (piece 3).
+- **F98:** a release was announced before it was proven: it failed 2 of 33 tests from a fresh
+  clone. Separately, a green suite with ten green checks still had three blocking defects that
+  an adversarial review found. A release should be proven from what users install, and at T3
+  a review told to refute it should read the release's diff (piece 5).
+- **F99:** cited commits were stranded three ways: a squash merge, the branch deleted after it,
+  and an amend of regenerated files. A test should fail when a cited commit isn't reachable, a
+  cited commit should never be amended, and regenerated files should go in their own commit
+  (piece 3).
+- **F100:** a sibling read a relayed message and concluded the other side's lap was unsent,
+  while it sat released on that side's `main`, one fetch and one grep away. A claim about
+  another repository should cite `repo@sha:path:line` from its committed files, shared files
+  should be checked byte for byte at a named commit, and a bug shape the peer reports should
+  be looked for at home (piece 5).
+- **F101:** a review loop between repositories ran to lap 39 by one side's recount, 37 by the
+  other's, and produced no release. Close conditions
+  should be fixed at the start, a new finding should go to the next round unless it breaks what
+  is under review, each agreed change should be tracked to the commit that lands it, and a
+  consumer's parser should be read, and taught both forms, before output it parses changes
+  (piece 5).
+- **F102:** a live repository's owner told its sessions to stop adding Markdown files for their
+  own sake. A commit that adds a document should name the existing homes it considered and
+  rejected, as that repository's rule now says (piece 5).
+
+Building `git-workflows`, its cold review and the owner's question about slow CI found five more
+on 2026-09-30, each checked against its source that day. They await the owner's approval:
+
+- **F103:** dimension 2's lockfile table offers `uv sync --frozen` as well as `--locked`, but
+  `--frozen` installs from the lockfile without checking it, so drift passes. It should name
+  `--locked` only (uv's CLI reference).
+- **F104:** the facts table and dimension 7 say push protection is on by default for public
+  repositories. GitHub's docs split it in two. Push protection for users is on by default, and
+  stops a user's own pushes of secrets to public repositories. Push protection for the
+  repository has to be turned on, and only it raises alerts when someone bypasses it.
+- **F105:** the starter CI file has the collection guard only, which counts the tests
+  collected, not those that ran. It should add the completion guard this repository's CI and
+  `git-workflows`' `tests.yml` use: the test report must exist, and count at least the
+  baseline.
+- **F106:** dimension 10 says that under squash merging the pull request's title becomes the
+  subject, so the grammar check reads the title. GitHub's default squash message takes a
+  one-commit pull request's own commit message instead. The rule should also set the
+  repository's default squash title to the pull request's title, and audit that setting.
+- **F107:** the starter CI runs on `push` and `pull_request`, so each pull request's commits run
+  twice, once as the branch and once merged with its base. That costs little in a fast suite
+  and doubles a slow one. The starter should say so, and offer `push` on the default branch
+  with `pull_request` where CI is slow.
+
+One more, from Anthropic support's reply to the owner on 2026-09-30, awaiting the owner's
+approval:
+
+- **F108:** the facts table says plugins enabled on a claude.ai account load in Cowork and
+  terminal sessions, that the docs name no cloud session for them, and that one account's cloud
+  sessions received none. Support said they are meant to load in cloud sessions too, that the
+  docs' silence is a gap, and that an empty plugin list isn't expected. It named two causes to
+  rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true`
+  in the cloud environment. In a cloud session that day, the platform set the variable itself:
+  the process that launches Claude Code, the environment manager and Claude Code 2.1.280 all
+  carried it, while the environment's own variables were empty. The session's synced plugins
+  folder was empty too, and no plugins were enabled on the account. The fact should say what
+  support said and what the session showed, and be checked again once a plugin is installed
+  and the variable is gone. Until then, a skill uploaded to the account stays the route the
+  standard names.
+
+The parity runs of v0.40.0's final text found five more on 2026-10-05, each checked against the
+text that day. All three runs met F109, and each of the others rests on one run's evidence. They
+await the owner's approval:
+
+- **F109:** Phase 3's `drafts.reply` takes `confirmed`, `corrected` or `not sure`, and nothing
+  says no reply was given. An unattended run whose prompt leaves out a question can't record
+  that without putting "not sure" in a person's mouth: every run met it, for v0.40.0's new
+  question on co-maintainers. `reply` should gain `unanswered`, with the question's default
+  applied and the draft carried to Phase 6's first list.
+- **F110:** the self-check says `actions_requiring_a_local_clone` must be 0, while Phase 6
+  allows a local command where Phase 0 recorded a local working copy, after the browser route.
+  The self-check should require 0 only where Phase 0 recorded none.
+- **F111:** a re-check judges each recorded trigger `fired: yes | no`. Where the fetch can't run,
+  a trigger that names a tag or a release can only be judged from local refs, which may be
+  stale. The text should say to judge it from what's local, say so, and offer the human the
+  remote's tag list as a browser action.
+- **F112:** dimension 10 rates a version scheme never chosen as `DRIFT`, while versioning is
+  required from T2, or earlier once a built artifact reaches someone. The text should say
+  whether that rating applies below that point, where a tag alone doesn't make the project
+  versioned.
+- **F113:** Phase 3 says an unattended run given its answers can't stop at the wait, so it goes
+  on. The routing table's `choose` job ends at that wait with its recommendation, and the
+  language is never picked by default. The greenfield run followed the job, which is right,
+  but the text should say that a job ending at the wait ends there.
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on
@@ -450,8 +749,9 @@ before it's built:
     favour Python, name packages that don't exist (at least 5.2% of those from commercial
     models) and use deprecated APIs: the first pass's rows 64 and 66, and the deeper pass's
     F35. This joins R21's rule in piece 5.
-  - **The plugin's version:** the catalog pins 0.1.1, and Claude Code updates an installed copy
-    only when that string changes, so a copy installed before v0.37.0 still has v0.36.0. How
+  - **The plugin's version:** Claude Code updates an installed copy only when the version the
+    catalog pins changes. It said 0.1.1 from 2026-09-23 until release 0.1.2, so a copy
+    installed before v0.37.0 kept v0.36.0 until then. How
     claude.ai decides that a personal marketplace's copy changed isn't documented. By the Help
     Center, an organisation's GitHub-synced marketplace syncs when a merged pull request
     changes the version. Releasing at each standard change, or leaving the version out so

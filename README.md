@@ -1,7 +1,8 @@
 # claude-code-skills
 
-The reference for setting up, auditing and keeping repositories current with Claude Code:
-installable skills, the checks behind them, and the research they rest on.
+The owner's master reference for Claude Code, for Claude skills, and for coding practice in
+general: installable skills for setting up, auditing and keeping repositories current, the
+checks behind them, and the research they rest on.
 
 ## Install
 
@@ -10,6 +11,7 @@ In Claude Code:
 ```
 /plugin marketplace add rmccann-hub/claude-code-skills
 /plugin install standards@claude-code-skills
+/plugin install engineering@claude-code-skills
 ```
 
 Before 0.1.1 the marketplace was called `rmccann-skills`. If you added it under that name,
@@ -19,7 +21,8 @@ run `/plugin marketplace remove rmccann-skills`, then add it again as above.
 
 | Skill | Plugin | What it does |
 |---|---|---|
-| `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.39.0) |
+| `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.40.0) |
+| `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill
@@ -39,6 +42,11 @@ uv run skillcheck .
 npm ci
 npx --no-install claude plugin validate --strict .
 ```
+
+Each skill's dated facts carry their source and a date to check them again by.
+`uv run skillcheck --due` lists the facts that are due, and `uv run skillcheck --verify` looks
+for each quote at its source, over the network. The Freshness workflow runs both every Monday,
+and keeps one issue open while anything is due.
 
 Parity runs check how the skill behaves on sample repositories, before and after a change.
 [docs/testing-the-skill.md](docs/testing-the-skill.md) says how to run one.

@@ -1,0 +1,95 @@
+name: Release
+
+# Makes an annotated release tag on one commit, named by its SHA, once that commit is on the
+# default branch, its CHANGELOG.md has the version's section, and every check on it has passed.
+# Run it from the Actions tab, or: gh workflow run release.yml -f version=1.4.0 -f sha=<SHA>
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release, such as 1.4.0 or 1.4.0-rc.1"
+        required: true
+      sha:
+        description: "Full SHA of the commit to tag"
+        required: true
+
+permissions:
+  contents: read
+
+# Two releases at once would race for the tag and the changelog, so they queue.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write # to push the tag
+      checks: read # to read the commit's check runs
+    env:
+      VERSION: ${{ inputs.version }}
+      SHA: ${{ inputs.sha }}
+      DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check the version, the commit and its changelog
+        run: |
+          # A Semantic Versioning version, with an optional pre-release label such as -rc.1.
+          semver='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$'
+          if [[ ! $VERSION =~ $semver ]]; then
+            echo "::error::not a version: $VERSION"; exit 1
+          fi
+          if [[ ! $SHA =~ ^([0-9a-f]{40}|[0-9a-f]{64})$ ]]; then
+            echo "::error::not a full commit SHA: $SHA"; exit 1
+          fi
+          if ! git cat-file -e "$SHA^{commit}" 2>/dev/null; then
+            echo "::error::no commit $SHA in this repository"; exit 1
+          fi
+          if ! git merge-base --is-ancestor "$SHA" "origin/$DEFAULT_BRANCH"; then
+            echo "::error::$SHA is not on $DEFAULT_BRANCH"; exit 1
+          fi
+          if ! git show "$SHA:CHANGELOG.md" | grep -qF "## [$VERSION]"; then
+            echo "::error::CHANGELOG.md at $SHA has no section for $VERSION"; exit 1
+          fi
+
+      - name: Check that every check on the commit has passed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # This run's own jobs are checks on the commit too, so they are left out. A commit with
+          # no checks at all fails: a gate that read nothing has proved nothing. CI that reports
+          # commit statuses instead of check runs needs repos/.../commits/$SHA/status as well.
+          runs=$(gh api --paginate "repos/$GITHUB_REPOSITORY/commits/$SHA/check-runs" \
+            --jq ".check_runs[] | select((.details_url // \"\") | contains(\"/runs/$GITHUB_RUN_ID/\") | not) | \"\(.conclusion) \(.name)\"")
+          if [ -z "$runs" ]; then
+            echo "::error::no checks have run on $SHA"; exit 1
+          fi
+          # A check still running has no conclusion yet, which jq prints as null.
+          if failed=$(printf '%s\n' "$runs" | grep -Ev '^(success|skipped|neutral) '); then
+            printf '::error::not every check on %s has passed:\n%s\n' "$SHA" "$failed"; exit 1
+          fi
+          echo "$(printf '%s\n' "$runs" | wc -l) check(s) passed on $SHA"
+
+      - name: Make the annotated tag and push it
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git -c user.name="github-actions[bot]" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              tag -a "v$VERSION" -m "Release $VERSION" "$SHA"
+          test "$(git cat-file -t "v$VERSION")" = tag
+          # Checkout kept no credentials, so the push gets them here: through the environment,
+          # not the command line, and masked in case anything prints them.
+          auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          GIT_CONFIG_COUNT=1 \
+          GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
+          GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
+            git push origin "refs/tags/v$VERSION"

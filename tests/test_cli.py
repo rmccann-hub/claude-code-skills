@@ -12,7 +12,7 @@ def test_clean_repository_exits_zero_and_prints_summary(repo, capsys):
     repo.catalog(repo.plugin("example", "./skills/example-skill"))
     assert main([str(repo.root)]) == 0
     assert capsys.readouterr().out == (
-        f"skillcheck: 1 skill(s), {len(DEFAULT_DESCRIPTION)} description characters, "
+        f"skillcheck: 1 skill(s), {len(DEFAULT_DESCRIPTION)} description characters, 0 fact(s), "
         "1 catalog plugin(s), no roadmap, no standard, 0 finding(s)\n"
     )
 
@@ -25,8 +25,8 @@ def test_findings_exit_one_with_one_line_each(repo, capsys):
     assert lines == [
         "skills/example-skill/SKILL.md: name: name 'other-name' does not match directory "
         "'example-skill'",
-        "skillcheck: 1 skill(s), 1 description characters, 1 catalog plugin(s), no roadmap, "
-        "no standard, 1 finding(s)",
+        "skillcheck: 1 skill(s), 1 description characters, 0 fact(s), 1 catalog plugin(s), "
+        "no roadmap, no standard, 1 finding(s)",
     ]
 
 
@@ -43,6 +43,6 @@ def test_module_entry_point(repo, monkeypatch, capsys):
         runpy.run_module("skillcheck", run_name="__main__")
     assert exited.value.code == 0
     assert capsys.readouterr().out == (
-        "skillcheck: 0 skill(s), 0 description characters, no catalog, no roadmap, "
+        "skillcheck: 0 skill(s), 0 description characters, 0 fact(s), no catalog, no roadmap, "
         "no standard, 0 finding(s)\n"
     )
