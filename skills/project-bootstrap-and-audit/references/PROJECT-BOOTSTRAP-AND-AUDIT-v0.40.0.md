@@ -678,6 +678,51 @@ reads as diligence.
 | `actions/checkout` is at v7 (v7.0.1, commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) | 2026-09 | *Starter File Contents*. A template's action versions go stale like any other pin |
 | Pinning an action to a full-length commit SHA is the only way to use it as an immutable release, and Dependabot raises no security alert for an action pinned to a SHA | 2026-09 | *Starter File Contents* and dimension 8. Why the template pins commits, and why version updates must stay on |
 
+### Platform settings, and where each is
+
+**What each GitHub setting should be, where it is, and where it applies**, as GitHub's
+documentation described them on 2026-10-05. Phase 2 reads what it can, Phase 3 asks for the
+rest, and Phase 6's third list carries each one to change, because **the run changes no setting
+itself**, even after the gate, unless the human asks it to. Each value is a recommendation,
+declinable like any amendment. Leave out the rows that don't apply to the repository's
+visibility and plan. Where a page shows something else, report what it shows.
+
+| Setting | Set it to | Where, in the repository's Settings | Where it applies |
+|---|---|---|---|
+| Merge methods | Only the strategy the context file records | General, Pull Requests | Every repository |
+| Default squash message | Pull request title | General, Pull Requests, the menu under Allow squash merging | Where squash merging is allowed |
+| Automatically delete head branches | On | General, Pull Requests | Where merges are merge commits. Under squash or rebase-merge, only where nothing cites a branch's commits |
+| Release immutability | On, once the release workflow uploads its files while the release is a draft | General, Releases | Where releases are published |
+| Wiki, Projects, Discussions | Off, unless something uses them | General, Features | Every repository |
+| Default-branch ruleset | Deletion and force pushes blocked. A pull request required, with no approval for one maintainer and at least one for several. The CI checks required | Rules, Rulesets | Public, or private on a paid plan |
+| Release-tag ruleset | `v*` tags can't be updated, deleted or force-pushed | Rules, Rulesets | Where releases are tagged: public, or private on a paid plan |
+| Workflow permissions | Read repository contents and packages permissions, with Allow GitHub Actions to create and approve pull requests unticked | Actions, General | Every repository with workflows. A new one in a personal account starts this way |
+| SHA-pinned actions | Require actions to be pinned to a full-length commit SHA, once every action, and every action those call, is pinned | Actions, General, Actions permissions | Every repository with workflows |
+| Fork pull requests | Require approval for all external contributors | Actions, General, Approval for running fork pull request workflows from contributors | Public |
+| Secret scanning, and the repository's push protection | On | Advanced Security | Public. On private, a paid add-on |
+| Dependabot | Alerts on. Security updates on, and grouped, where someone merges their pull requests. Dependabot on self-hosted runners off, unless a runner labeled for it exists: without one, its jobs wait, and fail after 24 hours | Advanced Security | Every repository |
+| Code scanning | CodeQL's default setup | Advanced Security, CodeQL analysis, Set up, Default | Public. On private, an organization's repository with GitHub Code Security |
+| Private vulnerability reporting | On, with `SECURITY.md` pointing to it | Advanced Security | Public. On a fork that only sends changes upstream, off, so reports reach the upstream project |
+
+Secret scanning's validity checks and generic patterns exist only for an organization's
+repositories on GitHub Team with Secret Protection, so a run doesn't list them as missing
+anywhere else.
+
+**The human's account has settings of its own**, which go in Phase 6's third list as one
+action, once. Each is in the account's Settings, under the profile picture:
+
+| Account setting | Set it to | Where |
+|---|---|---|
+| Private vulnerability reporting, dependency graph, Dependabot alerts, Dependabot security updates, grouped security updates | On for new repositories. For existing ones, Enable all for the dependency graph and Dependabot alerts, and the repository table decides the others | Code security |
+| Dependabot on self-hosted runners | Off, unless the account has a runner labeled for it, as in the repository table | Code security |
+| Push protection for yourself | On | Code security |
+| Keep my email addresses private | On, so merges and edits made on GitHub carry the no-reply address | Emails |
+| Block command line pushes that expose my email | On, once every clone commits with the no-reply address, set in `git config user.email` | Emails |
+| Two-factor authentication | On | Password and authentication |
+| Default branch name | `main` | Repositories |
+| An agent's GitHub App's repository access | Includes this repository, or no session can reach it | Applications, Installed GitHub Apps, Configure |
+| The plan | The human's choice. On GitHub Free, a private repository can have no ruleset or branch protection, and GitHub Pro adds both. A personal account's private repositories get no secret scanning or code scanning on either | Billing and licensing |
+
 ### Agent tooling
 
 | Fact | As of | Why a run cares |
@@ -1022,6 +1067,18 @@ report no CI for a project that runs it on every change.
 **Read the remote CI conclusion** for the current head and for the default branch. A red
 default branch nobody noticed is a finding in its own right, and local gates cannot see it.
 
+**Read the platform's settings with read-only calls**, against *Platform settings, and where
+each is* in *Facts with an Expiry Date*. On GitHub that is `gh api repos/<owner>/<repo>` and its
+`rulesets`, `immutable-releases`, `private-vulnerability-reporting` and
+`code-scanning/default-setup` paths. A session often can't read the Actions settings, and Phase
+3 asks for what it can't read. **A `rulesets` call that answers 403 and says to upgrade to
+GitHub Pro means the account is on GitHub Free**, which answers the plan. **In a public
+repository, read the addresses on the human's own commits**, those whose platform author is the
+human: a personal address there is public, and it stays on every commit already published. Say
+which domains they carry and how many commits each, as dimension 10 counts, never the address
+itself, and never propose rewriting published history to remove one. The account's email
+settings keep it off the next commit.
+
 <constraints>
 
 **`ls` cannot distinguish tracked from untracked.** Use `git ls-files --error-unmatch`.
@@ -1214,8 +1271,11 @@ true when it was written, and only the human knows whether it still is.
 
 **Ask here for what a rating needs and the run can't read.** Some settings live only on the
 platform, such as secret scanning, push protection and dependency alerts, and a session often
-can't read them. Where one bears on a rating, ask the human at this wait for a screenshot of the
-settings page, or failing that their reading of it. Phase 4 rates on that and names it as the
+can't read them. *Platform settings, and where each is* lists them, with the page each is on.
+Where one bears on a rating, ask the human at this wait for a screenshot of the settings page,
+or failing that their reading of it, with the page's link. **For the account's settings, ask
+for a screenshot of its Code security page**, and whether the two email boxes are ticked: a
+screenshot of the Emails page would show the addresses themselves. Phase 4 rates on that and names it as the
 source. A screenshot is what was seen; a reading is what was said, as with a human action, and
 a rating that rests on one says so. **Without either, the setting is `UNVERIFIABLE-HERE`**,
 never done because the last record said so. A live re-check rated such settings unverifiable,
@@ -2578,7 +2638,10 @@ standard. **They must not have to copy blocks out of the conversation to do that
    browser by default.** Where Phase 0 recorded no local working copy, "run this command on
    your machine" is not an action they can take, and a step needing a working copy is either
    done by a session or turned into a `workflow_dispatch` job. Where Phase 0 recorded one, a
-   local command is allowed, and the browser route is still offered first.
+   local command is allowed, and the browser route is still offered first. **A setting to
+   change is one of these**, from *Platform settings, and where each is*: one for each that
+   differs or that the run couldn't read, saying what it is now, what to set it to, and where.
+   The account's settings go here as one action, once.
 
 **State at the top of List 2 which amendments are gated, and that "take all recommendations"
 does not answer List 1.** A blanket approval otherwise leaves the gated amendments — usually
