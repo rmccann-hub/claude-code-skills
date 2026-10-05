@@ -3,10 +3,9 @@
 The owner's master reference for Claude Code, for Claude skills, and for coding practice in
 general, not only an agent's. Other repositories are set up, audited and kept current against it,
 and the owner's claude.ai skills are uploaded from it. It holds Agent Skills for Claude Code,
-including the PROJECT-BOOTSTRAP-AND-AUDIT standard shipped as a skill, plus the checks that test
-them and the research behind them. Skills from here are installed into sessions on other
-repositories, some of whose output reaches production, so a change here changes what agents do
-there.
+including the PROJECT-BOOTSTRAP-AND-AUDIT standard as a skill, with their checks and research.
+Its skills run in sessions on other repositories, some of whose output reaches production, so a
+change here changes what agents do there.
 
 ## Commands
 
@@ -55,10 +54,9 @@ there.
 
 ## Budgets
 
-These are the standard's figures (File Governance and Starter File Contents) plus the Agent Skills
-spec's. They are smells, not thresholds. Split by the standard's recipe: keep enforced
-conventions here, move reference prose to `docs/` and link it, and delete what moved in the same
-commit.
+The standard's figures (File Governance, Starter File Contents) and the Agent Skills spec's,
+as smells, not thresholds. Split by the standard's recipe: enforced conventions stay here,
+reference prose moves to `docs/` with a link, and what moved is deleted in the same commit.
 
 - `AGENTS.md`: under 150 lines, 300 at most. `CLAUDE.md`: about 30 lines. A rule file: about 50.
 - `SKILL.md`: under 500 lines, and its references one level deep, by link or by name.
@@ -77,14 +75,12 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
 - **A fact that can go stale carries its source and the date it was checked.** That includes a
   version, a date and a support window. It follows the standard's rule for dated facts: check it
   or mark it, and ask whether the source is in a position to know. Nothing checks it.
-- **The plan lives in `ROADMAP.md`, and nowhere else in the repository.** That means no
-  `PROGRESS.md`, `HANDOFF.md` or plan files, as the standard's file governance forbids them. A
-  handoff for another session lives outside the repository, marked transient with an expiry
-  date. Nothing checks it.
-- **Third-party material comes in only under its licence.** Name that licence in the skill's
-  `license` field, keep a `THIRD-PARTY-NOTICES.md` in the skill's directory, and record the reuse
-  in `docs/decisions.md`. Nothing comes from Anthropic's source-available document skills.
-  Nothing checks it.
+- **The plan lives in `ROADMAP.md` and nowhere else:** no `PROGRESS.md`, `HANDOFF.md` or plan
+  files, which the standard's file governance forbids. A handoff for another session lives
+  outside the repository, marked transient with an expiry date. Nothing checks it.
+- **Third-party material comes in only under its licence,** named in the skill's `license`
+  field, with a `THIRD-PARTY-NOTICES.md` beside it and the reuse in `docs/decisions.md`. Nothing
+  comes from Anthropic's source-available document skills. Nothing checks it.
 - **This repository is public.** Nothing work-owned is committed without an entry in
   `docs/decisions.md` recording who permitted it. Company-specific detail, such as internal names,
   hosts, tenants and templates, belongs in the consuming repository's own `.claude/skills/`. A
@@ -92,8 +88,12 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
   it's a dependency or a research source. CI's `gitleaks` catches credentials, not names.
 - **Pull requests merge with a merge commit.** Commits here are cited from outside, in pull
   request bodies, the decision record and run reports, and a squash or a rebase-merge writes
-  new commits that strand those citations. It's enforced once the repository's settings allow
-  only merge commits, which the owner sets. Until then, nothing checks it.
+  new commits that strand those citations. The repository's settings allow no other method.
+- **Commit subjects read "area: summary",** such as `skillcheck: name the stale map file`. The
+  `subjects` check fails any other, merges and reverts aside. Dependabot's carry a `deps:` prefix.
+- **A session merges its own pull request once every check passes,** for work the owner asked
+  for, and Dependabot's once they've been tested together on `main`. Anything else waits for
+  the owner's word. Nothing checks it.
 - **A commit that adds a Markdown file names the existing homes it considered**, and why none
   fit. Nothing checks it.
 - **A session that stops with work outstanding says what it's waiting on, and from whom.**

@@ -25,7 +25,7 @@ freshness run and the release workflow both run it.
 |---|---|
 | Markdown | 63 |
 | Python | 25 |
-| YAML | 16 |
+| YAML | 17 |
 | JSON | 8 |
 | Shell | 2 |
 | TOML | 2 |
@@ -36,7 +36,7 @@ freshness run and the release workflow both run it.
 |---|---|---|---|
 | Python | 3.14 | `.python-version` | `pyproject.toml` requires >=3.14 |
 | uv_build | >=0.12.19,<0.13 | `pyproject.toml` | build backend |
-| GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
+| GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
 | Go | 1.27 | `.github/workflows/ci.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
@@ -86,7 +86,7 @@ package.json
 
 | Action | Version | Pinned commit | Used in |
 |---|---|---|---|
-| `actions/checkout` | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
+| `actions/checkout` | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
 | `actions/download-artifact` | v8.0.1 | `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` | `.github/workflows/release.yml` |
 | `actions/setup-go` | v7.0.0 | `b7ad1dad31e06c5925ef5d2fc7ad053ef454303e` | `.github/workflows/ci.yml` |
 | `actions/setup-node` | v7.0.0 | `820762786026740c76f36085b0efc47a31fe5020` | `.github/workflows/ci.yml` |
@@ -98,7 +98,7 @@ package.json
 | Service | Provider | What for | Address |
 |---|---|---|---|
 | GitHub | GitHub | Hosts the repository, its pull requests, its rulesets and its releases. | https://github.com/rmccann-hub/claude-code-skills |
-| GitHub Actions | GitHub | Runs the workflows: ci, freshness, release. | https://github.com/rmccann-hub/claude-code-skills/actions |
+| GitHub Actions | GitHub | Runs the workflows: ci, commit-subjects, freshness, release. | https://github.com/rmccann-hub/claude-code-skills/actions |
 | Dependabot | GitHub | Opens pull requests that update dependencies: github-actions, npm, uv. | documented at https://docs.github.com/en/code-security/dependabot |
 | PyPI | Python Software Foundation | Serves the Python packages in `uv.lock`. | https://pypi.org/simple |
 | npm registry | GitHub | Serves the packages in `package-lock.json`. | https://registry.npmjs.org |

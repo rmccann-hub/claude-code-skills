@@ -231,6 +231,20 @@ def check_subjects(repo: Path, base: str, head: str):
     return run(["bash", "-e", "-c", script], repo, env)
 
 
+def test_this_repository_runs_the_shipped_subject_check():
+    # The repository checks its own commits with the example, unchanged.
+    own = ASSETS.parents[2] / ".github" / "workflows" / "commit-subjects.yml"
+    assert own.read_bytes() == (WORKFLOWS / "commit-subjects.yml").read_bytes()
+
+
+def test_subject_check_passes_dependabot_subjects_with_a_prefix(repo):
+    base = git(repo, "rev-parse", "HEAD")
+    head = commit(repo, "deps: Bump ruff from 0.16.8 to 0.16.10 in the python group")
+    assert check_subjects(repo, base, head).returncode == 0
+    unprefixed = commit(repo, "Bump ruff from 0.16.10 to 0.16.11")
+    assert check_subjects(repo, base, unprefixed).returncode == 1
+
+
 def test_subject_check_passes_good_commits_and_fails_a_bad_one(repo):
     base = git(repo, "rev-parse", "HEAD")
     good = commit(repo, "core: add the parser")

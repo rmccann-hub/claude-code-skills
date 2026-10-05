@@ -6,6 +6,12 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- Commit subjects here read "area: summary", and a check fails any pull request whose commits
+  don't, with merge commits and reverts allowed. Dependabot's subjects carry a `deps:` prefix,
+  so they pass.
+
 ## [0.1.5] - 2026-10-05
 
 ### Added

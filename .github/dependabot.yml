@@ -2,6 +2,8 @@ version: 2
 updates:
   - package-ecosystem: uv
     directory: /
+    commit-message:
+      prefix: deps
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
@@ -12,6 +14,8 @@ updates:
 
   - package-ecosystem: github-actions
     directory: /
+    commit-message:
+      prefix: deps
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
@@ -22,6 +26,8 @@ updates:
 
   - package-ecosystem: npm
     directory: /
+    commit-message:
+      prefix: deps
     schedule:
       interval: weekly
     open-pull-requests-limit: 3

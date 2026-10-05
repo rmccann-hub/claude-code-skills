@@ -2,6 +2,42 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — The owner's answers to questions 1 to 17
+
+- **Answered:** the owner took every recommended option: "Do the recommended. And do the
+  recommended yes." They're staying on GitHub Free.
+- **Applied in this repository:**
+  - **1 and 2:** release immutability on and the wiki off, which the owner had already set.
+  - **4:** a session merges its own pull request once every check passes, for work the owner
+    asked for. It merges Dependabot's once they've been tested together on `main`. Stated in
+    `AGENTS.md`.
+  - **5:** commit subjects read "area: summary". The `git-workflows` skill's commit-subject
+    check runs on every pull request here, unchanged, and Dependabot's subjects carry a `deps:`
+    prefix. Stated in `AGENTS.md`.
+  - **7:** `v0.1.1` stays untagged.
+  - **9:** the weekly freshness run stays. A session re-checks this repository against the
+    standard at each release, as the README's release steps now say.
+  - **15:** on GitHub Free, the owner's private repositories can have no ruleset or branch
+    protection. CI still runs and reports there. The owner accepts this as a risk, to reopen
+    when one of them ships something people rely on.
+- **For the owner to set,** because this session's GitHub access refuses every settings write:
+  - **3:** a pull request required on `main`;
+  - **14:** a public `.github` repository holding a default `SECURITY.md`. The owner has its
+    text;
+  - **16:** merge commits as the only method in every repository;
+  - **17:** archiving an empty placeholder repository;
+  - the settings checklists for the account and each repository.
+
+  The owner has the click paths for each, ordered so that nothing breaks before the change it
+  depends on lands.
+- **Approved, and applied in changes of their own:**
+  - **6:** F81 to F114, as standard v0.41.0;
+  - **11 to 13:** the house style, with American spelling, a Vale check, and the draft rules as
+    written.
+- **8:** the owner sets each other repository's settings. Then a session in each runs the
+  kickstart file, through that repository's own process.
+- **10:** the skills on claude.ai are for the owner only, not their organization.
+
 ## 2026-10-05 — The account's settings in the kickstart file, and release 0.1.5
 
 - **Asked:** the owner sent screenshots of their account's Code security page, and asked for

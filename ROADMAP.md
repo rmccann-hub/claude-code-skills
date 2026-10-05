@@ -535,7 +535,7 @@ rather than inferred, also applied in v0.40.0:
 On 2026-09-30 the owner asked what the two live repositories had found through their own
 iteration, to leverage it. Their context files, decision logs, tools and the tests that guard
 their process were read that day, and each lesson was checked against the standard. Twenty-two
-are missing, awaiting the owner's approval:
+are missing. The owner approved them on 2026-10-05:
 
 - **F81:** a test run that stops early can exit 0: a live repository merged a pull request
   whose suite had run 76% of its tests. The suite should write a marker as its last act, and
@@ -628,7 +628,8 @@ are missing, awaiting the owner's approval:
   rejected, as that repository's rule now says (piece 5).
 
 Building `git-workflows`, its cold review and the owner's question about slow CI found five more
-on 2026-09-30, each checked against its source that day. They await the owner's approval:
+on 2026-09-30, each checked against its source that day. The owner approved them on
+2026-10-05:
 
 - **F103:** dimension 2's lockfile table offers `uv sync --frozen` as well as `--locked`, but
   `--frozen` installs from the lockfile without checking it, so drift passes. It should name
@@ -650,8 +651,8 @@ on 2026-09-30, each checked against its source that day. They await the owner's 
   and doubles a slow one. The starter should say so, and offer `push` on the default branch
   with `pull_request` where CI is slow.
 
-One more, from Anthropic support's reply to the owner on 2026-09-30, awaiting the owner's
-approval:
+One more, from Anthropic support's reply to the owner on 2026-09-30, approved by the owner on
+2026-10-05:
 
 - **F108:** the facts table says plugins enabled on a claude.ai account load in Cowork and
   terminal sessions, that the docs name no cloud session for them, and that one account's cloud
@@ -667,8 +668,8 @@ approval:
   standard names.
 
 The parity runs of v0.40.0's final text found five more on 2026-10-05, each checked against the
-text that day. All three runs met F109, and each of the others rests on one run's evidence. They
-await the owner's approval:
+text that day. All three runs met F109, and each of the others rests on one run's evidence. The
+owner approved them on 2026-10-05:
 
 - **F109:** Phase 3's `drafts.reply` takes `confirmed`, `corrected` or `not sure`, and nothing
   says no reply was given. An unattended run whose prompt leaves out a question can't record
@@ -692,7 +693,7 @@ await the owner's approval:
   but the text should say that a job ending at the wait ends there.
 
 One more, from the owner's request on 2026-10-05 for one settings checklist across their
-repositories, awaiting the owner's approval:
+repositories, approved by the owner on 2026-10-05:
 
 - **F114:** Phase 3 asks for the platform settings a run can't read, and dimensions 6 to 8 and
   the release gate rate some of them. But the standard lists neither the settings to read nor

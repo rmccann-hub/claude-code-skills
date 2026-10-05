@@ -69,6 +69,16 @@ run it.
 Parity runs check how the skill behaves on sample repositories, before and after a change.
 [docs/testing-the-skill.md](docs/testing-the-skill.md) says how to run one.
 
+## Releasing
+
+1. In the pull request, set the new version in every catalog entry, and add its section to
+   `CHANGELOG.md`.
+2. Once it merges and CI passes on `main`, run the Release workflow from the Actions tab, with
+   the version and the merge commit's full SHA.
+3. Then a session re-checks this repository against the standard, with the new release's
+   kickstart file, and sends the owner its report. What it raises waits for the owner's
+   answers, as in any other run, and the release doesn't wait for it.
+
 ## Operations: withdrawing a bad skill
 
 If a skill here gives wrong or harmful instructions, take it out of circulation in this order.
