@@ -6,6 +6,25 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.4] - 2026-10-05
+
+### Added
+
+- The kickstart file has a session read the repository's GitHub settings, with read-only calls,
+  and ask for the ones it can't read. At the gate it lists each one to change as an action for
+  the person, with the value and where it is in Settings, and it changes none itself. The list
+  covers the merge methods, branch deletion, release immutability, both rulesets, workflow
+  permissions, SHA-pinned actions, approval before outside contributors' workflows run, secret
+  scanning, Dependabot, code scanning and private vulnerability reporting, with the visibility
+  and plan each applies to, and four settings on the person's account.
+- The `git-workflows` skill ships two rulesets to import under Settings, Rules, Rulesets. One
+  protects the default branch: no deletion or force push, and a pull request with no approval.
+  The other stops `v*` release tags being moved or deleted. Each release carries both, as
+  `ruleset-default-branch.json` and `ruleset-release-tags.json`.
+- `git-workflows` also covers the token's read-only default, what the SHA-pinning policy covers,
+  approval for outside contributors, and CodeQL's default setup. Three new audit checks read
+  the rulesets and the token's default.
+
 ## [0.1.3] - 2026-10-05
 
 ### Added

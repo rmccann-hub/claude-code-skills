@@ -691,6 +691,16 @@ await the owner's approval:
   language is never picked by default. The greenfield run followed the job, which is right,
   but the text should say that a job ending at the wait ends there.
 
+One more, from the owner's request on 2026-10-05 for one settings checklist across their
+repositories, awaiting the owner's approval:
+
+- **F114:** Phase 3 asks for the platform settings a run can't read, and dimensions 6 to 8 and
+  the release gate rate some of them. But the standard lists neither the settings to read nor
+  where each one is, nor what each should be set to. From release 0.1.4, the kickstart file's
+  run instructions carry that list. The standard should carry it itself, with its click paths
+  among its dated facts, so the full file and the kickstart file agree. The run instructions
+  then go back to choosing the job.
+
 The owner asked for one more rule, researched before it's written:
 
 - **Fewest dependencies, newest versions:** a repository the standard sets up or audits runs on

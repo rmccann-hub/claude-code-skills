@@ -17,6 +17,16 @@ In Claude Code:
 Before 0.1.1 the marketplace was called `rmccann-skills`. If you added it under that name,
 run `/plugin marketplace remove rmccann-skills`, then add it again as above.
 
+## Start another repository
+
+Attach the latest release's
+[`KICKSTART.md`](https://github.com/rmccann-hub/claude-code-skills/releases/latest/download/KICKSTART.md)
+to a Claude Code session in that repository, with no message. It reads the repository, asks
+only what it can't find out, and stops twice for answers before it changes anything. It also
+reads the repository's GitHub settings, and lists each one to change with where it is. The
+same release's `ruleset-default-branch.json` and `ruleset-release-tags.json` import under
+Settings, Rules, Rulesets, from the New ruleset menu.
+
 ## Skills
 
 | Skill | Plugin | What it does |
@@ -82,8 +92,8 @@ If a skill here gives wrong or harmful instructions, take it out of circulation 
 2. **Merge it, then release it.** Run the Release workflow from the Actions tab, with the new
    version and the merge commit's full SHA, not a branch, before a later commit changes a
    workflow. It checks the version, the changelog and CI, and makes the annotated tag. Then it
-   publishes the release page, with the kickstart file, each skill packaged for claude.ai, and
-   the dependency map attached.
+   publishes the release page, with the kickstart file, each skill packaged for claude.ai, the
+   ruleset files and the dependency map attached.
 3. **Reach the copies already installed.**
    - **claude.ai:** delete or replace the uploaded skill under Customize, then Skills. If an
      admin uploaded it for an organization, an admin removes it.
