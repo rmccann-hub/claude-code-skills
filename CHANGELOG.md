@@ -6,6 +6,28 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-10-05
+
+### Added
+
+- The kickstart file lists the person's account settings in full, with the value for each and
+  where it is:
+  - the security features, and Dependabot on self-hosted runners;
+  - push protection, both email settings and two-factor authentication;
+  - the default branch name, the Claude app's repository access, and the plan.
+
+  A session reads the plan from a private repository, and the addresses on the person's own
+  commits in a public one. It asks for the rest.
+- `git-workflows` covers the address commits carry, Dependabot on self-hosted runners, and the
+  token's read-only default for a new repository. Audit checks 29 and 30 cover the first two.
+
+### Fixed
+
+- The kickstart file had a session recommend Enable all for every security feature on the
+  account. That clashed with its own repository table, which turns on Dependabot security
+  updates only where someone merges them. Now only the dependency graph and Dependabot alerts
+  get Enable all. Every feature is on for new repositories, and the table decides the rest.
+
 ## [0.1.4] - 2026-10-05
 
 ### Added

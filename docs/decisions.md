@@ -2,6 +2,34 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — The account's settings in the kickstart file, and release 0.1.5
+
+- **Asked:** the owner sent screenshots of their account's Code security page, and asked for
+  them to be checked, for anything else needed to go into the kickstart file, and for
+  everything checkable to be checked.
+- **Read:** the screenshots, GitHub's documentation, and the owner's repositories through the
+  API, read-only and with the owner's leave. Nothing was changed in any of them. Four gaps
+  turned up that the kickstart file didn't cover:
+  - **Dependabot on self-hosted runners** was set to turn on for new repositories. With no
+    runner labelled for it, Dependabot's jobs wait, and fail after 24 hours. The owner turned
+    it off the same day, and the recent Dependabot runs in each repository had all passed.
+  - **Commit addresses:** a personal address on commits stays public once they're published.
+    The account's two email settings keep it off later ones.
+  - **The plan:** on GitHub Free, a private repository can have no ruleset or branch
+    protection, and the API says so in a 403.
+  - **Two-factor authentication** wasn't in the list at all.
+- **Chosen:**
+  - The kickstart file's account settings become a table of nine, with the value for each and
+    where it is.
+  - A session reads the plan and the commit addresses itself. A personal address is named in
+    the report only, never in a repository, and rewriting published history to remove it is
+    never proposed. A session asks whether the email boxes are ticked, because a screenshot of
+    the Emails page would show the addresses.
+  - `git-workflows` gains four facts, and audit checks 29 and 30. Each fact's quote was found
+    at its source on 2026-10-05.
+- **Release 0.1.5:** this pull request's merge, released by the Release workflow once CI passes
+  on the merge commit. Both catalog entries say 0.1.5, because `git-workflows` changed.
+
 ## 2026-10-05 — Repository settings in the kickstart file, two rulesets, and release 0.1.4
 
 - **Asked:** the owner asked:
