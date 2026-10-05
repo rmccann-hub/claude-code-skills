@@ -2,6 +2,21 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — The repositories the skills run on go unnamed
+
+- **Asked:** the owner asked that this repository name nothing a skill has been run on or
+  tested against, unless it's a dependency or a research source, and that it read
+  professionally, since people other than the owner may use it.
+- **Chosen:** `AGENTS.md`'s convention for a public repository now says so. Such a repository
+  is "a live repository" here, and goes unnamed even by a quote a search would find. Nothing
+  checks it, since a check would have to name what it looks for.
+- **Checked:** the tracked files, every commit message in the history, and every pull
+  request's title and body. None names such a repository. The products named in research
+  files are research sources.
+- **Changed:** one lesson in `ROADMAP.md` quoted a live repository's own words, which a code
+  search would find. It now describes the step instead, and the lesson after it no longer says
+  what kind of input the catalogue lacked.
+
 ## 2026-09-30 — The text, audited against the repository
 
 - **Asked:** the owner: "audit all text, readme, changelog, tasks, anything. we need this up to

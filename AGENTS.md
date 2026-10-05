@@ -86,9 +86,10 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
   in `docs/decisions.md`. Nothing comes from Anthropic's source-available document skills.
   Nothing checks it.
 - **This repository is public.** Nothing work-owned is committed without an entry in
-  `docs/decisions.md` recording who permitted it. Company-specific detail never comes here: that
-  covers internal names, hosts, tenants and templates. It belongs in the consuming repository's
-  own `.claude/skills/`. CI's `gitleaks` fails on a credential, but nothing checks for a name.
+  `docs/decisions.md` recording who permitted it. Company-specific detail, such as internal names,
+  hosts, tenants and templates, belongs in the consuming repository's own `.claude/skills/`. A
+  repository a skill ran on or was tested against goes unnamed, even by a findable quote, unless
+  it's a dependency or a research source. CI's `gitleaks` catches credentials, not names.
 - **Pull requests merge with a merge commit.** Commits here are cited from outside, in pull
   request bodies, the decision record and run reports, and a squash or a rebase-merge writes
   new commits that strand those citations. It's enforced once the repository's settings allow

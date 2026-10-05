@@ -117,14 +117,13 @@ lessons in when it's built, and its `why.md` cites them.
 
 - **L1, `testing`:** check the fact, not a symptom the failure path shares. When one check is
   re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
-  live repository's acceptance step reported "the disc identified unambiguously" because tracks
-  had loaded. They were the placeholders its app loads for a disc nobody identified. A sibling
-  check, re-keyed on the release ID after the same symptom fooled it once before, caught it two
-  steps later.
+  live repository's acceptance step passed an identification because rows had loaded. They were
+  the placeholders its app loads when a lookup finds nothing. A sibling check, re-keyed onto the
+  identifier after the same symptom fooled it once before, caught it two steps later.
 - **L2, `testing`:** a test that needs outside data, such as an entry in a public catalogue,
   names the fixture it expects, and says so when the fixture is the cause. The same rig made
-  three acceptance runs in 40 minutes, on two discs the catalogue didn't know. Each one read as
-  a failed step, not as the wrong disc.
+  three acceptance runs in 40 minutes, on two inputs the catalogue didn't know. Each one read as
+  a failed step, not as the wrong input.
 - **L3, `logging-and-observability`:** every timestamp carries its offset. The same app logged
   in local time and wrote its evidence bundle in UTC, so one event sat four hours apart in the
   two.
