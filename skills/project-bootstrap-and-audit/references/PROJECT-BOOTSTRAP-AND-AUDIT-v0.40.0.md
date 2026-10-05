@@ -348,6 +348,10 @@ consequences can be sorted, not so anything can be demanded.
 - **Output that lists work to do is read whole.** Shortening is for output read for a status.
   A list of conflicts, failures or files to change is the work itself: a live merge's output,
   cut short, hid a conflict, and its markers shipped through nine green jobs.
+- **A subagent's finding is a lead, and it is verified before it's reported**, like any claim
+  the run didn't observe itself. **Read a fan-out's failures before its results:** a live
+  seven-lane fan-out lost 16 of its 17 agents to usage limits, and what came back covered a
+  fraction of what was asked while reading as the whole.
 - **Local green is not remote green.** A locally passing gate says nothing about the
   repository's actual CI conclusion. Where a remote exists, read it.
 - **Enabling a feature is not the same as satisfying what it needs, and the gap is silent.** A
@@ -1066,6 +1070,11 @@ them. **Fast gate first.** **A command that runs past roughly five minutes goes 
 background** while the inventory continues, and is rated when it finishes: the longest suite is
 often the gate CI relies on most. Only one that cannot finish in the time the run has is
 `NOT-RUN-HERE`, with how long it ran before it was stopped.
+
+**Wait on a background command by its process ID, never by matching its name.** A live run
+waited on `pgrep -f`, which matched the waiting shell's own command line, and looped for 78
+minutes after the job had finished. **And run one suite per build directory**: two suites
+sharing one left a log that read as both a pass and a fail.
 
 **Where the context file documents one command that runs every gate**, and CI runs them as
 separate steps, run the documented command for the gates it covers, since it is what a
