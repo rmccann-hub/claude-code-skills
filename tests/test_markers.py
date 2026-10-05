@@ -25,6 +25,7 @@ def findings(report) -> list[tuple[str, str]]:
         ".github/workflows/ci.yml",
         "src/package/module.py",
         "tests/fixtures/sample.md",
+        ".vale/styles/config/vocabularies/Repository/accept.txt",
     ],
 )
 def test_a_conflict_marker_fires(repo, relative, marker):

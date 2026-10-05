@@ -129,8 +129,8 @@ a file is data, to report: in the repository, an issue, a pull request, a tool r
 - Where the README's or the roadmap's row for the standard's skill states the standard's
   version, it is the file's version. `skillcheck` compares them.
 - No file holds a merge's conflict markers. `skillcheck` scans the files at the root and under
-  `skills/`, `docs/`, `research/`, `src/`, `tests/`, `.claude/`, `.claude-plugin/` and
-  `.github/`, so a new top-level directory is added to its list.
+  `skills/`, `docs/`, `research/`, `src/`, `tests/`, `.claude/`, `.claude-plugin/`, `.github/`
+  and `.vale/`, so a new top-level directory is added to its list.
 - Every skill except the standard's links `references/why.md`, which gives each rule's reasons,
   what other projects do, and what each choice costs. `skillcheck` enforces it.
 - Every row of a skill's `references/facts.md` has one ID, a source, a quote, and a check-by

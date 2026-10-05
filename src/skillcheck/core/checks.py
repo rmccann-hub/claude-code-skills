@@ -77,8 +77,9 @@ AGENT_DIRS = (".claude", "research")
 # markers with a label after a space. A line of seven equals signs is also a Markdown heading
 # underline, so it isn't matched, and a conflict always leaves the other two.
 CONFLICT_MARKER = re.compile(r"^(?:<{7}|>{7}|\|{7})(?: |$)", re.MULTILINE)
-# Everything a commit here carries: the files at the root, and these directories. The other
-# dot-directories hold tools' caches.
+# Everything a commit here carries: the files at the root, and these directories. `.vale` holds
+# the tracked vocabulary beside the styles `vale sync` installs. The other dot-directories hold
+# tools' caches.
 SCANNED_DIRS = (
     "skills",
     "docs",
@@ -88,6 +89,7 @@ SCANNED_DIRS = (
     ".claude",
     ".claude-plugin",
     ".github",
+    ".vale",
 )
 
 # Every skill says why it advises what it does, what others do instead, and what each choice

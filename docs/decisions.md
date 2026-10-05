@@ -75,10 +75,12 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
     release in which two files would share a name.
   - **The kickstart file** has a session write in the house style, and propose its check where
     a repository has none.
+  - **The conflict-marker scan** covers `.vale/`, the new top-level directory, which holds the
+    tracked vocabulary.
   - **Planted breakages:** a drifted pin, a canary missing a rule, a word swapped twice and a
     style not run on Markdown were each caught by the test meant for it.
-- **Checked:** `uv run pytest` passes 316 tests, with 100% line and branch coverage, and
-  `.test-baseline` moves from 293 to 316. ruff, `skillcheck` with 0 findings, Claude Code's
+- **Checked:** `uv run pytest` passes 320 tests, with 100% line and branch coverage, and
+  `.test-baseline` moves from 293 to 320. ruff, `skillcheck` with 0 findings, Claude Code's
   validator, and `skillcheck --verify` with 105 quotes and 0 not confirmed all pass.
 - **Release 0.1.6:** this pull request's merge, released by the Release workflow once CI passes
   on the merge commit. Both catalog entries say 0.1.6.
