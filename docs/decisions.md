@@ -2,6 +2,33 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-05 — A dependency map, kept in CycloneDX
+
+- **Asked:** the owner asked for a full map of the projects, languages, versions, applications
+  and dependencies this repository has or relies on, kept somewhere standard that sessions and
+  other applications can read and use.
+- **Chosen:** two files, which `skillcheck` builds from the files that decide them and nobody
+  edits by hand:
+  - `bom.json`, at the root, in CycloneDX 1.7. Research R05 found 1.7 current, and "the final
+    version in the 1.x series". CycloneDX tools look for `bom.json` by name;
+  - `docs/dependencies.md`, the same facts for people, with each package tree drawn.
+
+  It reads every package at its exact version from `uv.lock` and `package-lock.json`, marking
+  development-only ones as outside what ships. From the workflows it reads the pinned Actions,
+  the versions the setup actions install, the tools `go install` builds and the runner labels.
+  `.python-version` and `pyproject.toml` give Python and the build backend, the catalog and
+  frontmatter give the plugins and skills, each skill's facts give the sources they cite, and
+  `git ls-files` gives the languages. Two services that no file declares are stated in the code:
+  the Go module proxy, which `go install` uses, and claude.ai, where the owner uploads the skills.
+  The serial number comes from the content, so the same repository always builds the same file,
+  and a check can compare the two byte for byte.
+- **Checked:** the file validates against CycloneDX's official 1.7 JSON schema, with jsonschema
+  4.25.1 in a throwaway environment, so the project gains no dependency. Four defects planted in
+  copies were each caught. The tests cover every line and branch of the generator.
+- **Not run on pull requests:** `skillcheck --bom-check` would fail every Dependabot update,
+  which changes a lockfile but can't rebuild the map. The Freshness workflow runs it each week,
+  and keeps its issue open while the map is out of date.
+
 ## 2026-10-05 — Release 0.1.2 is tagged, and releases get a workflow
 
 - **Asked:** after the merge, the owner asked for everything to be merged and the release made,

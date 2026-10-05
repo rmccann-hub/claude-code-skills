@@ -12,12 +12,12 @@ there.
 
 - Install: `uv sync --locked`, then `npm ci` for Claude Code's own validator
 - Test: `uv run pytest`
-- Lint: `uv run ruff check`
-- Format: `uv run ruff format --check` (apply with `uv run ruff format`)
+- Lint, format: `uv run ruff check`, `uv run ruff format --check` (fix: `uv run ruff format`)
 - Check skills and the catalog: `uv run skillcheck .`
 - Check dated facts: `uv run skillcheck --due` lists those due to be checked again, and
   `uv run skillcheck --verify` looks for each quote at its source, over the network
 - Validate the catalog with Claude Code: `npx --no-install claude plugin validate --strict .`
+- Dependency map: `uv run skillcheck --bom` writes `bom.json` and `docs/dependencies.md`
 
 ## Layout
 

@@ -46,7 +46,15 @@ npx --no-install claude plugin validate --strict .
 Each skill's dated facts carry their source and a date to check them again by.
 `uv run skillcheck --due` lists the facts that are due, and `uv run skillcheck --verify` looks
 for each quote at its source, over the network. The Freshness workflow runs both every Monday,
-and keeps one issue open while anything is due.
+with the dependency map's check below, and keeps one issue open while anything is due.
+
+[docs/dependencies.md](docs/dependencies.md) maps what the repository is built from, runs on
+and relies on: its languages, runtimes, tools, packages at their exact versions, GitHub Actions,
+services, and the sources its facts cite. [bom.json](bom.json) holds the same map in CycloneDX
+1.7, for other tools to read. `uv run skillcheck --bom` writes both, and
+`uv run skillcheck --bom-check` names one that no longer matches. Pull requests don't run that
+check, because a Dependabot update can't rebuild the map. The Freshness and Release workflows
+run it.
 
 Parity runs check how the skill behaves on sample repositories, before and after a change.
 [docs/testing-the-skill.md](docs/testing-the-skill.md) says how to run one.

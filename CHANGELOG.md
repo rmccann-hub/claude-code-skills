@@ -12,6 +12,11 @@ Notable changes to this repository. The format follows
   and a commit's SHA. It checks that the version is Semantic Versioning, that the commit is on
   `main`, that its changelog has the version's section and that every check on it passed, then
   makes the annotated tag. It's the `git-workflows` skill's tested example.
+- A dependency map: `docs/dependencies.md` for people, and `bom.json`, in CycloneDX 1.7, for
+  tools. It lists the languages, runtimes and tools, every package at its exact version, the
+  pinned GitHub Actions, the services, and the sources the skills' facts cite.
+  `uv run skillcheck --bom` writes both from the lockfiles, the workflows and the catalog, and
+  `uv run skillcheck --bom-check` names one out of date. The Freshness workflow checks it weekly.
 
 ## [0.1.2] - 2026-10-05
 
