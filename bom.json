@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:7464f65d-51b8-54bb-aaa0-921c28b60049",
+  "serialNumber": "urn:uuid:e94fcd3b-0c5a-51fa-9e3c-7d43e8c2f424",
   "version": 1,
   "metadata": {
     "tools": {
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "YAML: 16 file(s)"
+          "value": "YAML: 17 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -68,7 +68,7 @@
       "properties": [
         {
           "name": "claude-code-skills:used-in",
-          "value": ".github/workflows/ci.yml, .github/workflows/freshness.yml, .github/workflows/release.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/commit-subjects.yml, .github/workflows/freshness.yml, .github/workflows/release.yml"
         },
         {
           "name": "claude-code-skills:pinned-commit",
@@ -602,7 +602,7 @@
       "properties": [
         {
           "name": "claude-code-skills:set-in",
-          "value": ".github/workflows/ci.yml, .github/workflows/freshness.yml, .github/workflows/release.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/commit-subjects.yml, .github/workflows/freshness.yml, .github/workflows/release.yml"
         }
       ]
     },
@@ -693,7 +693,7 @@
         "name": "GitHub"
       },
       "name": "GitHub Actions",
-      "description": "Runs the workflows: ci, freshness, release.",
+      "description": "Runs the workflows: ci, commit-subjects, freshness, release.",
       "endpoints": [
         "https://github.com/rmccann-hub/claude-code-skills/actions"
       ]
