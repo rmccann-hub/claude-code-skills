@@ -57,6 +57,3 @@ dated facts, lists each one, and its phases say how a run reads, asks for and re
 Release RELEASE_VERSION carries the ruleset files that section's import refers to,
 `ruleset-default-branch.json` and `ruleset-release-tags.json`, on its page:
 https://github.com/REPOSITORY/releases/tag/vRELEASE_VERSION
-They import into a repository whose ruleset rows apply. In Settings, Rules, Rulesets, the New
-ruleset menu has Import a ruleset. Then the repository's CI jobs go into the default-branch
-ruleset, under Require status checks to pass, by the names their checks report.

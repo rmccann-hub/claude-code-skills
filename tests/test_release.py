@@ -138,7 +138,7 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     )
     assert "No warranty of any kind.\n\n> **About this file.**" in kick
     assert "\n---\n\n# How to read this file\n" in kick
-    assert "# Validating a Change" not in kick and "# Provenance" not in kick
+    assert "# Validating a change" not in kick and "# Provenance" not in kick
     assert kick.endswith(f"\n\n{release.END}\n")
     notes = (out / "notes.md").read_text(encoding="utf-8")
     assert (

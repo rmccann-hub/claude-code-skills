@@ -404,7 +404,7 @@ also applied in v0.39.0:
 The v0.39.0 parity runs found seven more, applied before it merged:
 
 - **F53:** the routing row for choosing a language and a shape sent the run to neither *Project
-  Shapes and Layout*, where Phase 2 finds the shapes, nor Phase 6, which gives a Phase 3 stop's
+  shapes and layout*, where Phase 2 finds the shapes, nor Phase 6, which gives a Phase 3 stop's
   report its shape (piece 1).
 - **F54:** the `job` vocabulary had no value for choosing, so the greenfield run recorded
   "set up" (piece 1).
@@ -781,8 +781,8 @@ before it's built:
 | 2 | Starter file contents into `assets/templates/`, each file tested, with `starter-files.md`. | planned |
 | 3 | Phase 4: one file per dimension, and `phase-4-dimensions.md` for greenfield generation. | planned |
 | 4 | Phases 0 to 3 and 5 to 9 into four phase files, with `preflight.py` and `inventory.py`. | planned |
-| 5 | Choosing a language and runtime, Choosing the shape and Project Shapes into `new-project.md`. The configuration file map, Standards distribution, File governance, the Release and Deploy Currency Gate, Cross-repository contracts, Any agent, any tool and the facts into their references. | planned |
-| 6 | Versioning, Proposing a Change, Sending results back, Validating a Change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's license becomes Apache-2.0. Release 0.2.0 | planned |
+| 5 | Choosing a language and runtime, Choosing the shape and Project shapes and layout into `new-project.md`. The configuration file map, Standards distribution, File governance, the release and deploy currency gate, Cross-repository contracts, Any agent, any tool and the facts into their references. | planned |
+| 6 | Versioning, Proposing a change, Sending results back, Validating a change and Provenance retired. The standard file deleted. `AGENTS.md`, the authoring review, the README, the catalog and the research prompts updated. The skill's license becomes Apache-2.0. Release 0.2.0 | planned |
 
 ## Repository
 
