@@ -1,0 +1,94 @@
+[
+  {
+    "query": "Rewrite this README so it reads plainly and drops the marketing fluff.",
+    "should_trigger": true
+  },
+  {
+    "query": "Review the docs in this pull request for wording and formatting.",
+    "should_trigger": true
+  },
+  {
+    "query": "Should our docs say licence or license? We mix both.",
+    "should_trigger": true
+  },
+  {
+    "query": "Are headings in sentence case or title case here?",
+    "should_trigger": true
+  },
+  {
+    "query": "Add a Vale check for our Markdown to CI.",
+    "should_trigger": true
+  },
+  {
+    "query": "Vale fails on a heading with our product name in it. How do I make it accept the name?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write the decision record entry for switching from Jenkins to GitHub Actions.",
+    "should_trigger": true
+  },
+  {
+    "query": "Write up the results of this investigation as a report for the team.",
+    "should_trigger": true
+  },
+  {
+    "query": "What sections should every README have, and in what order?",
+    "should_trigger": true
+  },
+  {
+    "query": "Tidy the wording of CONTRIBUTING.md: shorter sentences, no hedging.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our docs wrap at 80 columns in some files and not at all in others. Pick one and fix them.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it OK to say 'simply run the installer' in our getting-started guide?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write the pull request description for these changes.",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a commit message for this diff.",
+    "should_trigger": false
+  },
+  {
+    "query": "Should we squash-merge or use merge commits?",
+    "should_trigger": false
+  },
+  {
+    "query": "Pick the next version number and cut the release.",
+    "should_trigger": false
+  },
+  {
+    "query": "Audit this repository against the standard and tell me what to fix.",
+    "should_trigger": false
+  },
+  {
+    "query": "Set up ruff and pre-commit for this Python project.",
+    "should_trigger": false
+  },
+  {
+    "query": "Our AGENTS.md is 400 lines. What should move out of it?",
+    "should_trigger": false
+  },
+  {
+    "query": "Translate this README into Spanish.",
+    "should_trigger": false
+  },
+  {
+    "query": "Generate API reference docs from the docstrings with Sphinx.",
+    "should_trigger": false
+  },
+  {
+    "query": "Fix the broken image links on our documentation site.",
+    "should_trigger": false
+  },
+  {
+    "query": "Write unit tests for the date parser.",
+    "should_trigger": false
+  }
+]

@@ -148,7 +148,7 @@ def fixture(
         + ('[build-system]\nrequires = ["uv_build>=0.12.19,<0.13", "hatchling"]\n' if full else ""),
         "src/fixture.py": "",
         "hooks/pre-push": "#!/bin/sh\nexit 0\n",
-        "LICENSE": "Licence text.\n",
+        "LICENSE": "License text.\n",
         "notes.txt": "",
     }
     if python_version:

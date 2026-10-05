@@ -1,6 +1,6 @@
 # Dependency map
 
-What `claude-code-skills` 0.1.5 is built from, runs on and relies on: the
+What `claude-code-skills` 0.1.6 is built from, runs on and relies on: the
 plugins it ships, the languages it's written in, its runtimes and tools, every package
 at its exact version, the GitHub Actions it pins, the services it uses, and the sources
 its skills' facts cite.
@@ -14,19 +14,20 @@ freshness run and the release workflow both run it.
 
 ## What it ships
 
-| Plugin | Version | Licence | Skill | What it carries |
+| Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
-| `standards` | 0.1.5 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.40.0 |
-| `engineering` | 0.1.5 | Apache-2.0 | `git-workflows` | reviewed 2026-10-05 |
+| `standards` | 0.1.6 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.40.0 |
+| `engineering` | 0.1.6 | Apache-2.0 | `git-workflows` | reviewed 2026-10-05 |
+| `engineering` | 0.1.6 | Apache-2.0 | `house-style` | reviewed 2026-10-05 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 63 |
-| Python | 25 |
-| YAML | 17 |
-| JSON | 8 |
+| Markdown | 69 |
+| Python | 26 |
+| YAML | 22 |
+| JSON | 9 |
 | Shell | 2 |
 | TOML | 2 |
 
@@ -36,18 +37,19 @@ freshness run and the release workflow both run it.
 |---|---|---|---|
 | Python | 3.14 | `.python-version` | `pyproject.toml` requires >=3.14 |
 | uv_build | >=0.12.19,<0.13 | `pyproject.toml` | build backend |
-| GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
-| Go | 1.27 | `.github/workflows/ci.yml` | — |
+| GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` | — |
+| Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
 | uv | 0.12.18 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
+| vale | v3.24.0 | `.github/workflows/prose.yml` | — |
 
 ## Python packages
 
 Exact versions from `uv.lock`. A development-only package isn't part of what the
 plugins ship.
 
-```
+```text
 skillcheck 0.0.0 (this repository's checks)
 ├── pytest 9.1.1 (dev)
 │   ├── colorama 0.4.6 (dev; only when sys_platform == 'win32')
@@ -69,7 +71,7 @@ skillcheck 0.0.0 (this repository's checks)
 Exact versions from `package-lock.json`. A development-only package isn't part of what the
 plugins ship.
 
-```
+```text
 package.json
 └── @anthropic-ai/claude-code 2.1.283 (dev)
     ├── @anthropic-ai/claude-code-darwin-arm64 2.1.283 (dev; optional)
@@ -86,9 +88,9 @@ package.json
 
 | Action | Version | Pinned commit | Used in |
 |---|---|---|---|
-| `actions/checkout` | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
+| `actions/checkout` | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` |
 | `actions/download-artifact` | v8.0.1 | `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` | `.github/workflows/release.yml` |
-| `actions/setup-go` | v7.0.0 | `b7ad1dad31e06c5925ef5d2fc7ad053ef454303e` | `.github/workflows/ci.yml` |
+| `actions/setup-go` | v7.0.0 | `b7ad1dad31e06c5925ef5d2fc7ad053ef454303e` | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` |
 | `actions/setup-node` | v7.0.0 | `820762786026740c76f36085b0efc47a31fe5020` | `.github/workflows/ci.yml` |
 | `actions/upload-artifact` | v7.0.1 | `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` | `.github/workflows/release.yml` |
 | `astral-sh/setup-uv` | v10.2.0 | `c18668ad3cf93ea998bef934396af7bb5c839dc7` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
@@ -98,7 +100,7 @@ package.json
 | Service | Provider | What for | Address |
 |---|---|---|---|
 | GitHub | GitHub | Hosts the repository, its pull requests, its rulesets and its releases. | https://github.com/rmccann-hub/claude-code-skills |
-| GitHub Actions | GitHub | Runs the workflows: ci, commit-subjects, freshness, release. | https://github.com/rmccann-hub/claude-code-skills/actions |
+| GitHub Actions | GitHub | Runs the workflows: ci, commit-subjects, freshness, prose, release. | https://github.com/rmccann-hub/claude-code-skills/actions |
 | Dependabot | GitHub | Opens pull requests that update dependencies: github-actions, npm, uv. | documented at https://docs.github.com/en/code-security/dependabot |
 | PyPI | Python Software Foundation | Serves the Python packages in `uv.lock`. | https://pypi.org/simple |
 | npm registry | GitHub | Serves the packages in `package-lock.json`. | https://registry.npmjs.org |
@@ -141,3 +143,9 @@ weekly freshness run looks for every quote at its source again.
 | `git-workflows` | semver.org | 1 |
 | `git-workflows` | towncrier.readthedocs.io | 1 |
 | `git-workflows` | www.conventionalcommits.org | 1 |
+| `house-style` | developers.google.com | 4 |
+| `house-style` | vale.sh | 4 |
+| `house-style` | raw.githubusercontent.com | 2 |
+| `house-style` | github.com | 1 |
+| `house-style` | learn.microsoft.com | 1 |
+| `house-style` | www.gov.uk | 1 |

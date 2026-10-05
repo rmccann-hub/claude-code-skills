@@ -1,4 +1,4 @@
-# Test Verification Checklist
+# Test verification checklist
 
 Run before claiming any task complete. Answer from output, not from memory.
 

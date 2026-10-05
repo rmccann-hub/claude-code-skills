@@ -20,7 +20,7 @@ metadata:
   version: "1.0.0"
 ---
 
-**Licence.** Free to use. No warranty of any kind.
+**License.** Free to use. No warranty of any kind.
 
 ---
 
@@ -43,6 +43,9 @@ STANDARD_PATH = (
 )
 RULESET_PATH = "skills/tool/assets/rulesets/tags.json"
 RULESET = '{"name": "Tags", "target": "tag", "rules": [{"type": "deletion"}]}\n'
+VALE_PATH = "skills/tool/assets/vale/Plain"
+VALE_CONFIG = "[*.md]\nBasedOnStyles = Plain\n"
+VALE_RULE = "extends: existence\nmessage: \"Cut '%s'.\"\ntokens: [very]\n"
 CHANGELOG = """\
 # Changelog
 
@@ -91,6 +94,8 @@ def fixture(root: Path) -> Path:
         "skills/tool/SKILL.md": "---\nname: tool\n---\nBody.\n",
         "skills/tool/hooks/run": "#!/bin/sh\nexit 0\n",
         RULESET_PATH: RULESET,
+        f"{VALE_PATH}/.vale.ini": VALE_CONFIG,
+        f"{VALE_PATH}/styles/Plain/Words.yml": VALE_RULE,
         "CHANGELOG.md": CHANGELOG,
         "pyproject.toml": "[project]\n",
     }
@@ -113,6 +118,7 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     out = tmp_path / "out"
     assert release.build(root, "1.0.0", out) == [
         "KICKSTART.md",
+        "Plain.zip",
         "bom.json",
         "notes.md",
         "project-bootstrap-and-audit.zip",
@@ -142,6 +148,10 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     assert "| `tool.zip` | The `tool` skill, packaged to upload to claude.ai |" in notes
     assert "choose Import a ruleset.\n\n| File |" in notes
     assert '| `ruleset-tags.json` | A tag ruleset, "Tags", to import |' in notes
+    assert (
+        "| `Plain.zip` | The Plain Vale style, which a repository's `.vale.ini` names by URL |"
+        in notes
+    )
     assert notes.endswith("### Added\n\n- A thing.\n")
     assert (out / "bom.json").read_bytes() == (root / "bom.json").read_bytes()
     assert (out / "ruleset-tags.json").read_text(encoding="utf-8") == RULESET
@@ -150,10 +160,17 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     assert modes == {
         "tool/SKILL.md": 0o644,
         "tool/assets/rulesets/tags.json": 0o644,
+        "tool/assets/vale/Plain/.vale.ini": 0o644,
+        "tool/assets/vale/Plain/styles/Plain/Words.yml": 0o644,
         "tool/hooks/run": 0o755,
     }
+    # Vale wants one folder, named for the package, at the top of its ZIP.
+    style = zipfile.ZipFile(io.BytesIO((out / "Plain.zip").read_bytes()))
+    assert style.namelist() == ["Plain/.vale.ini", "Plain/styles/Plain/Words.yml"]
+    assert style.read("Plain/.vale.ini").decode("utf-8") == VALE_CONFIG
     # The same commit packs the same bytes.
     assert release.packages(root) == release.packages(root)
+    assert release.vale_packages(root) == release.vale_packages(root)
 
 
 def test_nothing_is_built_until_the_catalog_the_changelog_and_the_map_agree(tmp_path):
@@ -185,6 +202,43 @@ def test_the_page_says_how_to_import_a_ruleset_only_when_it_carries_one(tmp_path
     git(root, "rm", "-q", "-f", RULESET_PATH)
     page = release.notes(root, "1.0.0")
     assert "ruleset" not in page
+
+
+def test_a_vale_package_needs_a_name_no_other_skill_uses(tmp_path):
+    root = fixture(tmp_path)
+    other = root / "skills/project-bootstrap-and-audit/assets/vale/Plain/.vale.ini"
+    other.parent.mkdir(parents=True)
+    other.write_text(VALE_CONFIG, encoding="utf-8")
+    git(root, "add", "-A")
+    with pytest.raises(release.ReleaseError, match="two skills ship a Vale package called Plain"):
+        release.vale_packages(root)
+
+
+def test_a_vale_file_outside_a_package_folder_stops_the_release(tmp_path):
+    root = fixture(tmp_path)
+    loose = root / "skills/tool/assets/vale/.vale.ini"
+    loose.write_text(VALE_CONFIG, encoding="utf-8")
+    git(root, "add", "-A")
+    with pytest.raises(release.ReleaseError, match="isn't inside a Vale package's folder"):
+        release.vale_packages(root)
+
+
+def test_a_vale_package_named_like_a_skill_stops_the_release(tmp_path):
+    root = fixture(tmp_path)
+    clash = root / "skills/tool/assets/vale/tool/.vale.ini"
+    clash.parent.mkdir(parents=True)
+    clash.write_text(VALE_CONFIG, encoding="utf-8")
+    git(root, "add", "-A")
+    with pytest.raises(release.ReleaseError, match="two of the release's files would be called"):
+        release.build(root, "1.0.0", tmp_path / "out")
+    assert not (tmp_path / "out").exists()
+
+
+def test_the_page_lists_a_vale_style_only_when_it_carries_one(tmp_path):
+    root = fixture(tmp_path)
+    git(root, "rm", "-q", "-r", "-f", VALE_PATH)
+    assert "Vale" not in release.notes(root, "1.0.0")
+    assert release.vale_packages(root) == {}
 
 
 def test_the_changelog_section_ends_at_the_next_version_or_the_file(tmp_path):

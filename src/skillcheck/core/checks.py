@@ -77,8 +77,9 @@ AGENT_DIRS = (".claude", "research")
 # markers with a label after a space. A line of seven equals signs is also a Markdown heading
 # underline, so it isn't matched, and a conflict always leaves the other two.
 CONFLICT_MARKER = re.compile(r"^(?:<{7}|>{7}|\|{7})(?: |$)", re.MULTILINE)
-# Everything a commit here carries: the files at the root, and these directories. The other
-# dot-directories hold tools' caches.
+# Everything a commit here carries: the files at the root, and these directories. `.vale` holds
+# the tracked vocabulary beside the styles `vale sync` installs. The other dot-directories hold
+# tools' caches.
 SCANNED_DIRS = (
     "skills",
     "docs",
@@ -88,6 +89,7 @@ SCANNED_DIRS = (
     ".claude",
     ".claude-plugin",
     ".github",
+    ".vale",
 )
 
 # Every skill says why it advises what it does, what others do instead, and what each choice
@@ -322,7 +324,7 @@ def _check_tables(skill_dir: Path, report: Report) -> None:
 def _check_optional_fields(data: dict, where: str, report: Report) -> None:
     """The spec's optional fields, in the form claude.ai accepts at upload."""
     if "license" in data and not _is_text(data["license"]):
-        report.add(where, "license", "license must name a licence or a bundled licence file")
+        report.add(where, "license", "license must name a license or a bundled license file")
     if "compatibility" in data:
         value = data["compatibility"]
         if not _is_text(value):

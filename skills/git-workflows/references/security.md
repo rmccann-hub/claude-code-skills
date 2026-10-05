@@ -12,7 +12,7 @@ or when a secret has reached a commit. Facts are named by ID from `facts.md`.
   permissions, and leave "Allow GitHub Actions to create and approve pull requests" off (fact
   `workflow-permissions`). A workflow that forgets its block then gets read access, not write.
   A new repository in a personal account starts that way (fact `token-default`). Check an older
-  one, and one an organisation owns.
+  one, and one an organization owns.
 - **`persist-credentials: false` on checkout,** unless a later step in that job pushes. Otherwise
   the token stays in the checkout for every later step, including third-party ones (fact
   `persist-creds`).
@@ -28,7 +28,7 @@ or when a secret has reached a commit. Facts are named by ID from `facts.md`.
 - **Keep the pins moving:** turn on Dependabot version updates for `github-actions`, and check
   that its pull requests reach the pinned lines. A pinned action gets no backported fix, so a
   pin nobody updates goes stale (fact `checkout-v7`).
-- **Leave "Dependabot on self-hosted runners" off** unless a runner labelled for Dependabot
+- **Leave "Dependabot on self-hosted runners" off** unless a runner labeled for Dependabot
   exists. Its jobs wait for one, and fail after 24 hours (fact `dependabot-runners`), so no
   update arrives.
 - **Enforce pinning by policy** where you can (fact `sha-policy`), so an unpinned action fails
@@ -61,7 +61,7 @@ environment variable instead (fact `injection`):
   repositories that set no event policy of their own have it disabled by default (fact
   `prt-default`).
 - **So prefer `pull_request`,** which runs a fork's code without your secrets. Where you need
-  `pull_request_target`, such as for labelling or commenting, never check out or run the pull
+  `pull_request_target`, such as for labeling or commenting, never check out or run the pull
   request's code in it.
 - **`workflow_run` carries the same risk** when it acts on the output of a pull request's run.
   Treat what that run produced as untrusted input.

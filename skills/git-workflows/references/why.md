@@ -49,7 +49,7 @@ quoted.
 |---|---|---|
 | Merge commit | Every commit ID survives; `git bisect` can go inside a branch; attribution stays per commit | History forks and joins, and it keeps "fix typo" commits unless authors tidy their branch before review |
 | Squash | One commit per pull request; a clean revert; a readable `git log --first-parent` without effort | Branch commits lose their IDs; per-step history is gone; co-authors survive only as trailers |
-| Rebase-merge | A straight line that keeps each commit's content | Every commit gets a new ID, so it strands citations just as squash does |
+| Rebase-merge | A straight line that keeps each commit's content | Every commit gets a new ID, so it strands citations as squash does |
 | One reviewed commit (Gerrit) | The reviewed commit is the landed one | It needs a review tool built for it, and authors amend rather than add commits |
 
 **When to choose differently.** If nothing outside the repository cites commits, for example
@@ -155,6 +155,7 @@ commit SHA, installs that fail on lockfile drift, CI on the branches where work 
 path filter on a required check.
 
 **Why, one by one.**
+
 - **SHA pins.** A tag can be moved. In March 2025 an attacker moved every tag of
   `tj-actions/changed-files` onto a commit that printed secrets into build logs (fact
   `tj-actions`). Workflows pinned by tag ran it; workflows pinned by SHA didn't. A full SHA is
@@ -231,6 +232,7 @@ and `-x` records where each copy came from (fact `cherry-x`).
 what lands. Weaken no test to save time: change where and how often it runs.
 
 **The evidence.**
+
 - Fowler: "the XP guideline of a ten minute build is perfectly within reason", with slower tests
   in later stages of the pipeline (fact `fowler-build`).
 - Google: before submit, "only fast, reliable ones", catching the rest after submit and
@@ -244,6 +246,7 @@ what lands. Weaken no test to save time: change where and how often it runs.
   it again after the push, because it is the same commit.
 
 **How GitHub decides what was tested.**
+
 - A `pull_request` run tests the merge of the branch into its base, not the branch's head (fact
   `pr-merge-ref`).
 - With strict required checks, the default, a branch must be up to date before it merges, so
@@ -251,7 +254,7 @@ what lands. Weaken no test to save time: change where and how often it runs.
 - Without them, two pull requests can each pass and fail together once merged (fact
   `loose-checks`). Then the run on the default branch is what catches it.
 - A merge queue gives strict's guarantee without making every author update their branch, but
-  only in organisation-owned repositories (fact `merge-queue`).
+  only in organization-owned repositories (fact `merge-queue`).
 
 **Is the run on the default branch needed?** Compare its jobs with the pull request's:
 
@@ -262,6 +265,7 @@ what lands. Weaken no test to save time: change where and how often it runs.
 | More suites than the pull request | Either | This is the split Google, LLVM and Kubernetes use. It's sound if a red run on the default branch gets a revert at once. Otherwise move those suites before merge, as Rust does |
 
 **Making it faster without testing less.**
+
 - Measure first: a job's steps are timed in its log, and queueing, setup and installs often
   cost more than the tests.
 - Run independent jobs in parallel, and split a long suite across jobs.
