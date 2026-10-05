@@ -75,12 +75,16 @@ Tested examples to copy:
   a commit named by SHA, once its checks have passed.
 - [assets/workflows/tests.yml](assets/workflows/tests.yml) runs the tests and proves they
   finished.
+- [assets/rulesets/default-branch.json](assets/rulesets/default-branch.json) and
+  [assets/rulesets/release-tags.json](assets/rulesets/release-tags.json) protect the default
+  branch and the release tags, imported under Settings, Rules, Rulesets.
 
 ## Check before you act
 
 | Question | Command |
 |---|---|
 | Which merge methods does the repository allow? | `gh api repos/OWNER/REPO --jq '.allow_merge_commit, .allow_squash_merge, .allow_rebase_merge'` |
+| Which rulesets protect the branches and tags? | `gh api repos/OWNER/REPO/rulesets --jq '.[].id'`, then `gh api repos/OWNER/REPO/rulesets/<id>` for each one's rules |
 | Is this cited commit still on the default branch? | `git merge-base --is-ancestor <commit> origin/main && echo reachable` |
 | Which branches hold this commit? | `git branch -r --contains <commit>` |
 | Which local branches lost their remote branch? | `git fetch --prune`, then `git for-each-ref --format='%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)' refs/heads`; check each one's pull request before deleting it |

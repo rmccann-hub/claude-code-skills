@@ -1,5 +1,6 @@
-"""The git-workflows skill's example hooks and workflows work as its references say."""
+"""The git-workflows skill's example hooks, workflows and rulesets work as its references say."""
 
+import fnmatch
 import json
 import os
 import re
@@ -15,6 +16,17 @@ import yaml
 ASSETS = Path(__file__).resolve().parent.parent / "skills" / "git-workflows" / "assets"
 HOOKS = ASSETS / "githooks"
 WORKFLOWS = ASSETS / "workflows"
+RULESETS = ASSETS / "rulesets"
+# What GitHub's starter rulesets carry, and its export less the IDs a repository assigns.
+RULESET_FIELDS = {"name", "target", "enforcement", "conditions", "rules", "bypass_actors"}
+# The pull request rule's parameters that GitHub's REST API marks required.
+PULL_REQUEST_PARAMETERS = {
+    "dismiss_stale_reviews_on_push",
+    "require_code_owner_review",
+    "require_last_push_approval",
+    "required_approving_review_count",
+    "required_review_thread_resolution",
+}
 SHA_PIN = re.compile(r"uses: [\w.-]+/[\w.-]+@[0-9a-f]{40} # v\d+\.\d+\.\d+$")
 SUBJECTS_STEP = 'Check that each commit subject reads "area: summary"'
 RELEASE_CHECK = "Check the version, the commit and its changelog"
@@ -138,6 +150,47 @@ def test_workflows_pass_zizmor():
     paths = sorted(str(path) for path in WORKFLOWS.glob("*.y*ml"))
     result = run(["zizmor", "--offline", *paths])
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def ruleset(name: str) -> dict:
+    return json.loads((RULESETS / name).read_text(encoding="utf-8"))
+
+
+@pytest.mark.parametrize("path", sorted(RULESETS.glob("*.json")), ids=lambda p: p.name)
+def test_ruleset_imports_into_any_repository(path):
+    rules = json.loads(path.read_text(encoding="utf-8"))
+    # No ID, source or required check: each belongs to one repository.
+    assert set(rules) == RULESET_FIELDS
+    assert rules["enforcement"] == "active"
+    assert rules["bypass_actors"] == []
+    assert set(rules["conditions"]) == {"ref_name"}
+    types = [rule["type"] for rule in rules["rules"]]
+    assert len(types) == len(set(types))
+    assert {"deletion", "non_fast_forward"} <= set(types)
+    assert "required_status_checks" not in types
+
+
+def test_default_branch_ruleset_requires_a_pull_request_and_no_approval():
+    rules = ruleset("default-branch.json")
+    assert rules["target"] == "branch"
+    assert rules["conditions"]["ref_name"]["include"] == ["~DEFAULT_BRANCH"]
+    [parameters] = [r["parameters"] for r in rules["rules"] if r["type"] == "pull_request"]
+    assert set(parameters) == PULL_REQUEST_PARAMETERS
+    assert parameters.pop("required_approving_review_count") == 0
+    assert not any(parameters.values())
+
+
+def test_release_tag_ruleset_covers_the_tag_the_release_job_makes(repo):
+    rules = ruleset("release-tags.json")
+    assert rules["target"] == "tag"
+    # Creation stays open, or the release job couldn't make the tag at all.
+    assert {rule["type"] for rule in rules["rules"]} == {"update", "deletion", "non_fast_forward"}
+    sha = changelog_commit(repo)
+    result = release_step(repo, RELEASE_TAG, VERSION="1.4.0", SHA=sha, GH_TOKEN="CHANGEME")
+    assert result.returncode == 0, result.stderr
+    refs = git(repo, "ls-remote", "--tags", "origin").splitlines()
+    [made] = [line.split()[1] for line in refs if not line.endswith("^{}")]
+    assert any(fnmatch.fnmatchcase(made, p) for p in rules["conditions"]["ref_name"]["include"])
 
 
 def step_script(workflow: str, job: str, name: str) -> str:
