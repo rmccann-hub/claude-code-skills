@@ -14,7 +14,7 @@ skillcheck = "skillcheck.cli:main"
 dev = [
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
-    "ruff>=0.16.8",
+    "ruff>=0.16.10",
     "zizmor>=1.30.1",
 ]
 
