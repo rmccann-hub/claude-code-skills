@@ -692,7 +692,9 @@ rates a setting, its amendment carries both consequences, and its third-list act
 approving the amendment doesn't ask the run to change the setting. Each value is a
 recommendation, declinable like any amendment. Leave out the rows whose last column doesn't
 hold, and a mirror's own settings. A survey, which stops before Phase 6, reports the rest in
-Phase 5's `notes`. Where a page shows something else, report what it shows.
+Phase 5's `notes`. Where a page shows something else, report what it shows. **A setting never
+re-proposes a recorded decline:** where a repository's record declines something an action
+would turn on, the account's included, the action leaves that repository out and says why.
 
 A page's link is `https://github.com/<owner>/<repo>/settings`, with `/actions`, `/rules` or
 `/security_analysis` after it for those pages. Where a ruleset row applies and the ruleset is
@@ -727,7 +729,7 @@ action, once. Each is in the account's Settings, under the profile picture:
 
 | Account setting | Set it to | Where |
 |---|---|---|
-| Private vulnerability reporting, dependency graph, Dependabot alerts, Dependabot security updates | On for new repositories. For existing ones, Enable all for the dependency graph and Dependabot alerts, and the repository table decides the others | Code security |
+| Private vulnerability reporting, dependency graph, Dependabot alerts, Dependabot security updates | On for new repositories. For existing ones, Enable all for the dependency graph and Dependabot alerts, leaving out a repository whose record declines them, and the repository table decides the others | Code security |
 | Grouped security updates | Off, as dimension 8 says | Code security |
 | Dependabot on self-hosted runners | Off, unless the account has a runner labeled for it, as in the repository table | Code security |
 | Push protection for yourself | On | Code security |
@@ -1290,7 +1292,9 @@ no longer holds. Production
 and dependents change without a commit, as where it runs does, so none of the three is ever
 carried forward unasked. This costs one exchange and catches the thing a record cannot: a
 tier rated on the *imminent* state whose trigger has since fired. A record describes what was
-true when it was written, and only the human knows whether it still is.
+true when it was written, and only the human knows whether it still is. **A question the prior
+entry doesn't hold**, such as one this standard added since, is asked as on a first audit,
+with its draft and evidence.
 
 **Ask here for what the run can't read.** Some settings live only on the platform, such as
 secret scanning, push protection and dependency alerts, and a session often can't read them.
@@ -1442,7 +1446,8 @@ Record the answers in `inception`. **Do not ask a fourth question to be thorough
 phase: 3
 answers_source: <recon report path | given in the prompt | asked directly>
 drafts: [{q: <1-6 | p0-4>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
-          reply: confirmed | corrected | not sure | unanswered}]   # none on a re-check
+          reply: confirmed | corrected | not sure | unanswered}]
+       # on a re-check, only the questions the prior entry doesn't hold
 owner: work | personal | mixed | unknown   # mixed: provenance and copyright are decided per item
 copyright_holder: <as the human names it: a legal name, or the name they publish under | n/a |
                    unknown>
