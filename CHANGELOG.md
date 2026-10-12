@@ -6,6 +6,16 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-10-12
+
+### Changed
+
+- The standard is v0.42.0. It adds one rule, F119, which the owner asked for: generated
+  evidence, the logs, captures and reports a project's runs keep adding, lives on an orphan
+  `evidence` branch that's never tagged. The default branch keeps a manifest of it, and a
+  SessionStart hook keeps sessions from fetching the branch. Dimension 3 rates such evidence on
+  the default branch `GAP`. A review loop's laps stay where their protocol keeps them.
+
 ## [0.1.7] - 2026-10-05
 
 ### Changed

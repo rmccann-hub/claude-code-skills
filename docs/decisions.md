@@ -2,6 +2,59 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-12 — Standard v0.42.0: generated evidence lives on its own branch, and release 0.1.8
+
+- **Asked:** the owner said on 2026-10-12, of the evidence the live repositories keep committing,
+  "we plan to move them all to a branch so that needs to be a rule". They had approved the
+  approach on 2026-10-07, after tests showed a dedicated branch keeps it out of sessions' clones.
+- **Applied:** F119, as v0.42.0. *Generated evidence lives on its own branch:*
+  - **What it is:** the logs, captures and reports a project's runs keep adding, and that nothing
+    builds or tests from. Fixtures and correspondence, such as a review loop's laps, stay where
+    they are.
+  - **Where it goes:** an orphan `evidence` branch, only appended to and never tagged, with an
+    append-only manifest of each file's hash and commit on the default branch.
+  - **How sessions avoid it:** a committed SessionStart hook adds a negative refspec. In a
+    session holding several repositories, which runs no hooks, the context file tells the
+    session to do it itself.
+  - **What CI checks, from T2:** that no tag is reachable from the branch, and the hash of each
+    new manifest row.
+  - **Ratings:** dimension 3 rates such evidence on the default branch `GAP` at any tier, under
+    10 MB in all aside. Dimensions 4 and 6 rate the missing exclusion and check, and the settings
+    table gains an evidence-branch ruleset.
+- **Why:** one live repository held 320 MB of such evidence on its default branch, 151 MB from
+  one round of review, and every session's clone carried it.
+- **Checked against Git:**
+  - Negative refspecs are in Git 2.29.0's release notes and the `git fetch` page.
+  - Tested in scratch repositories with Git 2.43 on 2026-10-07 and 2026-10-12. The exclusion
+    kept a 3 MB branch out of a session-shaped clone, until a tag pointed into the branch: a
+    plain fetch then took it, as a plain clone did.
+  - The tag check fetched 24 KB, and flagged only the planted tag.
+  - Both results are dated facts in the standard.
+- **Reviewed cold, twice:**
+  - The first review found three blocking defects: the rule would have moved a review loop's
+    laps, which the standard keeps immutable; a survey never reached its rating; and a session
+    holding several repositories runs no hooks. It also found seven smaller ones.
+  - A second review of the fixes found two more: dimensions 4 and 6 didn't state their ratings,
+    and the first tag check, every tag on the default or a release branch, would have failed
+    repositories set up correctly.
+  - Each finding was checked against the text before it was applied.
+- **Parity run:** the audit sample, in a fresh session, on the rule's first text. The fixes
+  touch only the new rule, and the sample has no evidence.
+  - Twenty of twenty checks pass, and both manual checks hold.
+  - One value moved: dimension 4 to `BLOCKER`, the v0.37.0 rule every audit run has moved since.
+  - The run listed "an evidence branch: the project generates no evidence" among what it didn't
+    propose.
+  - Its slips: it fetched once from the sample's remote outside its directories, and pip wrote
+    a cache under the system temporary folder. The prompt's known limits cover both.
+- **Not chosen:**
+  - Git LFS: it moves files out of history, but a clone still fetches the current ones, and the
+    plan's storage and bandwidth limits apply.
+  - Release assets: they can't be cited at a commit, and immutable releases freeze them.
+  - Rewriting history to remove what is already there: it changes every commit ID, and every
+    citation of one, so it stays a decision of its own.
+- **Release 0.1.8:** this pull request's merge, released by the Release workflow once CI passes on
+  the merge commit. Both catalog entries say 0.1.8.
+
 ## 2026-10-05 — Standard v0.41.0, reviewed cold and in the house style, and release 0.1.7
 
 - **Asked:** the owner's answer 6 approved F81 to F114, to be applied as v0.41.0 in groups, each

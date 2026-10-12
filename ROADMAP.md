@@ -23,7 +23,7 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.41.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.42.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -720,6 +720,13 @@ approval:
   dimension owns it.
 - **F118:** the README template has no Operations or Security section, which the house style
   asks every README for (question 18).
+
+The owner asked on 2026-10-12 for one rule, applied in v0.42.0:
+
+- **F119:** generated evidence, the logs, captures and reports a project's runs keep adding,
+  lives on an orphan `evidence` branch, never tagged, with a manifest on the default branch and
+  a SessionStart hook that keeps sessions from fetching it. A live repository's evidence had reached 320 MB on its default
+  branch, and every session's clone carried it.
 
 The owner asked for one more rule, researched before it's written:
 
