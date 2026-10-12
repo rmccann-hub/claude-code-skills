@@ -23,6 +23,7 @@ RULESETS = ASSETS / "rulesets"
 RULESET_FIELDS = {"name", "target", "enforcement", "conditions", "rules", "bypass_actors"}
 # The pull request rule's parameters that GitHub's REST API marks required.
 PULL_REQUEST_PARAMETERS = {
+    "allowed_merge_methods",
     "dismiss_stale_reviews_on_push",
     "require_code_owner_review",
     "require_last_push_approval",
@@ -161,6 +162,7 @@ def test_default_branch_ruleset_requires_a_pull_request_and_no_approval():
     [parameters] = [r["parameters"] for r in rules["rules"] if r["type"] == "pull_request"]
     assert set(parameters) == PULL_REQUEST_PARAMETERS
     assert parameters.pop("required_approving_review_count") == 0
+    assert parameters.pop("allowed_merge_methods") == ["merge"]
     assert not any(parameters.values())
 
 
