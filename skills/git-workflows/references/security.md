@@ -25,6 +25,11 @@ or when a secret has reached a commit. Facts are named by ID from `facts.md`.
 - **Pin each action to a full commit SHA, with its version in a comment.** A tag can be moved
   to other code, and a commit can't (fact `sha-pin`). Check that the SHA comes from the
   action's own repository, not a fork of it.
+- **Workflow dependency lockfiles go further, and are in public preview** (fact
+  `actions-lockfile`). One file records the exact commit of every action, including the
+  actions those actions call, and GitHub checks the source repository at run time. Try one
+  where a preview feature is acceptable. Until it's generally available, SHA pins stay the
+  rule.
 - **Keep the pins moving:** turn on Dependabot version updates for `github-actions`, and check
   that its pull requests reach the pinned lines. A pinned action gets no backported fix, so a
   pin nobody updates goes stale (fact `checkout-v7`).
@@ -96,6 +101,65 @@ environment variable instead (fact `injection`):
 
 project-bootstrap-and-audit rates secret handling, push protection and the secret-scan job
 (dimension 7), and its facts give push protection's defaults.
+
+## Personal information in history
+
+An email address in commit metadata, or a home folder in a committed log, can't be rotated.
+Removing it means rewriting history. That's the one exception to rule 3, and only when the
+owner asks for it, knowing what it costs.
+
+1. **Count before choosing.** Read-only, count each item in every place it can be:
+   - commit metadata, messages and files;
+   - release notes and release files, and published packages;
+   - tags, branches and pull request refs.
+
+   Then let the owner choose the scope with the numbers in front of them. Some copies can't be
+   changed at all: a published package, an immutable release, a transparency log. A username
+   that also starts the owner's public handle hides almost nothing when it's removed. In one
+   live repository, narrowing the job to the email address alone made it about fifty times
+   smaller, and left the other repository it shared a review loop with untouched.
+2. **Change only what you must.** For an address in metadata only, use
+   `git filter-repo --mailmap` (fact `filter-repo-mailmap`) with `--sensitive-data-removal`,
+   version 2.47 or later (fact `sdr-version`). Add `--preserve-commit-hashes` to keep commit
+   messages byte for byte (fact `filter-repo-hashes`). Every commit ID still changes, from the
+   first rewritten commit on.
+3. **Keep cited IDs resolvable.** Commit the tool's old-to-new map, and have every reader of
+   commit IDs look an old ID up in it before asking Git, since an older clone still holds the
+   old objects. Leave sent records as written. Keep the map file out of any citation scan:
+   otherwise it meets the scan's floor on its own. Where another repository cites yours, agree
+   the change with it word for word first, then run each side's checker on the other's tree.
+4. **Rehearse on a scratch mirror,** and run the full test suite there. In that live rewrite,
+   the suite found all 32 places that read commit IDs in one pass. The rewrite is
+   deterministic, so the rehearsal's map has the same digest as the real run's, unless a
+   branch moved in between.
+5. **Hand the owner one script** that:
+   - works in a new folder it names at the start and the end;
+   - installs the pinned tool there, checked with `--require-hashes`;
+   - before it pushes, checks for zero matches, the same commit count and the same refs, and
+     that the trees, names, dates and messages are unchanged;
+   - asks the owner to type `YES`, and pushes only then;
+   - pushes with `--atomic` and `--force-with-lease=<ref>:<old>` on every ref, under
+     `-c credential.helper=`, so the token isn't saved;
+   - compares `git ls-remote` with what it pushed, and prints a summary to paste back.
+
+   Rehearse the script itself against a local bare repository, including someone typing "no"
+   and a stale lease. A fine-grained token needs Workflows write access as well as Contents,
+   since the push rewrites commits that carry workflow files (fact `workflow-scope`).
+6. **Warn the owner in advance:**
+   - every signed commit loses its Verified badge (fact `rewrite-signatures`);
+   - the first CI run after the force push can go red, where a gate compares against a commit
+     that no longer exists;
+   - rulesets that block force pushes must be off for the push, and on again after;
+   - old commits stay viewable through `refs/pull/*` until GitHub Support removes them (fact
+     `pr-refs-readonly`). On 2026-10-12, GitHub's support form had no "sensitive data"
+     category: the route that worked was Repositories, then Repository features, then
+     Branches. Its "Deletes" choice leads to deleting the whole repository, so avoid it;
+   - a shipped app that checks out a fixed commit from the rewritten repository can't install
+     afterward. Check every consumer of the repository first.
+7. **Afterward, refresh every clone, the agent's own included.** A stale local branch still
+   points at old history: one checker read the map from one and reported 13 false refusals.
+   Run `git fetch --force --tags`, reset each local branch to its remote, or check from a
+   fresh clone.
 
 ## Signed tags
 
