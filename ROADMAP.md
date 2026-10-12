@@ -723,9 +723,9 @@ approval:
 
 The owner asked on 2026-10-12 for one rule, applied in v0.42.0:
 
-- **F119:** evidence a project generates run after run lives on an orphan `evidence` branch,
-  never tagged, with a manifest on the default branch and a SessionStart hook that keeps
-  sessions from fetching it. A live repository's evidence had reached 320 MB on its default
+- **F119:** generated evidence, the logs, captures and reports a project's runs keep adding,
+  lives on an orphan `evidence` branch, never tagged, with a manifest on the default branch and
+  a SessionStart hook that keeps sessions from fetching it. A live repository's evidence had reached 320 MB on its default
   branch, and every session's clone carried it.
 
 The owner asked for one more rule, researched before it's written:
