@@ -2,6 +2,46 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-12 — A live history rewrite, taken into `git-workflows`, and release 0.1.9
+
+- **Asked:** the owner sent a live repository's session's feedback on removing one email
+  address from that repository's history, which the owner ran on 2026-10-12. The feedback is
+  taken in as data. Its claims about the rewrite were checked on GitHub from a fresh copy:
+  - the address is in none of the 1,825 commits on the repository's branches and tags;
+  - the commit map is committed;
+  - both rulesets are back on.
+- **`git-workflows` gains *Personal information in history*,** in `references/security.md`:
+  - count every copy before choosing the scope;
+  - rewrite only the metadata with `--mailmap`, `--sensitive-data-removal` and
+    `--preserve-commit-hashes`;
+  - commit an old-to-new map that every reader of commit IDs looks up first;
+  - rehearse on a mirror with the full test suite;
+  - hand the owner one checked script;
+  - warn of lost signatures, a red first CI run, rulesets to switch off, pull request refs
+    only GitHub Support can purge, and shipped apps pinned to commits;
+  - refresh every clone afterward.
+
+  Rule 3, never rewrite shared history, now names this as its one exception, at the owner's
+  request. Five dated facts back it, each quote checked at its source on 2026-10-12.
+- **Found on the way:** the online check of every fact found that GitHub no longer says a SHA
+  is the only immutable way to use an action. It now ranks workflow dependency lockfiles, in
+  public preview, above SHA pins. `git-workflows` says so, and keeps SHA pins as the rule until
+  lockfiles are generally available. The standard carries the old fact, so F136 proposes the
+  change there.
+- **The ruleset template allows merge commits only.** A live session pointed out that the
+  repository setting was then the only guard on the merge strategy. A test pins the value.
+- **To the roadmap:**
+  - F133 to F137, for the owner's approval: ask about an unfilled placeholder at once; an
+    owner's hold wins over a stop hook that demands a push; a progress line at each phase; the
+    stale SHA-pin fact; two more shell habits.
+  - Lessons L27 to L29: instructions a non-programmer can't mistake, checking each other's
+    tree after a joint change, and a field's format written beside it.
+- **Not chosen:** recording the repository-specific items in the feedback, such as one
+  project's decision-number ranges, which belong in that repository's own rules.
+- **Release 0.1.9:** this pull request's merge, released by the Release workflow once CI passes
+  on the merge commit. It also carries the lessons and the release-check fix merged earlier
+  today. Both catalog entries say 0.1.9.
+
 ## 2026-10-12 — What two live repositories' records taught, taken in
 
 - **Asked:** the owner asked for both live repositories to be read for what their review loop
