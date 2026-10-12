@@ -1046,10 +1046,10 @@ notes: <... | none>
 Read-only, apart from the setup carve-out.
 
 **Read evidence; don't swallow it.** Logs, captured tool output and test artifacts can run to
-thousands of lines each, and **a repository that keeps its evidence is doing it right** — the
-budget table says so — on its own branch once its runs keep adding to it. List them with their
-sizes and read only the part a finding needs: one
-read of a whole log can cost the context the rest of the audit needed.
+thousands of lines each. **Evidence a repository keeps is not sprawl**, as the budget table
+says, though generated evidence belongs on its own branch, which dimension 3 rates. List the
+files with their sizes and read only the part a finding needs: one read of a whole log can
+cost the context the rest of the audit needed.
 
 ```bash
 git ls-files | sed -n 's/.*\.\([a-zA-Z0-9]*\)$/\1/p' | sort | uniq -c | sort -rn | head -15
@@ -1579,7 +1579,7 @@ named in the module map that no longer exists; auxiliary files with no consisten
 and run reports that a project's runs keep adding, as *File governance* defines them. The cost
 lands on every clone, whatever the stakes. Moving it to its own branch isn't the restructuring
 this dimension warns against: the layout stays, and only the branch the files are kept on
-changes. Under 10 MB in all, it's a note.
+changes. Under 10 MB in all, it isn't rated, as *File governance* says.
 
 **Restructuring an established repository is rarely worth it** — say so, and record the cost,
 unless the layout is actively causing the confusion.
@@ -1637,7 +1637,9 @@ and one naming a single person is the ceremony dimension 8 describes.
   other hook, below. A toolchain the image lacks belongs in the environment's setup script,
   which is also the route for a session holding several repositories. Where agent sessions
   rely on something only a script in the repository sets, and no committed SessionStart hook
-  runs it, it is `GAP`.
+  runs it, it is `GAP`. That includes the exclusion that keeps sessions from fetching an
+  `evidence` branch, as *File governance* says under *Generated evidence*: where the branch
+  exists and agent sessions work the repository, a missing exclusion is `GAP`.
 - **Facts that sessions keep re-deriving belong in an index**, each beside the command that
   re-checks it, with a tool that runs the whole index. Sessions in one live repository
   re-derived settled facts again and again, three of them four times in one session. Where the
@@ -1912,6 +1914,10 @@ grant given only to the job that needs it. A workflow without the block runs wit
 repository's default token, which is broader than a test run needs. **One workflow missing it
 is the finding, however many others have it:** rate it `GAP` here and name the file. *Starter
 file contents* shows the block, and says why a gate that checks only some workflows misleads.
+
+**Where a repository keeps an `evidence` branch, CI checks it from T2,** as *Generated
+evidence* says: no tag reachable from the branch, and each new manifest row's hash. Missing,
+it is `GAP`.
 
 **Every job sets a timeout**, `timeout-minutes` on GitHub. Without it, a job that hangs runs to
 the platform's limit, 360 minutes on GitHub, holding a runner and the merge behind it. **And CI
@@ -4262,8 +4268,9 @@ session's clone carried all of it.
 
 **How a run finds it:** a tracked path where commit after commit adds logs, captures or
 reports that no build or test configuration names. `git log --diff-filter=A --name-only --
-<path>` lists the additions, and `git ls-files` with each file's size gives the total. Under
-10 MB in all, this file's heuristic, it's a note rather than a finding.
+<path>` lists the additions, and `git ls-tree -r -l HEAD -- <path>` gives each file's size.
+Under 10 MB in all, a heuristic of this standard, it isn't rated: it goes in the phase block's
+`notes`.
 
 - **An orphan branch named `evidence`, only ever appended to.** It's never merged into the
   default branch, never rebased and never tagged. A plain clone takes every branch and tag. In
@@ -4272,14 +4279,15 @@ reports that no build or test configuration names. `git log --diff-filter=A --na
 - **The default branch keeps a manifest,** `docs/evidence-manifest.tsv`, append-only: for each
   file, its path on the evidence branch, its size, its SHA-256 and the evidence commit that
   added it. New rows land with the change whose run produced the files, through the
-  repository's usual process. A record cites evidence by that commit and path, which stays
-  valid because the branch is never rewritten, and a reader checks the file against its hash.
-  Citations made before a move stay valid too, because history keeps the files at the commits
-  they cite.
+  repository's usual process, and the README links the manifest. A record cites evidence by
+  that commit and path, which stays valid because the branch is never rewritten, and a reader
+  checks the file against its hash. A citation made before a move stays valid where it names a
+  commit, because history keeps the file there. One that names a bare path resolves through
+  the manifest, since the move keeps each file's path.
 - **Sessions don't fetch it.** A cloud session's clone holds only the default branch but keeps
   the refspec for every branch, so its first plain `git fetch` downloads the evidence too. A
-  committed SessionStart hook adds the exclusion for each remote whose fetch refspec covers
-  every branch, once, and exits 0 where there's no remote:
+  committed SessionStart hook adds the exclusion to each remote, once, and exits 0 where there's
+  no remote:
 
   ```sh
   for r in $(git remote); do
@@ -4289,12 +4297,15 @@ reports that no build or test configuration names. `git log --diff-filter=A --na
   ```
 
   A session holding several repositories runs no repository's hooks, as dimension 4 says, so
-  there the line goes in the environment's setup script, or the run records the gap. A tool or
+  there the context file tells the session to run those lines itself before its first fetch. A
+  tool or
   session that needs a file fetches it by name, with `git fetch --depth 1 origin evidence` or
   `git fetch origin <commit>`, or reads its raw link at its commit.
-- **From T2, CI checks what nothing else does:** that every tag points at a commit on the
-  default branch or a release branch, which needs the full history and the tags, and that each
-  manifest row a change adds matches its file's hash, fetched by its commit.
+- **From T2, CI checks what nothing else does:** that no tag is reachable from `evidence`, and
+  that each manifest row a change adds matches its file's hash, with the file fetched by its
+  commit. The tag check needs the branch's commits and the tags, not their files:
+  `git fetch --filter=tree:0 origin evidence:refs/remotes/origin/evidence
+  '+refs/tags/*:refs/tags/*'`, then `git tag --merged origin/evidence` prints nothing.
 - **Where the plan allows a ruleset,** one blocks deleting the branch and force pushes to it.
 - **Moving evidence already on the default branch takes one commit on each branch:** the files
   added to `evidence`, then removed from the default branch with the manifest added. History
@@ -4308,10 +4319,9 @@ reports that no build or test configuration names. `git log --diff-filter=A --na
   records hold, under *Cross-repository contracts*. A run lists those files and asks rather
   than proposing to touch them.
 
-**Ratings:** dimension 3 rates generated evidence on the default branch, as it says. Where an
-evidence branch exists and agent sessions work the repository, a missing exclusion is `GAP`
-in dimension 4. From T2, a missing CI check is `GAP` in dimension 6. The ruleset is a row in
-*Platform settings, and where each is*.
+**Ratings:** dimensions 3, 4 and 6 each say what they rate here: the evidence on the default
+branch, the missing exclusion and the missing CI check. The ruleset is a row in *Platform
+settings, and where each is*.
 
 ## Merge, delete, leave alone
 
@@ -5024,11 +5034,13 @@ records are append-only and are not edited for this.
 lives on its own branch.* An orphan `evidence` branch, only ever appended to and never tagged,
 holds the logs, captures and reports a project's runs keep adding; the default branch keeps a
 manifest with each file's hash and commit; a committed SessionStart hook keeps sessions from
-fetching the branch; and from T2, CI checks that every tag points at the default branch or a
-release branch. Dimension 3 rates such evidence on the default branch `GAP` at any tier, and a
+fetching the branch; and from T2, CI checks that no tag is reachable from the branch.
+Dimensions 3, 4 and 6 rate each part `GAP`, the evidence on the default branch at any tier, and a
 review loop's laps stay where their protocol keeps them. A cold review of the first text found
 three blocking defects, among them a rule that would have touched correspondence the standard
-keeps immutable, and seven smaller ones, all fixed before release. A live repository's
+keeps immutable, and seven smaller ones. A second review of the fixes found two more: ratings
+dimensions 4 and 6 didn't state, and a tag check that would have failed correctly set-up
+repositories. All were fixed before release. A live repository's
 evidence had reached 320 MB on its default branch. Two dated facts record the Git behavior the
 rule rests on, one from Git's documentation and one observed in this standard's own sessions,
 including the tag that brought an excluded branch back.
