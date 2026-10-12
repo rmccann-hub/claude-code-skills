@@ -27,6 +27,7 @@ that will do the same for other repositories.
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
+| `review-loops` | Agent sessions in two repositories reviewing each other's work: the few rules that end rounds, the ones that cost more than they caught, and where agents have to stop for a person | planned | core | done |
 
 ## B. Engineering practice, for every language
 
@@ -130,6 +131,90 @@ lessons in when it's built, and its `why.md` cites them.
 - **L4, `logging-and-observability`:** an evidence bundle lists what it left out, and the raw
   facts each verdict was computed from. That bundle did both, so "nothing was missing" could be
   told from "nothing was collected", and a wrong label could be checked against its inputs.
+- **L5, `testing`:** a regression test for a wiring bug goes through the production entry
+  point. Four releases claimed a fix whose test handed the fact straight to the renderer, while
+  nothing in the app ever passed it on.
+- **L6, `testing`:** grep for a call site before believing a documented capability. Four
+  cancel methods were documented and never called.
+- **L7, `testing`:** a test asserts the invariant, not today's state, and a rule about releases
+  runs on the release path. A unit test blocked every commit during a review round, and didn't
+  block the releases it was for.
+- **L8, `testing`:** the command typed locally stands in for CI's, so it matches CI's import
+  path and compiler flags. `python -m pytest` adds the current directory to `sys.path` and the
+  `pytest` script doesn't; a bare `gcc` passed code the project's flags reject.
+- **L9, `testing`:** a gate never picks its subject by sort or directory order. The "newest
+  verification" was whichever file the directory listed last.
+- **L10, `testing`:** a scripted edit with several parts asserts each part landed. One assert
+  covered one replacement while the others silently did nothing.
+- **L11, `testing`:** a stand-in for hardware can be a fault-injection shim. An `LD_PRELOAD`
+  shim that fails reads found a hang no drive run had, and reproduced a damaged disc on demand.
+- **L12, `testing`:** a parser that offline tests never reach is tested against a recorded
+  response. Tests that all ran offline left a network parser at 27% branch coverage, hiding
+  three crashes.
+- **L13, `testing`:** an intermittent failure can be a race in the program, not the test. One
+  was a signal arriving after the loop, fixed in the program. This adds to F87.
+- **L14, `testing`:** filed evidence is read as a set of claims. Two defects sat for weeks in
+  logs both sides had filed and nobody had read.
+- **L15, `testing`:** a check is independent of another by the time between them, not the
+  date. Two checks on consecutive dates were 26 minutes apart.
+- **L16, `error-handling`:** a broad `try` around a whole validator fails open. One field of
+  the wrong type made the validator return no errors, and a path-traversal template was saved.
+- **L17, `error-handling`:** an exit code carries one meaning. One program exited 1 for both a
+  failed read and a stopped search, and its consumer couldn't step its retry ladder down.
+- **L18, `error-handling`:** a captured child process records a tri-state exit code, null for a
+  child never reaped, its arguments as run, and long output as head and tail with a count of
+  what was cut.
+- **L19, `logging-and-observability`:** a program that writes two records of one run makes them
+  agree. The machine-readable record and the archival log disagreed, and the archival one was
+  wrong.
+- **L20, `logging-and-observability`:** a population is recorded once, as data, and never
+  derived again. One total was re-derived, and fixed, in four files.
+- **L21, `api-design`:** a contract derived from format strings can't see a change of meaning.
+  An error count began to include encoder failures, and the contract diff showed one row of
+  303. A contract records every argument as used, declined with a reason, or not yet examined.
+- **L22, `api-design`:** when a provider rewords a line its consumer parses, the consumer's
+  release that reads both wordings ships first.
+- **L23, `c`:** gate on the count of warnings under the shipped flags rather than `-Werror`,
+  which fails on a new compiler's new warnings. Ask the binary whether it's instrumented: a
+  test log looked sanitized while the binary wasn't. Argument shape is a probe axis of its
+  own, and it found an overread both sanitizers missed.
+- **L24, `versioning-and-releases`:** a fork whose advancing part is SemVer build metadata
+  can't order its releases by version, since the specification ignores build metadata for
+  precedence. Order by a release sequence.
+- **L25, `house-style`:** a claim takes the strongest verb its evidence supports and no
+  stronger, names the artifact, and says what an absence means.
+- **L26, `review-loops`:** what one loop of two repositories learned over 31 rounds and eight
+  protocol versions, as a starting set:
+  - **What worked:**
+    - Close conditions fixed at the first lap.
+    - A pre-commit, "our next lap is GO unless X". Rounds went from 37 laps to three.
+    - Each side reading the other's default branch rather than relayed files.
+    - A lap counted as sent only when marked released.
+    - Lap numbers per side.
+    - A short header parsed fail-closed.
+    - Claims cited as `owner/repo@sha:path:line`.
+    - One status block per side, checked by that side's tests.
+    - A conformance table with a test per row on both sides.
+    - Overrides written once, with the rule, who and why.
+  - **What cost more than it caught:**
+    - Round digests and a reconcile state.
+    - Envelopes around laps.
+    - Copying the peer's verdict into one's own lap.
+    - A required ledger field on GO laps.
+    - Close-by dates and a lap ceiling that never fired.
+    - Releases gated on round state.
+    - A mirrored spec where each correction is a version that governs only from the next round.
+    - Hand-copied pins in prose.
+  - **What the agents couldn't supply:** time on hardware, a design both sides agree on, and
+    acts only the owner can do. No number of laps stood in for any of them.
+  - **The owner's rulings:**
+    - Cut rules about choreography and keep rules about evidence.
+    - An answer is not a settlement.
+    - Laps that only acknowledge are gone.
+  - **Where the value was:** the contract mismatches neither side could see alone, such as a
+    flag upstream had dropped, a filtered message list and one-word parser misses. Nearly all
+    came from reading the other side's committed artifacts or a run on real hardware, rarely
+    from a lap's argument.
 
 ## Rebuilding `project-bootstrap-and-audit`
 
@@ -725,8 +810,60 @@ The owner asked on 2026-10-12 for one rule, applied in v0.42.0:
 
 - **F119:** generated evidence, the logs, captures and reports a project's runs keep adding,
   lives on an orphan `evidence` branch, never tagged, with a manifest on the default branch and
-  a SessionStart hook that keeps sessions from fetching it. A live repository's evidence had reached 320 MB on its default
-  branch, and every session's clone carried it.
+  a SessionStart hook that keeps sessions from fetching it. A live repository's evidence had
+  reached 320 MB on its default branch, and every session's clone carried it.
+
+Reading the two live repositories' records on 2026-10-12 found these. Four readers worked
+through their review rounds, their protocol's eight versions, and their rules and guidance;
+each quote a candidate rests on was checked against its file. They wait for the owner's
+approval:
+
+- **F120:** fix the instance, then sweep for the same shape, and make the sweep a test. One
+  live repository fixed a thread-ownership bug in one of nine classes that create threads, and
+  its rule now sweeps all of them. The same repository fixed a hook that failed open in one
+  place and left the same shape in its agent hook.
+- **F121:** a Claude Code PreToolUse hook is a gate of its own, beside deny rules, git hooks and
+  CI. It reads the tool's input, lets through the fix its own message prints, and fails closed:
+  that agent hook piped `git diff` into `grep`, so a failing `git diff` passed, and it blocked
+  the unstage command it told the agent to run.
+- **F122:** under `pipefail`, `producer | grep -q` can read a match as a failure, because
+  `grep` exits on the first match and the producer dies of SIGPIPE. It silently ate a
+  legitimate changelog opt-out there. A here-string doesn't. `grep -c` over a glob prints a
+  count per file, not a total.
+- **F123:** evidence names the build it ran on, read from the artifact itself. Acceptance runs
+  on real hardware tested the wrong build twice, 247 passes on the release pin rather than the
+  test pin, and a lap declared a version the bundle didn't hold. A version line in every log
+  made both checkable.
+- **F124:** a completeness field computed from the request is read as the result. Both
+  repositories had one: a file list printed from the requested formats, and gates marked "ran"
+  from the configuration, so a session reported 241 passed while writing no files of two
+  formats.
+- **F125:** two sides agreeing proves they hold the same bytes, not that the bytes are right.
+  A shared argument table stayed stale for eight days under matching hashes, and both sides
+  certified a protocol version complete "accurately, against the wrong list". Each shared file
+  is checked against what it describes.
+- **F126:** a rule overridden two rounds running goes up for amendment. One was overridden in
+  each of five rounds, and a release-blocking rule for ten releases, before a protocol version
+  deleted both.
+- **F127:** a close condition states what must be true, never what must have happened, and is
+  checked at the first lap for whether it can be met. Three conditions could only be met by
+  events after them, and the two-sided close rules deadlocked three times. One condition asked
+  for behavior the code documents as deliberately absent. This extends F101.
+- **F128:** a release never waits for a review round; a round approves a pair already
+  released. Tying the two produced the deadlocks above, a stream of overrides, and every
+  build cut inside a round logging that it wasn't a released build.
+- **F129:** a fact copied by hand into prose is deleted, not policed. Over five rounds each
+  stale copy of a pin or round number produced a new gate, and each gate missed the next copy.
+  The owner had the copies removed, with nine tests that only policed them. This extends F97.
+- **F130:** the context file's size budget is enforced, not advised, and the run says what
+  moves out: session logs, completed tasks, superseded documents. One context file reached
+  153 KB and another 79 KB, against the standard's own advice, and about 38% of one
+  repository's commits went to process records against 10% touching its source.
+- **F131:** a recorded decline whose premise can be checked is checked. One decline of branch
+  protection rested on cost, in a public repository where the plan includes rulesets.
+- **F132:** what a session hands its owner is one thing to paste or run, with the steps beside
+  it, never an instruction file to work through. A live owner's rule says so, after a 414-line
+  runbook; this repository's own owner asked the same of a handoff on 2026-10-12.
 
 The owner asked for one more rule, researched before it's written:
 
