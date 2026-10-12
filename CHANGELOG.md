@@ -6,14 +6,31 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.9] - 2026-10-12
+
 ### Added
 
 - The roadmap gains the `review-loops` skill, planned, with what two live repositories' review
-  loop learned over 31 rounds. It also gains 22 lessons for planned skills, L5 to L26, and
-  thirteen proposed changes to the standard, F120 to F132, which wait for the owner's approval.
+  loop learned over 31 rounds. It also gains 25 lessons for planned skills, L5 to L29, and
+  eighteen proposed changes to the standard, F120 to F137, which wait for the owner's approval.
+- `git-workflows` covers personal information in history, from a live rewrite:
+  - count every copy before choosing the scope;
+  - rewrite only the metadata where that's enough;
+  - commit an old-to-new map, so cited commits still resolve;
+  - rehearse on a mirror, with the full test suite;
+  - hand the owner one checked script to run;
+  - warn of the side effects, and refresh every clone afterward.
+
+### Changed
+
+- `git-workflows` names workflow dependency lockfiles, in public preview, as stronger than SHA
+  pins, and keeps SHA pins as the rule until lockfiles are generally available.
+- `git-workflows`' default-branch ruleset template allows merge commits only, so the strategy
+  holds even if the repository's setting is changed.
 
 ### Fixed
 
+- `git-workflows`' fact on SHA pins quoted a sentence GitHub has since removed.
 - `git-workflows`' release workflow, and this repository's copy of it, refuses a release whose
   changelog section has no entries, or whose `[Unreleased]` section still has some. It had
   checked only that the section's heading existed, and a live repository once released with six
