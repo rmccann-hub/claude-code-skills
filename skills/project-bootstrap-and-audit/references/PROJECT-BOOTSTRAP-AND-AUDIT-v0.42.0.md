@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.41.0"
-  updated: "2026-10-05"
-  supersedes: "0.40.0"
+  version: "0.42.0"
+  updated: "2026-10-12"
+  supersedes: "0.41.0"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -681,6 +681,8 @@ reads as diligence.
 | A job with no `timeout-minutes` runs for up to 360 minutes before GitHub cancels it (GitHub's workflow syntax page) | 2026-10 | Dimension 6 and *Starter file contents*. What a job that hangs costs |
 | GitHub's default squash message is the commit's title and message for a one-commit pull request, and the pull request's title and list of commits for two or more. The API returns the title's setting as `squash_merge_commit_title`: `COMMIT_OR_PR_TITLE` takes a one-commit pull request's own title, as the default message does, and `PR_TITLE` always takes the pull request's title (GitHub's page on configuring commit squashing, and its REST reference) | 2026-10 | Dimension 10. Under squash, whether the grammar check reads the subject |
 | Events a workflow makes with its `GITHUB_TOKEN` create no new workflow run, apart from `workflow_dispatch` and `repository_dispatch`, and a pull request it opens or updates, whose runs then wait for approval (GitHub's `GITHUB_TOKEN` page) | 2026-10 | The release gate. Why a release hands off through `workflow_dispatch` |
+| `git fetch` and `git push` take negative refspecs, which start with `^` and exclude the refs they match: a ref is fetched only where it matches a positive refspec and no negative one (Git 2.29.0's release notes, and the `git fetch` page) | 2026-10 | *Evidence a project generates*. How sessions leave a branch alone |
+| Observed in this standard's own cloud sessions with Git 2.43, on 2026-10-07 and 2026-10-12: the clone fetched only the default branch, 50 commits deep, but kept the refspec for every branch, so a later plain `git fetch` downloaded every branch. With `^refs/heads/evidence` added, it downloaded none of that branch until a tag pointed into it. Then a plain fetch took the tag and the history behind it, as a plain clone did. `git clone --single-branch --no-tags` took none of it | 2026-10 | *Evidence a project generates*. Why the branch is never tagged |
 
 ### Platform settings, and where each is
 
@@ -1569,7 +1571,9 @@ one that was intended.
 
 Findings worth raising: source files scattered at the repository root; tests interleaved with
 source where the ecosystem separates them; two directories doing the same job; a directory
-named in the module map that no longer exists; auxiliary files with no consistent home.
+named in the module map that no longer exists; auxiliary files with no consistent home;
+evidence that grows with each run committed to the default branch, which goes on its own
+branch as *File governance* says.
 **Restructuring an established repository is rarely worth it** — say so, and record the cost,
 unless the layout is actively causing the confusion.
 
@@ -4233,10 +4237,50 @@ delivery form — a reply body does not survive being carried into another sessi
 | Scope | Guidance |
 |---|---|
 | **Always-loaded volume** | The per-session cost, and the number that matters. Past ~150 lines in the canonical file, prune. **~300 lines is the outer limit anyone recommends**, and Anthropic's own target is under 200 lines per `CLAUDE.md`. **At 32 KiB Codex stops reading** (`project_doc_max_bytes`, combined size) — past that the file is not merely expensive, it is partly unread |
-| **Reference volume** | Costs nothing until opened. **A large evidence file is not sprawl** |
+| **Reference volume** | Costs nothing until opened. **A large evidence file is not sprawl**, and evidence a project keeps generating goes on its own branch, below |
 | Any tool shim | ~30 lines |
 | Any single rule file | ~50 lines |
 | Files in `docs/` with no inbound link | 0 |
+
+## Evidence a project generates
+
+**Evidence a project generates run after run lives on its own branch, not on the default
+branch.** That's the logs, captures, screenshots, recordings and run reports that tests,
+acceptance runs and reviews produce, and that nothing builds or tests from. A fixture a test
+reads stays with the tests. In one live repository such evidence reached 320 MB on the default
+branch, 151 MB of it from one round of review, mostly application logs of 8 MB each, and every
+session's clone carried all of it.
+
+- **An orphan branch named `evidence`, only ever appended to.** It's never merged into the
+  default branch, never rebased and never tagged. A tag that points into it brings its history
+  into every clone, and into a plain fetch that excludes the branch, as *Facts with an expiry
+  date* records. Where the plan allows a ruleset, one blocks deleting the branch and force
+  pushes to it.
+- **The default branch keeps a manifest** of what the evidence branch holds: each file's path,
+  size, SHA-256 and the evidence commit that added it. A record cites evidence by that commit
+  and path, which stays valid because the branch is never rewritten, and a reader checks the
+  file against its hash.
+- **Sessions don't fetch it.** A committed SessionStart hook adds
+  `git config --add remote.origin.fetch '^refs/heads/evidence'` where the line isn't there yet.
+  A cloud session's clone holds only the default branch, but keeps the refspec for every
+  branch, so without that line its first plain `git fetch` downloads the evidence too. A tool
+  or session that needs a file fetches it by name, with `git fetch --depth 1 origin evidence`,
+  or reads the file's raw link at its commit.
+- **From T2, CI checks what nothing else does:** that no tag points into the evidence branch,
+  and that each manifest row's hash matches its file.
+- **Moving evidence already on the default branch takes one commit on each branch:** the files
+  added to `evidence`, then removed from the default branch with the manifest added. History
+  isn't rewritten, so a full clone keeps its size, and a shallow clone stops carrying the old
+  files once the move is older than its depth, 50 commits in a cloud session. Removing them
+  from history too is a decision of its own: it changes every commit ID, and every citation of
+  one.
+- **Where two repositories cite each other's evidence,** as a review loop does, both move it in
+  one agreed change, under *Cross-repository contracts*.
+
+**Where evidence that grows with each run is committed to the default branch, dimension 3
+rates it `GAP`**, at every tier: the cost lands on every clone, whatever the stakes. Moving
+it isn't the restructuring dimension 3 warns against: the layout stays, and only the branch
+the files are kept on changes.
 
 ## Merge, delete, leave alone
 
@@ -4944,6 +4988,15 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.42.0** — **one rule, F119, which the owner asked for on 2026-10-12:** *evidence a project
+generates run after run lives on its own branch.* An orphan `evidence` branch, only ever appended
+to and never tagged, holds it; the default branch keeps a manifest with each file's hash and
+commit; a committed SessionStart hook keeps sessions from fetching the branch; and from T2, CI
+checks that no tag points into it. Dimension 3 rates such evidence on the default branch `GAP`
+at every tier. A live repository's evidence had reached 320 MB on its default branch. Two dated
+facts record the Git behavior the rule rests on, one from Git's documentation and one observed
+in this standard's own sessions, including the tag that brought an excluded branch back.
 
 **0.41.0** — **thirty-four fixes**, F81 to F114, which the owner approved on 2026-10-05: lessons the
 two live repositories paid for, five checks of this file against its sources, a support reply, the
