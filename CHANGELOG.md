@@ -6,6 +6,19 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- The roadmap gains the `review-loops` skill, planned, with what two live repositories' review
+  loop learned over 31 rounds. It also gains 22 lessons for planned skills, L5 to L26, and
+  thirteen proposed changes to the standard, F120 to F132, which wait for the owner's approval.
+
+### Fixed
+
+- `git-workflows`' release workflow, and this repository's copy of it, refuses a release whose
+  changelog section has no entries, or whose `[Unreleased]` section still has some. It had
+  checked only that the section's heading existed, and a live repository once released with six
+  entries left under `[Unreleased]`.
+
 ## [0.1.8] - 2026-10-12
 
 ### Changed

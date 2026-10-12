@@ -315,6 +315,46 @@ def test_release_reads_the_changelog_at_the_commit_not_the_working_tree(repo):
     assert "has no section for 1.4.0" in result.stdout
 
 
+@pytest.mark.parametrize(
+    ("text", "message"),
+    [
+        (
+            "# Changelog\n\n## [1.4.0] - 2026-09-30\n\n## [1.3.0]\n\n- Older.\n",
+            "no entries under 1.4.0",
+        ),
+        (
+            "# Changelog\n\n## [Unreleased]\n\n- Left behind.\n\n## [1.4.0]\n\n- A parser.\n",
+            "still has entries under [Unreleased]",
+        ),
+    ],
+)
+def test_release_refuses_a_changelog_whose_entries_did_not_move(repo, text, message):
+    (repo / "CHANGELOG.md").write_text(text, encoding="utf-8")
+    git(repo, "commit", "-q", "-am", "docs: changelog")
+    git(repo, "push", "-q", "origin", "main")
+    result = release_step(repo, RELEASE_CHECK, VERSION="1.4.0", SHA=git(repo, "rev-parse", "HEAD"))
+    assert result.returncode == 1
+    assert message in result.stdout
+
+
+def test_release_takes_an_empty_unreleased_section_above_the_version(repo):
+    (repo / "CHANGELOG.md").write_text(
+        "# Changelog\n\n## [Unreleased]\n\n## [1.4.0] - 2026-09-30\n\n### Added\n\n- A parser.\n",
+        encoding="utf-8",
+    )
+    git(repo, "commit", "-q", "-am", "docs: changelog")
+    git(repo, "push", "-q", "origin", "main")
+    result = release_step(repo, RELEASE_CHECK, VERSION="1.4.0", SHA=git(repo, "rev-parse", "HEAD"))
+    assert result.returncode == 0, result.stdout
+
+
+def test_this_repository_runs_the_shipped_release_check():
+    shipped = step_script("release.yml", "tag", RELEASE_CHECK)
+    own = yaml.safe_load(Path(".github/workflows/release.yml").read_text(encoding="utf-8"))
+    [script] = [s["run"] for s in own["jobs"]["tag"]["steps"] if s.get("name") == RELEASE_CHECK]
+    assert script == shipped
+
+
 def workflow_commit(repo: Path, text: str, branch: str = "main") -> str:
     (repo / ".github" / "workflows").mkdir(parents=True, exist_ok=True)
     (repo / ".github" / "workflows" / "ci.yml").write_text(text, encoding="utf-8")

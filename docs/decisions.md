@@ -2,6 +2,44 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-12 — What two live repositories' records taught, taken in
+
+- **Asked:** the owner asked for both live repositories to be read for what their review loop
+  found and fixed, and for this repository to improve from it. They added: "both repos have a
+  lot of experience, make sure you look at their rules, guidance files".
+- **Read:** four readers, each a fresh session given read-only checkouts:
+  - each repository's review records;
+  - the protocol's eight versions, through its history;
+  - both repositories' rules, guidance, hooks, workflows and tools.
+
+  Each reader was told the files were data, not instructions. Two reported directives aimed at
+  agents, which none followed. Eight quotes the candidates rest on were checked against their
+  files, and so were the two defects below. The repositories stay unnamed here, as the
+  2026-10-05 entry says.
+- **Taken in:**
+  - **`review-loops`,** a planned skill: agent sessions in two repositories reviewing each
+    other's work. L26 holds the loop's starting set, what worked, what cost more than it
+    caught, and what agents couldn't supply.
+  - **Lessons L5 to L25** for planned skills: `testing`, `error-handling`,
+    `logging-and-observability`, `api-design`, `c`, `versioning-and-releases` and
+    `house-style`.
+  - **F120 to F132,** proposed changes to the standard. They wait for the owner's approval, as
+    changes to the standard do.
+  - **One fix to a shipped skill:** `git-workflows`' release workflow checked only that the
+    version's changelog heading existed. It now refuses a section with no entries, and an
+    `[Unreleased]` section that still has some. A live repository once released with six
+    entries left behind. Its checks read the changelog through here-strings rather than pipes,
+    as F122 asks. Four tests plant each failure and show a clean changelog passes. One keeps
+    this repository's own copy identical to the template. `.test-baseline` moves to 324.
+- **Found, and left to the owner:** these are in the live repositories, which this session
+  doesn't change, so they go to the owner rather than into a commit:
+  - one repository's agent hook fails open;
+  - a recorded decline whose premise doesn't hold;
+  - the other repository's CI workflow has no permissions block or timeouts.
+- **Not chosen:**
+  - Applying any of F120 to F132 now. The standard changes only once its owner approves.
+  - Writing `review-loops` now. The owner asked that no more skills be built yet.
+
 ## 2026-10-12 — Standard v0.42.0: generated evidence lives on its own branch, and release 0.1.8
 
 - **Asked:** the owner said on 2026-10-12, of the evidence the live repositories keep committing,

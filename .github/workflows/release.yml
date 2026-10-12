@@ -64,8 +64,21 @@ jobs:
           if ! git merge-base --is-ancestor "$SHA" "origin/$DEFAULT_BRANCH"; then
             echo "::error::$SHA is not on $DEFAULT_BRANCH"; exit 1
           fi
-          if ! git show "$SHA:CHANGELOG.md" | grep -qF "## [$VERSION]"; then
+          changelog=$(git show "$SHA:CHANGELOG.md")
+          if ! grep -qF "## [$VERSION]" <<<"$changelog"; then
             echo "::error::CHANGELOG.md at $SHA has no section for $VERSION"; exit 1
+          fi
+          # The entries moved, both halves: the version's section has some, and [Unreleased]
+          # has none left. A live release once shipped with six entries still under [Unreleased].
+          # Here-strings, not pipes: under pipefail, grep -q can stop its producer mid-write.
+          section() {
+            awk -v h="## [$1]" 'index($0, h) == 1 {on = 1; next} /^## \[/ {on = 0} on' <<<"$changelog"
+          }
+          if ! grep -qE '^[[:space:]]*[-*] ' <<<"$(section "$VERSION")"; then
+            echo "::error::CHANGELOG.md at $SHA has no entries under $VERSION"; exit 1
+          fi
+          if grep -qE '^[[:space:]]*[-*] ' <<<"$(section Unreleased)"; then
+            echo "::error::CHANGELOG.md at $SHA still has entries under [Unreleased]"; exit 1
           fi
 
       - name: Check that a branch has the commit's workflow files
