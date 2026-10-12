@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.8] - 2026-10-12
+
 ### Changed
 
 - The standard is v0.42.0. It adds one rule, F119, which the owner asked for: generated
