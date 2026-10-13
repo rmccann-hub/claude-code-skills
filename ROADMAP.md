@@ -930,7 +930,8 @@ before it's built:
     pin decides the version, at the cost of a fetch on every run. A hash shows that a copy is
     whole, not that it's current, so the run also compares its version with `main`'s. The
     first pass has it ask whether to go on when `main` is newer, a stop the standard's two
-    waits don't include; the deeper pass warns without stopping.
+    waits don't include; the deeper pass warns without stopping. **The owner chose on
+    2026-10-13:** the hash in `SKILL.md`, checked at the start, and a warning, not a stop.
   - **The questions:** a draft of each answer the repository shows, with its evidence and one
     word of confidence. The first pass asks three outright every run: where it runs,
     production and dependents. The deeper pass asks five, adding work or personal and how long
@@ -938,10 +939,12 @@ before it's built:
     marked recommended only beside its evidence, and a re-check asks "Is that still the
     case?" (F38). `AskUserQuestion` takes at most four questions a call, and how it shows in
     the mobile app isn't documented, so the questions also need a numbered list answered in
-    one reply. The studies behind these are checked, except the first pass's row 58.
+    one reply. The studies behind these are checked, except the first pass's row 58. **The
+    owner chose the five on 2026-10-13.**
   - **Where the answers are kept:** R22 proposes a dated block in the decision record, with no
     addresses, hostnames or names. The run report's Phase 3 block already defines those
-    answers' fields, and one schema is easier to keep than two.
+    answers' fields, and one schema is easier to keep than two. **The owner chose the run
+    report on 2026-10-13.**
   - **When it loads:** a description narrowed to runs that name it, since an uploaded skill
     can't carry `disable-model-invocation`. That needs the trigger evaluations the authoring
     review asks for. The Help Center gives an uploaded skill's description 200 characters at
@@ -950,7 +953,8 @@ before it's built:
     and hooks, and a PreToolUse hook that exits with code 2 blocks the call. The deeper pass
     has Phase 8 offer each repository such a skill after its first approved run, with a hook
     that blocks writes until approval. That puts a skill and a hook into other repositories,
-    so it needs a review of its own.
+    so it needs a review of its own. **The owner chose on 2026-10-13:** offer it after each
+    approved run, and install it only on the owner's yes.
   - **A new project's recommendation:** at least two languages compared, each dependency
     checked against its registry, and each version against current release notes. Code models
     favor Python, name packages that don't exist (at least 5.2% of those from commercial
@@ -961,8 +965,8 @@ before it's built:
     installed before v0.37.0 kept v0.36.0 until then. How
     claude.ai decides that a personal marketplace's copy changed isn't documented. By the Help
     Center, an organization's GitHub-synced marketplace syncs when a merged pull request
-    changes the version. Releasing at each standard change, or leaving the version out so
-    that installs follow `main`, is the owner's choice.
+    changes the version. **The owner chose on 2026-10-13** to keep bumping the version at
+    each release, rather than leave it out so that installs follow `main`.
   - **Tests in the owner's browser** settle what's left. Three are in the first pass's section
     10: what refreshes claude.ai's copy, with Check for updates tried before any version
     change; what a same-name upload does; and whether `skillOverrides` reaches a synced skill

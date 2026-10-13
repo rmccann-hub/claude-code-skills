@@ -2,6 +2,27 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-13 — The owner's answers to questions 36 to 43
+
+- **Asked:** the owner was given eight more questions, six with a recommendation and two with
+  options only, and answered, verbatim: "Do 5 questions, the fingerprint, warn, yes offer each
+  time and only install with a yes, keep bumping, run the report.not now. File all 18, bit not
+  right now, I will say."
+- **The single start command,** from R22, as `ROADMAP.md` records beside each choice:
+  - a run always asks five questions: where it runs, production, dependents, work or
+    personal, and how long it must live (36);
+  - the reference file's SHA-256 sits in `SKILL.md` and is checked at the start, rather than
+    the skill fetching the reference on every run (37);
+  - where `main` holds a newer standard than the copy running, the run warns and goes on (38);
+  - after each approved run, the run offers a project skill whose hook blocks writes until
+    approval, and installs it only on the owner's yes (39);
+  - the catalog's version is bumped at every release (40);
+  - a run keeps its answers about a repository in its run report's Phase 3 block (41).
+- **Not now (42):** no work repositories are named, and `procedure-generator` stays as it is
+  on the owner's account until `word-documents` is built.
+- **The fork's upstream reports (43):** all 18 are to be filed, by the owner, but not until
+  the owner says so. Nothing is posted until then.
+
 ## 2026-10-13 — The owner's answers to questions 19 to 35, and F115 to F137
 
 - **Asked:** the owner was given each open question with a recommendation, and answered "I
