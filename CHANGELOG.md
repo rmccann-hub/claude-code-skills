@@ -6,6 +6,13 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- CI and the prose check run on a push to `main` only. A branch with a pull request ran each
+  twice, once for the push and once for the pull request.
+- The house-style skill's prose workflow does the same, with a note to name another default
+  branch where it isn't `main`.
+
 ## [0.1.10] - 2026-10-13
 
 ### Added

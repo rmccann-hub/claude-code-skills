@@ -2,6 +2,24 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-13 — CI runs once per pull request
+
+- **Asked:** the owner asked whether running CI on a branch and again on `main` after the merge
+  is redundant, and approved the fix on 2026-10-13.
+- **Found:** `ci.yml` and `prose.yml` had a bare `push:` trigger, so each push to a branch with
+  an open pull request ran both workflows twice: commit `793baa3` has a `push` run and a
+  `pull_request` run of each. The two other repositories the owner keeps already limit `push`
+  to their default branch.
+- **Changed:** both workflows run `push` on `main` only. The pull request run still tests each
+  branch merged with `main`, and `main`'s own run stays, because it tests the merge commit
+  itself and the release workflow reads that commit's checks.
+- **The house-style skill's copy follows:** a test holds this repository's `prose.yml` byte for
+  byte to the one the skill ships, so the shipped workflow narrows `push` too, and its setup page
+  says to name another default branch in place of `main`.
+- **Costs:** a branch pushed with no pull request gets no run until one is opened. The standard
+  already gives this trade-off and calls the narrowing optional for a fast suite; the owner
+  chose fewer runs.
+
 ## 2026-10-13 — Standard v0.43.0, and release 0.1.10
 
 - **Asked:** the owner approved F115 to F118 and F120 to F137 on 2026-10-13, with F138 from
