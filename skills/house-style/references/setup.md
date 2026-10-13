@@ -98,8 +98,9 @@ Copy [assets/workflows/prose.yml](../assets/workflows/prose.yml) into the reposi
 4. **Check every tracked Markdown file.** The files to leave alone are set in `.vale.ini`, not
    in the workflow, so a person running `vale` locally gets the same answer as CI.
 
-The workflow runs on every push and pull request, with no path filter, so it can be a required
-check. Its action pins go stale like any other. In claude-code-skills, Dependabot moves the copy
+It runs on each pull request and on each push to `main`, with no path filter, so it can be a
+required check. A repository whose default branch has another name puts that name in place of
+`main`. A branch with no pull request gets no run. Its action pins go stale like any other. In claude-code-skills, Dependabot moves the copy
 it runs, and the asset follows.
 
 ## Running it locally

@@ -1,7 +1,10 @@
 name: CI
 
 on:
+  # A branch's pull request run tests it merged with main, so a push run there repeats it.
+  # main's own run stays: it tests the merge commit, and the release gate reads its checks.
   push:
+    branches: [main]
   pull_request:
 
 permissions:
