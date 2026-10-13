@@ -23,7 +23,7 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.42.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.43.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -799,7 +799,7 @@ repositories, approved by the owner on 2026-10-05 and applied in v0.41.0:
   then go back to choosing the job.
 
 Applying them found four more on 2026-10-05, each checked that day. The owner approved them on
-2026-10-13, for v0.43.0:
+2026-10-13, and applied in v0.43.0:
 
 - **F115:** the starter CI file's checkout keeps its credentials, which zizmor flags as
   `artipacked`. This repository's workflows set `persist-credentials: false`, and the template
@@ -826,7 +826,7 @@ The owner asked on 2026-10-12 for one rule, applied in v0.42.0:
 Reading the two live repositories' records on 2026-10-12 found these. Four readers worked
 through their review rounds, their protocol's eight versions, and their rules and guidance;
 each quote a candidate rests on was checked against its file. The owner approved them on
-2026-10-13, for v0.43.0:
+2026-10-13, and applied in v0.43.0:
 
 - **F120:** fix the instance, then sweep for the same shape, and make the sweep a test. One
   live repository fixed a thread-ownership bug in one of nine classes that create threads, and
@@ -876,8 +876,8 @@ each quote a candidate rests on was checked against its file. The owner approved
   runbook; this repository's own owner asked the same of a handoff on 2026-10-12.
 
 A history rewrite in one of those repositories, run by its owner on 2026-10-12, and the
-session's own feedback on it, found five more. The owner approved them on 2026-10-13, for
-v0.43.0:
+session's own feedback on it, found five more. The owner approved them on 2026-10-13, and they're
+applied in v0.43.0:
 
 - **F133:** a placeholder left unfilled in a request, such as `<Windows / macOS / Linux>`, is
   asked about at once, before any work that depends on it.
@@ -892,7 +892,7 @@ v0.43.0:
 - **F137:** two more shell habits for F96: `pkill -f <name>` matched the agent's own shell and
   killed it, and a scratch copy gets a new folder name rather than `rm -rf` of an old one.
 
-One more, from the owner's answer on 2026-10-13, for v0.43.0:
+One more, from the owner's answer on 2026-10-13, applied in v0.43.0:
 
 - **F138:** a log committed as evidence has home-folder paths replaced with `~` before it's
   committed. The evidence branch is as public as the repository, and one owner's username was
