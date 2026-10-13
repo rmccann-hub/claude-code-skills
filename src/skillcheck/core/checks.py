@@ -36,6 +36,10 @@ MAX_COMPATIBILITY_LENGTH = 500
 # Both the spec and Claude Code's docs: "Keep SKILL.md under 500 lines." The whole file loads
 # every time the skill activates; detail belongs in files it links to.
 MAX_SKILL_LINES = 500
+# The standard's budget for an always-loaded context file, enforced since v0.43.0: 300 lines at
+# most, and Codex stops reading instruction files past 32 KiB by default.
+MAX_CONTEXT_LINES = 300
+MAX_CONTEXT_BYTES = 32 * 1024
 
 # A catalog entry serving skills from this repository names each one as ./skills/<name>, or the
 # whole folder as ./skills/. Claude Code loads every skill when none of an entry's listed paths
@@ -356,10 +360,24 @@ def _is_text(value: object) -> bool:
 
 def _check_agent_files(root: Path, report: Report) -> None:
     files = [root / name for name in AGENT_FILES if (root / name).is_file()]
+    for path in files:
+        _check_context_size(path, report)
     for directory in AGENT_DIRS:
         if (root / directory).is_dir():
             files += _files_under(root / directory)
     _check_hidden_characters(root, files, report)
+
+
+def _check_context_size(path: Path, report: Report) -> None:
+    data = path.read_bytes()
+    lines = len(data.splitlines())
+    if lines > MAX_CONTEXT_LINES or len(data) > MAX_CONTEXT_BYTES:
+        report.add(
+            path.name,
+            "size",
+            f"{path.name} is {lines} lines and {len(data)} bytes; keep it within "
+            f"{MAX_CONTEXT_LINES} lines and {MAX_CONTEXT_BYTES} bytes",
+        )
 
 
 def _files_under(directory: Path) -> list[Path]:
