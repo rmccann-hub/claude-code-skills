@@ -2,6 +2,38 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-13 — The owner's answers to questions 19 to 35, and F115 to F137
+
+- **Asked:** the owner was given each open question with a recommendation, and answered "I
+  agree with you recommendations". Events had already settled 21 (F119, in v0.42.0), 22 and 23
+  (history: only one email address was rewritten), 24 (releases went ahead without R21), 25
+  (no wait for the rebuild), and the first two parts of 30.
+- **Approved for the standard, as v0.43.0, a change of its own:** F115 to F118, F120 to F137,
+  and F138, which replaces home-folder paths with `~` in a log before it's committed as
+  evidence (23, from now on).
+- **This repository:**
+  - `house-style` follows the commit grammar a repository records, rather than requiring
+    "area: summary" everywhere (26). A live repository that records lowercase Conventional
+    Commits keeps them.
+  - A session regenerates the dependency map in each Dependabot pull request before merging
+    it (27).
+- **The roll-out:**
+  - Scope: the owner's six repositories, and no work repository without the employer's
+    agreement (28).
+  - Order: this repository; then the two quiet private ones; then the two live ones, the fork
+    once its CI is green; then the empty organization repository is archived (29).
+  - The fork gives each release an annotated tag, from its first (30).
+  - The live repository marks only betas as prerelease, from its next release (31).
+  - The owner starts one re-check session per repository at each release, with that release's
+    kickstart file. Scheduling waits until a round of re-checks finds nothing to fix (32).
+- **How skills work together:**
+  - A checked pairing map replaces the orchestrator: each skill lists the skills it pairs with,
+    `skillcheck` checks the map, and each repository's `AGENTS.md` names its route. It's built
+    with the first language skill (33).
+  - A `word-documents` skill here takes a template and a defaults file. The company template
+    and defaults stay out of this public repository (34).
+  - Skills reach cloud sessions by upload to claude.ai, until cloud sessions load plugins (35).
+
 ## 2026-10-12 — A live history rewrite, taken into `git-workflows`, and release 0.1.9
 
 - **Asked:** the owner sent a live repository's session's feedback on removing one email
