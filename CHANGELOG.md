@@ -8,6 +8,11 @@ Notable changes to this repository. The format follows
 
 ## [0.1.10] - 2026-10-13
 
+### Added
+
+- `skillcheck` holds `AGENTS.md` and `CLAUDE.md` to 300 lines and 32 KiB each, as standard
+  v0.43.0 asks of every repository from T2.
+
 ### Changed
 
 - The standard is v0.43.0, with twenty-three changes the owner approved on 2026-10-13:

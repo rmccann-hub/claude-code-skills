@@ -2,6 +2,56 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-13 — Standard v0.43.0, and release 0.1.10
+
+- **Asked:** the owner approved F115 to F118 and F120 to F137 on 2026-10-13, with F138 from
+  their answer to question 23. They're applied as v0.43.0, a change of its own, following a
+  read-only plan that placed each one and named five that needed a reading:
+  - F133 asks about an unfilled placeholder at once, and carries it to the Phase 3 wait, so
+    the standard still has two waits;
+  - F134 lets an owner's hold on pushing win over a stop hook, and over Phase 7's push and
+    dimension 10's handoff, with the unpushed commits carried in the report;
+  - F131 sends a false premise to Phase 6's first list as a question with a default, so a
+    decline is still never re-proposed;
+  - F129 replaces 0.41.0's generate-or-test paragraph with delete-first, and the standard's
+    own "Eight things" count, which F115 made wrong, is gone;
+  - F117 puts a CI job stuck at its locked install in dimension 2 as `DRIFT`.
+- **Dated facts:** three new rows and one replaced, each quote checked at its source on
+  2026-10-13: the checkout's `persist-credentials`, `uv run` locking and syncing, Claude Code
+  hooks failing open unless they exit 2 or set `onFailure`, and lockfiles ranked above SHA
+  pins.
+- **Reviewed cold:** a fresh reviewer found thirteen defects in the first text, each checked
+  against the text before it was applied. The worst was this change's own shell recipe, whose
+  here-string threw away a failing producer's status, the fail-open shape F121 warns about.
+  Others: gates after a failed locked install would have rewritten `uv.lock` in the working
+  tree; an unfilled placeholder worked as a third wait; and the size rule had no template. The
+  starter CI's new size step failed open in its first draft too, and was tested in four cases
+  before it went in.
+- **This repository meets the size rule:** `skillcheck` holds `AGENTS.md` and `CLAUDE.md` to
+  300 lines and 32 KiB, and `AGENTS.md` now says its limits are enforced.
+- **Parity runs:** one fresh session for each sample, on the first text, the skill as committed
+  at `4363098`, whose standard's SHA-256 starts `ccdb33d4`. The review's fixes came after:
+  - **Audit:** twenty of twenty checks, and both manual checks hold. One value moved: dimension
+    4 to `BLOCKER`, the v0.37.0 rule every audit run has moved since. It proposed
+    `persist-credentials: false`, weighed a size check and proposed none at T1, and named the
+    gates that ran on a fresh resolution.
+  - **Re-check:** all four planted checks pass, and the three manual checks hold. Dimension 6
+    moved from `DRIFT` to `GAP`, which F117 meant: the stale lock is dimension 2's `DRIFT`. The
+    grader failed "does not propose Dependabot", but the amendment's change reads "no update
+    tool proposed (Dependabot declined)", so the reading wins, as the testing guide says. The
+    run checked a decline's premise against the history, and held Dependabot back from the SHA
+    pin.
+  - **Greenfield:** seven of seven checks, no difference from the baseline, and both manual
+    checks hold.
+  - **Slips:** the audit and re-check runs fetched from the sample's bare remote, outside
+    their directories, and the session refused their `rm -rf` of scratch files. The prompt's
+    known limits cover the first.
+- **Left for the rebuild:** the standard still restates a few counts and limits by hand, such
+  as "Four things cannot be detected". F129 applies to them, and the rebuild's pieces move that
+  text anyway.
+- **Release 0.1.10:** this pull request's merge, released by the Release workflow once CI
+  passes on the merge commit. Both catalog entries say 0.1.10.
+
 ## 2026-10-13 — The owner's answers to questions 36 to 43
 
 - **Asked:** the owner was given eight more questions, six with a recommendation and two with
