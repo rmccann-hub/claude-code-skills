@@ -5,6 +5,8 @@ from conftest import DEFAULT_DESCRIPTION
 
 from skillcheck.core.checks import (
     MAX_COMPATIBILITY_LENGTH,
+    MAX_CONTEXT_BYTES,
+    MAX_CONTEXT_LINES,
     MAX_DESCRIPTION_LENGTH,
     MAX_NAME_LENGTH,
     MAX_SKILL_LINES,
@@ -266,6 +268,33 @@ def test_skill_md_at_the_line_limit_fires(repo):
     assert [(f.rule, f.message) for f in report.findings] == [
         ("size", f"SKILL.md is {MAX_SKILL_LINES} lines; keep it under {MAX_SKILL_LINES}")
     ]
+
+
+@pytest.mark.parametrize("name", ["AGENTS.md", "CLAUDE.md"])
+def test_context_file_at_the_line_limit_passes(repo, name):
+    (repo.root / name).write_text("line\n" * MAX_CONTEXT_LINES, encoding="utf-8")
+    assert check_repository(repo.root).findings == []
+
+
+@pytest.mark.parametrize("name", ["AGENTS.md", "CLAUDE.md"])
+def test_context_file_past_the_line_limit_fires(repo, name):
+    lines = MAX_CONTEXT_LINES + 1
+    (repo.root / name).write_text("line\n" * lines, encoding="utf-8")
+    report = check_repository(repo.root)
+    assert [(f.path, f.rule, f.message) for f in report.findings] == [
+        (
+            name,
+            "size",
+            f"{name} is {lines} lines and {lines * 5} bytes; keep it within "
+            f"{MAX_CONTEXT_LINES} lines and {MAX_CONTEXT_BYTES} bytes",
+        )
+    ]
+
+
+def test_context_file_past_the_byte_limit_fires(repo):
+    # Few lines, each a paragraph: a line count alone would pass it.
+    (repo.root / "AGENTS.md").write_text(("x" * 1000 + "\n") * 33, encoding="utf-8")
+    assert rules(check_repository(repo.root)) == {"size"}
 
 
 def test_reference_that_links_to_another_reference_fires(repo):

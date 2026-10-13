@@ -2,6 +2,109 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-13 — Standard v0.43.0, and release 0.1.10
+
+- **Asked:** the owner approved F115 to F118 and F120 to F137 on 2026-10-13, with F138 from
+  their answer to question 23. They're applied as v0.43.0, a change of its own, following a
+  read-only plan that placed each one and named five that needed a reading:
+  - F133 asks about an unfilled placeholder at once, and carries it to the Phase 3 wait, so
+    the standard still has two waits;
+  - F134 lets an owner's hold on pushing win over a stop hook, and over Phase 7's push and
+    dimension 10's handoff, with the unpushed commits carried in the report;
+  - F131 sends a false premise to Phase 6's first list as a question with a default, so a
+    decline is still never re-proposed;
+  - F129 replaces 0.41.0's generate-or-test paragraph with delete-first, and the standard's
+    own "Eight things" count, which F115 made wrong, is gone;
+  - F117 puts a CI job stuck at its locked install in dimension 2 as `DRIFT`.
+- **Dated facts:** three new rows and one replaced, each quote checked at its source on
+  2026-10-13: the checkout's `persist-credentials`, `uv run` locking and syncing, Claude Code
+  hooks failing open unless they exit 2 or set `onFailure`, and lockfiles ranked above SHA
+  pins.
+- **Reviewed cold:** a fresh reviewer found thirteen defects in the first text, each checked
+  against the text before it was applied. The worst was this change's own shell recipe, whose
+  here-string threw away a failing producer's status, the fail-open shape F121 warns about.
+  Others: gates after a failed locked install would have rewritten `uv.lock` in the working
+  tree; an unfilled placeholder worked as a third wait; and the size rule had no template. The
+  starter CI's new size step failed open in its first draft too, and was tested in four cases
+  before it went in.
+- **This repository meets the size rule:** `skillcheck` holds `AGENTS.md` and `CLAUDE.md` to
+  300 lines and 32 KiB, and `AGENTS.md` now says its limits are enforced.
+- **Parity runs:** one fresh session for each sample, on the first text, the skill as committed
+  at `4363098`, whose standard's SHA-256 starts `ccdb33d4`. The review's fixes came after:
+  - **Audit:** twenty of twenty checks, and both manual checks hold. One value moved: dimension
+    4 to `BLOCKER`, the v0.37.0 rule every audit run has moved since. It proposed
+    `persist-credentials: false`, weighed a size check and proposed none at T1, and named the
+    gates that ran on a fresh resolution.
+  - **Re-check:** all four planted checks pass, and the three manual checks hold. Dimension 6
+    moved from `DRIFT` to `GAP`, which F117 meant: the stale lock is dimension 2's `DRIFT`. The
+    grader failed "does not propose Dependabot", but the amendment's change reads "no update
+    tool proposed (Dependabot declined)", so the reading wins, as the testing guide says. The
+    run checked a decline's premise against the history, and held Dependabot back from the SHA
+    pin.
+  - **Greenfield:** seven of seven checks, no difference from the baseline, and both manual
+    checks hold.
+  - **Slips:** the audit and re-check runs fetched from the sample's bare remote, outside
+    their directories, and the session refused their `rm -rf` of scratch files. The prompt's
+    known limits cover the first.
+- **Left for the rebuild:** the standard still restates a few counts and limits by hand, such
+  as "Four things cannot be detected". F129 applies to them, and the rebuild's pieces move that
+  text anyway.
+- **Release 0.1.10:** this pull request's merge, released by the Release workflow once CI
+  passes on the merge commit. Both catalog entries say 0.1.10.
+
+## 2026-10-13 — The owner's answers to questions 36 to 43
+
+- **Asked:** the owner was given eight more questions, six with a recommendation and two with
+  options only, and answered, verbatim: "Do 5 questions, the fingerprint, warn, yes offer each
+  time and only install with a yes, keep bumping, run the report.not now. File all 18, bit not
+  right now, I will say."
+- **The single start command,** from R22, as `ROADMAP.md` records beside each choice:
+  - a run always asks five questions: where it runs, production, dependents, work or
+    personal, and how long it must live (36);
+  - the reference file's SHA-256 sits in `SKILL.md` and is checked at the start, rather than
+    the skill fetching the reference on every run (37);
+  - where `main` holds a newer standard than the copy running, the run warns and goes on (38);
+  - after each approved run, the run offers a project skill whose hook blocks writes until
+    approval, and installs it only on the owner's yes (39);
+  - the catalog's version is bumped at every release (40);
+  - a run keeps its answers about a repository in its run report's Phase 3 block (41).
+- **Not now (42):** no work repositories are named, and `procedure-generator` stays as it is
+  on the owner's account until `word-documents` is built.
+- **The fork's upstream reports (43):** all 18 are to be filed, by the owner, but not until
+  the owner says so. Nothing is posted until then.
+
+## 2026-10-13 — The owner's answers to questions 19 to 35, and F115 to F137
+
+- **Asked:** the owner was given each open question with a recommendation, and answered "I
+  agree with you recommendations". Events had already settled 21 (F119, in v0.42.0), 22 and 23
+  (history: only one email address was rewritten), 24 (releases went ahead without R21), 25
+  (no wait for the rebuild), and the first two parts of 30.
+- **Approved for the standard, as v0.43.0, a change of its own:** F115 to F118, F120 to F137,
+  and F138, which replaces home-folder paths with `~` in a log before it's committed as
+  evidence (23, from now on).
+- **This repository:**
+  - `house-style` follows the commit grammar a repository records, rather than requiring
+    "area: summary" everywhere (26). A live repository that records lowercase Conventional
+    Commits keeps them.
+  - A session regenerates the dependency map in each Dependabot pull request before merging
+    it (27).
+- **The roll-out:**
+  - Scope: the owner's six repositories, and no work repository without the employer's
+    agreement (28).
+  - Order: this repository; then the two quiet private ones; then the two live ones, the fork
+    once its CI is green; then the empty organization repository is archived (29).
+  - The fork gives each release an annotated tag, from its first (30).
+  - The live repository marks only betas as prerelease, from its next release (31).
+  - The owner starts one re-check session per repository at each release, with that release's
+    kickstart file. Scheduling waits until a round of re-checks finds nothing to fix (32).
+- **How skills work together:**
+  - A checked pairing map replaces the orchestrator: each skill lists the skills it pairs with,
+    `skillcheck` checks the map, and each repository's `AGENTS.md` names its route. It's built
+    with the first language skill (33).
+  - A `word-documents` skill here takes a template and a defaults file. The company template
+    and defaults stay out of this public repository (34).
+  - Skills reach cloud sessions by upload to claude.ai, until cloud sessions load plugins (35).
+
 ## 2026-10-12 — A live history rewrite, taken into `git-workflows`, and release 0.1.9
 
 - **Asked:** the owner sent a live repository's session's feedback on removing one email

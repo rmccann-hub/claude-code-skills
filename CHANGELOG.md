@@ -6,6 +6,33 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.10] - 2026-10-13
+
+### Added
+
+- `skillcheck` holds `AGENTS.md` and `CLAUDE.md` to 300 lines and 32 KiB each, as standard
+  v0.43.0 asks of every repository from T2.
+
+### Changed
+
+- The standard is v0.43.0, with twenty-three changes the owner approved on 2026-10-13:
+  - **gates and evidence:** a fix is followed by a sweep for its shape, made a test; a hook
+    that blocks a tool call is a gate and fails closed; `grep -q` reads a here-string under
+    `pipefail`; evidence names the build it ran on; a "done" field comes from what was done;
+    a fact copied by hand is deleted, not policed; the context file's budget is enforced; and
+    committed logs have home-folder paths replaced with `~`;
+  - **other repositories:** matching hashes don't prove a shared file right; close conditions
+    state what must be true; a release never waits for a review round; a rule overridden two
+    rounds running goes up for amendment;
+  - **the run's own habits:** gates after a failed locked install say what they ran on; a
+    decline's premise is checked; the owner gets one thing to paste or run; an unfilled
+    placeholder is asked about at once; an owner's hold on pushing wins over a stop hook; a
+    progress line at each phase; a process is stopped by its ID, and each scratch copy gets
+    a new folder;
+  - **templates and facts:** the starter checkout drops its credentials; the README template
+    has Operations and Security; a CI job stuck at its locked install is rated in dimension 2;
+    workflow dependency lockfiles now rank above SHA pins, while they're in preview.
+
 ## [0.1.9] - 2026-10-12
 
 ### Added

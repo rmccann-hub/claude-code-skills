@@ -54,11 +54,11 @@ change here changes what agents do there.
 
 ## Budgets
 
-The standard's figures (File governance, Starter file contents) and the Agent Skills spec's,
-as smells, not thresholds. Split by the standard's recipe: enforced conventions stay here,
-reference prose moves to `docs/` with a link, and what moved is deleted in the same commit.
+The standard's and the Agent Skills spec's figures: targets are smells, limits are enforced.
+Split by the standard's recipe, logs and finished work first, deleting what moved in one commit.
 
-- `AGENTS.md`: under 150 lines, 300 at most. `CLAUDE.md`: about 30 lines. A rule file: about 50.
+- `AGENTS.md`: under 150 lines. `CLAUDE.md`: about 30 lines. A rule file: about 50. Each of
+  `AGENTS.md` and `CLAUDE.md` stays within 300 lines and 32 KiB, which `skillcheck` enforces.
 - `SKILL.md`: under 500 lines, and its references one level deep, by link or by name.
   `skillcheck` enforces both.
 - Every file in `docs/` has an inbound link.

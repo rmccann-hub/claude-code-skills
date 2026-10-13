@@ -23,7 +23,7 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.42.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.43.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -798,8 +798,8 @@ repositories, approved by the owner on 2026-10-05 and applied in v0.41.0:
   among its dated facts, so the full file and the kickstart file agree. The run instructions
   then go back to choosing the job.
 
-Applying them found four more on 2026-10-05, each checked that day. They wait for the owner's
-approval:
+Applying them found four more on 2026-10-05, each checked that day. The owner approved them on
+2026-10-13, and applied in v0.43.0:
 
 - **F115:** the starter CI file's checkout keeps its credentials, which zizmor flags as
   `artipacked`. This repository's workflows set `persist-credentials: false`, and the template
@@ -825,8 +825,8 @@ The owner asked on 2026-10-12 for one rule, applied in v0.42.0:
 
 Reading the two live repositories' records on 2026-10-12 found these. Four readers worked
 through their review rounds, their protocol's eight versions, and their rules and guidance;
-each quote a candidate rests on was checked against its file. They wait for the owner's
-approval:
+each quote a candidate rests on was checked against its file. The owner approved them on
+2026-10-13, and applied in v0.43.0:
 
 - **F120:** fix the instance, then sweep for the same shape, and make the sweep a test. One
   live repository fixed a thread-ownership bug in one of nine classes that create threads, and
@@ -876,7 +876,8 @@ approval:
   runbook; this repository's own owner asked the same of a handoff on 2026-10-12.
 
 A history rewrite in one of those repositories, run by its owner on 2026-10-12, and the
-session's own feedback on it, found five more. They wait for the owner's approval:
+session's own feedback on it, found five more. The owner approved them on 2026-10-13, and they're
+applied in v0.43.0:
 
 - **F133:** a placeholder left unfilled in a request, such as `<Windows / macOS / Linux>`, is
   asked about at once, before any work that depends on it.
@@ -890,6 +891,12 @@ session's own feedback on it, found five more. They wait for the owner's approva
   public preview, above SHA pins. `git-workflows` already says so.
 - **F137:** two more shell habits for F96: `pkill -f <name>` matched the agent's own shell and
   killed it, and a scratch copy gets a new folder name rather than `rm -rf` of an old one.
+
+One more, from the owner's answer on 2026-10-13, applied in v0.43.0:
+
+- **F138:** a log committed as evidence has home-folder paths replaced with `~` before it's
+  committed. The evidence branch is as public as the repository, and one owner's username was
+  in two public repositories' logs about 19,000 times.
 
 The owner asked for one more rule, researched before it's written:
 
@@ -923,7 +930,8 @@ before it's built:
     pin decides the version, at the cost of a fetch on every run. A hash shows that a copy is
     whole, not that it's current, so the run also compares its version with `main`'s. The
     first pass has it ask whether to go on when `main` is newer, a stop the standard's two
-    waits don't include; the deeper pass warns without stopping.
+    waits don't include; the deeper pass warns without stopping. **The owner chose on
+    2026-10-13:** the hash in `SKILL.md`, checked at the start, and a warning, not a stop.
   - **The questions:** a draft of each answer the repository shows, with its evidence and one
     word of confidence. The first pass asks three outright every run: where it runs,
     production and dependents. The deeper pass asks five, adding work or personal and how long
@@ -931,10 +939,12 @@ before it's built:
     marked recommended only beside its evidence, and a re-check asks "Is that still the
     case?" (F38). `AskUserQuestion` takes at most four questions a call, and how it shows in
     the mobile app isn't documented, so the questions also need a numbered list answered in
-    one reply. The studies behind these are checked, except the first pass's row 58.
+    one reply. The studies behind these are checked, except the first pass's row 58. **The
+    owner chose the five on 2026-10-13.**
   - **Where the answers are kept:** R22 proposes a dated block in the decision record, with no
     addresses, hostnames or names. The run report's Phase 3 block already defines those
-    answers' fields, and one schema is easier to keep than two.
+    answers' fields, and one schema is easier to keep than two. **The owner chose the run
+    report on 2026-10-13.**
   - **When it loads:** a description narrowed to runs that name it, since an uploaded skill
     can't carry `disable-model-invocation`. That needs the trigger evaluations the authoring
     review asks for. The Help Center gives an uploaded skill's description 200 characters at
@@ -943,7 +953,8 @@ before it's built:
     and hooks, and a PreToolUse hook that exits with code 2 blocks the call. The deeper pass
     has Phase 8 offer each repository such a skill after its first approved run, with a hook
     that blocks writes until approval. That puts a skill and a hook into other repositories,
-    so it needs a review of its own.
+    so it needs a review of its own. **The owner chose on 2026-10-13:** offer it after each
+    approved run, and install it only on the owner's yes.
   - **A new project's recommendation:** at least two languages compared, each dependency
     checked against its registry, and each version against current release notes. Code models
     favor Python, name packages that don't exist (at least 5.2% of those from commercial
@@ -954,8 +965,8 @@ before it's built:
     installed before v0.37.0 kept v0.36.0 until then. How
     claude.ai decides that a personal marketplace's copy changed isn't documented. By the Help
     Center, an organization's GitHub-synced marketplace syncs when a merged pull request
-    changes the version. Releasing at each standard change, or leaving the version out so
-    that installs follow `main`, is the owner's choice.
+    changes the version. **The owner chose on 2026-10-13** to keep bumping the version at
+    each release, rather than leave it out so that installs follow `main`.
   - **Tests in the owner's browser** settle what's left. Three are in the first pass's section
     10: what refreshes claude.ai's copy, with Check for updates tried before any version
     change; what a same-name upload does; and whether `skillOverrides` reaches a synced skill
@@ -983,5 +994,5 @@ trigger.
 | `copier` template | The standard's starter files, so a new repository is set up without a session | planned | the first repository set up from this one |
 | Reusable workflows | This repository's CI gates, callable from other repositories | planned | a second repository wants this CI |
 | `upstream-defects.md` | The standard's register of upstream defects shared across repositories | planned | the first upstream defect found |
-| Map refresh on dependency updates | Dependabot's pull requests change the lockfiles but not `bom.json` or `docs/dependencies.md`, and pull request CI doesn't check the map, so main's goes stale until the weekly check or a release refuses it. A session can regenerate it in each such pull request before merging, or CI can check it and fail them until then | planned | the owner chooses between the two |
+| Map refresh on dependency updates | Dependabot's pull requests change the lockfiles but not `bom.json` or `docs/dependencies.md`, and pull request CI doesn't check the map, so main's goes stale until the weekly check or a release refuses it. The owner chose on 2026-10-13: a session regenerates it in each such pull request before merging | planned | the next Dependabot pull request |
 | Fewest dependencies here | This repository's own dependencies and pins, in `pyproject.toml`, `package.json` and CI, held to the R21 rule | planned | the rule is in the standard |
