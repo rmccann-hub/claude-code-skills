@@ -158,8 +158,9 @@ path filter on a required check.
 
 - **SHA pins.** A tag can be moved. In March 2025 an attacker moved every tag of
   `tj-actions/changed-files` onto a commit that printed secrets into build logs (fact
-  `tj-actions`). Workflows pinned by tag ran it; workflows pinned by SHA didn't. A full SHA is
-  the only immutable reference (fact `sha-pin`).
+  `tj-actions`). Workflows pinned by tag ran it; workflows pinned by SHA didn't. A full SHA
+  can't be moved (fact `sha-pin`), and a lockfile, now in preview, also pins the actions an
+  action calls (fact `actions-lockfile`).
 - **Permissions.** A token that can only read can't be used to write, whatever a compromised
   step tries.
 - **Timeouts.** A hung job otherwise runs for six hours (fact `timeout`), and holds a runner

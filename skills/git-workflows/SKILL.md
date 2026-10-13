@@ -1,6 +1,6 @@
 ---
 name: git-workflows
-description: Sets up and runs a repository's Git and GitHub workflow, with the reasons, what other projects do, and the trade-offs. It covers commit messages and trailers, branch names, pull requests and review, the merge strategy, deleting branches safely, rebasing, conflicts and recovering lost commits, GitHub Actions CI (permissions, timeouts, SHA-pinned actions, path filters, required checks that never report, pull_request_target, slow CI), hooks, .gitignore, secrets that reached a commit, annotated release tags, changelogs, versions, release lines and backports. Use when writing a commit message, pull request, changelog entry or version number, deciding squash against merge commits, cleaning up branches, resolving a conflict, writing or fixing a workflow, speeding up CI without weakening it, adding a hook, responding to a committed secret, cutting a release or backporting a fix. For a full audit or first-time setup of a repository against the standard, use project-bootstrap-and-audit.
+description: Sets up and runs a repository's Git and GitHub workflow, with the reasons, what other projects do, and the trade-offs. It covers commit messages and trailers, branch names, pull requests and review, the merge strategy, deleting branches safely, rebasing, conflicts and recovering lost commits, GitHub Actions CI (permissions, timeouts, SHA-pinned actions, path filters, required checks that never report, pull_request_target, slow CI), hooks, .gitignore, secrets or personal information that reached a commit, annotated release tags, changelogs, versions, release lines and backports. Use when writing a commit message, pull request, changelog entry or version number, deciding squash against merge commits, cleaning up branches, resolving a conflict, writing or fixing a workflow, speeding up CI without weakening it, adding a hook, responding to a committed secret, cutting a release or backporting a fix. For a full audit or first-time setup of a repository against the standard, use project-bootstrap-and-audit.
 license: Apache-2.0
 metadata:
   reviewed: "2026-10-05"
@@ -28,7 +28,8 @@ Dated facts, such as versions, defaults and platform changes, live in
    commits cited only there, a release line, a sibling repository. Never bulk-delete remote
    branches from `git branch -r --merged`.
 3. **Never rewrite shared or cited history.** No force-push to a shared branch, and no amend of
-   a pushed or cited commit. Revert, or add a commit.
+   a pushed or cited commit. Revert, or add a commit. The one exception is removing personal
+   information at the owner's request, as `references/security.md` lays out.
 4. **Never get to green by going around a check.** No `--no-verify`, and no skipping or
    quarantining a failing test. Fix the cause. CI re-runs what a commit hook checks, and branch
    protection does on the server what a pre-push hook does.
@@ -57,7 +58,7 @@ Dated facts, such as versions, defaults and platform changes, live in
 |---|---|
 | writing a commit message, branch name, pull request, review comment, changelog entry or version number, or choosing the address commits carry | [references/style.md](references/style.md) |
 | setting up or changing branching, protection, the merge strategy, branch deletion, hooks, CI, releases, release lines or `.gitignore`; rebasing your own branch, resolving a conflict, or recovering a lost commit | [references/setup.md](references/setup.md) |
-| writing or reviewing workflow triggers, permissions or third-party actions, or handling a secret that reached a commit | [references/security.md](references/security.md) |
+| writing or reviewing workflow triggers, permissions or third-party actions, or handling a secret or personal information that reached a commit | [references/security.md](references/security.md) |
 | proving that a workflow, hook or gate works | [references/testing.md](references/testing.md) |
 | reviewing a repository's Git and CI setup | [references/audit.md](references/audit.md) |
 | about to do something risky, or checking an assistant's advice | [references/mistakes.md](references/mistakes.md) |

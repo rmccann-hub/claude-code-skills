@@ -41,9 +41,10 @@ installs hooks, runs CI, cuts releases or keeps release lines. Facts are named b
   - [assets/rulesets/default-branch.json](../assets/rulesets/default-branch.json) blocks
     deletion and force pushes, and requires a pull request with no approval, which suits one
     maintainer (fact `pr-rule`). After importing it, add the CI checks under "Require status
-    checks to pass", by the names their jobs report, which a template can't know. It leaves
-    the merge method to the repository's Pull Requests setting (see *Choose one merge
-    strategy*).
+    checks to pass", by the names their jobs report, which a template can't know. It allows
+    merge commits only, so the strategy holds even if the repository's Pull Requests setting
+    is changed. Where the context file records squash or rebase instead, change
+    `allowed_merge_methods` before importing (see *Choose one merge strategy*).
   - [assets/rulesets/release-tags.json](../assets/rulesets/release-tags.json) stops a `v*` tag
     being moved, deleted or force-pushed. It leaves creation open, so the release job below can
     still make the tag.

@@ -215,6 +215,16 @@ lessons in when it's built, and its `why.md` cites them.
     flag upstream had dropped, a filtered message list and one-word parser misses. Nearly all
     came from reading the other side's committed artifacts or a run on real hardware, rarely
     from a lap's argument.
+- **L27, `house-style`:** instructions for a reader who isn't a programmer never put an
+  application's name where it could be taken for something to type. One owner typed `Konsole`
+  at a prompt after reading "open Konsole". Say what the screen looks like instead, such as
+  "you're in the terminal when you see a `$`". Each command goes in its own block, with what
+  its output should look like.
+- **L28, `review-loops`:** a change both sides must make is agreed word for word, and then each
+  side runs its checker against the other's tree from a fresh clone. After a history rewrite,
+  a stale local branch made one checker read an old map and report 13 false refusals.
+- **L29, `documentation`:** a field whose format a test enforces has the format written beside
+  the field. One session learned a status field's format only from a failing test.
 
 ## Rebuilding `project-bootstrap-and-audit`
 
@@ -864,6 +874,22 @@ approval:
 - **F132:** what a session hands its owner is one thing to paste or run, with the steps beside
   it, never an instruction file to work through. A live owner's rule says so, after a 414-line
   runbook; this repository's own owner asked the same of a handoff on 2026-10-12.
+
+A history rewrite in one of those repositories, run by its owner on 2026-10-12, and the
+session's own feedback on it, found five more. They wait for the owner's approval:
+
+- **F133:** a placeholder left unfilled in a request, such as `<Windows / macOS / Linux>`, is
+  asked about at once, before any work that depends on it.
+- **F134:** a stop hook that demands a push can conflict with an owner's hold on pushing. The
+  owner's instruction wins, and the session says that it's holding and why. The standard's
+  two waits should say so beside dimension 4's hooks.
+- **F135:** a run with several phases gives one short progress line at each phase. In a long
+  session, the owner otherwise gets repeated "nothing heard from you" reminders.
+- **F136:** the standard's dated fact that a full-length SHA is the only way to use an action
+  as an immutable release is out of date. GitHub now ranks workflow dependency lockfiles, in
+  public preview, above SHA pins. `git-workflows` already says so.
+- **F137:** two more shell habits for F96: `pkill -f <name>` matched the agent's own shell and
+  killed it, and a scratch copy gets a new folder name rather than `rm -rf` of an old one.
 
 The owner asked for one more rule, researched before it's written:
 
