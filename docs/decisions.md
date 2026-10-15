@@ -2,6 +2,25 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-15 — Standard v0.44.0
+
+- **Asked:** the owner approved nine additions, A1 to A9 in the review of a round between two
+  live repositories, on 2026-10-15 ("do all recommendations"). They're F139 to F147 in
+  `ROADMAP.md`, and a change of their own, as this repository requires of the standard.
+- **Changed, in *Generated evidence*:** find the readers first (F139); build the move commit so
+  anyone can rebuild it (F140); the removal's parent, CI's tree check and `-z` (F141);
+  citations and checking every value they state (F142); filing order and redaction by a
+  committed tool (F143); look at what makes evidence large (F145).
+- **Corrected:** 0.42.0 told a tool to fetch evidence with `git fetch --depth 1 origin
+  evidence`. Run in a full clone, that makes the whole clone shallow; both sides of the round
+  hit or designed around it. The text now fetches into a temporary bare repository (F144).
+- **Elsewhere:** a check proves every value its input states, beside the gate proofs (F146);
+  and three sentences on the coordinator's messages, the reporting format and approvals given
+  with the request, in *Cross-repository contracts* (F147).
+- **Evidence:** each measurement is either re-checked on GitHub by this repository's session or
+  is one side's report, named as such in the review. Neither repository is named.
+- **Not changed:** no rating, no dimension, no wait. The dated facts are unchanged.
+
 ## 2026-10-15 — The owner's answers to questions 44 to 49, and what a round of review taught
 
 - **Asked:** the owner was given every open question with a recommendation, and answered,
