@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:25be31c7-9b2b-5ff6-9c80-87006846aef2",
+  "serialNumber": "urn:uuid:2226c214-ebc7-5202-8809-d33012cdb2cf",
   "version": 1,
   "metadata": {
     "tools": {
@@ -18,7 +18,7 @@
       "type": "application",
       "bom-ref": "claude-code-skills",
       "name": "claude-code-skills",
-      "version": "0.1.11",
+      "version": "0.1.12",
       "licenses": [
         {
           "expression": "Apache-2.0"
@@ -37,7 +37,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "Python: 26 file(s)"
+          "value": "Python: 28 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -441,9 +441,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:engineering@0.1.11",
+      "bom-ref": "plugin:engineering@0.1.12",
       "name": "engineering",
-      "version": "0.1.11",
+      "version": "0.1.12",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -613,9 +613,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:standards@0.1.11",
+      "bom-ref": "plugin:standards@0.1.12",
       "name": "standards",
-      "version": "0.1.11",
+      "version": "0.1.12",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -835,8 +835,8 @@
         "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.24.0",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
         "pkg:npm/%40anthropic-ai/claude-code@2.1.288",
-        "plugin:engineering@0.1.11",
-        "plugin:standards@0.1.11",
+        "plugin:engineering@0.1.12",
+        "plugin:standards@0.1.12",
         "project:skillcheck@0.0.0",
         "tool:GitHub-hosted runner@ubuntu-latest",
         "tool:Go@1.27",

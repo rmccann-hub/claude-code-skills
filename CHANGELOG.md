@@ -6,6 +6,14 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.12] - 2026-10-15
+
+### Fixed
+
+- The dependency map counted the Python files before the evidence verifier and its tests were
+  added, so the release workflow refused 0.1.11's files. 0.1.12 is 0.1.11 with the map fixed.
+  The `v0.1.11` tag stays, with no release.
+
 ## [0.1.11] - 2026-10-15
 
 ### Added
