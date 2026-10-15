@@ -2,6 +2,51 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-15 — The owner's answers to questions 44 to 49, and what a round of review taught
+
+- **Asked:** the owner was given every open question with a recommendation, and answered,
+  verbatim: "do all recommendations. for 46, yes its my employers. for 47, ok. 12, can you
+  just ignore them? 13, give me instructions for this. 15. done. 14, do recomended."
+- **The porting plan for the owner's claude.ai skills** is approved, and recorded in
+  `ROADMAP.md`, its only home:
+  - examples CI can't run are checked as far as they parse, run once by the owner, and
+    recorded with the version and date they were proven on (44);
+  - Anthropic's `brand-guidelines` and `theme-factory` are off on the account: neither loads in
+    sessions any more (45);
+  - `my-theme`'s palette is the owner's employer's, so it stays on the account and nothing of it
+    is published here (46);
+  - PowerPoint and PDF are left to Anthropic's skills unless a repository needs to generate them
+    (47);
+  - old copies with known dangerous examples stay on until their successors ship (48);
+  - work starts now: the shared tools here, and research wave 1 (R15, R09, R11, R10) with R21 by
+    the owner (49).
+- **Three retired synced skills** still load in sessions, since only the owner can turn them off
+  on claude.ai. `CLAUDE.md` now names them, so sessions here don't use them (12).
+- **A round of review between two live repositories,** which moved each one's run evidence to an
+  `evidence` branch under standard v0.43.0's rule, closed on 2026-10-15. Both sides wrote a
+  round summary and per-lap diagnostics for this repository, and the review of them is taken in
+  three ways:
+  - **`git-workflows`:**
+    - read paths from Git with `-z`, since Git quotes non-ASCII names (a check reported 29
+      present files missing);
+    - push only after reading a green result, never in the command that runs the tests;
+    - run every test that names an edited file;
+    - pin and cache what CI builds from source (one job: 19.5 of 21 minutes);
+    - timing tests assert on growth, and a slow test's timeout headroom is recorded;
+    - a check is proven against every value its input states;
+    - a merged branch's commits aren't pushed again;
+    - the job-log endpoint's redirect.
+    
+    One more GitHub fact, that a job can't be re-run while its workflow run is still going, was
+    observed once and has no GitHub source yet, so it isn't in the skill.
+  - **`ROADMAP.md`:** lesson L30 for `review-loops`, on the reporting format, approvals given
+    with the request, and steps run side by side.
+  - **The standard:** nine additions on moving, filing and citing evidence, and on running a
+    review loop, approved by the owner, go in as v0.44.0, a change of its own.
+- **Measured, re-checked on GitHub:** checkouts fell from 479 to 73 MB and from 130 to 16 MB;
+  full clones kept their size, since history keeps the files. Both evidence commits had the IDs
+  their laps named before anything was pushed, and each side rebuilt the other's by plain Git.
+
 ## 2026-10-13 — CI runs once per pull request
 
 - **Asked:** the owner asked whether running CI on a branch and again on `main` after the merge

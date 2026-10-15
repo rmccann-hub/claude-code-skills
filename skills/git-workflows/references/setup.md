@@ -198,6 +198,12 @@ properties that matter, each with its reason:
   starter CI file has a collection guard, which counts the tests collected, not the tests that
   ran. [assets/workflows/tests.yml](../assets/workflows/tests.yml) adds the completion guard:
   the test report must exist, and count at least as many tests as `.test-baseline`.
+- **Pin what a job builds from source, then cache the result.** A job that clones its
+  dependencies at their latest commit and builds them every run is slow, and isn't
+  reproducible: CI's result and the shipped binary change with commits nobody here made. One
+  Windows job spent 19.5 of its 21 minutes building five libraries that way. Pin each one to a
+  tag or commit in one place, and cache the built output with `actions/cache`, keyed on the
+  pins, the build script's hash and the toolchain version.
 - **A scheduled scan in a public repository stops after 60 days without activity** (fact
   `schedule-60`), with no failure shown. Read its last run date.
 - **Lint workflows with actionlint, and scan them with zizmor** (facts `actionlint`, `zizmor`),
