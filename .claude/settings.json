@@ -19,11 +19,23 @@
     "engineering@claude-code-skills": false
   },
   "skillOverrides": {
+    "algorithmic-art": "off",
+    "canvas-design": "off",
     "code-planner": "off",
+    "doc-coauthoring": "off",
+    "docs": "name-only",
     "git-workflows": "off",
+    "google-workspace": "name-only",
+    "import-memory": "off",
+    "internal-comms": "off",
     "markdown-standards": "off",
+    "morning": "off",
+    "procedure-generator": "off",
     "project-bootstrap-and-audit": "off",
+    "skill-creator": "on",
     "skill-orchestrator": "off",
-    "skill-stress-tester": "off"
+    "skill-stress-tester": "off",
+    "slack-gif-creator": "off",
+    "web-artifacts-builder": "off"
   }
 }

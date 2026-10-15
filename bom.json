@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:bc5a8054-392b-56dd-aea6-344ad0dcbecb",
+  "serialNumber": "urn:uuid:6fc273cf-e723-5b08-b99f-74393b9f0ecf",
   "version": 1,
   "metadata": {
     "tools": {
@@ -18,7 +18,7 @@
       "type": "application",
       "bom-ref": "claude-code-skills",
       "name": "claude-code-skills",
-      "version": "0.1.12",
+      "version": "0.1.13",
       "licenses": [
         {
           "expression": "Apache-2.0"
@@ -37,7 +37,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "Python: 30 file(s)"
+          "value": "Python: 31 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -45,7 +45,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 9 file(s)"
+          "value": "JSON: 10 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -441,9 +441,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:engineering@0.1.12",
+      "bom-ref": "plugin:engineering@0.1.13",
       "name": "engineering",
-      "version": "0.1.12",
+      "version": "0.1.13",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -613,9 +613,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:standards@0.1.12",
+      "bom-ref": "plugin:standards@0.1.13",
       "name": "standards",
-      "version": "0.1.12",
+      "version": "0.1.13",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -627,7 +627,7 @@
           "type": "data",
           "bom-ref": "skill:project-bootstrap-and-audit",
           "name": "project-bootstrap-and-audit",
-          "description": "standard v0.44.0",
+          "description": "standard v0.45.0",
           "licenses": [
             {
               "expression": "CC0-1.0"
@@ -835,8 +835,8 @@
         "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.24.0",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
         "pkg:npm/%40anthropic-ai/claude-code@2.1.288",
-        "plugin:engineering@0.1.12",
-        "plugin:standards@0.1.12",
+        "plugin:engineering@0.1.13",
+        "plugin:standards@0.1.13",
         "project:skillcheck@0.0.0",
         "tool:GitHub-hosted runner@ubuntu-latest",
         "tool:Go@1.27",

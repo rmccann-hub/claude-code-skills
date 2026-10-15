@@ -6,10 +6,16 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.13] - 2026-10-15
+
 ### Added
 
 - `skillcheck --new <name>` writes a new skill's starting files in the authoring guide's shape,
   and the `placeholder` rule fails a skill that still holds an unfinished part.
+- Standard v0.45.0: a run proposes the owner's skill exclusion list,
+  `skills/project-bootstrap-and-audit/assets/skill-overrides.json`, as `skillOverrides` in a
+  repository's `.claude/settings.json`. The `exclusions` rule checks the list, and that this
+  repository applies it.
 - The `listing` rule caps each skill's description at 250 characters, and holds all the
   skills' listing to room for 100 skills in Claude Code.
 

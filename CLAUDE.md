@@ -7,6 +7,7 @@ sync, but `skillOverrides` in `.claude/settings.json` hides a synced skill, trie
 worked on.
 
 `.claude/settings.json` turns off both plugins' copies of this repository's own skills, and the
-synced copies of `git-workflows` and `project-bootstrap-and-audit`. It also turns off the
-retired `markdown-standards` (`house-style` replaces it), `skill-orchestrator`,
-`skill-stress-tester` and `code-planner`.
+synced copies of `git-workflows` and `project-bootstrap-and-audit`. It also applies the owner's
+exclusion list in `skills/project-bootstrap-and-audit/assets/`, which turns off the retired
+`markdown-standards` (`house-style` replaces it), `skill-orchestrator`, `skill-stress-tester`
+and `code-planner`, with `skill-creator` left on here, where skills are built.
