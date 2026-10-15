@@ -4,6 +4,8 @@ import pytest
 from conftest import DEFAULT_DESCRIPTION
 
 from skillcheck.core.checks import (
+    DESCRIPTION_CAP,
+    LISTING_BUDGET,
     MAX_COMPATIBILITY_LENGTH,
     MAX_CONTEXT_BYTES,
     MAX_CONTEXT_LINES,
@@ -40,9 +42,38 @@ def test_clean_repository_passes(repo):
 
 def test_limits_are_inclusive(repo):
     name = "a" * MAX_NAME_LENGTH
-    repo.skill(name, f"name: {name}\ndescription: {'d' * MAX_DESCRIPTION_LENGTH}\n")
+    repo.skill(name, f"name: {name}\ndescription: {'d' * DESCRIPTION_CAP}\n")
     repo.catalog(repo.plugin("example", f"./skills/{name}"))
     assert check_repository(repo.root).findings == []
+
+
+@pytest.mark.parametrize("length", [DESCRIPTION_CAP + 1, MAX_DESCRIPTION_LENGTH])
+def test_a_description_over_the_cap_fails_the_listing_rule_alone(repo, length):
+    repo.skill("wordy-skill", f"name: wordy-skill\ndescription: {'d' * length}\n")
+    repo.catalog(repo.plugin("example", "./skills/wordy-skill"))
+    (finding,) = check_repository(repo.root).findings
+    assert (finding.path, finding.rule) == ("skills/wordy-skill/SKILL.md", "listing")
+    assert finding.message.startswith(f"description is {length} characters;")
+
+
+# Each skill-NNN entry is "- skill-NNN: " and a newline around its description: 264 characters
+# at the cap, so 98 fit the budget and 99 don't.
+@pytest.mark.parametrize(("count", "over"), [(98, False), (99, True)])
+def test_the_whole_listing_is_held_to_its_budget(repo, count, over):
+    for number in range(count):
+        name = f"skill-{number:03}"
+        repo.skill(name, f"name: {name}\ndescription: {'d' * DESCRIPTION_CAP}\n")
+    repo.catalog(repo.plugin("everything", "./skills/"))
+    report = check_repository(repo.root)
+    assert report.listing_chars == count * 264
+    if over:
+        assert [(f.path, f.rule) for f in report.findings] == [("skills", "listing")]
+        assert report.findings[0].message == (
+            f"the skills' listing is {count * 264} characters; the budget is "
+            f"{LISTING_BUDGET}, room for 100 skills at 240"
+        )
+    else:
+        assert report.findings == []
 
 
 def test_whole_folder_entry_lists_every_skill(repo):

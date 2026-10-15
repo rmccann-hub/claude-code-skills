@@ -59,8 +59,8 @@ def _files(name: str) -> dict[str, str]:
 _SKILL = """\
 ---
 name: {name}
-description: "{todo} What the skill does and when to use it, in the third person, with the \
-words a request would use rather than a keyword list, in 1,024 characters or fewer."
+description: "{todo} What the skill does and when to use it, in the third person, its main \
+use first, with the words a request would use, in 250 characters or fewer."
 license: Apache-2.0
 metadata:
   reviewed: "{todo} the date of its review, YYYY-MM-DD"

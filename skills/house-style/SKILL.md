@@ -1,6 +1,6 @@
 ---
 name: house-style
-description: Writes and checks prose and Markdown in one house style across every repository. That means the answer first, plain words, no filler or hype, facts with their sources and dates, American spelling, sentence-case headings, lines wrapped at 100 columns, and the same README sections everywhere. It ships HouseStyle, a Vale style each repository's CI loads from the latest release. Use when writing or reviewing a README, documentation, a decision record, a changelog entry, a pull request description, a report or any Markdown file, when choosing between British and American spelling, or when adding the prose check to a repository's CI. For commit subjects, branch names and changelog structure, use git-workflows. For a full audit of a repository, use project-bootstrap-and-audit.
+description: "Writes and checks prose and Markdown in one house style: the answer first, plain words, facts with sources, American spelling. Ships a Vale style. Use for a README, docs, records, changelogs, pull requests and reports."
 license: Apache-2.0
 metadata:
   reviewed: "2026-10-05"
