@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.44.0"
+  version: "0.45.0"
   updated: "2026-10-15"
-  supersedes: "0.43.0"
+  supersedes: "0.44.0"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -773,7 +773,7 @@ action for each page they're on. Each is in the account's Settings, under the pr
 | Adherence to written instructions may decay within a session — about 5.6% lower odds of compliance per additional function generated, an exploratory, non-monotonic finding; the same study found no detectable effect of file size, position, structure or conflicts (`arXiv:2605.10039`) | 2026-09 | Why the gates exist, and why the conformance block sits last |
 | Audits of public skill marketplaces found between a quarter and a third of published skills flawed (Snyk: 36.82% of 3,984; `arXiv:2601.10338`: 26.1% of 42,447), with confirmed coordinated malicious campaigns | 2026-09 | Dimension 4's inventory of hooks, skills and plugins |
 | `claude plugin validate --strict` (2.1.280) checks manifests and agents, but reported none of five planted skill defects and accepted a reserved marketplace name | 2026-09 | Dimension 9. A passing validator is not a review of the skills |
-| `syncClaudeAiSkills: false`, and `syncClaudeAiPlugins: false` for plugins, are read from user, local and managed settings only, so a project's committed `.claude/settings.json` can't stop the sync. Any settings file, the committed one included, can hide a skill with `skillOverrides`, which the docs say doesn't reach plugin skills and don't say of synced ones. The changelog documents `Skill(anthropic-skills:<name>)` permission rules that match synced skills (2.1.282, 2.1.283). Neither route had been tried on a synced skill as of 2026-09-28 | 2026-09 | Dimension 4. A repository can't stop the sync; whether it can hide or deny a synced skill in its own sessions is documented, not yet shown |
+| `syncClaudeAiSkills: false`, and `syncClaudeAiPlugins: false` for plugins, are read from user, local and managed settings only, so a project's committed `.claude/settings.json` can't stop the sync. Any settings file, the committed one included, can hide a skill with `skillOverrides`, which the docs say doesn't reach plugin skills and don't say of synced ones. On 2026-10-15, in a cloud session on Claude Code 2.1.301, `"off"` in a repository's committed `.claude/settings.json` hid synced skills: calling one was refused as "disabled for model invocation in skillOverrides settings". The changelog documents `Skill(anthropic-skills:<name>)` permission rules that match synced skills (2.1.282, 2.1.283), not yet tried | 2026-10 | Dimension 4. A repository can't stop the sync, and can hide a synced skill in its own sessions |
 | A plugin catalog entry whose skill paths all miss loads the plugin's whole skills folder, with no error | 2026-09 | Dimension 9. One typo ships everything |
 | Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Skills enabled on the account load in cloud sessions as well, and one account's arrived there on 2026-09-23, 2026-09-28 and 2026-10-05. Anthropic support said on 2026-09-30 that plugins are meant to load in cloud sessions too, that the docs' silence is a gap, and that an empty plugin list isn't expected, and named two causes to rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true` in the cloud environment. In that account's cloud sessions on 2026-09-30 and 2026-10-05, the platform set that variable itself, in the process that launches Claude Code, the environment manager and Claude Code (2.1.280, then 2.1.289), and the synced plugins folder was empty. On 2026-09-30 the environment's own variables were empty, and no plugin was enabled on the account | 2026-10 | *Standards distribution*. Check again once a plugin is installed on the account and the variable is gone. Until then, a skill uploaded to the account is the route that reaches a cloud session |
 | An organization's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards distribution*. A public repository reaches an organization's members only by upload |
@@ -1716,6 +1716,16 @@ and one naming a single person is the ceremony dimension 8 describes.
   commands without asking — `Bash(pip install:*)`, `Bash(npm install:*)`, a bare `Bash` — is a
   `BLOCKER` on this dimension in its own right, and a narrower allow nobody reviewed is
   `DRIFT`. Propose untracking it, and moving anything meant to be shared into `settings.json`.
+- **Skills the owner keeps out of repository sessions.** A skill synced from the owner's
+  claude.ai account loads in every session, and its name and description take room in a skill
+  listing that holds 1% of the context window. A skill used only in chat costs every session
+  that room and can load where it doesn't belong. `skillOverrides` in `.claude/settings.json`
+  hides it: `"off"` from Claude and from `/name`, `"user-invocable-only"` from Claude only, and
+  `"name-only"` lists the name without the description. Where the standards repository keeps
+  an exclusion list, such as `assets/skill-overrides.json` beside this skill, the run proposes
+  each entry the repository lacks at Phase 6, and keeps every entry the repository already
+  sets. A listed skill the repository's own work needs stays on, and the run says which and
+  why. This carries no rating.
 - **A deny rule names an access path, not only a file.** Claude Code's docs, read 2026-09-29, have
   `Read(.env*)` cover the file commands it recognizes in Bash, such as `cat`, `head` and `sed`, and
   redirections too. It doesn't cover `grep -r` run from the directory that holds the file, or a
@@ -1786,8 +1796,8 @@ tier; one carrying such an instruction is a `BLOCKER` on dimension 7.**
 
 **Count the copies that never appear in the tree.** A session loads the skills and plugins
 enabled on its account, and none of them is a file in the repository. A repository's committed
-settings cannot stop the sync, and whether they can hide or deny a synced skill is documented
-but not yet shown: *Facts with an expiry date* has both. Where the run can list what loaded,
+settings cannot stop the sync, but `skillOverrides` in them hides a synced skill: *Facts with
+an expiry date* has both. Where the run can list what loaded,
 the inventory includes them; where it cannot, it says so.
 
 **The files that instruct future sessions are the highest-risk write class, and they change
@@ -3850,6 +3860,9 @@ rules merge across scopes, and none of this constrains a script the agent writes
 }
 ```
 
+**Where the owner keeps a skill exclusion list**, the same file also carries `skillOverrides`,
+one entry per skill, as dimension 4's *Skills the owner keeps out of repository sessions* says.
+
 **Read the deny list as pairs, not as items.** Each secret has a file rule and a shell rule
 because they are different access paths to the same bytes, and a rule covering one leaves the
 other open. **Extend the pattern for every path that must not be reached**, and where the
@@ -5243,6 +5256,11 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.45.0**: **one change**, F148, which the owner approved on 2026-10-15. *Skills the owner
+keeps out of repository sessions*, in dimension 4: the run proposes the standards repository's
+exclusion list as `skillOverrides` in `.claude/settings.json`. *Facts with an expiry date* now
+records that a committed `skillOverrides` hides a synced skill, tried on 2026-10-15.
 
 **0.44.0**: **nine changes**, F139 to F147, which the owner approved on 2026-10-15. They come
 from a round in which two live repositories moved their run evidence to `evidence` branches

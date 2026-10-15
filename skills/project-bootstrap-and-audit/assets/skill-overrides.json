@@ -1,0 +1,38 @@
+{
+  "skillOverrides": {
+    "algorithmic-art": "off",
+    "canvas-design": "off",
+    "code-planner": "off",
+    "doc-coauthoring": "off",
+    "docs": "name-only",
+    "google-workspace": "name-only",
+    "import-memory": "off",
+    "internal-comms": "off",
+    "markdown-standards": "off",
+    "morning": "off",
+    "procedure-generator": "off",
+    "skill-creator": "off",
+    "skill-orchestrator": "off",
+    "skill-stress-tester": "off",
+    "slack-gif-creator": "off",
+    "web-artifacts-builder": "off"
+  },
+  "reasons": {
+    "algorithmic-art": "Anthropic's, for work in chat rather than in a repository",
+    "canvas-design": "Anthropic's, for work in chat rather than in a repository; the owner hasn't decided whether to keep it at all",
+    "code-planner": "the owner's, retired into this repository's shared tools",
+    "doc-coauthoring": "Anthropic's, for work in chat rather than in a repository",
+    "docs": "Anthropic's, for Claude's documents; its connector calls it by name, so the name is enough",
+    "google-workspace": "Anthropic's, for Google files; its connector calls it by name, so the name is enough",
+    "import-memory": "Anthropic's, for claude.ai memory",
+    "internal-comms": "Anthropic's, for work in chat rather than in a repository",
+    "markdown-standards": "the owner's, replaced by house-style",
+    "morning": "Anthropic's, for a claude.ai morning brief",
+    "procedure-generator": "the owner's, kept for claude.ai only, until word-documents replaces it",
+    "skill-creator": "Anthropic's, kept as a reference; on only in the repository that builds skills",
+    "skill-orchestrator": "the owner's, retired into this repository's pairing map",
+    "skill-stress-tester": "the owner's, retired into this repository's shared tools",
+    "slack-gif-creator": "Anthropic's, for work in chat rather than in a repository",
+    "web-artifacts-builder": "Anthropic's, for claude.ai artifacts"
+  }
+}
