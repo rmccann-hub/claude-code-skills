@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.45.0"
+  version: "0.46.0"
   updated: "2026-10-15"
-  supersedes: "0.44.0"
+  supersedes: "0.45.0"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -4771,6 +4771,16 @@ saved one round trip on every lap.
 the pair is recorded above. Tying the two produced the deadlocks above, a stream of overrides,
 and every build cut inside a round logging that it wasn't a released build.
 
+**A person's acceptance run goes between rounds, on the released pair, and opens the next
+round.** The cycle: a round closes, both sides release, the person runs the test only a person
+can, such as a run on real hardware, on that pair, and one side files the result and opens the
+next round with a first lap that reads it. The same side files every result and opens every
+round, and the other reads the result there by its citation, so the person hands it over once.
+A run inside a round tests a pair a fix may already have replaced, and holds both sides until
+the person is free. A severe failure, such as lost data, opens no round: the side responsible
+releases a fix and the run is repeated. **An audit that finds two repositories in a review
+loop without this order proposes it to both, in the same words.**
+
 **A protocol rule overridden two rounds running goes up for amendment.** One rule was
 overridden in each of five rounds, and a release-blocking rule for ten releases, before a
 protocol version deleted both. A rule overridden that often is the rule dimension 6 calls
@@ -5256,6 +5266,11 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.46.0**: **one change**, F149, which the owner approved on 2026-10-15. *A person's
+acceptance run goes between rounds, on the released pair, and opens the next round*, in *Two
+repositories*: one side files the result and opens every round, a severe failure gets a fix
+release and a repeat run first, and an audit of a pair proposes the cycle to both sides.
 
 **0.45.0**: **one change**, F148, which the owner approved on 2026-10-15. *Skills the owner
 keeps out of repository sessions*, in dimension 4: the run proposes the standards repository's
