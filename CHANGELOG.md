@@ -6,6 +6,16 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `skillcheck --new <name>` writes a new skill's starting files in the authoring guide's shape,
+  and the `placeholder` rule fails a skill that still holds an unfinished part.
+
+### Changed
+
+- The authoring guide says skills are built for Claude Code first, and work on claude.ai only
+  where that costs nothing.
+
 ## [0.1.12] - 2026-10-15
 
 ### Fixed

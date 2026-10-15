@@ -12,7 +12,7 @@ change here changes what agents do there.
 - Install: `uv sync --locked`, then `npm ci` for Claude Code's own validator
 - Test: `uv run pytest`
 - Lint, format: `uv run ruff check`, `uv run ruff format --check` (fix: `uv run ruff format`)
-- Check skills and the catalog: `uv run skillcheck .`
+- Check skills and the catalog: `uv run skillcheck .`; a new skill: `uv run skillcheck --new <name>`
 - Dated facts: `uv run skillcheck --due` lists those due; `--verify` checks each source online
 - Check the prose, with Vale installed: `vale sync`, then `git ls-files -z '*.md' | xargs -0 vale`
 - Validate the catalog with Claude Code: `npx --no-install claude plugin validate --strict .`

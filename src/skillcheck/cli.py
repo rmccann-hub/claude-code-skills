@@ -1,6 +1,6 @@
 """Command-line entry point: ``skillcheck [ROOT] [MODE]``.
 
-The modes are ``--due [DATE]``, ``--verify``, ``--bom``, ``--bom-check`` and
+The modes are ``--due [DATE]``, ``--verify``, ``--bom``, ``--bom-check``, ``--new NAME`` and
 ``--release-assets VERSION DIR``, one at a time. With none, it runs every rule on the repository.
 """
 
@@ -8,9 +8,9 @@ import argparse
 from datetime import date
 from pathlib import Path
 
-from skillcheck import bom, release
+from skillcheck import bom, release, scaffold
 from skillcheck.core import facts
-from skillcheck.core.checks import check_repository
+from skillcheck.core.checks import PLACEHOLDER, check_repository
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -49,6 +49,11 @@ def main(argv: list[str] | None = None) -> int:
         help="name each dependency-map file that no longer matches the repository",
     )
     mode.add_argument(
+        "--new",
+        metavar="NAME",
+        help="write a new skill's starting files, each unfinished part marked for the checks",
+    )
+    mode.add_argument(
         "--release-assets",
         nargs=2,
         metavar=("VERSION", "DIR"),
@@ -69,6 +74,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.release_assets:
         return _release(args.root, *args.release_assets)
+    if args.new:
+        return _new(args.root, args.new)
     if args.bom_check:
         old = bom.stale(args.root)
         for path in old:
@@ -97,6 +104,21 @@ def _release(root: Path, version: str, out: str) -> int:
             found = [str(error)]
     print(f"skillcheck: release {version}, {len(found)} problem(s)")
     return 1 if found else 0
+
+
+def _new(root: Path, name: str) -> int:
+    try:
+        written = scaffold.create(root, name)
+    except scaffold.ScaffoldError as error:
+        print(f"new: {error}")
+        return 1
+    for path in written:
+        print(f"wrote {path.as_posix()}")
+    print(
+        f"skillcheck: new skill {name}, {len(written)} file(s). Fill in each part marked "
+        f"{PLACEHOLDER}, then follow docs/authoring-a-skill.md from step 2"
+    )
+    return 0
 
 
 def _summary(root: Path) -> str:

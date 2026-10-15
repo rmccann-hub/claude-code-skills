@@ -96,6 +96,10 @@ SCANNED_DIRS = (
     ".vale",
 )
 
+# `skillcheck --new` marks each part of a new skill a person still has to write. A skill that
+# still holds one isn't finished, so it fails here rather than shipping half-written.
+PLACEHOLDER = "TODO(new-skill)"
+
 # Every skill says why it advises what it does, what others do instead, and what each choice
 # costs (docs/authoring-a-skill.md). The skill carrying the standard is exempt: the standard
 # gives its reasons inline, and it changes only on its own.
@@ -189,6 +193,7 @@ def _discover_skills(root: Path, report: Report) -> list[Path]:
 def _check_skill(skill_dir: Path, report: Report, needs_rationale: bool) -> None:
     where = f"{SKILLS_DIR}/{skill_dir.name}/SKILL.md"
     _check_hidden_characters(skill_dir.parent.parent, _files_under(skill_dir), report)
+    _check_placeholders(skill_dir, report)
     try:
         text = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
         data, body = frontmatter.parse(text)
@@ -239,6 +244,19 @@ def _check_skill(skill_dir: Path, report: Report, needs_rationale: bool) -> None
             "description",
             f"description is {len(description)} characters; the limit is {MAX_DESCRIPTION_LENGTH}",
         )
+
+
+def _check_placeholders(skill_dir: Path, report: Report) -> None:
+    for path in _files_under(skill_dir):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        count = text.count(PLACEHOLDER)
+        if count:
+            line = text.count("\n", 0, text.index(PLACEHOLDER)) + 1
+            report.add(
+                f"{SKILLS_DIR}/{skill_dir.name}/{path.relative_to(skill_dir).as_posix()}",
+                "placeholder",
+                f"{count} unfinished part(s) marked {PLACEHOLDER}, the first on line {line}",
+            )
 
 
 def _local_links(text: str) -> list[str]:
