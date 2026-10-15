@@ -23,7 +23,7 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.45.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.46.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -1003,6 +1003,9 @@ The owner's answers on 2026-10-15 added one more, applied in v0.45.0:
 
 - **F148:** the run proposes the standards repository's skill exclusion list as
   `skillOverrides` in `.claude/settings.json`, keeping the entries a repository already sets.
+- **F149, in v0.46.0:** a person's acceptance run goes between review rounds, on the released
+  pair, and one side files its result and opens the next round. An audit of a pair proposes
+  this to both.
 
 The owner asked for one more rule, researched before it's written:
 

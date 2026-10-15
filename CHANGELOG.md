@@ -6,6 +6,14 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.14] - 2026-10-15
+
+### Added
+
+- Standard v0.46.0: a person's acceptance run goes between review rounds, on the released
+  pair, and one side files its result and opens the next round. An audit of two repositories
+  in a review loop proposes this order to both.
+
 ## [0.1.13] - 2026-10-15
 
 ### Added
