@@ -2,6 +2,25 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-15 — Standard v0.46.0: acceptance runs between rounds, and release 0.1.14
+
+- **Asked:** the owner asked whether the acceptance test of two repositories in a review loop
+  should run between rounds, on the released pair, with its result opening the next round, and
+  who should start. They agreed with the recommendation, and asked that an audit of both
+  repositories give it to both next time.
+- **Changed, in the standard, as F149 and a change of its own:** *Two repositories* gains
+  *A person's acceptance run goes between rounds, on the released pair, and opens the next
+  round*. One side files every result and opens every round; the other reads the result there
+  by its citation. A severe failure gets a fix release and a repeat run before any round. An
+  audit that finds a pair in a review loop without this order proposes it to both, in the same
+  words.
+- **Why:** a run inside a round tests a pair a fix may already have replaced, and holds both
+  sides until the person is free. The paragraph beside it already says a round approves a pair
+  already released.
+- **Not done:** no parity run, since the change adds one proposal and moves no rating.
+- **Release 0.1.14:** this pull request's merge, so the owner's first upload of the three
+  skills to claude.ai carries v0.46.0. Both catalog entries say 0.1.14.
+
 ## 2026-10-15 — Standard v0.45.0: the skill exclusion list
 
 - **Asked:** the owner approved an exclusion list kept here and applied by the bootstrap skill
