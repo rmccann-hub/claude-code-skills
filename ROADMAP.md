@@ -43,9 +43,9 @@ that will do the same for other repositories.
 | `supply-chain-security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21 |
 | `ai-agent-security` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
 | `error-handling` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
-| `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06 |
-| `api-design` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
-| `data-and-sql` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
+| `testing-patterns` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06 |
+| `api-patterns` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
+| `sql-craftsman` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
 | `git-workflows` | Commits and trailers, branches, pull requests and review, the merge strategy, safe branch deletion, GitHub Actions CI and its hardening, hooks, `.gitignore`, annotated tags, changelogs, versions, release lines and backports | shipped | core | R08, R05 |
 | `ci-cd` | Caching, environments and deployment, beyond the CI that `git-workflows` covers | planned | core | R08, R21 |
 | `versioning-and-releases` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `git-workflows` covers | planned | core | R05 |
@@ -62,21 +62,21 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `python` | Python 3, its toolchain and idioms | planned | core | R09 |
-| `typescript-javascript` | TypeScript, JavaScript, Node.js | planned | core | R10 |
-| `html-css` | HTML, CSS, front-end security | planned | core | R10 |
-| `csharp-dotnet` | C# and .NET | planned | core | R11 |
-| `powershell` | PowerShell 7 and Windows PowerShell 5.1 | planned | core | R11 |
-| `shell` | Bash and POSIX sh | planned | core | R15 |
-| `vba` | VBA in Office applications | planned | core | R16 |
-| `go` | Go | planned | standard | R12 |
-| `rust` | Rust | planned | standard | R12 |
-| `c` | C | planned | standard | R12 |
-| `cpp` | C++ | planned | standard | R12 |
-| `java` | Java | planned | standard | R13 |
-| `kotlin` | Kotlin | planned | standard | R13 |
-| `php` | PHP | planned | standard | R13 |
-| `ruby` | Ruby | planned | standard | R13 |
+| `python-coding` | Python 3, its toolchain and idioms | planned | core | R09 |
+| `javascript-coding` | TypeScript, JavaScript, Node.js | planned | core | R10 |
+| `html-coding` | HTML, CSS, front-end security | planned | core | R10 |
+| `csharp-coding` | C# and .NET | planned | core | R11 |
+| `powershell-scripts` | PowerShell 7 and Windows PowerShell 5.1 | planned | core | R11 |
+| `bash-coding` | Bash and POSIX sh | planned | core | R15 |
+| `vba-coding` | VBA in Office applications | planned | core | R16 |
+| `go-coding` | Go | planned | standard | R12 |
+| `rust-coding` | Rust | planned | standard | R12 |
+| `c-coding` | C | planned | standard | R12 |
+| `cpp-coding` | C++ | planned | standard | R12 |
+| `java-coding` | Java | planned | standard | R13 |
+| `kotlin-coding` | Kotlin | planned | standard | R13 |
+| `php-coding` | PHP | planned | standard | R13 |
+| `ruby-coding` | Ruby | planned | standard | R13 |
 | `config-formats` | YAML, JSON, TOML, XML | planned | standard | R15 |
 
 ## D. Languages from the past: read, maintain, modernize
@@ -89,14 +89,14 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `windows-server` | AD, Group Policy, DNS/DHCP, certificates, file services, updates, hardening | planned | core | R11 |
-| `excel` | Workbooks from code, formulas, Power Query, DAX, Office Scripts, add-ins | planned | core | R16 |
+| `windows-admin` | AD, Group Policy, DNS/DHCP, certificates, file services, updates, hardening | planned | core | R11 |
+| `excel-master` | Workbooks from code, formulas, Power Query, DAX, Office Scripts, add-ins | planned | core | R16 |
 | `word-documents` | Generating and filling Word templates | planned | core | R16 |
 | `epicor-kinetic` | BPM, BAQ, REST API v2, Functions, from public knowledge only | planned | core | R16 |
-| `solidworks-api` | VBA and C# macros, documents, drawings, sheet metal, exports | planned | core | R16 |
+| `solidworks-automation` | VBA and C# macros, documents, drawings, sheet metal, exports | planned | core | R16 |
 | `linux` | Administration and troubleshooting across distributions | planned | standard | R15 |
 | `networking-security` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | planned | standard | R15 |
-| `containers` | Dockerfiles, Compose, hardening, registries | planned | standard | R15 |
+| `docker-containers` | Dockerfiles, Compose, hardening, registries | planned | standard | R15 |
 | `log-analysis` | Event logs, crash dumps, journals, application logs | planned | standard | R07 |
 | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans | planned | standard | R19 |
 | `linux-gaming` | Proton, Steam, handhelds | planned | on request | R15 |
@@ -113,13 +113,13 @@ that will do the same for other repositories.
 
 ## Rebuilding the owner's older skills
 
-The owner's account holds 33 skills of their own, older than this repository. 26 are rebuilt
+The owner's account holds 33 skills of their own, older than this repository. 25 are rebuilt
 here as the successors in the tables above, 3 are already replaced (`git-workflows`,
 `project-bootstrap-and-audit`, and `markdown-standards` by `house-style`), 3 retire into shared
-tools (`skill-orchestrator`, `skill-stress-tester`, `code-planner`), and 1, `procedure-generator`,
-stays on the account. Nothing is copied: none of their examples has ever been run, none of their
-facts has a source, and five hold company detail. The owner approved this plan on 2026-10-15
-(decisions 44 to 49).
+tools (`skill-orchestrator`, `skill-stress-tester`, `code-planner`), and 2 stay on the account:
+`procedure-generator`, for claude.ai only, and `my-theme` (46). Nothing is copied: none of their
+examples has ever been run, none of their facts has a source, and five hold company detail. The
+owner approved this plan on 2026-10-15 (decisions 44 to 49).
 
 1. **Shared tools first, each its own pull request:**
    - the intake, filed as a dated research result with company detail and repository names
@@ -138,15 +138,20 @@ facts has a source, and five hold company detail. The owner approved this plan o
 
    | Wave | Research | Skills |
    |---|---|---|
-   | 1 | R15, R09, R11, R10 | `shell`, `python`, `powershell`, `csharp-dotnet`, `typescript-javascript`, `html-css` |
-   | 2 | R06, R07, R14, R19 | `testing`, `error-handling`, `log-analysis`, `data-and-sql`, `api-design`, `optimization-and-scheduling` |
-   | 3 | R16, R11 | `vba`, `excel`, `word-documents`, `epicor-kinetic`, `solidworks-api`, `windows-server` |
-   | 4 | R12, R13, R15, R20 | `go`, `rust`, `php`, `ruby`, `containers`, `linux`, `networking-security`, `visual-theme`, `data-visualization` |
+   | 1 | R15, R09, R11, R10 | `bash-coding`, `python-coding`, `powershell-scripts`, `csharp-coding`, `javascript-coding`, `html-coding` |
+   | 2 | R06, R07, R14, R19 | `testing-patterns`, `error-handling`, `log-analysis`, `sql-craftsman`, `api-patterns`, `optimization-and-scheduling` |
+   | 3 | R16, R11 | `vba-coding`, `excel-master`, `word-documents`, `epicor-kinetic`, `solidworks-automation`, `windows-admin` |
+   | 4 | R12, R13, R15, R20 | `go-coding`, `rust-coding`, `php-coding`, `ruby-coding`, `docker-containers`, `linux`, `networking-security`, `visual-theme`, `data-visualization` |
    | When needed | R15 | `linux-gaming` |
 
    Each rebuild takes the old skill's topics from the intake, writes from primary sources with
-   dated facts, makes every example pass the checker, gets a fresh review and its trigger
-   tests, and ships in a release. The owner then turns the old copy off, since the names differ.
+   dated facts, makes every example pass the checker, gets a fresh review, its trigger tests
+   and the owner's claude.ai tries, and ships in a release. Most rebuilds keep the old skill's
+   name, so its upload can replace the old copy in place; the first one confirms that it does.
+   Four take a new name, because the old one would misstate the scope: `log-parser` becomes
+   `log-analysis`, `epicor-bpm` becomes `epicor-kinetic`, `linux-troubleshooting` becomes
+   `linux`, and `human-factor-audit` becomes `optimization-and-scheduling`. The owner turns
+   those four old copies off.
 
 **What the owner decided:**
 - **Examples CI can't run** (VBA, SOLIDWORKS, Epicor, Power Query, DAX): CI checks what it can
@@ -157,18 +162,33 @@ facts has a source, and five hold company detail. The owner approved this plan o
 - **PowerPoint and PDF** are left to Anthropic's `pptx` and `pdf` skills, unless a repository
   needs to generate them (47).
 - **Old copies with known dangerous examples** stay on until their successors ship (48).
+- **Room for 100 skills:** every skill works in Claude Code first and on claude.ai too, with
+  extra effort where it takes some. Descriptions are capped at 250 characters, and `skillcheck`
+  holds the whole listing to room for 100 skills. Only if that runs short is the listing
+  budget raised (2026-10-15).
+- **The Claude Code exclusion list:** a file in this repository names the skills, Anthropic's
+  and the owner's, that load on claude.ai but not in Claude Code. The bootstrap skill writes
+  it into each repository's `.claude/settings.json` as `skillOverrides`, which Claude Code
+  applies to synced skills, tested here on 2026-10-15. It starts with `procedure-generator`,
+  `markdown-standards`, the three retired skills, and Anthropic's skills the owner doesn't use in repositories. Its
+  bootstrap step is a change to the standard, proposed on its own (2026-10-15).
+- **Anthropic's skills:** `docx`, `xlsx`, `pptx` and `pdf` stay on. `skill-creator` stays as a
+  reference, on in this repository only, unless `skill-builder` replaces it (2026-10-15).
+- **Company material,** such as the company theme, template and the Epicor and SOLIDWORKS
+  detail, goes in a private companion repository with the same tools and checks, not here
+  (2026-10-15).
 
 ## Lessons waiting for their skill
 
 What live repositories taught that belongs to a skill not built yet. Each skill takes its
 lessons in when it's built, and its `why.md` cites them.
 
-- **L1, `testing`:** check the fact, not a symptom the failure path shares. When one check is
+- **L1, `testing-patterns`:** check the fact, not a symptom the failure path shares. When one check is
   re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
   live repository's acceptance step passed an identification because rows had loaded. They were
   the placeholders its app loads when a lookup finds nothing. A sibling check, re-keyed onto the
   identifier after the same symptom fooled it once before, caught it two steps later.
-- **L2, `testing`:** a test that needs outside data, such as an entry in a public catalog,
+- **L2, `testing-patterns`:** a test that needs outside data, such as an entry in a public catalog,
   names the fixture it expects, and says so when the fixture is the cause. The same rig made
   three acceptance runs in 40 minutes, on two inputs the catalog didn't know. Each one read as
   a failed step, not as the wrong input.
@@ -178,31 +198,31 @@ lessons in when it's built, and its `why.md` cites them.
 - **L4, `logging-and-observability`:** an evidence bundle lists what it left out, and the raw
   facts each verdict was computed from. That bundle did both, so "nothing was missing" could be
   told from "nothing was collected", and a wrong label could be checked against its inputs.
-- **L5, `testing`:** a regression test for a wiring bug goes through the production entry
+- **L5, `testing-patterns`:** a regression test for a wiring bug goes through the production entry
   point. Four releases claimed a fix whose test handed the fact straight to the renderer, while
   nothing in the app ever passed it on.
-- **L6, `testing`:** grep for a call site before believing a documented capability. Four
+- **L6, `testing-patterns`:** grep for a call site before believing a documented capability. Four
   cancel methods were documented and never called.
-- **L7, `testing`:** a test asserts the invariant, not today's state, and a rule about releases
+- **L7, `testing-patterns`:** a test asserts the invariant, not today's state, and a rule about releases
   runs on the release path. A unit test blocked every commit during a review round, and didn't
   block the releases it was for.
-- **L8, `testing`:** the command typed locally stands in for CI's, so it matches CI's import
+- **L8, `testing-patterns`:** the command typed locally stands in for CI's, so it matches CI's import
   path and compiler flags. `python -m pytest` adds the current directory to `sys.path` and the
   `pytest` script doesn't; a bare `gcc` passed code the project's flags reject.
-- **L9, `testing`:** a gate never picks its subject by sort or directory order. The "newest
+- **L9, `testing-patterns`:** a gate never picks its subject by sort or directory order. The "newest
   verification" was whichever file the directory listed last.
-- **L10, `testing`:** a scripted edit with several parts asserts each part landed. One assert
+- **L10, `testing-patterns`:** a scripted edit with several parts asserts each part landed. One assert
   covered one replacement while the others silently did nothing.
-- **L11, `testing`:** a stand-in for hardware can be a fault-injection shim. An `LD_PRELOAD`
+- **L11, `testing-patterns`:** a stand-in for hardware can be a fault-injection shim. An `LD_PRELOAD`
   shim that fails reads found a hang no drive run had, and reproduced a damaged disc on demand.
-- **L12, `testing`:** a parser that offline tests never reach is tested against a recorded
+- **L12, `testing-patterns`:** a parser that offline tests never reach is tested against a recorded
   response. Tests that all ran offline left a network parser at 27% branch coverage, hiding
   three crashes.
-- **L13, `testing`:** an intermittent failure can be a race in the program, not the test. One
+- **L13, `testing-patterns`:** an intermittent failure can be a race in the program, not the test. One
   was a signal arriving after the loop, fixed in the program. This adds to F87.
-- **L14, `testing`:** filed evidence is read as a set of claims. Two defects sat for weeks in
+- **L14, `testing-patterns`:** filed evidence is read as a set of claims. Two defects sat for weeks in
   logs both sides had filed and nobody had read.
-- **L15, `testing`:** a check is independent of another by the time between them, not the
+- **L15, `testing-patterns`:** a check is independent of another by the time between them, not the
   date. Two checks on consecutive dates were 26 minutes apart.
 - **L16, `error-handling`:** a broad `try` around a whole validator fails open. One field of
   the wrong type made the validator return no errors, and a path-traversal template was saved.
@@ -216,12 +236,12 @@ lessons in when it's built, and its `why.md` cites them.
   wrong.
 - **L20, `logging-and-observability`:** a population is recorded once, as data, and never
   derived again. One total was re-derived, and fixed, in four files.
-- **L21, `api-design`:** a contract derived from format strings can't see a change of meaning.
+- **L21, `api-patterns`:** a contract derived from format strings can't see a change of meaning.
   An error count began to include encoder failures, and the contract diff showed one row of
   303. A contract records every argument as used, declined with a reason, or not yet examined.
-- **L22, `api-design`:** when a provider rewords a line its consumer parses, the consumer's
+- **L22, `api-patterns`:** when a provider rewords a line its consumer parses, the consumer's
   release that reads both wordings ships first.
-- **L23, `c`:** gate on the count of warnings under the shipped flags rather than `-Werror`,
+- **L23, `c-coding`:** gate on the count of warnings under the shipped flags rather than `-Werror`,
   which fails on a new compiler's new warnings. Ask the binary whether it's instrumented: a
   test log looked sanitized while the binary wasn't. Argument shape is a probe axis of its
   own, and it found an overread both sanitizers missed.

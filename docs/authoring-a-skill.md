@@ -61,12 +61,18 @@ and dependencies. A second version of a published rule drifts from the first.
    - a destructive command is shown with a dry run or a confirmation first;
    - never fetch-and-run (`curl … | sh`).
 
-   Claude Code comes first. A skill also works on claude.ai where that costs nothing: spec
-   fields only, which `skillcheck` enforces, and a description that stands on its own. Nothing
-   beyond that is built for claude.ai (the owner, 2026-10-15).
+   Claude Code comes first, and a skill works on claude.ai too, even where that takes some
+   extra effort (the owner, 2026-10-15). That means spec fields only, which `skillcheck`
+   enforces, a description that stands on its own, and steps that say what to do where no
+   shell is available. Where a skill can't serve claude.ai at a fair cost, say so in its
+   `compatibility` field. Before it ships, the owner tries two or three requests on claude.ai,
+   from prompts the session gives them, each with what a pass looks like.
 6. **Frontmatter.** Spec fields only, and the name matches the directory. The description says
-   what the skill does and when to use it, in the third person, with distinctive trigger words
-   rather than a keyword list, in 1,024 characters or fewer.
+   what the skill does and when to use it, in the third person, its main use first, with
+   distinctive trigger words rather than a keyword list, in 250 characters or fewer. Claude Code
+   lists every skill's name and description within a budget, and past it the skills used least
+   keep only their names, so the name says what the skill is for. `skillcheck` enforces the cap,
+   and holds the whole listing to room for 100 skills.
 7. **Shape.** `SKILL.md` is a router under 500 lines: scope, the rules that matter most, how to
    check, how to audit, and where to go next. Detail goes in `references/`, one level deep: a
    reference never sends the reader on to another reference, by link or by naming its file.
@@ -100,5 +106,7 @@ and dependencies. A second version of a published rule drifts from the first.
     `uv run skillcheck .` and `npx --no-install claude plugin validate --strict .`.
 11. **Record it.** Add a line under `[Unreleased]` in `CHANGELOG.md` and set `metadata.reviewed`
     to today's date.
-12. **The old copy.** Once the new version is delivered, turn off or replace the claude.ai copy,
-    so sessions don't load two versions of one skill.
+12. **The old copy.** A rebuilt skill keeps its old skill's name where the old name still fits
+    its scope, so it can replace the claude.ai copy in place. Otherwise, once the new version is
+    delivered, the owner turns the old copy off, so sessions don't load two versions of one
+    skill.

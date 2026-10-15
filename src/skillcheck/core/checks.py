@@ -32,6 +32,13 @@ ALLOWED_KEYS = frozenset(
 NAME_PATTERN = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 MAX_NAME_LENGTH = 64
 MAX_DESCRIPTION_LENGTH = 1024
+# Claude Code lists every skill to the model as "- name: description", within 1% of the context
+# window at 4 characters a token: 8,000 characters for a 200,000-token model, 40,000 for a
+# million (its code, read on 2.1.301). Over that, the skills used least keep only their names.
+# The owner plans for 100 skills here beside Anthropic's and their own, so each description is
+# capped well under the spec's limit, and the whole listing is held to 100 skills at 240.
+DESCRIPTION_CAP = 250
+LISTING_BUDGET = 100 * (240 + 20)
 MAX_COMPATIBILITY_LENGTH = 500
 # Both the spec and Claude Code's docs: "Keep SKILL.md under 500 lines." The whole file loads
 # every time the skill activates; detail belongs in files it links to.
@@ -123,6 +130,8 @@ class Report:
     # Every installed skill's description is listed to the model, and the listing has a budget:
     # in one session 50 skills' 26,620 characters left the last 9 with no description at all.
     description_chars: int = 0
+    # The same skills as Claude Code lists them: "- name: description" and a newline each.
+    listing_chars: int = 0
     # Rows in the skills' references/facts.md, each checked for its source, quote and dates.
     facts: int = 0
     catalog_plugins: int | None = None
@@ -167,6 +176,13 @@ def check_repository(root: Path) -> Report:
     _check_readme(root, names, report)
     _check_agent_files(root, report)
     _check_conflict_markers(root, report)
+    if report.listing_chars > LISTING_BUDGET:
+        report.add(
+            SKILLS_DIR,
+            "listing",
+            f"the skills' listing is {report.listing_chars} characters; the budget is "
+            f"{LISTING_BUDGET}, room for 100 skills at 240",
+        )
     for path in standards:
         report.standard_version = standard.check(root, path, report.add)
         _check_version_copies(root, path.parent.parent.name, report.standard_version, report)
@@ -238,11 +254,19 @@ def _check_skill(skill_dir: Path, report: Report, needs_rationale: bool) -> None
         report.add(where, "description", "description is missing or empty")
         return
     report.description_chars += len(description)
+    report.listing_chars += len(skill_dir.name) + len(description) + 5
     if len(description) > MAX_DESCRIPTION_LENGTH:
         report.add(
             where,
             "description",
             f"description is {len(description)} characters; the limit is {MAX_DESCRIPTION_LENGTH}",
+        )
+    elif len(description) > DESCRIPTION_CAP:
+        report.add(
+            where,
+            "listing",
+            f"description is {len(description)} characters; this repository's cap is "
+            f"{DESCRIPTION_CAP}, so 100 skills fit Claude Code's listing",
         )
 
 

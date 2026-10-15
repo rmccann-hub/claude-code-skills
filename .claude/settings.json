@@ -17,5 +17,13 @@
     "standards@claude-code-skills": false,
     "engineering@synced": false,
     "engineering@claude-code-skills": false
+  },
+  "skillOverrides": {
+    "code-planner": "off",
+    "git-workflows": "off",
+    "markdown-standards": "off",
+    "project-bootstrap-and-audit": "off",
+    "skill-orchestrator": "off",
+    "skill-stress-tester": "off"
   }
 }

@@ -2,10 +2,11 @@
 
 Sessions on this repository also load the maintainer's skills synced from claude.ai. They are
 older copies of skills this repository is replacing. This repository's settings can't stop the
-sync, and whether they can hide a synced skill is documented but not yet tried. Where one
-disagrees with a file under `skills/`, the file here is the one being worked on.
-That goes for an installed copy of this repository's own skills too: `.claude/settings.json` turns
-off both plugins' copies, but not one uploaded as a claude.ai skill.
+sync, but `skillOverrides` in `.claude/settings.json` hides a synced skill, tried on
+2026-10-15. Where one disagrees with a file under `skills/`, the file here is the one being
+worked on.
 
-Three synced skills are retired, and sessions here don't use them: `markdown-standards`
-(`house-style` replaces it), `skill-orchestrator` and `skill-stress-tester`.
+`.claude/settings.json` turns off both plugins' copies of this repository's own skills, and the
+synced copies of `git-workflows` and `project-bootstrap-and-audit`. It also turns off the
+retired `markdown-standards` (`house-style` replaces it), `skill-orchestrator`,
+`skill-stress-tester` and `code-planner`.

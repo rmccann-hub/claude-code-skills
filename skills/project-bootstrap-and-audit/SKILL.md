@@ -1,6 +1,6 @@
 ---
 name: project-bootstrap-and-audit
-description: Set up a new repository, retrofit or audit an existing one, check configuration before a release, or plan what to fix next, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (a two-axis stakes model and ten dimensions). Use when asked to bootstrap, scaffold, survey, audit or re-check a repository's structure, CI, agent configuration, secrets handling, dependencies, licensing or release readiness. It stops for approval before changing anything.
+description: "Sets up, retrofits or audits a repository against the PROJECT-BOOTSTRAP-AND-AUDIT standard: structure, CI, agent files, secrets, dependencies, licensing, release readiness. Stops for approval before changing anything."
 license: CC0-1.0
 metadata:
   standard-version: "0.44.0"
