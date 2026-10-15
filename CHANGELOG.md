@@ -10,11 +10,16 @@ Notable changes to this repository. The format follows
 
 - `skillcheck --new <name>` writes a new skill's starting files in the authoring guide's shape,
   and the `placeholder` rule fails a skill that still holds an unfinished part.
+- The `listing` rule caps each skill's description at 250 characters, and holds all the
+  skills' listing to room for 100 skills in Claude Code.
 
 ### Changed
 
-- The authoring guide says skills are built for Claude Code first, and work on claude.ai only
-  where that costs nothing.
+- The three skills' descriptions are shortened to fit the cap: `git-workflows` from 1,015
+  characters to 227, `house-style` from 780 to 218, and `project-bootstrap-and-audit` from 446
+  to 217.
+- The authoring guide says skills are built for Claude Code first and work on claude.ai too,
+  with extra effort where it takes some, and the owner tries each one there before it ships.
 
 ## [0.1.12] - 2026-10-15
 

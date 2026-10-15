@@ -2,6 +2,54 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-15 — Room for 100 skills, on both surfaces, and an exclusion list for Claude Code
+
+- **Asked:** the owner asked to plan for 75 to 100 skills, to make them work in Claude Code and
+  on claude.ai even where that takes extra effort, to replace every older skill of theirs, and to
+  keep a file listing the claude.ai skills Claude Code shouldn't load, applied by the bootstrap
+  skill. On the seven questions that followed they answered, verbatim: "3. do all the word files
+  and pdf, skill-creator maybe is only needed for this repo, unless you build a better one, but
+  it should be kept as something refernce in case something changes in the future. convas
+  design i am not sure. 5, fair, we can either make this repo private, but it was too
+  restrictive, or make a private compananion repo […]. 6. yes, true, you would need to give me a
+  prompt to run and test will on .ai to test in that direction. 7. we would likely try to
+  replace in place if we can? if not agreed. otherwise all recommended".
+- **Supersedes** the previous entry's "work on claude.ai only where that costs nothing". The
+  authoring guide now asks for claude.ai too, with the owner's tries there before a skill ships.
+- **Measured, in Claude Code 2.1.301's own code, since its documentation gives only the 1%:**
+  the skill listing is 1% of the context window at 4 characters a token, so 8,000 characters
+  for a 200,000-token model and 40,000 for a million. Each skill costs its name and description
+  plus five characters. Over budget, Claude Code's bundled skills keep their descriptions, and
+  the rest keep theirs in order of use until the budget runs out; the others keep only their
+  names. 49 synced skills hold 26,894 description characters today: 16 of them Anthropic's
+  (8,183), 33 the owner's (18,711).
+- **Tested here:** `skillOverrides` set to `"off"` hides a synced claude.ai skill. With it in
+  `.claude/settings.local.json`, then in `.claude/settings.json`, calling the skill was refused
+  with "disabled for model invocation in skillOverrides settings". The documentation says
+  plugin skills are exempt and says nothing of synced ones.
+- **Decided:**
+  - A description is at most 250 characters, with its main use first. The `listing` rule
+    enforces it, and holds the whole listing to room for 100 skills at 240. The budget is raised
+    only if that runs short (1).
+  - The exclusion list is a file in this repository, and the bootstrap skill writes it into each
+    repository's settings as `skillOverrides` (2). Its bootstrap step changes the standard, so
+    it's proposed on its own. This repository already sets it for the retired skills and the
+    synced copies of its own, which `CLAUDE.md` names.
+  - Anthropic's `docx`, `xlsx`, `pptx` and `pdf` stay on. `skill-creator` is kept as a reference,
+    on in this repository only, unless `skill-builder` replaces it. `canvas-design` is undecided,
+    and off in Claude Code meanwhile (3).
+  - `procedure-generator` stays on claude.ai and is off in Claude Code (4).
+  - Company material, such as the company theme and template, goes in a private companion
+    repository, which the owner creates. This repository stays public (5).
+  - For each rebuilt skill, the session gives the owner two or three requests to try on
+    claude.ai, each with what a pass looks like (6).
+  - A rebuilt skill keeps its old skill's name where the name still fits its scope, so it can
+    replace the old copy in place. That renames 18 planned skills in `ROADMAP.md`, such as
+    `python` to `python-coding`, and `c`, `cpp`, `java` and `kotlin` to match. Four keep a new
+    name, since the old one would misstate the scope (7).
+  - `markdown-standards`, `skill-orchestrator`, `skill-stress-tester` and `code-planner` retire
+    (7).
+
 ## 2026-10-15 — Claude Code first, and a skeleton for every new skill
 
 - **Asked:** the owner asked whether the rebuilt skills would suit claude.ai, where the old ones
