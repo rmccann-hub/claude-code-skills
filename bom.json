@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:bc5a8054-392b-56dd-aea6-344ad0dcbecb",
+  "serialNumber": "urn:uuid:a7b45fef-1e6d-53a8-9170-27531ae465d3",
   "version": 1,
   "metadata": {
     "tools": {
@@ -37,7 +37,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "Python: 30 file(s)"
+          "value": "Python: 31 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -45,7 +45,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 9 file(s)"
+          "value": "JSON: 10 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -627,7 +627,7 @@
           "type": "data",
           "bom-ref": "skill:project-bootstrap-and-audit",
           "name": "project-bootstrap-and-audit",
-          "description": "standard v0.44.0",
+          "description": "standard v0.45.0",
           "licenses": [
             {
               "expression": "CC0-1.0"

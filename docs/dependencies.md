@@ -16,7 +16,7 @@ freshness run and the release workflow both run it.
 
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
-| `standards` | 0.1.12 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.44.0 |
+| `standards` | 0.1.12 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.45.0 |
 | `engineering` | 0.1.12 | Apache-2.0 | `git-workflows` | reviewed 2026-10-05 |
 | `engineering` | 0.1.12 | Apache-2.0 | `house-style` | reviewed 2026-10-05 |
 
@@ -25,9 +25,9 @@ freshness run and the release workflow both run it.
 | Language | Tracked files |
 |---|---|
 | Markdown | 69 |
-| Python | 30 |
+| Python | 31 |
 | YAML | 22 |
-| JSON | 9 |
+| JSON | 10 |
 | Shell | 2 |
 | TOML | 2 |
 

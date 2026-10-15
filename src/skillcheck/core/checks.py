@@ -107,6 +107,13 @@ SCANNED_DIRS = (
 # still holds one isn't finished, so it fails here rather than shipping half-written.
 PLACEHOLDER = "TODO(new-skill)"
 
+# The owner's exclusion list: the claude.ai skills repository sessions don't load, as Claude Code's
+# skillOverrides, each with its reason. A listed skill this repository ships would hide it in
+# every repository the list is applied to, and this repository applies the list to itself.
+EXCLUSIONS = "assets/skill-overrides.json"
+SETTINGS = ".claude/settings.json"
+OVERRIDE_VALUES = ("on", "name-only", "user-invocable-only", "off")
+
 # Every skill says why it advises what it does, what others do instead, and what each choice
 # costs (docs/authoring-a-skill.md). The skill carrying the standard is exempt: the standard
 # gives its reasons inline, and it changes only on its own.
@@ -176,6 +183,9 @@ def check_repository(root: Path) -> Report:
     _check_readme(root, names, report)
     _check_agent_files(root, report)
     _check_conflict_markers(root, report)
+    for skill_dir in skills:
+        if (skill_dir / EXCLUSIONS).is_file():
+            _check_exclusions(root, skill_dir, names, report)
     if report.listing_chars > LISTING_BUDGET:
         report.add(
             SKILLS_DIR,
@@ -398,6 +408,41 @@ def _check_optional_fields(data: dict, where: str, report: Report) -> None:
 
 def _is_text(value: object) -> bool:
     return isinstance(value, str) and bool(value.strip())
+
+
+def _check_exclusions(root: Path, skill_dir: Path, names: set[str], report: Report) -> None:
+    where = f"{SKILLS_DIR}/{skill_dir.name}/{EXCLUSIONS}"
+    try:
+        data = json.loads((skill_dir / EXCLUSIONS).read_text(encoding="utf-8"))
+        overrides, reasons = data["skillOverrides"], data["reasons"]
+        if not isinstance(overrides, dict) or not isinstance(reasons, dict):
+            raise TypeError
+    except ValueError, KeyError, TypeError:
+        report.add(where, "exclusions", 'needs "skillOverrides" and "reasons", each an object')
+        return
+    for name, value in overrides.items():
+        if not NAME_PATTERN.fullmatch(name) or len(name) > MAX_NAME_LENGTH:
+            report.add(where, "exclusions", f"{name!r} isn't a skill name")
+        if value not in OVERRIDE_VALUES:
+            report.add(where, "exclusions", f"{name}: {value!r} isn't one of {OVERRIDE_VALUES}")
+        if name in names:
+            report.add(where, "exclusions", f"{name} ships here, and the list would hide it")
+        if not _is_text(reasons.get(name)):
+            report.add(where, "exclusions", f"{name} has no reason")
+    for name in sorted(set(reasons) - set(overrides)):
+        report.add(where, "exclusions", f"{name} has a reason but no setting")
+    try:
+        settings = json.loads((root / SETTINGS).read_text(encoding="utf-8"))
+        applied = settings.get("skillOverrides") or {}
+    except OSError, ValueError, AttributeError:
+        applied = {}
+    missing = sorted(set(overrides) - set(applied))
+    if missing:
+        report.add(
+            SETTINGS,
+            "exclusions",
+            f"skillOverrides lacks {len(missing)} of {where}'s entries: {', '.join(missing)}",
+        )
 
 
 def _check_agent_files(root: Path, report: Report) -> None:
