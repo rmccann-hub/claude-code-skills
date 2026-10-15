@@ -2,6 +2,28 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-15 — Standard v0.45.0: the skill exclusion list
+
+- **Asked:** the owner approved an exclusion list kept here and applied by the bootstrap skill
+  (the previous entry, answer 2), then said: "do what you can".
+- **Changed, in the standard, as F148 and a change of its own:** dimension 4's *Skills the
+  owner keeps out of repository sessions*. A run proposes each entry of the standards
+  repository's exclusion list that a repository's `.claude/settings.json` lacks, as
+  `skillOverrides`, at Phase 6, and keeps the entries the repository already sets. It carries
+  no rating. The enforced-layer template points to it, and *Facts with an expiry date* records
+  the test from the previous entry.
+- **The list:** `skills/project-bootstrap-and-audit/assets/skill-overrides.json`, 16 entries,
+  each with its reason. Turned off: 8 of Anthropic's skills for chat (`canvas-design` among
+  them, until the owner decides), `skill-creator` outside this repository,
+  `procedure-generator`, and the owner's four retired skills. `docs` and `google-workspace` list
+  their names only, since their connectors call them by name. Nothing this repository ships is
+  on it, and the new `exclusions` rule fails a list that names one.
+- **This repository applies it:** the `exclusions` rule fails `.claude/settings.json` when it
+  lacks any entry, and lets this repository set its own value, as it does to keep
+  `skill-creator` on.
+- **Not done:** no parity run, since the change adds one proposal to dimension 4 and moves no
+  rating. 13 tests cover the rule; `.test-baseline` is 382.
+
 ## 2026-10-15 — Room for 100 skills, on both surfaces, and an exclusion list for Claude Code
 
 - **Asked:** the owner asked to plan for 75 to 100 skills, to make them work in Claude Code and
