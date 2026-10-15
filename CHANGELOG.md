@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.13] - 2026-10-15
+
 ### Added
 
 - `skillcheck --new <name>` writes a new skill's starting files in the authoring guide's shape,

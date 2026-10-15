@@ -23,6 +23,9 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   `skill-creator` on.
 - **Not done:** no parity run, since the change adds one proposal to dimension 4 and moves no
   rating. 13 tests cover the rule; `.test-baseline` is 382.
+- **Release 0.1.13:** this pull request's merge, with standard v0.45.0, the exclusion list, the
+  description cap and the shorter descriptions merged since 0.1.12, so the owner's uploads to
+  claude.ai carry them. Both catalog entries say 0.1.13.
 
 ## 2026-10-15 — Room for 100 skills, on both surfaces, and an exclusion list for Claude Code
 
