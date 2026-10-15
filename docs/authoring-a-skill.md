@@ -7,6 +7,11 @@ reused under another license.
 The owner's old claude.ai skills are a list of topics, checks and lessons. Nothing is copied from
 them.
 
+**Start from the skeleton:** `uv run skillcheck --new <name>` writes the skill's `SKILL.md`, the
+references every skill starts with, and its trigger evaluations, in the shape below. Each part
+still to be written is marked `TODO(new-skill)`, and `skillcheck` fails a skill that still holds
+one, so a half-written skill can't ship.
+
 **The standard covers configuration and process; these skills cover code.** The standard says it
 doesn't judge code, and the category skills are what does. Where the standard already rules,
 cite its section instead of restating it. That applies to budgets, layouts, versioning, secrets
@@ -56,7 +61,9 @@ and dependencies. A second version of a published rule drifts from the first.
    - a destructive command is shown with a dry run or a confirmation first;
    - never fetch-and-run (`curl … | sh`).
 
-   Under decision H2 (a), the skill must also work on claude.ai.
+   Claude Code comes first. A skill also works on claude.ai where that costs nothing: spec
+   fields only, which `skillcheck` enforces, and a description that stands on its own. Nothing
+   beyond that is built for claude.ai (the owner, 2026-10-15).
 6. **Frontmatter.** Spec fields only, and the name matches the directory. The description says
    what the skill does and when to use it, in the third person, with distinctive trigger words
    rather than a keyword list, in 1,024 characters or fewer.

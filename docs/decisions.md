@@ -2,6 +2,26 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-15 — Claude Code first, and a skeleton for every new skill
+
+- **Asked:** the owner asked whether the rebuilt skills would suit claude.ai, where the old ones
+  were used, and then said: "It's mostly for Claude code to use. If it works for Claude.ai with
+  minimal effort as a byproduct, excellent even better, let's improve the skills. But this was
+  always secondary."
+- **Decided:** skills are built for Claude Code. They work on claude.ai only where that costs
+  nothing: spec fields only, which `skillcheck` already enforces because claude.ai rejects any
+  other, and a description that stands on its own. `docs/authoring-a-skill.md` says so in place
+  of its old pointer to decision H2 (a).
+- **Changed, the first of the porting plan's shared tools:** `skillcheck --new <name>` writes a
+  skill's `SKILL.md`, `why.md`, `facts.md`, `audit.md`, `mistakes.md`, `sources.md` and its
+  trigger evaluations, in the authoring guide's shape. Each part still to be written is marked
+  `TODO(new-skill)`, and a new rule, `placeholder`, fails any skill that still holds one, with
+  the count and the first line. It refuses a bad name and never overwrites a skill or a trigger
+  file that exists.
+- **Tested:** 14 tests, including one that fills every placeholder in a fresh skeleton and finds
+  it passes every rule, so the skeleton itself can't drift from the checks. `.test-baseline`
+  is 365.
+
 ## 2026-10-15 — Release 0.1.12, after 0.1.11's files were refused
 
 - **What happened:** the Release workflow tagged `v0.1.11` on `5ca99d0`, then its files step
