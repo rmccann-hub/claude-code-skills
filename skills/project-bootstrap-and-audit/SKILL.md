@@ -20,3 +20,7 @@ It is written to be read in ranges, never end to end.
    written to the repository before explicit approval.
 4. The run's report goes outside the repository, as the standard's Phase 6 describes, and is
    handed to the person in the same turn.
+
+Where a repository keeps an `evidence` branch, as the standard's *Generated evidence* describes,
+[scripts/verify_evidence.py](scripts/verify_evidence.py) checks the branch and its manifest in a
+local copy, and its first lines say how to make one. It reads Git only and changes nothing.
