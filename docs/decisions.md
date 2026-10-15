@@ -2,6 +2,21 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-15 — Release 0.1.12, after 0.1.11's files were refused
+
+- **What happened:** the Release workflow tagged `v0.1.11` on `5ca99d0`, then its files step
+  refused: `bom.json` and `docs/dependencies.md` counted 26 Python files, not 28. The session
+  regenerated the map while the evidence verifier and its tests were still untracked, and the
+  map counts tracked files. Pull request CI doesn't compare the map, so only the release caught
+  it. No release page was published.
+- **Changed:** the map is regenerated, and the same content ships as 0.1.12. The `v0.1.11` tag
+  stays where it is, with no release, since the tag ruleset blocks deleting and moving tags, as
+  it should.
+- **Lesson, for this repository's own checks:** a check that only the release runs finds a
+  mistake after the tag. Whether pull request CI should compare the map too is the owner's
+  call, since a Dependabot pull request would then fail until a session regenerates it, which
+  decision 27 already asks for before merging.
+
 ## 2026-10-15 — An evidence verifier in the standard's skill, and release 0.1.11
 
 - **Asked:** the owner approved C1 of the round review on 2026-10-15: ship the verifier this
