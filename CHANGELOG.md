@@ -6,6 +6,15 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.11] - 2026-10-15
+
+### Added
+
+- `project-bootstrap-and-audit` ships `scripts/verify_evidence.py`, which checks a repository's
+  evidence branch and manifest in a local copy: an orphan root, a linear branch, no tag, no
+  shared history, the move commit's pinned identity and instant, and every manifest row's file,
+  size, SHA-256 and source. It exits 2 when it couldn't check, never 0.
+
 ### Changed
 
 - CI and the prose check run on a push to `main` only. A branch with a pull request ran each

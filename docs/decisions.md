@@ -2,6 +2,32 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-15 — An evidence verifier in the standard's skill, and release 0.1.11
+
+- **Asked:** the owner approved C1 of the round review on 2026-10-15: ship the verifier this
+  repository's session used during the round, generic and tested.
+- **Changed:** `skills/project-bootstrap-and-audit/scripts/verify_evidence.py`, Python 3.11 or
+  later and nothing else, checks an evidence branch and its manifest in a local copy:
+  - an orphan root, each later commit's one parent, no tag reaching the branch, and no history
+    shared with the default branch;
+  - with `--identity` and `--instant`, the move commit's pinned author, committer and dates;
+  - the manifest's header, order and one row per path;
+  - each row's file in its evidence commit, by size and SHA-256, the same blob as in its source
+    commit, and no different file at that path on the default branch.
+  
+  It exits 0 when every check passes, 1 when any fails, and 2 when it couldn't check. Rulesets
+  and CI are GitHub's to report, and it doesn't read them. `SKILL.md` links it.
+- **Rebuilt, not copied:** the session's own script read GitHub's API and named the repositories
+  it checked. This one reads only Git, so it works in any local copy, and its tests build their
+  repositories. Building it found a defect the session's script never met: a branch wrongly
+  rooted on the default branch walks into that branch's history, whose root also has no parent.
+  It now lists only the branch's own commits.
+- **Tested:** 22 tests in `tests/test_verify_evidence.py` plant each failure in a throwaway
+  repository, including a non-ASCII path, and cover every line and branch of the script. Run on a
+  live repository's real evidence branch, it passed all 16 checks over 1,032 rows.
+- **Release 0.1.11:** this pull request's merge, with standard v0.44.0 and the `git-workflows`
+  changes merged since 0.1.10. Both catalog entries say 0.1.11, and `.test-baseline` is 351.
+
 ## 2026-10-15 — Standard v0.44.0
 
 - **Asked:** the owner approved nine additions, A1 to A9 in the review of a round between two
