@@ -27,6 +27,11 @@ when you're checking advice an assistant gave. Facts are named by ID from `facts
   3.0 makes SHA-256 the default for new repositories (fact `git3`).
 - **`git init`, then `git push -u origin main`, when the new branch is `master`.** Use
   `git init -b main`, or set `init.defaultBranch`.
+- **Pushing a merged branch's commits again because a tool calls them unpushed.** Once GitHub
+  deletes a merged pull request's branch, the local branch's upstream is gone, and a status
+  line or a session's stop hook can count its commits as unpushed. They're on the default
+  branch already. `git remote prune origin` and `git branch --unset-upstream` clear it, with
+  nothing pushed.
 
 ## Hooks and checks
 
@@ -46,6 +51,11 @@ when you're checking advice an assistant gave. Facts are named by ID from `facts
   strips comments, so a commit template's comment becomes "the subject". Read it through
   `git stripspace --strip-comments`.
 - **Reading an exit status through a pipe:** `pytest | tail` reports `tail`'s status.
+- **Running the tests and pushing in one command.** One session's single command ran the suite,
+  which failed, and pushed the branch anyway. Push as its own step, after reading a green result.
+- **Running only the tests you expect to matter before pushing an edit to a checked file.** One
+  session edited a status line, ran a subset, and pushed a shape a test it skipped would have
+  refused. Run every test that names the file, or the whole suite.
 - **Trimming a merge's or rebase's output for readability.** The conflict it listed goes unseen,
   and the markers ship. Read the whole output, and check for markers in CI.
 
@@ -67,6 +77,10 @@ when you're checking advice an assistant gave. Facts are named by ID from `facts
   `injection`).
 - **Planning a merge queue on a personal account's repository.** It isn't offered there (fact
   `merge-queue`).
+- **Fetching a job's log from the REST API with a client that doesn't follow redirects.** The
+  endpoint answers with a short-lived redirect, not the log (fact `job-log-redirect`), so the
+  client reports an error or an empty file. Follow the redirect at once, or use a tool that
+  does.
 
 ## Releases
 
@@ -83,6 +97,10 @@ when you're checking advice an assistant gave. Facts are named by ID from `facts
 
 ## Files
 
+- **Comparing paths Git printed with stored paths, without `-z`.** Git quotes a path holding
+  a non-ASCII character, with octal escapes (fact `quotepath`), so it matches nothing stored.
+  One check reported 29 files missing from a manifest that listed every one. Read `ls-files`,
+  `ls-tree`, `diff --name-only` and `diff-tree` with `-z`, and split on NUL.
 - **Comments after a pattern in `.gitignore`,** which become part of the pattern (fact
   `gitignore-comment`).
 - **`!` re-including a file under an ignored directory,** which keeps nothing (fact

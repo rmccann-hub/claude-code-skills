@@ -15,6 +15,9 @@ exists to catch:
   and disable it where it stands. The gate should fail each time.
 - **The "couldn't check" case.** Make its input unavailable, with an unknown ref, an empty
   range or a missing file. It should fail, not pass having checked nothing.
+- **Every value its input states.** Change each value the checked record states, one at a
+  time, by one character. A checker that compared a cited file with its manifest row, but never
+  read the hash written beside the citation, passed a record with a wrong hash.
 
 project-bootstrap-and-audit's dimension 5 sets these rules for every gate. Restore what you
 broke from a copy you made first, checked by its hash, not with `git checkout --`, which throws
@@ -41,6 +44,15 @@ Both run offline. Neither can tell you the workflow ran, only that it could.
   (fact `skipped-pending`).
 - **Read a scheduled job's last run date,** because a public repository's schedule stops quietly
   (fact `schedule-60`).
+
+## Timing and timeouts
+
+- **A timing test asserts on growth, not on milliseconds.** Time the code at several input
+  sizes far apart, and compare the ratios with room for noise. One test read 0.2 ms of runner
+  noise as quadratic growth in a pattern measured linear.
+- **Record each slow test's headroom under its timeout,** and act before it's gone. One suite's
+  slowest test reached 87% of its timeout on a developer's machine, and timed out once on a CI
+  runner the same week.
 
 ## Test a hook in a throwaway repository
 
