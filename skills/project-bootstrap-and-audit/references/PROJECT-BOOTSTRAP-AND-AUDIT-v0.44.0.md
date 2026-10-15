@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.43.0"
-  updated: "2026-10-13"
-  supersedes: "0.42.0"
+  version: "0.44.0"
+  updated: "2026-10-15"
+  supersedes: "0.43.0"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -1841,7 +1841,10 @@ of which execute.**
 **So prove a gate by mutating what it guards, not by running it once.** Break the thing three
 ways — remove it, reorder it so it runs too late, and disable it in place — and confirm the
 gate fails each time. A gate that has only ever been watched passing has been watched
-agreeing with the current state, which it would also do if it matched nothing.
+agreeing with the current state, which it would also do if it matched nothing. **A check
+proves every value its input states.** A value it never reads is decoration, and a record that
+writes one is trusted for a check nobody made, as *Generated evidence* records of a live
+citation checker.
 
 **And there is a cheaper test that needs no mutation invented at all: run the gate against
 the parent commit.** Every gate defect found across two repositories shared one property —
@@ -2166,7 +2169,8 @@ where the plan can't enforce it, as the table above says.
 **Committable:** usernames, BAQ names, column and field names, endpoint URLs, hostnames,
 ports, database and schema names, timeouts, feature flags, structural configuration. A
 username here is one in configuration. A person's account name inside a home-folder path
-is personal information, and *Generated evidence* replaces it.
+is personal information, and *Generated evidence* replaces it. So is a workstation's hostname,
+or the owner's name, inside a log; a hostname here is a service's, in configuration.
 
 **Never committed. Placeholder only:** passwords, API keys, tokens, client secrets,
 connection strings embedding a password, certificates, private keys.
@@ -4401,7 +4405,9 @@ session's clone carried all of it.
 reports that no build or test configuration names. `git log --diff-filter=A --name-only --
 <path>` lists the additions, and `git ls-tree -r -l HEAD -- <path>` gives each file's size.
 Under 10 MB in all, a heuristic of this standard, it isn't rated: it goes in the phase block's
-`notes`.
+`notes`. **Look at what makes the files large, too.** In one repository, 85% of the evidence by
+size was one progress line the app wrote ten times a second. Moving it saves the checkout;
+fixing the writer stops the growth, and shrinks every user's report.
 
 - **An orphan branch named `evidence`, only ever appended to.** It's never merged into the
   default branch, never rebased and never tagged. A plain clone takes every branch and tag. In
@@ -4415,11 +4421,26 @@ Under 10 MB in all, a heuristic of this standard, it isn't rated: it goes in the
   checks the file against its hash. A citation made before a move stays valid where it names a
   commit, because history keeps the file there. One that names a bare path resolves through
   the manifest, since the move keeps each file's path.
+- **A new citation states the commit, the path and the SHA-256 on one line,** as
+  `owner/repo@<commit>:<path>` and the hash, and the path has no whitespace and no colon. **A
+  checker checks every value a citation states.** One live checker compared the file with its
+  manifest row but never read the hash the record wrote beside it, so a record with a wrong
+  hash passed. Check a citation the way its reader will: a fresh single-branch clone of the
+  default branch, with no tags, not partial, and no evidence fetched; then fetch the cited
+  commit into a temporary bare repository, as *Sessions don't fetch it* says, and check it
+  there. In a blobless clone, `git cat-file -e` fetches a missing object rather than reporting
+  it absent; `GIT_NO_LAZY_FETCH=1 git cat-file -e` reports it truthfully.
+- **New evidence is filed in order:** an evidence commit whose parent is the branch's tip, then
+  the manifest rows through the usual review, then the record that cites them. The record is
+  written from a default-branch commit that already holds its rows.
 - **A log has home-folder paths replaced with `~` before it's committed.** The evidence branch
   is as public as the repository, and one owner's username was in two public repositories'
   logs about 19,000 times. The step that writes the log replaces them before the manifest
   takes its hash, so the hash is of what's committed. Files already committed stay as they
-  are, since the branch is never rewritten.
+  are, since the branch is never rewritten. **Home folders aren't all of it:** a filing also
+  searches for the machine's hostname and the owner's name, which replacing home-folder paths
+  misses. **A committed filing tool does the redaction, not a person by hand:** one of two live
+  repositories redacted by hand, and recorded the tool as work still owed.
 - **Sessions don't fetch it.** A cloud session's clone holds only the default branch but keeps
   the refspec for every branch, so its first plain `git fetch` downloads the evidence too. A
   committed SessionStart hook adds the exclusion to each remote, once, and exits 0 where there's
@@ -4433,19 +4454,42 @@ Under 10 MB in all, a heuristic of this standard, it isn't rated: it goes in the
   ```
 
   A session holding several repositories runs no repository's hooks, as dimension 4 says, so
-  there the context file tells the session to run those lines itself before its first fetch. A
-  tool or
-  session that needs a file fetches it by name, with `git fetch --depth 1 origin evidence` or
-  `git fetch origin <commit>`, or reads its raw link at its commit.
+  there the context file tells the session to run those lines itself before its first fetch.
+  A tool or session that needs a file fetches its commit into a temporary bare repository,
+  where `--depth 1` is safe, optionally with `--filter=blob:none` so only the files it reads
+  arrive, or reads its raw link at its commit. **Never `git fetch --depth 1` into a full
+  clone:** it marks the whole clone shallow, so `git rev-parse --is-shallow-repository` then
+  prints `true` and Phase 0 treats it as a shallow clone.
 - **From T2, CI checks what nothing else does:** that no tag is reachable from `evidence`, and
   that each manifest row a change adds matches its file's hash, with the file fetched by its
   commit. The tag check needs the branch's commits and the tags, not their files:
   `git fetch --filter=tree:0 origin evidence:refs/remotes/origin/evidence
   '+refs/tags/*:refs/tags/*'`, then `git tag --merged origin/evidence` prints nothing.
 - **Where the plan allows a ruleset,** one blocks deleting the branch and force pushes to it.
+- **Before moving anything, find what reads it.** Simulate the move in a scratch clone that
+  also holds every ref CI fetches, run the whole suite and every check there, and copy each
+  moving file that anything opens to a fixture first. In one live repository the simulated
+  move failed 10 tests, made 30 recorded facts stale and broke the build's setup on a moved
+  input. The other repository of that pair had 177 tests in 39 files reading evidence, and a
+  scratch clone without the refs CI fetches failed 4 tests that pass in CI.
+- **Build the move commit so anyone can rebuild it:** an enumerated folder list, a fixed
+  message, no signature (`--no-gpg-sign`), and author and committer pinned to a fixed identity
+  and instant with all six `GIT_AUTHOR_*` and `GIT_COMMITTER_*` name, email and date variables,
+  built in a temporary depth-1 clone. It has no parent, since it starts the branch; a later
+  move's parent is the branch's tip. Its ID then depends only on the folders' trees: building
+  it from two default-branch commits that hold the same folders gives the same ID, and the
+  other side of a review loop can rebuild it with plain Git. Pushed from a full clone, an
+  orphan commit uploaded every file again in Git 2.43, observed on 2026-10-14: one side sent
+  749 objects, 33 MiB, in 58 seconds, and pushes from depth-1 clones took 6 to 9 seconds.
 - **Moving evidence already on the default branch takes one commit on each branch:** the files
-  added to `evidence`, then removed from the default branch with the manifest added. History
-  isn't rewritten, so a full clone keeps its size, and a shallow clone stops carrying the old
+  added to `evidence`, then removed from the default branch with the manifest added. The
+  removal's first commit has the build's source commit as its parent, and before it merges, CI
+  checks that each moved folder's tree on the default branch still equals its tree in the
+  evidence commit. Each folder's README, and any specification a checker reads, stays on both
+  branches, and every removed path has exactly one manifest row. Read paths from Git with `-z`
+  wherever they're compared with the manifest: one live check reported 29 files with
+  non-ASCII names missing from a manifest that listed them all. History isn't rewritten, so a
+  full clone keeps its size, and a shallow clone stops carrying the old
   files once the move is older than its depth, 50 commits in a cloud session. Removing them
   from history too is a decision of its own: it changes every commit ID, and every citation of
   one. The run proposes the move as one `recommended` amendment, and pushes nothing before the
@@ -4459,7 +4503,9 @@ Under 10 MB in all, a heuristic of this standard, it isn't rated: it goes in the
 branch, the missing exclusion and the missing CI check. The ruleset is a row in *Platform
 settings, and where each is*. In a public repository, dimension 7 rates `GAP` a step that
 commits logs without replacing home-folder paths. Paths already committed go in `notes`,
-since the branch is never rewritten.
+since the branch is never rewritten. The practices 0.44.0 added, from finding the readers to
+the citation checker and the filing tool, carry no rating of their own: a run proposes them
+with a move, and names any it finds missing in `notes`.
 
 ## Merge, delete, leave alone
 
@@ -4695,6 +4741,18 @@ deadlocked three times. A new finding
 goes to the next round unless it breaks what is under review, each agreed change is tracked to
 the commit that lands it, and **before output a consumer parses changes, the consumer's parser
 is read, and taught both forms first.**
+
+**The coordinator's messages are copies too, and go stale like any other.** In one round,
+three of the coordinator's commit IDs and rule numbers were wrong by the time a side read them,
+and each side caught them only by checking its own tree. So a message names the state it read
+and when, cites a rule by its number in the agreed text after reading it there, names the
+rule rather than the commit the rule produced, and quotes the owner by copying, never by
+retyping. **Settle the reporting format before the first lap.** What worked: fixed
+diagnostic keys in every lap, a round summary in each side's last lap of the round, and a short
+handoff block ending each reply that names exactly what to read. It took six changes in about
+45 minutes to settle when it was worked out mid-round. **Where a step's approval is already
+decided, give it with the request,** such as "release once its pull request is green", which
+saved one round trip on every lap.
 
 **A release never waits for a review round.** A round approves a pair already released, as
 the pair is recorded above. Tying the two produced the deadlocks above, a stream of overrides,
@@ -5185,6 +5243,26 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.44.0**: **nine changes**, F139 to F147, which the owner approved on 2026-10-15. They come
+from a round in which two live repositories moved their run evidence to `evidence` branches
+under 0.42.0's rule, and from both sides' summaries of it.
+
+**Generated evidence.** *Find what reads the evidence before moving it.* *Build the move commit
+so anyone can rebuild it.* *The removal's parent is the build's source, CI checks each moved
+folder's tree before it merges, and paths are read with `-z`.* *A citation states commit, path
+and hash, and a checker checks every value it states, the way its reader will.* *Each moved
+folder's README, and any specification a checker reads, stays on both branches, and every
+removed path has one manifest row.* *New evidence is filed in order, redacted by a committed
+tool for hostnames and names as well as home folders.* *Fetch evidence into a temporary bare
+repository, and never `git fetch --depth 1` into a full clone*, which corrects 0.42.0's advice
+to fetch it that way. *Look at what makes the files large.* These practices carry no rating of
+their own, and dimension 7 now says a workstation's hostname in a log is personal.
+
+**Gates.** *A check proves every value its input states.*
+
+**Other repositories.** *The coordinator's messages go stale like any other copy.* *Settle the
+reporting format before the first lap.* *Give an approval already decided with the request.*
 
 **0.43.0**: **twenty-three changes**, F115 to F118 and F120 to F138, which the owner approved
 on 2026-10-13. Four were found applying 0.41.0, thirteen came from reading two live

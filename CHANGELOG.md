@@ -18,6 +18,10 @@ Notable changes to this repository. The format follows
   they read, and two new dated facts, `quotepath` and `job-log-redirect`.
 - `ROADMAP.md` holds the approved plan for porting the owner's claude.ai skills, and lesson L30.
 - `CLAUDE.md` names the three retired synced skills that sessions here don't use.
+- The standard is v0.44.0, with nine changes the owner approved on 2026-10-15: how to find an
+  evidence move's readers, build the move so it can be rebuilt, remove and cite evidence,
+  file and redact new evidence, and fetch it without making a clone shallow; a check proves
+  every value its input states; and three practices for review loops between repositories.
 
 ## [0.1.10] - 2026-10-13
 

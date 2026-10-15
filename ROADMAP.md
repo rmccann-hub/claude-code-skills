@@ -23,7 +23,7 @@ that will do the same for other repositories.
 
 | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|
-| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.43.0 | shipped | core | R21, R22 |
+| `project-bootstrap-and-audit` | Set up a new repository, retrofit or audit an existing one, re-check, release, prune: the standard, v0.44.0 | shipped | core | R21, R22 |
 | `keeping-current` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
@@ -957,6 +957,27 @@ One more, from the owner's answer on 2026-10-13, applied in v0.43.0:
 - **F138:** a log committed as evidence has home-folder paths replaced with `~` before it's
   committed. The evidence branch is as public as the repository, and one owner's username was
   in two public repositories' logs about 19,000 times.
+
+A round in which two live repositories moved their evidence under F119, closed on 2026-10-15,
+found nine more in both sides' summaries and diagnostics. The owner approved them on
+2026-10-15, and they're applied in v0.44.0:
+
+- **F139:** find what reads the evidence before moving it, in a scratch clone holding every ref
+  CI fetches, and copy each file anything opens to a fixture first.
+- **F140:** build the move commit so anyone can rebuild it: an enumerated folder list, no
+  parent, a pinned identity and instant, in a depth-1 clone.
+- **F141:** the removal's parent is the build's source, CI checks each moved folder's tree
+  before it merges, and paths are read with `-z`.
+- **F142:** a citation states commit, path and hash, and a checker checks every value it
+  states, from a clone shaped like its reader's.
+- **F143:** new evidence is filed in order, and a committed tool redacts hostnames and names as
+  well as home folders.
+- **F144:** never `git fetch --depth 1` into a full clone, which 0.42.0's text advised for
+  fetching evidence.
+- **F145:** look at what makes evidence large, as well as moving it.
+- **F146:** a check proves every value its input states.
+- **F147:** the coordinator's messages go stale like any copy, the reporting format is settled
+  before the first lap, and an approval already decided goes with the request.
 
 The owner asked for one more rule, researched before it's written:
 
