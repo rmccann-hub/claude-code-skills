@@ -12,6 +12,12 @@ Notable changes to this repository. The format follows
   twice, once for the push and once for the pull request.
 - The house-style skill's prose workflow does the same, with a note to name another default
   branch where it isn't `main`.
+- `git-workflows` takes in a round of review between two live repositories: paths read with
+  `-z`, a push only after a green result, every test that names an edited file, pinned and
+  cached source builds, timing tests and timeout headroom, checks proven against every value
+  they read, and two new dated facts, `quotepath` and `job-log-redirect`.
+- `ROADMAP.md` holds the approved plan for porting the owner's claude.ai skills, and lesson L30.
+- `CLAUDE.md` names the three retired synced skills that sessions here don't use.
 
 ## [0.1.10] - 2026-10-13
 

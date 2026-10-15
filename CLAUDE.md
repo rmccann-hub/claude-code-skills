@@ -6,3 +6,6 @@ sync, and whether they can hide a synced skill is documented but not yet tried. 
 disagrees with a file under `skills/`, the file here is the one being worked on.
 That goes for an installed copy of this repository's own skills too: `.claude/settings.json` turns
 off both plugins' copies, but not one uploaded as a claude.ai skill.
+
+Three synced skills are retired, and sessions here don't use them: `markdown-standards`
+(`house-style` replaces it), `skill-orchestrator` and `skill-stress-tester`.

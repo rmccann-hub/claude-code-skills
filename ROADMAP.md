@@ -111,6 +111,53 @@ that will do the same for other repositories.
 | `visual-theme` | Design tokens, palettes, typography, dark mode | planned | standard | R20 |
 | `data-visualization` | Choosing charts, accessible charts, charting libraries | planned | standard | R20 |
 
+## Rebuilding the owner's older skills
+
+The owner's account holds 33 skills of their own, older than this repository. 26 are rebuilt
+here as the successors in the tables above, 3 are already replaced (`git-workflows`,
+`project-bootstrap-and-audit`, and `markdown-standards` by `house-style`), 3 retire into shared
+tools (`skill-orchestrator`, `skill-stress-tester`, `code-planner`), and 1, `procedure-generator`,
+stays on the account. Nothing is copied: none of their examples has ever been run, none of their
+facts has a source, and five hold company detail. The owner approved this plan on 2026-10-15
+(decisions 44 to 49).
+
+1. **Shared tools first, each its own pull request:**
+   - the intake, filed as a dated research result with company detail and repository names
+     taken out, listing for each old skill what its successor must cover, its lessons, and its
+     defects not to repeat;
+   - a successor template: a short `SKILL.md`, then `why.md`, `facts.md`, `audit.md`,
+     `mistakes.md` and `sources.md`, with no chat frame;
+   - an example checker in CI that runs each language's own tool on every code block;
+   - the pairing map (decision 33);
+   - one trigger-test runner for every skill;
+   - `skill-builder`, from `skill-creator`'s method under its license, and the stress tester's
+     two good checks: content safety, and compiling every code block.
+2. **Research, in waves:** the owner runs each wave's prompts, and each result is checked
+   against its sources before it's used.
+3. **Rebuilds, one pull request per skill:**
+
+   | Wave | Research | Skills |
+   |---|---|---|
+   | 1 | R15, R09, R11, R10 | `shell`, `python`, `powershell`, `csharp-dotnet`, `typescript-javascript`, `html-css` |
+   | 2 | R06, R07, R14, R19 | `testing`, `error-handling`, `log-analysis`, `data-and-sql`, `api-design`, `optimization-and-scheduling` |
+   | 3 | R16, R11 | `vba`, `excel`, `word-documents`, `epicor-kinetic`, `solidworks-api`, `windows-server` |
+   | 4 | R12, R13, R15, R20 | `go`, `rust`, `php`, `ruby`, `containers`, `linux`, `networking-security`, `visual-theme`, `data-visualization` |
+   | When needed | R15 | `linux-gaming` |
+
+   Each rebuild takes the old skill's topics from the intake, writes from primary sources with
+   dated facts, makes every example pass the checker, gets a fresh review and its trigger
+   tests, and ships in a release. The owner then turns the old copy off, since the names differ.
+
+**What the owner decided:**
+- **Examples CI can't run** (VBA, SOLIDWORKS, Epicor, Power Query, DAX): CI checks what it can
+  parse, the owner runs each once, and the skill records the version and date it was proven on
+  (44).
+- **`my-theme`'s palette is the owner's employer's,** so it stays on the account, and
+  `visual-theme` publishes no palette from it (46).
+- **PowerPoint and PDF** are left to Anthropic's `pptx` and `pdf` skills, unless a repository
+  needs to generate them (47).
+- **Old copies with known dangerous examples** stay on until their successors ship (48).
+
 ## Lessons waiting for their skill
 
 What live repositories taught that belongs to a skill not built yet. Each skill takes its
@@ -225,6 +272,19 @@ lessons in when it's built, and its `why.md` cites them.
   a stale local branch made one checker read an old map and report 13 false refusals.
 - **L29, `documentation`:** a field whose format a test enforces has the format written beside
   the field. One session learned a status field's format only from a failing test.
+- **L30, `review-loops`:** what one round that moved both sides' evidence taught about running
+  the loop, on 2026-10-14 and 15:
+  - **The reporting that worked:** eight fixed diagnostic keys in every lap, a seven-heading
+    round summary in each side's last lap, and a five-line handoff block ending each reply that
+    names exactly what to read. The owner copied the block between sessions. It took six
+    changes in about 45 minutes to settle, so settle it before the first lap.
+  - **Approval given with the request:** "release once its pull request is green" in the
+    message that asked for a lap removed one round trip per lap.
+  - **Steps the protocol lets run side by side, run side by side:** both moves went ahead at
+    once, and finished within a minute of each other.
+  - **An operator message goes stale like any other copy:** three of the coordinator's commit
+    and rule numbers were wrong by the time they were read. Each side caught them by checking
+    its own tree.
 
 ## Rebuilding `project-bootstrap-and-audit`
 
