@@ -3,7 +3,7 @@ name: house-style
 description: "Writes and checks prose and Markdown in one house style: the answer first, plain words, facts with sources, American spelling. Ships a Vale style. Use for a README, docs, records, changelogs, pull requests and reports."
 license: Apache-2.0
 metadata:
-  reviewed: "2026-10-05"
+  reviewed: "2026-10-16"
 ---
 
 # House style
@@ -13,11 +13,7 @@ requests, commit bodies and reports. It should be recognizable because it's plai
 checked, not because of whose it is. In Claude Code, apply it as you write. On claude.ai, apply
 it to the text you hand back.
 
-Dated facts, such as Vale's version and what other guides say, live in
-[references/facts.md](references/facts.md), and the other files name them by ID, such as fact
-`vale-current`.
-
-## The rules
+## What applies to every module
 
 **Voice**
 
@@ -55,34 +51,19 @@ Dated facts, such as Vale's version and what other guides say, live in
 - **Past entries in an append-only record,** such as a decision record or a dated research
   result, stay as written. New entries follow the style.
 
-## Check it
+HouseStyle, a Vale style shipped in [assets/vale/HouseStyle/](assets/vale/HouseStyle/.vale.ini),
+checks rules 3, 8 and 12. The rest are for review.
 
-HouseStyle is a Vale style, kept in
-[assets/vale/HouseStyle/](assets/vale/HouseStyle/.vale.ini) and published as `HouseStyle.zip`
-on each release. It checks three of the rules:
+## Modules
 
-| Rule | Vale rule | What it catches |
-|---|---|---|
-| 3 | `HouseStyle.Filler` | The six words, in any case |
-| 8 | `HouseStyle.Headings` | A heading that isn't in sentence case, apart from listed proper nouns and the repository's own vocabulary |
-| 12 | `HouseStyle.Spelling` | Common British spellings, with the American form to use |
+Read the module that fits the request, and each one a request spans. Each holds its rules,
+mistakes, audit checks, reasons, dated facts and sources. A module names a fact by its ID, such
+as fact `vale-current`, and the fact's row is in whichever module holds it.
 
-The rest are for review. Vale can't tell whether the answer comes first, or whether a fact was
-checked at its source. Rule 11's commit subjects have their own check, in git-workflows.
-
-To run it: `vale sync`, then `vale` with the files to check. Setting it up in a repository's CI
-takes a `.vale.ini` and one job, both in [references/setup.md](references/setup.md).
-
-## Where to go
-
-| When you're | Read |
+| Module | Read it for |
 |---|---|
-| writing or reviewing Markdown: headings, lists, wrapping, code, tables, links, file names or a README's sections | [references/style.md](references/style.md) |
-| choosing a word, or checking a spelling | [references/style.md](references/style.md) |
-| adding the check to a repository, or running it locally | [references/setup.md](references/setup.md) |
-| asking why a rule is what it is, what other guides do, or what a choice costs | [references/why.md](references/why.md) |
-| checking a version, or what a source says | [references/facts.md](references/facts.md) |
-| checking a source's license | [references/sources.md](references/sources.md) |
+| [`writing-style`](references/writing-style.md) | writing or reviewing prose or Markdown: headings, lists, wrapping, code, tables, links, file names, a README's sections, word choice and spelling, and why each rule is what it is |
+| [`prose-check`](references/prose-check.md) | adding the Vale check to a repository, running it locally, tuning it for a repository's own names and records, or a rule that flags something it shouldn't |
 
 ## What this doesn't cover
 

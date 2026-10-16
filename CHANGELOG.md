@@ -16,6 +16,10 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- `git-workflows` is made of eight modules, and `house-style` of two, each holding its rules,
+  mistakes, audit checks, reasons, facts and sources. The skills' names, descriptions and
+  assets are unchanged.
+- A module may name any fact the repository defines, not only its own.
 - `skillcheck` holds each `SKILL.md` to 20,000 characters, the size Anthropic gives for the
   file read when a skill is triggered, on claude.ai as in Claude Code.
 - `skillcheck --new` writes a skill made of modules. The listing budget is room for 20 skills,

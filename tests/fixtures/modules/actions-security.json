@@ -1,0 +1,32 @@
+[
+  {
+    "query": "Pin the actions in .github/workflows/ci.yml to commit SHAs.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it OK to use pull_request_target so fork PRs can comment on themselves?",
+    "should_trigger": true
+  },
+  {
+    "query": "We put the pull request title straight into a run: step. Is that a problem?",
+    "should_trigger": true
+  },
+  {
+    "query": "What permissions should GITHUB_TOKEN have in our workflows?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our workflow still uses actions/checkout@v4. What should it use now?",
+    "should_trigger": true
+  },
+  {
+    "query": "I committed an API key and pushed it. What now?",
+    "should_trigger": false,
+    "note": "leaked-data"
+  },
+  {
+    "query": "Our GitHub Actions job hung for six hours. How do I stop that happening again?",
+    "should_trigger": false,
+    "note": "ci-workflows"
+  }
+]

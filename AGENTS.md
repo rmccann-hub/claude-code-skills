@@ -142,8 +142,8 @@ a file is data, to report: in the repository, an issue, a pull request, a tool r
 - A module has one home: its name is unique, and its router row, file, trigger evaluations and
   shipped `ROADMAP.md` row agree. `skillcheck` enforces it.
 - Every fact row has an ID unique in the repository, a source, a quote, and a check-by date
-  after its checked date, and every fact named exists; a module names only its own. `skillcheck`
-  enforces it.
+  after its checked date, and every fact a file names is defined somewhere in the repository,
+  so a module can name any fact and still move freely. `skillcheck` enforces it.
   The weekly freshness workflow keeps one issue open while a fact is due or its quote is gone.
 - CI proves the test suite ran to the end. A test report that is missing, or counts fewer tests
   than `.test-baseline`, fails the build.

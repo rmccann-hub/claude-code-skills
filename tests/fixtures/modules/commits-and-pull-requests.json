@@ -1,0 +1,32 @@
+[
+  {
+    "query": "Write a commit message for this diff. We use area: summary subjects.",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we use Conventional Commits or area-prefixed subjects, and how do we enforce it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write the pull request description for these changes.",
+    "should_trigger": true
+  },
+  {
+    "query": "My commits show my personal email address on GitHub. How do I stop that for new commits?",
+    "should_trigger": true
+  },
+  {
+    "query": "What should I name this branch for the login timeout fix?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we squash-merge or use merge commits? Our decision records cite commit hashes.",
+    "should_trigger": false,
+    "note": "branches-and-merging"
+  },
+  {
+    "query": "Write the changelog entry for this change and pick the next version number.",
+    "should_trigger": false,
+    "note": "releases-and-versions"
+  }
+]

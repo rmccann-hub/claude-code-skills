@@ -190,6 +190,7 @@ def check_repository(root: Path) -> Report:
         found_facts += facts.check(root, skill_dir, report.add)
     report.facts = len(found_facts)
     _check_fact_ids(found_facts, report)
+    facts.check_references(root, skills, {fact.id for fact in found_facts}, report.add)
     _check_catalog(root, skills, report)
     names = {skill.name for skill in skills}
     found_modules = modules.check(root, skills, names, report.add)

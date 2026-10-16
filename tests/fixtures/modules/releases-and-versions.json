@@ -1,0 +1,32 @@
+[
+  {
+    "query": "Cut the 2.3.0 release: tag it and publish the GitHub release.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our release workflow creates the tag but the publish workflow never runs.",
+    "should_trigger": true
+  },
+  {
+    "query": "Backport this fix to the release/9.0 branch.",
+    "should_trigger": true
+  },
+  {
+    "query": "Write the changelog entry for this change and pick the next version number.",
+    "should_trigger": true
+  },
+  {
+    "query": "Should our release tags be annotated or lightweight?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a commit message for this diff. We use area: summary subjects.",
+    "should_trigger": false,
+    "note": "commits-and-pull-requests"
+  },
+  {
+    "query": "Protect our main branch so nobody can force-push or delete it.",
+    "should_trigger": false,
+    "note": "branches-and-merging"
+  }
+]

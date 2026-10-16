@@ -32,9 +32,9 @@ and dependencies. A second version of a published rule drifts from the first.
      the fact;
    - the quote is the source's own words in double quotes, or a command's output in backticks.
      A row with neither is checked by hand when it falls due;
-   - other text names a fact by its ID, such as fact `node20`, rather than repeating it. A
-     module names only its own facts, so it can move, and an ID is defined once in the
-     repository.
+   - other text names a fact by its ID, such as fact `node20`, rather than repeating it. An ID
+     is defined once in the repository, and any file in any skill may name it, so a module
+     that moves keeps every fact it names.
 
    `skillcheck` checks every row's shape and every fact a skill names. `skillcheck --due` lists
    the facts due to be checked again, and `skillcheck --verify` fetches each source and looks
@@ -109,8 +109,8 @@ and dependencies. A second version of a published rule drifts from the first.
      skill made of modules holds no other Markdown in `references/`. Its `ROADMAP.md` row names
      its skill.
 
-   `skillcheck` checks every part of this. `git-workflows` and `house-style` keep their older
-   layout, a `references/why.md` beside files named for their kind, until they're converted.
+   `skillcheck` checks every part of this. Every skill is made of modules except the
+   standard's, which keeps the standard in one versioned file.
 8. **Every link resolves and every example works.** Each code example compiles, lints or runs
    under its language's own tools.
 9. **Trigger evaluations.** Each module has `tests/fixtures/modules/<module>.json`, with requests

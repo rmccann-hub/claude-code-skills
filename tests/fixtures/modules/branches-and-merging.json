@@ -1,0 +1,36 @@
+[
+  {
+    "query": "Should we squash-merge or use merge commits? Our decision records cite commit hashes.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it safe to delete all the branches that git branch -r --merged lists?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm halfway through a rebase with conflicts and git checkout --ours is giving me the wrong side. What's going on?",
+    "should_trigger": true
+  },
+  {
+    "query": "I ran git reset --hard and my last two commits are gone. Can I get them back?",
+    "should_trigger": true
+  },
+  {
+    "query": "Protect our main branch so nobody can force-push or delete it.",
+    "should_trigger": true
+  },
+  {
+    "query": "We still use Git Flow with a develop branch. How do we move to short-lived branches?",
+    "should_trigger": true
+  },
+  {
+    "query": "Backport this fix to the release/9.0 branch.",
+    "should_trigger": false,
+    "note": "releases-and-versions"
+  },
+  {
+    "query": "The required check on my pull request has been pending forever and I can't merge.",
+    "should_trigger": false,
+    "note": "ci-workflows"
+  }
+]

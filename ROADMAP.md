@@ -92,7 +92,9 @@ Grouped by subject; the Skill column is each module's one home.
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
 | `repo-structure` | `architecture` | Layouts by project type, where each file goes, naming files and folders | planned | core | R02 |
-| `documentation` | `house-style` | Docs sites, diagrams, file size and splitting, beyond the README sections, records and prose that `house-style` covers | planned | core | R02 |
+| `writing-style` | `house-style` | Prose and Markdown: voice, headings, lists, wrapping, code, tables, links, file names, a README's sections, words to cut, American spelling | shipped | core | R02 |
+| `prose-check` | `house-style` | The Vale check: the HouseStyle package, `.vale.ini`, the CI job with its canary, a repository's vocabulary, files left alone | shipped | core | R02 |
+| `documentation` | `house-style` | Docs sites, diagrams, file size and splitting, beyond the README sections, records and prose that `writing-style` covers | planned | core | R02 |
 | `code-style` | `coding` | Naming, formatting, structure, comments and docstrings | planned | core | R03 |
 | `types` | `coding` | Static and gradual typing, strictness, type checkers, types at trust boundaries | planned | core | R03 |
 | `input-handling` | `coding` | Validation, sanitization and output encoding by context | planned | core | R04 |
@@ -103,8 +105,16 @@ Grouped by subject; the Skill column is each module's one home.
 | `testing-patterns` | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06 |
 | `api-patterns` | `architecture` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
 | `sql-craftsman` | `data` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
-| `ci-cd` | `git-workflows` | Caching, environments and deployment, beyond the CI that `git-workflows` covers | planned | core | R08, R21 |
-| `versioning-and-releases` | `git-workflows` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `git-workflows` covers | planned | core | R05 |
+| `commits-and-pull-requests` | `git-workflows` | Commit grammar and messages, trailers, the author's address, branch names, pull requests and review comments | shipped | core | R08 |
+| `branches-and-merging` | `git-workflows` | Branching models, protecting the default branch, merge strategies, deleting branches, rebasing, conflicts and recovery | shipped | core | R08 |
+| `ci-workflows` | `git-workflows` | GitHub Actions triggers, timeouts, installs, required checks, proving a gate works, and how long CI should take | shipped | core | R08, R21 |
+| `actions-security` | `git-workflows` | Workflow permissions, SHA-pinned actions, untrusted input, `pull_request_target`, scanning workflows | shipped | core | R08 |
+| `git-hooks` | `git-workflows` | Writing, installing and testing hooks, and where CI is the gate instead | shipped | core | R08 |
+| `releases-and-versions` | `git-workflows` | Release tags and workflows, changelog entries, version numbers, release lines and backports | shipped | core | R05 |
+| `leaked-data` | `git-workflows` | A secret or personal information in a commit: rotating, and rewriting history at the owner's request | shipped | core | R08 |
+| `gitignore` | `git-workflows` | `.gitignore` rules, secret files, lockfiles, untracking a file | shipped | core | R08 |
+| `ci-cd` | `git-workflows` | Caching, environments and deployment, beyond the CI that `ci-workflows` covers | planned | core | R08, R21 |
+| `versioning-and-releases` | `git-workflows` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `releases-and-versions` covers | planned | core | R05 |
 | `legacy-modernization` | `architecture` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
 | `logging-and-observability` | `coding` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | planned | standard | R07 |
 | `performance-and-concurrency` | `coding` | Profiling, complexity, caching, async and threads | planned | standard | R07 |
@@ -208,13 +218,13 @@ palettes in `visual-design`, not in `excel-master`.
      defects not to repeat;
    - the module template, and `skillcheck` checks for modules: unique names, one home each,
      the template's sections, and facts read from inside each module, with `git-workflows` and
-     `house-style` converted to modules;
-   - a listing budget for about 20 skills, in place of room for 100;
+     `house-style` converted to modules. Shipped 2026-10-16;
+   - a listing budget for about 20 skills, in place of room for 100. Shipped 2026-10-16;
    - an example checker in CI that runs each language's own tool on every code block;
    - one trigger-test runner, which checks in Claude Code that a request reached the right skill
      and that the skill read the right module; on claude.ai the owner tries the same requests
      by hand, from a list the session gives them;
-   - `skillcheck --move` and its record of moves, renames and removals;
+   - `skillcheck --move` and its record of moves, renames and removals. Shipped 2026-10-16;
    - `skill-builder`, from `skill-creator`'s method under its license, and the stress tester's
      two good checks: content safety, and compiling every code block.
 

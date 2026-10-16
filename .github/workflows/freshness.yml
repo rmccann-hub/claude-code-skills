@@ -1,9 +1,8 @@
 name: Freshness
 
-# Once a week, and on demand: lists the facts in the skills' references/facts.md that are due to
-# be checked again, the quotes no longer found at their sources, and a dependency map that no
-# longer matches the lockfiles, in one open issue, and closes that issue once everything is
-# current. It never runs on a pull request: the facts' answers change with the date and the web,
+# Once a week, and on demand: lists the skills' dated facts that are due to be checked again,
+# the quotes no longer found at their sources, and a dependency map that no longer matches the
+# lockfiles, in one open issue, and closes that issue once everything is current. It never runs on a pull request: the facts' answers change with the date and the web,
 # and a Dependabot update changes a lockfile but can't rebuild the map. In a public repository
 # GitHub turns a schedule off after 60 days with no activity, so the date of its last run is
 # worth a glance.

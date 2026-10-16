@@ -772,8 +772,9 @@ def to_markdown(inventory: Inventory) -> str:
         "",
         "## Sources the skills' facts rely on",
         "",
-        "Each skill's dated facts, in its `references/facts.md`, name where each was read. The",
-        "weekly freshness run looks for every quote at its source again.",
+        "Each skill's dated facts, in its modules' Facts sections or its `references/facts.md`,",
+        "name where each was read. The weekly freshness run looks for every quote at its source",
+        "again.",
         "",
         "| Skill | Source | Facts |",
         "|---|---|---|",
@@ -782,7 +783,7 @@ def to_markdown(inventory: Inventory) -> str:
         for skill in plugin.skills:
             out += [f"| `{skill.name}` | {host} | {count} |" for host, count in skill.sources]
             if not skill.sources:
-                out.append(f"| `{skill.name}` | no `references/facts.md` | — |")
+                out.append(f"| `{skill.name}` | no dated facts | — |")
     return "\n".join(out) + "\n"
 
 

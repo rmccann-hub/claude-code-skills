@@ -38,11 +38,11 @@ def test_a_router_without_its_table_fires(repo):
     skill_dir = built(repo, "first")
     text = (skill_dir / "SKILL.md").read_text(encoding="utf-8")
     (skill_dir / "SKILL.md").write_text(text.replace("| Module |", "| Name |"), encoding="utf-8")
-    assert findings(repo)[0] == (
+    assert (
         "skills/demo/SKILL.md",
         "modules",
         "the Modules section has no table headed Module | Read it for",
-    )
+    ) in findings(repo)
 
 
 @pytest.mark.parametrize(
@@ -169,25 +169,21 @@ def test_a_module_named_like_another_skill_fires(repo):
     ]
 
 
-def test_a_module_names_only_its_own_facts(repo):
+def test_a_module_may_name_any_fact_in_the_repository(repo):
     skill_dir = built(repo, "first", "second")
     path = skill_dir / "references" / "first.md"
     text = path.read_text(encoding="utf-8").replace("(fact `first-fact`)", "(fact `second-fact`)")
     path.write_text(text, encoding="utf-8")
     skill_md = skill_dir / "SKILL.md"
     skill_md.write_text(
-        skill_md.read_text(encoding="utf-8") + "\nSee fact `nowhere`.\n", encoding="utf-8"
+        skill_md.read_text(encoding="utf-8") + "\nSee facts `first-fact` and `nowhere`.\n",
+        encoding="utf-8",
     )
     assert findings(repo) == [
         (
-            "skills/demo/references/first.md",
-            "facts",
-            "line 7 names fact `second-fact`, not defined in its Facts section",
-        ),
-        (
             "skills/demo/SKILL.md",
             "facts",
-            "line 15 names fact `nowhere`, not defined in any of its modules' Facts sections",
+            "line 15 names fact `nowhere`, which no fact table in the repository defines",
         ),
     ]
 

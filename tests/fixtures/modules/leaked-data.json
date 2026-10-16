@@ -1,0 +1,24 @@
+[
+  {
+    "query": "I committed an API key and pushed it. What now?",
+    "should_trigger": true
+  },
+  {
+    "query": "Remove my personal email address from every commit in this repository's history.",
+    "should_trigger": true
+  },
+  {
+    "query": "A log with my home folder path got committed months ago. Can we scrub it?",
+    "should_trigger": true
+  },
+  {
+    "query": "My commits show my personal email address on GitHub. How do I stop that for new commits?",
+    "should_trigger": false,
+    "note": "commits-and-pull-requests"
+  },
+  {
+    "query": "Add .env to .gitignore and commit an example file.",
+    "should_trigger": false,
+    "note": "gitignore"
+  }
+]

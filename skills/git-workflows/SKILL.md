@@ -3,7 +3,7 @@ name: git-workflows
 description: "Sets up and runs Git and GitHub work: commits, branches, pull requests, merges, conflicts, GitHub Actions CI, hooks, leaked secrets, tags, changelogs, versions and releases. Use when writing, fixing or speeding up any of these."
 license: Apache-2.0
 metadata:
-  reviewed: "2026-10-05"
+  reviewed: "2026-10-16"
 ---
 
 # Git workflows
@@ -13,73 +13,59 @@ no stranded commits, no gate that never ran, no release that never published. It
 GitHub and GitHub Actions. Other forges have the same ideas under other names. In Claude Code,
 run the commands; on claude.ai, give them to the person to run.
 
-Dated facts, such as versions, defaults and platform changes, live in
-[references/facts.md](references/facts.md), and the other files name them by ID, such as fact
-`node20`, rather than repeating them.
-
-## The rules that matter most
+## What applies to every module
 
 1. **Choose the merge strategy by whether anything cites your commits.** A merge commit keeps a
-   branch's commits. Squash and GitHub's rebase-merge write new ones (fact `rebase-merge`), so
-   cited commits leave the default branch's history, and once the branch goes they survive only
-   under the pull request's own refs, which a clone doesn't fetch (fact `pr-refs`). Record the
-   choice in the context file, and allow only that strategy in the repository's settings.
-2. **Never delete a branch until you've checked what still needs it:** its pull request,
-   commits cited only there, a release line, a sibling repository. Never bulk-delete remote
-   branches from `git branch -r --merged`.
-3. **Never rewrite shared or cited history.** No force-push to a shared branch, and no amend of
-   a pushed or cited commit. Revert, or add a commit. The one exception is removing personal
-   information at the owner's request, as `references/security.md` lays out.
+   branch's commits; squash and rebase-merge don't (`branches-and-merging`).
+2. **Never delete a branch until you've checked what still needs it,** and never bulk-delete
+   remote branches from `git branch -r --merged` (`branches-and-merging`).
+3. **Never rewrite shared or cited history.** Revert, or add a commit. The one exception is
+   removing personal information at the owner's request (`leaked-data`).
 4. **Never get to green by going around a check.** No `--no-verify`, and no skipping or
-   quarantining a failing test. Fix the cause. CI re-runs what a commit hook checks, and branch
-   protection does on the server what a pre-push hook does.
-5. **Write down one commit grammar and check it:** Conventional Commits, or Git's own "area:
-   summary". Subjects are in the imperative, 50 characters is the soft limit, and the body says
-   why. Facts go in trailers, such as `Fixes:`, `Co-authored-by:` and `Signed-off-by:`.
-6. **In every workflow:**
-   - `permissions:` at the top;
-   - `timeout-minutes` on every job;
-   - actions pinned to a full commit SHA with the version in a comment;
-   - installs that fail on lockfile drift;
-   - runs on the branches where work happens;
-   - no path filter on a required check.
-7. **Release from an annotated tag on the release commit's SHA,** never a branch's tip, made by
-   a job when there's no local clone, after the changelog entry and after CI is green on that
-   commit. A tag or release the job makes with `GITHUB_TOKEN` starts no other workflow (fact
-   `token-no-trigger`).
-8. **Read Git's output whole.** Merge and rebase output lists the conflicts. Check for conflict
-   markers in CI. Never read an exit status through a pipe.
-9. **Keep a second release line only when users need it,** and backport to it with
-   `git cherry-pick -x`, one focused pull request per fix.
+   quarantining a failing test. Fix the cause (`ci-workflows`, `git-hooks`).
+5. **Write down one commit grammar and check it** (`commits-and-pull-requests`).
+6. **Harden every workflow:** `permissions:` at the top, `timeout-minutes` on every job, actions
+   pinned to a full commit SHA, installs that fail on lockfile drift, runs on the branches where
+   work happens, and no path filter on a required check (`actions-security`, `ci-workflows`).
+7. **Release from an annotated tag on the release commit's SHA,** after the changelog entry and
+   after CI is green on that commit (`releases-and-versions`).
+8. **Read Git's output whole,** and never read an exit status through a pipe
+   (`branches-and-merging`).
+9. **Keep a second release line only when users need it** (`releases-and-versions`).
 
-## Where to go
+Before anything destructive, show what it will do, and wait for confirmation. That covers
+deleting a branch or a tag, resetting, force-pushing, and rewriting history. Commit, stash or
+copy uncommitted work before any command that touches the working tree.
 
-| When you're | Read |
+## Modules
+
+Read the module that fits the request, and each one a request spans. Each holds its rules,
+mistakes, audit checks, reasons, dated facts and sources. A module names a fact by its ID, such
+as fact `node20`, and the fact's row is in whichever module holds it.
+
+| Module | Read it for |
 |---|---|
-| writing a commit message, branch name, pull request, review comment, changelog entry or version number, or choosing the address commits carry | [references/style.md](references/style.md) |
-| setting up or changing branching, protection, the merge strategy, branch deletion, hooks, CI, releases, release lines or `.gitignore`; rebasing your own branch, resolving a conflict, or recovering a lost commit | [references/setup.md](references/setup.md) |
-| writing or reviewing workflow triggers, permissions or third-party actions, or handling a secret or personal information that reached a commit | [references/security.md](references/security.md) |
-| proving that a workflow, hook or gate works | [references/testing.md](references/testing.md) |
-| reviewing a repository's Git and CI setup | [references/audit.md](references/audit.md) |
-| about to do something risky, or checking an assistant's advice | [references/mistakes.md](references/mistakes.md) |
-| moving off Git Flow, tag pins, Node 20 actions, `master`, `pull_request_target` or lightweight tags | [references/modernization.md](references/modernization.md) |
-| checking a version, date or default | [references/facts.md](references/facts.md) |
-| checking where a rule comes from, or a source's license | [references/sources.md](references/sources.md) |
-| asking why a rule is what it is, what other projects do instead, whether it fits your project, or how long CI should take and where it should run | [references/why.md](references/why.md) |
+| [`commits-and-pull-requests`](references/commits-and-pull-requests.md) | writing a commit message, naming a branch, opening or reviewing a pull request, choosing and checking the commit grammar, or the address commits carry |
+| [`branches-and-merging`](references/branches-and-merging.md) | the branching model, protecting the default branch, the merge strategy, deleting branches, rebasing, conflicts, recovering a lost commit, or renaming `master` |
+| [`ci-workflows`](references/ci-workflows.md) | a GitHub Actions workflow's triggers, timeouts, installs, path filters and required checks; how long CI should take; proving a gate or a test job works |
+| [`actions-security`](references/actions-security.md) | a workflow's permissions, pinned actions, untrusted input, `pull_request_target`, Node 20 actions, or scanning workflows with zizmor |
+| [`git-hooks`](references/git-hooks.md) | writing, installing or testing a commit or push hook, or a hook that didn't run |
+| [`releases-and-versions`](references/releases-and-versions.md) | cutting a release or tag, a release workflow, changelog entries, version numbers, release lines and backports |
+| [`leaked-data`](references/leaked-data.md) | a secret or personal information that reached a commit, and rewriting history to remove it |
+| [`gitignore`](references/gitignore.md) | writing or debugging `.gitignore`, ignoring secrets, committing lockfiles, or untracking a file |
 
-Tested examples to copy:
+Tested examples to copy, each described in its module:
 
-- [assets/githooks/commit-msg](assets/githooks/commit-msg) checks the "area: summary" grammar.
-- [assets/githooks/pre-push](assets/githooks/pre-push) blocks direct pushes to `main`.
-- [assets/workflows/commit-subjects.yml](assets/workflows/commit-subjects.yml) checks a pull
-  request's commits.
-- [assets/workflows/release.yml](assets/workflows/release.yml) makes an annotated release tag on
-  a commit named by SHA, once its checks have passed.
-- [assets/workflows/tests.yml](assets/workflows/tests.yml) runs the tests and proves they
-  finished.
-- [assets/rulesets/default-branch.json](assets/rulesets/default-branch.json) and
-  [assets/rulesets/release-tags.json](assets/rulesets/release-tags.json) protect the default
-  branch and the release tags, imported under Settings, Rules, Rulesets.
+- [assets/githooks/commit-msg](assets/githooks/commit-msg) and
+  [assets/githooks/pre-push](assets/githooks/pre-push), in `git-hooks`.
+- [assets/workflows/commit-subjects.yml](assets/workflows/commit-subjects.yml), in
+  `commits-and-pull-requests`.
+- [assets/workflows/tests.yml](assets/workflows/tests.yml), in `ci-workflows`.
+- [assets/workflows/release.yml](assets/workflows/release.yml) and
+  [assets/rulesets/release-tags.json](assets/rulesets/release-tags.json), in
+  `releases-and-versions`.
+- [assets/rulesets/default-branch.json](assets/rulesets/default-branch.json), in
+  `branches-and-merging`.
 
 ## Check before you act
 
@@ -99,9 +85,24 @@ The first two answer from the refs you have. In a shallow or single-branch clone
 or a cloud session's, fetch every branch first, with `--unshallow` if
 `git rev-parse --is-shallow-repository` prints `true`.
 
-Before anything destructive, show what it will do, and wait for confirmation. That covers
-deleting a branch or a tag, resetting, force-pushing, and rewriting history. Commit, stash or
-copy uncommitted work before any command that touches the working tree.
+## Reviewing a repository
+
+Each module's Audit section checks its part of a repository, without a full audit. For a full
+audit, with tiers and a report, use project-bootstrap-and-audit: it rates most of these checks
+by tier (dimensions 6, 8 and 10, and its release gate), and its rating wins where the two
+differ. The status words are the standard's:
+
+- **`BLOCKER`:** a live exposure, or a check reporting success while measuring nothing.
+- **`DRIFT`:** configured, but no longer doing what it says.
+- **`GAP`:** missing something the project needs.
+- **`OVER`:** heavier than the project needs.
+- **`MIRROR`:** the truth is outside the repository, such as a platform setting you've read
+  rather than a file.
+- **`UNVERIFIABLE-HERE`:** can't be established from this session, such as a settings page
+  without admin access.
+- **`OK`**, and **`N/A`**.
+
+Workflows may end in `.yml` or `.yaml`, so every search covers both.
 
 ## What this doesn't cover
 
@@ -114,3 +115,14 @@ copy uncommitted work before any command that touches the working tree.
 - **How to design and write the tests CI runs:** that belongs to a testing skill. This one
   covers the job that runs them, and proving that job ran.
 - **Git hosting administration:** servers, organizations, teams and Git LFS configuration.
+
+## Where this came from
+
+- The owner's earlier `git-workflows` skill, as a list of topics, checks and lessons. Nothing
+  was copied from it. Where it advised against a lesson here, such as squash-merging feature
+  branches, bulk-deleting merged branches, `--no-verify` or a status section in `CLAUDE.md`,
+  the advice was dropped.
+- Research runs R08 (Git, GitHub, CI/CD) and R05 (versioning, releases), filed in this skill's
+  repository. They were leads until each claim was checked.
+- A cold review by a second reader on 2026-09-30, and the split into modules on 2026-10-16,
+  recorded in this skill's repository.

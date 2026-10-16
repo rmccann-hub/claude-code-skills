@@ -64,57 +64,44 @@ class Fact:
 
 
 def check(root: Path, skill_dir: Path, add: Add) -> list[Fact]:
-    """Report malformed rows and unknown fact IDs in one skill; return its facts."""
-    routed = modules.router(skill_dir)
-    if routed is not None:
-        return _check_modules(root, skill_dir, routed[0], add)
-    path = skill_dir / FACTS
+    """Report malformed rows in one skill's facts, and return its well-formed facts."""
     found: list[Fact] = []
-    if path.is_file():
-        found, problems = _read(root, path)
+    for path, (own, problems) in _fact_files(root, skill_dir):
         for message in problems:
             add(path.relative_to(root).as_posix(), "facts", message)
-    others = [other for other in sorted(skill_dir.rglob("*.md")) if other != path]
-    _check_references(root, others, {fact.id for fact in found}, FACTS, add)
+        found += own
     return found
+
+
+def check_references(root: Path, skill_dirs: list[Path], ids: set[str], add: Add) -> None:
+    """Report each fact a skill's files name that no fact table in the repository defines.
+
+    A fact's ID is unique across the repository, so any module may name any fact, and a module
+    moved to another skill still resolves every fact it names.
+    """
+    for skill_dir in skill_dirs:
+        for path in sorted(skill_dir.rglob("*.md")):
+            if path.name != FACTS.rsplit("/", 1)[-1]:
+                _check_references(root, path, ids, add)
 
 
 def collect(root: Path) -> list[Fact]:
     """Every well-formed fact in every skill. The full check reports the malformed rows."""
     found: list[Fact] = []
     for skill_dir in sorted(path for path in (root / "skills").glob("*") if path.is_dir()):
-        routed = modules.router(skill_dir) if (skill_dir / "SKILL.md").is_file() else None
-        if routed is None:
-            if (skill_dir / FACTS).is_file():
-                found += _read(root, skill_dir / FACTS)[0]
-            continue
-        for module in routed[0]:
-            if module.path.is_file():
-                found += _module_facts(root, module.path)[0]
+        if (skill_dir / "SKILL.md").is_file():
+            for _, (own, _) in _fact_files(root, skill_dir):
+                found += own
     return found
 
 
-def _check_modules(
-    root: Path, skill_dir: Path, routed: list[modules.Module], add: Add
-) -> list[Fact]:
-    # A module names only its own facts, so it can move to another skill and still resolve.
-    found: list[Fact] = []
-    for module in routed:
-        if not module.path.is_file():
-            continue
-        own, problems = _module_facts(root, module.path)
-        for message in problems:
-            add(module.path.relative_to(root).as_posix(), "facts", message)
-        _check_references(root, [module.path], {fact.id for fact in own}, "its Facts section", add)
-        found += own
-    _check_references(
-        root,
-        [skill_dir / "SKILL.md"],
-        {fact.id for fact in found},
-        "any of its modules' Facts sections",
-        add,
-    )
-    return found
+def _fact_files(root: Path, skill_dir: Path) -> list[tuple[Path, tuple[list[Fact], list[str]]]]:
+    """Each file holding a skill's facts, with what it parsed to."""
+    routed = modules.router(skill_dir)
+    if routed is None:
+        path = skill_dir / FACTS
+        return [(path, _read(root, path))] if path.is_file() else []
+    return [(m.path, _module_facts(root, m.path)) for m in routed[0] if m.path.is_file()]
 
 
 def _module_facts(root: Path, path: Path) -> tuple[list[Fact], list[str]]:
@@ -257,19 +244,19 @@ def _day(text: str) -> date | None:
         return None
 
 
-def _check_references(root: Path, paths: list[Path], ids: set[str], home: str, add: Add) -> None:
-    for path in paths:
-        text = path.read_text(encoding="utf-8", errors="replace")
-        for match in REFERENCE.finditer(text):
-            for ident in CODE.findall(match.group(1)):
-                # Only an ID's shape counts, so "a fact `UNVERIFIABLE-HERE`" in prose doesn't.
-                if NAME.fullmatch(ident) and ident not in ids:
-                    number = text.count("\n", 0, match.start()) + 1
-                    add(
-                        path.relative_to(root).as_posix(),
-                        "facts",
-                        f"line {number} names fact `{ident}`, not defined in {home}",
-                    )
+def _check_references(root: Path, path: Path, ids: set[str], add: Add) -> None:
+    text = path.read_text(encoding="utf-8", errors="replace")
+    for match in REFERENCE.finditer(text):
+        for ident in CODE.findall(match.group(1)):
+            # Only an ID's shape counts, so "a fact `UNVERIFIABLE-HERE`" in prose doesn't.
+            if NAME.fullmatch(ident) and ident not in ids:
+                number = text.count("\n", 0, match.start()) + 1
+                add(
+                    path.relative_to(root).as_posix(),
+                    "facts",
+                    f"line {number} names fact `{ident}`, which no fact table in the repository "
+                    "defines",
+                )
 
 
 def _plain(text: str) -> str:

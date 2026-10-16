@@ -1,0 +1,28 @@
+[
+  {
+    "query": "Add a Vale check for our Markdown to CI.",
+    "should_trigger": true
+  },
+  {
+    "query": "Vale fails on a heading with our product name in it. How do I make it accept the name?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I run the house style's prose check on my machine?",
+    "should_trigger": true
+  },
+  {
+    "query": "Stop Vale flagging the old entries in our decision record.",
+    "should_trigger": true
+  },
+  {
+    "query": "Are headings in sentence case or title case here?",
+    "should_trigger": false,
+    "note": "writing-style"
+  },
+  {
+    "query": "Rewrite this README so it reads plainly and drops the marketing fluff.",
+    "should_trigger": false,
+    "note": "writing-style"
+  }
+]

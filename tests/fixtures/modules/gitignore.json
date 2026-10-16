@@ -1,0 +1,28 @@
+[
+  {
+    "query": "Why doesn't !.vscode/extensions.json keep that file when .vscode/ is ignored?",
+    "should_trigger": true
+  },
+  {
+    "query": "Which rule in .gitignore is ignoring this file?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we commit Cargo.lock for a library?",
+    "should_trigger": true
+  },
+  {
+    "query": "Add .env to .gitignore and commit an example file.",
+    "should_trigger": true
+  },
+  {
+    "query": "I committed an API key and pushed it. What now?",
+    "should_trigger": false,
+    "note": "leaked-data"
+  },
+  {
+    "query": "Set up pre-commit so formatting is checked before each commit.",
+    "should_trigger": false,
+    "note": "git-hooks"
+  }
+]

@@ -42,7 +42,7 @@ same release's `ruleset-default-branch.json` and `ruleset-release-tags.json` imp
 Settings, Rules, Rulesets, from the New ruleset menu.
 
 To check another repository's prose against the house style, follow the house-style skill's
-[setup reference](skills/house-style/references/setup.md).
+[`prose-check` module](skills/house-style/references/prose-check.md).
 
 ## Skills
 
