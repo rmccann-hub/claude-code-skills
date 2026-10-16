@@ -54,6 +54,7 @@ that will do the same for other repositories.
 | `performance-and-concurrency` | Profiling, complexity, caching, async and threads | planned | standard | R07 |
 | `configuration` | Layered config, environment variables, validation at startup, secret stores | planned | standard | R04 |
 | `architecture-and-design` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
+| `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it | planned | standard | R23 |
 | `accessibility` | WCAG 2.2, ARIA, contrast, testing tools | planned | standard | R18 |
 | `internationalization` | Unicode, locales, time zones, formats, right-to-left text | planned | standard | R18 |
 | `privacy-and-compliance` | Personal data, retention, licenses and notices, obligations on software publishers | planned | standard | R18 |
@@ -98,7 +99,7 @@ that will do the same for other repositories.
 | `networking-security` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | planned | standard | R15 |
 | `docker-containers` | Dockerfiles, Compose, hardening, registries | planned | standard | R15 |
 | `log-analysis` | Event logs, crash dumps, journals, application logs | planned | standard | R07 |
-| `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans | planned | standard | R19 |
+| `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | planned | standard | R19, R23 |
 | `linux-gaming` | Proton, Steam, handhelds | planned | on request | R15 |
 | `kubernetes` | Clusters, workloads, the Gateway API | planned | on request | R15 |
 | `cloud` | Azure, AWS and Google Cloud baselines | planned | on request | R15 |
@@ -139,7 +140,7 @@ owner approved this plan on 2026-10-15 (decisions 44 to 49).
    | Wave | Research | Skills |
    |---|---|---|
    | 1 | R15, R09, R11, R10 | `bash-coding`, `python-coding`, `powershell-scripts`, `csharp-coding`, `javascript-coding`, `html-coding` |
-   | 2 | R06, R07, R14, R19 | `testing-patterns`, `error-handling`, `log-analysis`, `sql-craftsman`, `api-patterns`, `optimization-and-scheduling` |
+   | 2 | R06, R07, R14, R19, R23 | `testing-patterns`, `error-handling`, `log-analysis`, `sql-craftsman`, `api-patterns`, `human-factors`, `optimization-and-scheduling` |
    | 3 | R16, R11 | `vba-coding`, `excel-master`, `word-documents`, `epicor-kinetic`, `solidworks-automation`, `windows-admin` |
    | 4 | R12, R13, R15, R20 | `go-coding`, `rust-coding`, `php-coding`, `ruby-coding`, `docker-containers`, `linux`, `networking-security`, `visual-theme`, `data-visualization` |
    | When needed | R15 | `linux-gaming` |
@@ -151,8 +152,9 @@ owner approved this plan on 2026-10-15 (decisions 44 to 49).
    reaches chat through the plugins and cloud sessions through the release's hook. Most rebuilds
    keep the old skill's name. Four take a new name, because the old one would misstate the scope: `log-parser` becomes
    `log-analysis`, `epicor-bpm` becomes `epicor-kinetic`, `linux-troubleshooting` becomes
-   `linux`, and `human-factor-audit` becomes `optimization-and-scheduling`. The owner deletes
-   those four old copies when their successors ship.
+   `linux`, and `human-factor-audit` becomes `human-factors`, the wider skill it was meant to
+   be, with its scheduling checks going to `optimization-and-scheduling` (the owner,
+   2026-10-16). The owner deletes those four old copies when their successors ship.
 
 **What the owner decided:**
 - **Examples CI can't run** (VBA, SOLIDWORKS, Epicor, Power Query, DAX): CI checks what it can

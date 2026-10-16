@@ -2,6 +2,23 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — `human-factors`: the skill `human-factor-audit` was meant to be
+
+- **Said, by the owner:** `human-factor-audit` was meant to be much more than an audit of
+  schedules and optimizers. It was to hold human notions, habits and mindsets that are common
+  to people, that may look odd or wasteful to someone else, and that serve a purpose.
+- **Changed, in `ROADMAP.md`:** the plan had `human-factor-audit` become
+  `optimization-and-scheduling`, which kept only the schedules. A new planned skill,
+  `human-factors`, takes the wider scope: what each such habit is for, how to spot one before a
+  design, an automation or an optimization removes it, and how to design with it.
+  `optimization-and-scheduling` keeps the human factors in plans and pairs with it. The name
+  differs from the old one because the old one names only an audit, as step 12 of
+  `docs/authoring-a-skill.md` allows.
+- **Next:** research run R23, written once the owner has given the examples they had in mind,
+  so the prompt asks about those first. R19's question 7 covers fatigue and shift design only.
+- **Supersedes:** the previous entry's successor for `human-factor-audit`, which is
+  `human-factors`. Keeping the old copy until then stays the recommendation, with more reason.
+
 ## 2026-10-16 — In a member's own settings, an uploaded skill is deleted, not turned off
 
 - **Found, by the owner:** their claude.ai account belongs to an organization, on which they
