@@ -88,9 +88,9 @@ with the dependency map's check below, and keeps one issue open while anything i
 and relies on: its languages, runtimes, tools, packages at their exact versions, GitHub Actions,
 services, and the sources its facts cite. [bom.json](bom.json) holds the same map in CycloneDX
 1.7, for other tools to read. `uv run skillcheck --bom` writes both, and
-`uv run skillcheck --bom-check` names one that no longer matches. Pull requests don't run that
-check, because a Dependabot update can't rebuild the map. The Freshness and Release workflows
-run it.
+`uv run skillcheck --bom-check` names one that no longer matches. CI runs that check on every
+pull request, so a Dependabot update fails it until a session regenerates the map in its branch.
+The Freshness and Release workflows run it too.
 
 Parity runs check how the skill behaves on sample repositories, before and after a change.
 [docs/testing-the-skill.md](docs/testing-the-skill.md) says how to run one.

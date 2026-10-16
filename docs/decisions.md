@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — The dependency map checked on every pull request, `canvas-design` kept, and chat syncs
+
+- **Chosen, by the owner:** CI runs `skillcheck --bom-check` on every pull request. This
+  supersedes the 2026-10-05 entry's *Not run on pull requests*. A Dependabot update now fails
+  until a session regenerates the map in its branch, which the 2026-10-13 answers already ask
+  for before merging one. It would have stopped release 0.1.11's stale map at its pull request.
+- **Chosen, by the owner:** `canvas-design` stays on claude.ai, and stays off in Claude Code
+  through the exclusion list. This settles the 2026-10-15 entry's undecided item 3.
+- **Found:** after release 0.1.16, a new claude.ai chat loaded standard v0.47.0 with nothing
+  pulled by hand. With **Sync automatically** on, the plugins follow each release, which
+  settles the question the earlier entry left for this release. No **Check for updates** step
+  is needed after a release.
+
 ## 2026-10-16 — The six claude.ai tries, standard v0.47.0, and release 0.1.16
 
 - **Tried, by the owner,** on claude.ai with the plugins at 0.1.15, each request in a new chat,

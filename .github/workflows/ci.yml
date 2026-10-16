@@ -75,6 +75,12 @@ jobs:
       - name: Check skills and catalog
         run: uv run skillcheck .
 
+      # A Dependabot update fails here until a session regenerates the map in its branch,
+      # which merging one already requires. The map fell stale on main before, and a release
+      # refused it then; this catches it at the pull request.
+      - name: Check the dependency map matches the repository
+        run: uv run skillcheck --bom-check
+
   catalog:
     # Claude Code's own validator checks the catalog's schema; skillcheck checks the skills.
     runs-on: ubuntu-latest
