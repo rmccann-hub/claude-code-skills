@@ -12,7 +12,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from skillcheck.core import facts, frontmatter, modules, standard
+from skillcheck.core import facts, frontmatter, modules, reporting, standard
 
 SKILLS_DIR = "skills"
 CATALOG = ".claude-plugin/marketplace.json"
@@ -183,11 +183,13 @@ def check_repository(root: Path) -> Report:
     standards = standard.find(root)
     carriers = {path.parent.parent for path in standards}
     found_facts: list[facts.Fact] = []
+    issues = reporting.issues_url(root)
     for skill_dir in skills:
         # A skill made of modules gives its reasons in each module's Why section.
         modular = modules.router(skill_dir) is not None
         _check_skill(skill_dir, report, needs_rationale=not modular and skill_dir not in carriers)
         found_facts += facts.check(root, skill_dir, report.add)
+        reporting.check(root, skill_dir, issues, report.add)
     report.facts = len(found_facts)
     _check_fact_ids(found_facts, report)
     facts.check_references(root, skills, {fact.id for fact in found_facts}, report.add)

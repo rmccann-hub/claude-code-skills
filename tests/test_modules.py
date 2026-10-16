@@ -3,6 +3,7 @@
 import json
 
 import pytest
+from conftest import REPORTING
 
 from skillcheck.cli import main
 from skillcheck.core import modules
@@ -145,7 +146,8 @@ def test_a_module_in_two_skills_fires(repo):
     two = repo.skill_file(
         "two",
         "---\nname: two\ndescription: Two. Use when testing.\n---\n\n## Modules\n\n"
-        "| Module | Read it for |\n|---|---|\n| [`shared`](references/shared.md) | x |\n",
+        "| Module | Read it for |\n|---|---|\n| [`shared`](references/shared.md) | x |\n"
+        + REPORTING,
     )
     (two / "references").mkdir()
     (two / "references" / "shared.md").write_text(
@@ -183,7 +185,7 @@ def test_a_module_may_name_any_fact_in_the_repository(repo):
         (
             "skills/demo/SKILL.md",
             "facts",
-            "line 15 names fact `nowhere`, which no fact table in the repository defines",
+            "line 19 names fact `nowhere`, which no fact table in the repository defines",
         ),
     ]
 
@@ -304,7 +306,9 @@ def test_sections_skip_headings_in_code_and_number_lines():
 def test_add_row_mends_a_table_with_no_final_newline(repo):
     skill_dir = repo.modular_skill("demo", "first")
     path = skill_dir / "SKILL.md"
-    path.write_text(path.read_text(encoding="utf-8").rstrip("\n"), encoding="utf-8")
+    # The router's table ends the file, with no newline after its last row.
+    text = path.read_text(encoding="utf-8").replace(REPORTING, "").rstrip("\n")
+    path.write_text(text, encoding="utf-8")
     modules.add_row(path, "| [`second`](references/second.md) | x |")
     assert path.read_text(encoding="utf-8").endswith(
         "first requests |\n| [`second`](references/second.md) | x |\n"

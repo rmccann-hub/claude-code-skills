@@ -1,7 +1,7 @@
 """Each rule fires on a planted defect, alone, and stays quiet on a clean repository."""
 
 import pytest
-from conftest import DEFAULT_DESCRIPTION
+from conftest import DEFAULT_DESCRIPTION, REPORTING
 
 from skillcheck.core.checks import (
     DESCRIPTION_CAP,
@@ -157,7 +157,7 @@ def test_frontmatter_rule_fires_alone(repo, directory, frontmatter, expected):
     ],
 )
 def test_unreadable_frontmatter_fires(repo, text):
-    repo.skill_file("broken", text)
+    repo.skill_file("broken", text + REPORTING)
     repo.catalog(repo.plugin("example", "./skills/broken"))
     assert rules(check_repository(repo.root)) == {"frontmatter"}
 
@@ -284,7 +284,7 @@ def test_optional_fields_in_spec_form_pass(repo):
 
 
 def skill_of_lines(repo, total: int) -> None:
-    head = "---\nname: sized-skill\ndescription: d\n---\n[why](references/why.md)\n"
+    head = "---\nname: sized-skill\ndescription: d\n---\n[why](references/why.md)\n" + REPORTING
     skill_dir = repo.skill_file("sized-skill", head + "line\n" * (total - head.count("\n")))
     (skill_dir / "references").mkdir()
     (skill_dir / "references" / "why.md").write_text("# Why\n", encoding="utf-8")
@@ -298,7 +298,7 @@ def test_skill_md_under_the_line_limit_passes(repo):
 
 @pytest.mark.parametrize("over", [False, True])
 def test_skill_md_is_held_to_its_character_budget(repo, over):
-    head = "---\nname: sized-skill\ndescription: d\n---\n[why](references/why.md)\n"
+    head = "---\nname: sized-skill\ndescription: d\n---\n[why](references/why.md)\n" + REPORTING
     filler = "x" * (MAX_SKILL_CHARS - len(head) - 1 + over) + "\n"
     skill_dir = repo.skill_file("sized-skill", head + filler)
     (skill_dir / "references").mkdir()

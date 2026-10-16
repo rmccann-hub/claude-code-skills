@@ -48,20 +48,31 @@ try them, how to report a problem, and how to send a change.
 - **They hold nothing company-specific.** A company's names, hosts and templates belong in that
   company's own repositories.
 
-## Try it
+## Use it
+
+The three shipped skills are ready for real work. Use them the way you'd work anyway, and
+report what goes wrong.
 
 1. Install the plugins, as the README's [Install](README.md#install) section says, in Claude
    Code, on claude.ai, or both.
-2. Ask for things you'd ask anyway. To test on purpose, use the sample requests in
+2. Use them on your own repositories and writing. Some requests that load them:
+   - "Set up this repository" or "audit this repository", which load the standard's skill;
+   - "write the commit message", "why is my required check stuck", "cut the 1.2.0 release" or
+     "I pushed a secret", which load `git-workflows`;
+   - "tidy this README", or "add a prose check to CI", which load `house-style`.
+3. To test one area on purpose, use the sample requests in
    [tests/fixtures/skills/](tests/fixtures/skills/) and
    [tests/fixtures/modules/](tests/fixtures/modules/). Each request says whether it should reach
    that skill or module (`"should_trigger": true`), or is a near miss that belongs elsewhere.
-3. Note what happened: whether the right skill loaded, whether its advice was right, and
-   anything it got wrong or left out.
 
 ## Report a problem
 
-Open an issue on this repository. Say:
+The quickest way is to tell Claude, in the same chat, that something it said is wrong or
+didn't work. Every skill tells it to answer your problem first, then to say in one sentence
+whether the fault looks like the skill's, and why. When it is the skill's, Claude drafts a full
+report for you to paste as an issue here. Check the draft before you post it.
+
+To write one yourself, open an issue on this repository. Say:
 
 - what you asked, word for word;
 - where: Claude Code or claude.ai, and the plugin's version (`/plugin` in Claude Code lists it);

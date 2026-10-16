@@ -2,6 +2,31 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — Every skill says when it's at fault, and drafts the report
+
+- **Asked, by the owner:** "You should include some level of this in yourselve for all skills.
+  It shouldn't be much, but if someone has an issue or concern, there would be a sentence or a
+  word that gives it away and why. If it's a bug somewhere then yes give a verbose answer." The
+  owner wants their brother, and later colleagues, to use the skills on real work and report
+  what goes wrong.
+- **Decided:** every `SKILL.md` ends with one shared section, `When something here is wrong`.
+  When a person says advice is wrong, out of date, failed or doesn't fit, the model answers the
+  problem first, then says in one sentence whether the fault looks like the skill's, and why.
+  When it is the skill's, it drafts a full report to paste as an issue: skill and module,
+  version, the request, the line that misled, what happened, what's right with its source, and
+  a suggested fix. Private data, company detail and repository names stay out, and it files
+  nothing unless asked.
+- **Why one text, held word for word:** the section changes how every skill behaves, so it is
+  kept once, in `src/skillcheck/core/reporting.py`. `skillcheck` fails a skill without it, or
+  with any other wording, and `--new` writes it. The address comes from the catalog's
+  `repository`, so a repository that uses these tools for its own skills reports to itself.
+- **Why at the end of `SKILL.md`, not in a module:** it applies whatever module is read, and
+  `SKILL.md` is always read when the skill loads. It costs about 900 characters per skill, and
+  nothing in the listing, which holds descriptions only.
+- **Also done the same day:** Dependabot's four open updates came in together, as #58, with the
+  git-workflows example moved to the same `setup-uv` commit. The private repository's one
+  update merged on its own.
+
 ## 2026-10-16 — `git-workflows` and `house-style` made of modules, and facts named across the repository
 
 - **Asked, by the owner:** "do the rest if you can", on the weekend's work, which included
