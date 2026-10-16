@@ -19,7 +19,7 @@
   },
   "reasons": {
     "algorithmic-art": "Anthropic's, for work in chat rather than in a repository",
-    "canvas-design": "Anthropic's, for work in chat rather than in a repository; the owner hasn't decided whether to keep it at all",
+    "canvas-design": "Anthropic's, for work in chat rather than in a repository; kept on claude.ai (the owner, 2026-10-16)",
     "code-planner": "the owner's, retired into this repository's shared tools",
     "doc-coauthoring": "Anthropic's, for work in chat rather than in a repository",
     "docs": "Anthropic's, for Claude's documents; its connector calls it by name, so the name is enough",

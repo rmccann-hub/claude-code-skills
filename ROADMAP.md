@@ -179,7 +179,8 @@ owner approved this plan on 2026-10-15 (decisions 44 to 49).
   reference, on in this repository only, unless `skill-builder` replaces it (2026-10-15).
 - **Company material,** such as the company theme, template and the Epicor and SOLIDWORKS
   detail, goes in a private companion repository with the same tools and checks, not here
-  (2026-10-15).
+  (2026-10-15). It was set up on 2026-10-16, running this repository's checks at a pinned
+  release, and plans four company skills, each built on one of the skills above.
 
 ## Lessons waiting for their skill
 
