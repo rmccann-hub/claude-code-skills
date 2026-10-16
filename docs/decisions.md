@@ -2,6 +2,64 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — Skills reach cloud sessions from the release, and release 0.1.15
+
+- **Asked:** after release 0.1.14, the owner asked that getting the skills into sessions be
+  made automatic. Uploading by hand is no trouble to them, so this was wanted only if it can
+  be done, and with one condition: the owner removes the old skills, and anything that depends
+  on them, first.
+- **Found, by tests on 2026-10-16, with Claude Code 2.1.301 in this cloud environment:**
+  - A skill that a `SessionStart` hook writes into `~/.claude/skills` loads in that same
+    session. A headless session started in a scratch folder listed it and read it.
+  - The same, with the hook in user settings, as `cloud-setup.sh` writes it: a fresh headless
+    session ran it, restored a skill deleted to prove the hook ran, and listed all three skills
+    by their plain names.
+  - The claude.ai uploads of `git-workflows` and `project-bootstrap-and-audit` then loaded as
+    well, as `anthropic-skills:git-workflows` and `anthropic-skills:project-bootstrap-and-audit`.
+    Two copies of a skill is what the owner's condition prevents.
+  - `skillOverrides` keys match the listed name: `"git-workflows": "off"` hid the installed
+    copy, and the synced one came back under its prefix. That lasts only while the uploads do.
+  - The tests restored this container's settings and removed what they installed.
+- **Found, in the docs, read on 2026-10-16:**
+  - A cloud session still doesn't install the plugins a repository turns on under
+    `enabledPlugins`. The plugin-loading page names Cowork and terminal sessions for plugins
+    synced from claude.ai, not cloud sessions.
+  - A setup script runs before Claude Code starts, and its result is cached for about seven
+    days, so an install there alone would lag the releases. The hook runs at every session start.
+  - claude.ai updates a plugin from a personal marketplace when Sync automatically is on. Its
+    docs don't say what counts as a change; each release here changes the version.
+  - No public interface uploads a skill to a claude.ai account.
+- **Chosen:** this supersedes how skills reach cloud sessions in item 35 of the 2026-10-13
+  entry *The owner's answers to questions 19 to 35*, and the 2026-09-23 entry *The plugin reaches the account, not cloud sessions*:
+  - **Cloud sessions:** each release carries `skills.zip` and `cloud-setup.sh`. The owner adds
+    the setup lines to the environment once. The hook downloads the latest release's
+    `skills.zip`, checks its manifest and every path in it, installs the skills into
+    `~/.claude/skills`, and keeps a ledger, so it replaces and removes only what it installed.
+    A failed download keeps what's there and never stops a session. It names any claude.ai copy
+    still loading beside a skill, for the session to report. The setup lines also set
+    `syncClaudeAiPlugins` to false, so a plugin copy can't load beside the hook's copy.
+  - **claude.ai chat:** the two plugins from this repository's marketplace, with Sync
+    automatically on, instead of uploaded ZIP files.
+  - **The ZIP files stay on each release** as the fallback, uploaded by hand.
+
+  *Considered:* installing the plugins from the setup script, cached for up to a week, and so
+  up to a week behind a release; and a hook in each consuming repository, which would need a
+  change in each.
+  *Risk:* the hook runs nothing it downloads. It installs skills, whose scripts run only when a
+  session runs them, as with any install, from a tag that the tag ruleset stops anyone
+  moving. A bad release reaches every
+  new session at once, which the withdrawal runbook in the README now covers.
+- **Chosen:** removing old copies comes first, as the owner asked, and stays the order:
+  `docs/authoring-a-skill.md` step 12 has the session name the old copy and what depends on
+  it before a rebuild's release, which waits for the owner's word.
+- **Changed:**
+  - `house-style` is off in this repository's `skillOverrides`. The new `own-copies` rule
+    fails these settings if any skill under `skills/` isn't off. It found `house-style` missing
+    on its first run.
+  - `bom.py`'s row for claude.ai says the account takes the plugins.
+- **Release 0.1.15:** this pull request's merge, so that `cloud-setup.sh` and `skills.zip`
+  exist on a release for the setup lines to fetch.
+
 ## 2026-10-15 — Standard v0.46.0: acceptance runs between rounds, and release 0.1.14
 
 - **Asked:** the owner asked whether the acceptance test of two repositories in a review loop

@@ -11,3 +11,7 @@ synced copies of `git-workflows` and `project-bootstrap-and-audit`. It also appl
 exclusion list in `skills/project-bootstrap-and-audit/assets/`, which turns off the retired
 `markdown-standards` (`house-style` replaces it), `skill-orchestrator`, `skill-stress-tester`
 and `code-planner`, with `skill-creator` left on here, where skills are built.
+
+The release's `cloud-setup.sh` hook installs every skill here into `~/.claude/skills` as a
+cloud session starts, so the settings turn off each skill under `skills/` by name, and the
+`own-copies` rule fails them if one is missing.

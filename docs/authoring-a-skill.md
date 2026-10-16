@@ -107,6 +107,8 @@ and dependencies. A second version of a published rule drifts from the first.
 11. **Record it.** Add a line under `[Unreleased]` in `CHANGELOG.md` and set `metadata.reviewed`
     to today's date.
 12. **The old copy.** A rebuilt skill keeps its old skill's name where the old name still fits
-    its scope, so it can replace the claude.ai copy in place. Otherwise, once the new version is
-    delivered, the owner turns the old copy off, so sessions don't load two versions of one
-    skill.
+    its scope. Before the release that ships it, the session names the old copy on the owner's
+    claude.ai account, and every skill there that depends on it, found by searching the synced
+    copies under `~/.claude/skills/synced/` for its name. The owner deletes the old copy and
+    turns those off, and the release waits for their word (the owner, 2026-10-16). Otherwise
+    the old copy loads beside the new one under a prefix, in chat and in cloud sessions.

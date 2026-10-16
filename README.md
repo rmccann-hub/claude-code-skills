@@ -17,6 +17,17 @@ In Claude Code:
 Before 0.1.1 the marketplace was called `rmccann-skills`. If you added it under that name,
 run `/plugin marketplace remove rmccann-skills`, then add it again as above.
 
+In Claude Code's cloud sessions, which don't install a repository's plugins, add the lines in
+the latest release's
+[`cloud-setup.sh`](https://github.com/rmccann-hub/claude-code-skills/releases/latest/download/cloud-setup.sh)
+to the end of the environment's setup script. They install a hook that copies the newest
+release's skills into `~/.claude/skills` as each session starts, so no upload is needed. Delete
+any copy of these skills uploaded to claude.ai first, or it loads beside them under a prefix.
+
+On claude.ai, add this repository as a personal plugin marketplace, turn on Sync
+automatically, and install both plugins. Each release changes the plugins' version, which
+brings the account's copy up to date.
+
 ## Usage
 
 Once the plugins are installed, Claude Code loads a skill when a request matches what its
@@ -120,8 +131,12 @@ If a skill here gives wrong or harmful instructions, take it out of circulation 
    publishes the release page, with the kickstart file, each skill packaged for claude.ai, the
    ruleset files and the dependency map attached.
 3. **Reach the copies already installed.**
-   - **claude.ai:** delete or replace the uploaded skill under Customize, then Skills. If an
-     admin uploaded it for an organization, an admin removes it.
+   - **claude.ai:** a plugin installed from this marketplace with Sync automatically on takes
+     the new version. Otherwise, delete or replace the uploaded skill under Customize, then
+     Skills. If an admin uploaded it for an organization, an admin removes it.
+   - **Cloud sessions with `cloud-setup.sh`'s hook:** the next session to start installs the
+     newest release, and removes a skill it no longer ships. A session already running keeps
+     its copy.
    - **Plugin installs:** a third-party marketplace updates automatically only if the user
      turned that on. Ask users to run these in a terminal:
 

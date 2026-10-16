@@ -3,6 +3,7 @@
 import hashlib
 import io
 import json
+import os
 import subprocess
 import zipfile
 from pathlib import Path
@@ -120,9 +121,11 @@ def test_a_release_is_built_from_the_commit(tmp_path):
         "KICKSTART.md",
         "Plain.zip",
         "bom.json",
+        "cloud-setup.sh",
         "notes.md",
         "project-bootstrap-and-audit.zip",
         "ruleset-tags.json",
+        "skills.zip",
         "tool.zip",
     ]
     kick = (out / "KICKSTART.md").read_text(encoding="utf-8")
@@ -147,6 +150,8 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     assert "/plugin install beta@fixture-skills\n```" in notes
     assert "| `tool.zip` | The `tool` skill, packaged to upload to claude.ai |" in notes
     assert "choose Import a ruleset.\n\n| File |" in notes
+    assert "add the lines in `cloud-setup.sh` to the end of the\nenvironment's setup" in notes
+    assert "| `skills.zip` | Every skill in one file" in notes
     assert '| `ruleset-tags.json` | A tag ruleset, "Tags", to import |' in notes
     assert (
         "| `Plain.zip` | The Plain Vale style, which a repository's `.vale.ini` names by URL |"
@@ -168,7 +173,16 @@ def test_a_release_is_built_from_the_commit(tmp_path):
     style = zipfile.ZipFile(io.BytesIO((out / "Plain.zip").read_bytes()))
     assert style.namelist() == ["Plain/.vale.ini", "Plain/styles/Plain/Words.yml"]
     assert style.read("Plain/.vale.ini").decode("utf-8") == VALE_CONFIG
+    # One file holds every skill, with the manifest the cloud hook checks.
+    bundle = zipfile.ZipFile(io.BytesIO((out / "skills.zip").read_bytes()))
+    assert json.loads(bundle.read("release.json")) == {
+        "version": "1.0.0",
+        "skills": ["project-bootstrap-and-audit", "tool"],
+    }
+    assert "tool/hooks/run" in bundle.namelist()
+    assert bundle.read(STANDARD_PATH.removeprefix("skills/")).decode("utf-8") == STANDARD
     # The same commit packs the same bytes.
+    assert release.bundle(root, "1.0.0") == release.bundle(root, "1.0.0")
     assert release.packages(root) == release.packages(root)
     assert release.vale_packages(root) == release.vale_packages(root)
 
@@ -304,3 +318,48 @@ def test_the_command_line_builds_a_release_or_says_why_not(tmp_path, capsys):
     (root / STANDARD_PATH).write_text(STANDARD.replace("Read it", "Read​it"), encoding="utf-8")
     assert main([str(root), "--release-assets", "1.0.0", str(tmp_path / "again")]) == 1
     assert "release: the kickstart file would hold U+200B\n" in capsys.readouterr().out
+
+
+def test_the_cloud_setup_lines_install_the_hook_once_and_keep_other_settings(tmp_path):
+    root = fixture(tmp_path / "repo")
+    out = tmp_path / "out"
+    release.build(root, "1.0.0", out)
+    script = (out / "cloud-setup.sh").read_text(encoding="utf-8")
+    assert script.startswith("# From example/fixture, release 1.0.0.")
+    assert "REPOSITORY" not in script and "HOOK_SOURCE" not in script
+    url = "https://github.com/example/fixture/releases/latest/download/skills.zip"
+    assert script.count(url) == 1
+    # Run against the built file, as the hook would fetch it from the release.
+    script = script.replace(url, (out / "skills.zip").as_uri())
+    home = tmp_path / "home"
+    settings = home / ".claude/settings.json"
+    settings.parent.mkdir(parents=True)
+    other = {"matcher": "startup", "hooks": [{"type": "command", "command": "true"}]}
+    settings.write_text(
+        json.dumps({"model": "kept", "hooks": {"SessionStart": [other]}}), encoding="utf-8"
+    )
+    env = {"HOME": str(home), "PATH": os.environ["PATH"]}
+    for _ in range(2):
+        subprocess.run(["bash", "-c", script], env=env, check=True, capture_output=True)
+    written = json.loads(settings.read_text(encoding="utf-8"))
+    command = 'python3 "$HOME/.claude/hooks/claude-code-skills.py"'
+    assert written == {
+        "model": "kept",
+        "hooks": {
+            "SessionStart": [
+                other,
+                {
+                    "matcher": "startup|resume",
+                    "hooks": [{"type": "command", "command": command, "timeout": 60}],
+                },
+            ]
+        },
+        "syncClaudeAiPlugins": False,
+    }
+    skills = home / ".claude/skills"
+    assert sorted(p.name for p in skills.iterdir()) == [
+        ".claude-code-skills.json",
+        "project-bootstrap-and-audit",
+        "tool",
+    ]
+    assert os.access(skills / "tool/hooks/run", os.X_OK)

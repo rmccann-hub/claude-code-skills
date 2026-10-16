@@ -26,6 +26,7 @@
     "docs": "name-only",
     "git-workflows": "off",
     "google-workspace": "name-only",
+    "house-style": "off",
     "import-memory": "off",
     "internal-comms": "off",
     "markdown-standards": "off",
