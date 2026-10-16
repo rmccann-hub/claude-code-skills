@@ -32,9 +32,9 @@ and dependencies. A second version of a published rule drifts from the first.
      the fact;
    - the quote is the source's own words in double quotes, or a command's output in backticks.
      A row with neither is checked by hand when it falls due;
-   - other text names a fact by its ID, such as fact `node20`, rather than repeating it. A
-     module names only its own facts, so it can move, and an ID is defined once in the
-     repository.
+   - other text names a fact by its ID, such as fact `node20`, rather than repeating it. An ID
+     is defined once in the repository, and any file in any skill may name it, so a module
+     that moves keeps every fact it names.
 
    `skillcheck` checks every row's shape and every fact a skill names. `skillcheck --due` lists
    the facts due to be checked again, and `skillcheck --verify` fetches each source and looks
