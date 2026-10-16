@@ -16,7 +16,8 @@ change here changes what agents do there.
 - Dated facts: `uv run skillcheck --due` lists those due; `--verify` checks each source online
 - Check the prose, with Vale installed: `vale sync`, then `git ls-files -z '*.md' | xargs -0 vale`
 - Validate the catalog with Claude Code: `npx --no-install claude plugin validate --strict .`
-- Dependency map: `uv run skillcheck --bom` writes `bom.json` and `docs/dependencies.md`
+- Dependency map: `uv run skillcheck --bom` writes `bom.json` and `docs/dependencies.md`;
+  CI's `--bom-check` fails a pull request whose map is stale, Dependabot's included
 
 ## Layout
 
