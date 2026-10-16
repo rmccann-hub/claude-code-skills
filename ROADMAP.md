@@ -114,8 +114,9 @@ that will do the same for other repositories.
 
 ## Rebuilding the owner's older skills
 
-The owner's account holds 33 skills of their own, older than this repository. 25 are rebuilt
-here as the successors in the tables above, 3 are already replaced (`git-workflows`,
+The owner's account holds 34 skills of their own, older than this repository. 25 are rebuilt
+here as the successors in the tables above, `code-standards` is rebuilt across several of them
+(below), 3 are already replaced (`git-workflows`,
 `project-bootstrap-and-audit`, and `markdown-standards` by `house-style`), 3 retire into shared
 tools (`skill-orchestrator`, `skill-stress-tester`, `code-planner`), and 2 stay on the account:
 `procedure-generator`, for claude.ai only, and `my-theme` (46). Nothing is copied: none of their
@@ -155,6 +156,27 @@ owner approved this plan on 2026-10-15 (decisions 44 to 49).
    `linux`, and `human-factor-audit` becomes `human-factors`, the wider skill it was meant to
    be, with its scheduling checks going to `optimization-and-scheduling` (the owner,
    2026-10-16). The owner deletes those four old copies when their successors ship.
+
+   `code-standards` was counted late: it left the synced copies on 2026-09-28, when the owner
+   deleted their own copy, and the organization's library kept it. It is the layer ten
+   language skills, `docker-containers` and `networking-security` say they must read first.
+   Its topics go to successors already planned, and its old copy goes last, after the
+   language skills that name it are rebuilt:
+
+   | Its topic | Successor |
+   |---|---|
+   | Naming, comments and documentation | `code-style` |
+   | Input sanitization, safety boundaries | `input-handling` |
+   | Configuration | `configuration` |
+   | Error handling | `error-handling` |
+   | Refactoring | `architecture-and-design` |
+   | The code checklist | each successor's `audit.md` |
+
+4. **Colleagues:** the organization's library installs all 28 of the owner's old skills still
+   on claude.ai for everyone in the organization, where colleagues use claude.ai and Claude
+   Code (2026-10-16). Deleting an old copy takes it from them too. The owner chose to keep
+   deleting each old copy as its successor ships, and to have colleagues add this
+   repository's plugins themselves (2026-10-16).
 
 **What the owner decided:**
 - **Examples CI can't run** (VBA, SOLIDWORKS, Epicor, Power Query, DAX): CI checks what it can
