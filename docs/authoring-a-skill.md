@@ -111,6 +111,6 @@ and dependencies. A second version of a published rule drifts from the first.
     claude.ai account, and every skill there that depends on it, found by searching the synced
     copies under `~/.claude/skills/synced/` for its name, saying for each whether it would
     break or only names the old one. The owner deletes the old copy and decides which of those
-    to delete too, since a personal account can delete an uploaded skill but not turn it off
+    to delete too, since the owner's own settings delete an uploaded skill but can't turn it off
     (the owner, 2026-10-16). The release waits for their word. Otherwise the old copy loads
     beside the new one under a prefix, in chat and in cloud sessions.
