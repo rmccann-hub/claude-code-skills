@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:defcb8f0-8ed4-5ad7-a47a-bd68241b762e",
+  "serialNumber": "urn:uuid:a95d939d-abdf-5129-87be-573ca786037e",
   "version": 1,
   "metadata": {
     "tools": {
@@ -78,10 +78,10 @@
     },
     {
       "type": "application",
-      "bom-ref": "pkg:github/actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "bom-ref": "pkg:github/actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "name": "actions/download-artifact",
-      "version": "v8.0.1",
-      "purl": "pkg:github/actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+      "version": "v8.0.2",
+      "purl": "pkg:github/actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
       "properties": [
         {
           "name": "claude-code-skills:used-in",
@@ -89,7 +89,7 @@
         },
         {
           "name": "claude-code-skills:pinned-commit",
-          "value": "3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c"
+          "value": "9000827ccba6bdab643e8b6fd33ac0654aef8333"
         }
       ]
     },
@@ -112,10 +112,10 @@
     },
     {
       "type": "application",
-      "bom-ref": "pkg:github/actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+      "bom-ref": "pkg:github/actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
       "name": "actions/setup-node",
-      "version": "v7.0.0",
-      "purl": "pkg:github/actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
+      "version": "v7.1.0",
+      "purl": "pkg:github/actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
       "properties": [
         {
           "name": "claude-code-skills:used-in",
@@ -123,16 +123,16 @@
         },
         {
           "name": "claude-code-skills:pinned-commit",
-          "value": "820762786026740c76f36085b0efc47a31fe5020"
+          "value": "949feb2413d6458794dcd2491c4babbbce0c15c1"
         }
       ]
     },
     {
       "type": "application",
-      "bom-ref": "pkg:github/actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+      "bom-ref": "pkg:github/actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
       "name": "actions/upload-artifact",
-      "version": "v7.0.1",
-      "purl": "pkg:github/actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
+      "version": "v7.0.2",
+      "purl": "pkg:github/actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
       "properties": [
         {
           "name": "claude-code-skills:used-in",
@@ -140,16 +140,16 @@
         },
         {
           "name": "claude-code-skills:pinned-commit",
-          "value": "043fb46d1a93c77aae656e7c1c64a875d1fc6a0a"
+          "value": "cf430e030ddbb5b0abf93d22962f4752f3646cd9"
         }
       ]
     },
     {
       "type": "application",
-      "bom-ref": "pkg:github/astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7",
+      "bom-ref": "pkg:github/astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884",
       "name": "astral-sh/setup-uv",
-      "version": "v10.2.0",
-      "purl": "pkg:github/astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7",
+      "version": "v10.3.0",
+      "purl": "pkg:github/astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884",
       "properties": [
         {
           "name": "claude-code-skills:used-in",
@@ -157,7 +157,7 @@
         },
         {
           "name": "claude-code-skills:pinned-commit",
-          "value": "c18668ad3cf93ea998bef934396af7bb5c839dc7"
+          "value": "1c37ad07a6a961277cf70c0d37d6f313000f5884"
         }
       ]
     },
@@ -189,11 +189,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-darwin-arm64@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-darwin-arm64@2.1.296",
       "name": "@anthropic-ai/claude-code-darwin-arm64",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code-darwin-arm64@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code-darwin-arm64@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -207,11 +207,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-darwin-x64@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-darwin-x64@2.1.296",
       "name": "@anthropic-ai/claude-code-darwin-x64",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code-darwin-x64@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code-darwin-x64@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -225,11 +225,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64-musl@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64-musl@2.1.296",
       "name": "@anthropic-ai/claude-code-linux-arm64-musl",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64-musl@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64-musl@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -243,11 +243,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64@2.1.296",
       "name": "@anthropic-ai/claude-code-linux-arm64",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -261,11 +261,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-linux-x64-musl@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-linux-x64-musl@2.1.296",
       "name": "@anthropic-ai/claude-code-linux-x64-musl",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code-linux-x64-musl@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code-linux-x64-musl@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -279,11 +279,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-linux-x64@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-linux-x64@2.1.296",
       "name": "@anthropic-ai/claude-code-linux-x64",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code-linux-x64@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code-linux-x64@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -297,11 +297,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-win32-arm64@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-win32-arm64@2.1.296",
       "name": "@anthropic-ai/claude-code-win32-arm64",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code-win32-arm64@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code-win32-arm64@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -315,11 +315,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-win32-x64@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code-win32-x64@2.1.296",
       "name": "@anthropic-ai/claude-code-win32-x64",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code-win32-x64@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code-win32-x64@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -333,11 +333,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code@2.1.288",
+      "bom-ref": "pkg:npm/%40anthropic-ai/claude-code@2.1.296",
       "name": "@anthropic-ai/claude-code",
-      "version": "2.1.288",
+      "version": "2.1.296",
       "scope": "excluded",
-      "purl": "pkg:npm/%40anthropic-ai/claude-code@2.1.288",
+      "purl": "pkg:npm/%40anthropic-ai/claude-code@2.1.296",
       "properties": [
         {
           "name": "cdx:npm:package:development",
@@ -425,11 +425,11 @@
     },
     {
       "type": "library",
-      "bom-ref": "pkg:pypi/ruff@0.16.10",
+      "bom-ref": "pkg:pypi/ruff@0.17.0",
       "name": "ruff",
-      "version": "0.16.10",
+      "version": "0.17.0",
       "scope": "excluded",
-      "purl": "pkg:pypi/ruff@0.16.10"
+      "purl": "pkg:pypi/ruff@0.17.0"
     },
     {
       "type": "library",
@@ -710,9 +710,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "tool:uv_build@>=0.12.19,<0.13",
+      "bom-ref": "tool:uv_build@>=0.13.0,<0.14",
       "name": "uv_build",
-      "version": ">=0.12.19,<0.13",
+      "version": ">=0.13.0,<0.14",
       "properties": [
         {
           "name": "claude-code-skills:set-in",
@@ -827,14 +827,14 @@
       "ref": "claude-code-skills",
       "dependsOn": [
         "pkg:github/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
-        "pkg:github/actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c",
+        "pkg:github/actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
         "pkg:github/actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e",
-        "pkg:github/actions/setup-node@820762786026740c76f36085b0efc47a31fe5020",
-        "pkg:github/actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a",
-        "pkg:github/astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7",
+        "pkg:github/actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+        "pkg:github/actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9",
+        "pkg:github/astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884",
         "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.24.0",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
-        "pkg:npm/%40anthropic-ai/claude-code@2.1.288",
+        "pkg:npm/%40anthropic-ai/claude-code@2.1.296",
         "plugin:engineering@0.1.16",
         "plugin:standards@0.1.16",
         "project:skillcheck@0.0.0",
@@ -843,52 +843,52 @@
         "tool:Node.js@24",
         "tool:Python@3.14",
         "tool:uv@0.12.18",
-        "tool:uv_build@>=0.12.19,<0.13"
+        "tool:uv_build@>=0.13.0,<0.14"
       ]
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code-darwin-arm64@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code-darwin-arm64@2.1.296",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code-darwin-x64@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code-darwin-x64@2.1.296",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64-musl@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64-musl@2.1.296",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code-linux-arm64@2.1.296",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code-linux-x64-musl@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code-linux-x64-musl@2.1.296",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code-linux-x64@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code-linux-x64@2.1.296",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code-win32-arm64@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code-win32-arm64@2.1.296",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code-win32-x64@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code-win32-x64@2.1.296",
       "dependsOn": []
     },
     {
-      "ref": "pkg:npm/%40anthropic-ai/claude-code@2.1.288",
+      "ref": "pkg:npm/%40anthropic-ai/claude-code@2.1.296",
       "dependsOn": [
-        "pkg:npm/%40anthropic-ai/claude-code-darwin-arm64@2.1.288",
-        "pkg:npm/%40anthropic-ai/claude-code-darwin-x64@2.1.288",
-        "pkg:npm/%40anthropic-ai/claude-code-linux-arm64-musl@2.1.288",
-        "pkg:npm/%40anthropic-ai/claude-code-linux-arm64@2.1.288",
-        "pkg:npm/%40anthropic-ai/claude-code-linux-x64-musl@2.1.288",
-        "pkg:npm/%40anthropic-ai/claude-code-linux-x64@2.1.288",
-        "pkg:npm/%40anthropic-ai/claude-code-win32-arm64@2.1.288",
-        "pkg:npm/%40anthropic-ai/claude-code-win32-x64@2.1.288"
+        "pkg:npm/%40anthropic-ai/claude-code-darwin-arm64@2.1.296",
+        "pkg:npm/%40anthropic-ai/claude-code-darwin-x64@2.1.296",
+        "pkg:npm/%40anthropic-ai/claude-code-linux-arm64-musl@2.1.296",
+        "pkg:npm/%40anthropic-ai/claude-code-linux-arm64@2.1.296",
+        "pkg:npm/%40anthropic-ai/claude-code-linux-x64-musl@2.1.296",
+        "pkg:npm/%40anthropic-ai/claude-code-linux-x64@2.1.296",
+        "pkg:npm/%40anthropic-ai/claude-code-win32-arm64@2.1.296",
+        "pkg:npm/%40anthropic-ai/claude-code-win32-x64@2.1.296"
       ]
     },
     {
@@ -938,7 +938,7 @@
       "dependsOn": []
     },
     {
-      "ref": "pkg:pypi/ruff@0.16.10",
+      "ref": "pkg:pypi/ruff@0.17.0",
       "dependsOn": []
     },
     {
@@ -951,7 +951,7 @@
         "pkg:pypi/pytest-cov@7.1.0",
         "pkg:pypi/pytest@9.1.1",
         "pkg:pypi/pyyaml@6.0.3",
-        "pkg:pypi/ruff@0.16.10",
+        "pkg:pypi/ruff@0.17.0",
         "pkg:pypi/zizmor@1.30.1"
       ]
     }

@@ -36,7 +36,7 @@ freshness run and the release workflow both run it.
 | Name | Version | Set in | Note |
 |---|---|---|---|
 | Python | 3.14 | `.python-version` | `pyproject.toml` requires >=3.14 |
-| uv_build | >=0.12.19,<0.13 | `pyproject.toml` | build backend |
+| uv_build | >=0.13.0,<0.14 | `pyproject.toml` | build backend |
 | GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` | — |
 | Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
@@ -62,7 +62,7 @@ skillcheck 0.0.0 (this repository's checks)
 │   ├── pluggy 1.6.0 (dev)
 │   └── pytest 9.1.1 (dev) (listed above)
 ├── pyyaml 6.0.3
-├── ruff 0.16.10 (dev)
+├── ruff 0.17.0 (dev)
 └── zizmor 1.30.1 (dev)
 ```
 
@@ -73,15 +73,15 @@ plugins ship.
 
 ```text
 package.json
-└── @anthropic-ai/claude-code 2.1.288 (dev)
-    ├── @anthropic-ai/claude-code-darwin-arm64 2.1.288 (dev; optional)
-    ├── @anthropic-ai/claude-code-darwin-x64 2.1.288 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-arm64 2.1.288 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-arm64-musl 2.1.288 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-x64 2.1.288 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-x64-musl 2.1.288 (dev; optional)
-    ├── @anthropic-ai/claude-code-win32-arm64 2.1.288 (dev; optional)
-    └── @anthropic-ai/claude-code-win32-x64 2.1.288 (dev; optional)
+└── @anthropic-ai/claude-code 2.1.296 (dev)
+    ├── @anthropic-ai/claude-code-darwin-arm64 2.1.296 (dev; optional)
+    ├── @anthropic-ai/claude-code-darwin-x64 2.1.296 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-arm64 2.1.296 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-arm64-musl 2.1.296 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-x64 2.1.296 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-x64-musl 2.1.296 (dev; optional)
+    ├── @anthropic-ai/claude-code-win32-arm64 2.1.296 (dev; optional)
+    └── @anthropic-ai/claude-code-win32-x64 2.1.296 (dev; optional)
 ```
 
 ## GitHub Actions
@@ -89,11 +89,11 @@ package.json
 | Action | Version | Pinned commit | Used in |
 |---|---|---|---|
 | `actions/checkout` | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` |
-| `actions/download-artifact` | v8.0.1 | `3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c` | `.github/workflows/release.yml` |
+| `actions/download-artifact` | v8.0.2 | `9000827ccba6bdab643e8b6fd33ac0654aef8333` | `.github/workflows/release.yml` |
 | `actions/setup-go` | v7.0.0 | `b7ad1dad31e06c5925ef5d2fc7ad053ef454303e` | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` |
-| `actions/setup-node` | v7.0.0 | `820762786026740c76f36085b0efc47a31fe5020` | `.github/workflows/ci.yml` |
-| `actions/upload-artifact` | v7.0.1 | `043fb46d1a93c77aae656e7c1c64a875d1fc6a0a` | `.github/workflows/release.yml` |
-| `astral-sh/setup-uv` | v10.2.0 | `c18668ad3cf93ea998bef934396af7bb5c839dc7` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
+| `actions/setup-node` | v7.1.0 | `949feb2413d6458794dcd2491c4babbbce0c15c1` | `.github/workflows/ci.yml` |
+| `actions/upload-artifact` | v7.0.2 | `cf430e030ddbb5b0abf93d22962f4752f3646cd9` | `.github/workflows/release.yml` |
+| `astral-sh/setup-uv` | v10.3.0 | `1c37ad07a6a961277cf70c0d37d6f313000f5884` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
 
 ## Services
 
