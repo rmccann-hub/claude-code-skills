@@ -54,7 +54,7 @@ that will do the same for other repositories.
 | `performance-and-concurrency` | Profiling, complexity, caching, async and threads | planned | standard | R07 |
 | `configuration` | Layered config, environment variables, validation at startup, secret stores | planned | standard | R04 |
 | `architecture-and-design` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
-| `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it | planned | standard | R23 |
+| `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | planned | standard | R23 |
 | `accessibility` | WCAG 2.2, ARIA, contrast, testing tools | planned | standard | R18 |
 | `internationalization` | Unicode, locales, time zones, formats, right-to-left text | planned | standard | R18 |
 | `privacy-and-compliance` | Personal data, retention, licenses and notices, obligations on software publishers | planned | standard | R18 |
