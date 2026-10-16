@@ -2,6 +2,24 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — The automatic route, checked in the owner's environment
+
+- **Done, by the owner:** `protect-main` now requires `prose` beside `checks`, `catalog` and
+  `secret-scan`, all from GitHub Actions, read back from the ruleset at 12:34 that day. They
+  deleted the old uploaded copies (step 2A of their steps), added this repository as a
+  marketplace in their own **Customize > Plugins**, and added the setup lines to their cloud
+  environment.
+- **Found:** **Organization settings > Plugins & skills > Sync from GitHub** lists only private
+  and internal repositories, and says to fork a public one into a private one first. That is
+  the organization-wide route, and the attempt there failed; the owner's own **Customize >
+  Plugins** took the same repository with no error.
+- **Checked:** a fresh cloud session in that environment, with no repository, listed
+  `git-workflows`, `house-style` and `project-bootstrap-and-audit`, with no prefix and no second
+  copy. Its ledger said release 0.1.15, the hook and its `SessionStart` entry were in place,
+  `syncClaudeAiPlugins` was false, and the standard said 0.46.0. That settles the 2026-10-16
+  entry's untested half for cloud sessions. Whether claude.ai's automatic sync takes the next
+  release is still to be seen, at the next release.
+
 ## 2026-10-16 — `human-factors`: where it applies, and research run R23
 
 - **Said, by the owner,** answering the previous entry's three questions:
