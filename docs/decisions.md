@@ -2,6 +2,20 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — claude.ai kept a plugin copy from 2026-09-23 until it was removed and added again
+
+- **Found, in the owner's chat:** after the plugins were added from **Discover**, a new chat
+  still loaded `project-bootstrap-and-audit` with standard v0.36.0. That is the copy installed
+  on 2026-09-23, which the 2026-09-28 entry also found. It stayed through every catalog version
+  from 0.1.1 to 0.1.15.
+- **Fixed, by the owner:** they removed every `Standards` and `Engineering` under **Customize >
+  Plugins > Yours**, and added both again from **Discover**. A new chat then loaded v0.46.0,
+  with the skill's metadata and its copy of the standard agreeing, and no older copy beside it.
+- **So:** a version change in the catalog doesn't reach a plugin claude.ai already holds unless
+  something pulls it. Whether **Sync automatically** is that something is checked at the next
+  release by asking a new chat the same question. If it isn't, each release's steps for the
+  owner include **Check for updates**.
+
 ## 2026-10-16 — The automatic route, checked in the owner's environment
 
 - **Done, by the owner:** `protect-main` now requires `prose` beside `checks`, `catalog` and
