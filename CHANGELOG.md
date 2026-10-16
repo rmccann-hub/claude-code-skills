@@ -6,6 +6,14 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.16] - 2026-10-16
+
+### Changed
+
+- Standard v0.47.0: the toolchain table names Python 3.15; Phase 0 continues without a
+  repository when setting up something new before it exists, writing nothing until it does;
+  and dimension 6 rates dangerous workflow triggers and template injection.
+
 ## [0.1.15] - 2026-10-16
 
 ### Added
