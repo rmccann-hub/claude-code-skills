@@ -4,6 +4,9 @@ The owner's master reference for Claude Code, for Claude skills, and for coding 
 general: installable skills for setting up, auditing and keeping repositories current, the
 checks behind them, and the research they rest on.
 
+Anyone may install, test or improve it. [CONTRIBUTING.md](CONTRIBUTING.md) says what the skills
+can and can't do, how to try them on purpose, how to report a problem, and how to send a change.
+
 ## Install
 
 In Claude Code:
@@ -94,6 +97,13 @@ The Freshness and Release workflows run it too.
 
 Parity runs check how the skill behaves on sample repositories, before and after a change.
 [docs/testing-the-skill.md](docs/testing-the-skill.md) says how to run one.
+
+## Contributing
+
+Report a problem as an issue, or a security problem through the Security tab. Send a change as
+a pull request from a fork, after running the checks above; the owner reviews and merges each
+one. [CONTRIBUTING.md](CONTRIBUTING.md) has the detail, including the rules CI checks and the
+ones nothing checks.
 
 ## Releasing
 
