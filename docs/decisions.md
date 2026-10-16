@@ -2,6 +2,27 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — The tools for skills made of modules
+
+- **Built, as the roadmap's shared tools planned, with the owner's permission:**
+  - `skillcheck` checks a skill made of modules: its router table, each module's file and its
+    six sections, each module's trigger tests (requests that should reach it and near misses),
+    no Markdown in `references/` outside a module, one home per module name, and each built
+    module's shipped `ROADMAP.md` row naming its skill;
+  - facts live in each module's Facts section, a module names only its own, and an ID is
+    unique across the repository, so a module moves without a collision;
+  - `skillcheck --new SKILL` writes a router, `--new-module MODULE SKILL` adds a module, and
+    `--move MODULE SKILL` moves one, refusing with nothing changed when it can't;
+  - the listing budget is room for 20 skills.
+- **Why a router table and not a manifest file:** the table is what Claude reads to pick a
+  module, so the one list both routes and registers, and can't disagree with itself.
+- **Why `docs/module-moves.md`:** the moves need a record the command can append to and a
+  person can read. `docs/decisions.md` is prose, appended by hand; `ROADMAP.md` holds the plan,
+  not the history; a release's changelog is cut at release. None fits a row per move.
+- **Not done yet:** `git-workflows` and `house-style` keep their older layout until they're
+  converted, which the checks allow. The trigger-test runner, the example checker and
+  `skill-builder` follow in their own pull requests.
+
 ## 2026-10-16 — Fifteen skills made of modules, in place of a hundred skills
 
 - **Asked, by the owner, verbatim:** "I want the functionality and more, I don't. Care how it is

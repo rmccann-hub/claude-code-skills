@@ -1,4 +1,4 @@
-"""`skillcheck --new` writes a skill in the authoring guide's shape, marked until it's finished."""
+"""`skillcheck --new` and `--new-module` write a skill and its modules, marked until finished."""
 
 import json
 
@@ -8,46 +8,63 @@ from skillcheck import scaffold
 from skillcheck.cli import main
 from skillcheck.core.checks import PLACEHOLDER, check_repository
 
-FILES = [
-    "skills/demo-skill/SKILL.md",
-    "skills/demo-skill/references/why.md",
-    "skills/demo-skill/references/facts.md",
-    "skills/demo-skill/references/audit.md",
-    "skills/demo-skill/references/mistakes.md",
-    "skills/demo-skill/references/sources.md",
-    "tests/fixtures/skills/demo-skill.json",
-]
+SKILL = "skills/demo-skill/SKILL.md"
+MODULE = "skills/demo-skill/references/demo-module.md"
+FIXTURE = "tests/fixtures/modules/demo-module.json"
 
 
 def rules(report) -> list[tuple[str, str]]:
     return [(finding.path, finding.rule) for finding in report.findings]
 
 
-def test_it_writes_every_file_the_guide_asks_for(repo):
-    written = scaffold.create(repo.root, "demo-skill")
-    assert [path.as_posix() for path in written] == FILES
-    assert all((repo.root / path).is_file() for path in FILES)
-    triggers = json.loads((repo.root / FILES[-1]).read_text(encoding="utf-8"))
-    assert {case["should_trigger"] for case in triggers} == {True, False}
+def finish(repo, *paths):
+    for path in paths:
+        target = repo.root / path
+        target.write_text(target.read_text(encoding="utf-8").replace(PLACEHOLDER, "Done."), "utf-8")
 
 
-def test_an_unfinished_skill_fails_only_on_its_placeholders(repo):
-    scaffold.create(repo.root, "demo-skill")
+def roadmap(repo):
+    repo.roadmap({"demo-skill": "shipped"}, {"demo-module": ("demo-skill", "shipped")})
+
+
+def test_a_new_skill_is_one_router_with_no_modules(repo):
+    assert [path.as_posix() for path in scaffold.create(repo.root, "demo-skill")] == [SKILL]
     repo.catalog(repo.plugin("demo", "./skills/demo-skill"))
-    found = rules(check_repository(repo.root))
-    assert found == [(path, "placeholder") for path in sorted(FILES[:-1])]
+    assert sorted(rules(check_repository(repo.root))) == [
+        (SKILL, "modules"),
+        (SKILL, "placeholder"),
+    ]
+
+
+def test_a_new_module_adds_its_file_row_and_trigger_tests(repo):
+    scaffold.create(repo.root, "demo-skill")
+    written = scaffold.create_module(repo.root, "demo-module", "demo-skill")
+    assert [path.as_posix() for path in written] == [SKILL, MODULE, FIXTURE]
+    triggers = json.loads((repo.root / FIXTURE).read_text(encoding="utf-8"))
+    assert {case["should_trigger"] for case in triggers} == {True, False}
+    assert "| [`demo-module`](references/demo-module.md) |" in (repo.root / SKILL).read_text(
+        encoding="utf-8"
+    )
+
+
+def test_an_unfinished_module_fails_only_on_its_placeholders(repo):
+    scaffold.create(repo.root, "demo-skill")
+    scaffold.create_module(repo.root, "demo-module", "demo-skill")
+    repo.catalog(repo.plugin("demo", "./skills/demo-skill"))
+    roadmap(repo)
+    found = sorted(rules(check_repository(repo.root)))
+    assert found == [(SKILL, "placeholder"), (MODULE, "placeholder"), (FIXTURE, "placeholder")]
 
 
 def test_a_finished_skeleton_passes_every_rule(repo):
     scaffold.create(repo.root, "demo-skill")
+    scaffold.create_module(repo.root, "demo-module", "demo-skill")
     repo.catalog(repo.plugin("demo", "./skills/demo-skill"))
-    for path in FILES[:-1]:
-        target = repo.root / path
-        text = target.read_text(encoding="utf-8").replace(PLACEHOLDER, "Done.")
-        target.write_text(text, encoding="utf-8")
+    roadmap(repo)
+    finish(repo, SKILL, MODULE, FIXTURE)
     report = check_repository(repo.root)
     assert report.findings == []
-    assert report.skills == 1
+    assert (report.skills, report.modules) == (1, 1)
 
 
 def test_the_placeholder_rule_counts_and_locates(repo):
@@ -70,28 +87,55 @@ def test_a_bad_name_is_refused_with_nothing_written(repo, name):
 
 def test_an_existing_skill_is_not_overwritten(repo):
     repo.skill("demo-skill")
-    before = (repo.root / "skills/demo-skill/SKILL.md").read_text(encoding="utf-8")
+    before = (repo.root / SKILL).read_text(encoding="utf-8")
     with pytest.raises(scaffold.ScaffoldError, match="already there: skills/demo-skill"):
         scaffold.create(repo.root, "demo-skill")
-    assert (repo.root / "skills/demo-skill/SKILL.md").read_text(encoding="utf-8") == before
+    assert (repo.root / SKILL).read_text(encoding="utf-8") == before
 
 
-def test_an_existing_trigger_file_is_not_overwritten(repo):
-    (repo.root / "tests/fixtures/skills").mkdir(parents=True)
-    (repo.root / FILES[-1]).write_text("[]\n", encoding="utf-8")
-    with pytest.raises(scaffold.ScaffoldError, match="tests/fixtures/skills/demo-skill.json"):
-        scaffold.create(repo.root, "demo-skill")
-    assert not (repo.root / "skills").exists()
+@pytest.mark.parametrize(
+    ("name", "skill", "message"),
+    [
+        ("Bad", "demo-skill", "lowercase letters"),
+        ("demo-module", "nowhere", "there's no skill `nowhere`; make it with --new nowhere first"),
+        ("demo-module", "plain", "`plain` has no Modules section to route it"),
+        ("taken", "demo-skill", "`taken` is already a module of `other`"),
+        ("plain", "demo-skill", "`plain` is already the name of a skill"),
+        ("demo-module", "demo-skill", f"already there: {FIXTURE}"),
+    ],
+)
+def test_a_refused_module_writes_nothing(repo, name, skill, message):
+    scaffold.create(repo.root, "demo-skill")
+    repo.skill("plain")
+    repo.modular_skill("other", "taken")
+    (repo.root / FIXTURE).write_text("[]\n", encoding="utf-8")
+    before = (repo.root / SKILL).read_text(encoding="utf-8")
+    with pytest.raises(scaffold.ScaffoldError, match=message.replace("(", r"\(")):
+        scaffold.create_module(repo.root, name, skill)
+    assert (repo.root / SKILL).read_text(encoding="utf-8") == before
+    assert not (repo.root / MODULE).exists()
 
 
-def test_the_command_writes_and_says_what_comes_next(repo, capsys):
+def test_a_skill_may_route_a_module_of_its_own_name(repo):
+    scaffold.create(repo.root, "demo-skill")
+    written = scaffold.create_module(repo.root, "demo-skill", "demo-skill")
+    assert written[1].as_posix() == "skills/demo-skill/references/demo-skill.md"
+
+
+def test_the_commands_write_and_say_what_comes_next(repo, capsys):
     assert main([str(repo.root), "--new", "demo-skill"]) == 0
+    assert main([str(repo.root), "--new-module", "demo-module", "demo-skill"]) == 0
     out = capsys.readouterr().out.splitlines()
-    assert out[:-1] == [f"wrote {path}" for path in FILES]
-    assert out[-1].startswith("skillcheck: new skill demo-skill, 7 file(s).")
-    assert "docs/authoring-a-skill.md" in out[-1]
+    assert out[0] == f"wrote {SKILL}"
+    assert out[1].startswith("skillcheck: new skill demo-skill, 1 file(s).")
+    assert out[2:5] == [f"wrote {SKILL}", f"wrote {MODULE}", f"wrote {FIXTURE}"]
+    assert out[5].startswith("skillcheck: new module demo-module in demo-skill, 3 file(s).")
+    assert "docs/authoring-a-skill.md" in out[5]
 
 
-def test_the_command_refuses_and_exits_one(repo, capsys):
+def test_the_commands_refuse_and_exit_one(repo, capsys):
     assert main([str(repo.root), "--new", "Bad"]) == 1
-    assert capsys.readouterr().out.startswith("new: 'Bad' must be")
+    assert main([str(repo.root), "--new-module", "demo-module", "nowhere"]) == 1
+    out = capsys.readouterr().out.splitlines()
+    assert out[0].startswith("new: 'Bad' must be")
+    assert out[1].startswith("new-module: there's no skill `nowhere`")

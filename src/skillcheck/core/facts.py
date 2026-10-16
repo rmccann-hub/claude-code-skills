@@ -1,4 +1,4 @@
-"""Dated facts: a skill's references/facts.md, one table row per fact.
+"""Dated facts: a skill's references/facts.md, or each module's Facts section, a row per fact.
 
 A fact that can go stale carries its source, a short quote, the date it was checked and a date
 to check it again by (docs/authoring-a-skill.md, item 2). Three checks keep the rows honest:
@@ -19,6 +19,8 @@ from dataclasses import dataclass
 from datetime import date
 from html.parser import HTMLParser
 from pathlib import Path
+
+from skillcheck.core import modules
 
 FACTS = "references/facts.md"
 COLUMNS = ("ID", "Fact", "Source", "Quote", "Checked", "Check by")
@@ -61,24 +63,63 @@ class Fact:
     check_by: date
 
 
-def check(root: Path, skill_dir: Path, add: Add) -> int:
-    """Report malformed rows and unknown fact IDs in one skill; return how many facts it has."""
+def check(root: Path, skill_dir: Path, add: Add) -> list[Fact]:
+    """Report malformed rows and unknown fact IDs in one skill; return its facts."""
+    routed = modules.router(skill_dir)
+    if routed is not None:
+        return _check_modules(root, skill_dir, routed[0], add)
     path = skill_dir / FACTS
     found: list[Fact] = []
     if path.is_file():
         found, problems = _read(root, path)
         for message in problems:
             add(path.relative_to(root).as_posix(), "facts", message)
-    _check_references(root, skill_dir, {fact.id for fact in found}, add)
-    return len(found)
+    others = [other for other in sorted(skill_dir.rglob("*.md")) if other != path]
+    _check_references(root, others, {fact.id for fact in found}, FACTS, add)
+    return found
 
 
 def collect(root: Path) -> list[Fact]:
     """Every well-formed fact in every skill. The full check reports the malformed rows."""
     found: list[Fact] = []
-    for path in sorted((root / "skills").glob(f"*/{FACTS}")):
-        found += _read(root, path)[0]
+    for skill_dir in sorted(path for path in (root / "skills").glob("*") if path.is_dir()):
+        routed = modules.router(skill_dir) if (skill_dir / "SKILL.md").is_file() else None
+        if routed is None:
+            if (skill_dir / FACTS).is_file():
+                found += _read(root, skill_dir / FACTS)[0]
+            continue
+        for module in routed[0]:
+            if module.path.is_file():
+                found += _module_facts(root, module.path)[0]
     return found
+
+
+def _check_modules(
+    root: Path, skill_dir: Path, routed: list[modules.Module], add: Add
+) -> list[Fact]:
+    # A module names only its own facts, so it can move to another skill and still resolve.
+    found: list[Fact] = []
+    for module in routed:
+        if not module.path.is_file():
+            continue
+        own, problems = _module_facts(root, module.path)
+        for message in problems:
+            add(module.path.relative_to(root).as_posix(), "facts", message)
+        _check_references(root, [module.path], {fact.id for fact in own}, "its Facts section", add)
+        found += own
+    _check_references(
+        root,
+        [skill_dir / "SKILL.md"],
+        {fact.id for fact in found},
+        "any of its modules' Facts sections",
+        add,
+    )
+    return found
+
+
+def _module_facts(root: Path, path: Path) -> tuple[list[Fact], list[str]]:
+    lines = modules.sections(path.read_text(encoding="utf-8")).get("Facts", [])
+    return _parse(path.relative_to(root).as_posix(), lines)
 
 
 def verify(facts: list[Fact], fetch: Fetch | None = None) -> Iterator[tuple[Fact, str]]:
@@ -145,12 +186,16 @@ def _ls_remote(url: str) -> str:
 
 
 def _read(root: Path, path: Path) -> tuple[list[Fact], list[str]]:
-    where = path.relative_to(root).as_posix()
+    lines = enumerate(path.read_text(encoding="utf-8").splitlines(), 1)
+    return _parse(path.relative_to(root).as_posix(), list(lines))
+
+
+def _parse(where: str, lines: list[tuple[int, str]]) -> tuple[list[Fact], list[str]]:
     found: list[Fact] = []
     problems: list[str] = []
     seen: set[str] = set()
     table = None  # None outside a table; else whether the table is a fact table
-    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+    for number, line in lines:
         if not line.startswith("|"):
             table = None
             continue
@@ -212,10 +257,8 @@ def _day(text: str) -> date | None:
         return None
 
 
-def _check_references(root: Path, skill_dir: Path, ids: set[str], add: Add) -> None:
-    for path in sorted(skill_dir.rglob("*.md")):
-        if path == skill_dir / FACTS:
-            continue
+def _check_references(root: Path, paths: list[Path], ids: set[str], home: str, add: Add) -> None:
+    for path in paths:
         text = path.read_text(encoding="utf-8", errors="replace")
         for match in REFERENCE.finditer(text):
             for ident in CODE.findall(match.group(1)):
@@ -225,7 +268,7 @@ def _check_references(root: Path, skill_dir: Path, ids: set[str], add: Add) -> N
                     add(
                         path.relative_to(root).as_posix(),
                         "facts",
-                        f"line {number} names fact `{ident}`, which {FACTS} doesn't define",
+                        f"line {number} names fact `{ident}`, not defined in {home}",
                     )
 
 

@@ -1,16 +1,19 @@
 # Authoring a skill
 
-Every new or rebuilt skill passes this review, one skill per change. Record the outcome in
-`docs/decisions.md`: the skill, what it was built from, the sources it rests on, and anything
-reused under another license.
+Every new or rebuilt skill, and every new module, passes this review, one per change. Record the
+outcome in `docs/decisions.md`: the skill or module, what it was built from, the sources it
+rests on, and anything reused under another license. How skills and modules divide is in the
+roadmap's [*How skills are structured*](../ROADMAP.md#how-skills-are-structured).
 
 The owner's old claude.ai skills are a list of topics, checks and lessons. Nothing is copied from
 them.
 
-**Start from the skeleton:** `uv run skillcheck --new <name>` writes the skill's `SKILL.md`, the
-references every skill starts with, and its trigger evaluations, in the shape below. Each part
-still to be written is marked `TODO(new-skill)`, and `skillcheck` fails a skill that still holds
-one, so a half-written skill can't ship.
+**Start from the skeleton:** `uv run skillcheck --new <skill>` writes a skill's `SKILL.md` with
+an empty router, and `uv run skillcheck --new-module <module> <skill>` adds a module: its file,
+its row in the router and its trigger evaluations, in the shape below. Each part still to be
+written is marked `TODO(new-skill)`, and `skillcheck` fails a skill that still holds one, so a
+half-written skill can't ship. `uv run skillcheck --move <module> <skill>` gives a module a new
+home, and records it in [docs/module-moves.md](module-moves.md).
 
 **The standard covers configuration and process; these skills cover code.** The standard says it
 doesn't judge code, and the category skills are what does. Where the standard already rules,
@@ -23,13 +26,15 @@ and dependencies. A second version of a published rule drifts from the first.
 2. **Sources.** Every fact comes from a primary source: official documentation, a standard, or
    the project's own release notes. Each one carries its URL and the date it was checked. Put
    facts that can go stale (versions, support dates, defaults, and what other projects do) in
-   `references/facts.md`, in tables with the columns ID, Fact, Source, Quote, Checked and
-   Check by:
+   each module's Facts section, or in `references/facts.md` in a skill not yet made of modules,
+   in tables with the columns ID, Fact, Source, Quote, Checked and Check by:
    - the source is an https link, or the `git ls-remote --tags <https URL>` command that shows
      the fact;
    - the quote is the source's own words in double quotes, or a command's output in backticks.
      A row with neither is checked by hand when it falls due;
-   - other files name a fact by its ID, such as fact `node20`, rather than repeating it.
+   - other text names a fact by its ID, such as fact `node20`, rather than repeating it. A
+     module names only its own facts, so it can move, and an ID is defined once in the
+     repository.
 
    `skillcheck` checks every row's shape and every fact a skill names. `skillcheck --due` lists
    the facts due to be checked again, and `skillcheck --verify` fetches each source and looks
@@ -68,41 +73,41 @@ and dependencies. A second version of a published rule drifts from the first.
    `compatibility` field. Before it ships, the owner tries two or three requests on claude.ai,
    from prompts the session gives them, each with what a pass looks like.
 6. **Frontmatter.** Spec fields only, and the name matches the directory. The description says
-   what the skill does and when to use it, in the third person, its main use first, with
-   distinctive trigger words rather than a keyword list, in 250 characters or fewer. Claude Code
-   lists every skill's name and description within a budget, and past it the skills used least
-   keep only their names, so the name says what the skill is for. `skillcheck` enforces the cap,
-   and holds the whole listing to room for 100 skills.
-7. **Shape.** `SKILL.md` is a router under 500 lines: scope, the rules that matter most, how to
-   check, how to audit, and where to go next. Detail goes in `references/`, one level deep: a
-   reference never sends the reader on to another reference, by link or by naming its file.
-   Naming a fact by its ID is the one exception, because a fact is looked up, not read on to.
-   `skillcheck` checks both forms. Each reference stands alone:
-   - a title that says what it is, and one line on when to read it;
-   - a table of contents once it passes 300 lines;
-   - a checked date if it holds facts.
+   when to load the skill and what it does, in the third person, its main use first, with
+   distinctive trigger words rather than a keyword list, in 250 characters or fewer. It names
+   the situations its modules cover, so a request for any of them loads it. Claude Code lists
+   every skill's name and description within a budget, and past it the skills used least keep
+   only their names, so the name says what the skill is for. `skillcheck` enforces the cap, and
+   holds the whole listing to room for 20 skills: coverage grows by modules.
+7. **Shape.** A skill is a router and its modules.
+   - **`SKILL.md`,** under 500 lines: the situations it loads for, what applies to every module,
+     and a section headed `Modules` with a table, `Module | Read it for`, one row per module,
+     each starting with a link to `references/<module>.md`.
+   - **A module,** `references/<module>.md`, stands alone, and holds every part of its story
+     under these headings, so it can move to another skill whole: `Rules`, `Mistakes`, `Audit`
+     (each check, what to look for, its severity in the standard's status words, and the fix),
+     `Why` (for each rule that matters, the advice, the reason, what other projects do and why,
+     what each choice costs, and when to choose differently), `Facts` and `Sources` (each
+     source with its license). It opens with one line on when to read it, and a table of
+     contents once it passes 300 lines.
+   - **One level deep:** a module never sends the reader on to another file, by link or by
+     naming it. It names another module in words, by its name. Naming a fact by its ID is the
+     one exception, because a fact is looked up, not read on to.
+   - **One home:** a module's name is unique across the repository and never changes, and a
+     skill made of modules holds no other Markdown in `references/`. Its `ROADMAP.md` row names
+     its skill.
 
-   A category skill uses these references, keeping only the ones it needs, except `why.md`,
-   which every skill has:
-
-   | File | Holds |
-   |---|---|
-   | `why.md` | For each rule that matters: the advice, the reason, what other projects do and why, what each choice costs, when to choose differently, and what could be better. `skillcheck` fails a skill whose `SKILL.md` doesn't link it |
-   | `facts.md` | Versions, support dates and defaults, each with its source, quote, checked date and check-by date |
-   | `setup.md` | Starting a project: structure, config files, toolchain commands |
-   | `style.md` | Naming, formatting, comments and docstrings, types |
-   | `security.md` | The threats in this area, and the safe pattern for each |
-   | `testing.md` | Frameworks, patterns, commands |
-   | `audit.md` | Every check: what to look for, its severity (the standard's status words), and the fix |
-   | `mistakes.md` | Common mistakes, including those AI assistants make |
-   | `modernization.md` | Moving off older versions and idioms |
-   | `sources.md` | Every source, with its license |
+   `skillcheck` checks every part of this. `git-workflows` and `house-style` keep their older
+   layout, a `references/why.md` beside files named for their kind, until they're converted.
 8. **Every link resolves and every example works.** Each code example compiles, lints or runs
    under its language's own tools.
-9. **Trigger evaluations.** Write `tests/fixtures/skills/<name>.json` with requests that should
-   and should not activate the skill. Include near misses that belong to a neighboring skill.
+9. **Trigger evaluations.** Each module has `tests/fixtures/modules/<module>.json`, with requests
+   that should reach it and near misses that belong to another module or skill. `skillcheck`
+   requires both kinds. These requests decide the boundaries: a module spins off into a skill
+   of its own, two skills merge, or a module moves, by the rules in the roadmap.
 10. **Catalog, roadmap, README.** List the skill in exactly one plugin entry. Set its
-    `ROADMAP.md` row to `shipped`, and add it to the README's skill table. Then run
+    `ROADMAP.md` row, and each built module's row, to `shipped`, and add the skill to the
+    README's skill table. Then run
     `uv run skillcheck .` and `npx --no-install claude plugin validate --strict .`.
 11. **Record it.** Add a line under `[Unreleased]` in `CHANGELOG.md` and set `metadata.reviewed`
     to today's date.

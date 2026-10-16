@@ -12,7 +12,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from skillcheck.core import facts, frontmatter, standard
+from skillcheck.core import facts, frontmatter, modules, standard
 
 SKILLS_DIR = "skills"
 CATALOG = ".claude-plugin/marketplace.json"
@@ -35,10 +35,12 @@ MAX_DESCRIPTION_LENGTH = 1024
 # Claude Code lists every skill to the model as "- name: description", within 1% of the context
 # window at 4 characters a token: 8,000 characters for a 200,000-token model, 40,000 for a
 # million (its code, read on 2.1.301). Over that, the skills used least keep only their names.
-# The owner plans for 100 skills here beside Anthropic's and their own, so each description is
-# capped well under the spec's limit, and the whole listing is held to 100 skills at 240.
+# So coverage grows by modules, which cost nothing until read, and the skills stay few: each
+# description is capped well under the spec's limit, and the listing is held to 20 skills at 240,
+# which leaves room on a 200,000-token model for Anthropic's skills beside them (ROADMAP.md).
 DESCRIPTION_CAP = 250
-LISTING_BUDGET = 100 * (240 + 20)
+MAX_SKILLS = 20
+LISTING_BUDGET = MAX_SKILLS * (240 + 20)
 MAX_COMPATIBILITY_LENGTH = 500
 # Both the spec and Claude Code's docs: "Keep SKILL.md under 500 lines." The whole file loads
 # every time the skill activates; detail belongs in files it links to.
@@ -105,7 +107,7 @@ SCANNED_DIRS = (
 
 # `skillcheck --new` marks each part of a new skill a person still has to write. A skill that
 # still holds one isn't finished, so it fails here rather than shipping half-written.
-PLACEHOLDER = "TODO(new-skill)"
+PLACEHOLDER = modules.PLACEHOLDER
 
 # The owner's exclusion list: the claude.ai skills repository sessions don't load, as Claude Code's
 # skillOverrides, each with its reason. A listed skill this repository ships would hide it in
@@ -134,6 +136,7 @@ class Finding:
 @dataclass
 class Report:
     skills: int = 0
+    modules: int = 0
     # Every installed skill's description is listed to the model, and the listing has a budget:
     # in one session 50 skills' 26,620 characters left the last 9 with no description at all.
     description_chars: int = 0
@@ -163,7 +166,8 @@ class Report:
             "no standard" if self.standard_version is None else f"standard {self.standard_version}"
         )
         return (
-            f"skillcheck: {self.skills} skill(s), {self.description_chars} description "
+            f"skillcheck: {self.skills} skill(s), {self.modules} module(s), "
+            f"{self.description_chars} description "
             f"characters, {self.facts} fact(s), {catalog}, {roadmap}, {stamp}, "
             f"{len(self.findings)} finding(s)"
         )
@@ -174,12 +178,20 @@ def check_repository(root: Path) -> Report:
     skills = _discover_skills(root, report)
     standards = standard.find(root)
     carriers = {path.parent.parent for path in standards}
+    found_facts: list[facts.Fact] = []
     for skill_dir in skills:
-        _check_skill(skill_dir, report, needs_rationale=skill_dir not in carriers)
-        report.facts += facts.check(root, skill_dir, report.add)
+        # A skill made of modules gives its reasons in each module's Why section.
+        modular = modules.router(skill_dir) is not None
+        _check_skill(skill_dir, report, needs_rationale=not modular and skill_dir not in carriers)
+        found_facts += facts.check(root, skill_dir, report.add)
+    report.facts = len(found_facts)
+    _check_fact_ids(found_facts, report)
     _check_catalog(root, skills, report)
     names = {skill.name for skill in skills}
+    found_modules = modules.check(root, skills, names, report.add)
+    report.modules = len(found_modules)
     _check_roadmap(root, names, report)
+    _check_roadmap_modules(root, found_modules, report)
     _check_readme(root, names, report)
     _check_agent_files(root, report)
     _check_conflict_markers(root, report)
@@ -192,7 +204,7 @@ def check_repository(root: Path) -> Report:
             SKILLS_DIR,
             "listing",
             f"the skills' listing is {report.listing_chars} characters; the budget is "
-            f"{LISTING_BUDGET}, room for 100 skills at 240",
+            f"{LISTING_BUDGET}, room for {MAX_SKILLS} skills at 240; grow by modules instead",
         )
     for path in standards:
         report.standard_version = standard.check(root, path, report.add)
@@ -277,7 +289,7 @@ def _check_skill(skill_dir: Path, report: Report, needs_rationale: bool) -> None
             where,
             "listing",
             f"description is {len(description)} characters; this repository's cap is "
-            f"{DESCRIPTION_CAP}, so 100 skills fit Claude Code's listing",
+            f"{DESCRIPTION_CAP}, so {MAX_SKILLS} skills fit Claude Code's listing",
         )
 
 
@@ -604,15 +616,29 @@ def _check_catalog(root: Path, skills: list[Path], report: Report) -> None:
             report.add(where, "catalog", f"listed by {len(owners)} plugins: {', '.join(owners)}")
 
 
-def _skill_tables(text: str) -> list[list[tuple[str, dict[str, str]]]]:
-    """Every Markdown table whose first header cell is "Skill", as rows of (name, cells)."""
+def _check_fact_ids(found: list[facts.Fact], report: Report) -> None:
+    # One ID, one fact, across the repository, so a module can move between skills safely.
+    first: dict[str, facts.Fact] = {}
+    for fact in found:
+        if fact.id in first:
+            report.add(
+                fact.path,
+                "facts",
+                f"line {fact.line}: `{fact.id}` is already defined in {first[fact.id].path}",
+            )
+        else:
+            first[fact.id] = fact
+
+
+def _skill_tables(text: str, first: str = "Skill") -> list[list[tuple[str, dict[str, str]]]]:
+    """Every Markdown table whose first header cell is ``first``, as rows of (name, cells)."""
     lines = text.splitlines()
     tables = []
     index = 0
     while index < len(lines) - 1:
         header = _cells(lines[index])
         separator = lines[index + 1].strip()
-        if header and header[0] == "Skill" and "-" in separator and set(separator) <= set("|-: "):
+        if header and header[0] == first and "-" in separator and set(separator) <= set("|-: "):
             rows = []
             index += 2
             while index < len(lines) and lines[index].lstrip().startswith("|"):
@@ -666,6 +692,50 @@ def _check_roadmap(root: Path, names: set[str], report: Report) -> None:
                 )
     for name in sorted(names - shipped):
         report.add(f"{SKILLS_DIR}/{name}", "roadmap", f"not listed as shipped in {ROADMAP}")
+
+
+def _check_roadmap_modules(root: Path, found: list[modules.Module], report: Report) -> None:
+    # Each built module has a shipped row naming its home skill, and each shipped row has its
+    # module, so the roadmap can't drift from the routers. `skillcheck --move` keeps the row.
+    path = root / ROADMAP
+    if not path.is_file():
+        return
+    rows = [
+        row for table in _skill_tables(path.read_text(encoding="utf-8"), "Module") for row in table
+    ]
+    for name, count in sorted(Counter(name for name, _ in rows).items()):
+        if count > 1:
+            report.add(ROADMAP, "roadmap", f"module `{name}` is listed {count} times")
+    homes = {name: _ticked(cells.get("Skill", "")) for name, cells in rows}
+    listed = dict(rows)
+    built = {module.name: module for module in found}
+    for name, cells in rows:
+        status = cells.get("Status", "")
+        home = homes[name]
+        if status not in ROADMAP_STATUSES:
+            report.add(
+                ROADMAP,
+                "roadmap",
+                f"module `{name}` has status {status!r}; use one of {', '.join(ROADMAP_STATUSES)}",
+            )
+        elif status == "shipped" and (name not in built or built[name].skill != home):
+            report.add(
+                ROADMAP,
+                "roadmap",
+                f"module `{name}` is marked shipped in `{home}`, which doesn't route it",
+            )
+    for name, module in sorted(built.items()):
+        where = f"{SKILLS_DIR}/{module.skill}/SKILL.md"
+        cells = listed.get(name)
+        if cells is None or cells.get("Status") != "shipped":
+            report.add(where, "roadmap", f"module `{name}` is not listed as shipped in {ROADMAP}")
+        elif homes[name] != module.skill:
+            report.add(where, "roadmap", f"{ROADMAP} gives module `{name}` another skill")
+
+
+def _ticked(cell: str) -> str:
+    match = TICKED.search(cell)
+    return match.group(1) if match else ""
 
 
 def _check_readme(root: Path, names: set[str], report: Report) -> None:

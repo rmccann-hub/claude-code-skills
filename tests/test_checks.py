@@ -24,7 +24,8 @@ def test_empty_repository_says_nothing_was_checked(repo):
     report = check_repository(repo.root)
     assert report.findings == []
     assert report.summary() == (
-        "skillcheck: 0 skill(s), 0 description characters, 0 fact(s), no catalog, no roadmap, "
+        "skillcheck: 0 skill(s), 0 module(s), 0 description characters, 0 fact(s), no catalog, "
+        "no roadmap, "
         "no standard, 0 finding(s)"
     )
 
@@ -35,7 +36,8 @@ def test_clean_repository_passes(repo):
     report = check_repository(repo.root)
     assert report.findings == []
     assert report.summary() == (
-        f"skillcheck: 1 skill(s), {len(DEFAULT_DESCRIPTION)} description characters, 0 fact(s), "
+        "skillcheck: 1 skill(s), 0 module(s), "
+        f"{len(DEFAULT_DESCRIPTION)} description characters, 0 fact(s), "
         "1 catalog plugin(s), no roadmap, no standard, 0 finding(s)"
     )
 
@@ -57,8 +59,8 @@ def test_a_description_over_the_cap_fails_the_listing_rule_alone(repo, length):
 
 
 # Each skill-NNN entry is "- skill-NNN: " and a newline around its description: 264 characters
-# at the cap, so 98 fit the budget and 99 don't.
-@pytest.mark.parametrize(("count", "over"), [(98, False), (99, True)])
+# at the cap, so 19 fit the budget and 20 don't.
+@pytest.mark.parametrize(("count", "over"), [(19, False), (20, True)])
 def test_the_whole_listing_is_held_to_its_budget(repo, count, over):
     for number in range(count):
         name = f"skill-{number:03}"
@@ -70,7 +72,7 @@ def test_the_whole_listing_is_held_to_its_budget(repo, count, over):
         assert [(f.path, f.rule) for f in report.findings] == [("skills", "listing")]
         assert report.findings[0].message == (
             f"the skills' listing is {count * 264} characters; the budget is "
-            f"{LISTING_BUDGET}, room for 100 skills at 240"
+            f"{LISTING_BUDGET}, room for 20 skills at 240; grow by modules instead"
         )
     else:
         assert report.findings == []
