@@ -6,6 +6,8 @@ import pytest
 DEFAULT_DESCRIPTION = "A fixture skill for tests. Use when testing."
 DEFAULT_FRONTMATTER = "name: {name}\ndescription: " + DEFAULT_DESCRIPTION + "\n"
 RATIONALE_LINK = "\nWhy: [the reasons](references/why.md).\n"
+# Every skill says what to do when something in it is wrong (core/reporting.py).
+REPORTING = "\n## When something here is wrong\n\nSay so.\n"
 
 # A module that passes every rule: each section, and a fact named by its ID.
 MODULE_TEXT = """\
@@ -66,7 +68,8 @@ class RepoBuilder:
         if frontmatter is None:
             frontmatter = DEFAULT_FRONTMATTER.format(name=directory)
         skill_dir = self.skill_file(
-            directory, f"---\n{frontmatter}---\n\n{body}{RATIONALE_LINK if rationale else ''}"
+            directory,
+            f"---\n{frontmatter}---\n\n{body}{RATIONALE_LINK if rationale else ''}{REPORTING}",
         )
         if rationale:
             (skill_dir / "references").mkdir()
@@ -87,7 +90,7 @@ class RepoBuilder:
         skill_dir = self.skill_file(
             directory,
             f"---\n{DEFAULT_FRONTMATTER.format(name=directory)}---\n\n# Title\n\n"
-            f"## Modules\n\n| Module | Read it for |\n|---|---|\n{rows}",
+            f"## Modules\n\n| Module | Read it for |\n|---|---|\n{rows}{REPORTING}",
         )
         (skill_dir / "references").mkdir()
         for name in module_names:

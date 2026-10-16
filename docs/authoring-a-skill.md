@@ -94,7 +94,10 @@ and dependencies. A second version of a published rule drifts from the first.
 7. **Shape.** A skill is a router and its modules.
    - **`SKILL.md`,** under 500 lines: the situations it loads for, what applies to every module,
      and a section headed `Modules` with a table, `Module | Read it for`, one row per module,
-     each starting with a link to `references/<module>.md`.
+     each starting with a link to `references/<module>.md`. It ends with the section every
+     skill shares, `When something here is wrong`, which tells the model to say in a sentence
+     whether a problem a person raises is the skill's fault, and to draft a full report when it
+     is. The text lives once, in `src/skillcheck/core/reporting.py`; `--new` writes it.
    - **A module,** `references/<module>.md`, stands alone, and holds every part of its story
      under these headings, so it can move to another skill whole: `Rules`, `Mistakes`, `Audit`
      (each check, what to look for, its severity in the standard's status words, and the fix),

@@ -6,6 +6,7 @@ import pytest
 
 from skillcheck import move
 from skillcheck.cli import main
+from skillcheck.core import modules
 from skillcheck.core.checks import check_repository
 
 DAY = date(2026, 10, 16)
@@ -117,11 +118,7 @@ def test_a_refused_move_changes_nothing(two, name, target, prepare, message):
     elif prepare == "missing":
         (root / "skills/one/references/first.md").unlink()
     elif prepare == "twice":
-        (root / "skills/two/SKILL.md").write_text(
-            (root / "skills/two/SKILL.md").read_text(encoding="utf-8")
-            + "| [`first`](references/first.md) | again |\n",
-            encoding="utf-8",
-        )
+        modules.add_row(root / "skills/two/SKILL.md", "| [`first`](references/first.md) | again |")
     (root / "skills" / "stray").mkdir()
     before = snapshot(root)
     with pytest.raises(move.MoveError) as error:

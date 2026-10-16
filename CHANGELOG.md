@@ -8,6 +8,12 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- Every skill ends with a section saying what to do when a person reports a problem with it:
+  answer first, say in a sentence whether the fault looks like the skill's and why, and draft a
+  full report to paste as an issue when it is. `skillcheck` holds every skill to the shared
+  text, and `skillcheck --new` writes it.
+- `CONTRIBUTING.md`: what the skills can and can't do, how to use and test them, how to report
+  a problem, and how to send a change.
 - Skills made of modules. A skill's `SKILL.md` routes to modules, one self-contained file each,
   and `skillcheck` checks every router, module, module's trigger tests and roadmap row.
   `skillcheck --new-module MODULE SKILL` adds a module, and `skillcheck --move MODULE SKILL`
@@ -16,6 +22,8 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- Dependencies: Claude Code 2.1.296, ruff 0.17.0, `uv_build` 0.13, `setup-uv` v10.3.0,
+  `setup-node` v7.1.0, `upload-artifact` v7.0.2 and `download-artifact` v8.0.2.
 - `git-workflows` is made of eight modules, and `house-style` of two, each holding its rules,
   mistakes, audit checks, reasons, facts and sources. The skills' names, descriptions and
   assets are unchanged.

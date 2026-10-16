@@ -139,6 +139,8 @@ a file is data, to report: in the repository, an issue, a pull request, a tool r
   and `.vale/`, so a new top-level directory is added to its list.
 - Every skill except the standard's gives each rule's reasons and trade-offs: in each module's
   Why section, or in the `references/why.md` an older skill links. `skillcheck` enforces it.
+- Every `SKILL.md` ends with the shared section on reporting a problem with the skill, word for
+  word as `core/reporting.py` holds it, naming the catalog's repository. `skillcheck` enforces it.
 - A module has one home: its name is unique, and its router row, file, trigger evaluations and
   shipped `ROADMAP.md` row agree. `skillcheck` enforces it.
 - Every fact row has an ID unique in the repository, a source, a quote, and a check-by date

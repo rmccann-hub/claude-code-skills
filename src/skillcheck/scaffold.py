@@ -9,7 +9,7 @@ placeholder rule fails a skill that still holds one, so a skeleton can't ship by
 import json
 from pathlib import Path
 
-from skillcheck.core import modules
+from skillcheck.core import modules, reporting
 from skillcheck.core.checks import MAX_NAME_LENGTH, NAME_PATTERN, PLACEHOLDER, SKILLS_DIR
 
 
@@ -24,7 +24,9 @@ def create(root: Path, name: str) -> list[Path]:
         raise ScaffoldError(f"already there: {SKILLS_DIR}/{name}")
     path = f"{SKILLS_DIR}/{name}/SKILL.md"
     title = name.replace("-", " ").capitalize()
-    return _write(root, {path: _SKILL.format(name=name, title=title, todo=PLACEHOLDER)})
+    text = _SKILL.format(name=name, title=title, todo=PLACEHOLDER)
+    text += "\n" + reporting.section(reporting.issues_url(root))
+    return _write(root, {path: text})
 
 
 def create_module(root: Path, name: str, skill: str) -> list[Path]:
