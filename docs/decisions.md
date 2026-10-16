@@ -2,6 +2,36 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — The private companion repository, set up, and the empty one deleted
+
+- **Done, by the owner:** they deleted the empty organization repository, which item 29 of the
+  2026-10-13 answers had said to archive; this supersedes that item. They created the private
+  companion repository that item 5 of the 2026-10-15 answers asked for, set its settings by the
+  steps given, and attached it to the session.
+- **Set up against the standard, v0.47.0:** the run stopped at both waits, and the owner
+  approved all ten items. Its record holds the answers. This entry names only what bears on
+  this repository:
+  - **Its tier is T1:** work-owned, never public, guidance and templates that change no system
+    themselves, and used by the owner alone for now. Sharing it with colleagues through the
+    organization's library raises it to T2, and the standard runs again first.
+  - **It reuses this repository's tools rather than copying them.** Its CI runs `skillcheck`
+    from this repository at release 0.1.16's commit, and the house style from that release's
+    `HouseStyle.zip`. Each release here can be taken up there by raising one pinned commit.
+  - **Its skills reach sessions** by a second personal marketplace on the owner's claude.ai
+    account, and by attaching it to a cloud session: the cloud hook here downloads releases
+    without credentials, which a private repository refuses.
+  - **Its plugin and skill names** start with the company's name, so none clashes with a
+    skill here.
+- **Found:** on GitHub Free, a private repository's ruleset request is refused with "Upgrade to
+  GitHub Pro or make this repository public", so its checks warn rather than block, as the
+  standard's platform table says.
+- **Said, by the owner:** this repository's skills are meant for colleagues too, in time, as
+  the companion's are. It is public already, and rated T3 on the imminent state, so the tier
+  stands; what changes is that a colleague's claude.ai account, not only the owner's, may
+  install its plugins.
+- **Changed:** the exclusion list's reason for `canvas-design` now says it is kept on claude.ai,
+  as the previous entry records.
+
 ## 2026-10-16 — The dependency map checked on every pull request, `canvas-design` kept, and chat syncs
 
 - **Chosen, by the owner:** CI runs `skillcheck --bom-check` on every pull request. This
