@@ -11,6 +11,7 @@ from skillcheck.core.checks import (
     MAX_CONTEXT_LINES,
     MAX_DESCRIPTION_LENGTH,
     MAX_NAME_LENGTH,
+    MAX_SKILL_CHARS,
     MAX_SKILL_LINES,
     check_repository,
 )
@@ -293,6 +294,27 @@ def skill_of_lines(repo, total: int) -> None:
 def test_skill_md_under_the_line_limit_passes(repo):
     skill_of_lines(repo, MAX_SKILL_LINES - 1)
     assert check_repository(repo.root).findings == []
+
+
+@pytest.mark.parametrize("over", [False, True])
+def test_skill_md_is_held_to_its_character_budget(repo, over):
+    head = "---\nname: sized-skill\ndescription: d\n---\n[why](references/why.md)\n"
+    filler = "x" * (MAX_SKILL_CHARS - len(head) - 1 + over) + "\n"
+    skill_dir = repo.skill_file("sized-skill", head + filler)
+    (skill_dir / "references").mkdir()
+    (skill_dir / "references" / "why.md").write_text("# Why\n", encoding="utf-8")
+    repo.catalog(repo.plugin("example", "./skills/sized-skill"))
+    found = [(f.rule, f.message) for f in check_repository(repo.root).findings]
+    if over:
+        assert found == [
+            (
+                "size",
+                f"SKILL.md is {MAX_SKILL_CHARS + 1} characters, over about 5,000 tokens; keep it "
+                f"within {MAX_SKILL_CHARS} and move detail into modules",
+            )
+        ]
+    else:
+        assert found == []
 
 
 def test_skill_md_at_the_line_limit_fires(repo):

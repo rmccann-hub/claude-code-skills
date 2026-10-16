@@ -211,8 +211,9 @@ palettes in `visual-design`, not in `excel-master`.
      `house-style` converted to modules;
    - a listing budget for about 20 skills, in place of room for 100;
    - an example checker in CI that runs each language's own tool on every code block;
-   - one trigger-test runner, which checks that a request reached the right skill and that the
-     skill read the right module;
+   - one trigger-test runner, which checks in Claude Code that a request reached the right skill
+     and that the skill read the right module; on claude.ai the owner tries the same requests
+     by hand, from a list the session gives them;
    - `skillcheck --move` and its record of moves, renames and removals;
    - `skill-builder`, from `skill-creator`'s method under its license, and the stress tester's
      two good checks: content safety, and compiling every code block.

@@ -70,8 +70,20 @@ and dependencies. A second version of a published rule drifts from the first.
    extra effort (the owner, 2026-10-15). That means spec fields only, which `skillcheck`
    enforces, a description that stands on its own, and steps that say what to do where no
    shell is available. Where a skill can't serve claude.ai at a fair cost, say so in its
-   `compatibility` field. Before it ships, the owner tries two or three requests on claude.ai,
-   from prompts the session gives them, each with what a pass looks like.
+   `compatibility` field. Skills load the same way on both: each description is always in the
+   system prompt, and a skill's files are read with bash when it's triggered. For claude.ai:
+   - say "read `references/<module>.md`", never "use the Read tool": Claude Code's own tools
+     don't exist there;
+   - the core guidance needs no network, which claude.ai may not allow, depending on the
+     user's and the admin's settings;
+   - custom skills there need code execution turned on, on Pro, Max, Team and Enterprise.
+
+   Before it ships, the owner tries requests on claude.ai, each in a new chat, from a list the
+   session gives them: for each changed module, a request worded as a person would ask, the
+   skill and module it should reach, and what a pass looks like, plus one near miss it
+   shouldn't take. The list comes from the module's trigger tests, and the results are
+   recorded in `docs/decisions.md`. claude.ai can't be driven by a program, and the owner chose
+   these tries over an API run that would cost money (2026-10-16).
 6. **Frontmatter.** Spec fields only, and the name matches the directory. The description says
    when to load the skill and what it does, in the third person, its main use first, with
    distinctive trigger words rather than a keyword list, in 250 characters or fewer. It names

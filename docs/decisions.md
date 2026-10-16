@@ -2,6 +2,28 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — Skills made of modules work on claude.ai, and are tried there by hand
+
+- **Asked, by the owner:** "This does still need work with claude.ai as well."
+- **Read, at Anthropic's Agent Skills overview
+  (https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview, 2026-10-16):**
+  - a skill's name and description are always loaded: "Claude loads this metadata at startup
+    and includes it in the system prompt";
+  - when triggered, "Claude reads SKILL.md from the filesystem using bash", and other files
+    when its instructions point to them, so a module costs nothing until read, on claude.ai as
+    in Claude Code;
+  - the triggered file's cost is given as "Under 5k tokens";
+  - custom skills on claude.ai need "code execution enabled", and there skills "may have full,
+    partial, or no network access" by settings;
+  - the API takes "up to 20 Skills for each request" (the skills guide, read the same day).
+- **Changed:** `skillcheck` holds each `SKILL.md` to 20,000 characters, about 5,000 tokens.
+  The authoring guide's step 5 adds the claude.ai rules: no Claude Code tool names, core
+  guidance without the network, and the owner's tries listing for each module the skill and
+  module a request should reach, and a near miss.
+- **Chosen, by the owner:** claude.ai is tested as the six tries were, by the owner asking
+  questions in new chats from a list the session gives, not by an API run, which needs a key
+  and costs money. In their words: "that is fine, that is what i want for claude.ai."
+
 ## 2026-10-16 — The tools for skills made of modules
 
 - **Built, as the roadmap's shared tools planned, with the owner's permission:**
