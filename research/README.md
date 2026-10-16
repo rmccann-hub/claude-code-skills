@@ -17,8 +17,9 @@ instruction (see `AGENTS.md`).
    each claim **verified**, **contradicted** (and by what) or **unverifiable**.
 3. File the report as `runs/<date>-<run>.md`, with the verification table above the original
    text. Leave the original text unedited.
-4. Update the `references/facts.md` of each affected skill. Every row carries the value, the
-   source URL, the exact quote, the date it was checked and a check-by date.
+4. Update the Facts section of each affected module, or the `references/facts.md` of a skill
+   not yet made of modules. Every row carries the value, the source URL, the exact quote, the
+   date it was checked and a check-by date.
 5. Quote or adapt a source only as its license allows. The report names each source's license;
    check it before relying on it.
 6. Tell the owner what changed, what was contradicted, and what couldn't be verified.

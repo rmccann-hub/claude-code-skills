@@ -71,8 +71,8 @@ def test_each_rule_is_an_error_with_a_message():
         assert "%s" in spec["message"]
 
 
-def test_the_skill_names_each_rule_the_style_has():
-    text = (SKILL / "SKILL.md").read_text(encoding="utf-8")
+def test_the_check_module_names_each_rule_the_style_has():
+    text = (SKILL / "references" / "prose-check.md").read_text(encoding="utf-8")
     assert sorted(set(re.findall(r"`HouseStyle\.([A-Z]\w*)`", text))) == RULES
 
 
@@ -97,7 +97,7 @@ def test_this_repository_checks_itself_with_the_style_from_its_source():
 
 
 def test_the_setup_reference_names_the_style_the_release_publishes():
-    text = (SKILL / "references" / "setup.md").read_text(encoding="utf-8")
+    text = (SKILL / "references" / "prose-check.md").read_text(encoding="utf-8")
     [url] = re.findall(r"^Packages = (\S+)$", text, re.MULTILINE)
     repository = release._repository(ROOT)
     assert url == f"https://github.com/{repository}/releases/latest/download/HouseStyle.zip"
@@ -145,8 +145,8 @@ def test_the_canary_breaks_each_rule():
 def test_the_workflow_installs_the_vale_version_the_facts_name():
     env = yaml.safe_load(WORKFLOW.read_text(encoding="utf-8"))["jobs"]["prose"]["env"]
     version = env["VALE_VERSION"]
-    assert f"`refs/tags/{version}`" in (SKILL / "references" / "facts.md").read_text("utf-8")
-    assert f"/cmd/vale@{version}\n" in (SKILL / "references" / "setup.md").read_text("utf-8")
+    assert f"`refs/tags/{version}`" in (SKILL / "references" / "prose-check.md").read_text("utf-8")
+    assert f"/cmd/vale@{version}\n" in (SKILL / "references" / "prose-check.md").read_text("utf-8")
 
 
 def test_this_repository_runs_the_shipped_prose_check():

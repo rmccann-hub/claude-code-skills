@@ -1,0 +1,36 @@
+[
+  {
+    "query": "Rewrite this README so it reads plainly and drops the marketing fluff.",
+    "should_trigger": true
+  },
+  {
+    "query": "Should our docs say licence or license? We mix both.",
+    "should_trigger": true
+  },
+  {
+    "query": "Are headings in sentence case or title case here?",
+    "should_trigger": true
+  },
+  {
+    "query": "What sections should every README have, and in what order?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it OK to say 'simply run the installer' in our getting-started guide?",
+    "should_trigger": true
+  },
+  {
+    "query": "Tidy the wording of CONTRIBUTING.md: shorter sentences, no hedging.",
+    "should_trigger": true
+  },
+  {
+    "query": "Add a Vale check for our Markdown to CI.",
+    "should_trigger": false,
+    "note": "prose-check"
+  },
+  {
+    "query": "Vale fails on a heading with our product name in it. How do I make it accept the name?",
+    "should_trigger": false,
+    "note": "prose-check"
+  }
+]

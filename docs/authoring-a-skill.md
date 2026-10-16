@@ -109,8 +109,8 @@ and dependencies. A second version of a published rule drifts from the first.
      skill made of modules holds no other Markdown in `references/`. Its `ROADMAP.md` row names
      its skill.
 
-   `skillcheck` checks every part of this. `git-workflows` and `house-style` keep their older
-   layout, a `references/why.md` beside files named for their kind, until they're converted.
+   `skillcheck` checks every part of this. Every skill is made of modules except the
+   standard's, which keeps the standard in one versioned file.
 8. **Every link resolves and every example works.** Each code example compiles, lints or runs
    under its language's own tools.
 9. **Trigger evaluations.** Each module has `tests/fixtures/modules/<module>.json`, with requests

@@ -17,17 +17,17 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.16 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.47.0 |
-| `engineering` | 0.1.16 | Apache-2.0 | `git-workflows` | reviewed 2026-10-05 |
-| `engineering` | 0.1.16 | Apache-2.0 | `house-style` | reviewed 2026-10-05 |
+| `engineering` | 0.1.16 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
+| `engineering` | 0.1.16 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 71 |
+| Markdown | 66 |
 | Python | 37 |
 | YAML | 22 |
-| JSON | 10 |
+| JSON | 20 |
 | Shell | 3 |
 | TOML | 2 |
 
@@ -110,12 +110,13 @@ package.json
 
 ## Sources the skills' facts rely on
 
-Each skill's dated facts, in its `references/facts.md`, name where each was read. The
-weekly freshness run looks for every quote at its source again.
+Each skill's dated facts, in its modules' Facts sections or its `references/facts.md`,
+name where each was read. The weekly freshness run looks for every quote at its source
+again.
 
 | Skill | Source | Facts |
 |---|---|---|
-| `project-bootstrap-and-audit` | no `references/facts.md` | — |
+| `project-bootstrap-and-audit` | no dated facts | — |
 | `git-workflows` | docs.github.com | 41 |
 | `git-workflows` | git-scm.com | 18 |
 | `git-workflows` | raw.githubusercontent.com | 9 |

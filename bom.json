@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:b2713440-1579-59ac-b513-54f4807d53d1",
+  "serialNumber": "urn:uuid:4df8c444-84e1-54df-8605-c1d0c98db717",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 71 file(s)"
+          "value": "Markdown: 66 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -45,7 +45,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 10 file(s)"
+          "value": "JSON: 20 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -455,7 +455,7 @@
           "type": "data",
           "bom-ref": "skill:git-workflows",
           "name": "git-workflows",
-          "description": "reviewed 2026-10-05",
+          "description": "reviewed 2026-10-16",
           "licenses": [
             {
               "expression": "Apache-2.0"
@@ -576,7 +576,7 @@
           "type": "data",
           "bom-ref": "skill:house-style",
           "name": "house-style",
-          "description": "reviewed 2026-10-05",
+          "description": "reviewed 2026-10-16",
           "licenses": [
             {
               "expression": "Apache-2.0"

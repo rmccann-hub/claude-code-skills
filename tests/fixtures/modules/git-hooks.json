@@ -1,0 +1,28 @@
+[
+  {
+    "query": "Add a pre-push hook that stops anyone pushing straight to main.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our commit-msg hook never runs for anyone who clones the repo. Why?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up pre-commit so formatting is checked before each commit.",
+    "should_trigger": true
+  },
+  {
+    "query": "The hook works on Linux but Git won't run it for my teammate on Windows.",
+    "should_trigger": true
+  },
+  {
+    "query": "Check commit subjects in CI on every pull request.",
+    "should_trigger": false,
+    "note": "commits-and-pull-requests"
+  },
+  {
+    "query": "A test keeps failing randomly. Can we just skip it so CI goes green?",
+    "should_trigger": false,
+    "note": "ci-workflows"
+  }
+]

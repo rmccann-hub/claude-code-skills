@@ -1,0 +1,37 @@
+[
+  {
+    "query": "Our GitHub Actions job hung for six hours. How do I stop that happening again?",
+    "should_trigger": true
+  },
+  {
+    "query": "The required check on my pull request has been pending forever and I can't merge.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our CI takes 15 minutes before a PR can merge and another 25 on main after it merges. I don't want to weaken the tests, but is all of that needed?",
+    "should_trigger": true
+  },
+  {
+    "query": "A test keeps failing randomly. Can we just skip it so CI goes green?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I prove the new CI check actually catches the problem it's for?",
+    "should_trigger": true
+  },
+  {
+    "query": "Pin the actions in .github/workflows/ci.yml to commit SHAs.",
+    "should_trigger": false,
+    "note": "actions-security"
+  },
+  {
+    "query": "Our release workflow creates the tag but the publish workflow never runs.",
+    "should_trigger": false,
+    "note": "releases-and-versions"
+  },
+  {
+    "query": "Write pytest tests for the parser module.",
+    "should_trigger": false,
+    "note": "a testing skill"
+  }
+]

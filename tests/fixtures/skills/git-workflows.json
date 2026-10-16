@@ -96,22 +96,22 @@
   {
     "query": "Our CI takes 15 minutes before a PR can merge and another 25 on main after it merges. I don't want to weaken the tests, but is all of that needed?",
     "should_trigger": true,
-    "note": "CI duration: why.md, section 10"
+    "note": "CI duration: ci-workflows"
   },
   {
     "query": "I'm halfway through a rebase with conflicts and git checkout --ours is giving me the wrong side. What's going on?",
     "should_trigger": true,
-    "note": "rebase conflicts: setup.md"
+    "note": "rebase conflicts: branches-and-merging"
   },
   {
     "query": "I ran git reset --hard and my last two commits are gone. Can I get them back?",
     "should_trigger": true,
-    "note": "recovery through the reflog: setup.md"
+    "note": "recovery through the reflog: branches-and-merging"
   },
   {
     "query": "Why do some projects squash-merge and others insist on merge commits? Which is better for us?",
     "should_trigger": true,
-    "note": "the rationale layer: why.md, section 1"
+    "note": "the rationale layer: branches-and-merging"
   },
   {
     "query": "Set up blue-green deployments to our Kubernetes cluster, with a manual approval before production",

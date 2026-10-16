@@ -2,6 +2,37 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — `git-workflows` and `house-style` made of modules, and facts named across the repository
+
+- **Asked, by the owner:** "do the rest if you can", on the weekend's work, which included
+  converting both skills.
+- **Changed, superseding part of "The tools for skills made of modules" below:** a module may
+  name any fact the repository defines, not only its own. An ID is still unique across the
+  repository, so a fact's name never means two things, and a module that moves keeps every fact
+  it names. `skillcheck` reports a name no fact table defines.
+- **Why:** the git-workflows facts were each named by several of its topics. Under the old rule
+  each module would have needed its own copy of a shared fact, which the unique-ID rule forbids,
+  or the topics would have had to stay together.
+- **`git-workflows`, eight modules:** `commits-and-pull-requests`, `branches-and-merging`,
+  `ci-workflows`, `actions-security`, `git-hooks`, `releases-and-versions`, `leaked-data` and
+  `gitignore`. Its nine rules stay in `SKILL.md`, each naming the module that holds it, with the
+  commands to check before acting and the audit's status words. Each of the 103 facts and 30
+  audit checks went to exactly one module, by script, checked for none lost and none doubled.
+  `leaked-data`, `git-hooks` and `gitignore` had no Why or Audit of their own, so they gained
+  them, from reasons and checks the old files already stated.
+- **`house-style`, two modules:** `writing-style`, with how each rule applies, its reasons and
+  the style guides' facts, and `prose-check`, with the Vale check, its reasons and Vale's facts.
+  The thirteen rules stay in `SKILL.md`, where the asset tests read rule 3.
+- **Kept as they were:** both skills' names, descriptions, assets and asset tests. Each skill's
+  trigger set in `tests/fixtures/skills/` stays, because the description still decides whether
+  the skill loads. Each module has its own set in `tests/fixtures/modules/`, for which module a
+  loaded skill reads.
+- **`.vale.ini` skips double-quoted text in every module,** where it skipped it in `facts.md` and
+  `sources.md` before, because each module now holds its own facts and sources.
+- **Considered for the new trigger sets:** the skill-level sets, which answer a different
+  question, and one file per skill, which a move would have to split. One file per module, as
+  the module checks already require, moves with its module.
+
 ## 2026-10-16 — Skills made of modules work on claude.ai, and are tried there by hand
 
 - **Asked, by the owner:** "This does still need work with claude.ai as well."

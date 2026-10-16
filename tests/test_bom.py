@@ -303,7 +303,7 @@ def test_the_page_draws_the_tree_and_says_what_it_could_not_find(tmp_path):
     assert "└── tool 1.0.0 (dev)\n    └── tool-linux 1.0.0 (dev; optional)\n" in page
     assert "| `actions/setup-go` | v5 | not pinned to a commit |" in page
     assert "documented at https://docs.github.com/en/code-security/dependabot" in page
-    assert "| `beta-skill` | no `references/facts.md` | — |" in page
+    assert "| `beta-skill` | no dated facts | — |" in page
 
 
 def test_a_repository_with_no_lockfiles_or_workflows_still_gets_a_map(tmp_path):
