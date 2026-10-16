@@ -2,6 +2,22 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — `human-factors`: where it applies, and research run R23
+
+- **Said, by the owner,** answering the previous entry's three questions:
+  - **Example:** a familiar, slower tool kept over a faster one.
+  - **Where:** everywhere.
+  - **Which agents:** only some, perhaps only a few. Most agents should be unbiased when they
+    gather information, unless what they gather isn't objective fact.
+- **Changed:**
+  - `ROADMAP.md`: `human-factors` is loaded only by the few agents that design or change what
+    people do, and never bends a factual finding. Its description will say so when it's built,
+    so it doesn't load for research or fact-finding.
+  - `research/prompts/R23-human-factors.md`, research run R23, priority 2, starts from the
+    owner's example, asks the literature for the rest rather than a list of guesses, and tests
+    the limit: language models' measured sycophancy, biases carried into gathered information,
+    and where a person's preferences rightly count. Fatigue and shift design stay in R19.
+
 ## 2026-10-16 — `human-factors`: the skill `human-factor-audit` was meant to be
 
 - **Said, by the owner:** `human-factor-audit` was meant to be much more than an audit of
