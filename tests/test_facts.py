@@ -136,12 +136,12 @@ def test_a_named_fact_that_is_not_defined_fires(repo):
         (
             "skills/facts-skill/SKILL.md",
             "facts",
-            "line 6 names fact `missing-one`, which references/facts.md doesn't define",
+            "line 6 names fact `missing-one`, not defined in references/facts.md",
         ),
         (
             "skills/facts-skill/references/other.md",
             "facts",
-            "line 1 names fact `gone`, which references/facts.md doesn't define",
+            "line 1 names fact `gone`, not defined in references/facts.md",
         ),
     ]
 
@@ -153,7 +153,7 @@ def test_a_named_fact_in_a_skill_with_no_facts_file_fires(repo):
         (
             "skills/plain-skill/SKILL.md",
             "facts",
-            "line 6 names fact `node20`, which references/facts.md doesn't define",
+            "line 6 names fact `node20`, not defined in references/facts.md",
         )
     ]
 

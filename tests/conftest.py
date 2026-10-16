@@ -7,6 +7,47 @@ DEFAULT_DESCRIPTION = "A fixture skill for tests. Use when testing."
 DEFAULT_FRONTMATTER = "name: {name}\ndescription: " + DEFAULT_DESCRIPTION + "\n"
 RATIONALE_LINK = "\nWhy: [the reasons](references/why.md).\n"
 
+# A module that passes every rule: each section, and a fact named by its ID.
+MODULE_TEXT = """\
+# {title}
+
+Read this for {name} requests.
+
+## Rules
+
+Follow the rule (fact `{name}-fact`).
+
+## Mistakes
+
+- **A mistake.** Do the other thing.
+
+## Audit
+
+| Check | What to look for | Severity | Fix |
+|---|---|---|---|
+| One | Something | GAP | Fix it |
+
+## Why
+
+The reason.
+
+## Facts
+
+| ID | Fact | Source | Quote | Checked | Check by |
+|---|---|---|---|---|---|
+| `{name}-fact` | A fact | [p](https://example.com/{name}) | "a quote" | 2026-10-01 | 2027-04-01 |
+
+## Sources
+
+| Source | Used for | License |
+|---|---|---|
+| A page | The fact | CC0 |
+"""
+TRIGGERS = [
+    {"query": "a request it answers", "should_trigger": True},
+    {"query": "a near miss", "should_trigger": False},
+]
+
 
 class RepoBuilder:
     """Builds a throwaway repository under tmp_path. Every skill here is synthetic."""
@@ -37,6 +78,40 @@ class RepoBuilder:
         skill_dir.mkdir(parents=True)
         (skill_dir / "SKILL.md").write_text(text, encoding="utf-8")
         return skill_dir
+
+    def modular_skill(self, directory: str, *module_names: str) -> Path:
+        """A skill made of modules, each passing every rule, with its trigger tests."""
+        rows = "".join(
+            f"| [`{name}`](references/{name}.md) | {name} requests |\n" for name in module_names
+        )
+        skill_dir = self.skill_file(
+            directory,
+            f"---\n{DEFAULT_FRONTMATTER.format(name=directory)}---\n\n# Title\n\n"
+            f"## Modules\n\n| Module | Read it for |\n|---|---|\n{rows}",
+        )
+        (skill_dir / "references").mkdir()
+        for name in module_names:
+            self.module(skill_dir, name)
+        return skill_dir
+
+    def module(self, skill_dir: Path, name: str, text: str | None = None) -> Path:
+        path = skill_dir / "references" / f"{name}.md"
+        title = name.replace("-", " ").capitalize()
+        path.write_text(text or MODULE_TEXT.format(name=name, title=title), encoding="utf-8")
+        fixtures = self.root / "tests" / "fixtures" / "modules"
+        fixtures.mkdir(parents=True, exist_ok=True)
+        (fixtures / f"{name}.json").write_text(json.dumps(TRIGGERS), encoding="utf-8")
+        return path
+
+    def roadmap(self, skills: dict[str, str], modules: dict[str, tuple[str, str]]) -> None:
+        """ROADMAP.md with a skills table ({name: status}) and a modules table."""
+        lines = ["# Roadmap", "", "| Skill | Status |", "|---|---|"]
+        lines += [f"| `{name}` | {status} |" for name, status in skills.items()]
+        lines += ["", "| Module | Skill | Status |", "|---|---|---|"]
+        lines += [
+            f"| `{name}` | `{skill}` | {status} |" for name, (skill, status) in modules.items()
+        ]
+        (self.root / "ROADMAP.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
     def plugin(self, name: str, *paths: str) -> dict:
         return {"name": name, "source": "./", "strict": False, "skills": list(paths)}

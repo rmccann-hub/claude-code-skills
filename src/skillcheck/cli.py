@@ -1,14 +1,15 @@
 """Command-line entry point: ``skillcheck [ROOT] [MODE]``.
 
-The modes are ``--due [DATE]``, ``--verify``, ``--bom``, ``--bom-check``, ``--new NAME`` and
-``--release-assets VERSION DIR``, one at a time. With none, it runs every rule on the repository.
+The modes are ``--due [DATE]``, ``--verify``, ``--bom``, ``--bom-check``, ``--new SKILL``,
+``--new-module MODULE SKILL``, ``--move MODULE SKILL`` and ``--release-assets VERSION DIR``, one
+at a time. With none, it runs every rule on the repository.
 """
 
 import argparse
 from datetime import date
 from pathlib import Path
 
-from skillcheck import bom, release, scaffold
+from skillcheck import bom, move, release, scaffold
 from skillcheck.core import facts
 from skillcheck.core.checks import PLACEHOLDER, check_repository
 
@@ -50,8 +51,20 @@ def main(argv: list[str] | None = None) -> int:
     )
     mode.add_argument(
         "--new",
-        metavar="NAME",
-        help="write a new skill's starting files, each unfinished part marked for the checks",
+        metavar="SKILL",
+        help="write a new skill made of modules, each unfinished part marked for the checks",
+    )
+    mode.add_argument(
+        "--new-module",
+        nargs=2,
+        metavar=("MODULE", "SKILL"),
+        help="add a module to a skill: its file, router row and trigger tests",
+    )
+    mode.add_argument(
+        "--move",
+        nargs=2,
+        metavar=("MODULE", "SKILL"),
+        help="give a module a new home skill, updating both routers, the roadmap and the record",
     )
     mode.add_argument(
         "--release-assets",
@@ -76,6 +89,10 @@ def main(argv: list[str] | None = None) -> int:
         return _release(args.root, *args.release_assets)
     if args.new:
         return _new(args.root, args.new)
+    if args.new_module:
+        return _new_module(args.root, *args.new_module)
+    if args.move:
+        return _move(args.root, *args.move)
     if args.bom_check:
         old = bom.stale(args.root)
         for path in old:
@@ -116,7 +133,38 @@ def _new(root: Path, name: str) -> int:
         print(f"wrote {path.as_posix()}")
     print(
         f"skillcheck: new skill {name}, {len(written)} file(s). Fill in each part marked "
-        f"{PLACEHOLDER}, then follow docs/authoring-a-skill.md from step 2"
+        f"{PLACEHOLDER}, add its modules with --new-module, then follow "
+        "docs/authoring-a-skill.md from step 2"
+    )
+    return 0
+
+
+def _new_module(root: Path, name: str, skill: str) -> int:
+    try:
+        written = scaffold.create_module(root, name, skill)
+    except scaffold.ScaffoldError as error:
+        print(f"new-module: {error}")
+        return 1
+    for path in written:
+        print(f"wrote {path.as_posix()}")
+    print(
+        f"skillcheck: new module {name} in {skill}, {len(written)} file(s). Fill in each part "
+        f"marked {PLACEHOLDER}, then follow docs/authoring-a-skill.md from step 2"
+    )
+    return 0
+
+
+def _move(root: Path, name: str, skill: str) -> int:
+    try:
+        changed = move.move(root, name, skill)
+    except move.MoveError as error:
+        print(f"move: {error}")
+        return 1
+    for line in changed:
+        print(line)
+    print(
+        f"skillcheck: moved {name} to {skill}. Run skillcheck, then the trigger tests, and "
+        "update each skill's description if its scope changed"
     )
     return 0
 

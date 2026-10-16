@@ -6,7 +6,18 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Skills made of modules. A skill's `SKILL.md` routes to modules, one self-contained file each,
+  and `skillcheck` checks every router, module, module's trigger tests and roadmap row.
+  `skillcheck --new-module MODULE SKILL` adds a module, and `skillcheck --move MODULE SKILL`
+  gives one a new home skill, updating both routers and the roadmap and recording the move in
+  `docs/module-moves.md`.
+
 ### Changed
+
+- `skillcheck --new` writes a skill made of modules. The listing budget is room for 20 skills,
+  not 100, and a fact's ID is unique across the repository.
 
 - The skill exclusion list says `canvas-design` is kept on claude.ai.
 

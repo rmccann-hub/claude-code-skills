@@ -46,7 +46,8 @@ research. These rules are that structure.
    - Two skills merge when their tests always fire together.
    - A module moves when its requests land in the other skill.
 5. **A move is a command, not a project.** `skillcheck --move <module> <skill>` moves the file
-   and its tests, fixes both routers and records the move. The trigger tests then show that
+   and its tests, fixes both routers and records the move in
+   [docs/module-moves.md](docs/module-moves.md). The trigger tests then show that
    every module's requests still reach it. Skill renames and removals go in the same record,
    from which the old copies to delete on claude.ai, and what depends on them, are listed.
 6. **Names:** a skill keeps its name unless the name misleads. Module names never change.

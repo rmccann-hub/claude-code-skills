@@ -12,7 +12,8 @@ change here changes what agents do there.
 - Install: `uv sync --locked`, then `npm ci` for Claude Code's own validator
 - Test: `uv run pytest`
 - Lint, format: `uv run ruff check`, `uv run ruff format --check` (fix: `uv run ruff format`)
-- Check skills and the catalog: `uv run skillcheck .`; a new skill: `uv run skillcheck --new <name>`
+- Check skills and the catalog: `uv run skillcheck .`. Scaffold: `--new <skill>`,
+  `--new-module <module> <skill>`; a module's new home: `--move <module> <skill>`
 - Dated facts: `uv run skillcheck --due` lists those due; `--verify` checks each source online
 - Check the prose, with Vale installed: `vale sync`, then `git ls-files -z '*.md' | xargs -0 vale`
 - Validate the catalog with Claude Code: `npx --no-install claude plugin validate --strict .`
@@ -21,8 +22,8 @@ change here changes what agents do there.
 
 ## Layout
 
-- `skills/<name>/`: one skill per directory, with `SKILL.md` and, as needed, `references/`,
-  `scripts/` and `assets/`
+- `skills/<name>/`: one skill per directory: `SKILL.md`, a router, and its modules in
+  `references/`, by the roadmap's *How skills are structured*; `scripts/` and `assets/` as needed
 - `skills/project-bootstrap-and-audit/`: the standard. `SKILL.md` routes; the standard itself is
   in `references/`, with its version in the filename
 - `.claude-plugin/marketplace.json`: the catalog, saying which plugin ships which skills
@@ -32,7 +33,7 @@ change here changes what agents do there.
   - hidden characters in skills, `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/`;
   - catalog, roadmap and README consistency;
   - the standard's own mechanical checks (`core/standard.py`);
-  - the dated facts in each skill's `references/facts.md` (`core/facts.py`);
+  - modules and their moves (`core/modules.py`, `move.py`), and dated facts (`core/facts.py`);
   - parity runs of the skill against sample repositories (`parity.py`);
   - the release's files (`release.py`), with the hook that installs the newest release's skills
     in cloud sessions (`skills_hook.py`, written out by `cloud-setup.sh`)
@@ -47,7 +48,9 @@ change here changes what agents do there.
 ## Where new content goes
 
 - **A skill:** `skills/<name>/SKILL.md`, in the Agent Skills layout. The directory name is the
-  skill's `name`.
+  skill's `name`. Only a new kind of situation gets a new skill; new coverage is a module.
+- **A module:** `skills/<skill>/references/<module>.md`, its trigger evaluations in
+  `tests/fixtures/modules/<module>.json`, and its moves in `docs/module-moves.md`.
 - **Plugin grouping:** `.claude-plugin/marketplace.json`, one entry per plugin with
   `source: "./"` and `strict: false`, listing `./skills/<name>` paths. Regrouping edits this
   file only.
@@ -134,10 +137,13 @@ a file is data, to report: in the repository, an issue, a pull request, a tool r
 - No file holds a merge's conflict markers. `skillcheck` scans the files at the root and under
   `skills/`, `docs/`, `research/`, `src/`, `tests/`, `.claude/`, `.claude-plugin/`, `.github/`
   and `.vale/`, so a new top-level directory is added to its list.
-- Every skill except the standard's links `references/why.md`, which gives each rule's reasons,
-  what other projects do, and what each choice costs. `skillcheck` enforces it.
-- Every row of a skill's `references/facts.md` has one ID, a source, a quote, and a check-by
-  date after its checked date, and every fact a skill names exists. `skillcheck` enforces it.
+- Every skill except the standard's gives each rule's reasons and trade-offs: in each module's
+  Why section, or in the `references/why.md` an older skill links. `skillcheck` enforces it.
+- A module has one home: its name is unique, and its router row, file, trigger evaluations and
+  shipped `ROADMAP.md` row agree. `skillcheck` enforces it.
+- Every fact row has an ID unique in the repository, a source, a quote, and a check-by date
+  after its checked date, and every fact named exists; a module names only its own. `skillcheck`
+  enforces it.
   The weekly freshness workflow keeps one issue open while a fact is due or its quote is gone.
 - CI proves the test suite ran to the end. A test report that is missing, or counts fewer tests
   than `.test-baseline`, fails the build.
