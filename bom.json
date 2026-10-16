@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:8edcbf39-6efd-587f-8129-7c1d3a77a690",
+  "serialNumber": "urn:uuid:4394e912-4ada-5b4d-999f-2f42a09dc4d4",
   "version": 1,
   "metadata": {
     "tools": {
@@ -37,7 +37,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "Python: 31 file(s)"
+          "value": "Python: 33 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -49,7 +49,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "Shell: 2 file(s)"
+          "value": "Shell: 3 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -816,7 +816,7 @@
         "name": "Anthropic"
       },
       "name": "claude.ai",
-      "description": "The owner uploads the skills to their account, which is how they reach cloud sessions.",
+      "description": "The owner's account installs the plugins from this repository's marketplace, which is how they reach chat; cloud sessions get them from the release instead.",
       "endpoints": [
         "https://claude.ai"
       ]

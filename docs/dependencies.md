@@ -25,10 +25,10 @@ freshness run and the release workflow both run it.
 | Language | Tracked files |
 |---|---|
 | Markdown | 69 |
-| Python | 31 |
+| Python | 33 |
 | YAML | 22 |
 | JSON | 10 |
-| Shell | 2 |
+| Shell | 3 |
 | TOML | 2 |
 
 ## Runtimes and tools
@@ -106,7 +106,7 @@ package.json
 | npm registry | GitHub | Serves the packages in `package-lock.json`. | https://registry.npmjs.org |
 | Go module proxy and checksum database | Google | Serves the Go modules CI installs, and the checksums `go install` verifies. | https://proxy.golang.org, https://sum.golang.org |
 | Claude Code plugin marketplace | Anthropic | Claude Code installs the plugins from `.claude-plugin/marketplace.json`. | documented at https://code.claude.com/docs/en/plugin-marketplaces |
-| claude.ai | Anthropic | The owner uploads the skills to their account, which is how they reach cloud sessions. | https://claude.ai |
+| claude.ai | Anthropic | The owner's account installs the plugins from this repository's marketplace, which is how they reach chat; cloud sessions get them from the release instead. | https://claude.ai |
 
 ## Sources the skills' facts rely on
 

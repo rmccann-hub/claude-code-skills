@@ -32,7 +32,9 @@ change here changes what agents do there.
   - catalog, roadmap and README consistency;
   - the standard's own mechanical checks (`core/standard.py`);
   - the dated facts in each skill's `references/facts.md` (`core/facts.py`);
-  - parity runs of the skill against sample repositories (`parity.py`)
+  - parity runs of the skill against sample repositories (`parity.py`);
+  - the release's files (`release.py`), with the hook that installs the newest release's skills
+    in cloud sessions (`skills_hook.py`, written out by `cloud-setup.sh`)
 - `tests/`: tests for those checks. Every skill under `tests/` is synthetic
 - `tests/fixtures/standard/`: the samples, answer keys and baseline for parity runs, described
   in [docs/testing-the-skill.md](docs/testing-the-skill.md)

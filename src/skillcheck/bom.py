@@ -495,8 +495,8 @@ def _services(
             "claude.ai",
             "Anthropic",
             ("https://claude.ai",),
-            "The owner uploads the skills to their account, which is how they reach cloud "
-            "sessions.",
+            "The owner's account installs the plugins from this repository's marketplace, "
+            "which is how they reach chat; cloud sessions get them from the release instead.",
         )
     )
     return services
