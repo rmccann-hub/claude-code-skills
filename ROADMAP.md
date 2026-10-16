@@ -147,12 +147,12 @@ owner approved this plan on 2026-10-15 (decisions 44 to 49).
    Each rebuild takes the old skill's topics from the intake, writes from primary sources with
    dated facts, makes every example pass the checker, gets a fresh review, its trigger tests
    and the owner's claude.ai tries, and ships in a release. Before that release, the owner
-   deletes the old copy from claude.ai and turns off whatever depends on it; the release then
+   deletes the old copy from claude.ai, with whatever depends on it that they choose; the release then
    reaches chat through the plugins and cloud sessions through the release's hook. Most rebuilds
    keep the old skill's name. Four take a new name, because the old one would misstate the scope: `log-parser` becomes
    `log-analysis`, `epicor-bpm` becomes `epicor-kinetic`, `linux-troubleshooting` becomes
-   `linux`, and `human-factor-audit` becomes `optimization-and-scheduling`. The owner turns
-   those four old copies off.
+   `linux`, and `human-factor-audit` becomes `optimization-and-scheduling`. The owner deletes
+   those four old copies when their successors ship.
 
 **What the owner decided:**
 - **Examples CI can't run** (VBA, SOLIDWORKS, Epicor, Power Query, DAX): CI checks what it can
