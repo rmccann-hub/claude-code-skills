@@ -2,6 +2,30 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — The organization's library read, `code-standards` counted, and private skills by token tried
+
+- **Read, from the owner's screenshots of the admin inventory:** the organization's library
+  holds 28 of the owner's old skills, each with the audience "Everyone · installed by
+  default". Colleagues use them: the owner says about five use claude.ai and one uses Claude
+  Code.
+- **Found:** `code-standards` is among the 28 but not among the copies synced into sessions.
+  It left them on 2026-09-28, when the owner deleted their own copy, and the library kept it.
+  The plan counted 33 old skills from the synced copies, so it missed it. `ROADMAP.md` now
+  counts 34 and sends its topics to five planned successors, its old copy going last, since
+  twelve old skills say they must read it first.
+- **Chosen, by the owner, verbatim:** "we should just keep removing them as we replace them. i
+  can then tell people to start using the plugins". Deleting an old copy takes it from
+  colleagues too; they add this repository's plugins themselves. `ROADMAP.md` records it as
+  its colleagues step.
+- **Changed, in `docs/authoring-a-skill.md`:** step 12 has the old copy deleted in the
+  organization library's inventory as well as in the owner's own settings.
+- **Tried, and refused:** a read-only token for the private companion, held as a network secret
+  in the cloud environment, so a session without the repository attached could install its
+  skills. A fresh session with only this repository attached got 403 on every request: "GitHub
+  access to this repository is not enabled for this session. Use add_repo to request access."
+  The cloud's own access check comes before the secret, so attaching the repository stays the
+  way in, and the owner deletes the secret and the token.
+
 ## 2026-10-16 — The private companion repository, set up, and the empty one deleted
 
 - **Done, by the owner:** they deleted the empty organization repository, which item 29 of the

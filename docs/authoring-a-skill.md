@@ -112,5 +112,8 @@ and dependencies. A second version of a published rule drifts from the first.
     copies under `~/.claude/skills/synced/` for its name, saying for each whether it would
     break or only names the old one. The owner deletes the old copy and decides which of those
     to delete too, since the owner's own settings delete an uploaded skill but can't turn it off
-    (the owner, 2026-10-16). The release waits for their word. Otherwise the old copy loads
+    (the owner, 2026-10-16). The owner deletes it in the organization library's inventory as
+    well, since deleting their own copy left the library's installed for everyone, and
+    colleagues get the successor from this repository's plugins. The release waits for their
+    word. Otherwise the old copy loads
     beside the new one under a prefix, in chat and in cloud sessions.
