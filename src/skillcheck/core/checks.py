@@ -45,6 +45,10 @@ MAX_COMPATIBILITY_LENGTH = 500
 # Both the spec and Claude Code's docs: "Keep SKILL.md under 500 lines." The whole file loads
 # every time the skill activates; detail belongs in files it links to.
 MAX_SKILL_LINES = 500
+# Anthropic sizes the part of a skill read when it's triggered at "Under 5k tokens" (Agent
+# Skills overview, read 2026-10-16); at about 4 characters a token that's 20,000 characters.
+# The same file loads on claude.ai and in Claude Code, so a router stays small on both.
+MAX_SKILL_CHARS = 20_000
 # The standard's budget for an always-loaded context file, enforced since v0.43.0: 300 lines at
 # most, and Codex stops reading instruction files past 32 KiB by default.
 MAX_CONTEXT_LINES = 300
@@ -242,6 +246,13 @@ def _check_skill(skill_dir: Path, report: Report, needs_rationale: bool) -> None
     lines = len(text.splitlines())
     if lines >= MAX_SKILL_LINES:
         report.add(where, "size", f"SKILL.md is {lines} lines; keep it under {MAX_SKILL_LINES}")
+    if len(text) > MAX_SKILL_CHARS:
+        report.add(
+            where,
+            "size",
+            f"SKILL.md is {len(text)} characters, over about 5,000 tokens; keep it within "
+            f"{MAX_SKILL_CHARS} and move detail into modules",
+        )
     _check_links(skill_dir, body, where, report)
     _check_reference_mentions(skill_dir, report)
     _check_tables(skill_dir, report)

@@ -16,6 +16,8 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- `skillcheck` holds each `SKILL.md` to 20,000 characters, the size Anthropic gives for the
+  file read when a skill is triggered, on claude.ai as in Claude Code.
 - `skillcheck --new` writes a skill made of modules. The listing budget is room for 20 skills,
   not 100, and a fact's ID is unique across the repository.
 
