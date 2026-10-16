@@ -6,6 +6,25 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.15] - 2026-10-16
+
+### Added
+
+- Skills reach Claude Code's cloud sessions with no upload. Each release carries
+  `skills.zip`, every skill with a manifest, and `cloud-setup.sh`, lines for an environment's
+  setup script. They install a hook that copies the newest release's skills into
+  `~/.claude/skills` as each session starts or resumes, replaces only its own copies, keeps
+  them when a download fails, and tells the session when claude.ai still holds an old copy.
+- The `own-copies` rule fails settings here that set `skillOverrides` without turning off
+  every skill under `skills/`, so a session here never loads an installed copy beside the
+  files being edited.
+
+### Changed
+
+- `house-style` is off in this repository's sessions, as the other two skills already were.
+- Rebuilding a skill: before the release that ships it, the owner deletes the old claude.ai
+  copy and turns off what depends on it.
+
 ## [0.1.14] - 2026-10-15
 
 ### Added
