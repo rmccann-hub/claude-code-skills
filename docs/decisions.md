@@ -2,6 +2,40 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — The six claude.ai tries, standard v0.47.0, and release 0.1.16
+
+- **Tried, by the owner,** on claude.ai with the plugins at 0.1.15, each request in a new chat,
+  as step 5 of `docs/authoring-a-skill.md` asks. All six pass:
+
+  | Skill | Request | Result |
+  |---|---|---|
+  | `house-style` | Rewrite a paragraph in the house style | Pass: led with the change, cut the filler, American spelling, and asked about the hedge it dropped and the palette it couldn't name |
+  | `house-style` | Which heading case a README uses | Pass: sentence case, citing the Vale rule; every other claim is in the skill |
+  | `git-workflows` | A commit message for retry logic | Pass: a 48-character subject and a body saying why. It led with Conventional Commits, which the skill allows beside "area: summary"; the pass line named only the second, and was too narrow |
+  | `git-workflows` | Squash or merge commits | Pass: merge commits, the reason and the trade. Its claims hold: all three of the owner's public repositories allow merge commits only |
+  | `project-bootstrap-and-audit` | Set up a new Python CLI repository | Pass: asked the Phase 3 questions, drafted none of the three never-drafted answers, and wrote only its report. It didn't ask how long the tool must last, which the standard asks only when choosing a language, and Python was named |
+  | `project-bootstrap-and-audit` | What an audit of configuration checks | Pass: the stakes questions and the ten dimensions. It found that the standard names no dangerous workflow trigger |
+
+- **Found, and checked:**
+  - python.org's release list, read 2026-10-16, gives Python 3.15.0 on 2026-10-09. The
+    standard's toolchain table named 3.14.x.
+  - The routing table sends "set up something new" with no repository yet through the run,
+    and Phase 0 refused to continue without a git repository. The new-project run broke that
+    rule to reach its questions, and recorded doing so.
+  - The standard has no match for `pull_request_target`, `workflow_run` or template injection.
+    `git-workflows` covers all three, in its security reference and row 13 of its audit.
+- **Changed, approved by the owner on 2026-10-16, as standard v0.47.0, a change of its own:**
+  F150, the Python row; F151, Phase 0's case for a new project before its repository exists;
+  F152, dimension 6's rating of dangerous triggers and template injection, with a dated fact
+  from GitHub's security hardening guide. A public repository with either is `BLOCKER`, as
+  `git-workflows` rates it; a private one, where only collaborators open pull requests, `GAP`.
+- **Not done:** no parity run. F150 changes a fact, F151 a case no sample reaches, since every
+  sample has a repository, and F152 a pattern no sample's workflows contain.
+- **Done, by the owner:** this repository's merge commits take the pull request's title, set
+  under Settings, General, read back as `merge_commit_title: PR_TITLE`. Nothing here reads the
+  old subject: the `subjects` check skips merges.
+- **Release 0.1.16:** this pull request's merge, so the hook and the plugins carry v0.47.0.
+
 ## 2026-10-16 — claude.ai kept a plugin copy from 2026-09-23 until it was removed and added again
 
 - **Found, in the owner's chat:** after the plugins were added from **Discover**, a new chat
