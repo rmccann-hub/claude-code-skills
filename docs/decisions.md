@@ -2,6 +2,26 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — On a personal account, an uploaded skill is deleted, not turned off
+
+- **Found, by the owner:** their personal claude.ai account offers only removal for an uploaded
+  skill, with no switch to turn it off. The Help Center's skills article, read on 2026-10-16,
+  describes a switch beside each skill and deletion from the "..." menu, so the account and the
+  article differ, and what the account shows is what stands.
+- **Found, in the plugins page, read on 2026-10-16:** a plugin is turned off with its
+  **Disable plugin** toggle and removed with **Remove** from its menu. A marketplace is added
+  under **Customize > Plugins**, **Add > Add marketplace**, with **Check for updates** and, for
+  one added from github.com, **Sync automatically**. A marketplace's plugins are then added from
+  **Discover** with **Add**.
+- **Changed:** every step that turned an old claude.ai skill off now deletes it.
+  `docs/authoring-a-skill.md` step 12 has the session say, for each skill that depends on an old
+  copy, whether it would break or only names it, and the owner chooses which to delete. The
+  previous entry's "turns off" for dependents is superseded by this.
+- **For the owner's current step:** `human-factor-audit` only names `skill-orchestrator` and
+  `markdown-standards` as companions, and one of its triggers can no longer fire. Deleting it
+  would lose the source its rebuild, `optimization-and-scheduling`, is written from, so keeping
+  it until then is the recommendation; the choice is the owner's.
+
 ## 2026-10-16 — Skills reach cloud sessions from the release, and release 0.1.15
 
 - **Asked:** after release 0.1.14, the owner asked that getting the skills into sessions be
