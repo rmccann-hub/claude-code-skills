@@ -19,6 +19,7 @@ def plant(repo, overrides, reasons=None, applied=None):
     path.write_text(json.dumps({"skillOverrides": overrides, "reasons": reasons}), "utf-8")
     if applied is not None:
         (repo.root / ".claude").mkdir()
+        applied = {"demo-skill": "off", **applied}
         (repo.root / SETTINGS).write_text(json.dumps({"skillOverrides": applied}), "utf-8")
 
 
@@ -63,7 +64,9 @@ def test_a_list_of_the_wrong_shape_is_one_finding(repo, text):
     ]
 
 
-@pytest.mark.parametrize("settings", [None, "not json", '{"skillOverrides": {"chat-only": "off"}}'])
+@pytest.mark.parametrize(
+    "settings", [None, "not json", '{"skillOverrides": {"chat-only": "off", "demo-skill": "off"}}']
+)
 def test_this_repository_applies_every_entry(repo, settings):
     plant(repo, {"chat-only": "off", "tool-only": "off"})
     if settings is not None:
@@ -74,3 +77,32 @@ def test_this_repository_applies_every_entry(repo, settings):
     assert found(repo) == [
         (SETTINGS, "exclusions", f"skillOverrides lacks {count} of {LIST}'s entries: {missing}")
     ]
+
+
+@pytest.mark.parametrize(
+    "settings",
+    [
+        {"skillOverrides": {"demo-skill": "on"}},
+        {"skillOverrides": {"other": "off"}},
+    ],
+)
+def test_settings_here_hide_every_installed_copy_of_a_skill_here(repo, settings):
+    repo.skill("demo-skill")
+    repo.catalog(repo.plugin("demo", "./skills/demo-skill"))
+    (repo.root / ".claude").mkdir()
+    (repo.root / SETTINGS).write_text(json.dumps(settings), "utf-8")
+    ((path, rule, text),) = found(repo)
+    assert (path, rule) == (SETTINGS, "own-copies")
+    assert text.startswith("skillOverrides doesn't turn off demo-skill, so")
+
+
+@pytest.mark.parametrize(
+    "settings",
+    ["not json", "{}", '{"skillOverrides": []}', '{"skillOverrides": {"demo-skill": "off"}}'],
+)
+def test_settings_without_overrides_or_hiding_every_skill_pass(repo, settings):
+    repo.skill("demo-skill")
+    repo.catalog(repo.plugin("demo", "./skills/demo-skill"))
+    (repo.root / ".claude").mkdir()
+    (repo.root / SETTINGS).write_text(settings, "utf-8")
+    assert found(repo) == []

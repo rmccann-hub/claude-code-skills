@@ -186,6 +186,7 @@ def check_repository(root: Path) -> Report:
     for skill_dir in skills:
         if (skill_dir / EXCLUSIONS).is_file():
             _check_exclusions(root, skill_dir, names, report)
+    _check_own_copies(root, names, report)
     if report.listing_chars > LISTING_BUDGET:
         report.add(
             SKILLS_DIR,
@@ -442,6 +443,28 @@ def _check_exclusions(root: Path, skill_dir: Path, names: set[str], report: Repo
             SETTINGS,
             "exclusions",
             f"skillOverrides lacks {len(missing)} of {where}'s entries: {', '.join(missing)}",
+        )
+
+
+def _check_own_copies(root: Path, names: set[str], report: Report) -> None:
+    """Where settings here set skillOverrides, they hide every installed copy of a skill here.
+
+    A session here works on the files under skills/. A copy installed from a release, by an
+    upload, a plugin or the cloud hook, would load beside them under the same name.
+    """
+    try:
+        applied = json.loads((root / SETTINGS).read_text(encoding="utf-8"))["skillOverrides"]
+        if not isinstance(applied, dict):
+            return
+    except OSError, ValueError, KeyError, TypeError:
+        return
+    shown = sorted(name for name in names if applied.get(name) != "off")
+    if shown:
+        report.add(
+            SETTINGS,
+            "own-copies",
+            f"skillOverrides doesn't turn off {', '.join(shown)}, so a session here would load "
+            "an installed copy beside the files being edited",
         )
 
 
