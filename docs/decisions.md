@@ -2,6 +2,38 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-16 — Fifteen skills made of modules, in place of a hundred skills
+
+- **Asked, by the owner, verbatim:** "I want the functionality and more, I don't. Care how it is
+  divided, named, etc. I want it to be efficent and effective. So if that means a complete
+  restructure I'm all for it, and now is the time to do a complete refactor on this. So don't
+  hold back. But it needs to work, make sense, and be structured so that if we need to do so
+  again it's easy and not a mystery with a ton of research. We should be able to spin off a
+  skill into multiple if needed, or whatever."
+- **Decided:** `ROADMAP.md` now plans 15 skills, each a trigger, made of modules. The 60
+  planned skills become modules under their old names, each with one home skill, so the
+  research prompts, lessons and intake that name them still apply. Its new section *How skills
+  are structured* gives the rules: a module is one self-contained file, a router `SKILL.md`
+  picks it, trigger tests decide when a module spins off, merges or moves, and a move is one
+  `skillcheck` command with a record.
+- **Why:** each installed skill's description is in context all the time, and Claude Code
+  gives the listing 1% of the context window, 8,000 characters on a 200,000-token model (the
+  2026-10-15 entry measured it). A hundred skills at 240 characters would leave most of them
+  as bare names there, and colleagues' claude.ai accounts load the same descriptions. Fifteen
+  fit. A module costs nothing until it's read.
+- **Supersedes:**
+  - the 2026-10-15 entry's room for 100 skills: the listing budget becomes about 20 skills in
+    the shared tools;
+  - the 2026-10-15 answer 7, replacing old skills in place: old copies are deleted as each
+    wave ships, which the owner already chose earlier today;
+  - decision 33's pairing map, which shrinks to the pairs between skills;
+  - this session's own advice earlier today to keep a skill per language. One `coding` skill
+    with a module per language costs one description instead of eleven, and its trigger tests
+    decide whether any language spins off.
+- **Not changed:** the three shipped skills keep their names. The research waves are the same.
+  `AGENTS.md`'s invariant that every skill links `references/why.md`, the authoring guide's
+  layout and the listing rule change with the module checks, in the shared tools' pull request.
+
 ## 2026-10-16 — The organization's library read, `code-standards` counted, and private skills by token tried
 
 - **Read, from the owner's screenshots of the admin inventory:** the organization's library
