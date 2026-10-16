@@ -4,6 +4,9 @@
   session can be handed it with no message. The standard's text is unchanged; only the two
   sections no run reads are left out.
 - ``<skill>.zip``: each skill, packaged to upload to claude.ai.
+- ``skills.zip``: every skill in one ZIP, with ``release.json`` naming the version and the skills,
+  for the hook that ``cloud-setup.sh`` installs to fetch from the newest release.
+- ``cloud-setup.sh``: lines for a cloud environment's setup script, installing that hook.
 - ``<Package>.zip``: each Vale package a skill ships, for a repository's ``.vale.ini`` to name.
 - ``ruleset-<name>.json``: each ruleset a skill ships, to import into a repository's settings.
 - ``bom.json``: the dependency map, which must already match the commit.
@@ -22,13 +25,16 @@ from io import BytesIO
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from skillcheck import bom
+from skillcheck import bom, skills_hook
 from skillcheck.core import standard
 from skillcheck.core.checks import HIDDEN
 
 KICKSTART = "KICKSTART.md"
 NOTES = "notes.md"
 INSTRUCTIONS = Path(__file__).with_name("kickstart.md")
+BUNDLE = "skills.zip"
+SETUP = "cloud-setup.sh"
+SETUP_TEMPLATE = Path(__file__).with_name(SETUP)
 # The two sections no run reads come last, from the first of them to the end of the file.
 CUT = "\n---\n\n# Validating a change to this standard"
 AFTER_LICENSE = "No warranty of any kind.\n\n---\n\n# How to read this file"
@@ -67,6 +73,8 @@ def build(root: Path, version: str, out: Path) -> list[str]:
         {
             KICKSTART: kickstart(root, version).encode("utf-8"),
             NOTES: notes(root, version).encode("utf-8"),
+            BUNDLE: bundle(root, version),
+            SETUP: cloud_setup(root, version).encode("utf-8"),
             bom.BOM: (root / bom.BOM).read_bytes(),
         },
         packages(root),
@@ -135,7 +143,7 @@ def notes(root: Path, version: str) -> str:
     catalog = _catalog(root)
     repository = _repository(root)
     number = standard.FILENAME.fullmatch(standard.find(root)[0].name)[1]
-    skills = [Path(path).name for plugin in catalog["plugins"] for path in plugin["skills"]]
+    skills = _skills(root)
     section = _section(root, version)
     if section is None:
         raise ReleaseError(f"CHANGELOG.md has no section for {version}")
@@ -148,6 +156,10 @@ def notes(root: Path, version: str) -> str:
         f"/plugin marketplace add {repository}",
         *[f"/plugin install {p['name']}@{catalog['name']}" for p in catalog["plugins"]],
         "```",
+        "",
+        "In Claude Code's cloud sessions, add the lines in `cloud-setup.sh` to the end of the",
+        "environment's setup script. Every session there then starts with the newest release's",
+        "skills, with nothing to upload.",
         "",
         "To start any repository with the standard, attach `KICKSTART.md` to a session there. It",
         "needs no message: it reads the repository first, asks only what it can't find out, and",
@@ -170,6 +182,8 @@ def notes(root: Path, version: str) -> str:
             f"| `{name}.zip` | The `{name}` skill, packaged to upload to claude.ai |"
             for name in skills
         ],
+        f"| `{BUNDLE}` | Every skill in one file, which the cloud setup's hook installs |",
+        f"| `{SETUP}` | Lines for a cloud environment's setup script, installing that hook |",
         *[
             f"| `{name}` | The {Path(name).stem} Vale style, which a repository's `.vale.ini` "
             "names by URL |"
@@ -189,12 +203,29 @@ def notes(root: Path, version: str) -> str:
 
 def packages(root: Path) -> dict[str, bytes]:
     """Each skill in the catalog as a ZIP of its tracked files, under its own folder."""
-    out = {}
-    for plugin in _catalog(root)["plugins"]:
-        for path in plugin["skills"]:
-            name = Path(path).name
-            out[f"{name}.zip"] = _archive(root, _tracked(root, f"skills/{name}"), "skills")
-    return out
+    return {
+        f"{name}.zip": _archive(root, _tracked(root, f"skills/{name}"), "skills")
+        for name in _skills(root)
+    }
+
+
+def bundle(root: Path, version: str) -> bytes:
+    """Every skill in the catalog in one ZIP, with the manifest the cloud hook checks it by."""
+    names = _skills(root)
+    files = [file for name in names for file in _tracked(root, f"skills/{name}")]
+    manifest = json.dumps({"version": version, "skills": names}, indent=2) + "\n"
+    return _archive(root, files, "skills", {skills_hook.MANIFEST: manifest.encode("utf-8")})
+
+
+def cloud_setup(root: Path, version: str) -> str:
+    """The setup script's lines, with the hook written out in full rather than fetched."""
+    hook = Path(skills_hook.__file__).read_text(encoding="utf-8")
+    return (
+        SETUP_TEMPLATE.read_text(encoding="utf-8")
+        .replace("HOOK_SOURCE\n", hook)
+        .replace("RELEASE_VERSION", version)
+        .replace("REPOSITORY", _repository(root))
+    )
 
 
 def vale_packages(root: Path) -> dict[str, bytes]:
@@ -237,16 +268,28 @@ def _tracked(root: Path, pathspec: str) -> list[tuple[str, str]]:
     )
 
 
-def _archive(root: Path, files: list[tuple[str, str]], base: str) -> bytes:
+def _archive(
+    root: Path, files: list[tuple[str, str]], base: str, extra: dict[str, bytes] | None = None
+) -> bytes:
     """A ZIP of tracked files, each named from ``base``, the same bytes for the same commit."""
+    entries = [(name, "100644", data) for name, data in (extra or {}).items()]
+    entries += [
+        (Path(tracked).relative_to(base).as_posix(), mode, (root / tracked).read_bytes())
+        for tracked, mode in files
+    ]
     buffer = BytesIO()
     with zipfile.ZipFile(buffer, "w", zipfile.ZIP_DEFLATED) as archive:
-        for tracked, mode in files:
-            entry = zipfile.ZipInfo(Path(tracked).relative_to(base).as_posix(), EPOCH)
+        for name, mode, data in entries:
+            entry = zipfile.ZipInfo(name, EPOCH)
             entry.external_attr = (0o755 if mode == "100755" else 0o644) << 16
             entry.compress_type = zipfile.ZIP_DEFLATED
-            archive.writestr(entry, (root / tracked).read_bytes())
+            archive.writestr(entry, data)
     return buffer.getvalue()
+
+
+def _skills(root: Path) -> list[str]:
+    """The catalog's skills, by name, in its order."""
+    return [Path(path).name for plugin in _catalog(root)["plugins"] for path in plugin["skills"]]
 
 
 def _catalog(root: Path) -> dict:
