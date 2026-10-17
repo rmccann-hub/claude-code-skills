@@ -2,6 +2,13 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-17 — Release 0.1.17, for people beyond the owner
+
+- **Asked, by the owner:** "release", so their brother installs the current skills: the
+  modules, the report section in every skill, and the dependency updates.
+- **Release 0.1.17:** this pull request's merge, released by the Release workflow once CI
+  passes on it.
+
 ## 2026-10-16 — Every skill says when it's at fault, and drafts the report
 
 - **Asked, by the owner:** "You should include some level of this in yourselve for all skills.

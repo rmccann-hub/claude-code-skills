@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.17] - 2026-10-17
+
 ### Added
 
 - Every skill ends with a section saying what to do when a person reports a problem with it:
