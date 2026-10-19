@@ -105,6 +105,10 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
   fit. Nothing checks it.
 - **A session that stops with work outstanding says what it's waiting on, and from whom.**
   Nothing checks it.
+- **A time given to the owner is given twice:** as recorded, in UTC on a 24-hour clock, and in
+  New York time on a 12-hour clock with AM or PM and the zone in effect, such as
+  `00:55 UTC (8:55 PM EDT, Fri Oct 16)`. The owner asked for this on 2026-10-19, until they
+  change it. Commits, records and files keep UTC alone. Nothing checks it.
 
 ## Files the owner sends
 
