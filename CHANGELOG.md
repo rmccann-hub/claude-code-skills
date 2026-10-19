@@ -14,6 +14,9 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- Dependencies, each the newest release at least three days old: Python 3.15, uv 0.13.1 in CI,
+  Claude Code 2.1.302, ruff 0.17.1, zizmor 1.31.1, coverage 7.16.2, pluggy 1.7.0 and
+  iniconfig 2.3.1.
 - `git-workflows` takes in six lessons from a two-repository review loop's rounds 34 and 35:
   three in `ci-workflows`, two in `releases-and-versions` and one in `commits-and-pull-requests`.
 - The house style keeps the zone of a time copied from a source, and `ROADMAP.md` holds four

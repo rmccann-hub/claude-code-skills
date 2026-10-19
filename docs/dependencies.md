@@ -35,13 +35,13 @@ freshness run and the release workflow both run it.
 
 | Name | Version | Set in | Note |
 |---|---|---|---|
-| Python | 3.14 | `.python-version` | `pyproject.toml` requires >=3.14 |
+| Python | 3.15 | `.python-version` | `pyproject.toml` requires >=3.14 |
 | uv_build | >=0.13.0,<0.14 | `pyproject.toml` | build backend |
 | GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` | — |
 | Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
-| uv | 0.12.18 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
+| uv | 0.13.1 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
 | vale | v3.24.0 | `.github/workflows/prose.yml` | — |
 
 ## Python packages
@@ -53,17 +53,17 @@ plugins ship.
 skillcheck 0.0.0 (this repository's checks)
 ├── pytest 9.1.1 (dev)
 │   ├── colorama 0.4.6 (dev; only when sys_platform == 'win32')
-│   ├── iniconfig 2.3.0 (dev)
+│   ├── iniconfig 2.3.1 (dev)
 │   ├── packaging 26.3 (dev)
-│   ├── pluggy 1.6.0 (dev)
+│   ├── pluggy 1.7.0 (dev)
 │   └── pygments 2.21.0 (dev)
 ├── pytest-cov 7.1.0 (dev)
-│   ├── coverage 7.16.1 (dev)
-│   ├── pluggy 1.6.0 (dev)
+│   ├── coverage 7.16.2 (dev)
+│   ├── pluggy 1.7.0 (dev)
 │   └── pytest 9.1.1 (dev) (listed above)
 ├── pyyaml 6.0.3
-├── ruff 0.17.0 (dev)
-└── zizmor 1.30.1 (dev)
+├── ruff 0.17.1 (dev)
+└── zizmor 1.31.1 (dev)
 ```
 
 ## Node packages
@@ -73,15 +73,15 @@ plugins ship.
 
 ```text
 package.json
-└── @anthropic-ai/claude-code 2.1.296 (dev)
-    ├── @anthropic-ai/claude-code-darwin-arm64 2.1.296 (dev; optional)
-    ├── @anthropic-ai/claude-code-darwin-x64 2.1.296 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-arm64 2.1.296 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-arm64-musl 2.1.296 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-x64 2.1.296 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-x64-musl 2.1.296 (dev; optional)
-    ├── @anthropic-ai/claude-code-win32-arm64 2.1.296 (dev; optional)
-    └── @anthropic-ai/claude-code-win32-x64 2.1.296 (dev; optional)
+└── @anthropic-ai/claude-code 2.1.302 (dev)
+    ├── @anthropic-ai/claude-code-darwin-arm64 2.1.302 (dev; optional)
+    ├── @anthropic-ai/claude-code-darwin-x64 2.1.302 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-arm64 2.1.302 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-arm64-musl 2.1.302 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-x64 2.1.302 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-x64-musl 2.1.302 (dev; optional)
+    ├── @anthropic-ai/claude-code-win32-arm64 2.1.302 (dev; optional)
+    └── @anthropic-ai/claude-code-win32-x64 2.1.302 (dev; optional)
 ```
 
 ## GitHub Actions
