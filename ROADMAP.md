@@ -17,8 +17,9 @@ than inside it.
 Each module says why, not only what: it gives each rule's reasons, what other projects do and
 why, what each choice costs, and when to choose differently. Its dated facts, including what
 other projects do, are checked again by `skillcheck --due` and `skillcheck --verify`, which the
-weekly freshness workflow runs. `keeping-current` is the module that will do the same for other
-repositories.
+weekly freshness workflow runs, with `skillcheck --outdated` for every dependency.
+`keeping-current` is the module that will do the same for other repositories, starting from
+`--outdated`, which already runs on any repository's path.
 
 ## How skills are structured
 

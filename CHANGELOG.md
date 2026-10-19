@@ -8,6 +8,11 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- `skillcheck --outdated` names each dependency behind its newest release, once that release has
+  been out three days. It covers the lockfiles, the GitHub Actions, the tool and runtime
+  versions the workflows name, `.python-version`, and the ranges in `pyproject.toml`, and runs
+  on any repository's path. The weekly Freshness workflow runs it and keeps one issue open
+  while anything is behind.
 - `skillcheck --time STAMP [ZONE]` gives a time as its UTC stamp and, worked out from it, the
   zone's local time. The `times` check fails Markdown that writes a time without its zone.
 - The house style stamps times in UTC, with any local time derived from the stamp.

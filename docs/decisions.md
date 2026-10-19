@@ -2,6 +2,28 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-19 — Every dependency on its newest release, checked weekly
+
+- **Asked, by the owner:** "are all repos using the most up to date of all dependcies, they
+  should. And we need a way to make sure they are. Like a weekly repo check".
+- **The rule:** each dependency is on its newest stable release once that release has been out
+  three days, the platform's default wait, which the standard already holds. Security fixes
+  don't wait. Research prompt R21 tests the rule against the evidence; its result may change
+  the wait or the exceptions.
+- **Done here:** Python 3.15, uv 0.13.1 in CI, Claude Code 2.1.302 and the dev tools' newest
+  releases (#66), and uv 0.13.1 in the private repository's CI.
+- **The check:** `skillcheck --outdated`, run weekly by the Freshness workflow in an issue of
+  its own. It reads what a repository uses through the dependency map's readers, so the two
+  never disagree. It covers what Dependabot doesn't: tool versions a workflow names as
+  inputs, `.python-version`, and a range in `pyproject.toml` that shuts out a new release.
+- **Considered:** Dependabot alone, which can't see those three; Renovate, which can, but is a
+  second update bot with its own configuration to keep. The check proposes nothing itself;
+  Dependabot still opens the update pull requests.
+- **Not covered:** runner images and system packages, since neither has a registry naming its
+  newest version.
+- **Other repositories:** the owner's other projects get their lists and the command to run,
+  through the owner. Nothing in them was changed here.
+
 ## 2026-10-19 — A two-repository loop's audit against a reference tool, checked for lessons
 
 - **Asked, by the owner:** "do a full check against both repos … see if you missed anything and
