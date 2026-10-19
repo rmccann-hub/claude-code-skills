@@ -12,7 +12,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from skillcheck.core import facts, frontmatter, modules, reporting, standard
+from skillcheck.core import facts, frontmatter, modules, reporting, standard, times
 
 SKILLS_DIR = "skills"
 CATALOG = ".claude-plugin/marketplace.json"
@@ -202,6 +202,7 @@ def check_repository(root: Path) -> Report:
     _check_readme(root, names, report)
     _check_agent_files(root, report)
     _check_conflict_markers(root, report)
+    times.check(root, report.add)
     for skill_dir in skills:
         if (skill_dir / EXCLUSIONS).is_file():
             _check_exclusions(root, skill_dir, names, report)
