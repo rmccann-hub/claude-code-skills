@@ -14,6 +14,8 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- `git-workflows` takes in six lessons from a two-repository review loop's rounds 34 and 35:
+  three in `ci-workflows`, two in `releases-and-versions` and one in `commits-and-pull-requests`.
 - Standard v0.48.0: UTC is the stamp of every time a run writes, and a first audit asks the time
   zone and clock the human reads times in.
 

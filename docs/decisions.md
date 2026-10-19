@@ -2,6 +2,26 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-19 — Rounds 34 and 35 of the two-repository loop, read for lessons
+
+- **Asked, by the owner:** "do a review of both repos and see what is learned".
+- **Read:** both repositories' history from 2026-10-15, by two read-only reviewers, one per
+  repository. Each lesson cites its commits or lap statements, and those quoted here were
+  checked against them before they were used. Nothing in either repository was changed.
+- **Taken into shipped modules:**
+  - `ci-workflows`: a timeout with no known cause is recorded each time and instrumented, not
+    hidden by a higher limit; diagnostics that print only on failure; a build chain that goes
+    on after a step fails;
+  - `releases-and-versions`: a release staged and never published; a candidate proved only in
+    the working tree;
+  - `commits-and-pull-requests`: a fix to inherited upstream code whose commit doesn't say so.
+- **Waiting for their modules,** as L31 to L40 in `ROADMAP.md`: checks that can fail, a ratchet
+  after a flaky fix, the seam between two tools, shared validation, four on running the loop,
+  parallel helper sessions, and checked status against unchecked prose.
+- **Already held here, so not added:** a push in the same command as a failing suite, trimmed
+  output, a stale local branch, approval given with the request, and a file agreed word for
+  word.
+
 ## 2026-10-19 — Standard v0.48.0: UTC is the stamp, and a first audit asks the reader's zone
 
 - **Asked, by the owner:** "on an iniitial audit, you can ask for what to use, but gmt should

@@ -117,6 +117,13 @@ clones already have them.
 
 ## Mistakes
 
+- **A release staged and never published.** Work committed after it, under its dated changelog
+  heading, makes the heading describe something the tag won't hold, and whatever waits on the
+  release waits silently. Publish it, or move the heading back to `Unreleased`.
+- **A release candidate proved only in the working tree.** One candidate's suite failed a
+  freshness check on a clean checkout, and its regeneration step named every derived file but
+  two. Build each candidate from a clean checkout, regenerate with one command, and move the
+  same artifact between channels rather than rebuilding it.
 - **`gh release create` with a new tag name,** which makes a tag that isn't annotated (fact
   `gh-release-tag`). Push the annotated tag first, then run it with `--verify-tag`.
 - **Tagging a branch instead of a commit.** The branch's tip may have moved past the release
