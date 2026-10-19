@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.47.0"
-  updated: "2026-10-16"
-  supersedes: "0.46.0"
+  version: "0.48.0"
+  updated: "2026-10-19"
+  supersedes: "0.47.0"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -899,7 +899,7 @@ absent produces advice the human cannot follow; a capability present and unused 
 Claude Code version, and a long-lived session can run one many releases behind the current
 one: on 2026-09-29, two sessions started in July still ran 2.1.233, while new ones ran 2.1.284.
 
-**Four things cannot be detected. Ask them once — and ask them at the Phase 3 wait, not
+**Five things cannot be detected. Ask them once — and ask them at the Phase 3 wait, not
 here:**
 
 1. **Is there a local working copy of this repository?** Decides tagging, hooks and desktop
@@ -914,10 +914,19 @@ here:**
    unanswered, or `unknown`: no**, and nothing that depends on it is rated. A default taken
    goes in Phase 6's first list, beside the tier. Phase 8 records the answer, and a re-check
    shows it and asks "Is that still the case?", with any authors since as its evidence.
+5. **Which time zone does the human read times in, and on which clock?** For example,
+   `America/New_York` on a 12-hour clock. **UTC is the stamp whatever the answer:** every time
+   the run writes, in its report, its records and the repository, is UTC with its zone, as
+   `14:05 UTC` or ISO 8601 with `Z`. The answer only adds a local time beside each stamp in
+   what the run tells the human, worked out from the stamp with the time zone database, never
+   in the run's head: `00:55 UTC (8:55 PM EDT, Fri Oct 16)`. Draft it from the offsets on the
+   human's own commit dates, which every clone has, as a draft only: a laptop's clock can be
+   set to anywhere. **Default if unanswered: UTC alone.** Phase 8 records the answer in the
+   context file, for every later session to follow.
 
 **Carry them forward rather than stopping here.** Two waits is both the floor and the
 ceiling, Phase 3 already stops and already asks the human about copyright, and a separate
-round trip for four short questions costs more than it returns. **Three independent runs
+round trip for five short questions costs more than it returns. **Three independent runs
 each invented this same fold and recorded it as an override** — a deviation that recurs with
 the same reasoning is a rule waiting to be written, so it is written. Record the answers in
 the Phase 0 block as normal; they arrive one phase later.
@@ -931,7 +940,8 @@ capability_proof: |
   <the probe output, one line each>
 asked: {local_working_copy: yes|no, standards_repo: "<name | none>",
         copyright_holder: "<as the human names it>",
-        more_maintainers: "<no | yes, and who | unknown>"}   # unknown counts as no
+        more_maintainers: "<no | yes, and who | unknown>",   # unknown counts as no
+        display_time: "<IANA zone and 12- or 24-hour clock | UTC alone>"}
 degraded: [<what this run could not do, and what it recorded instead>]
 tool: "<which agent and surface this ran on, and its version>"
 clean_tree_proof: |
@@ -1283,7 +1293,7 @@ notes: <... | none>
 
 ## Phase 3 — establish tier — **WAIT**
 
-**Six questions, with Phase 0's four beside them. Phase 3 always stops here — including on a
+**Six questions, with Phase 0's five beside them. Phase 3 always stops here — including on a
 re-check.**
 
 On a **first audit**, ask all six, **with a draft of each answer the repository shows.** Its
@@ -1313,7 +1323,7 @@ the tier it computed from them.
 person won't be there and carries the answers, the run can't stop, so it records
 `answers_source: given in the prompt` and goes on, unless its job ends at this wait, as below.
 The tier it computed goes first among Phase 6's decisions only the human can supply, followed by
-any of Phase 0's four left at its default, so a wrong tier is caught before anything is applied.
+any of Phase 0's five left at its default, so a wrong tier is caught before anything is applied.
 That is the one case in which the confirmation moves to Phase 6. It isn't a deviation, and
 `waits_observed` counts it.
 
@@ -5280,6 +5290,11 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.48.0**: **one change**, F153, which the owner asked for on 2026-10-19: UTC is the stamp of
+every time a run writes, and Phase 0's fifth question asks the time zone and clock the human
+reads times in, which adds a local time, worked out from the stamp, beside each time the run
+gives the human.
 
 **0.47.0**: **three changes**, F150 to F152, which the owner approved on 2026-10-16. They
 come from runs of the skill on claude.ai. *Language toolchains* names Python 3.15, released

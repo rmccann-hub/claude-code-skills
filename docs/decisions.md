@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-19 — Standard v0.48.0: UTC is the stamp, and a first audit asks the reader's zone
+
+- **Asked, by the owner:** "on an iniitial audit, you can ask for what to use, but gmt should
+  be the "stamp"".
+- **Changed, in the standard, as F153 and a change of its own:** Phase 0's questions that can't
+  be detected gain a fifth, asked at the Phase 3 wait: the time zone and clock the human reads
+  times in. Whatever the answer, every time a run writes is UTC with its zone; the answer adds a
+  local time beside each stamp in what the run tells the human, worked out with the time zone
+  database. The draft comes from the offsets on the human's own commit dates, and the default
+  is UTC alone. `display_time` joins the Phase 0 block's `asked`.
+- **Not done:** no parity run. The samples' answer keys rate findings, and a question asked at
+  the wait changes no finding.
+
 ## 2026-10-19 — UTC is the stamp, local times are derived, and a check holds it
 
 - **Asked, by the owner:** "GMT is the gold standrad, just derive from that. we need timestamps
