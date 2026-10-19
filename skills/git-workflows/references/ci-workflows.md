@@ -114,9 +114,20 @@ away uncommitted work.
 - **Record each slow test's headroom under its timeout,** and act before it's gone. One suite's
   slowest test reached 87% of its timeout on a developer's machine, and timed out once on a CI
   runner the same week.
+- **A timeout that comes and goes with no known cause is recorded, every time, with its
+  numbers,** and the test is made to print where its time went, on passing runs too. One tree
+  took from under half a minute to over two within an hour; the next timeout named its step.
+  Raising the limit hides the cause.
 
 ## Mistakes
 
+- **Diagnostics that print only when a test fails.** A test runner that shows output only for
+  failures says nothing about a pass near its limit. One suite's new per-step timing reached
+  nobody until a step read the runner's own results file after every run.
+- **A build chain that goes on after a step fails.** Every earlier log of one Windows build
+  carried a failed install, unseen, because the script ran each library's build whatever the
+  last one returned. Stop at the first failure, and expect the first strict run to turn up old
+  ones.
 - **Quarantining or skipping a flaky test "so it doesn't block CI".** It hides the failure from
   the only people who can fix it. Re-run it once to confirm it flakes, then instrument it and
   keep the artifacts until the cause is found.

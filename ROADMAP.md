@@ -411,6 +411,54 @@ lessons in when it's built, and its reasons cite them.
     and rule numbers were wrong by the time they were read. Each side caught them by checking
     its own tree.
 
+- **L31, `testing-patterns`:** a check must be able to fail, and these tests show it can:
+  - it compares the whole value, and the value the document wrote. A checker that cut two
+    hashes to 16 characters, and another that never read the hash a record wrote beside its
+    citation, both passed a changed hash;
+  - it never compares a value with one derived from itself. Under an option that overwrote a
+    field, comparing the input with the written files would always have agreed; the fix
+    compares with what was passed;
+  - a summary or diff tool is tested against a known change it must report. One said
+    "unchanged" over the commit that added a flag, because a row filter skipped its row, and a
+    "complete" list built for one build left out a flag only the other build took;
+  - a sweep over a population carries a minimum count, and each fix is reverted once to show
+    its test fails. Two probes found tests that couldn't fail.
+- **L32, `testing-patterns`:** a flaky failure is fixed where it is, then a ratchet refuses the
+  pattern coming back: it fails closed on code it can't place, and its allowlist may only
+  shrink. Two flakes from one directory walk racing a parallel worker's cleanup were the same
+  shape, and a third had been written before the ratchet.
+- **L33, `api-patterns`:** between two tools, the consumer takes a value only from output that
+  carries it, knows every name the producer may give a file, names the light mode where the
+  default action is heavy, sends an optional flag only to builds that declare it, and ships
+  the parser for a new output shape before the producer changes the shape. One runner took a
+  build tag from a refusal's message, and probe steps that named no mode fell through into
+  the tool's heavy default action.
+- **L34, `api-patterns`:** where two sides validate the same value, they agree one rule on the
+  same raw bytes, the stricter side's, and a property test runs one side's code against a port
+  of the other's. A looser rule would have passed a code the other side's own report flagged.
+- **L35, `review-loops`:** take in every message the other side has released before writing
+  anything that sums up the exchange. A digest written before one released lap was filed could
+  not be reproduced by its reader, and a counter that included one's own unreleased lap refused
+  the other side's verdict.
+- **L36, `review-loops`:** a message says what is established now, names what it waits on by
+  the condition it must meet rather than a version number, commits in advance to how the next
+  verdict will be decided, and says what it doesn't ask. A round closed in three laps on that.
+  An owner's `I thought we just needed X?` is the instruction, and reading it as a question
+  cost a round trip.
+- **L37, `review-loops`:** a shorter acceptance run is scoped from the diff, lists what it leaves
+  out and the risk, and replaces an agreed close condition only by the owner's recorded
+  override. A step that can hang runs last, under a time limit nothing can raise.
+- **L38, `review-loops`:** a file both sides must hold identically is written by one side,
+  copied byte for byte by the other and checked by SHA-256, never retyped. Every hash in a
+  message is pasted from a command's output: one draft's hash had its first 16 characters
+  right and the rest invented.
+- **L39, `agent-context-files`:** parallel helper sessions pay for read-only audits, which found
+  real defects, but not for running full test suites at once: seven on four cores pushed one
+  suite past its limit. Helpers run their targeted tests, and one integrator runs the suite.
+- **L40, `documentation`:** a status block that code checks stays current, and prose that no
+  test reads drifts. One audit found 103 statements in a project's documentation that its
+  tree no longer supported, and the checked block caught a stale line the same week.
+
 ## Rebuilding `project-bootstrap-and-audit`
 
 The standard stops being one separate document. Its content becomes the skill's own parts, one

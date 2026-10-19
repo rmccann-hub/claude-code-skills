@@ -145,6 +145,10 @@ the current default branch, fetched first.
   report. Read it from Git or the platform, or leave it out.
 - **Expecting `Fixes: <commit>` to close an issue.** Only a closing keyword with an issue
   number does, and only on a merge into the default branch (fact `close-keywords`).
+- **A fix to code inherited from an upstream project, with a commit that doesn't say so.** It
+  never gets reported. One went unreported for two months, until a search for upstream's code
+  found it. Say whose code it is in the subject or body, and before reporting it, reproduce it
+  on a build of upstream's head and point each file and line at that head.
 - **A "current state" section in `CLAUDE.md`.** It goes stale within days. Plans live in one
   planning file, and status in pull requests and issues.
 
