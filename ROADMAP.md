@@ -58,7 +58,7 @@ research. These rules are that structure.
 
 | Skill | Plugin | Loads when | Status |
 |---|---|---|---|
-| `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.47.0 | shipped |
+| `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.48.0 | shipped |
 | `git-workflows` | `engineering` | Commits, branches, pull requests, CI, hooks, tags, changelogs and releases | shipped |
 | `house-style` | `engineering` | Writing prose, Markdown, READMEs and documentation | shipped |
 | `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | planned |
@@ -1111,6 +1111,9 @@ The owner's answers on 2026-10-15 added one more, applied in v0.45.0:
 - **F149, in v0.46.0:** a person's acceptance run goes between review rounds, on the released
   pair, and one side files its result and opens the next round. An audit of a pair proposes
   this to both.
+- **F153, in v0.48.0:** UTC is the stamp of every time a run writes, and Phase 0 asks the time
+  zone and clock the human reads times in, so a local time worked out from the stamp goes beside
+  each time the run gives them. The owner asked for it on 2026-10-19.
 - **F150, in v0.47.0:** *Language toolchains* names Python 3.15, released 2026-10-09. A run
   of the skill on claude.ai checked python.org and found the table a release behind.
 - **F151, in v0.47.0:** Phase 0 continues without a repository when setting up something new

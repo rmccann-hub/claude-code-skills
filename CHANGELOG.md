@@ -12,6 +12,11 @@ Notable changes to this repository. The format follows
   zone's local time. The `times` check fails Markdown that writes a time without its zone.
 - The house style stamps times in UTC, with any local time derived from the stamp.
 
+### Changed
+
+- Standard v0.48.0: UTC is the stamp of every time a run writes, and a first audit asks the time
+  zone and clock the human reads times in.
+
 ## [0.1.17] - 2026-10-17
 
 ### Added
