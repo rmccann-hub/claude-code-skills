@@ -16,6 +16,8 @@ Notable changes to this repository. The format follows
 
 - `git-workflows` takes in six lessons from a two-repository review loop's rounds 34 and 35:
   three in `ci-workflows`, two in `releases-and-versions` and one in `commits-and-pull-requests`.
+- The house style keeps the zone of a time copied from a source, and `ROADMAP.md` holds four
+  lessons from an audit against a reference tool, as L41 to L44.
 - Standard v0.48.0: UTC is the stamp of every time a run writes, and a first audit asks the time
   zone and clock the human reads times in.
 

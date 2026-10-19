@@ -2,6 +2,21 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-19 — A two-repository loop's audit against a reference tool, checked for lessons
+
+- **Asked, by the owner:** "do a full check against both repos … see if you missed anything and
+  fix yourself as well".
+- **Read:** one repository's audit of its output against an established tool's, and each of
+  its numbers against the primary logs, reports and source it cites. Nothing in either
+  repository was changed; the findings went to the owner as a report outside this repository.
+- **Taken into a shipped module:** `writing-style`, that a time copied from a source keeps the
+  zone the source gave it.
+- **Waiting for their modules,** as L41 to L44 in `ROADMAP.md`: a reference checked before a
+  match with it counts, corroboration that is independent and carries weight, "not found"
+  against "couldn't look", and a summary computed from the same state as its verdict.
+- **Missed by this repository's earlier review of the same loop,** on 2026-10-19: the
+  corroboration and absence findings. Both were in records it read.
+
 ## 2026-10-19 — Rounds 34 and 35 of the two-repository loop, read for lessons
 
 - **Asked, by the owner:** "do a review of both repos and see what is learned".

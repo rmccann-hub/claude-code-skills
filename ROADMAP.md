@@ -458,6 +458,26 @@ lessons in when it's built, and its reasons cite them.
 - **L40, `documentation`:** a status block that code checks stays current, and prose that no
   test reads drifts. One audit found 103 statements in a project's documentation that its
   tree no longer supported, and the checked block caught a stale line the same week.
+- **L41, `testing-patterns`:** a reference is checked against an independent authority before
+  matching it counts as correct. One project's test called matching another tool's output
+  "parity", and called a re-read that converged on that output "the feature working". On that
+  item the reference was wrong: the main checksum database disagreed at its highest
+  confidence, and the project's own later audit said so.
+- **L42, `testing-patterns`:** a second source corroborates a result only when it's
+  independent of the first and carries weight. One app showed a green "verified" from a
+  secondary database on 8 of 26 results whose primary check rejected a part. Each match was
+  one entry, most likely from the same user and a read with the same fault, while over a
+  thousand entries disagreed. Show a match's weight beside the dissent, and never show a
+  minority match as verified when the primary check rejects.
+- **L43, `error-handling`:** "not found" and "couldn't look" are different results, and a
+  check that infers absence from "nothing matched" can't tell them apart. One app skipped its
+  extra verification pass when nothing matched a database, a rule meant for inputs the
+  database lacks. It also fired when the lookup failed and when every item misread, the two
+  cases that most need the extra pass, though the lookup's own answer was in the record.
+- **L44, `documentation`:** every summary in a report is computed from the same final state as
+  the verdict beside it. One report carried a first-pass count, 12 of 14, beside a verdict of
+  13 of 14 written after a corrective pass, because the count was copied from the tool's first
+  log.
 
 ## Rebuilding `project-bootstrap-and-audit`
 
