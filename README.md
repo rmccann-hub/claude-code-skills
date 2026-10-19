@@ -87,6 +87,13 @@ Each skill's dated facts carry their source and a date to check them again by.
 for each quote at its source, over the network. The Freshness workflow runs both every Monday,
 with the dependency map's check below, and keeps one issue open while anything is due.
 
+Every dependency stays on its newest release. `uv run skillcheck --outdated` measures each one
+against its registry: the packages in the lockfiles, the GitHub Actions, the tool and runtime
+versions the workflows name, `.python-version`, and the ranges in `pyproject.toml`. A release
+counts once it has been out three days, the wait Dependabot also keeps. The Freshness workflow
+runs it every Monday too, in an issue of its own. Give it another repository's path to check
+that one.
+
 [docs/dependencies.md](docs/dependencies.md) maps what the repository is built from, runs on
 and relies on: its languages, runtimes, tools, packages at their exact versions, GitHub Actions,
 services, and the sources its facts cite. [bom.json](bom.json) holds the same map in CycloneDX

@@ -1,15 +1,16 @@
 """Command-line entry point: ``skillcheck [ROOT] [MODE]``.
 
-The modes are ``--due [DATE]``, ``--verify``, ``--bom``, ``--bom-check``, ``--new SKILL``,
-``--new-module MODULE SKILL``, ``--move MODULE SKILL``, ``--release-assets VERSION DIR`` and
-``--time STAMP [ZONE]``, one at a time. With none, it runs every rule on the repository.
+The modes are ``--due [DATE]``, ``--verify``, ``--outdated``, ``--bom``, ``--bom-check``,
+``--new SKILL``, ``--new-module MODULE SKILL``, ``--move MODULE SKILL``,
+``--release-assets VERSION DIR`` and ``--time STAMP [ZONE]``, one at a time. With none, it runs
+every rule on the repository.
 """
 
 import argparse
 from datetime import UTC, date, datetime
 from pathlib import Path
 
-from skillcheck import bom, move, release, scaffold
+from skillcheck import bom, move, outdated, release, scaffold
 from skillcheck.core import facts, times
 from skillcheck.core.checks import PLACEHOLDER, check_repository
 
@@ -36,6 +37,12 @@ def main(argv: list[str] | None = None) -> int:
         "--verify",
         action="store_true",
         help="fetch each fact's source and look for its quote (uses the network)",
+    )
+    mode.add_argument(
+        "--outdated",
+        action="store_true",
+        help="name each dependency behind its newest release, past a "
+        f"{outdated.COOLDOWN_DAYS}-day wait (uses the network)",
     )
     # The dependency map changes whenever a lockfile does, and a Dependabot pull request can't
     # rebuild it, so these two run by hand, weekly and at release rather than on pull requests.
@@ -89,6 +96,12 @@ def main(argv: list[str] | None = None) -> int:
         return _due(args.root, args.due)
     if args.verify:
         return _verify(args.root)
+    if args.outdated:
+        lines, summary, code = outdated.report(outdated.scan(args.root))
+        for line in lines:
+            print(line)
+        print(summary)
+        return code
     if args.bom:
         for path in bom.write(args.root):
             print(f"wrote {path}")
