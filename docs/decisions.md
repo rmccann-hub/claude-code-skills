@@ -2,6 +2,15 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-19 — Times given to the owner in UTC and New York time
+
+- **Asked, by the owner:** "can you also provide them in my timezone, EST/NYC and using a 12 hour
+  clock with AM/PM? present both. just as a standard until i change this."
+- **Decided:** `AGENTS.md` asks every session to give a time to the owner as recorded, in UTC on
+  a 24-hour clock, and in New York time on a 12-hour clock with AM or PM and the zone in effect,
+  EDT or EST. Commits, records and files keep UTC alone, which the owner called fine for
+  official records. The private repository's `AGENTS.md` says the same.
+
 ## 2026-10-17 — Release 0.1.17, for people beyond the owner
 
 - **Asked, by the owner:** "release", so their brother installs the current skills: the
