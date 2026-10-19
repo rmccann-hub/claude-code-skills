@@ -149,6 +149,10 @@ quoted from a source.
   reader's local time, where they want one, is worked out from the stamp and follows it, with
   its own zone: `00:55 UTC (8:55 PM EDT, Fri Oct 16)`. A time with no zone is a guess at the
   reader's clock, and a local time on its own goes wrong twice a year.
+- **A time copied from a source keeps the zone the source gave it,** and is converted to UTC
+  from that zone. One audit copied a log's `5. October 2026, 22:48 (UTC-04:00)` as
+  `2026-10-05 22:48`, and its date then disagreed with the file it cited, named for the next
+  day, the date in UTC.
 - **Commit subjects, the changelog and the decision record** follow rule 11. git-workflows has
   the detail.
 - **An append-only record's past entries stay as they were written.** New entries follow the
