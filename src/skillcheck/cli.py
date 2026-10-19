@@ -1,16 +1,16 @@
 """Command-line entry point: ``skillcheck [ROOT] [MODE]``.
 
 The modes are ``--due [DATE]``, ``--verify``, ``--bom``, ``--bom-check``, ``--new SKILL``,
-``--new-module MODULE SKILL``, ``--move MODULE SKILL`` and ``--release-assets VERSION DIR``, one
-at a time. With none, it runs every rule on the repository.
+``--new-module MODULE SKILL``, ``--move MODULE SKILL``, ``--release-assets VERSION DIR`` and
+``--time STAMP [ZONE]``, one at a time. With none, it runs every rule on the repository.
 """
 
 import argparse
-from datetime import date
+from datetime import UTC, date, datetime
 from pathlib import Path
 
 from skillcheck import bom, move, release, scaffold
-from skillcheck.core import facts
+from skillcheck.core import facts, times
 from skillcheck.core.checks import PLACEHOLDER, check_repository
 
 
@@ -72,10 +72,19 @@ def main(argv: list[str] | None = None) -> int:
         metavar=("VERSION", "DIR"),
         help="build what a release of VERSION publishes beside its tag, into DIR",
     )
+    mode.add_argument(
+        "--time",
+        nargs="+",
+        metavar=("STAMP", "ZONE"),
+        help="give STAMP, an ISO 8601 time with its offset, in UTC and derived in ZONE, such as "
+        "America/New_York; now is the current time",
+    )
     args = parser.parse_args(argv)
     if not args.root.is_dir():
         # A missing root would otherwise report zero findings, which reads as a pass.
         parser.error(f"{args.root} is not a directory")
+    if args.time:
+        return _time(*args.time)
     if args.due is not None:
         return _due(args.root, args.due)
     if args.verify:
@@ -106,6 +115,20 @@ def main(argv: list[str] | None = None) -> int:
     # Always printed, so a run that checked nothing says so rather than looking like a pass.
     print(report.summary())
     return 1 if report.findings else 0
+
+
+def _time(text: str, zone: str | None = None, *extra: str) -> int:
+    if extra:
+        print(f"time: one stamp and at most one zone, not also {' '.join(extra)}")
+        return 2
+    if text == "now":
+        text = datetime.now(UTC).isoformat(timespec="minutes")
+    try:
+        print(times.stamp(text, zone))
+    except times.TimeError as error:
+        print(f"time: {error}")
+        return 2
+    return 0
 
 
 def _release(root: Path, version: str, out: str) -> int:

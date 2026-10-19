@@ -6,6 +6,12 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `skillcheck --time STAMP [ZONE]` gives a time as its UTC stamp and, worked out from it, the
+  zone's local time. The `times` check fails Markdown that writes a time without its zone.
+- The house style stamps times in UTC, with any local time derived from the stamp.
+
 ## [0.1.17] - 2026-10-17
 
 ### Added

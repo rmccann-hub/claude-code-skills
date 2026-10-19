@@ -145,6 +145,10 @@ quoted from a source.
 ### Records and dates
 
 - **Dates are written `YYYY-MM-DD`.** A reader anywhere reads them the same way, and they sort.
+- **A time is stamped in UTC, with its zone,** such as `14:05 UTC`, or ISO 8601 with `Z`. A
+  reader's local time, where they want one, is worked out from the stamp and follows it, with
+  its own zone: `00:55 UTC (8:55 PM EDT, Fri Oct 16)`. A time with no zone is a guess at the
+  reader's clock, and a local time on its own goes wrong twice a year.
 - **Commit subjects, the changelog and the decision record** follow rule 11. git-workflows has
   the detail.
 - **An append-only record's past entries stay as they were written.** New entries follow the

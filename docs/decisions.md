@@ -2,6 +2,25 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-19 — UTC is the stamp, local times are derived, and a check holds it
+
+- **Asked, by the owner:** "GMT is the gold standrad, just derive from that. we need timestamps
+  to be correct. make sure the check for this, and on an iniitial audit, you can ask for what to
+  use, but gmt should be the "stamp"". This sharpens the entry below on times given in UTC and
+  New York time.
+- **Built:** `skillcheck --time STAMP [ZONE]` gives an ISO 8601 time, which must carry its
+  offset, as UTC and as the zone's local time, worked out from the time zone database. Its
+  tests cover the hour New York's clocks repeat on 2026-11-01. `now` is the current time.
+- **Checked:** the `times` rule fails Markdown here that writes a time of day without UTC, or a
+  12-hour local time with no UTC time before it on its line. It leaves code, ISO 8601 times,
+  dated research results and decision entries dated before 2026-10-19 alone: the one time it
+  finds today is in an entry of 2026-10-05, which stays as written.
+- **Written down:** `AGENTS.md`, and the house style's *Records and dates*, which every
+  repository using `house-style` follows. The standard asks the question at a first audit, in its
+  own change.
+- **GMT or UTC:** the stamp is written `UTC`, the name time zone databases and ISO 8601 use; `GMT`
+  passes the check too, since for a timestamp the two agree.
+
 ## 2026-10-19 — Times given to the owner in UTC and New York time
 
 - **Asked, by the owner:** "can you also provide them in my timezone, EST/NYC and using a 12 hour

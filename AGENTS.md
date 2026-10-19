@@ -15,6 +15,7 @@ change here changes what agents do there.
 - Check skills and the catalog: `uv run skillcheck .`. Scaffold: `--new <skill>`,
   `--new-module <module> <skill>`; a module's new home: `--move <module> <skill>`
 - Dated facts: `uv run skillcheck --due` lists those due; `--verify` checks each source online
+- A time for the owner: `uv run skillcheck --time 2026-10-17T00:55Z America/New_York`
 - Check the prose, with Vale installed: `vale sync`, then `git ls-files -z '*.md' | xargs -0 vale`
 - Validate the catalog with Claude Code: `npx --no-install claude plugin validate --strict .`
 - Dependency map: `uv run skillcheck --bom` writes `bom.json` and `docs/dependencies.md`;
@@ -105,10 +106,12 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
   fit. Nothing checks it.
 - **A session that stops with work outstanding says what it's waiting on, and from whom.**
   Nothing checks it.
-- **A time given to the owner is given twice:** as recorded, in UTC on a 24-hour clock, and in
-  New York time on a 12-hour clock with AM or PM and the zone in effect, such as
-  `00:55 UTC (8:55 PM EDT, Fri Oct 16)`. The owner asked for this on 2026-10-19, until they
-  change it. Commits, records and files keep UTC alone. Nothing checks it.
+- **UTC is the stamp, and a local time is derived from it.** Every time written in the
+  repository is UTC, with its zone: `14:05 UTC`, or ISO 8601 with `Z`. To the owner, each time
+  is given as that stamp, then in New York time on a 12-hour clock, worked out by
+  `uv run skillcheck --time <stamp> America/New_York`, never in a session's head. The owner set
+  this on 2026-10-19, until they change it. The `times` check fails a time written without
+  its zone, or a local time with no stamp before it.
 
 ## Files the owner sends
 
