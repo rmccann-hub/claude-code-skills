@@ -431,8 +431,8 @@ lessons in when it's built, and its reasons cite them.
   carries it, knows every name the producer may give a file, names the light mode where the
   default action is heavy, sends an optional flag only to builds that declare it, and ships
   the parser for a new output shape before the producer changes the shape. One runner took a
-  build tag from a refusal's message, and probe steps with no mode fell through into a
-  whole-disc rip.
+  build tag from a refusal's message, and probe steps that named no mode fell through into
+  the tool's heavy default action.
 - **L34, `api-patterns`:** where two sides validate the same value, they agree one rule on the
   same raw bytes, the stricter side's, and a property test runs one side's code against a port
   of the other's. A looser rule would have passed a code the other side's own report flagged.

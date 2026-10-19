@@ -116,7 +116,7 @@ away uncommitted work.
   runner the same week.
 - **A timeout that comes and goes with no known cause is recorded, every time, with its
   numbers,** and the test is made to print where its time went, on passing runs too. One tree
-  took 28, 93 and over 120 seconds within an hour; the next timeout then named its slow step.
+  took from under half a minute to over two within an hour; the next timeout named its step.
   Raising the limit hides the cause.
 
 ## Mistakes
