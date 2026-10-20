@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-20 — Release 0.1.18
+
+- **Asked, by the owner:** "proceed when ready", for release 0.1.18.
+- **Carries:**
+  - standard v0.48.0, with UTC as the stamp;
+  - `skillcheck --time` and the `times` check;
+  - `skillcheck --outdated` and its weekly run;
+  - Python 3.15 and the other dependency updates;
+  - the house style's rule on copied times;
+  - the lessons from the two-repository loop.
+- **Release 0.1.18:** this pull request's merge, released by the Release workflow once CI
+  passes on it.
+
 ## 2026-10-19 — Every dependency on its newest release, checked weekly
 
 - **Asked, by the owner:** "are all repos using the most up to date of all dependcies, they
