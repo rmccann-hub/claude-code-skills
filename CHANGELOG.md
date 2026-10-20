@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.18] - 2026-10-20
+
 ### Added
 
 - `skillcheck --outdated` names each dependency behind its newest release, once that release has
