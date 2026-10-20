@@ -146,9 +146,10 @@ quoted from a source.
 
 - **Dates are written `YYYY-MM-DD`.** A reader anywhere reads them the same way, and they sort.
 - **A time is stamped in UTC, with its zone,** such as `14:05 UTC`, or ISO 8601 with `Z`. A
-  reader's local time, where they want one, is worked out from the stamp and follows it, with
-  its own zone: `00:55 UTC (8:55 PM EDT, Fri Oct 16)`. A time with no zone is a guess at the
-  reader's clock, and a local time on its own goes wrong twice a year.
+  reader's local time, where they want one, is worked out from the stamp and shown with it, in
+  the order the reader chose, each with its zone:
+  `8:55 PM EDT, Fri Oct 16 (2026-10-17 00:55 UTC)`. A time with no zone is a guess at the
+  reader's clock, and a local time without its stamp goes wrong twice a year.
 - **A time copied from a source keeps the zone the source gave it,** and is converted to UTC
   from that zone. One audit copied a log's `5. October 2026, 22:48 (UTC-04:00)` as
   `2026-10-05 22:48`, and its date then disagreed with the file it cited, named for the next

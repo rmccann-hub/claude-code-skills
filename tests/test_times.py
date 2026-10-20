@@ -1,4 +1,4 @@
-"""UTC is the stamp, and local times are derived from it (core/times.py)."""
+"""UTC is the stamp, and local times are derived from it and shown first (core/times.py)."""
 
 import pytest
 
@@ -22,13 +22,13 @@ def written(repo, path: str, text: str) -> None:
 @pytest.mark.parametrize(
     ("text", "zone", "expected"),
     [
-        ("2026-10-17T00:55Z", NEW_YORK, "2026-10-17 00:55 UTC (8:55 PM EDT, Fri Oct 16)"),
-        ("2026-10-17T02:55+02:00", NEW_YORK, "2026-10-17 00:55 UTC (8:55 PM EDT, Fri Oct 16)"),
-        ("2026-11-14T23:59:59Z", NEW_YORK, "2026-11-14 23:59 UTC (6:59 PM EST, Sat Nov 14)"),
+        ("2026-10-17T00:55Z", NEW_YORK, "8:55 PM EDT, Fri Oct 16 (2026-10-17 00:55 UTC)"),
+        ("2026-10-17T02:55+02:00", NEW_YORK, "8:55 PM EDT, Fri Oct 16 (2026-10-17 00:55 UTC)"),
+        ("2026-11-14T23:59:59Z", NEW_YORK, "6:59 PM EST, Sat Nov 14 (2026-11-14 23:59 UTC)"),
         # The hour New York's clocks repeat: the same local time, a different zone.
-        ("2026-11-01T05:30Z", NEW_YORK, "2026-11-01 05:30 UTC (1:30 AM EDT, Sun Nov 1)"),
-        ("2026-11-01T06:30Z", NEW_YORK, "2026-11-01 06:30 UTC (1:30 AM EST, Sun Nov 1)"),
-        ("2026-10-19T12:05Z", NEW_YORK, "2026-10-19 12:05 UTC (8:05 AM EDT, Mon Oct 19)"),
+        ("2026-11-01T05:30Z", NEW_YORK, "1:30 AM EDT, Sun Nov 1 (2026-11-01 05:30 UTC)"),
+        ("2026-11-01T06:30Z", NEW_YORK, "1:30 AM EST, Sun Nov 1 (2026-11-01 06:30 UTC)"),
+        ("2026-10-19T12:05Z", NEW_YORK, "8:05 AM EDT, Mon Oct 19 (2026-10-19 12:05 UTC)"),
         ("2026-10-19T12:05Z", None, "2026-10-19 12:05 UTC"),
     ],
 )
@@ -51,7 +51,7 @@ def test_a_stamp_without_its_zone_or_an_unknown_zone_is_refused(text, zone, mess
 
 def test_the_command_prints_both_or_refuses(capsys):
     assert main(["--time", "2026-10-17T00:55Z", NEW_YORK]) == 0
-    assert capsys.readouterr().out == "2026-10-17 00:55 UTC (8:55 PM EDT, Fri Oct 16)\n"
+    assert capsys.readouterr().out == "8:55 PM EDT, Fri Oct 16 (2026-10-17 00:55 UTC)\n"
     assert main(["--time", "2026-10-17T00:55"]) == 2
     assert "names no zone" in capsys.readouterr().out
     assert main(["--time", "2026-10-17T00:55Z", NEW_YORK, "extra"]) == 2
@@ -66,6 +66,7 @@ def test_times_with_their_zone_pass(repo):
         "docs/notes.md",
         "Merged at 14:05 UTC, released at 2026-10-17T00:55Z, and tagged at 23:59:59 GMT.\n"
         "Seen at 00:55 UTC (8:55 PM EDT, Fri Oct 16).\n"
+        "Seen at 8:55 PM EDT, Fri Oct 16 (2026-10-17 00:55 UTC).\n"
         "`12:34` in code is left alone.\n\n```text\nat 09:30\n```\n",
     )
     assert findings(repo) == []
@@ -95,7 +96,7 @@ def test_a_local_time_without_its_utc_stamp_fires(repo):
         (
             "README.md",
             "times",
-            "line 1: 6:59 is a local time with no UTC stamp before it on its line",
+            "line 1: 6:59 is a local time with no UTC stamp beside it on its line",
         )
     ]
 

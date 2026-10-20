@@ -1,11 +1,12 @@
 """Times: UTC is the stamp, and any other zone is derived from it.
 
 The owner asked, on 2026-10-19, for UTC as the stamp every time is recorded in, with a local
-time worked out from it, never written on its own. ``stamp`` does the working out, so no
-session converts a time zone in its head, and ``check`` holds the repository's Markdown to it:
-a time of day carries UTC, and a 12-hour local time follows a UTC time on its line. An ISO 8601
-time, such as ``2026-10-17T00:55Z``, is left to whatever parses it, since its offset is part of
-it.
+time worked out from it, never written on its own. On 2026-10-20 they chose the order shown to
+them: the local time first, with the UTC stamp beside it, as their other projects write it.
+``stamp`` does the working out, so no session converts a time zone in its head, and ``check``
+holds the repository's Markdown to it: a time of day carries UTC, and a 12-hour local time has a
+UTC time on its line. An ISO 8601 time, such as ``2026-10-17T00:55Z``, is left to whatever
+parses it, since its offset is part of it.
 """
 
 import re
@@ -43,7 +44,7 @@ class TimeError(ValueError):
 
 
 def stamp(text: str, zone: str | None = None) -> str:
-    """``text``, an ISO 8601 time with its offset, as UTC, and in ``zone`` derived from it."""
+    """``text``, an ISO 8601 time with its offset, in ``zone`` derived from it, then as UTC."""
     try:
         moment = datetime.fromisoformat(text.strip())
     except ValueError as exc:
@@ -59,7 +60,7 @@ def stamp(text: str, zone: str | None = None) -> str:
     except (ZoneInfoNotFoundError, ValueError) as exc:
         raise TimeError(f"no time zone named {zone!r}") from exc
     hour = local.strftime("%I").lstrip("0")
-    return f"{written} ({hour}:{local:%M %p %Z, %a %b} {local.day})"
+    return f"{hour}:{local:%M %p %Z, %a %b} {local.day} ({written})"
 
 
 def check(root: Path, add: Add) -> None:
@@ -94,13 +95,16 @@ def _checked_lines(where: str, lines: list[str]) -> Iterator[tuple[int, str]]:
 
 
 def _problems(line: str) -> Iterator[str]:
-    seen_utc = False
+    stamped, local = False, []
     for match in TIME.finditer(line):
         written, after = match.group("t"), match.group("after")
         if STAMPED.match(after):
-            seen_utc = True
+            stamped = True
         elif TWELVE_HOUR.match(after):
-            if not seen_utc:
-                yield f"{written} is a local time with no UTC stamp before it on its line"
+            local.append(written)
         else:
             yield f"{written} names no zone; write the stamp in UTC, such as {written} UTC"
+    # A local time is shown first and its UTC stamp beside it, so the stamp may come either side.
+    if not stamped:
+        for written in local:
+            yield f"{written} is a local time with no UTC stamp beside it on its line"

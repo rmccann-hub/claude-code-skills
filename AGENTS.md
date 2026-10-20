@@ -109,10 +109,11 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
   Nothing checks it.
 - **UTC is the stamp, and a local time is derived from it.** Every time written in the
   repository is UTC, with its zone: `14:05 UTC`, or ISO 8601 with `Z`. To the owner, each time
-  is given as that stamp, then in New York time on a 12-hour clock, worked out by
-  `uv run skillcheck --time <stamp> America/New_York`, never in a session's head. The owner set
-  this on 2026-10-19, until they change it. The `times` check fails a time written without
-  its zone, or a local time with no stamp before it.
+  is given in New York time on a 12-hour clock first, with the UTC stamp beside it, worked out
+  by `uv run skillcheck --time <stamp> America/New_York`, never in a session's head. The owner
+  set the stamp on 2026-10-19 and the order on 2026-10-20, to match their other projects, until
+  they change it. The `times` check fails a time written without its zone, or a local time
+  with no stamp on its line.
 
 ## Files the owner sends
 
