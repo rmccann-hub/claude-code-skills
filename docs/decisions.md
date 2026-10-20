@@ -2,6 +2,17 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-20 — Times to the owner: New York time first, the UTC stamp beside it
+
+- **Asked, by the owner:** "yes all should match", for how three repositories give times; then
+  "New York first", when asked which order.
+- **Supersedes, in part,** the entry of 2026-10-19 on UTC as the stamp. The stamp is
+  unchanged: every record is UTC, and every local time is derived from it by the tool. Only the
+  order shown to the owner changes, to the one the owner's other two projects agreed between
+  them on 2026-10-19.
+- **Changed here:** `skillcheck --time`'s output, the `times` check, AGENTS.md and the house
+  style. The standard's own example changes on its own, as the standard's changes do.
+
 ## 2026-10-20 — Release 0.1.18
 
 - **Asked, by the owner:** "proceed when ready", for release 0.1.18.
