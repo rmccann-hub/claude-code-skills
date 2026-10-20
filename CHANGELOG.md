@@ -8,6 +8,7 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- Standard v0.48.1: a first audit also asks whether the local time or the UTC stamp comes first.
 - `skillcheck --time` gives the local time first, with the UTC stamp beside it:
   `8:55 PM EDT, Fri Oct 16 (2026-10-17 00:55 UTC)`. The `times` check accepts the stamp on
   either side of a local time on its line. The owner chose the order to match their other

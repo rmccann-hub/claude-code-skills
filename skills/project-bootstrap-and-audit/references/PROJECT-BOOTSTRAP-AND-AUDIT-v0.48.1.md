@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.48.0"
-  updated: "2026-10-19"
-  supersedes: "0.47.0"
+  version: "0.48.1"
+  updated: "2026-10-20"
+  supersedes: "0.48.0"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -914,12 +914,13 @@ here:**
    unanswered, or `unknown`: no**, and nothing that depends on it is rated. A default taken
    goes in Phase 6's first list, beside the tier. Phase 8 records the answer, and a re-check
    shows it and asks "Is that still the case?", with any authors since as its evidence.
-5. **Which time zone does the human read times in, and on which clock?** For example,
-   `America/New_York` on a 12-hour clock. **UTC is the stamp whatever the answer:** every time
-   the run writes, in its report, its records and the repository, is UTC with its zone, as
-   `14:05 UTC` or ISO 8601 with `Z`. The answer only adds a local time beside each stamp in
-   what the run tells the human, worked out from the stamp with the time zone database, never
-   in the run's head: `00:55 UTC (8:55 PM EDT, Fri Oct 16)`. Draft it from the offsets on the
+5. **Which time zone does the human read times in, on which clock, and which comes first?**
+   For example, `America/New_York` on a 12-hour clock, local time first. **UTC is the stamp
+   whatever the answer:** every time the run writes, in its report, its records and the
+   repository, is UTC with its zone, as `14:05 UTC` or ISO 8601 with `Z`. The answer only adds
+   a local time beside each stamp in what the run tells the human, worked out from the stamp
+   with the time zone database, never in the run's head, in the order they chose:
+   `8:55 PM EDT, Fri Oct 16 (00:55 UTC)`, or `00:55 UTC (8:55 PM EDT, Fri Oct 16)`. Draft it from the offsets on the
    human's own commit dates, which every clone has, as a draft only: a laptop's clock can be
    set to anywhere. **Default if unanswered: UTC alone.** Phase 8 records the answer in the
    context file, for every later session to follow.
@@ -941,7 +942,7 @@ capability_proof: |
 asked: {local_working_copy: yes|no, standards_repo: "<name | none>",
         copyright_holder: "<as the human names it>",
         more_maintainers: "<no | yes, and who | unknown>",   # unknown counts as no
-        display_time: "<IANA zone and 12- or 24-hour clock | UTC alone>"}
+        display_time: "<IANA zone, 12- or 24-hour clock, local or UTC first | UTC alone>"}
 degraded: [<what this run could not do, and what it recorded instead>]
 tool: "<which agent and surface this ran on, and its version>"
 clean_tree_proof: |
@@ -5290,6 +5291,10 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.48.1**: **one change**, F154, which the owner asked for on 2026-10-20: Phase 0's fifth
+question also asks whether the local time or the UTC stamp comes first, and `display_time`
+records the answer. The owner chose local time first, as their other projects give it.
 
 **0.48.0**: **one change**, F153, which the owner asked for on 2026-10-19: UTC is the stamp of
 every time a run writes, and Phase 0's fifth question asks the time zone and clock the human

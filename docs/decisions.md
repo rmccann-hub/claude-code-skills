@@ -2,6 +2,14 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-20 — Standard v0.48.1: the order of a local time and its stamp
+
+- **Asked, by the owner:** "New York first", for how times are given to them; the entry below
+  changed this repository.
+- **Changed, in the standard, as F154 and a change of its own:** Phase 0's fifth question also
+  asks which comes first, and `display_time` in the Phase 0 block records it. The stamp is
+  unchanged: UTC, whatever the answer.
+
 ## 2026-10-20 — Times to the owner: New York time first, the UTC stamp beside it
 
 - **Asked, by the owner:** "yes all should match", for how three repositories give times; then
