@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:fa9638a9-9b5a-59c3-8208-26aa691de402",
+  "serialNumber": "urn:uuid:1014ffb3-df49-5918-8308-d0fd0158b05b",
   "version": 1,
   "metadata": {
     "tools": {
@@ -627,7 +627,7 @@
           "type": "data",
           "bom-ref": "skill:project-bootstrap-and-audit",
           "name": "project-bootstrap-and-audit",
-          "description": "standard v0.48.0",
+          "description": "standard v0.48.1",
           "licenses": [
             {
               "expression": "CC0-1.0"
