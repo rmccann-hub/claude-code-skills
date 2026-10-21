@@ -14,6 +14,16 @@ Notable changes to this repository. The format follows
   either side of a local time on its line. The owner chose the order to match their other
   projects; every record stays in UTC.
 
+### Fixed
+
+- `skillcheck --outdated` reads the `name==version` pins in a `requirements*.lock` or
+  `requirements*.txt` at the root, which it skipped before.
+- It also reads an action pinned to a tag such as `@v7`. Such a pin is current while the newest
+  release is a 7.x, and the report names it as a moving tag, not a commit. Before, it read
+  `@v7` as naming no version.
+- The workflows' `uses:` lines are read one line at a time, so a comment on the next line is no
+  longer taken for the action's version. The dependency map reads them the same way.
+
 ## [0.1.18] - 2026-10-20
 
 ### Added

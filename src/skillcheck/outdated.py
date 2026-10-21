@@ -2,6 +2,8 @@
 
 What a repository uses comes from the same readers as the dependency map (``bom.py``): the
 lockfiles, the workflows' actions and tool versions, ``.python-version`` and ``pyproject.toml``.
+The pins in a ``requirements*.lock`` or ``requirements*.txt`` at the root are read here too, as
+pip-tools and ``uv pip compile`` write them: ``name==version``, one to a line.
 Each registry then names its newest stable release and the day it came out:
 
 - **behind:** a newer release has been out for at least ``COOLDOWN_DAYS``;
@@ -35,6 +37,9 @@ USER_AGENT = "skillcheck (https://github.com/rmccann-hub/claude-code-skills)"
 # A runtime set by a setup action or `.python-version`, and its product on endoflife.date.
 RUNTIMES = {"Python": "python", "Go": "go", "Node.js": "nodejs"}
 GITHUB_MODULE = re.compile(r"pkg:golang/github\.com/([\w.-]+)/([\w.-]+)")
+PINNED = re.compile(r"^([A-Za-z0-9][\w.-]*)(?:\[[^\]]*\])?[ \t]*==[ \t]*([^\s;\\#]+)", re.MULTILINE)
+# An action pinned to a tag or a branch, not a commit: it moves with each release it names.
+MOVING = "a moving tag, not a commit"
 CLAUSE = re.compile(r"\s*(~=|==|!=|<=|>=|<|>)\s*([^\s,;]+)")
 REQUIREMENT = re.compile(r"\s*(?P<name>[A-Za-z0-9][\w.-]*)(?:\[[^\]]*\])?\s*(?P<spec>[^;@]*)")
 
@@ -91,6 +96,8 @@ def scan(root: Path, fetch: Fetch = fetch_json, today: date | None = None) -> li
     _, packages = bom._python(root)
     for package in packages:
         want("pypi", package.name, package.version, lambda n=package.name: _pypi(fetch, n))
+    for where, name, version in _pinned(root):
+        want("pypi", name, version, lambda n=name: _pypi(fetch, n), where)
     # An optional npm package is a platform build of another, at that package's version.
     for package in bom._node(root)[0]:
         if not package.optional:
@@ -98,7 +105,14 @@ def scan(root: Path, fetch: Fetch = fetch_json, today: date | None = None) -> li
     workflows = bom._workflows(root)
     for action in bom._actions(workflows):
         owner_repo = "/".join(action.name.split("/")[:2])
-        want("action", action.name, action.tag, lambda r=owner_repo: _github(fetch, r))
+        pinned = bom.SHA.fullmatch(action.ref)
+        want(
+            "action",
+            action.name,
+            action.tag if pinned else action.ref,
+            lambda r=owner_repo: _github(fetch, r),
+            "" if pinned else MOVING,
+        )
     pyproject = bom._toml(root / "pyproject.toml")
     for tool in bom._ci_tools(workflows) + bom._runtimes(root, pyproject):
         _want_tool(want, fetch, tool)
@@ -169,9 +183,13 @@ def _judge(kind: str, name: str, used: str, release: Release, note: str, today: 
         newest, mine = _key(release.version), _key(used)
         if not mine:
             return Result("unread", kind, name, used or "(none)", note="the pin names no version")
-        if len(mine) < len(newest) and newest[: len(mine)] == mine:
+        if note == MOVING:
+            # `v7` follows every 7.x release, so it's current while the newest is a 7.x.
+            fresh = mine >= newest[: len(mine)]
+        elif len(mine) < len(newest) and newest[: len(mine)] == mine:
             return Result("unread", kind, name, used, note=f"names {used}, not one release of it")
-        fresh = mine >= newest
+        else:
+            fresh = mine >= newest
     if fresh:
         return Result("current", kind, name, used, release.version, release.published, note)
     age = (today - release.published).days if release.published else COOLDOWN_DAYS
@@ -210,6 +228,16 @@ def _allows(spec: str, version: str) -> bool:
 
 def _key(version: str) -> tuple[int, ...]:
     return tuple(int(part) for part in re.findall(r"\d+", version))
+
+
+def _pinned(root: Path) -> list[tuple[str, str, str]]:
+    """Each pin in a requirements file at the root, with the file it's in."""
+    return [
+        (path.name, name, version)
+        for path in sorted(root.glob("requirements*"))
+        if path.suffix in {".lock", ".txt"}
+        for name, version in PINNED.findall(path.read_text(encoding="utf-8"))
+    ]
 
 
 def _requirements(pyproject: dict) -> list[str]:
