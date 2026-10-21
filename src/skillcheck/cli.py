@@ -3,7 +3,8 @@
 The modes are ``--due [DATE]``, ``--verify``, ``--outdated``, ``--examples``,
 ``--triggers [NAME ...]``, ``--tries [NAME ...]``, ``--bom``,
 ``--bom-check``, ``--new SKILL``, ``--new-module MODULE SKILL``, ``--move MODULE SKILL``,
-``--release-assets VERSION DIR`` and ``--time STAMP [ZONE]``, one at a time. With none, it runs
+``--release-assets VERSION DIR``, ``--hash-name NAME ...`` and ``--time STAMP [ZONE]``, one at a
+time. With none, it runs
 every rule on the repository.
 """
 
@@ -12,7 +13,7 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 
 from skillcheck import bom, examples, move, outdated, release, scaffold, triggers
-from skillcheck.core import facts, times
+from skillcheck.core import content, facts, times
 from skillcheck.core.checks import PLACEHOLDER, check_repository
 
 
@@ -100,6 +101,12 @@ def main(argv: list[str] | None = None) -> int:
         help="build what a release of VERSION publishes beside its tag, into DIR",
     )
     mode.add_argument(
+        "--hash-name",
+        nargs="+",
+        metavar="NAME",
+        help=f"print the line to add to {content.NAMES} for each name the repository withholds",
+    )
+    mode.add_argument(
         "--time",
         nargs="+",
         metavar=("STAMP", "ZONE"),
@@ -112,6 +119,10 @@ def main(argv: list[str] | None = None) -> int:
         parser.error(f"{args.root} is not a directory")
     if args.time:
         return _time(*args.time)
+    if args.hash_name:
+        for name in args.hash_name:
+            print(content.hash_line(name))
+        return 0
     if args.due is not None:
         return _due(args.root, args.due)
     if args.verify:

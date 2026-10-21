@@ -1,0 +1,12 @@
+# Names this public repository withholds: private repositories, the owner's employer, and the
+# repositories its skills ran on (AGENTS.md). One SHA-256 per line, of the name in lower case,
+# so the list names no one. Add one with: uv run skillcheck --hash-name NAME
+# skillcheck's private-name rule fails any file that holds one, word by word.
+e702004f73f26e87df50af721dca20e31fa9705b42973554c7bd705480d90a1c
+f27fc5938c850acc8fa6e489700b0873d4cec2bbd2d510b430500a7269933c08
+13cf3424dd729c631d8db46f3740113b3f26227f30e9171ff06ef90f21466a6e
+e2a6555c70d61324542ee2d6246874e98da5ff56f0389c8da5cd62fa1bafe5f6
+4cfca3964f4f780a004fd84ff5bb90fa528496a626ce314dc7ce9878dfa7a6f4
+d06ac433ac2388e9ad47def64f5eece4d02e8d5d067e78cc2faf71e133875023
+e766c4da0caf7b07b02126b4193bce6eb0ad07b979ae2c541ce1a96d714d6a94
+7670e29e434534600f3032a1106d2d2adb3f649308a59fb02ce2586b32980a90

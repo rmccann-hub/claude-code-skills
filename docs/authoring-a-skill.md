@@ -59,6 +59,12 @@ and dependencies. A second version of a published rule drifts from the first.
    - `CHANGEME` for secrets. Never use a realistic fake, because secret scanners can't tell one
      from a real key.
 
+   `skillcheck`'s `test-data` rule holds every file in `skills/` and `tests/` to these, and to
+   reserved email domains. Its `content-safety` rule fails fetch-and-run commands, and text that
+   steers an agent against its user, in what agents read. A test that must plant a realistic
+   value builds it from pieces; a Markdown line or block that must show one takes
+   `<!-- content: allowed, <reason> -->` on the line before it.
+
    Company-specific versions of a skill live in that company's repositories, under
    `.claude/skills/`.
 5. **Fits Claude Code.** Commands run on the user's machine. That means:

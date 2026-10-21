@@ -95,7 +95,9 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
   `docs/decisions.md` recording who permitted it. Company-specific detail, such as internal names,
   hosts, tenants and templates, belongs in the consuming repository's own `.claude/skills/`. A
   repository a skill ran on or was tested against goes unnamed, even by a findable quote, unless
-  it's a dependency or a research source. CI's `gitleaks` catches credentials, not names.
+  it's a dependency or a research source. CI's `gitleaks` catches credentials; `skillcheck`'s
+  `private-name` rule fails a name listed by hash in `.github/private-names.sha256`. Add one
+  with `uv run skillcheck --hash-name NAME`, and never write the name in a commit.
 - **Pull requests merge with a merge commit,** the only method the settings allow. Commits are
   cited in pull requests, records and reports, and a squash or rebase-merge strands each citation.
 - **Commit subjects read "area: summary",** such as `skillcheck: name the stale map file`. The
