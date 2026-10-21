@@ -75,6 +75,11 @@ jobs:
       - name: Check skills and catalog
         run: uv run skillcheck .
 
+      # ShellCheck comes from the locked dev group; pwsh is on GitHub's Ubuntu image. A tool
+      # that's missing fails the step rather than passing what it couldn't check.
+      - name: Run every example in the skills under its language's tool
+        run: uv run skillcheck --examples
+
       # A Dependabot update fails here until a session regenerates the map in its branch,
       # which merging one already requires. The map fell stale on main before, and a release
       # refused it then; this catches it at the pull request.

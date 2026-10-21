@@ -1,7 +1,7 @@
 """Command-line entry point: ``skillcheck [ROOT] [MODE]``.
 
-The modes are ``--due [DATE]``, ``--verify``, ``--outdated``, ``--bom``, ``--bom-check``,
-``--new SKILL``, ``--new-module MODULE SKILL``, ``--move MODULE SKILL``,
+The modes are ``--due [DATE]``, ``--verify``, ``--outdated``, ``--examples``, ``--bom``,
+``--bom-check``, ``--new SKILL``, ``--new-module MODULE SKILL``, ``--move MODULE SKILL``,
 ``--release-assets VERSION DIR`` and ``--time STAMP [ZONE]``, one at a time. With none, it runs
 every rule on the repository.
 """
@@ -10,7 +10,7 @@ import argparse
 from datetime import UTC, date, datetime
 from pathlib import Path
 
-from skillcheck import bom, move, outdated, release, scaffold
+from skillcheck import bom, examples, move, outdated, release, scaffold
 from skillcheck.core import facts, times
 from skillcheck.core.checks import PLACEHOLDER, check_repository
 
@@ -43,6 +43,11 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="name each dependency behind its newest release, past a "
         f"{outdated.COOLDOWN_DAYS}-day wait (uses the network)",
+    )
+    mode.add_argument(
+        "--examples",
+        action="store_true",
+        help="run each code example in the skills under its language's own tool",
     )
     # The dependency map changes whenever a lockfile does, and a Dependabot pull request can't
     # rebuild it, so these two run by hand, weekly and at release rather than on pull requests.
@@ -98,6 +103,12 @@ def main(argv: list[str] | None = None) -> int:
         return _verify(args.root)
     if args.outdated:
         lines, summary, code = outdated.report(outdated.scan(args.root))
+        for line in lines:
+            print(line)
+        print(summary)
+        return code
+    if args.examples:
+        lines, summary, code = examples.check(args.root).report()
         for line in lines:
             print(line)
         print(summary)

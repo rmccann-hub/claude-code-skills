@@ -63,6 +63,7 @@ skillcheck 0.0.0 (this repository's checks)
 │   └── pytest 9.1.1 (dev) (listed above)
 ├── pyyaml 6.0.3
 ├── ruff 0.17.1 (dev)
+├── shellcheck-py 0.11.0.1 (dev)
 └── zizmor 1.31.1 (dev)
 ```
 

@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:1014ffb3-df49-5918-8308-d0fd0158b05b",
+  "serialNumber": "urn:uuid:1d511476-2cfd-5702-8cf1-07f2530027f4",
   "version": 1,
   "metadata": {
     "tools": {
@@ -430,6 +430,14 @@
       "version": "0.17.1",
       "scope": "excluded",
       "purl": "pkg:pypi/ruff@0.17.1"
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:pypi/shellcheck-py@0.11.0.1",
+      "name": "shellcheck-py",
+      "version": "0.11.0.1",
+      "scope": "excluded",
+      "purl": "pkg:pypi/shellcheck-py@0.11.0.1"
     },
     {
       "type": "library",
@@ -942,6 +950,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:pypi/shellcheck-py@0.11.0.1",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:pypi/zizmor@1.31.1",
       "dependsOn": []
     },
@@ -952,6 +964,7 @@
         "pkg:pypi/pytest@9.1.1",
         "pkg:pypi/pyyaml@6.0.3",
         "pkg:pypi/ruff@0.17.1",
+        "pkg:pypi/shellcheck-py@0.11.0.1",
         "pkg:pypi/zizmor@1.31.1"
       ]
     }
