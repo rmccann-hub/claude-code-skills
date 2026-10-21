@@ -379,3 +379,17 @@ def test_the_command_reports_and_exits_by_what_it_found(tmp_path, capsys, monkey
 
 def _refuse(request, timeout):
     raise OSError("no network in tests")
+
+
+def test_each_address_is_fetched_once_a_run(tmp_path, monkeypatch):
+    tags(monkeypatch, {})
+    asked = []
+
+    def counting(url):
+        asked.append(url)
+        return fake_fetch(REGISTRY)(url)
+
+    outdated.scan(repository(tmp_path), counting, TODAY)
+    assert len(asked) == len(set(asked))
+    assert asked.count("https://endoflife.date/api/python.json") == 1
+    assert asked.count("https://pypi.org/pypi/ruff/json") == 1
