@@ -6,6 +6,25 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.19] - 2026-10-21
+
+### Added
+
+- `skillcheck --examples` runs every code block in the skills under its language's own tool:
+  Python compiled, JSON, YAML, TOML and INI parsed, shell through `bash -n` and ShellCheck, and
+  PowerShell through its parser. CI runs it. A block wrong on purpose is skipped by a comment
+  that gives the reason, and a missing tool fails the run.
+- `skillcheck --triggers [NAME ...]` asks Claude Code each trigger evaluation in a scratch
+  project and names each request that missed its skill or module; it runs by hand, since each
+  request is a model call. `--tries [NAME ...]` writes the list to try by hand on claude.ai.
+- Three rules on what the text says, with every `skillcheck .`:
+  - `test-data`: emails, IPv4 addresses and secret values in skills and tests use the reserved
+    examples (`example.com`, RFC 5737, `CHANGEME`), and a real credential's prefix fails;
+  - `content-safety`: no fetch-and-run command, and no text steering an agent against its
+    user, in what agents read;
+  - `private-name`: no file names what the repository withholds, listed only by SHA-256, with
+    `skillcheck --hash-name NAME` to add one.
+
 ### Changed
 
 - Standard v0.48.1: a first audit also asks whether the local time or the UTC stamp comes first.
@@ -23,6 +42,8 @@ Notable changes to this repository. The format follows
   `@v7` as naming no version.
 - The workflows' `uses:` lines are read one line at a time, so a comment on the next line is no
   longer taken for the action's version. The dependency map reads them the same way.
+- `skillcheck --outdated` asks each registry address once a run, so two pins of one runtime
+  can no longer get different answers when one lookup times out.
 
 ## [0.1.18] - 2026-10-20
 
