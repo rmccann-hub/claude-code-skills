@@ -35,7 +35,8 @@ SETUP = {
     "actions/setup-python": ("Python", "python-version", "platform"),
     "astral-sh/setup-uv": ("uv", "version", "application"),
 }
-USES = re.compile(r"^\s*(?:-\s+)?uses:\s*([^\s#]+)(?:\s*#\s*(\S+))?", re.MULTILINE)
+# `[ \t]`, not `\s`, so a comment on a later line is never read as this pin's version.
+USES = re.compile(r"^[ \t]*(?:-[ \t]+)?uses:[ \t]*([^\s#]+)(?:[ \t]*#[ \t]*(\S+))?", re.MULTILINE)
 GO_INSTALL = re.compile(r"go install\s+\"?([\w.\-/]+)@([^\s\"]+)\"?")
 VARIABLE = re.compile(r"\$\{?(\w+)\}?")
 SHA = re.compile(r"[0-9a-f]{40}")
