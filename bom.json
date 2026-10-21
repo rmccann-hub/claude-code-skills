@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:1014ffb3-df49-5918-8308-d0fd0158b05b",
+  "serialNumber": "urn:uuid:67d29779-31cb-5648-8ae4-78334c701836",
   "version": 1,
   "metadata": {
     "tools": {
@@ -18,7 +18,7 @@
       "type": "application",
       "bom-ref": "claude-code-skills",
       "name": "claude-code-skills",
-      "version": "0.1.18",
+      "version": "0.1.19",
       "licenses": [
         {
           "expression": "Apache-2.0"
@@ -37,7 +37,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "Python: 43 file(s)"
+          "value": "Python: 49 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -433,6 +433,14 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:pypi/shellcheck-py@0.11.0.1",
+      "name": "shellcheck-py",
+      "version": "0.11.0.1",
+      "scope": "excluded",
+      "purl": "pkg:pypi/shellcheck-py@0.11.0.1"
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:pypi/zizmor@1.31.1",
       "name": "zizmor",
       "version": "1.31.1",
@@ -441,9 +449,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:engineering@0.1.18",
+      "bom-ref": "plugin:engineering@0.1.19",
       "name": "engineering",
-      "version": "0.1.18",
+      "version": "0.1.19",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -613,9 +621,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:standards@0.1.18",
+      "bom-ref": "plugin:standards@0.1.19",
       "name": "standards",
-      "version": "0.1.18",
+      "version": "0.1.19",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -835,8 +843,8 @@
         "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.24.0",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
         "pkg:npm/%40anthropic-ai/claude-code@2.1.302",
-        "plugin:engineering@0.1.18",
-        "plugin:standards@0.1.18",
+        "plugin:engineering@0.1.19",
+        "plugin:standards@0.1.19",
         "project:skillcheck@0.0.0",
         "tool:GitHub-hosted runner@ubuntu-latest",
         "tool:Go@1.27",
@@ -942,6 +950,10 @@
       "dependsOn": []
     },
     {
+      "ref": "pkg:pypi/shellcheck-py@0.11.0.1",
+      "dependsOn": []
+    },
+    {
       "ref": "pkg:pypi/zizmor@1.31.1",
       "dependsOn": []
     },
@@ -952,6 +964,7 @@
         "pkg:pypi/pytest@9.1.1",
         "pkg:pypi/pyyaml@6.0.3",
         "pkg:pypi/ruff@0.17.1",
+        "pkg:pypi/shellcheck-py@0.11.0.1",
         "pkg:pypi/zizmor@1.31.1"
       ]
     }

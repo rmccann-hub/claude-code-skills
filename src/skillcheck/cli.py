@@ -1,8 +1,10 @@
 """Command-line entry point: ``skillcheck [ROOT] [MODE]``.
 
-The modes are ``--due [DATE]``, ``--verify``, ``--outdated``, ``--bom``, ``--bom-check``,
-``--new SKILL``, ``--new-module MODULE SKILL``, ``--move MODULE SKILL``,
-``--release-assets VERSION DIR`` and ``--time STAMP [ZONE]``, one at a time. With none, it runs
+The modes are ``--due [DATE]``, ``--verify``, ``--outdated``, ``--examples``,
+``--triggers [NAME ...]``, ``--tries [NAME ...]``, ``--bom``,
+``--bom-check``, ``--new SKILL``, ``--new-module MODULE SKILL``, ``--move MODULE SKILL``,
+``--release-assets VERSION DIR``, ``--hash-name NAME ...`` and ``--time STAMP [ZONE]``, one at a
+time. With none, it runs
 every rule on the repository.
 """
 
@@ -10,8 +12,8 @@ import argparse
 from datetime import UTC, date, datetime
 from pathlib import Path
 
-from skillcheck import bom, move, outdated, release, scaffold
-from skillcheck.core import facts, times
+from skillcheck import bom, examples, move, outdated, release, scaffold, triggers
+from skillcheck.core import content, facts, times
 from skillcheck.core.checks import PLACEHOLDER, check_repository
 
 
@@ -43,6 +45,25 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="name each dependency behind its newest release, past a "
         f"{outdated.COOLDOWN_DAYS}-day wait (uses the network)",
+    )
+    mode.add_argument(
+        "--examples",
+        action="store_true",
+        help="run each code example in the skills under its language's own tool",
+    )
+    # Each request is a model call, so this runs by hand, never in CI.
+    mode.add_argument(
+        "--triggers",
+        nargs="*",
+        metavar="NAME",
+        help="ask Claude Code each trigger evaluation, of every skill and module or those named, "
+        "and check it reached the right one (one model call each)",
+    )
+    mode.add_argument(
+        "--tries",
+        nargs="*",
+        metavar="NAME",
+        help="write the requests the owner tries by hand on claude.ai",
     )
     # The dependency map changes whenever a lockfile does, and a Dependabot pull request can't
     # rebuild it, so these two run by hand, weekly and at release rather than on pull requests.
@@ -80,6 +101,12 @@ def main(argv: list[str] | None = None) -> int:
         help="build what a release of VERSION publishes beside its tag, into DIR",
     )
     mode.add_argument(
+        "--hash-name",
+        nargs="+",
+        metavar="NAME",
+        help=f"print the line to add to {content.NAMES} for each name the repository withholds",
+    )
+    mode.add_argument(
         "--time",
         nargs="+",
         metavar=("STAMP", "ZONE"),
@@ -92,6 +119,10 @@ def main(argv: list[str] | None = None) -> int:
         parser.error(f"{args.root} is not a directory")
     if args.time:
         return _time(*args.time)
+    if args.hash_name:
+        for name in args.hash_name:
+            print(content.hash_line(name))
+        return 0
     if args.due is not None:
         return _due(args.root, args.due)
     if args.verify:
@@ -102,6 +133,21 @@ def main(argv: list[str] | None = None) -> int:
             print(line)
         print(summary)
         return code
+    if args.examples:
+        lines, summary, code = examples.check(args.root).report()
+        for line in lines:
+            print(line)
+        print(summary)
+        return code
+    if args.triggers is not None:
+        lines, summary, code = triggers.run_all(args.root, args.triggers)
+        for line in lines:
+            print(line)
+        print(summary)
+        return code
+    if args.tries is not None:
+        print(triggers.tries(args.root, args.tries), end="")
+        return 0
     if args.bom:
         for path in bom.write(args.root):
             print(f"wrote {path}")

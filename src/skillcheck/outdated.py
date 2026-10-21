@@ -88,6 +88,7 @@ def fetch_json(url: str) -> object:
 def scan(root: Path, fetch: Fetch = fetch_json, today: date | None = None) -> list[Result]:
     """Every dependency the repository declares, each with its state."""
     today = today or datetime.now(UTC).date()
+    fetch = _once(fetch)
     wanted: dict[tuple[str, str, str], tuple[Callable[[], Release], str]] = {}
 
     def want(kind: str, name: str, used: str, newest: Callable[[], Release], note: str = ""):
@@ -143,6 +144,24 @@ def scan(root: Path, fetch: Fetch = fetch_json, today: date | None = None) -> li
             continue
         results.append(_judge(kind, name, used, release, note, today))
     return results
+
+
+def _once(fetch: Fetch) -> Fetch:
+    """The fetch, asking each address once a run: several pins can share one registry answer."""
+    answers: dict[str, object] = {}
+
+    def cached(url: str) -> object:
+        if url not in answers:
+            try:
+                answers[url] = fetch(url)
+            except Exception as error:
+                answers[url] = error
+        answer = answers[url]
+        if isinstance(answer, Exception):
+            raise answer
+        return answer
+
+    return cached
 
 
 def report(results: list[Result]) -> tuple[list[str], str, int]:

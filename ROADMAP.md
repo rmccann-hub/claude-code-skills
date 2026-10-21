@@ -221,10 +221,13 @@ palettes in `visual-design`, not in `excel-master`.
      the template's sections, and facts read from inside each module, with `git-workflows` and
      `house-style` converted to modules. Shipped 2026-10-16;
    - a listing budget for about 20 skills, in place of room for 100. Shipped 2026-10-16;
-   - an example checker in CI that runs each language's own tool on every code block;
+   - an example checker in CI that runs each language's own tool on every code block. Shipped
+     2026-10-21 as `skillcheck --examples`;
    - one trigger-test runner, which checks in Claude Code that a request reached the right skill
      and that the skill read the right module; on claude.ai the owner tries the same requests
-     by hand, from a list the session gives them;
+     by hand, from a list the session gives them. Shipped 2026-10-21 as `skillcheck --triggers`
+     and `--tries`. Its first run, on `gitignore`, found none of its four requests loading
+     `git-workflows`, so the descriptions get tuned against it before the rebuilds;
    - `skillcheck --move` and its record of moves, renames and removals. Shipped 2026-10-16;
    - `skill-builder`, from `skill-creator`'s method under its license, and the stress tester's
      two good checks: content safety, and compiling every code block.
@@ -1285,9 +1288,10 @@ trigger.
 
 | Item | What it is | Status | Trigger |
 |---|---|---|---|
-| Weekly currency check | A scheduled workflow that flags stale facts, versions behind, and end of life within six months | planned | the first category skill ships |
+| Weekly currency check | The Freshness workflow, each Monday: facts due or whose quote is gone (`--due`, `--verify`), and dependencies behind their newest release (`--outdated`), each kept as one open issue | shipped | done, 2026-10-20 |
+| End-of-life warning | A runtime or dependency whose support ends within six months, which the weekly check doesn't yet name | planned | the first category skill ships |
 | `copier` template | The standard's starter files, so a new repository is set up without a session | planned | the first repository set up from this one |
 | Reusable workflows | This repository's CI gates, callable from other repositories | planned | a second repository wants this CI |
 | `upstream-defects.md` | The standard's register of upstream defects shared across repositories | planned | the first upstream defect found |
-| Map refresh on dependency updates | Dependabot's pull requests change the lockfiles but not `bom.json` or `docs/dependencies.md`, and pull request CI doesn't check the map, so main's goes stale until the weekly check or a release refuses it. The owner chose on 2026-10-13: a session regenerates it in each such pull request before merging | planned | the next Dependabot pull request |
+| Map refresh on dependency updates | Dependabot's pull requests change the lockfiles but not `bom.json` or `docs/dependencies.md`. CI's `--bom-check` fails such a pull request until a session regenerates the map in its branch before merging, as the owner chose on 2026-10-13 | shipped | done |
 | Fewest dependencies here | This repository's own dependencies and pins, in `pyproject.toml`, `package.json` and CI, held to the R21 rule | planned | the rule is in the standard |

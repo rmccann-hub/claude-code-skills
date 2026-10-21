@@ -2,6 +2,71 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-21 — Release 0.1.19
+
+- **Asked, by the owner:** "do everything you can up to 6 and release. plan 7 for the next
+  release after we have more info", of a list of tasks given that day, and "update your own
+  dependencies if possible, we should be practicing what we preach".
+- **Carries:**
+  - the example checker and the trigger-test runner, two of the rebuild plan's shared tools;
+  - the three rules on what the text says (the entry below);
+  - `--outdated`'s fixes: requirements locks, tag-pinned actions, a comment taken for a
+    version, and each registry asked once a run;
+  - the New York-first times and standard v0.48.1, merged on 2026-10-20.
+- **The roadmap, corrected:** the weekly currency check is shipped as the Freshness workflow,
+  less an end-of-life warning, now a row of its own; the map refresh on Dependabot's updates
+  is shipped as CI's `--bom-check`.
+- **Item 7, the two company audits' fixes:** planned in the private repository's roadmap,
+  which can name them, to follow the owner's answers to the audits' questions.
+- **Own dependencies:** nothing is behind. uv 0.13.4 and Claude Code 2.1.305 came out on
+  2026-10-20, inside the three-day wait the rule keeps, so they wait for Dependabot's pull
+  requests after 2026-10-23. Practicing the rule means waiting, too. ShellCheck comes in at
+  its newest, `shellcheck-py` 0.11.0.1.
+- **Release 0.1.19:** this pull request's merge, released by the Release workflow once CI
+  passes on it.
+
+## 2026-10-21 — Checking what the text says
+
+- **Asked, by the owner:** "are we checking for good info security? for plausible deniability
+  when needed it (for testing)? things like this? input and output sanitation, not just of
+  type and int, etc, but of what they say? but we should do the rest too." Then, as examples:
+  "i know this is a test, let me give fake data, not use real for a test", and "i need to make
+  sure the other application cannot accidentialy read this data it is necessary to uphold our
+  stanards".
+- **Read as:** the habits an agent should have, fake data in tests and one application's data
+  out of another's reach, so the checks enforce them. The owner was told so, and asked to say
+  if they meant phrases to flag.
+- **Done, as `skillcheck` rules that run with every check:**
+  - `test-data`, in skills and tests: reserved email domains, RFC 5737 addresses, and
+    `CHANGEME` or a placeholder for a secret's value; a real credential's prefix fails
+    anywhere;
+  - `content-safety`, in what agents read: fetch-and-run commands, and text steering an agent
+    against its user. Quoted text passes, as a quotation;
+  - `private-name`, everywhere: names this public repository withholds, listed only as
+    SHA-256 hashes in `.github/private-names.sha256`. The list was seeded with the private
+    repositories, the owner's employer and the repositories the skills ran on, and names none
+    of them.
+- **Considered for the names:** a list in a CI secret, which no local run or session could
+  read; a keyed hash, the same. A plain hash can be confirmed by someone who already guesses a
+  name, and reveals nothing to anyone who doesn't, which is the risk that matters here.
+- **Left to the modules that teach it:** sanitizing input and output in the code the skills
+  teach, by meaning and by context. That's `input-handling`, `secure-coding` and
+  `ai-agent-security`, after research R04 and R01. Keeping one application's data from
+  another goes there too, and into the standard as a proposed change once that research is in.
+
+## 2026-10-21 — The example checker and the trigger-test runner
+
+- **Asked, by the owner:** the rebuild plan's shared tools, approved on 2026-10-15 and 16, and
+  "do everything you can up to 6".
+- **Built:** `skillcheck --examples`, which CI runs, and `skillcheck --triggers` with
+  `--tries`, which run by hand.
+- **Chosen:** ShellCheck pinned through `shellcheck-py` (MIT) in the dev group rather than the
+  runner image's, so CI and a local run use one version. PowerShell is parsed by `pwsh` from
+  GitHub's Ubuntu image, fed on standard input so nothing runs; no skill holds PowerShell yet.
+- **Found by the first live trigger run:** none of the four `gitignore` requests loaded
+  `git-workflows` in Claude Code, which answered them from its own knowledge. The descriptions
+  get tuned against the runner before the rebuilds.
+
 ## 2026-10-20 — Standard v0.48.1: the order of a local time and its stamp
 
 - **Asked, by the owner:** "New York first", for how times are given to them; the entry below
