@@ -1,6 +1,7 @@
 """Command-line entry point: ``skillcheck [ROOT] [MODE]``.
 
-The modes are ``--due [DATE]``, ``--verify``, ``--outdated``, ``--examples``, ``--bom``,
+The modes are ``--due [DATE]``, ``--verify``, ``--outdated``, ``--examples``,
+``--triggers [NAME ...]``, ``--tries [NAME ...]``, ``--bom``,
 ``--bom-check``, ``--new SKILL``, ``--new-module MODULE SKILL``, ``--move MODULE SKILL``,
 ``--release-assets VERSION DIR`` and ``--time STAMP [ZONE]``, one at a time. With none, it runs
 every rule on the repository.
@@ -10,7 +11,7 @@ import argparse
 from datetime import UTC, date, datetime
 from pathlib import Path
 
-from skillcheck import bom, examples, move, outdated, release, scaffold
+from skillcheck import bom, examples, move, outdated, release, scaffold, triggers
 from skillcheck.core import facts, times
 from skillcheck.core.checks import PLACEHOLDER, check_repository
 
@@ -48,6 +49,20 @@ def main(argv: list[str] | None = None) -> int:
         "--examples",
         action="store_true",
         help="run each code example in the skills under its language's own tool",
+    )
+    # Each request is a model call, so this runs by hand, never in CI.
+    mode.add_argument(
+        "--triggers",
+        nargs="*",
+        metavar="NAME",
+        help="ask Claude Code each trigger evaluation, of every skill and module or those named, "
+        "and check it reached the right one (one model call each)",
+    )
+    mode.add_argument(
+        "--tries",
+        nargs="*",
+        metavar="NAME",
+        help="write the requests the owner tries by hand on claude.ai",
     )
     # The dependency map changes whenever a lockfile does, and a Dependabot pull request can't
     # rebuild it, so these two run by hand, weekly and at release rather than on pull requests.
@@ -113,6 +128,15 @@ def main(argv: list[str] | None = None) -> int:
             print(line)
         print(summary)
         return code
+    if args.triggers is not None:
+        lines, summary, code = triggers.run_all(args.root, args.triggers)
+        for line in lines:
+            print(line)
+        print(summary)
+        return code
+    if args.tries is not None:
+        print(triggers.tries(args.root, args.tries), end="")
+        return 0
     if args.bom:
         for path in bom.write(args.root):
             print(f"wrote {path}")

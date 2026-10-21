@@ -81,8 +81,8 @@ and dependencies. A second version of a published rule drifts from the first.
    Before it ships, the owner tries requests on claude.ai, each in a new chat, from a list the
    session gives them: for each changed module, a request worded as a person would ask, the
    skill and module it should reach, and what a pass looks like, plus one near miss it
-   shouldn't take. The list comes from the module's trigger tests, and the results are
-   recorded in `docs/decisions.md`. claude.ai can't be driven by a program, and the owner chose
+   shouldn't take. `uv run skillcheck --tries <module>` writes the list from the module's
+   trigger tests, and the results are recorded in `docs/decisions.md`. claude.ai can't be driven by a program, and the owner chose
    these tries over an API run that would cost money (2026-10-16).
 6. **Frontmatter.** Spec fields only, and the name matches the directory. The description says
    when to load the skill and what it does, in the third person, its main use first, with
@@ -115,10 +115,13 @@ and dependencies. A second version of a published rule drifts from the first.
    `skillcheck` checks every part of this. Every skill is made of modules except the
    standard's, which keeps the standard in one versioned file.
 8. **Every link resolves and every example works.** Each code example compiles, lints or runs
-   under its language's own tools.
+   under its language's own tools: `uv run skillcheck --examples`, which CI runs. A block that's
+   wrong on purpose takes `<!-- example: unchecked, <reason> -->` on the line before it.
 9. **Trigger evaluations.** Each module has `tests/fixtures/modules/<module>.json`, with requests
    that should reach it and near misses that belong to another module or skill. `skillcheck`
-   requires both kinds. These requests decide the boundaries: a module spins off into a skill
+   requires both kinds. `uv run skillcheck --triggers <module>` asks Claude Code each one and
+   names each that missed; each is a model call, so it runs by hand. These requests decide the
+   boundaries: a module spins off into a skill
    of its own, two skills merge, or a module moves, by the rules in the roadmap.
 10. **Catalog, roadmap, README.** List the skill in exactly one plugin entry. Set its
     `ROADMAP.md` row, and each built module's row, to `shipped`, and add the skill to the

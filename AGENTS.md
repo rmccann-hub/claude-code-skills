@@ -15,6 +15,8 @@ change here changes what agents do there.
 - Check skills and the catalog: `uv run skillcheck .`. Scaffold: `--new <skill>`,
   `--new-module <module> <skill>`; a module's new home: `--move <module> <skill>`
 - Dated facts: `uv run skillcheck --due` lists those due; `--verify` checks each source online
+- Examples: `uv run skillcheck --examples`; trigger tests in Claude Code: `--triggers [name]`, by
+  hand only, and the owner's claude.ai list: `--tries [name]`
 - A time for the owner: `uv run skillcheck --time 2026-10-17T00:55Z America/New_York`
 - Check the prose, with Vale installed: `vale sync`, then `git ls-files -z '*.md' | xargs -0 vale`
 - Validate the catalog with Claude Code: `npx --no-install claude plugin validate --strict .`
