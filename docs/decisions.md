@@ -2,6 +2,17 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Release 0.1.23, every module within claude.ai's file viewer
+
+- **Asked, by the owner:** to get ready for an audit of the two repositories that consume these
+  skills ("anything else you can do before that to be ready?"). The audit should test the skills
+  as they now are, and plugin installs and cloud sessions take a release, not `main`.
+- **Carries:** `coding`'s modules split in two (#85), `git-workflows`' and house style's (#86),
+  the `modules` rule's 16,000-character limit (#86), and `--verify` retrying an unreadable
+  source (#87). claude.ai has had each since its merge.
+- **Unchanged for consumers:** no skill or module was renamed or removed, so nothing that names
+  one breaks. Six of `coding`'s modules and three of `git-workflows`' are new.
+
 ## 2026-10-26 — Every module fits claude.ai's file viewer, and `skillcheck` holds it there
 
 - **Asked, by the owner:** the same "i want it", for the six modules the entry below left over
