@@ -1,0 +1,42 @@
+[
+  {
+    "query": "Is it safe to pass our API token to curl with -H in a shell script?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our script runs rm -rf \"$BUILD_DIR\"/* at the end. What happens if BUILD_DIR is empty, and how do I guard it?",
+    "should_trigger": true
+  },
+  {
+    "query": "A reviewer flagged (( $1 > limit )) in my bash script as command injection. Is that real?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is eval ever OK in a bash wrapper that runs one of a few subcommands the caller picks?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our install docs pipe a downloaded script straight into bash. What should we tell people to do instead?",
+    "should_trigger": true
+  },
+  {
+    "query": "Why does my bash script exit silently right after ((count++))?",
+    "should_trigger": false,
+    "note": "bash-coding"
+  },
+  {
+    "query": "My while read loop drops the last line of the file. Why?",
+    "should_trigger": false,
+    "note": "bash-coding"
+  },
+  {
+    "query": "We committed an AWS key to the repository last week. What now?",
+    "should_trigger": false,
+    "note": "leaked-data"
+  },
+  {
+    "query": "Write a PowerShell script that reads an API key without putting it on the command line.",
+    "should_trigger": false,
+    "note": "powershell-security"
+  }
+]
