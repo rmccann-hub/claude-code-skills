@@ -2,6 +2,32 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Merging ships to claude.ai, and the gate moves before the merge
+
+- **Found:** the owner's claude.ai account loaded `coding` in two tries without installing
+  anything, though no release carried it: 0.1.21 was cut before it existed. The account syncs
+  this repository's plugins with "Sync automatically", and that sync reads `main`, not releases.
+  The README, the authoring review, the roadmap and the pull request for `coding` (#82) all said
+  a release was the gate. For claude.ai it wasn't.
+- **Asked, by the owner:** "do option 2", of two offered: point the catalog at release tags, or
+  accept that merging ships and move the checks before the merge.
+- **Changed:** the README, the authoring review (steps 5 and 12), the roadmap's rebuild plan and
+  `AGENTS.md` now say that a merge ships to claude.ai. Before a skill's merge: CI, a fresh
+  review, the trigger tests in Claude Code, and the owner's deletion of any old copy. After it:
+  the owner's claude.ai tries, with a miss fixed or the merge reverted at once. claude.ai can't
+  show a skill before it's on `main` without a hand upload, which would clash with the synced
+  copy. Releases still reach plugin installs in Claude Code and cloud sessions; whether a Claude
+  Code install follows `main` the same way is not yet checked.
+- **For `coding`, the owner's word:**
+  - the six old language skills are deleted. A new session's sync on 2026-10-26 lists none of
+    them among the 35 it holds;
+  - one try instead of twelve ("can we do it in one?"). Try 1, a Bash review, passed: the steps
+    show `coding` and `bash-coding.md` read. Another skill on the account, `code-review`, also
+    loaded, and claude.ai read the 380-line module in two passes. The try chosen as the one,
+    `innerHTML` and a CSP, gave an answer that follows `html-coding`; its steps, to confirm
+    `javascript-coding` wasn't read, are still to come;
+  - the boundary with `git-workflows` goes untested, accepted.
+
 ## 2026-10-26 — The `coding` skill, wave 1 of the rebuild
 
 - **Asked, by the owner:** "can you build the coding skill", on 2026-10-26, which is wave 1 of

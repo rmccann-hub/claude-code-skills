@@ -247,11 +247,11 @@ palettes in `visual-design`, not in `excel-master`.
    | When needed | R15 | `linux-gaming` | `linux-gaming` |
 
    Each rebuild takes the old skill's topics from the intake, writes from primary sources with
-   dated facts, makes every example pass the checker, gets a fresh review, its trigger tests
-   and the owner's claude.ai tries, and ships in a release. Before that release, the owner
-   deletes the old copies the table names from claude.ai, in their own settings and in the
-   organization library's inventory; the release then reaches chat through the plugins and
-   cloud sessions through the release's hook. `code-standards` goes last because the old
+   dated facts, makes every example pass the checker, and gets a fresh review and its trigger
+   tests. Before it merges, the owner deletes the old copies the table names from claude.ai, in
+   their own settings and in the organization library's inventory, because the merge reaches
+   chat through the plugins' sync of `main` (2026-10-26). The owner's claude.ai tries follow
+   the merge, and the release then reaches cloud sessions through the release's hook. `code-standards` goes last because the old
    language skills, `docker-containers` and `networking-security` say they must read it first.
 
 4. **Colleagues:** the organization's library installs all 28 of the owner's old skills still

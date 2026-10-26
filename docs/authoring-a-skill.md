@@ -84,12 +84,16 @@ and dependencies. A second version of a published rule drifts from the first.
      user's and the admin's settings;
    - custom skills there need code execution turned on, on Pro, Max, Team and Enterprise.
 
-   Before it ships, the owner tries requests on claude.ai, each in a new chat, from a list the
-   session gives them: for each changed module, a request worded as a person would ask, the
-   skill and module it should reach, and what a pass looks like, plus one near miss it
-   shouldn't take. `uv run skillcheck --tries <module>` writes the list from the module's
-   trigger tests, and the results are recorded in `docs/decisions.md`. claude.ai can't be driven by a program, and the owner chose
-   these tries over an API run that would cost money (2026-10-16).
+   claude.ai's plugin sync reads `main`, so merging ships a skill there (the owner, 2026-10-26).
+   Before the merge, `uv run skillcheck --triggers` checks the routing in Claude Code. Right
+   after it, the owner tries requests on claude.ai, each in a new chat, and a miss is fixed or
+   the merge reverted at once. The session gives the owner the requests to try: for each
+   changed module, a request worded as a person would ask, the skill and module it should
+   reach, and what a pass looks like, plus one near miss it shouldn't take.
+   `uv run skillcheck --tries <module>` writes the list from the module's trigger tests, and
+   the results are recorded in `docs/decisions.md`. claude.ai can't be driven by a program, and
+   the owner chose these tries over an API run that would cost money (2026-10-16). How many to
+   run is the owner's call each time: for `coding`, one well-chosen try (2026-10-26).
 6. **Frontmatter.** Spec fields only, and the name matches the directory. The description says
    when to load the skill and what it does, in the third person, its main use first, with
    distinctive trigger words rather than a keyword list, in 250 characters or fewer. It names
@@ -135,14 +139,13 @@ and dependencies. A second version of a published rule drifts from the first.
     `uv run skillcheck .` and `npx --no-install claude plugin validate --strict .`.
 11. **Record it.** Add a line under `[Unreleased]` in `CHANGELOG.md` and set `metadata.reviewed`
     to today's date.
-12. **The old copy.** A rebuilt skill keeps its old skill's name where the old name still fits
-    its scope. Before the release that ships it, the session names the old copy on the owner's
-    claude.ai account, and every skill there that depends on it, found by searching the synced
-    copies under `~/.claude/skills/synced/` for its name, saying for each whether it would
-    break or only names the old one. The owner deletes the old copy and decides which of those
-    to delete too, since the owner's own settings delete an uploaded skill but can't turn it off
-    (the owner, 2026-10-16). The owner deletes it in the organization library's inventory as
-    well, since deleting their own copy left the library's installed for everyone, and
-    colleagues get the successor from this repository's plugins. The release waits for their
-    word. Otherwise the old copy loads
-    beside the new one under a prefix, in chat and in cloud sessions.
+12. **The old copy.** A rebuilt skill keeps its old skill's name where the old name still fits its
+    scope. Before the pull request that ships it merges, the session names the old copy on the
+    owner's claude.ai account, and every skill there that depends on it, found by searching the
+    synced copies under `~/.claude/skills/synced/` for its name, saying for each whether it would
+    break or only names the old one. The owner deletes the old copy and decides which of those to
+    delete too, since the owner's own settings delete an uploaded skill but can't turn it off (the
+    owner, 2026-10-16). The owner deletes it in the organization library's inventory as well, since
+    deleting their own copy left the library's installed for everyone, and colleagues get the
+    successor from this repository's plugins. The merge waits for their word. Otherwise the old copy
+    loads beside the new one under a prefix, in chat and in cloud sessions.
