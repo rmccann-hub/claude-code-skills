@@ -2,6 +2,33 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — How a repository that uses these skills is audited
+
+- **Asked, by the owner:** "should we make a rule, and an announcement, that an audit only
+  happens on main, new release or not?", and that the feedback "must be sent via .md file or
+  similar ... created in the llm, not on the repo".
+- **Decided:**
+  - An audit judges the tip of the repository's default branch, whether or not a release is due.
+    Work on another branch waits for the next audit, since it isn't integrated, and a new session
+    sees only what's pushed.
+  - It runs in the audited repository itself, in a new session, never the one doing its work,
+    and reviews only: no change, commit, push, release, issue or pull request.
+  - It writes two files and commits neither: its findings, and feedback on the skills alone,
+    with the repository's name, code and findings left out. Each goes in the repository's
+    ignored working folder, or as a file to download. Findings stay with the owner until they're
+    fixed, so none goes in an issue or a pull request, above all a security finding on a public
+    repository.
+  - The files come back by attachment. Grading against an answer key written before the audit,
+    and checking each finding against the code, happen here; the audited session never sees the
+    key. For anyone else, only the feedback comes back, if they choose, as an issue drafted by
+    each skill's reporting section.
+- **Considered:** auditing the branch that holds the next release's work. Rejected for its
+  ambiguity, since mid-work that branch can change hourly. And committing reports to the audited
+  repository, rejected for publishing unfixed findings.
+- **Next:** the kit's generic parts (the prompt, the test bench and the grader) are committed
+  once a first audit proves them, with the two files' first lines added to `AGENTS.md`'s *Files
+  the owner sends*.
+
 ## 2026-10-26 — Release 0.1.23, every module within claude.ai's file viewer
 
 - **Asked, by the owner:** to get ready for an audit of the two repositories that consume these
