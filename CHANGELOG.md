@@ -8,9 +8,9 @@ Notable changes to this repository. The format follows
 
 ### Security
 
-- The hidden-character rule also scans `src/`, `tests/`, `docs/` and `.github/`, where a Trojan
-  Source edit shows a reviewer one thing and runs another. Three tests held the characters they
-  plant literally; they now spell them as escapes.
+- The hidden-character rule also scans every file at the root, `src/`, `tests/`, `docs/` and
+  `.github/`, where a Trojan Source edit shows a reviewer one thing and runs another. Three tests
+  held the characters they plant literally; they now spell them as escapes.
 - The cloud install hook refuses a release whose files carry a hidden character, and names an
   archive entry escaped.
 - Text from outside the repository is printed with its control and hidden characters spelled

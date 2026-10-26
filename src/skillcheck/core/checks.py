@@ -497,6 +497,9 @@ def _check_agent_files(root: Path, report: Report) -> None:
     files = [root / name for name in AGENT_FILES if (root / name).is_file()]
     for path in files:
         _check_context_size(path, report)
+    # Every other file at the root, such as the README, the roadmap and the changelog, is read
+    # by agents and reviewers too.
+    files += sorted(p for p in root.iterdir() if p.is_file() and p.name not in AGENT_FILES)
     for directory in AGENT_DIRS + REVIEWED_DIRS:
         if (root / directory).is_dir():
             files += _files_under(root / directory)
