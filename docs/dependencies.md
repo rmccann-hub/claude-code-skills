@@ -1,6 +1,6 @@
 # Dependency map
 
-What `claude-code-skills` 0.1.22 is built from, runs on and relies on: the
+What `claude-code-skills` 0.1.23 is built from, runs on and relies on: the
 plugins it ships, the languages it's written in, its runtimes and tools, every package
 at its exact version, the GitHub Actions it pins, the services it uses, and the sources
 its skills' facts cite.
@@ -16,10 +16,10 @@ freshness run and the release workflow both run it.
 
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
-| `standards` | 0.1.22 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.2 |
-| `engineering` | 0.1.22 | Apache-2.0 | `coding` | reviewed 2026-10-26 |
-| `engineering` | 0.1.22 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
-| `engineering` | 0.1.22 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
+| `standards` | 0.1.23 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.2 |
+| `engineering` | 0.1.23 | Apache-2.0 | `coding` | reviewed 2026-10-26 |
+| `engineering` | 0.1.23 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
+| `engineering` | 0.1.23 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
 
 ## Languages
 

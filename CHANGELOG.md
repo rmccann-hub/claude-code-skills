@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.23] - 2026-10-26
+
 ### Changed
 
 - Each of `coding`'s six language modules is split in two, a language module and a security
