@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:e5c5fe41-e6f6-5ca4-9d24-bb26fa778b24",
+  "serialNumber": "urn:uuid:77810cdf-2083-5acf-9ab1-58a3e68d2a07",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 81 file(s)"
+          "value": "Markdown: 87 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 26 file(s)"
+          "value": "JSON: 32 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -489,7 +489,7 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "learn.microsoft.com: 56 fact(s)"
+              "value": "learn.microsoft.com: 59 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -505,7 +505,7 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "tiswww.case.edu: 14 fact(s)"
+              "value": "tiswww.case.edu: 15 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",

@@ -6,6 +6,21 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- Each of `coding`'s six language modules is split in two, a language module and a security
+  module (`python-security`, `javascript-security`, `web-security`, `csharp-security`,
+  `powershell-security`, `bash-security`), so that no file passes 15,000 characters.
+  claude.ai's file viewer drops the middle of a file over 16,000, which cut the Mistakes, Audit
+  and Why sections out of the larger modules. No rule, mistake, audit check or example was
+  lost.
+
+### Fixed
+
+- `csharp-security` says the SQL and type-handling analyzers, CA2100 and CA2326, are off by
+  default in .NET 10, even at `latest-Recommended`, and how to turn them on. The old module
+  implied they ran.
+
 ## [0.1.22] - 2026-10-26
 
 ### Added
