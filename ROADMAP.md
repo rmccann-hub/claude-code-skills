@@ -62,7 +62,7 @@ research. These rules are that structure.
 | `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.48.2 | shipped |
 | `git-workflows` | `engineering` | Commits, branches, pull requests, CI, hooks, tags, changelogs and releases | shipped |
 | `house-style` | `engineering` | Writing prose, Markdown, READMEs and documentation | shipped |
-| `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | planned |
+| `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | shipped |
 | `testing` | `engineering` | Writing, reviewing or fixing tests, and choosing a test strategy | planned |
 | `architecture` | `engineering` | Designing systems, APIs, layouts and plans, and modernizing old code | planned |
 | `data` | `engineering` | SQL, schemas, migrations, indexes and transactions | planned |
@@ -130,12 +130,12 @@ Grouped by subject; the Skill column is each module's one home.
 
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
-| `python-coding` | `coding` | Python 3, its toolchain and idioms | planned | core | R09 |
-| `javascript-coding` | `coding` | TypeScript, JavaScript, Node.js | planned | core | R10 |
-| `html-coding` | `coding` | HTML, CSS, front-end security | planned | core | R10 |
-| `csharp-coding` | `coding` | C# and .NET | planned | core | R11 |
-| `powershell-scripts` | `coding` | PowerShell 7 and Windows PowerShell 5.1 | planned | core | R11 |
-| `bash-coding` | `coding` | Bash and POSIX sh | planned | core | R15 |
+| `python-coding` | `coding` | Python 3, its toolchain and idioms | shipped | core | R09 |
+| `javascript-coding` | `coding` | TypeScript, JavaScript, Node.js | shipped | core | R10 |
+| `html-coding` | `coding` | HTML, CSS, front-end security | shipped | core | R10 |
+| `csharp-coding` | `coding` | C# and .NET | shipped | core | R11 |
+| `powershell-scripts` | `coding` | PowerShell 7 and Windows PowerShell 5.1 | shipped | core | R11 |
+| `bash-coding` | `coding` | Bash and POSIX sh | shipped | core | R15 |
 | `vba-coding` | `coding` | VBA in Office applications | planned | core | R16 |
 | `go-coding` | `coding` | Go | planned | standard | R12 |
 | `rust-coding` | `coding` | Rust | planned | standard | R12 |

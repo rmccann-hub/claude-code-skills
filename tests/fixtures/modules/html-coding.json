@@ -1,0 +1,50 @@
+[
+  {
+    "query": "Build a sign-up form in HTML that works with screen readers and password managers.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it safe to show the user's comment on the page with innerHTML?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a Content-Security-Policy header for our site that blocks inline scripts.",
+    "should_trigger": true
+  },
+  {
+    "query": "Add integrity attributes to the CDN script tags in index.html.",
+    "should_trigger": true
+  },
+  {
+    "query": "The focus outline is gone and dark mode looks wrong. Can you fix this stylesheet?",
+    "should_trigger": true
+  },
+  {
+    "query": "Check the alt text, labels and heading order on this HTML page.",
+    "should_trigger": true
+  },
+  {
+    "query": "Do links with target=_blank still need rel=noopener?",
+    "should_trigger": true
+  },
+  {
+    "query": "Convert this JavaScript module to TypeScript with strict mode on.",
+    "should_trigger": false,
+    "note": "javascript-coding"
+  },
+  {
+    "query": "Run a full WCAG accessibility audit of our web app, including screen reader testing.",
+    "should_trigger": false,
+    "note": "a planned accessibility module"
+  },
+  {
+    "query": "Pick a color palette and design tokens for our brand.",
+    "should_trigger": false,
+    "note": "a planned visual-design skill"
+  },
+  {
+    "query": "Commit our package-lock.json and set up Dependabot for npm.",
+    "should_trigger": false,
+    "note": "project-bootstrap-and-audit"
+  }
+]

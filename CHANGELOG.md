@@ -6,6 +6,14 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- The `coding` skill, in the `engineering` plugin: a ten-point contract every code change meets,
+  then six modules, `python-coding`, `javascript-coding`, `html-coding`, `csharp-coding`,
+  `powershell-scripts` and `bash-coding`. Each holds rules, common mistakes, review checks, the
+  reasons for each, and dated facts checked at primary sources. It replaces the owner's six old
+  language skills of those names, which are deleted from claude.ai before it's released.
+
 ## [0.1.21] - 2026-10-26
 
 ### Changed

@@ -17,6 +17,7 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.21 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.2 |
+| `engineering` | 0.1.21 | Apache-2.0 | `coding` | reviewed 2026-10-26 |
 | `engineering` | 0.1.21 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
 | `engineering` | 0.1.21 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
 
@@ -24,10 +25,10 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 73 |
+| Markdown | 81 |
 | Python | 51 |
+| JSON | 26 |
 | YAML | 22 |
-| JSON | 20 |
 | Shell | 3 |
 | TOML | 2 |
 
@@ -119,6 +120,41 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
+| `coding` | learn.microsoft.com | 56 |
+| `coding` | docs.python.org | 18 |
+| `coding` | nodejs.org | 16 |
+| `coding` | www.w3.org | 16 |
+| `coding` | tiswww.case.edu | 14 |
+| `coding` | developer.mozilla.org | 13 |
+| `coding` | raw.githubusercontent.com | 9 |
+| `coding` | cheatsheetseries.owasp.org | 7 |
+| `coding` | devblogs.microsoft.com | 5 |
+| `coding` | html.spec.whatwg.org | 5 |
+| `coding` | docs.astral.sh | 4 |
+| `coding` | dotnet.microsoft.com | 4 |
+| `coding` | packaging.python.org | 4 |
+| `coding` | pubs.opengroup.org | 4 |
+| `coding` | man7.org | 3 |
+| `coding` | typescript-eslint.io | 3 |
+| `coding` | web.dev | 3 |
+| `coding` | curl.se | 2 |
+| `coding` | devguide.python.org | 2 |
+| `coding` | eslint.org | 2 |
+| `coding` | pypi.org | 2 |
+| `coding` | www.shellcheck.net | 2 |
+| `coding` | biomejs.dev | 1 |
+| `coding` | cwe.mitre.org | 1 |
+| `coding` | google.github.io | 1 |
+| `coding` | jinja.palletsprojects.com | 1 |
+| `coding` | man.freebsd.org | 1 |
+| `coding` | mypy.readthedocs.io | 1 |
+| `coding` | oxc.rs | 1 |
+| `coding` | packages.debian.org | 1 |
+| `coding` | pester.dev | 1 |
+| `coding` | pyyaml.org | 1 |
+| `coding` | support.apple.com | 1 |
+| `coding` | www.powershellgallery.com | 1 |
+| `coding` | www.typescriptlang.org | 1 |
 | `git-workflows` | docs.github.com | 41 |
 | `git-workflows` | git-scm.com | 18 |
 | `git-workflows` | raw.githubusercontent.com | 9 |

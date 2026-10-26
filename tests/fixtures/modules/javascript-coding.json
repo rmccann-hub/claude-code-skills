@@ -1,0 +1,50 @@
+[
+  {
+    "query": "Set up a tsconfig.json for a Node service written in TypeScript, as strict as is sensible.",
+    "should_trigger": true
+  },
+  {
+    "query": "My script uses require and __dirname and now fails after I added \"type\": \"module\". How do I fix it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Review this Express handler: it calls exec with the uploaded file name to make a thumbnail.",
+    "should_trigger": true
+  },
+  {
+    "query": "Why does my Node process crash with an unhandled promise rejection when the cache write fails?",
+    "should_trigger": true
+  },
+  {
+    "query": "Do I still need dotenv and node-fetch in a new Node project, or can Node do it itself?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our merge helper copies request JSON into the config object. Is that a prototype pollution risk?",
+    "should_trigger": true
+  },
+  {
+    "query": "ESLint ignores my .eslintrc.json after upgrading. What changed?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is setting innerHTML from this API response safe, and what CSP should the page send?",
+    "should_trigger": false,
+    "note": "html-coding"
+  },
+  {
+    "query": "How should I structure the unit tests for this service, and when should I mock the database?",
+    "should_trigger": false,
+    "note": "testing (planned)"
+  },
+  {
+    "query": "Should we set a minimum release age in .npmrc after the npm worm attacks?",
+    "should_trigger": false,
+    "note": "supply-chain-security (planned, in security)"
+  },
+  {
+    "query": "Write a bash script that backs up the logs directory every night.",
+    "should_trigger": false,
+    "note": "bash-coding"
+  }
+]
