@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:ce61f0be-c12e-5a35-9e03-59656ce2fc4a",
+  "serialNumber": "urn:uuid:214f18ad-0e09-5c9c-a855-38a6b26b3aac",
   "version": 1,
   "metadata": {
     "tools": {
@@ -18,7 +18,7 @@
       "type": "application",
       "bom-ref": "claude-code-skills",
       "name": "claude-code-skills",
-      "version": "0.1.20",
+      "version": "0.1.21",
       "licenses": [
         {
           "expression": "Apache-2.0"
@@ -59,6 +59,23 @@
     }
   },
   "components": [
+    {
+      "type": "application",
+      "bom-ref": "pkg:github/actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6",
+      "name": "actions/attest",
+      "version": "v4.2.2",
+      "purl": "pkg:github/actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6",
+      "properties": [
+        {
+          "name": "claude-code-skills:used-in",
+          "value": ".github/workflows/release.yml"
+        },
+        {
+          "name": "claude-code-skills:pinned-commit",
+          "value": "1e69f48acb82d1966a394da916b4c1698aa569d6"
+        }
+      ]
+    },
     {
       "type": "application",
       "bom-ref": "pkg:github/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -449,9 +466,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:engineering@0.1.20",
+      "bom-ref": "plugin:engineering@0.1.21",
       "name": "engineering",
-      "version": "0.1.20",
+      "version": "0.1.21",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -621,9 +638,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:standards@0.1.20",
+      "bom-ref": "plugin:standards@0.1.21",
       "name": "standards",
-      "version": "0.1.20",
+      "version": "0.1.21",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -834,6 +851,7 @@
     {
       "ref": "claude-code-skills",
       "dependsOn": [
+        "pkg:github/actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6",
         "pkg:github/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
         "pkg:github/actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
         "pkg:github/actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e",
@@ -843,8 +861,8 @@
         "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.24.0",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
         "pkg:npm/%40anthropic-ai/claude-code@2.1.302",
-        "plugin:engineering@0.1.20",
-        "plugin:standards@0.1.20",
+        "plugin:engineering@0.1.21",
+        "plugin:standards@0.1.21",
         "project:skillcheck@0.0.0",
         "tool:GitHub-hosted runner@ubuntu-latest",
         "tool:Go@1.27",

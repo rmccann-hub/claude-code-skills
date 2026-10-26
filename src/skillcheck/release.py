@@ -195,6 +195,15 @@ def notes(root: Path, version: str) -> str:
         ],
         f"| `{bom.BOM}` | The dependency map in CycloneDX {bom.SPEC_VERSION}; "
         f"`{bom.MAP}` is the same for people |",
+        f"| `{skills_hook.ATTESTATION}` | The signed build provenance of every file here, "
+        "which the release workflow adds |",
+        "",
+        "To check that a file came from this repository's release workflow:",
+        "",
+        "```sh",
+        f"gh attestation verify FILE --bundle {skills_hook.ATTESTATION} --repo {repository} \\",
+        f"  --signer-workflow {repository}/.github/workflows/release.yml",
+        "```",
         "",
         section,
     ]

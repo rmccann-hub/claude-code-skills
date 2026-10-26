@@ -1,6 +1,6 @@
 # Dependency map
 
-What `claude-code-skills` 0.1.20 is built from, runs on and relies on: the
+What `claude-code-skills` 0.1.21 is built from, runs on and relies on: the
 plugins it ships, the languages it's written in, its runtimes and tools, every package
 at its exact version, the GitHub Actions it pins, the services it uses, and the sources
 its skills' facts cite.
@@ -16,9 +16,9 @@ freshness run and the release workflow both run it.
 
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
-| `standards` | 0.1.20 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.2 |
-| `engineering` | 0.1.20 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
-| `engineering` | 0.1.20 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
+| `standards` | 0.1.21 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.2 |
+| `engineering` | 0.1.21 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
+| `engineering` | 0.1.21 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
 
 ## Languages
 
@@ -89,6 +89,7 @@ package.json
 
 | Action | Version | Pinned commit | Used in |
 |---|---|---|---|
+| `actions/attest` | v4.2.2 | `1e69f48acb82d1966a394da916b4c1698aa569d6` | `.github/workflows/release.yml` |
 | `actions/checkout` | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` |
 | `actions/download-artifact` | v8.0.2 | `9000827ccba6bdab643e8b6fd33ac0654aef8333` | `.github/workflows/release.yml` |
 | `actions/setup-go` | v7.0.0 | `b7ad1dad31e06c5925ef5d2fc7ad053ef454303e` | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` |

@@ -6,10 +6,24 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.21] - 2026-10-26
+
 ### Changed
 
 - Standard v0.48.2: *Language toolchains* is current to 2026-10, with the end-of-support dates
   of PowerShell 7.4 and 7.5 and .NET 8 and 9, Pester 6, Node 26 and Rust 1.99.
+
+### Security
+
+- Each release carries `attestation.sigstore.json`, a Sigstore-signed build provenance
+  attestation for every file, made in a job of its own that runs none of the build's
+  dependencies. The release page job checks the signature with `gh attestation verify` before it
+  publishes, and the page says how to check a file.
+- The cloud install hook installs a release only when its attestation names the archive's
+  SHA-256 and this repository's release workflow, checks the signature with `gh` where `gh` is
+  installed, and says when it couldn't. It refuses a release older than the one it installed.
+  Environments set up before this release keep their older hook until the setup lines are
+  replaced.
 
 ## [0.1.20] - 2026-10-26
 

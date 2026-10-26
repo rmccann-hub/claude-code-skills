@@ -1,8 +1,11 @@
 """The cloud hook installs a release's skills, replaces only its own, and never stops a session."""
 
+import base64
+import hashlib
 import io
 import json
 import runpy
+import subprocess
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -10,7 +13,40 @@ from pathlib import Path
 import pytest
 
 from skillcheck import skills_hook
-from skillcheck.skills_hook import LEDGER, MANIFEST, install, main
+from skillcheck.skills_hook import ATTESTATION, LEDGER, MANIFEST, main
+
+WORKFLOW = {"repository": "https://github.com/REPOSITORY", "path": ".github/workflows/release.yml"}
+
+
+@pytest.fixture(autouse=True)
+def no_gh(monkeypatch):
+    """No gh unless a test brings one, so no test runs the machine's own."""
+    monkeypatch.setattr(skills_hook.shutil, "which", lambda name: None)
+
+
+def attest(data: bytes, name: str = "skills.zip", workflow: dict | None = None) -> bytes:
+    """A release's Sigstore bundle as the release workflow writes it, unsigned for the test."""
+    statement = {
+        "subject": [{"name": name, "digest": {"sha256": hashlib.sha256(data).hexdigest()}}],
+        "predicate": {
+            "buildDefinition": {"externalParameters": {"workflow": workflow or WORKFLOW}}
+        },
+    }
+    payload = base64.b64encode(json.dumps(statement).encode()).decode()
+    return (json.dumps({"dsseEnvelope": {"payload": payload}}) + "\n").encode()
+
+
+def install(data: bytes, skills: Path, bundle: bytes | None = None) -> list[str]:
+    """The hook's install, with the bundle the release would carry unless a test gives one."""
+    return skills_hook.install(data, skills, attest(data) if bundle is None else bundle)
+
+
+def release(folder: Path, data: bytes) -> Path:
+    """A release's download folder: the archive, and its attestation beside it."""
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / "skills.zip").write_bytes(data)
+    (folder / ATTESTATION).write_bytes(attest(data))
+    return folder / "skills.zip"
 
 
 def archive(version: str, skills: dict[str, dict[str, str]], manifest: dict | None = None) -> bytes:
@@ -111,8 +147,7 @@ def test_a_binary_file_is_not_read_as_text(tmp_path):
 
 
 def test_a_failed_download_keeps_the_installed_skills(tmp_path, capsys):
-    bundle = tmp_path / "skills.zip"
-    bundle.write_bytes(archive("1.0.0", {"alpha": skill()}))
+    bundle = release(tmp_path / "download", archive("1.0.0", {"alpha": skill()}))
     assert main(bundle.as_uri(), tmp_path) == 0
     assert (tmp_path / ".claude/skills/alpha/SKILL.md").is_file()
     assert capsys.readouterr().out == ""
@@ -122,8 +157,7 @@ def test_a_failed_download_keeps_the_installed_skills(tmp_path, capsys):
 
 
 def test_a_copy_still_on_the_account_is_named_for_the_user_to_delete(tmp_path, capsys):
-    bundle = tmp_path / "skills.zip"
-    bundle.write_bytes(archive("1.0.0", {"alpha": skill(), "beta": skill()}))
+    bundle = release(tmp_path / "download", archive("1.0.0", {"alpha": skill(), "beta": skill()}))
     synced = tmp_path / ".claude/skills/synced/account/beta"
     synced.mkdir(parents=True)
     (synced / "SKILL.md").write_text("Old.", encoding="utf-8")
@@ -135,11 +169,115 @@ def test_a_copy_still_on_the_account_is_named_for_the_user_to_delete(tmp_path, c
 
 
 def test_run_as_a_script_it_installs_into_the_home_folder(tmp_path, monkeypatch):
-    bundle = tmp_path / "skills.zip"
-    bundle.write_bytes(archive("1.0.0", {"alpha": skill()}))
+    bundle = release(tmp_path / "download", archive("1.0.0", {"alpha": skill()}))
     monkeypatch.setenv("HOME", str(tmp_path))
-    monkeypatch.setattr(urllib.request, "urlopen", lambda url, timeout: bundle.open("rb"))
+    beside = skills_hook.URL.replace("skills.zip", ATTESTATION)
+    downloads = {skills_hook.URL: bundle, beside: bundle.with_name(ATTESTATION)}
+    monkeypatch.setattr(urllib.request, "urlopen", lambda url, timeout: downloads[url].open("rb"))
     with pytest.raises(SystemExit) as stopped:
         runpy.run_path(skills_hook.__file__, run_name="__main__")
     assert stopped.value.code == 0
     assert (tmp_path / ".claude/skills/alpha/SKILL.md").is_file()
+
+
+def test_a_missing_attestation_keeps_the_installed_skills(tmp_path, capsys):
+    bundle = release(tmp_path / "download", archive("1.0.0", {"alpha": skill()}))
+    bundle.with_name(ATTESTATION).unlink()
+    assert main(bundle.as_uri(), tmp_path) == 0
+    assert "kept the skills already installed" in capsys.readouterr().err
+    assert not (tmp_path / ".claude/skills/alpha").exists()
+
+
+@pytest.mark.parametrize(
+    "bundle",
+    [
+        attest(b"another archive"),
+        attest(archive("1.0.0", {"alpha": skill()}), name="other.zip"),
+        attest(archive("1.0.0", {"alpha": skill()}), workflow={**WORKFLOW, "path": "x.yml"}),
+        attest(
+            archive("1.0.0", {"alpha": skill()}),
+            workflow={**WORKFLOW, "repository": "https://github.com/someone/else"},
+        ),
+        b"\n",
+    ],
+)
+def test_an_archive_its_attestation_doesnt_name_installs_nothing(tmp_path, bundle):
+    with pytest.raises(ValueError, match="no attestation from .github/workflows/release.yml"):
+        install(archive("1.0.0", {"alpha": skill()}), tmp_path / "skills", bundle)
+    assert not (tmp_path / "skills").exists()
+
+
+def test_the_matching_line_of_several_is_found(tmp_path):
+    data = archive("1.0.0", {"alpha": skill()})
+    install(data, tmp_path / "skills", attest(b"other") + b"\n" + attest(data))
+    assert (tmp_path / "skills/alpha/SKILL.md").is_file()
+
+
+def test_without_gh_it_says_the_signature_went_unchecked(tmp_path, capsys):
+    install(archive("1.0.0", {"alpha": skill()}), tmp_path / "skills")
+    assert "signature isn't checked without gh" in capsys.readouterr().err
+
+
+def test_with_gh_the_signature_must_check_out(tmp_path, monkeypatch):
+    monkeypatch.setattr(skills_hook.shutil, "which", lambda name: "/usr/bin/gh")
+    asked = []
+
+    def gh(command, **kwargs):
+        asked.append(command)
+        assert Path(command[3]).read_bytes() == data
+        return subprocess.CompletedProcess(command, 0, "", "")
+
+    monkeypatch.setattr(subprocess, "run", gh)
+    data = archive("1.0.0", {"alpha": skill()})
+    install(data, tmp_path / "skills")
+    assert (tmp_path / "skills/alpha/SKILL.md").is_file()
+    assert asked[0][:3] == ["/usr/bin/gh", "attestation", "verify"]
+    assert asked[0][-4:] == [
+        "--repo",
+        "REPOSITORY",
+        "--signer-workflow",
+        "REPOSITORY/.github/workflows/release.yml",
+    ]
+
+
+@pytest.mark.parametrize(
+    ("said", "message"),
+    [
+        ("Error: \x1b[31mverification failed\n", r"'Error: \\x1b\[31mverification failed'"),
+        ("", "'exit 1'"),
+    ],
+)
+def test_a_signature_gh_refuses_installs_nothing(tmp_path, monkeypatch, said, message):
+    monkeypatch.setattr(skills_hook.shutil, "which", lambda name: "/usr/bin/gh")
+    monkeypatch.setattr(
+        subprocess,
+        "run",
+        lambda command, **kwargs: subprocess.CompletedProcess(command, 1, "", said),
+    )
+    with pytest.raises(ValueError, match=f"gh attestation verify refused it: {message}"):
+        install(archive("1.0.0", {"alpha": skill()}), tmp_path / "skills")
+    assert not (tmp_path / "skills").exists()
+
+
+@pytest.mark.parametrize(
+    ("installed", "offered"),
+    [
+        ("1.2.0", "1.1.9"),
+        ("1.10.0", "1.9.0"),
+        ("2.0.0", "2.0.0-rc.1"),
+        ("2.0.0-rc.2", "2.0.0-rc.1"),
+    ],
+)
+def test_an_older_release_installs_nothing(tmp_path, installed, offered):
+    skills = tmp_path / "skills"
+    install(archive(installed, {"alpha": skill("Kept.")}), skills)
+    with pytest.raises(ValueError, match=f"{offered} is older than {installed}"):
+        install(archive(offered, {"alpha": skill()}), skills)
+    assert (skills / "alpha/SKILL.md").read_text(encoding="utf-8") == "Kept."
+
+
+def test_a_release_after_a_pre_release_installs(tmp_path):
+    skills = tmp_path / "skills"
+    install(archive("2.0.0-rc.1", {"alpha": skill()}), skills)
+    install(archive("2.0.0", {"alpha": skill("Final.")}), skills)
+    assert (skills / "alpha/SKILL.md").read_text(encoding="utf-8") == "Final."

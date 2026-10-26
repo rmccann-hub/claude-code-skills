@@ -2,6 +2,44 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Release 0.1.21, the first signed release
+
+- **Asked, by the owner:** "yes do all", which took in signing releases and standard v0.48.2.
+- **Carries:** the signed release and the hook that checks it (the entry below), and standard
+  v0.48.2, merged as #78.
+- **Proof it works:** the release run's page job checks every file's signature before it
+  publishes, so a published 0.1.21 is one whose attestation verified.
+
+## 2026-10-26 — Signed releases, and a hook that checks them
+
+- **Asked, by the owner:** "yes do all", to signing releases with build attestations and having
+  the cloud install hook verify them, since the hook installed "latest" on HTTPS alone and the
+  supply-chain draft tells others to verify by who built a file.
+- **Release workflow:** a job of its own, `Release attestation`, downloads the built files and
+  signs them with `actions/attest`, Sigstore's public-good instance, with `id-token: write` and
+  `attestations: write`. It runs no checkout and none of the build's dependencies, so nothing
+  they bring can ask for the signing token. The page job checks every file's signature with
+  `gh attestation verify --signer-workflow` before it publishes, and attaches the bundle as
+  `attestation.sigstore.json`.
+- **The hook:** it fetches the bundle from the same release, not GitHub's attestation API,
+  because a cloud session's proxy refuses that API for a repository not attached to the
+  session, which is every session on another repository. It requires the statement to name the
+  archive's SHA-256 and this repository's `release.yml`, and runs `gh attestation verify` where
+  `gh` is installed, refusing the release if it fails. It refuses a version older than the one
+  installed.
+- **What it doesn't do:** with no `gh`, the hook can't check a Sigstore signature with the
+  standard library alone, so it checks the digest and the claims only and says so on stderr.
+  Someone able to replace the release's files could replace the bundle too, and that check
+  wouldn't see it. Where `gh` is installed, it would.
+- **What it costs:** one more download each session; a release can no longer be withdrawn by
+  deleting it, since the hook refuses the older one, so a bad release is fixed by a newer one;
+  and where `gh` can't reach Sigstore's trust root, the hook keeps the skills already installed
+  until it can.
+- **Considered:** a checksum file beside the files, which proves nothing about who built them
+  when it comes from the same place; and GitHub's attestation API, which the proxy refuses.
+- **Reaches:** only environments whose setup script carries 0.1.21's `cloud-setup.sh` lines or
+  later. An older hook keeps installing without these checks until the lines are replaced.
+
 ## 2026-10-26 — Standard v0.48.2: language toolchains current to 2026-10
 
 - **Asked, by the owner:** "yes do all", to seven proposed rows, each checked that day at its
