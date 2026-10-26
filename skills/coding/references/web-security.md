@@ -133,7 +133,7 @@ Severity uses the standard's status words.
 | Untrusted data in an HTML sink | `innerHTML`, `outerHTML`, `insertAdjacentHTML`, `document.write`, `dangerouslySetInnerHTML`, `v-html` fed by input or a template string | `BLOCKER` where input reaches it | `textContent`, or `setHTML()` with DOMPurify as fallback |
 | Template auto-escaping | Jinja's `Environment(` without `autoescape`, and `\|safe` or `Markup(` on input | `BLOCKER` where input reaches it, else `GAP` | Turn it on (fact `web-jinja-autoescape`) |
 | URLs from input | `href`, `src` or `location` set from input with no scheme check | `GAP` | Allow `http:` and `https:` only (fact `web-owasp-url`) |
-| Content Security Policy | None, report-only for good, or `'unsafe-inline'` with hosts | `GAP` | A strict policy (fact `web-csp-strict`) |
+| Content Security Policy | None, report-only for good, or `'unsafe-inline'` with hosts and no nonce or hash | `GAP` | A strict policy (fact `web-csp-strict`) |
 | CSP in `<meta>` with `frame-ancestors` | The page's `<meta http-equiv>` | `DRIFT`: ignored | A header (fact `web-csp-meta`) |
 | Headers set outside the repository | A proxy or host sends the CSP | `MIRROR`, or `UNVERIFIABLE-HERE` | Read the live response headers |
 | Third-party scripts and styles | Another origin's `<script src>` or stylesheet without `integrity` | `GAP` | Self-host, or a computed hash (fact `web-sri-openssl`) |
@@ -149,8 +149,9 @@ Severity uses the standard's status words.
 
 **Why.** Cross-site scripting is input that a parser reads as code. `textContent` and an
 auto-escaping template take the parser out of the path (facts `web-owasp-text`,
-`web-owasp-url`). A sanitizer built into the browser uses its own parser, so no second, different
-parse lets a payload change shape, but Safari lacks it (fact `web-sethtml`). Trusted Types turns a forgotten sink into an error instead of a hole.
+`web-owasp-url`). A browser's own sanitizer uses its own parser, so no second parse lets a
+payload change shape; Safari lacks it (fact `web-sethtml`). Trusted Types makes a forgotten sink
+an error, not a hole.
 
 **What others do.** React and its peers escape text by default and name raw HTML APIs as a
 warning, such as `dangerouslySetInnerHTML`; the risk moves to those and to URLs.

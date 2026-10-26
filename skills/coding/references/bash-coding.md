@@ -4,10 +4,9 @@ Read this for writing, reviewing or fixing a Bash or POSIX `sh` script: the sheb
 and its traps, quoting, tests and globs, arrays, lines and file names, temporary files,
 portability to macOS and dash, and ShellCheck, shfmt and bats.
 
-Deletes, `eval`, fetched code, arithmetic on input, secrets and input checks are
-bash-security's; containers and Linux, the planned operations skill's; CI files,
-git-workflows'; test design, the planned testing skill's; tool layout and when to use Python,
-the project-bootstrap-and-audit standard's.
+Deletes, `eval`, fetched code, arithmetic on input, secrets and input checks: bash-security.
+Containers and Linux: the planned operations skill. CI files: git-workflows. Test design: the
+planned testing skill. Layout and when to use Python: project-bootstrap-and-audit.
 
 ## Rules
 
@@ -22,6 +21,8 @@ the project-bootstrap-and-audit standard's.
    Never parse `ls`.
 6. **`mktemp` for temporary files, removed in an `EXIT` trap.**
 7. **Run ShellCheck and shfmt, locally and in CI;** bats runs the tests.
+8. **A script that deletes or overwrites follows bash-security's guards:** `${var:?}`, `--`,
+   and a dry run first.
 
 ### The shell and the shebang
 
@@ -57,8 +58,8 @@ fi
   of `SIGPIPE`, status 141 (fact `sh-signal-status`); add `|| true`. ShellCheck's next release
   flags `grep -q` there (fact `sh-shellcheck`).
 - **`PIPESTATUS`** holds each stage's status, read on the next line (fact `sh-pipestatus`).
-- **In `sh`,** `pipefail` is POSIX since 2024 (fact `sh-posix-pipefail`), but dash has it
-  from 0.5.13 (fact `sh-dash-pipefail`), after Debian 13's. Probe:
+- **In `sh`,** `pipefail` is POSIX since 2024 (fact `sh-posix-pipefail`), but dash has it only
+  from 0.5.13 (fact `sh-dash-pipefail`); Debian 13 ships 0.5.12. Probe:
 
 ```sh
 set -eu
@@ -219,7 +220,6 @@ Checked 2026-10-26; bash-security holds the facts both modules use.
 | `sh-google` | Bash only; rewrite past 100 lines | [Google](https://google.github.io/styleguide/shellguide.html) | "the only shell scripting language permitted" and "more than 100 lines long" and "rewrite it in a more structured language" | 2026-10-26 | 2027-10-26 |
 | `sh-google-license` | Google's guides: CC BY 3.0 | [LICENSE](https://raw.githubusercontent.com/google/styleguide/gh-pages/LICENSE) | "Attribution 3.0 Unported" | 2026-10-26 | 2027-10-26 |
 | `sh-shellcheck` | 0.11.0 (2025-08-03); next flags `grep -q` | [Changelog](https://raw.githubusercontent.com/koalaman/shellcheck/master/CHANGELOG.md) | "v0.11.0 - 2025-08-03" and "in pipelines under pipefail" | 2026-10-26 | 2027-04-26 |
-| `sh-shfmt` | 3.14.1 (2026-09-06); reads EditorConfig | [Changelog](https://raw.githubusercontent.com/mvdan/sh/master/CHANGELOG.md), [shfmt(1)](https://raw.githubusercontent.com/mvdan/sh/master/cmd/shfmt/shfmt.1.scd) | "[3.14.1] - 2026-09-06" and "If any EditorConfig files are found" | 2026-10-26 | 2027-04-26 |
 | `sh-bats-version` | bats-core 1.14.0 (2026-07-21) | [Changelog](https://raw.githubusercontent.com/bats-core/bats-core/master/docs/CHANGELOG.md) | "[1.14.0] - 2026-07-21" | 2026-10-26 | 2027-04-26 |
 
 ## Sources

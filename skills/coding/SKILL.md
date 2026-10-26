@@ -53,8 +53,9 @@ The contract every change meets:
 
 ## Modules
 
-Read the module for the language at hand, and its security module too when the code takes
-input from outside, runs commands, or handles secrets; and each other module a request spans. Each holds its rules,
+Read the module for the language at hand. Read its security module too when the code takes
+input from outside, runs commands, deletes or overwrites files, or handles secrets, and each
+other module a request spans. Each holds its rules,
 mistakes, audit checks, reasons, dated facts and sources. A module names a fact by its ID, and
 the fact's row is in whichever module holds it.
 

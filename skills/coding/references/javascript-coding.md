@@ -99,8 +99,8 @@ export async function getJson(url: string, timeoutMs = 10_000): Promise<unknown>
 ### Promises and async code
 
 - **Mark a deliberate fire-and-forget** with `void` and a `.catch`.
-- **`Promise.all` rejects on the first failure** (fact `js-promise-all`); `Promise.allSettled`
-  returns every result.
+- **`Promise.all` rejects on the first failure** (fact `js-promise-all`), and the rest keeps
+  running; `Promise.allSettled` returns every result.
 - **`return await` inside `try`:** without it, a rejection skips the `catch` (fact
   `js-return-await`).
 - **Lint for floating promises** with types: typescript-eslint's or oxlint's
@@ -176,7 +176,7 @@ Severity uses the standard's status words.
 - **The reason:** a package is code to review and trust, and a way in for a compromised
   release.
 - **What others do, and why:** larger projects keep frameworks for snapshots or subcommands.
-- **What it costs:** less: no enums, no help text from `util.parseArgs`.
+- **What it costs:** the built-ins do less: no enums, no help text from `util.parseArgs`.
 - **When to choose differently:** when a built-in lacks what the project needs.
 
 ### Promises

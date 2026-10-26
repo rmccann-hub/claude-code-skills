@@ -90,7 +90,7 @@ Write-Verbose "Checked $($old.Count) files older than $cutoff"
 - **`catch` sees only terminating errors;** most cmdlets' aren't, and `$ErrorActionPreference`
   is `Continue` (facts `ps-nonterminating`, `ps-preferences`). Add `-ErrorAction Stop`, or set
   the preference atop a script (fact `ps-erroraction-stop`).
-- **Catch by type what you can handle;** rethrow the rest with `throw`. Never leave a `catch` empty.
+- **Catch by type what you can handle,** and rethrow the rest with `throw`. No empty `catch`.
 - **`Set-StrictMode -Version 3.0`,** not `Latest`, which moves: unset variables fail (fact
   `ps-strict`).
 - **Check `$LASTEXITCODE` after every native command:** it never reaches `catch`. From 7.4,
@@ -151,7 +151,7 @@ Severity uses the standard's status words.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| `catch` never runs | `try` around cmdlets without `Stop` | `DRIFT` | `-ErrorAction Stop` (fact `ps-erroraction-stop`) |
+| `catch` never runs | `try` around cmdlets without `Stop`, and no `$ErrorActionPreference = 'Stop'` | `DRIFT` | Add either (fact `ps-erroraction-stop`) |
 | Exit codes ignored | No `$LASTEXITCODE` check | `GAP` | Check, throw (fact `ps-native-exit`) |
 | No `-WhatIf` | `UseShouldProcessForStateChangingFunctions`, `ShouldProcess` | `GAP` | Add (fact `ps-shouldprocess`) |
 | Edition undeclared | No `#Requires`, `CompatiblePSEditions` | `GAP` | Add (facts `ps-requires`, `ps-editions`) |

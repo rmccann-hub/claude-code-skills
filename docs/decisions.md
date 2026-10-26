@@ -19,6 +19,11 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 - **Found while splitting:** CA2100 and CA2326 are off by default in .NET 10, even at
   `latest-Recommended`, confirmed in the SDK's rule files and by a build. The old `csharp-coding`
   implied they ran. Turning the security analyzers on is now a rule.
+- **Reviewed:** a cold reader compared each pair with its original. No safety advice was lost.
+  It found one gap, now fixed: the delete guards had left `bash-coding`, so the router and
+  `bash-coding` now send a script that deletes or overwrites files to `bash-security`. It also
+  found five compression errors, all fixed: two audit rows that lost a condition, two garbled
+  sentences, and a dropped warning that `Promise.all` leaves the other work running.
 - **Next:** five `git-workflows` modules and `writing-style` are also over 16,000, and a
   `skillcheck` rule will fail any module over that, in a change of their own.
 

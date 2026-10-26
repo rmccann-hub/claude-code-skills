@@ -197,6 +197,7 @@ too. Checked 2026-10-26.
 | `sh-mktemp` | GNU `mktemp` creates files readable and writable only by their owner | [mktemp(1)](https://man7.org/linux/man-pages/man1/mktemp.1.html) | "Files are created u+rw, and directories u+rwx, minus umask restrictions." | 2026-10-26 | 2027-10-26 |
 | `sh-exit-trap` | POSIX lets a shell skip the `EXIT` trap when a signal ends it | [POSIX.1-2024, Shell Command Language](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html) | "may occur when the shell terminates abnormally as a result of delivery of a signal" | 2026-10-26 | 2027-10-26 |
 | `sh-echo` | `echo` isn't portable with escapes or a leading option | [POSIX.1-2024 echo](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html) | "It is not possible to use echo portably across all POSIX systems unless escape sequences are omitted" | 2026-10-26 | 2027-10-26 |
+| `sh-shfmt` | 3.14.1 (2026-09-06); reads EditorConfig | [Changelog](https://raw.githubusercontent.com/mvdan/sh/master/CHANGELOG.md), [shfmt(1)](https://raw.githubusercontent.com/mvdan/sh/master/cmd/shfmt/shfmt.1.scd) | "[3.14.1] - 2026-09-06" and "If any EditorConfig files are found" | 2026-10-26 | 2027-04-26 |
 
 ## Sources
 
