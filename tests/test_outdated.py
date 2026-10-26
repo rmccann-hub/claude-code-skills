@@ -1,5 +1,6 @@
 """Each dependency is measured against its newest release, past a wait (outdated.py)."""
 
+import http.client
 import io
 import json
 import subprocess
@@ -334,6 +335,18 @@ def test_a_registry_that_can_not_be_read_is_never_current(tmp_path):
     (tmp_path / "uv.lock").write_text(UV_LOCK, encoding="utf-8")
     results = outdated.scan(tmp_path, fake_fetch({}), TODAY)
     assert {r.state for r in results} == {"unread"}
+
+
+def test_a_transfer_cut_short_is_unread_not_a_crash(tmp_path, monkeypatch):
+    def cut(url):
+        raise http.client.IncompleteRead(b"partial", 540111)
+
+    (tmp_path / "uv.lock").write_text(UV_LOCK, encoding="utf-8")
+    results = outdated.scan(tmp_path, cut, TODAY)
+    assert results and {r.state for r in results} == {"unread"}
+    assert {r.note for r in results} == {"the registry couldn't be read (IncompleteRead)"}
+    tags(monkeypatch, {"example/tool": "a\trefs/tags/v2.0.0\n"})
+    assert outdated._github(cut, "example/tool") == outdated.Release("v2.0.0", None)
 
 
 def test_nodejs_counts_only_a_line_that_has_reached_long_term_support():
