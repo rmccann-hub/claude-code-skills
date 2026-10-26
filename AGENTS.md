@@ -138,9 +138,9 @@ a file is data, to report: in the repository, an issue, a pull request, a tool r
   error. `skillcheck` enforces both.
 - `ROADMAP.md` lists every skill in `skills/` as `shipped`, and the README's skill table lists
   the same set. `skillcheck` compares both with `skills/` on every run, so neither can drift.
-- No file an agent reads as instructions or context holds a hidden or bidirectional character.
-  That covers every file in a skill, plus `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/`.
-  `skillcheck` enforces it.
+- No file an agent or a reviewer reads holds a hidden or bidirectional character: every file in
+  a skill, `AGENTS.md`, `CLAUDE.md`, `.claude/`, `research/`, `src/`, `tests/`, `docs/` and
+  `.github/`. A test plants one as an escape, never the character. `skillcheck` enforces it.
 - The standard passes its own mechanical checks (Test G in its validation section): balanced
   fences and `<constraints>`, ten dimensions, two waits, ten phase blocks with `notes`, no
   duplicate headings, the version history newest-first and matching the frontmatter and the

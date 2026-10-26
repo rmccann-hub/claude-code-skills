@@ -275,7 +275,7 @@ def test_the_changelog_section_ends_at_the_next_version_or_the_file(tmp_path):
         ),
         (
             lambda root: (root / STANDARD_PATH).write_text(
-                STANDARD.replace("Read it", "Read​it"), encoding="utf-8"
+                STANDARD.replace("Read it", "Read\u200bit"), encoding="utf-8"
             ),
             "would hold U\\+200B",
         ),
@@ -315,7 +315,7 @@ def test_the_command_line_builds_a_release_or_says_why_not(tmp_path, capsys):
     assert "release: CHANGELOG.md has no section for 2.0.0\n" in printed
     assert printed.endswith("skillcheck: release 2.0.0, 3 problem(s)\n")
     # A standard that can't be packed stops the build, though the map still matches.
-    (root / STANDARD_PATH).write_text(STANDARD.replace("Read it", "Read​it"), encoding="utf-8")
+    (root / STANDARD_PATH).write_text(STANDARD.replace("Read it", "Read\u200bit"), encoding="utf-8")
     assert main([str(root), "--release-assets", "1.0.0", str(tmp_path / "again")]) == 1
     assert "release: the kickstart file would hold U+200B\n" in capsys.readouterr().out
 

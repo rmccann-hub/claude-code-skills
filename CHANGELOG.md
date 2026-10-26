@@ -6,6 +6,17 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Security
+
+- The hidden-character rule also scans `src/`, `tests/`, `docs/` and `.github/`, where a Trojan
+  Source edit shows a reviewer one thing and runs another. Three tests held the characters they
+  plant literally; they now spell them as escapes.
+- The cloud install hook refuses a release whose files carry a hidden character, and names an
+  archive entry escaped.
+- Text from outside the repository is printed with its control and hidden characters spelled
+  out: a server's error in `--verify`, which the weekly freshness issue posts, and what Claude
+  Code sends back to `--triggers`.
+
 ## [0.1.19] - 2026-10-21
 
 ### Added

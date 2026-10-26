@@ -21,6 +21,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 from skillcheck.core import modules
+from skillcheck.core.text import printable
 
 FACTS = "references/facts.md"
 COLUMNS = ("ID", "Fact", "Source", "Quote", "Checked", "Check by")
@@ -129,7 +130,7 @@ def verify(facts: list[Fact], fetch: Fetch | None = None) -> Iterator[tuple[Fact
                     pages[source] = exc
             page = pages[source]
             if isinstance(page, OSError):
-                failures.append(f"{source} could not be read ({page})")
+                failures.append(f"{source} could not be read ({printable(str(page))})")
             else:
                 texts.append(page)
         if not texts:
@@ -168,7 +169,9 @@ def _ls_remote(url: str) -> str:
     except subprocess.TimeoutExpired as exc:
         raise OSError(f"git ls-remote took over {TIMEOUT_SECONDS} seconds") from exc
     if result.returncode:
-        raise OSError(f"git ls-remote exited {result.returncode}: {result.stderr.strip()}")
+        raise OSError(
+            f"git ls-remote exited {result.returncode}: {printable(result.stderr.strip())}"
+        )
     return result.stdout
 
 
