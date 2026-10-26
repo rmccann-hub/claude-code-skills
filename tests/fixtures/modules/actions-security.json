@@ -1,9 +1,5 @@
 [
   {
-    "query": "Pin the actions in .github/workflows/ci.yml to commit SHAs.",
-    "should_trigger": true
-  },
-  {
     "query": "Is it OK to use pull_request_target so fork PRs can comment on themselves?",
     "should_trigger": true
   },
@@ -16,7 +12,11 @@
     "should_trigger": true
   },
   {
-    "query": "Our workflow still uses actions/checkout@v4. What should it use now?",
+    "query": "Should actions/checkout in our workflows set persist-credentials: false?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up zizmor to scan our GitHub Actions workflows for security problems.",
     "should_trigger": true
   },
   {
@@ -28,5 +28,10 @@
     "query": "Our GitHub Actions job hung for six hours. How do I stop that happening again?",
     "should_trigger": false,
     "note": "ci-workflows"
+  },
+  {
+    "query": "Pin the actions in .github/workflows/ci.yml to commit SHAs.",
+    "should_trigger": false,
+    "note": "action-pinning"
   }
 ]

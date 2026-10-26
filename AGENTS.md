@@ -57,8 +57,8 @@ Split by the standard's recipe, logs and finished work first, deleting what move
 
 - `AGENTS.md`: under 150 lines; `CLAUDE.md`: about 30; a rule file: about 50. `skillcheck`
   holds `AGENTS.md` and `CLAUDE.md` within 300 lines and 32 KiB each.
-- `SKILL.md`: under 500 lines, its references one level deep. `skillcheck` enforces both.
-- Every file in `docs/` has an inbound link.
+- `SKILL.md`: under 500 lines, references one level deep; a module: 16,000 characters, past
+  which claude.ai drops its middle. `skillcheck` enforces each. Every `docs/` file is linked.
 
 ## Conventions
 

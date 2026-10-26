@@ -92,6 +92,29 @@ def test_a_routed_module_without_its_file_fires(repo):
     ) in findings(repo)
 
 
+def test_a_module_past_claude_ais_viewer_limit_fires_alone(repo):
+    skill_dir = built(repo, "first", "second")
+    path = skill_dir / "references" / "first.md"
+    text = path.read_text(encoding="utf-8")
+    path.write_text(text + "\n" + "x" * (modules.MAX_CHARACTERS - len(text)), encoding="utf-8")
+    assert findings(repo) == [
+        (
+            "skills/demo/references/first.md",
+            "modules",
+            "16,001 characters: claude.ai drops the middle of a file over 16,000, "
+            "so trim it or split it",
+        )
+    ]
+
+
+def test_a_module_at_the_limit_passes(repo):
+    skill_dir = built(repo, "first")
+    path = skill_dir / "references" / "first.md"
+    text = path.read_text(encoding="utf-8")
+    path.write_text(text + "x" * (modules.MAX_CHARACTERS - len(text)), encoding="utf-8")
+    assert findings(repo) == []
+
+
 def test_a_module_missing_sections_fires(repo):
     skill_dir = built(repo, "first")
     path = skill_dir / "references" / "first.md"

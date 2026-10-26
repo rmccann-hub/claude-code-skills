@@ -2,6 +2,30 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Every module fits claude.ai's file viewer, and `skillcheck` holds it there
+
+- **Asked, by the owner:** the same "i want it", for the six modules the entry below left over
+  16,000 characters.
+- **Measured, by the owner:** after `coding`'s split, claude.ai read `powershell-scripts.md`, at
+  14,993 characters, whole, and still cut `writing-style.md`, at 19,014, keeping 15,977. The
+  limit is 16,000, as the entry below found.
+- **Done:** three `git-workflows` modules split by topic, each keeping its name:
+  `rebasing-and-recovery` from `branches-and-merging`, `ci-speed` from `ci-workflows`, and
+  `action-pinning` from `actions-security`. `commits-and-pull-requests`,
+  `releases-and-versions` and `writing-style` were trimmed: shorter wording, fact descriptions
+  and quotes, with no rule, mistake, audit row, example or reason cut. `git-workflows`'
+  router and the rules that cite these modules now name the new ones.
+- **Reviewed:** a cold reader compared each file with its original. No safety advice was lost.
+  It found ten smaller faults, all fixed: two openings pointing at the wrong module, house
+  style's status words dropped, two release facts narrowed past what cites them, a quote cut past
+  its condition, a garbled sentence, a new audit row missing its conditions, two rules citing too
+  few modules, and two lost lines in `writing-style`.
+- **Held:** `skillcheck`'s `modules` rule fails a module over 16,000 characters, and the
+  authoring review aims at 15,000, leaving room for an edit. Claude Code reads files whole, but
+  a module must work on both.
+- **Considered:** a higher limit for Claude Code alone. Rejected, since claude.ai's plugin sync
+  reads `main` and every module ships to both.
+
 ## 2026-10-26 — `coding`'s modules split to fit claude.ai's file viewer
 
 - **Found, by the owner's test:** claude.ai's file viewer keeps about 8,000 characters from each
