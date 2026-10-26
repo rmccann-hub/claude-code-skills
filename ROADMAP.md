@@ -107,14 +107,17 @@ Grouped by subject; the Skill column is each module's one home.
 | `api-patterns` | `architecture` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
 | `sql-craftsman` | `data` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
 | `commits-and-pull-requests` | `git-workflows` | Commit grammar and messages, trailers, the author's address, branch names, pull requests and review comments | shipped | core | R08 |
-| `branches-and-merging` | `git-workflows` | Branching models, protecting the default branch, merge strategies, deleting branches, rebasing, conflicts and recovery | shipped | core | R08 |
-| `ci-workflows` | `git-workflows` | GitHub Actions triggers, timeouts, installs, required checks, proving a gate works, and how long CI should take | shipped | core | R08, R21 |
-| `actions-security` | `git-workflows` | Workflow permissions, SHA-pinned actions, untrusted input, `pull_request_target`, scanning workflows | shipped | core | R08 |
+| `branches-and-merging` | `git-workflows` | Branching models, protecting the default branch, merge strategies | shipped | core | R08 |
+| `rebasing-and-recovery` | `git-workflows` | Deleting branches, rebasing, conflicts, recovering lost commits, and reading Git's output | shipped | core | R08 |
+| `ci-workflows` | `git-workflows` | GitHub Actions triggers, timeouts, installs, required checks, proving a gate works | shipped | core | R08, R21 |
+| `ci-speed` | `git-workflows` | How long CI takes, where suites run, caching builds, and slow tests | shipped | core | R08, R21 |
+| `actions-security` | `git-workflows` | Workflow permissions, untrusted input, `pull_request_target`, scanning workflows | shipped | core | R08 |
+| `action-pinning` | `git-workflows` | SHA-pinned actions, lockfiles, the pinning policy, Dependabot for actions, Node 20 actions | shipped | core | R08 |
 | `git-hooks` | `git-workflows` | Writing, installing and testing hooks, and where CI is the gate instead | shipped | core | R08 |
 | `releases-and-versions` | `git-workflows` | Release tags and workflows, changelog entries, version numbers, release lines and backports | shipped | core | R05 |
 | `leaked-data` | `git-workflows` | A secret or personal information in a commit: rotating, and rewriting history at the owner's request | shipped | core | R08 |
 | `gitignore` | `git-workflows` | `.gitignore` rules, secret files, lockfiles, untracking a file | shipped | core | R08 |
-| `ci-cd` | `git-workflows` | Caching, environments and deployment, beyond the CI that `ci-workflows` covers | planned | core | R08, R21 |
+| `ci-cd` | `git-workflows` | Environments and deployment, beyond the CI that `ci-workflows` and `ci-speed` cover | planned | core | R08, R21 |
 | `versioning-and-releases` | `git-workflows` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `releases-and-versions` covers | planned | core | R05 |
 | `legacy-modernization` | `architecture` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
 | `logging-and-observability` | `coding` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | planned | standard | R07 |
