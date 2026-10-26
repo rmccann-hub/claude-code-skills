@@ -1,0 +1,28 @@
+[
+  {
+    "query": "Our two repos each have a Claude session reviewing the other's changes, and every round drags on for 30 messages. How do we make rounds end?",
+    "should_trigger": true
+  },
+  {
+    "query": "Both agent sessions wrote the same lap and released it. How do we stop that happening?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a review protocol between the app's agent and the library's agent so they check each other's releases.",
+    "should_trigger": true
+  },
+  {
+    "query": "The other repository's session has gone quiet with work outstanding. How should the loop handle a stalled side?",
+    "should_trigger": true
+  },
+  {
+    "query": "Review this pull request for bugs.",
+    "should_trigger": false,
+    "note": "code review, not a loop between repositories"
+  },
+  {
+    "query": "Write the CLAUDE.md for this repository.",
+    "should_trigger": false,
+    "note": "agent-context-files"
+  }
+]

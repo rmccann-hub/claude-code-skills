@@ -1,6 +1,6 @@
 # RESEARCH RUN R15: Shell, configuration formats, containers, Kubernetes, infrastructure as code, Linux, networking and cloud
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026, updated 26 October 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 26 October 2026.
 
 This run informs these categories: shell, config-formats, containers, kubernetes, infrastructure-as-code, cloud, linux, networking-security, linux-gaming.
 
@@ -96,3 +96,4 @@ Then these sections, in this order:
 7. Infrastructure as code: Terraform (current version, licence), OpenTofu (current version, features), Pulumi, Bicep, AWS CDK; testing and scanning (tflint, checkov, trivy config, terraform test); state security.
 8. Cloud baselines, vendor-neutral where possible: the Well-Architected frameworks (AWS, Azure, Google Cloud); identity (workload identity federation, OIDC from GitHub Actions); secrets managers; least privilege; the CIS cloud benchmarks.
 9. Linux gaming (a personal category): current Proton and Proton-GE, Steam on Linux, Bazzite (rpm-ostree versus bootc), handheld support, where anti-cheat status is tracked, and ntsync's status in the kernel and Wine.
+10. Untrusted text and downloads in shell and on servers: printing text from outside safely (control characters, escape sequences, `printf %q`); hidden Unicode in scripts and config; verifying a downloaded binary or install script by signature or provenance (cosign, `gh attestation verify`, minisign, distribution package signatures) rather than a checksum from the same place; building from source at a full commit with a clean tree; and why fetch-and-run (`curl | sh`) is refused.

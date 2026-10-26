@@ -1,6 +1,6 @@
 # RESEARCH RUN R21: Fewest dependencies, newest versions, and less for CI to check
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 24 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 24 September 2026, updated 26 October 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 24 September 2026.
+be current, precise and sourced. Today is 26 October 2026.
 
 This run informs these categories: project-bootstrap-and-audit (dimensions 2, 6 and 8, and what a new project starts with), keeping-current, supply-chain-security, ci-cd, and the dependency advice in every language skill.
 
@@ -47,7 +47,7 @@ at: a release adopted the day it's published, and hand-written code replacing a 
 7. **Depth over breadth.** Finish the Priority questions fully. If you run out of room, list the
    rest under "Not covered".
 8. **Beliefs marked "(the standard, date)"** come from this repository's own standard,
-   PROJECT-BOOTSTRAP-AND-AUDIT v0.37.0, in its section of dated facts. Checking them also
+   PROJECT-BOOTSTRAP-AND-AUDIT v0.48.1, in its section of dated facts. Checking them also
    checks that standard, so say plainly when one is wrong.
 9. **Measured over asserted.** Where a question asks what something costs or saves, give
    measurements: what was measured, on what, when, and how large the effect was. Label an
@@ -84,17 +84,17 @@ Then these sections, in this order:
 - Fewer dependencies mean fewer advisories to triage, fewer update pull requests, faster installs and CI runs, and a smaller attack surface.
 - "A little copying is better than a little dependency" (Go Proverbs, Rob Pike, 2015). Russ Cox's "Our Software Dependency Problem" (2019) sets out how to evaluate a dependency before adding it, and the OpenSSF publishes a "Concise Guide for Evaluating Open Source Software" for the same job.
 - Running the newest stable release is the safest choice, because fixes land there first and older release lines stop getting them. A brand-new release is safest taken after a short wait, because malicious versions are usually found and removed within days.
-- Release cooldowns: Dependabot waits three days by default; pnpm 11 waits one day by default; npm has `min-release-age`; Renovate has `minimumReleaseAge`; Yarn and Bun have similar settings; uv's `exclude-newer` accepts a relative duration.
-- (the standard, 2026-09) Pester 5.7.x is the safe pin: Pester 6 exists and breaks things.
+- Release cooldowns: Dependabot waits three days by default; pnpm's `minimumReleaseAge` defaults to 1440 minutes, one day, and pnpm 10 stopped running dependencies' `postinstall` scripts by default; npm has `min-release-age`; Renovate has `minimumReleaseAge`; Yarn and Bun have similar settings; uv's `exclude-newer` accepts a relative duration.
+- (the standard, 2026-10) Pester 5.7.x is the safe pin: Pester 6 exists and breaks things.
 - An application should run and test on one runtime version: the newest stable one its deployment target can run. A library should test the oldest version it declares and the newest.
 - Scientific Python's SPEC 0 recommends supporting each Python version for three years after its release, and core packages for two. It replaced NEP 29.
 - Unused dependencies are found by deptry (Python), knip (JavaScript and TypeScript), cargo-machete and cargo-udeps (Rust), and `go mod tidy` (Go). depcheck is no longer maintained.
 - The e18e project's module-replacements lists npm packages that built-in platform features now replace.
 - Ruff replaces flake8, isort, black and pyupgrade. uv replaces pip, pip-tools, virtualenv and pipx. Biome replaces ESLint and Prettier for most projects.
-- (the standard, 2026-09) A new JavaScript or TypeScript project starts with Biome 2.x for lint and format, and Vitest for tests.
+- (the standard, 2026-10) A new JavaScript or TypeScript project starts with Biome 2.x for lint and format, and Vitest for tests.
 - Node.js now has a stable built-in test runner, `fetch`, `--env-file`, `util.parseArgs`, a glob function and TypeScript type stripping, so a small project may need no package for any of them. Python 3.11 added `tomllib` and 3.9 added `zoneinfo`, so `tomli` and `backports.zoneinfo` are needed only below those versions.
-- AI coding assistants recommend packages that don't exist at a measurable rate (Spracklen et al., "We Have a Package for You!", USENIX Security 2025), and attackers register those names ("slopsquatting"). Assistants also suggest the versions in their training data rather than the current ones.
-- (the standard, 2026-09) Current toolchains: Python 3.14.x; PowerShell 7.6.x; .NET 10 LTS; Node.js 22 and 24, both LTS; Go 1.27; Rust 1.98.x, edition 2024.
+- AI coding assistants recommend packages that don't exist: at least 5.2% of suggested packages for commercial models and 21.7% for open-source ones, across 205,474 unique names (Spracklen et al., "We Have a Package for You!", USENIX Security 2025). Attackers register those names ("slopsquatting"). Assistants also suggest the versions in their training data rather than the current ones.
+- (the standard, 2026-10) Current toolchains: Python 3.15.x, released 2026-10-09; PowerShell 7.6.x; .NET 10 LTS; Node.js 22 and 24, both LTS; Go 1.27; Rust 1.98.x, edition 2024.
 
 ## Questions
 
@@ -149,3 +149,12 @@ Then these sections, in this order:
     - metrics a repository can track: direct and transitive dependency counts, libyear, versions behind, the share on the newest major version, open update pull requests, CI minutes per run;
     - tools that compute them;
     - whether any of these metrics has published evidence linking it to fewer incidents.
+11. Installing exactly what was locked, for npm, pnpm, Yarn, Bun, pip, uv, Poetry, Cargo, Go, NuGet, Composer and Bundler:
+    - the lockfile each uses, and whether a library should commit it;
+    - the command that installs from the lockfile and fails rather than updating it when the lockfile and manifest disagree, for example `npm ci` and `uv sync --locked`;
+    - which verify each package against a hash recorded in the lockfile, and how to turn that on where it isn't the default, for example pip's `--require-hashes`.
+12. Verifying provenance when installing:
+    - npm provenance and `npm audit signatures`, PyPI's PEP 740 attestations, crates.io's trusted publishing, NuGet package signing, and Go's checksum database;
+    - for each: what it proves (who built the package, from which source), what it doesn't, and whether an installer checks it by default or only on request;
+    - how a project's own code verifies a downloaded update by provenance (GitHub artifact attestations, Sigstore) rather than by a checksum published beside the file, and how it refuses a downgrade.
+13. Registries' defences against typosquatted and hallucinated package names: what npm, PyPI, crates.io and NuGet do today, and tools that check a name before it's installed.

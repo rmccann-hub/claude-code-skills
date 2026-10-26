@@ -168,3 +168,19 @@ def test_the_commands_print_and_exit_by_what_they_found(tmp_path, capsys, monkey
     assert capsys.readouterr().out == "a failure\nthe summary\n"
     assert main([str(root), "--tries"]) == 0
     assert capsys.readouterr().out.startswith("# Requests to try on claude.ai")
+
+
+def test_what_claude_code_sends_back_is_escaped_before_it_is_printed(tmp_path):
+    root = repository(tmp_path / "repo")
+
+    def run(command, **options):
+        query = command[command.index("-p") + 1]
+        if query == "Write a commit message.":
+            return subprocess.CompletedProcess(command, 1, stdout="", stderr="\x1b[2Jgone\n")
+        path = "/elsewhere\x1b[8m/.claude/skills/git-tools/references/ignore-rules.md"
+        return subprocess.CompletedProcess(command, 0, stdout=stream(("Read", {"file_path": path})))
+
+    lines, summary, _ = triggers.run_all(root, run=run)
+    assert lines[0].endswith("Claude Code failed: \\x1b[2Jgone")
+    assert "read another copy: /elsewhere\\x1b[8m/" in lines[2]
+    assert "\x1b" not in "".join(lines) + summary

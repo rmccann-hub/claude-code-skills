@@ -1,4 +1,5 @@
 import email.message
+import http.client
 import subprocess
 from datetime import date
 
@@ -230,6 +231,29 @@ def test_verify_reports_a_missing_quote_and_an_unreadable_source():
         ("elided-gone", 'the quote is no longer at its source: "the words … never were"'),
         ("unreadable", "https://example.com/down could not be read (HTTP Error 404: Not Found)"),
     ]
+
+
+def test_a_server_s_words_are_escaped_before_they_reach_a_report_or_an_issue(monkeypatch):
+    def fetch(source: str) -> str:
+        raise OSError("HTTP Error 500: \x1b[2J\nforged line")
+
+    [(_, problem)] = facts.verify([fact("down", "https://example.com/down")], fetch)
+    assert problem.endswith("(HTTP Error 500: \\x1b[2J\\x0aforged line)")
+
+    def failing(args, **kwargs):
+        return subprocess.CompletedProcess(args, 128, stdout="", stderr="remote: \x1b[31mred\n")
+
+    monkeypatch.setattr(facts.subprocess, "run", failing)
+    with pytest.raises(OSError, match=r"exited 128: remote: \\x1b\[31mred$"):
+        facts.fetch_text("git ls-remote --tags https://example.com/repo")
+
+
+def test_a_transfer_cut_short_is_an_unreadable_source_not_a_crash():
+    def fetch(source: str) -> str:
+        raise http.client.IncompleteRead(b"partial", 540111)
+
+    [(_, problem)] = facts.verify([fact("cut", "https://example.com/big")], fetch)
+    assert problem.startswith("https://example.com/big could not be read (IncompleteRead(")
 
 
 class FakeResponse:

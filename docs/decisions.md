@@ -2,6 +2,47 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — `supply-chain-security` started, as a draft
+
+- **Asked, by the owner:** "yes i do", to starting the planned security and input-handling
+  modules from the evening's lessons, after "do not limit what you do or your scope to just
+  those things" about the two repositories in use.
+- **Which one first, and why:** `input-handling` belongs to `coding`, after its contract, in
+  wave 1 of the rebuild plan, which waits on research not yet run, so starting it would build a
+  module ahead of the skill it rests on. `supply-chain-security` is new coverage in no wave,
+  and its research, R05, is in. It starts the planned `security` skill.
+- **Where it lives, and why:** the roadmap's row puts it in `security`. The homes that exist
+  were considered and didn't fit:
+  - `actions-security` covers pinning GitHub Actions, not what code does with dependencies;
+  - `releases-and-versions` covers tags, changelogs and version numbers, not provenance;
+  - `leaked-data` covers a secret already committed;
+  - the standard's *Dependencies* dimension covers a repository's update bot, cooldown,
+    Scorecard and licenses. The module cites it rather than restating it, and covers what code
+    and agents do: adding a package, frozen installs, source builds, verified updates.
+- **Built from:** R05's leads, each fact used checked again at its primary source on
+  2026-10-26, and the evening's lessons L51 and L53. `--verify` confirms all nine new facts.
+- **What it isn't yet:** reviewed. Its `TODO(new-skill)` markers keep it from merging: the
+  skill's description and shared rules, the per-ecosystem lockfile table, npm and PyPI
+  provenance checks, the fewest-dependencies rule after R21, and three sources' licenses.
+
+## 2026-10-26 — The review-loops skeleton, held to the rules it skipped
+
+- **Asked, by the owner:** "make sure we are consistent internally in our repo, with our rules,
+  etc. we need to be the best. the highest standards for all."
+- **Found:** the `review-loops` skeleton (`6f83cbc`, draft pull request #73) went in with no
+  entry here and no word on the homes it considered. It also failed `--bom-check`, because its
+  three new files weren't counted, and the `prose` check, on a placeholder in a heading. Both
+  are fixed on the draft's branch.
+- **Where it lives, and why:** the roadmap had already planned `review-loops` as a module of
+  the planned `agent-engineering` skill. The homes that exist were considered and didn't fit:
+  - `git-workflows` covers one repository's Git practice, not two agent sessions;
+  - `house-style` covers how prose reads;
+  - `project-bootstrap-and-audit` holds the standard, which isn't edited as part of other work.
+- **What the draft is, and isn't:** a skeleton on a draft branch, kept unmergeable by its
+  `TODO(new-skill)` markers. It isn't a committed skill under this repository's rule. Before it
+  leaves draft it passes the review in `docs/authoring-a-skill.md`, recorded here, as every
+  skill does. It took in lessons L45 to L49 from the EAC parity work of 2026-10-25 and 26.
+
 ## 2026-10-21 — Release 0.1.19
 
 - **Asked, by the owner:** "do everything you can up to 6 and release. plan 7 for the next

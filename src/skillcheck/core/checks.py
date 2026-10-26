@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from skillcheck.core import content, facts, frontmatter, modules, reporting, standard, times
+from skillcheck.core.text import HIDDEN
 
 SKILLS_DIR = "skills"
 CATALOG = ".claude-plugin/marketplace.json"
@@ -77,17 +78,13 @@ LOOKUP = "facts.md"
 TABLE_CELL = re.compile(r"(?<!\\)\|")
 FENCE = re.compile(r"^\s*(```|~~~)")
 
-# Characters that render as nothing or reorder the text around them, so what a reviewer sees
-# differs from what an agent reads: zero-width characters and joiners, bidirectional controls
-# (the Trojan Source attack, CVE-2021-42574), the byte-order mark, the soft hyphen, and Unicode
-# tag characters, which can carry a whole hidden instruction.
-HIDDEN = re.compile(
-    "[\u00ad\u180e\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff\U000e0000-\U000e007f]"
-)
 # Outside skills/, the files agents read as instructions or context. Research results are pasted
 # in from outside the repository, so they get the same scan as a skill.
 AGENT_FILES = ("AGENTS.md", "CLAUDE.md")
 AGENT_DIRS = (".claude", "research")
+# The code and documents a reviewer reads, where a Trojan Source edit hides: it shows one thing to
+# the reviewer and another to the interpreter or to an agent.
+REVIEWED_DIRS = ("src", "tests", "docs", ".github")
 
 # A merge's conflict markers. Nothing parses Markdown, so markers in it pass every test: a live
 # repository shipped them through nine green jobs. Git writes the opening, closing and diff3 base
@@ -500,7 +497,10 @@ def _check_agent_files(root: Path, report: Report) -> None:
     files = [root / name for name in AGENT_FILES if (root / name).is_file()]
     for path in files:
         _check_context_size(path, report)
-    for directory in AGENT_DIRS:
+    # Every other file at the root, such as the README, the roadmap and the changelog, is read
+    # by agents and reviewers too.
+    files += sorted(p for p in root.iterdir() if p.is_file() and p.name not in AGENT_FILES)
+    for directory in AGENT_DIRS + REVIEWED_DIRS:
         if (root / directory).is_dir():
             files += _files_under(root / directory)
     _check_hidden_characters(root, files, report)

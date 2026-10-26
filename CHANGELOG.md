@@ -6,6 +6,28 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- `skillcheck --verify` and `--outdated` report a source whose transfer was cut short as
+  unreadable, instead of ending the run: `http.client.IncompleteRead` isn't an `OSError`, as
+  the code had assumed. Repositories that run `--outdated` weekly should take this release.
+- `actions-security` gives 2 December 2026 for GitHub's default `pull_request_target` rule,
+  moved from 2 November by GitHub's note of 2026-10-21, which `--verify` caught.
+
+### Security
+
+- CI, the freshness check and the release run uv 0.13.5, up from 0.13.1. uv 0.13.4 fixed
+  GHSA-hq85-5cpj-mr62, a root certificate authority whose intermediate on the Web PKI was
+  compromised, and said to upgrade right away. Research R09 of 2026-10-26 surfaced it.
+- The hidden-character rule also scans every file at the root, `src/`, `tests/`, `docs/` and
+  `.github/`, where a Trojan Source edit shows a reviewer one thing and runs another. Three tests
+  held the characters they plant literally; they now spell them as escapes.
+- The cloud install hook refuses a release whose files carry a hidden character, and names an
+  archive entry escaped.
+- Text from outside the repository is printed with its control and hidden characters spelled
+  out: a server's error in `--verify`, which the weekly freshness issue posts, and what Claude
+  Code sends back to `--triggers`.
+
 ## [0.1.19] - 2026-10-21
 
 ### Added

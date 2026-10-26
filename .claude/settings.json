@@ -19,6 +19,7 @@
     "engineering@claude-code-skills": false
   },
   "skillOverrides": {
+    "agent-engineering": "off",
     "algorithmic-art": "off",
     "canvas-design": "off",
     "code-planner": "off",
@@ -33,6 +34,7 @@
     "morning": "off",
     "procedure-generator": "off",
     "project-bootstrap-and-audit": "off",
+    "security": "off",
     "skill-creator": "on",
     "skill-orchestrator": "off",
     "skill-stress-tester": "off",

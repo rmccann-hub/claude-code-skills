@@ -1,0 +1,28 @@
+[
+  {
+    "query": "Is this npm package Claude suggested actually real and safe to add to our project?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our build script checks out a dependency by a short commit hash and only warns if the tree is dirty. Is that OK?",
+    "should_trigger": true
+  },
+  {
+    "query": "The app downloads its own updates and checks a .sha256 from the same release. How should it verify them properly?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should CI run npm install or npm ci, and how do I make pip installs hash-checked?",
+    "should_trigger": true
+  },
+  {
+    "query": "Pin the actions in our GitHub workflow to commit SHAs.",
+    "should_trigger": false,
+    "note": "actions-security"
+  },
+  {
+    "query": "I committed an API key by mistake, how do I get it out of the history?",
+    "should_trigger": false,
+    "note": "leaked-data"
+  }
+]

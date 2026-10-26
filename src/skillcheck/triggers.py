@@ -24,6 +24,8 @@ from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 from pathlib import Path
 
+from skillcheck.core.text import printable
+
 CLAUDE = ("npx", "--no-install", "claude")
 TIMEOUT_SECONDS = 300
 TOOLS = "Skill Read Glob Grep"
@@ -95,7 +97,7 @@ def ask(query: str, project: Path, run: Callable = subprocess.run) -> Seen:
     )
     if done.returncode:
         reason = (done.stderr or done.stdout).strip().splitlines() or [f"exit {done.returncode}"]
-        return Seen((), (), reason[0])
+        return Seen((), (), printable(reason[0]))
     skills, reads, model = [], [], ""
     for line in done.stdout.splitlines():
         try:
@@ -103,7 +105,7 @@ def ask(query: str, project: Path, run: Callable = subprocess.run) -> Seen:
         except json.JSONDecodeError:
             continue
         if event.get("type") == "system" and event.get("subtype") == "init":
-            model = event.get("model", "")
+            model = printable(str(event.get("model", "")))
         if event.get("type") != "assistant":
             continue
         for item in event.get("message", {}).get("content", []):
@@ -111,9 +113,9 @@ def ask(query: str, project: Path, run: Callable = subprocess.run) -> Seen:
                 continue
             given = item.get("input", {})
             if item.get("name") == "Skill":
-                skills.append(given.get("skill", ""))
+                skills.append(printable(str(given.get("skill", ""))))
             elif item.get("name") == "Read":
-                reads.append(given.get("file_path", ""))
+                reads.append(printable(str(given.get("file_path", ""))))
     return Seen(tuple(skills), tuple(reads), model=model)
 
 
