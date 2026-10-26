@@ -14,6 +14,13 @@ Notable changes to this repository. The format follows
   claude.ai's file viewer drops the middle of a file over 16,000, which cut the Mistakes, Audit
   and Why sections out of the larger modules. No rule, mistake, audit check or example was
   lost.
+- Three `git-workflows` modules are split the same way, each into itself and a new module:
+  `branches-and-merging` and `rebasing-and-recovery`, `ci-workflows` and `ci-speed`, and
+  `actions-security` and `action-pinning`. `commits-and-pull-requests`,
+  `releases-and-versions` and house-style's `writing-style` are trimmed. Every module is now
+  under 15,000 characters.
+- `skillcheck`'s `modules` rule fails a module over 16,000 characters, past which claude.ai
+  drops its middle.
 
 ### Fixed
 
