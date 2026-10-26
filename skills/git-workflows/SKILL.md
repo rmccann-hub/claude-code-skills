@@ -20,7 +20,8 @@ run the commands; on claude.ai, give them to the person to run.
 2. **Never delete a branch until you've checked what still needs it,** and never bulk-delete
    remote branches from `git branch -r --merged` (`rebasing-and-recovery`).
 3. **Never rewrite shared or cited history.** Revert, or add a commit. The one exception is
-   removing personal information at the owner's request (`leaked-data`).
+   removing personal information at the owner's request (`rebasing-and-recovery`,
+   `leaked-data`).
 4. **Never get to green by going around a check.** No `--no-verify`, and no skipping or
    quarantining a failing test. Fix the cause (`ci-workflows`, `git-hooks`).
 5. **Write down one commit grammar and check it** (`commits-and-pull-requests`).
@@ -31,7 +32,7 @@ run the commands; on claude.ai, give them to the person to run.
 7. **Release from an annotated tag on the release commit's SHA,** after the changelog entry and
    after CI is green on that commit (`releases-and-versions`).
 8. **Read Git's output whole,** and never read an exit status through a pipe
-   (`rebasing-and-recovery`).
+   (`rebasing-and-recovery`, `ci-workflows`).
 9. **Keep a second release line only when users need it** (`releases-and-versions`).
 
 Before anything destructive, show what it will do, and wait for confirmation. That covers

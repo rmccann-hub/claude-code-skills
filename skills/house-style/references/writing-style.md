@@ -3,8 +3,9 @@
 Read this for writing or reviewing prose or Markdown: headings, lists, wrapping, code, tables,
 links, file names, a README's sections, word choice and spelling, and why each rule is what it is.
 
-It details the thirteen rules in this skill's `SKILL.md`, numbered as there.
-Running the check is `prose-check`. Commit subjects and changelog structure are git-workflows'.
+It details the thirteen rules in this skill's `SKILL.md`, numbered as there. Running the check
+is `prose-check`. Commit subjects, the changelog and the decision record follow rule 11, detailed
+in git-workflows.
 
 ## Rules
 
@@ -133,7 +134,7 @@ Government Licence, and quotes keep their own spelling.
   local time, if wanted, is derived from the stamp and shown with it, each with its zone, in the
   order the reader chose: `8:55 PM EDT, Fri Oct 16 (2026-10-17 00:55 UTC)`. A time with no zone
   guesses at the reader's clock, and a local time without its stamp goes wrong twice a year.
-- **A time copied from a source is converted to UTC from the source's zone.** One audit copied a
+- **A time copied from a source keeps its zone,** and is converted to UTC from it. One audit copied a
   log's `5. October 2026, 22:48 (UTC-04:00)` as `2026-10-05 22:48`, so its date disagreed with
   the file it cited, named for the next day, the date in UTC.
 - **An append-only record's past entries stay as written.** New entries follow the style.
@@ -154,7 +155,8 @@ Government Licence, and quotes keep their own spelling.
 
 ## Audit
 
-Severity uses the standard's status words.
+Severity uses the standard's status words: `BLOCKER`, `DRIFT`, `GAP`, `OVER`, `MIRROR`,
+`UNVERIFIABLE-HERE`, `OK` and `N/A`.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
@@ -199,8 +201,7 @@ here, goes in code formatting, which the check skips.
 
 **Why:** a wrong fact copied into many repositories is wrong in all of them. A date on a fact
 tells the next reader when to doubt it. Saying what wasn't checked costs a sentence, and stops a
-guess passing for a finding. **Cost:** time at writing, and a date to check again by, which
-the owner's skills keep on a schedule.
+guess passing for a finding. **Cost:** time at writing, and a date to check again by.
 
 ### 5. Short sentences in the active voice
 
@@ -249,9 +250,9 @@ git-workflows has the reasons and the alternatives.
 **Why:** the owner chose it. The tools and platforms these repositories use write American
 English, and so does their code: a skill's frontmatter has a `license` field, and GitHub has
 organizations. Mixed spelling reads as two authors, and a search for one form misses the other.
-**Cost:** converting British text, done here once in its own commit. A few British forms remain
-inside quotes. **Choose differently:** a project whose readers write British English, such as
-one for a UK public body, would choose British, and swap the spelling rule's direction.
+**Cost:** converting British text, once. Quotes keep their own spelling. **Choose differently:**
+a project whose readers write British English, such as a UK public body's, would choose
+British.
 
 ### 13. Formatters for code
 

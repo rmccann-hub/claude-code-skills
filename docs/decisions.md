@@ -15,6 +15,11 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   `releases-and-versions` and `writing-style` were trimmed: shorter wording, fact descriptions
   and quotes, with no rule, mistake, audit row, example or reason cut. `git-workflows`'
   router and the rules that cite these modules now name the new ones.
+- **Reviewed:** a cold reader compared each file with its original. No safety advice was lost.
+  It found ten smaller faults, all fixed: two openings pointing at the wrong module, house
+  style's status words dropped, two release facts narrowed past what cites them, a quote cut past
+  its condition, a garbled sentence, a new audit row missing its conditions, two rules citing too
+  few modules, and two lost lines in `writing-style`.
 - **Held:** `skillcheck`'s `modules` rule fails a module over 16,000 characters, and the
   authoring review aims at 15,000, leaving room for an edit. Claude Code reads files whole, but
   a module must work on both.

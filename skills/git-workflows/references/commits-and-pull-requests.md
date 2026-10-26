@@ -3,8 +3,9 @@
 Read this for writing a commit message, naming a branch, opening or reviewing a pull request,
 choosing and checking the commit grammar, or setting the address commits carry.
 
-It covers what a commit and a pull request say. Merging, and which branches to keep, are
-`branches-and-merging`; the changelog and the version number, `releases-and-versions`.
+It covers what a commit and a pull request say. Merging is `branches-and-merging`, and which
+branches to keep, `rebasing-and-recovery`; the changelog and the version number,
+`releases-and-versions`.
 
 ## Rules
 
@@ -194,7 +195,7 @@ configuration.
 | `close-keywords` | A closing keyword in a description or a commit message closes the issue only on a merge into the default branch | [Linking issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue) | "fix fixes fixed" | 2026-09-30 | 2027-09-30 |
 | `commit-email` | "Keep my email addresses private" gives GitHub's own operations the noreply address; a clone's commits use its Git configuration, and earlier ones keep the old address | [Commit email](https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address) | "select Keep my email addresses private" and "still associated with your previous email address" | 2026-10-05 | 2027-04-05 |
 | `email-push-block` | The push-blocking setting refuses a push whose newest commit's author address is private on the account | [Blocking pushes](https://docs.github.com/en/account-and-profile/how-tos/email-preferences/blocking-command-line-pushes-that-expose-your-personal-email-address) | "a private email on your GitHub account, we will block the push" | 2026-10-05 | 2027-04-05 |
-| `dependabot-prefix` | Dependabot's `commit-message.prefix` adds a colon and a space after a prefix ending in a letter or number | [Dependabot options](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference) | "Dependabot inserts a colon after the prefix" | 2026-09-30 | 2027-03-31 |
+| `dependabot-prefix` | Dependabot adds a colon after a `commit-message.prefix` ending in a letter or number | [Dependabot options](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference) | "Dependabot inserts a colon after the prefix" and "when the value ends with a letter, number" | 2026-09-30 | 2027-03-31 |
 | `kernel-subject` | The kernel's subject is "subsystem: summary phrase", in the imperative | [Submitting patches](https://docs.kernel.org/process/submitting-patches.html) | "subsystem: summary phrase" and "in imperative mood" | 2026-09-30 | 2027-03-31 |
 | `go-subject` | Go prefixes the subject with the package changed; Gerrit's `Change-Id` trailer ties a change's uploads together | [Contribution guide](https://go.dev/doc/contribute) | "prefixed by the primary affected package" and "used by Gerrit to match successive uploads" | 2026-09-30 | 2027-03-31 |
 
@@ -203,8 +204,8 @@ configuration.
 | Source | Used for | License |
 |---|---|---|
 | [Git documentation](https://git-scm.com/docs) | Subjects, bodies and trailers | GPL-2.0: our own words, short quotes |
-| [GitHub Docs](https://docs.github.com/) | Squash titles, closing keywords, credit, addresses, Dependabot | CC BY 4.0: our own words, short quotes |
-| [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) | One commit grammar | CC BY 3.0: summarized, with attribution |
+| [GitHub Docs](https://docs.github.com/) | Squash titles, closing keywords, credit, addresses, Dependabot | CC BY 4.0: short quotes |
+| [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) | One commit grammar | CC BY 3.0: summarized, attributed |
 | [Linux kernel docs](https://docs.kernel.org/process/submitting-patches.html) | The kernel's subjects | Not stated: short quotes only |
 | [Go contribution guide](https://go.dev/doc/contribute) | Package prefixes, Gerrit's `Change-Id` | Not stated: short quotes only |
 | FFmpeg, read from its tree and history on 2026-09-30 | Its "area: summary" grammar and check, `Fixes:` and `Found-by:` | Facts about the project, in our own words |

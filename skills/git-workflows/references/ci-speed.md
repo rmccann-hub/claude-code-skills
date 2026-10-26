@@ -90,7 +90,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 |---|---|---|---|
 | A job builds its dependencies from unpinned source every run | `git clone` or a build script in `run:` steps, with no `actions/cache` | `GAP` | Pin each one in one place, and cache the output keyed on the pins |
 | `cancel-in-progress` cancels default-branch runs | The `concurrency` block | `DRIFT` | Cancel only on `pull_request` (fact `cancel-in-progress`) |
-| The default branch's run repeats the pull request's jobs under strict checks | Both runs' jobs, and the ruleset | `OVER` | Keep only what differs there (fact `strict-checks`) |
+| The default branch's run repeats the pull request's jobs, though nothing lands but through a strictly checked pull request or a queue | Both runs' jobs, the ruleset and its bypass list | `OVER` | Keep only what differs there, filling the cache among it (facts `strict-checks`, `cache-scope`) |
 
 ## Why
 

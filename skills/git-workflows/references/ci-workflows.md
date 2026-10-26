@@ -4,8 +4,8 @@ Read this for writing or fixing a GitHub Actions workflow's triggers, timeouts, 
 filters and required checks, or proving that a gate, a test job or a workflow works.
 
 It covers the jobs that run checks and how to trust them. How long CI should take, where each
-suite runs, caching and slow tests are `ci-speed`; a workflow's permissions, pinned actions and
-untrusted input are `actions-security`; local hooks are `git-hooks`; the release job is
+suite runs, caching and slow tests are `ci-speed`; a workflow's permissions and untrusted input are
+`actions-security`, and pinned actions `action-pinning`; local hooks are `git-hooks`; the release job is
 `releases-and-versions`. How to design the tests themselves belongs to a testing skill.
 
 ## Rules

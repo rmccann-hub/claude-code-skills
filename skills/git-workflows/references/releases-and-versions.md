@@ -29,7 +29,7 @@ The commits it releases are `commits-and-pull-requests`; the checks that must pa
    workflow file no branch still has as it was (fact `workflow-scope`).
 4. **Make an annotated tag** (facts `tag-kinds`, `describe`). `gh release create` with a new
    tag name makes a tag that isn't annotated (fact `gh-release-tag`), so push the annotated tag
-   first, then run `gh release create --verify-tag`, which refuses a tag that doesn't exist yet.
+   first, then run `gh release create --verify-tag`.
    With no local clone, a `workflow_dispatch` job makes it, by project-bootstrap-and-audit's
    release gate (*How a tag gets cut when there is no local clone*).
 5. **Publish in the release job, or call the publish workflow** (rule 2).
@@ -99,8 +99,8 @@ derives each version from Conventional Commits (fact `semantic-release`).
 
 ## Mistakes
 
-- **A release staged and never published.** Work committed under its dated changelog heading
-  describes what the tag won't hold, and whatever waits on the release waits silently. Publish
+- **A release staged and never published.** Work committed after it, under its dated changelog
+  heading, makes the heading describe what the tag won't hold, and whatever waits on the release waits silently. Publish
   it, or move the heading back to `Unreleased`.
 - **A release candidate proved only in the working tree.** One candidate's suite failed a
   freshness check on a clean checkout, and its regeneration step named every derived file but
@@ -144,7 +144,7 @@ tagged, when, and why. A tag on a commit whose CI you haven't read releases
 whatever that commit holds.
 
 **What others do.** Many projects release from GitHub's release page or `gh release create`,
-which makes a lightweight tag (fact `gh-release-tag`). semantic-release versions and publishes
+which, given a new tag name, makes a lightweight tag (fact `gh-release-tag`). semantic-release versions and publishes
 from the commit messages. towncrier builds notes from one file per change, so parallel pull
 requests don't conflict over one changelog (fact `towncrier`).
 
@@ -178,8 +178,8 @@ each copy came from.
 | `token-no-trigger` | Events made with `GITHUB_TOKEN` start no workflow run, but for `workflow_dispatch` and `repository_dispatch` | [Triggering a workflow](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow) | "events triggered by the GITHUB_TOKEN will not create a new workflow run" | 2026-09-30 | 2027-03-31 |
 | `workflow-scope` | A token without the workflow permission pushes a workflow file only if another branch has it as is | [Scopes for OAuth apps](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps) | "(with both the same path and contents) exists on another branch" | 2026-10-05 | 2027-04-05 |
 | `bot-identity` | Checkout's README commits as `github-actions[bot]` | [checkout README](https://raw.githubusercontent.com/actions/checkout/main/README.md) | `git config user.name "github-actions[bot]"` | 2026-09-30 | 2027-03-31 |
-| `immutable` | A published immutable release locks its tag and assets | [Immutable releases](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/immutable-releases) | "Git tags cannot be moved" | 2026-09-30 | 2027-03-31 |
-| `gh-release-tag` | `gh release create` makes a lightweight tag; `--verify-tag` needs an existing one | [gh release create](https://cli.github.com/manual/gh_release_create) | "To create a release from an annotated git tag, first create one locally" and "Use --verify-tag to abort the release if the tag doesn't already exist" | 2026-09-30 | 2027-03-31 |
+| `immutable` | A published immutable release locks its tag and assets; a deleted one's tag name can't be reused, and assets go on while it's a draft | [Immutable releases](https://docs.github.com/en/code-security/supply-chain-security/understanding-your-software-supply-chain/immutable-releases) | "Git tags cannot be moved" | 2026-09-30 | 2027-03-31 |
+| `gh-release-tag` | `gh release create` with a new tag name makes a lightweight tag; `--verify-tag` needs an existing one | [gh release create](https://cli.github.com/manual/gh_release_create) | "To create a release from an annotated git tag, first create one locally" and "Use --verify-tag to abort the release if the tag doesn't already exist" | 2026-09-30 | 2027-03-31 |
 | `kac` | Keep a Changelog 2.0.0 (2026-06-07) kept the format | [keepachangelog.com](https://keepachangelog.com/en/2.0.0/) | "It breaks the guidance, not the format" | 2026-09-30 | 2027-03-31 |
 | `kac-agents` | Keep a Changelog 2.0.0 puts the brief in agents' context file | [keepachangelog.com](https://keepachangelog.com/en/2.0.0/) | "for example an AGENTS.md or CLAUDE.md file" | 2026-09-30 | 2027-03-31 |
 | `semver` | Semantic Versioning 2.0.0 requires a declared public API | [semver.org](https://semver.org/) | "MUST declare a public API" | 2026-09-30 | 2027-09-30 |
@@ -194,8 +194,8 @@ each copy came from.
 |---|---|---|
 | [Git documentation](https://git-scm.com/docs) | Tags and backports | GPL-2.0: our own words, short quotes |
 | [GitHub Docs](https://docs.github.com/) | Tokens and immutable releases | CC BY 4.0: our own words, short quotes |
-| actions/checkout and the gh manual, linked in Facts | The bot identity, `gh release create` | MIT: facts with short quotes |
+| actions/checkout and the gh manual, linked in Facts | The bot identity, `gh release create` | MIT: short quotes |
 | [Semantic Versioning 2.0.0](https://semver.org/) | Version numbers | CC BY 3.0: summarized, attributed |
 | [Keep a Changelog 2.0.0](https://keepachangelog.com/en/2.0.0/) | Changelogs | MIT: summarized |
-| The Linux kernel's stable rules, towncrier, pip and semantic-release, linked in Facts | What other projects do | Not stated: short quotes only |
+| Other projects, linked in Facts | What other projects do | Not stated: short quotes only |
 | FFmpeg's tree and history, read 2026-09-30 | Its backports | Facts, in our own words |
