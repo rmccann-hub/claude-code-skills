@@ -1,0 +1,37 @@
+[
+  {
+    "query": "Pin the actions in .github/workflows/ci.yml to commit SHAs.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our workflow still uses actions/checkout@v4. What should it use now?",
+    "should_trigger": true
+  },
+  {
+    "query": "Dependabot never opens pull requests to update the actions our workflows use. Why?",
+    "should_trigger": true
+  },
+  {
+    "query": "We turned on the policy that requires SHA-pinned actions and a run failed on an action we did pin. What happened?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we adopt GitHub's workflow dependency lockfile for our actions?",
+    "should_trigger": true
+  },
+  {
+    "query": "What permissions should GITHUB_TOKEN have in our workflows?",
+    "should_trigger": false,
+    "note": "actions-security"
+  },
+  {
+    "query": "Our GitHub Actions job hung for six hours. How do I stop that happening again?",
+    "should_trigger": false,
+    "note": "ci-workflows"
+  },
+  {
+    "query": "Our release workflow should publish when we push a version tag. How do we set that up?",
+    "should_trigger": false,
+    "note": "releases-and-versions"
+  }
+]
