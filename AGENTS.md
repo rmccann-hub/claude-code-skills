@@ -34,7 +34,7 @@ change here changes what agents do there.
 - `ROADMAP.md`: every skill, shipped or planned, with its status. This is the plan's one home
 - `src/skillcheck/`: this repository's checks for:
   - skill frontmatter, size, links and reference depth;
-  - hidden characters in skills, `AGENTS.md`, `CLAUDE.md`, `.claude/` and `research/`;
+  - hidden characters in what agents and reviewers read, as the invariant below lists;
   - catalog, roadmap and README consistency;
   - the standard's own mechanical checks (`core/standard.py`);
   - modules and their moves (`core/modules.py`, `move.py`), and dated facts (`core/facts.py`);
