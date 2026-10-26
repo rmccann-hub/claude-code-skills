@@ -1,0 +1,46 @@
+[
+  {
+    "query": "Review this Express handler: it calls exec with the uploaded file name to make a thumbnail.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our merge helper copies request JSON into the config object. Is that a prototype pollution risk?",
+    "should_trigger": true
+  },
+  {
+    "query": "My Node download route joins the filename query parameter onto the uploads folder. Can someone read files outside it?",
+    "should_trigger": true
+  },
+  {
+    "query": "A regex that validates email addresses in our Node API sometimes pins the CPU. Is that ReDoS, and how do I fix it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is building this Postgres query with a template string in TypeScript safe if I escape the quotes myself?",
+    "should_trigger": true
+  },
+  {
+    "query": "We load rules from a JSON file and run them with new Function. Is there a safer way in Node?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a tsconfig.json for a Node service written in TypeScript, as strict as is sensible.",
+    "should_trigger": false,
+    "note": "javascript-coding"
+  },
+  {
+    "query": "Is setting innerHTML from this API response safe, and what CSP should the page send?",
+    "should_trigger": false,
+    "note": "web-security"
+  },
+  {
+    "query": "Should we set a minimum release age in .npmrc after the npm worm attacks?",
+    "should_trigger": false,
+    "note": "supply-chain-security (planned, in security)"
+  },
+  {
+    "query": "Is subprocess.run with shell=True safe when the file name comes from the user?",
+    "should_trigger": false,
+    "note": "python-security"
+  }
+]
