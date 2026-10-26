@@ -1,0 +1,55 @@
+[
+  {
+    "query": "Review this deploy.sh before I merge it. It loops over the output of ls and uses set -e.",
+    "should_trigger": true
+  },
+  {
+    "query": "Why does my bash script exit silently right after ((count++))?",
+    "should_trigger": true
+  },
+  {
+    "query": "This script has #!/bin/sh but uses [[ and arrays. Make it run on Debian.",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I loop over file names with spaces and newlines safely in bash?",
+    "should_trigger": true
+  },
+  {
+    "query": "My script works on Linux but on a Mac it fails with 'declare: -A: invalid option'.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it safe to pass our API token to curl with -H in a shell script?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a shell script that cleans up its temp directory even when it's interrupted.",
+    "should_trigger": true
+  },
+  {
+    "query": "Add a GitHub Actions job that runs ShellCheck on every pull request.",
+    "should_trigger": false,
+    "note": "git-workflows"
+  },
+  {
+    "query": "Write a Dockerfile for this Node app that runs as a non-root user.",
+    "should_trigger": false,
+    "note": "operations (planned), its docker-containers module"
+  },
+  {
+    "query": "Set up a systemd timer to run my backup script every night.",
+    "should_trigger": false,
+    "note": "operations (planned), its linux module"
+  },
+  {
+    "query": "How should I organize test fixtures and doubles for our CLI's test suite?",
+    "should_trigger": false,
+    "note": "testing (planned)"
+  },
+  {
+    "query": "Write a PowerShell script that deletes log files older than 30 days.",
+    "should_trigger": false,
+    "note": "powershell-scripts"
+  }
+]

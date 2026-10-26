@@ -62,8 +62,8 @@ the fact's row is in whichever module holds it.
 | [`javascript-coding`](references/javascript-coding.md) | TypeScript and JavaScript on Node.js: `tsconfig` strictness, ES modules, type stripping, the built-ins that replace packages, lint setup, promise mistakes, and shell injection, `eval`, prototype pollution, path traversal and ReDoS |
 | [`html-coding`](references/html-coding.md) | HTML and CSS: semantic markup, the WCAG 2.2 basics (labels, alt text, headings, focus, contrast), forms, modern CSS with dark mode and reduced motion, and browser security: escaping, `innerHTML` and `setHTML()`, CSP, Trusted Types, SRI and `noopener` |
 | [`csharp-coding`](references/csharp-coding.md) | C# on modern .NET: the target framework and its support dates, nullable and warnings as errors, `Directory.Build.props`, analyzers and `dotnet format`, async and disposal, `HttpClient`, System.Text.Json, NativeAOT, P/Invoke, and SQL, process and path security |
-| [`powershell-scripts`](references/powershell-scripts.md) | TODO(new-skill) the requests it answers |
-| [`bash-coding`](references/bash-coding.md) | TODO(new-skill) the requests it answers |
+| [`powershell-scripts`](references/powershell-scripts.md) | PowerShell 7 or Windows PowerShell 5.1, and writing for both: advanced functions, `-WhatIf` and `-Confirm`, `try` and `catch` with exit codes, strict mode, prompts in jobs, credentials, `Invoke-Expression` and execution policy, PSScriptAnalyzer and Pester 6 |
+| [`bash-coding`](references/bash-coding.md) | Bash and POSIX `sh`: the shebang and the shell, `set -euo pipefail` and its traps, quoting, arrays, reading lines and file names, `mktemp` and cleanup, safe deletes, secrets, macOS and dash portability, ShellCheck, shfmt and bats |
 
 ## Check before you act
 
