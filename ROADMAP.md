@@ -482,6 +482,24 @@ lessons in when it's built, and its reasons cite them.
   the verdict beside it. One report carried a first-pass count, 12 of 14, beside a verdict of
   13 of 14 written after a corrective pass, because the count was copied from the tool's first
   log.
+- **L45, `review-loops`:** a cause read from a small sample is called a correlation, and it's
+  withdrawn in writing as soon as the side holding the data shows otherwise. A coordinator
+  advised re-reading a misread track more slowly, because a faster build had misread it. The
+  other side's reading of the same runs found that build right at the higher speed, the older
+  build wrong at nearly the lower one, and a drive that takes no speed setting.
+- **L46, `review-loops`:** a coordinator sends one file of record, naming each earlier file it
+  replaces. Four reports went to two sessions in one day, each correcting the one before, so a
+  reader holding an earlier one would have worked from a claim since withdrawn.
+- **L47, `testing-patterns`:** a reference's settings are read from its own artifacts before
+  they're stated. A report said a baseline had run without a two-pass mode, and every log in
+  that baseline carried the mode's second checksum.
+- **L48, `documentation`:** figures cited from a tool come from the implementation in use, at
+  a named commit. One project's table of a scoring program's deductions came partly from an
+  unmaintained reimplementation, and the program in use differed on four rows.
+- **L49, `logging-and-observability`:** a status line names the outcome that was checked, not
+  that a step finished. "Copy OK", "confirmed across 3 re-reads" and "read successfully" were
+  printed over tracks whose audio a checksum database showed was wrong, and readers took each
+  as a verdict.
 
 ## Rebuilding `project-bootstrap-and-audit`
 
