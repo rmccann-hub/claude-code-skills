@@ -12,7 +12,13 @@ Notable changes to this repository. The format follows
   then six modules, `python-coding`, `javascript-coding`, `html-coding`, `csharp-coding`,
   `powershell-scripts` and `bash-coding`. Each holds rules, common mistakes, review checks, the
   reasons for each, and dated facts checked at primary sources. It replaces the owner's six old
-  language skills of those names, which are deleted from claude.ai before it's released.
+  language skills of those names, which the owner deleted from claude.ai on 2026-10-26.
+
+### Changed
+
+- The README, the authoring review and the roadmap say what happens: claude.ai's plugin sync
+  reads `main`, so merging, not releasing, ships a change there. Old copies are deleted before
+  the merge, and the owner's claude.ai tries follow it.
 
 ## [0.1.21] - 2026-10-26
 

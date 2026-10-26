@@ -88,8 +88,8 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
 - **Commit subjects read "area: summary",** such as `skillcheck: name the stale map file`. The
   `subjects` check fails any other, merges and reverts aside. Dependabot's carry a `deps:` prefix.
 - **A session merges its own pull request once every check passes,** for work the owner asked
-  for, and Dependabot's once they've been tested together on `main`. Anything else waits for
-  the owner's word. Nothing checks it.
+  for, and Dependabot's once tested together on `main`; anything else waits for the owner. A
+  merge ships: claude.ai's plugin sync reads `main`. Nothing checks it.
 - **Prose follows the house style,** in `skills/house-style/`. The `prose` check fails Markdown
   that breaks a rule it checks. Past entries in records and dated research stay as written.
 - **A commit that adds a Markdown file names the homes it considered,** and why none fit; **a

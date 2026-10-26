@@ -32,8 +32,9 @@ older hook until the lines are replaced. Delete any copy of these skills uploade
 first, or it loads beside them under a prefix.
 
 On claude.ai, add this repository as a personal plugin marketplace, turn on Sync
-automatically, and install both plugins. Each release changes the plugins' version, which
-brings the account's copy up to date.
+automatically, and install both plugins. The sync reads this repository's `main` branch, not
+its releases, so a change reaches the account at the next sync after it merges. That was seen
+on 2026-10-26, when `coding` loaded on claude.ai before any release carried it.
 
 ## Usage
 
@@ -147,7 +148,9 @@ If a skill here gives wrong or harmful instructions, take it out of circulation 
 
    `skillcheck` fails the pull request if the catalog, the roadmap, the README and `skills/`
    disagree.
-2. **Merge it, then release it.** Run the Release workflow from the Actions tab, with the new
+2. **Merge it, then release it.** The merge is what reaches claude.ai, so a skill change is
+   ready for users before it merges. The release reaches plugin installs in Claude Code and
+   cloud sessions. Run the Release workflow from the Actions tab, with the new
    version and the merge commit's full SHA, not a branch, before a later commit changes a
    workflow. It checks the version, the changelog and CI, and makes the annotated tag. Then it
    signs the files with a build provenance attestation, checks that signature, and publishes the
@@ -155,8 +158,9 @@ If a skill here gives wrong or harmful instructions, take it out of circulation 
    the dependency map and the attestation attached.
 3. **Reach the copies already installed.**
    - **claude.ai:** a plugin installed from this marketplace with Sync automatically on takes
-     the new version. Otherwise, delete or replace the uploaded skill under Customize, then
-     Skills. If an admin uploaded it for an organization, an admin removes it.
+     each change once it merges to `main`, released or not. Otherwise, delete or replace the
+     uploaded skill under Customize, then Skills. If an admin uploaded it for an organization,
+     an admin removes it.
    - **Cloud sessions with `cloud-setup.sh`'s hook:** the next session to start installs the
      newest release, and removes a skill it no longer ships. A session already running keeps
      its copy.
