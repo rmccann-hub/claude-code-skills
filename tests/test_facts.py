@@ -232,6 +232,21 @@ def test_verify_reports_a_missing_quote_and_an_unreadable_source():
     ]
 
 
+def test_a_server_s_words_are_escaped_before_they_reach_a_report_or_an_issue(monkeypatch):
+    def fetch(source: str) -> str:
+        raise OSError("HTTP Error 500: \x1b[2J\nforged line")
+
+    [(_, problem)] = facts.verify([fact("down", "https://example.com/down")], fetch)
+    assert problem.endswith("(HTTP Error 500: \\x1b[2J\\x0aforged line)")
+
+    def failing(args, **kwargs):
+        return subprocess.CompletedProcess(args, 128, stdout="", stderr="remote: \x1b[31mred\n")
+
+    monkeypatch.setattr(facts.subprocess, "run", failing)
+    with pytest.raises(OSError, match=r"exited 128: remote: \\x1b\[31mred$"):
+        facts.fetch_text("git ls-remote --tags https://example.com/repo")
+
+
 class FakeResponse:
     def __init__(self, body: bytes, content_type: str) -> None:
         self.body = body

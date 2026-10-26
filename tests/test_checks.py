@@ -476,7 +476,7 @@ def test_link_to_another_skill_is_not_a_reference_chain(repo):
 
 
 def test_several_hidden_characters_are_counted_once_per_file(repo):
-    repo.skill("hidden-skill", body="One​ two​ three‮.\n")
+    repo.skill("hidden-skill", body="One\u200b two\u200b three\u202e.\n")
     repo.catalog(repo.plugin("example", "./skills/hidden-skill"))
     report = check_repository(repo.root)
     assert [(f.rule, f.message) for f in report.findings] == [
