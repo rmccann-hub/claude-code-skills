@@ -1,4 +1,5 @@
 import email.message
+import http.client
 import subprocess
 from datetime import date
 
@@ -245,6 +246,14 @@ def test_a_server_s_words_are_escaped_before_they_reach_a_report_or_an_issue(mon
     monkeypatch.setattr(facts.subprocess, "run", failing)
     with pytest.raises(OSError, match=r"exited 128: remote: \\x1b\[31mred$"):
         facts.fetch_text("git ls-remote --tags https://example.com/repo")
+
+
+def test_a_transfer_cut_short_is_an_unreadable_source_not_a_crash():
+    def fetch(source: str) -> str:
+        raise http.client.IncompleteRead(b"partial", 540111)
+
+    [(_, problem)] = facts.verify([fact("cut", "https://example.com/big")], fetch)
+    assert problem.startswith("https://example.com/big could not be read (IncompleteRead(")
 
 
 class FakeResponse:

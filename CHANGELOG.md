@@ -6,6 +6,13 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- `skillcheck --verify` reports a source whose transfer was cut short as unreadable, instead of
+  ending the run: `http.client.IncompleteRead` isn't an `OSError`, as the code had assumed.
+- `actions-security` gives 2 December 2026 for GitHub's default `pull_request_target` rule,
+  moved from 2 November by GitHub's note of 2026-10-21, which `--verify` caught.
+
 ### Security
 
 - The hidden-character rule also scans every file at the root, `src/`, `tests/`, `docs/` and

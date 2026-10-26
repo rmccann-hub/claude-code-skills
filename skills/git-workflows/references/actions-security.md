@@ -73,7 +73,7 @@ contains, so pass it through an environment variable (fact `injection`):
 - **`pull_request_target` runs in the base repository's context, with its secrets,** for pull
   requests from forks. Since 8 December 2025 it always runs the default branch's copy of the
   workflow (fact `prt-branch`). `actions/checkout` v7 refuses the common unsafe checkouts in it,
-  and `allow-unsafe-pr-checkout` opts out (fact `checkout-v7`). From 2 November 2026, public
+  and `allow-unsafe-pr-checkout` opts out (fact `checkout-v7`). From 2 December 2026, public
   repositories that set no event policy of their own have it disabled by default (fact
   `prt-default`).
 - **So prefer `pull_request`,** which runs a fork's code without your secrets. Where you need
@@ -115,7 +115,7 @@ contains, so pass it through an environment variable (fact `injection`):
   1. Move what the workflow does to `pull_request`, which has no secrets for forks.
   2. Where it must stay, because it labels or comments, make sure it never checks out or runs
      the pull request's code.
-  3. On a public repository, set an explicit event policy before 2 November 2026, or it stops
+  3. On a public repository, set an explicit event policy before 2 December 2026, or it stops
      running (fact `prt-default`).
 
 ## Mistakes
@@ -144,7 +144,7 @@ the trigger policy and the token's default need admin access to the settings, or
 | Every workflow narrows its token at the top | `grep -L '^permissions:' .github/workflows/*.y*ml`, then read each top-level block for `write-all` or a write grant | `GAP` per workflow | `contents: read` at the top, and any wider grant on the job that needs it (fact `permissions`) |
 | Actions pinned by tag or branch | `grep -n 'uses:' .github/workflows/*.y*ml` | `GAP` where the workflow reads secrets, writes or publishes | A full SHA with the version in a comment, and Dependabot (fact `sha-pin`) |
 | `pull_request_target` or `workflow_run` runs a pull request's code | Read those workflows' checkout and `run:` steps | `BLOCKER` | Move it to `pull_request`, which runs a fork's code without your secrets |
-| `pull_request_target` on a public repository with no event policy | Read the workflows, and the repository's Actions policy | `GAP`: it stops from 2 November 2026 (fact `prt-default`) | Move it, or set a policy |
+| `pull_request_target` on a public repository with no event policy | Read the workflows, and the repository's Actions policy | `GAP`: it stops from 2 December 2026 (fact `prt-default`) | Move it, or set a policy |
 | Untrusted text inside a `run:` script | `grep -nE -e '[$][{][{] *github[.]event' -e '[$][{][{] *github[.]head_ref' .github/workflows/*.y*ml`, then zizmor, whose injection audit follows more contexts | `BLOCKER` where the value is user-written | An environment variable (fact `injection`) |
 | The token's default is read and write | Settings, Actions, General, Workflow permissions | `GAP`, whatever the workflows declare: one that forgets its block gets write access | The read-only setting (fact `workflow-permissions`) |
 | Dependabot's jobs wait for a self-hosted runner that doesn't exist | Dependabot's runs in the Actions tab: queued, or failed after 24 hours | `DRIFT`: configured, and no update arrives | Turn off "Dependabot on self-hosted runners" (fact `dependabot-runners`) |
@@ -200,7 +200,7 @@ Versions, dates and defaults, each named elsewhere by its ID.
 | `checkout-sha` | `actions/checkout` v7.0.1 is commit `3d3c42e5aac5ba805825da76410c181273ba90b1` | `git ls-remote --tags https://github.com/actions/checkout` | `3d3c42e5aac5ba805825da76410c181273ba90b1 refs/tags/v7.0.1` | 2026-09-30 | 2026-12-31 |
 | `persist-creds` | `actions/checkout` keeps the token for later git commands unless `persist-credentials: false` | [checkout README](https://raw.githubusercontent.com/actions/checkout/main/README.md) | "Whether to configure the token or SSH key with the local git config" and "Default: true" | 2026-09-30 | 2026-12-31 |
 | `prt-branch` | From 8 December 2025, `pull_request_target` takes its workflow file and checkout commit from the default branch | [GitHub changelog, 2025-11-07](https://github.blog/changelog/2025-11-07-actions-pull_request_target-and-environment-branch-protections-changes/) | "The workflow file and checkout commit will always be taken from the repository’s default branch" | 2026-09-30 | 2027-03-31 |
-| `prt-default` | A default rule blocks `pull_request_target` on public repositories with no event policy of their own, enforced from 2 November 2026 | [GitHub changelog, 2026-09-17](https://github.blog/changelog/2026-09-17-workflow-execution-protections-in-github-actions-generally-available/) | "On November 2, 2026, we'll automatically enforce the default rule" | 2026-09-30 | 2026-11-30 |
+| `prt-default` | A default rule blocks `pull_request_target` on public repositories with no event policy of their own, enforced from 2 December 2026, moved from 2 November by an editor's note of 2026-10-21 | [GitHub changelog, 2026-09-17](https://github.blog/changelog/2026-09-17-workflow-execution-protections-in-github-actions-generally-available/) | "On December 2nd, 2026, we'll automatically enforce the default rule" | 2026-10-26 | 2026-12-01 |
 | `node20` | Runners default to Node 24 from 16 June 2026, and Node 20 was removed on 23 September 2026 | [GitHub changelog, 2025-09-19](https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/) | "Updated the Node20 removal date to September 23rd, 2026." | 2026-09-30 | 2026-12-31 |
 | `workflow-permissions` | Settings, Actions, General, Workflow permissions sets the token's default: read and write for everything, or read for contents and packages only. A setting in the same section decides whether the token can create and approve pull requests | [Managing GitHub Actions settings for a repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) | "just read access for the contents and packages permissions (the restricted setting)" and "Allow GitHub Actions to create and approve pull requests" | 2026-10-05 | 2027-04-05 |
 | `token-default` | A new repository in a personal account starts with the token read-only, and unable to create or approve pull requests | [Managing GitHub Actions settings for a repository](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) | "By default, when you create a new repository in your personal account, GITHUB_TOKEN only has read access for the contents and packages scopes." and "workflows are not allowed to create or approve pull requests" | 2026-10-05 | 2027-04-05 |
