@@ -24,10 +24,10 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 67 |
-| Python | 49 |
+| Markdown | 69 |
+| Python | 51 |
+| JSON | 22 |
 | YAML | 22 |
-| JSON | 20 |
 | Shell | 3 |
 | TOML | 2 |
 
@@ -41,7 +41,7 @@ freshness run and the release workflow both run it.
 | Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
-| uv | 0.13.1 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
+| uv | 0.13.5 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
 | vale | v3.24.0 | `.github/workflows/prose.yml` | — |
 
 ## Python packages
