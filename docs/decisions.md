@@ -2,6 +2,21 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Release 0.1.22, the `coding` skill
+
+- **Asked, by the owner:** to build `coding` and release it, with one try in place of twelve
+  (the entry below).
+- **The try passed:** for "Is setting innerHTML from this API response safe, and what CSP should
+  the page send?", claude.ai's steps show `coding`'s `SKILL.md` and `html-coding.md` read, and
+  `javascript-coding.md` not read. The closest boundary in the skill routed correctly.
+- **Seen twice now:** claude.ai read `bash-coding.md` and `html-coding.md`, each about 380
+  lines, in two passes, saying the first was truncated. It recovered both times. Claude Code
+  reads them whole. Trimming the modules to fit one read on claude.ai is proposed as a change
+  of its own, not a condition of this release, since claude.ai already has `main`.
+- **Carries:** `coding` (#82), and the documents saying a merge ships to claude.ai (#83). This
+  release reaches plugin installs in Claude Code and cloud sessions; claude.ai has had it since
+  the merge.
+
 ## 2026-10-26 — Merging ships to claude.ai, and the gate moves before the merge
 
 - **Found:** the owner's claude.ai account loaded `coding` in two tries without installing
