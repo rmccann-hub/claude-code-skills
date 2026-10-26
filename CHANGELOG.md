@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.21] - 2026-10-26
+
 ### Changed
 
 - Standard v0.48.2: *Language toolchains* is current to 2026-10, with the end-of-support dates

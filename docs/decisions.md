@@ -2,6 +2,14 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Release 0.1.21, the first signed release
+
+- **Asked, by the owner:** "yes do all", which took in signing releases and standard v0.48.2.
+- **Carries:** the signed release and the hook that checks it (the entry below), and standard
+  v0.48.2, merged as #78.
+- **Proof it works:** the release run's page job checks every file's signature before it
+  publishes, so a published 0.1.21 is one whose attestation verified.
+
 ## 2026-10-26 — Signed releases, and a hook that checks them
 
 - **Asked, by the owner:** "yes do all", to signing releases with build attestations and having
