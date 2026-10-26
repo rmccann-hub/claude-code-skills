@@ -2,6 +2,13 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — `AGENTS.md` back under its 150-line target
+
+- **Asked, by the owner:** "yes do all", to trimming `AGENTS.md` from 173 lines.
+- **Done:** tightened in place to 149 lines. Every rule, invariant and check stays in the file
+  agents load; the `src/skillcheck/` list became one line, and nothing moved elsewhere, since a
+  rule outside `AGENTS.md` is one a session may never read.
+
 ## 2026-10-26 — Release 0.1.21, the first signed release
 
 - **Asked, by the owner:** "yes do all", which took in signing releases and standard v0.48.2.
