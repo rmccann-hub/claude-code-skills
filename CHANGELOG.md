@@ -6,6 +6,11 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- Standard v0.48.2: *Language toolchains* is current to 2026-10, with the end-of-support dates
+  of PowerShell 7.4 and 7.5 and .NET 8 and 9, Pester 6, Node 26 and Rust 1.99.
+
 ## [0.1.20] - 2026-10-26
 
 ### Changed

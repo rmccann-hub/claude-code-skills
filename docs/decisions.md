@@ -2,6 +2,15 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Standard v0.48.2: language toolchains current to 2026-10
+
+- **Asked, by the owner:** "yes do all", to seven proposed rows, each checked that day at its
+  source from research R09, R10, R11 and R21.
+- **Changed, in the standard, as F155 and a change of its own:** *Language toolchains* reads
+  "Current at 2026-10". Python names every supported branch and 3.10's end; PowerShell 7.4 and
+  7.5 and .NET 8 and 9 end on 2026-11-10; Pester 6.x replaces "5.7.x is the safe pin"; Node 26
+  is the default for new work; Rust is 1.99.x.
+
 ## 2026-10-26 — Release 0.1.20, the finished fixes apart from the drafts
 
 - **Asked, by the owner:** "yes do all", to a list that recommended moving the finished fixes
