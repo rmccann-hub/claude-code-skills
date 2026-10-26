@@ -4,18 +4,6 @@
     "should_trigger": true
   },
   {
-    "query": "Is it safe to show the user's comment on the page with innerHTML?",
-    "should_trigger": true
-  },
-  {
-    "query": "Write a Content-Security-Policy header for our site that blocks inline scripts.",
-    "should_trigger": true
-  },
-  {
-    "query": "Add integrity attributes to the CDN script tags in index.html.",
-    "should_trigger": true
-  },
-  {
     "query": "The focus outline is gone and dark mode looks wrong. Can you fix this stylesheet?",
     "should_trigger": true
   },
@@ -24,8 +12,13 @@
     "should_trigger": true
   },
   {
-    "query": "Do links with target=_blank still need rel=noopener?",
+    "query": "Our Cancel button submits the form. Why, and how do I stop it?",
     "should_trigger": true
+  },
+  {
+    "query": "Is it safe to show the user's comment on the page with innerHTML?",
+    "should_trigger": false,
+    "note": "web-security"
   },
   {
     "query": "Convert this JavaScript module to TypeScript with strict mode on.",

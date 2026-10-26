@@ -1,0 +1,37 @@
+[
+  {
+    "query": "Is setting innerHTML from this API response safe, and what CSP should the page send?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it safe to show the user's comment on the page with innerHTML?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a Content-Security-Policy header for our site that blocks inline scripts.",
+    "should_trigger": true
+  },
+  {
+    "query": "Add integrity attributes to the CDN script tags in index.html.",
+    "should_trigger": true
+  },
+  {
+    "query": "Do links with target=_blank still need rel=noopener?",
+    "should_trigger": true
+  },
+  {
+    "query": "Build a sign-up form in HTML that works with screen readers and password managers.",
+    "should_trigger": false,
+    "note": "html-coding"
+  },
+  {
+    "query": "Our Node server passes a filename from the request to child_process.exec. Is that safe?",
+    "should_trigger": false,
+    "note": "javascript-security"
+  },
+  {
+    "query": "Commit our package-lock.json and set up Dependabot for npm.",
+    "should_trigger": false,
+    "note": "project-bootstrap-and-audit"
+  }
+]
