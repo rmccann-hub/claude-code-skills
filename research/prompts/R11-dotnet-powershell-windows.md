@@ -1,6 +1,6 @@
 # RESEARCH RUN R11: C# and .NET, PowerShell, Windows Server and Active Directory
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 3 · Written 22 September 2026, updated 26 October 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 26 October 2026.
 
 This run informs these categories: csharp-dotnet, powershell, windows-server, and legacy-languages (.NET Framework, Windows PowerShell 5.1, VBScript).
 
@@ -36,7 +36,7 @@ This run informs these categories: csharp-dotnet, powershell, windows-server, an
 7. **Depth over breadth.** Finish the Priority questions fully. If you run out of room, list the
    rest under "Not covered".
 8. **Beliefs marked "(the standard, date)"** come from this repository's own standard,
-   PROJECT-BOOTSTRAP-AND-AUDIT v0.35.0, in its section of dated facts. Checking them also
+   PROJECT-BOOTSTRAP-AND-AUDIT v0.48.1, in its section of dated facts. Checking them also
    checks that standard, so say plainly when one is wrong.
 
 ## Output
@@ -69,7 +69,8 @@ Then these sections, in this order:
 - C# 14 added extension members, the `field` keyword and null-conditional assignment.
 - System.CommandLine reached a stable 2.0 release in 2025.
 - xUnit v3 and MSTest 4 are current. Microsoft deprecated the .NET Upgrade Assistant in favour of GitHub Copilot app modernization.
-- (the standard, 2026-09) PowerShell 7.6.x is current. PowerShell 7.4 (LTS) ends support in November 2026. Windows PowerShell 5.1 ships with Windows and gets security fixes only.
+- (the standard, 2026-10) PowerShell 7.6.x is current. Windows PowerShell 5.1 is a component of Windows and follows its support lifecycle, and 7 installs beside it. Pester 5.7.x is the safe pin, since 6 exists and breaks things.
+- PowerShell 7.4 (LTS) ends support in November 2026.
 - (the standard, 2026-09) .NET 10 is LTS. Directory.Build.props holds shared properties and Directory.Packages.props central versions; packages.lock.json is opt-in.
 - PSResourceGet replaces PowerShellGet; PSScriptAnalyzer and Pester 5 are current.
 - Windows Server 2025 is current; Windows Server 2016 ends extended support in January 2027; Windows 10 ended support in October 2025, with paid Extended Security Updates.
@@ -113,3 +114,4 @@ Then these sections, in this order:
 7. Security baselines: the current Microsoft Security Compliance Toolkit baselines (Server 2025, Windows 11 24H2 and 25H2), and the current CIS Benchmark versions.
 8. .NET Framework and legacy: .NET Framework 4.8.1's support status; migrating WebForms (Blazor), WCF (CoreWCF, gRPC), Remoting and AppDomains; what replaced the Upgrade Assistant; VB.NET's status.
 9. C# mistakes AI assistants make (for example async void, DllImport where LibraryImport fits, outdated package versions), from sources.
+10. Untrusted text and downloads in PowerShell and .NET: text from outside in console output and logs (ANSI escape sequences, `$PSStyle.OutputRendering`); hidden Unicode in scripts; what Authenticode signing and the execution policy do and don't guarantee; verifying a download (`Get-AuthenticodeSignature`, and why `Get-FileHash` against a hash from the same place proves integrity but not who built it); and NuGet package signing and lock files (`RestoreLockedMode`).
