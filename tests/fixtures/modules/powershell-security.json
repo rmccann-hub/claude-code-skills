@@ -1,0 +1,42 @@
+[
+  {
+    "query": "Review this .ps1: it takes the service account password as a string parameter and calls Invoke-Expression.",
+    "should_trigger": true
+  },
+  {
+    "query": "How should a scheduled PowerShell job get the credentials for an API without keeping the password in the script?",
+    "should_trigger": true
+  },
+  {
+    "query": "My PowerShell script passes a user-supplied file name to a .cmd wrapper. I'm using an argument array, so that's safe, right?",
+    "should_trigger": true
+  },
+  {
+    "query": "Windows says my script isn't digitally signed. Should I just run Set-ExecutionPolicy Unrestricted?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is Microsoft.PowerShell.SecretManagement still the right way to store secrets for PowerShell automation?",
+    "should_trigger": true
+  },
+  {
+    "query": "My PowerShell try/catch doesn't catch a failed git clone. How do I make the script stop?",
+    "should_trigger": false,
+    "note": "powershell-scripts"
+  },
+  {
+    "query": "Set up WDAC App Control policies for every server in our domain through Group Policy.",
+    "should_trigger": false,
+    "note": "windows-admin, the planned operations module for Windows Server and Group Policy"
+  },
+  {
+    "query": "Our repository has a leaked API key in its history. How do we clean it up?",
+    "should_trigger": false,
+    "note": "leaked-data, in git-workflows"
+  },
+  {
+    "query": "Is it safe to pass user input to subprocess.run in Python with shell=True?",
+    "should_trigger": false,
+    "note": "python-security"
+  }
+]
