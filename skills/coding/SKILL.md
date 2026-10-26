@@ -3,7 +3,7 @@ name: coding
 description: "Writes, reviews and fixes code: the contract every change meets, then Python, TypeScript and JavaScript, HTML and CSS, C# and .NET, PowerShell, and Bash. Use when writing, reviewing, debugging or modernizing code in these languages."
 license: Apache-2.0
 metadata:
-  reviewed: "TODO(new-skill) the date of its review, YYYY-MM-DD"
+  reviewed: "2026-10-26"
 ---
 
 # Coding
@@ -44,7 +44,8 @@ The contract every change meets:
    fact is past its check-by date.
 8. **Prove it before you say it's done.** Run the project's own lint, format, type check and
    tests, as its context file lists them. Report what failed, with the output, and never skip,
-   disable or loosen a check to get to green.
+   disable or loosen a check to get to green. The one exception is a single finding you've
+   checked by hand, suppressed on its own line with a comment saying what was checked.
 9. **Show a destructive command before running it,** with its dry run or a confirmation: deleting
    files, dropping data, force-pushing, or anything a typo turns into a disaster.
 10. **No hidden or bidirectional characters in source.** They make a reviewer read one thing
@@ -100,6 +101,8 @@ status words are the standard's:
   repository.
 - **Designing tests:** a testing skill, planned. Each module here names its language's test
   runner and leaves test design there.
+- **Escaping for logs and terminals, in detail:** planned `input-handling` and
+  `logging-and-observability` modules. The contract's third rule applies until they ship.
 - **Prose and Markdown:** house-style.
 
 ## Where this came from

@@ -2,6 +2,44 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — The `coding` skill, wave 1 of the rebuild
+
+- **Asked, by the owner:** "can you build the coding skill", on 2026-10-26, which is wave 1 of
+  the rebuild plan the owner approved on 2026-10-15 (decisions 44 to 49).
+- **Built:** the `coding` skill, in the `engineering` plugin, with a ten-point contract every
+  code change meets and six modules: `python-coding`, `javascript-coding`, `html-coding`,
+  `csharp-coding`, `powershell-scripts` and `bash-coding`.
+- **From:** the owner's six old language skills of those names, as topic lists only, recorded
+  in the intake (`research/runs/2026-10-26-intake-wave-1.md`); research runs R09, R10, R11 and
+  R15 as leads; and primary sources for every rule and fact. One module per writer, each
+  checked by this session before it was committed.
+- **Sources and reuse:** each module's Sources table names its sources and licenses. Nothing
+  was adapted: every rule is in the module's own words, and share-alike sources (MDN prose,
+  OWASP, the Python Packaging User Guide) are quoted briefly with attribution only. No
+  `THIRD-PARTY-NOTICES.md` is needed.
+- **Checked:**
+  - all 319 facts in the repository were found at their sources;
+  - Python, shell and PowerShell examples pass the example checker, with PSScriptAnalyzer on
+    the PowerShell;
+  - TypeScript passed `tsc --strict` and ran on Node 22;
+  - the C# compiled with the .NET 10.0.403 SDK under the module's own settings. That build
+    caught one example that failed CA1852, fixed. CI has no C# checker, so it doesn't repeat it.
+- **The review:** a second reader, cold, on 2026-10-26, fetched 15 sources and ran examples. It
+  found nine problems, all fixed:
+  - **high:** Bash arithmetic, `(( ))` and `[[ -gt ]]`, runs a command hidden in input; the
+    module recommended it with no warning. Reproduced, then a rule, a mistake and a blocker
+    check were added;
+  - **medium:** the HTML module contradicted itself on DOMPurify and `innerHTML`, and its
+    example policy turned on Trusted Types that its text said to add last; the PowerShell and
+    C# modules didn't warn that a batch file gets `cmd.exe` parsing whatever the argument array;
+  - **low:** SQL parameters were missing from Python and JavaScript; Ruff's facts quoted a page
+    about preview mode; `DllImport`'s `W` lookup needs `CharSet.Unicode`; the contract seemed to
+    forbid a reasoned single-line suppression; and log and terminal escaping had no named home.
+- **Still to do before release:** the owner's claude.ai tries, from
+  `uv run skillcheck --tries` on the six modules, and deleting the six old skills from the
+  owner's account and the organization's library, so none loads beside its successor. Other old
+  skills, such as `windows-admin`, name the old ones, and would only point at a name that's gone.
+
 ## 2026-10-26 — `AGENTS.md` back under its 150-line target
 
 - **Asked, by the owner:** "yes do all", to trimming `AGENTS.md` from 173 lines.

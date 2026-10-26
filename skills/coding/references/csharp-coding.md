@@ -129,7 +129,9 @@ doesn't compile them again.
 - **Processes start without a shell.** `UseShellExecute` is `false` by default on .NET, but
   `true` on .NET Framework (fact `cs-shellexecute`). Pass each value as one `ArgumentList` item,
   which escapes it (fact `cs-argumentlist`), never inside a `cmd.exe /c` or `sh -c` string. A
-  value starting with `-` can still be read as an option by the program.
+  value starting with `-` can still be read as an option by the program. On Windows, a `.bat` or
+  `.cmd` file runs through `cmd.exe` whatever you pass (fact `py-subprocess-shell`), so input
+  never goes to a batch file unchecked.
 - **Paths from input are resolved, then checked.** `Path.Combine` drops everything before a
   rooted argument (fact `cs-path-combine`), and neither it nor `Path.Join` stops `..`:
 
@@ -190,8 +192,8 @@ doesn't compile them again.
 - **`Path.Combine(root, userInput)` as a guard.** An absolute input replaces the root, and `..`
   climbs out. Resolve and check.
 - **No `W` on a `LibraryImport` name,** from advice written for `DllImport`, which looks for the
-  `W` export while `ExactSpelling` is false. `LibraryImport` doesn't (fact `cs-libraryimport`),
-  so the call fails at run time.
+  `W` export while `ExactSpelling` is false and `CharSet` is `Unicode` (fact `cs-exactspelling`).
+  `LibraryImport` doesn't (fact `cs-libraryimport`), so the call fails at run time.
 - **`PublishTrimmed` on WinForms or WPF, or `IL2` and `IL3` warnings suppressed** to pass a
   build. The first isn't supported (fact `cs-trim-ui`); the second hides code that breaks after
   publishing.
@@ -338,6 +340,7 @@ Versions, dates and defaults, each named elsewhere in this module by its ID. Che
 | `cs-aot-limits` | NativeAOT allows no dynamic loading and no runtime code generation | [Native AOT deployment](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) | "No dynamic loading, for example, Assembly.LoadFile. No runtime code generation, for example, System.Reflection.Emit." | 2026-10-26 | 2027-04-26 |
 | `cs-trim-ui` | The SDK disables trimming for WPF and Windows Forms | [Trimming incompatibilities](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/incompatibilities) | "trimming support for WPF is currently disabled in the .NET SDK" and "trimming support for Windows Forms apps is disabled in the .NET SDK currently" | 2026-10-26 | 2027-04-26 |
 | `cs-libraryimport` | `LibraryImport` has no `ExactSpelling`, and needs `AllowUnsafeBlocks` | [P/Invoke source generation](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/pinvoke-source-generation) | "The method name or EntryPoint should be the exact spelling of the entry point name." and "The project must be marked unsafe using AllowUnsafeBlocks." | 2026-10-26 | 2027-10-26 |
+| `cs-exactspelling` | Without `ExactSpelling`, `DllImport` tries the name with `W` appended only when `CharSet` is `Unicode` | [DllImportAttribute.ExactSpelling](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute.exactspelling) | "the entry-point name appended with the letter W is invoked when the DllImportAttribute.CharSet field is set to the CharSet.Unicode" | 2026-10-26 | 2027-10-26 |
 | `cs-pinvoke-error` | Read the last error before making other calls, and use `SafeHandle` for unmanaged handles | [Native interop best practices](https://learn.microsoft.com/en-us/dotnet/standard/native-interop/best-practices) | "get the error before making other calls to avoid inadvertently having it overwritten" and "use SafeHandle handles to manage lifetime of objects that encapsulate unmanaged resources" | 2026-10-26 | 2027-10-26 |
 | `cs-getlastpinvokeerror` | `GetLastPInvokeError` is preferred over `GetLastWin32Error` | [Marshal.GetLastPInvokeError](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.marshal.getlastpinvokeerror) | "GetLastPInvokeError should be preferred over GetLastWin32Error." | 2026-10-26 | 2027-10-26 |
 | `cs-commandline-api` | System.CommandLine's API changed after 2.0.0-beta4: `SetAction` replaced `SetHandler` | [System.CommandLine migration guide](https://learn.microsoft.com/en-us/dotnet/standard/commandline/migration-guide-2.0.0-beta5) | "This article describes the breaking changes that were made in 2.0.0-beta5 and 2.0.0-beta7" and "You can use the Command.SetAction method to set an action for a command." | 2026-10-26 | 2027-04-26 |

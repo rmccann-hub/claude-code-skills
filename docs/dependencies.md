@@ -17,7 +17,7 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.21 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.2 |
-| `engineering` | 0.1.21 | Apache-2.0 | `coding` | reviewed TODO(new-skill) the date of its review, YYYY-MM-DD |
+| `engineering` | 0.1.21 | Apache-2.0 | `coding` | reviewed 2026-10-26 |
 | `engineering` | 0.1.21 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
 | `engineering` | 0.1.21 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
 
@@ -120,14 +120,14 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
-| `coding` | learn.microsoft.com | 54 |
-| `coding` | docs.python.org | 17 |
+| `coding` | learn.microsoft.com | 56 |
+| `coding` | docs.python.org | 18 |
 | `coding` | nodejs.org | 16 |
 | `coding` | www.w3.org | 16 |
+| `coding` | tiswww.case.edu | 14 |
 | `coding` | developer.mozilla.org | 13 |
-| `coding` | tiswww.case.edu | 13 |
 | `coding` | raw.githubusercontent.com | 9 |
-| `coding` | cheatsheetseries.owasp.org | 5 |
+| `coding` | cheatsheetseries.owasp.org | 7 |
 | `coding` | devblogs.microsoft.com | 5 |
 | `coding` | html.spec.whatwg.org | 5 |
 | `coding` | docs.astral.sh | 4 |

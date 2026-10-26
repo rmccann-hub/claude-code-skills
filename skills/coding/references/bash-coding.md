@@ -95,7 +95,9 @@ set -eu
   `=~`. The right side of `==` is a pattern, so quote it to compare literally:
   `[[ $a == "$b" ]]`. In POSIX `sh`, write `[ "$a" = "$b" ]`, each operand quoted.
 - **Numbers** compare with `(( a > b ))` in Bash, or `[ "$a" -gt "$b" ]`; inside `[ ]`, `>`
-  is a redirection.
+  is a redirection. A value from input reaches `(( ))`, `$(( ))`, `let` or `[[ … -gt … ]]` only
+  after it's checked to be digits: Bash evaluates it as an expression, and a command in an array
+  subscript runs (fact `sh-arith-eval`). `[ "$a" -gt "$b" ]` refuses such a value.
 - **`printf '%s\n' "$x"`, not `echo "$x"`,** for data: `echo` differs between shells on
   backslashes and a leading `-n` (fact `sh-echo`).
 - **A glob that matches nothing stays as written** (fact `sh-expansion`). Check `[ -e "$f" ]`
@@ -198,7 +200,8 @@ curl -fsS -H @"$HOME/.config/example/auth-header" https://api.example.com/v1/sta
 ```
 
 - **Validate input against what you accept,** such as `[[ $id =~ ^[0-9]+$ ]]`, rather than
-  stripping what you fear.
+  stripping what you fear. A number from input is checked this way before any arithmetic: a
+  value such as `x[$(cmd)]` runs `cmd` inside `(( ))` (fact `sh-arith-eval`).
 
 ### Tools
 
@@ -227,6 +230,8 @@ curl -fsS -H @"$HOME/.config/example/auth-header" https://api.example.com/v1/sta
   `mysql -p"$password"`. Use a file the tool reads, or its environment variable.
 - **`cd "$dir"` with no check,** after which the script runs on in the wrong directory. Write
   `cd -- "$dir" || exit`, or run the step in a subshell.
+- **Arithmetic on an unchecked argument,** such as `(( $1 > 0 ))`, which runs a command hidden
+  in the argument. Check it against `^[0-9]+$` first.
 - **A comment after a line-continuation backslash,** which breaks the continuation, so the next
   line runs as a command of its own. Put the comment on its own line.
 
@@ -243,6 +248,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 | Unsafe deletes | `rm -r` or `rm -f` on a variable path without `:?` or `--`; a deleting script with no dry run | `BLOCKER` | `"${dir:?}/"`, `--`, and a listing by default |
 | Temporary files | Fixed paths under `/tmp`, or `mktemp` with no `EXIT` trap | `GAP` | `mktemp`, and a trap on the next line |
 | Secrets on the command line | Tokens or passwords in arguments, or printed to the log | `BLOCKER` | A file or environment variable the tool reads |
+| Arithmetic on input | `(( ))`, `$(( ))`, `let` or `[[ -eq ]]`-style tests on a value from arguments, files or the network with no digits check before it | `BLOCKER` | `[[ $x =~ ^[0-9]+$ ]]` first (fact `sh-arith-eval`) |
 | `eval` and fetched code | `eval`, `bash -c` or `source` on input; a downloaded script piped into a shell | `BLOCKER` | `case` dispatch; download, verify, read, run |
 | Formatting | `shfmt -d` on the scripts | `DRIFT` | `shfmt -w`, and a CI step |
 | Version reach | Bash 4 features in a script claimed to run on macOS's `/bin/bash` | `DRIFT` | Remove them, or check `BASH_VERSINFO` |
@@ -342,6 +348,7 @@ Versions, dates and defaults, each named elsewhere in this module by its ID. Che
 | `sh-pipestatus` | `PIPESTATUS` holds each stage's status | [Bash manual](https://tiswww.case.edu/php/chet/bash/bashref.html) | "containing a list of exit status values from the commands in the most-recently-executed foreground pipeline" | 2026-10-26 | 2027-10-26 |
 | `sh-pipeline-subshell` | Each stage of a Bash pipeline runs in a subshell | [Bash manual](https://tiswww.case.edu/php/chet/bash/bashref.html) | "Each command in a multi-command pipeline, where pipes are created, is executed in its own subshell" | 2026-10-26 | 2027-10-26 |
 | `sh-expansion` | Unquoted expansions are split; `[[ … ]]` doesn't split or glob; a glob with no match stays as written | [Bash manual](https://tiswww.case.edu/php/chet/bash/bashref.html) | "The shell scans the results of parameter expansion, command substitution, and arithmetic expansion that did not occur within double quotes for word splitting." and "The words between the [[ and ]] do not undergo word splitting and filename expansion." and "If no matching filenames are found, and the shell option nullglob is disabled, the word is left unchanged." | 2026-10-26 | 2027-10-26 |
+| `sh-arith-eval` | Bash evaluates a variable's value as an arithmetic expression when an expression refers to it | [Bash manual](https://tiswww.case.edu/php/chet/bash/bashref.html) | "The value of a variable is evaluated as an arithmetic expression when it is referenced" | 2026-10-26 | 2027-10-26 |
 | `sh-read-r` | `read -r` keeps backslashes | [Bash manual](https://tiswww.case.edu/php/chet/bash/bashref.html) | "If this option is given, backslash does not act as an escape character." | 2026-10-26 | 2027-10-26 |
 | `sh-mktemp` | GNU `mktemp` creates files readable and writable only by their owner | [mktemp(1)](https://man7.org/linux/man-pages/man1/mktemp.1.html) | "Files are created u+rw, and directories u+rwx, minus umask restrictions." | 2026-10-26 | 2027-10-26 |
 | `sh-sc2115` | `${var:?}` fails when the variable is empty or unset | [ShellCheck wiki, SC2115](https://www.shellcheck.net/wiki/SC2115) | "Using :? will cause the command to fail if the variable is null or unset." | 2026-10-26 | 2027-10-26 |

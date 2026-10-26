@@ -21,7 +21,7 @@ Contents: [Rules](#rules), [Mistakes](#mistakes), [Audit](#audit), [Why](#why),
 1. **Set a project up with `pyproject.toml`, uv and the src layout,** and run every tool
    through `uv run`. A one-file script declares its dependencies inline instead.
 2. **Lint and format with Ruff, and turn on its security and time zone rules** (`S`, `DTZ`),
-   which its defaults leave out.
+   most of which its defaults leave out.
 3. **Annotate new code, and check it with a type checker in strict mode.** Unannotated code is
    barely checked.
 4. **Never hand untrusted input to a shell, `eval`, `pickle` or `yaml.load`.** Pass
@@ -113,6 +113,9 @@ def add_tag(tag: str, tags: list[str] | None = None) -> list[str]:
   docs don't recommend it for untrusted data either (fact `py-literal-eval`). Use `json.loads`.
 - **No `pickle` on data from outside** (fact `py-pickle`), and `yaml.safe_load`, never
   `yaml.load` (fact `py-yaml-load`).
+- **SQL takes placeholders,** such as `cursor.execute("SELECT * FROM t WHERE id = ?", (key,))`,
+  never a query built with an f-string, `%` or `+` (fact `py-sql-params`). Table and column
+  names can't be parameters, so pick them from a fixed set.
 - **Archives:** extract with `filter="data"`, which 3.14 made `tarfile`'s default and older
   versions need written out (fact `py-tar-filter`). `zipfile` warns that members can land
   outside the target (fact `py-zip-extract`).
@@ -204,6 +207,8 @@ print((stamp + timedelta(days=1)).astimezone(NEW_YORK))  # 2026-11-01 23:30:00-0
   list.
 - **`yaml.load` or `pickle.loads` on an upload, a request or a cache others can write.** Both
   can run code. Use `yaml.safe_load`, and JSON instead of pickle.
+- **`f"SELECT … WHERE name = '{name}'"` passed to `execute`,** which lets the input rewrite the
+  query. Pass the value as a parameter.
 - **`eval(text)` to parse a number or a list.** Use `int()`, `float()` or `json.loads`.
 - **`datetime.utcnow()`, or `datetime.now()` with no zone,** compared with an aware value. It
   raises `TypeError`, or stores a local time with nothing to say so. Use `datetime.now(UTC)`.
@@ -227,6 +232,7 @@ Severity uses the standard's status words. The `S` and `DTZ` codes are Ruff's, r
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
 | Shell commands from input | `S602`, `S604`, `S605` (fact `py-ruff-security-off`) | `BLOCKER` where input reaches it, else `GAP` | A list of arguments, no shell (fact `py-subprocess-shell`) |
+| SQL from strings | `execute(` with an f-string, `%`, `+` or `.format` in the query: Ruff's `S608` | `BLOCKER` where input reaches it, else `GAP` | Placeholders (fact `py-sql-params`) |
 | Code run from data | `eval`, `exec`, `pickle`, `yaml.load`: `S301`, `S307`, `S506` | `BLOCKER` where input reaches it, else `GAP` | `json.loads`, `yaml.safe_load` (facts `py-pickle`, `py-yaml-load`) |
 | Unsafe temporary files | `mktemp`, or a fixed path under `/tmp`: `S306`, `S108` | `GAP` | `tempfile.TemporaryDirectory` or `mkstemp` (fact `py-mktemp`) |
 | Paths from input | A request's or an archive's name joined to a base with no check; `extractall` without `filter=` | `BLOCKER` where reachable, else `GAP` | Resolve, then `is_relative_to`; `filter="data"` (facts `py-is-relative-to`, `py-tar-filter`) |
@@ -257,8 +263,8 @@ Severity uses the standard's status words. The `S` and `DTZ` codes are Ruff's, r
 
 - **The advice:** Ruff for lint and format, with the security and time zone rules selected.
 - **The reason:** Ruff's default rules catch classic mistakes such as a mutable default (fact
-  `py-ruff-defaults`), but its security rules are off by default (fact `py-ruff-security-off`),
-  so `shell=True` passes, and so does `datetime.now()` with no zone, a `DTZ` rule.
+  `py-ruff-defaults`), but only a few security and time zone rules are among them: `shell=True`
+  (`S602`) and `datetime.now()` with no zone (`DTZ005`) aren't (fact `py-ruff-security-off`).
 - **What others do, and why:** flake8 with plugins, isort and Black, which Ruff's linter and
   formatter are built to replace; Bandit, from which the `S` rules derive.
 - **What it costs:** `S603` and `S607` flag every `subprocess` call, the safe one above
@@ -327,8 +333,9 @@ Versions, dates and defaults, each named elsewhere in this module by its ID. Che
 | `py-inline-script` | A one-file script can declare its dependencies and Python version inline | [Inline script metadata](https://packaging.python.org/en/latest/specifications/inline-script-metadata/) | "This specification defines a metadata format that can be embedded in single-file Python scripts" | 2026-10-26 | 2027-10-26 |
 | `py-requires-upper` | The packaging guide warns against an upper bound in `requires-python` | [Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) | "Think twice before applying an upper bound" | 2026-10-26 | 2027-10-26 |
 | `py-ruff-target` | Ruff reads the target version from `requires-python`, and recommends it over its own setting | [Ruff settings](https://docs.astral.sh/ruff/settings/) | "If you're already using a pyproject.toml file, we recommend project.requires-python instead" | 2026-10-26 | 2027-04-26 |
-| `py-ruff-defaults` | Ruff's default rule set is its first five categories, which include the mutable default argument rule, `B006` | [The Ruff Linter](https://docs.astral.sh/ruff/linter/) | "The first five categories compose the default rule set" | 2026-10-26 | 2027-04-26 |
-| `py-ruff-security-off` | Ruff's security rules are off by default | [The Ruff Linter](https://docs.astral.sh/ruff/linter/) | "while the remaining four (security, formatting, pedantic, and restriction) are off by default." | 2026-10-26 | 2027-04-26 |
+| `py-ruff-defaults` | Ruff's default rules span several categories and include `B006`, the mutable default argument rule | [Ruff rules](https://docs.astral.sh/ruff/rules/) | "omitting any stylistic rules that overlap with the use of a formatter" | 2026-10-26 | 2027-04-26 |
+| `py-ruff-security-off` | Ruff's rules page marks each default rule "Enabled by default"; `S602` (`shell=True`) and `DTZ005` (`datetime.now()` with no zone) aren't marked. Checked by reading the page | [Ruff rules](https://docs.astral.sh/ruff/rules/) | "Enabled by default" | 2026-10-26 | 2027-04-26 |
+| `py-sql-params` | Python's `sqlite3` docs warn against building queries with string operations | [sqlite3](https://docs.python.org/3/library/sqlite3.html) | "as they are vulnerable to SQL injection attacks" | 2026-10-26 | 2027-10-26 |
 | `py-mypy-untyped` | By default, mypy doesn't check the body of a function with no annotations | [mypy command line](https://mypy.readthedocs.io/en/stable/command_line.html) | "(By default the bodies of functions without annotations are not type checked.)" | 2026-10-26 | 2027-04-26 |
 | `py-pyrefly-stable` | Pyrefly is marked production-stable on PyPI | [pyrefly on PyPI](https://pypi.org/pypi/pyrefly/json) | "Development Status :: 5 - Production/Stable" | 2026-10-26 | 2027-04-26 |
 | `py-ty-beta` | ty is marked beta on PyPI | [ty on PyPI](https://pypi.org/pypi/ty/json) | "Development Status :: 4 - Beta" | 2026-10-26 | 2027-04-26 |

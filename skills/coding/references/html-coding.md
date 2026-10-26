@@ -77,8 +77,9 @@ Every page meets these at level AA:
   `outerHTML`, `insertAdjacentHTML()`, `document.write()` and frameworks' escape hatches.
 - **`setHTML()` sanitizes as it inserts,** always dropping script-capable content, but Safari
   hasn't shipped it (fact `web-sethtml`). Feature-detect it, and fall back to DOMPurify, kept
-  patched (fact `web-owasp-dompurify`). Never re-insert sanitized output with `innerHTML` (fact
-  `web-sethtml-tt`).
+  patched (fact `web-owasp-dompurify`). DOMPurify's output goes into `innerHTML` once, straight
+  from `sanitize()`. Never serialize `setHTML()`'s result and parse it again with `innerHTML`
+  (fact `web-sethtml-tt`).
 - **Trusted Types** is Baseline since February 2026 (fact `web-trusted-types`). With the CSP
   directive `require-trusted-types-for 'script'`, a plain string assigned to a sink throws (fact
   `web-tt-enforce`). `setHTML()` isn't gated, because it always sanitizes (fact `web-sethtml-tt`),
@@ -114,7 +115,7 @@ if (typeof preview.setHTML === "function") {
 A strict policy allows scripts by nonce or hash, not by host (fact `web-csp-strict`):
 
 ```text
-Content-Security-Policy: script-src 'nonce-{RANDOM}' 'strict-dynamic'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'; require-trusted-types-for 'script'
+Content-Security-Policy: script-src 'nonce-{RANDOM}' 'strict-dynamic'; object-src 'none'; base-uri 'none'; frame-ancestors 'self'
 ```
 
 - **A fresh nonce on every response,** from a secure random source (fact `web-csp-nonce`), on
@@ -124,7 +125,8 @@ Content-Security-Policy: script-src 'nonce-{RANDOM}' 'strict-dynamic'; object-sr
 - **Send it as a header.** In a `<meta>` element, `frame-ancestors`, `sandbox` and `report-uri`
   are ignored (fact `web-csp-meta`).
 - **Roll out with `Content-Security-Policy-Report-Only` first,** read the reports, then enforce.
-  Add `require-trusted-types-for` last, once the code passes.
+  Add `; require-trusted-types-for 'script'` last, as its own step, once the code passes with it
+  in report-only mode: enforcing it breaks every library that still writes strings to sinks.
 
 ### Third-party files and new windows
 
@@ -158,6 +160,9 @@ openssl dgst -sha384 -binary vendor/lib.min.js | openssl base64 -A
   `web-button-submit`).
 - **Validate on the server too.** Browser checks are for the user's convenience (fact
   `web-owasp-validation`).
+- **A form that changes state needs CSRF protection on the server,** such as a token checked
+  with each request, where the session rides in a cookie (fact `web-owasp-csrf`). That check is
+  the server code's; this module only marks where a form needs it.
 
 ```html
 <form action="/account/email" method="post">
@@ -336,6 +341,7 @@ Versions, dates and defaults, each named elsewhere in this module by its ID. Che
 | `web-owasp-url` | OWASP: allow only http and https URLs from input, and encode parameters with `encodeURIComponent()` | [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html) | "Allow-list http and HTTPS URLs only" and "use encodeURIComponent() to encode each untrusted query parameter value" | 2026-10-26 | 2027-10-26 |
 | `web-owasp-dompurify` | OWASP recommends DOMPurify, kept patched | [OWASP XSS Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html) | "OWASP recommends DOMPurify for HTML Sanitization." and "You must regularly patch DOMPurify or other HTML Sanitization libraries that you use." | 2026-10-26 | 2027-04-26 |
 | `web-owasp-validation` | OWASP: browser validation can be bypassed, so the server validates too | [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) | "Client-side validation is bypassable; use it for immediate feedback." | 2026-10-26 | 2027-10-26 |
+| `web-owasp-csrf` | OWASP: CSRF tokens are still needed where cookies carry the session | [OWASP CSRF Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) | "CSRF tokens are still essential for web applications that rely on cookies for authentication." | 2026-10-26 | 2027-10-26 |
 | `web-jinja-autoescape` | Jinja's `Environment` leaves auto-escaping off unless it's configured | [Jinja API](https://jinja.palletsprojects.com/en/stable/api/) | "However autoescaping is not yet enabled by default" | 2026-10-26 | 2027-04-26 |
 | `web-innerhtml` | MDN calls `innerHTML` the most common XSS vector | [Element: innerHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML) | "The innerHTML property is probably the most common vector for cross-site scripting (XSS) attacks" | 2026-10-26 | 2027-10-26 |
 | `web-sethtml` | `Element.setHTML()` isn't Baseline: Chrome 146 and Firefox 148 ship it, Safari doesn't | [Element: setHTML()](https://developer.mozilla.org/en-US/docs/Web/API/Element/setHTML), [browser-compat-data](https://raw.githubusercontent.com/mdn/browser-compat-data/main/api/Element.json) | "This feature is not Baseline because it does not work in some of the most widely-used browsers." | 2026-10-26 | 2027-04-26 |
@@ -370,6 +376,6 @@ quoted only briefly, with attribution, and each quote is a dated fact above.
 | [Mitigate XSS with a strict CSP](https://web.dev/articles/strict-csp) and [Baseline](https://web.dev/baseline) (web.dev) | The strict policy, and Baseline's stages | CC BY 4.0, code Apache 2.0 (fact `web-webdev-license`): short quotes, with attribution |
 | [MDN Web Docs](https://developer.mozilla.org/) by Mozilla Contributors: innerHTML, setHTML(), Trusted Types API, color-scheme, prefers-reduced-motion, prefers-color-scheme, :focus-visible | Sinks, sanitizer and Trusted Types behavior, Baseline statuses | Prose CC BY-SA 2.5 or later: short quotes, with attribution; nothing adapted |
 | [MDN browser-compat-data](https://github.com/mdn/browser-compat-data) | Which browsers ship `setHTML()` | CC0 1.0: a fact |
-| [OWASP Cross Site Scripting Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html) and [Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) cheat sheets | Encoding by context, URL checks, DOMPurify, server validation | CC BY-SA 4.0: short quotes, with attribution; nothing adapted |
+| [OWASP Cross Site Scripting Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html), [Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) and [CSRF Prevention](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html) cheat sheets | Encoding by context, URL checks, DOMPurify, server validation, CSRF tokens | CC BY-SA 4.0: short quotes, with attribution; nothing adapted |
 | [DOMPurify README](https://github.com/cure53/DOMPurify) | `RETURN_TRUSTED_TYPE` | MPL-2.0 or Apache-2.0: a fact with a short quote |
 | [Jinja API](https://jinja.palletsprojects.com/en/stable/api/) | Auto-escaping's default | BSD-3-Clause: a fact with a short quote |

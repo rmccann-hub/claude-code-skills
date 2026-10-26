@@ -199,6 +199,9 @@ export function resolveInside(root: string, untrusted: string): string {
 }
 ```
 
+- **SQL takes parameters.** Pass values through the driver's placeholders, such as
+  `db.prepare("SELECT * FROM t WHERE id = ?").get(id)`, never a template string with input in
+  it (fact `js-sql-params`). Pick table and column names from a fixed set.
 - **ReDoS.** One slow regular expression blocks every request on the event loop. Avoid nested
   quantifiers such as `(a+)*`, alternatives that overlap, and backreferences on input; use
   `includes` or `indexOf` for a plain substring, and cap input length first (fact `js-redos`).
@@ -220,6 +223,8 @@ export function resolveInside(root: string, untrusted: string): string {
   rejection there ends the process (fact `js-unhandled-rejections`).
 - **`` exec(`convert ${file} out.png`) ``,** which runs a shell on a file name. Use `execFile`
   with an array (fact `js-exec-shell`).
+- **`` db.query(`SELECT … WHERE name = '${name}'`) ``,** which lets the input rewrite the query.
+  Pass it as a parameter (fact `js-sql-params`).
 - **`obj[key]` with a key from input,** which finds `toString` and `constructor` on every plain
   object. Check `Object.hasOwn` first, or use a `Map` (fact `js-hasown`).
 - **`as User` on parsed JSON or a caught error,** which tells the compiler a guess. Type it
@@ -247,6 +252,7 @@ Severity uses the standard's status words: `BLOCKER`, `DRIFT`, `GAP`, `OVER`, `M
 | Shell commands | `exec(`, `execSync(`, or `shell: true` with input in the command | `BLOCKER` where input reaches it, else `GAP` | `execFile` or `spawn` with an array (facts `js-exec-shell`, `js-dep0190`) |
 | Prototype pollution | Deep merges or `Object.assign` of parsed input; `obj[key]` lookups with input keys | `BLOCKER` where request input reaches it, else `GAP` | `Map`, `Object.hasOwn`, schema validation (facts `js-proto-node`, `js-hasown`) |
 | Path traversal | `path.join` or `path.resolve` on input with no containment check | `BLOCKER` | `resolveInside` above (fact `js-cwe22`) |
+| SQL from strings | Template strings or `+` building a query passed to a database call | `BLOCKER` where input reaches it, else `GAP` | Placeholders (fact `js-sql-params`) |
 | ReDoS | Regular expressions with nested quantifiers run on input | `GAP` | Rewrite the pattern, cap the input length (fact `js-redos`) |
 
 ## Why
@@ -366,6 +372,7 @@ Versions, dates and defaults, each named elsewhere in this module by its ID. Che
 | `js-hasown` | `Object.hasOwn` works on null-prototype objects and overridden `hasOwnProperty` | [MDN: Object.hasOwn()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) | "It is recommended over Object.prototype.hasOwnProperty()" | 2026-10-26 | 2027-10-26 |
 | `js-disable-proto` | `--disable-proto=delete` removes `Object.prototype.__proto__` | [Command-line options](https://nodejs.org/api/cli.html) | "Disable the Object.prototype.__proto__ property." | 2026-10-26 | 2027-10-26 |
 | `js-redos` | Node's guide: nested quantifiers make a regular expression vulnerable | [Don't block the event loop](https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop) | "Avoid nested quantifiers like (a+)*." | 2026-10-26 | 2027-10-26 |
+| `js-sql-params` | OWASP: parameterized queries for data values | [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) | "Use parameterized queries for data values" | 2026-10-26 | 2027-10-26 |
 | `js-cwe22` | CWE-22: canonicalize a path before checking it | [CWE-22](https://cwe.mitre.org/data/definitions/22.html) | "produces the canonical version of the pathname" | 2026-10-26 | 2027-10-26 |
 
 ## Sources
@@ -385,5 +392,5 @@ attribution, and each quote is a dated fact above.
 | [Biome](https://biomejs.dev/) | `noFloatingPromises` status | MIT (the biomejs/website repository): a short quote |
 | [Oxc blog](https://oxc.rs/blog/2026-07-22-type-aware-linting-stable) | oxlint's type-aware linting | No license found for the site: a fact in our own words, with a short quote |
 | [MDN Web Docs](https://developer.mozilla.org/) | `forEach`, `Promise.all`, `fetch`, `eval`, `Object.hasOwn` | Prose CC BY-SA 2.5 or later, by Mozilla Contributors: short quotes, with attribution |
-| [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) | Prototype pollution | CC BY-SA 4.0: a short quote, with attribution |
+| [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/) | Prototype pollution, SQL parameters | CC BY-SA 4.0: a short quote, with attribution |
 | [MITRE CWE-22](https://cwe.mitre.org/data/definitions/22.html) | Canonicalizing paths | CWE terms of use, copyright The MITRE Corporation: a short quote, with attribution |
