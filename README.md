@@ -24,8 +24,12 @@ In Claude Code's cloud sessions, which don't install a repository's plugins, add
 the latest release's
 [`cloud-setup.sh`](https://github.com/rmccann-hub/claude-code-skills/releases/latest/download/cloud-setup.sh)
 to the end of the environment's setup script. They install a hook that copies the newest
-release's skills into `~/.claude/skills` as each session starts, so no upload is needed. Delete
-any copy of these skills uploaded to claude.ai first, or it loads beside them under a prefix.
+release's skills into `~/.claude/skills` as each session starts, so no upload is needed. From
+0.1.21, the hook installs a release only when its signed attestation names the archive and this
+repository's release workflow; it checks the signature itself with `gh` where `gh` is installed,
+and refuses a release older than the one it has. An environment set up before 0.1.21 keeps its
+older hook until the lines are replaced. Delete any copy of these skills uploaded to claude.ai
+first, or it loads beside them under a prefix.
 
 On claude.ai, add this repository as a personal plugin marketplace, turn on Sync
 automatically, and install both plugins. Each release changes the plugins' version, which
@@ -145,8 +149,9 @@ If a skill here gives wrong or harmful instructions, take it out of circulation 
 2. **Merge it, then release it.** Run the Release workflow from the Actions tab, with the new
    version and the merge commit's full SHA, not a branch, before a later commit changes a
    workflow. It checks the version, the changelog and CI, and makes the annotated tag. Then it
-   publishes the release page, with the kickstart file, each skill packaged for claude.ai, the
-   ruleset files and the dependency map attached.
+   signs the files with a build provenance attestation, checks that signature, and publishes the
+   release page, with the kickstart file, each skill packaged for claude.ai, the ruleset files,
+   the dependency map and the attestation attached.
 3. **Reach the copies already installed.**
    - **claude.ai:** a plugin installed from this marketplace with Sync automatically on takes
      the new version. Otherwise, delete or replace the uploaded skill under Customize, then
