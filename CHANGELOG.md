@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.22] - 2026-10-26
+
 ### Added
 
 - The `coding` skill, in the `engineering` plugin: a ten-point contract every code change meets,
