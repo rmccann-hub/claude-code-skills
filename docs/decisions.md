@@ -2,6 +2,24 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — The review-loops skeleton, held to the rules it skipped
+
+- **Asked, by the owner:** "make sure we are consistent internally in our repo, with our rules,
+  etc. we need to be the best. the highest standards for all."
+- **Found:** the `review-loops` skeleton (`6f83cbc`, draft pull request #73) went in with no
+  entry here and no word on the homes it considered. It also failed `--bom-check`, because its
+  three new files weren't counted, and the `prose` check, on a placeholder in a heading. Both
+  are fixed on the draft's branch.
+- **Where it lives, and why:** the roadmap had already planned `review-loops` as a module of
+  the planned `agent-engineering` skill. The homes that exist were considered and didn't fit:
+  - `git-workflows` covers one repository's Git practice, not two agent sessions;
+  - `house-style` covers how prose reads;
+  - `project-bootstrap-and-audit` holds the standard, which isn't edited as part of other work.
+- **What the draft is, and isn't:** a skeleton on a draft branch, kept unmergeable by its
+  `TODO(new-skill)` markers. It isn't a committed skill under this repository's rule. Before it
+  leaves draft it passes the review in `docs/authoring-a-skill.md`, recorded here, as every
+  skill does. It took in lessons L45 to L49 from the EAC parity work of 2026-10-25 and 26.
+
 ## 2026-10-21 — Release 0.1.19
 
 - **Asked, by the owner:** "do everything you can up to 6 and release. plan 7 for the next

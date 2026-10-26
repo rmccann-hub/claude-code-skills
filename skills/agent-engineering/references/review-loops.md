@@ -78,7 +78,9 @@ Severity uses the standard's status words.
 
 ## Why
 
-### TODO(new-skill) A close condition fixed at the first message
+### A close condition fixed at the first message
+
+TODO(new-skill) Write this section from the evidence and the published work.
 
 - **The advice:** fix the close condition, and what proves it, in the round's first message.
 - **The reason:** rounds without one ran to dozens of messages; with one and a pre-committed
