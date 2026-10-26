@@ -8,8 +8,9 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
-- `skillcheck --verify` reports a source whose transfer was cut short as unreadable, instead of
-  ending the run: `http.client.IncompleteRead` isn't an `OSError`, as the code had assumed.
+- `skillcheck --verify` and `--outdated` report a source whose transfer was cut short as
+  unreadable, instead of ending the run: `http.client.IncompleteRead` isn't an `OSError`, as
+  the code had assumed. Repositories that run `--outdated` weekly should take this release.
 - `actions-security` gives 2 December 2026 for GitHub's default `pull_request_target` rule,
   moved from 2 November by GitHub's note of 2026-10-21, which `--verify` caught.
 
