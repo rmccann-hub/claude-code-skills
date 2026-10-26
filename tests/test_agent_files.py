@@ -1,10 +1,10 @@
-"""Files agents read outside skills/ get the same hidden-character scan as a skill (A30)."""
+"""Files agents or reviewers read outside skills/ get a skill's hidden-character scan (A30)."""
 
 import pytest
 
 from skillcheck.core.checks import check_repository
 
-RLO = "‮"  # right-to-left override, the Trojan Source character
+RLO = "\u202e"  # right-to-left override, the Trojan Source character
 
 
 def write(repo, relative: str, text: str) -> None:
@@ -34,21 +34,27 @@ def test_clean_agent_and_research_files_pass(repo):
         ".claude/settings.json",
         "research/runs/2026-01-01-R99.md",
         "research/prompts/R99.md",
+        "src/tool/module.py",
+        "tests/test_tool.py",
+        "docs/notes.md",
+        ".github/workflows/ci.yml",
+        "ROADMAP.md",
+        "README.md",
     ],
 )
-def test_a_hidden_character_in_an_agent_or_research_file_fires(repo, relative):
+def test_a_hidden_character_in_an_agent_or_reviewed_file_fires(repo, relative):
     write(repo, relative, f"Looks{RLO} harmless.\n")
     assert findings(check_repository(repo.root)) == [(relative, "unicode")]
 
 
 def test_the_message_names_the_line_and_the_code_point(repo):
-    write(repo, "research/runs/r.md", "clean\nzero​width\n")
+    write(repo, "research/runs/r.md", "clean\nzero\u200bwidth\n")
     [finding] = check_repository(repo.root).findings
     assert finding.message.startswith("line 2 holds U+200B")
 
 
 def test_a_file_outside_the_scope_is_not_checked(repo):
-    write(repo, "docs/notes.md", f"Out of scope{RLO}.\n")
+    write(repo, "scratch/notes.md", f"Out of scope{RLO}.\n")
     assert check_repository(repo.root).findings == []
 
 

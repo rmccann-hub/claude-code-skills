@@ -16,6 +16,7 @@ nothing can install the newest until someone raises it. Runner images and system
 aren't checked: neither has a registry that says which version is newest.
 """
 
+import http.client
 import json
 import os
 import re
@@ -134,6 +135,7 @@ def scan(root: Path, fetch: Fetch = fetch_json, today: date | None = None) -> li
             release = newest()
         except (
             OSError,
+            http.client.HTTPException,  # a transfer cut short isn't an OSError
             ValueError,
             KeyError,
             IndexError,
@@ -296,7 +298,7 @@ def _github(fetch: Fetch, repo: str) -> Release:
     try:
         data = fetch(f"https://api.github.com/repos/{repo}/releases/latest")
         return Release(data["tag_name"], _day(data.get("published_at")))
-    except (OSError, ValueError, KeyError, TypeError) as error:
+    except (OSError, http.client.HTTPException, ValueError, KeyError, TypeError) as error:
         if isinstance(error, urllib.error.HTTPError):
             error.close()
         listed = subprocess.run(

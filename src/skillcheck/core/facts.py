@@ -11,6 +11,7 @@ The last two depend on the date and the network, so they run on a schedule and n
 request, where a result should depend only on the commit.
 """
 
+import http.client
 import re
 import subprocess
 import urllib.request
@@ -21,6 +22,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 from skillcheck.core import modules
+from skillcheck.core.text import printable
 
 FACTS = "references/facts.md"
 COLUMNS = ("ID", "Fact", "Source", "Quote", "Checked", "Check by")
@@ -116,7 +118,7 @@ def verify(facts: list[Fact], fetch: Fetch | None = None) -> Iterator[tuple[Fact
     cell holding neither has nothing to look for, and is left to be checked by hand.
     """
     fetch = fetch or fetch_text
-    pages: dict[str, str | OSError] = {}
+    pages: dict[str, str | Exception] = {}
     for fact in facts:
         if not fact.quotes:
             continue
@@ -125,11 +127,13 @@ def verify(facts: list[Fact], fetch: Fetch | None = None) -> Iterator[tuple[Fact
             if source not in pages:
                 try:
                     pages[source] = _plain(fetch(source))
-                except OSError as exc:  # urllib's errors, HTTP ones included, are all OSErrors
+                # urllib's errors are OSErrors, but a transfer cut short raises IncompleteRead,
+                # an HTTPException, and one unreadable source mustn't end the whole run.
+                except (OSError, http.client.HTTPException) as exc:
                     pages[source] = exc
             page = pages[source]
-            if isinstance(page, OSError):
-                failures.append(f"{source} could not be read ({page})")
+            if isinstance(page, Exception):
+                failures.append(f"{source} could not be read ({printable(str(page))})")
             else:
                 texts.append(page)
         if not texts:
@@ -168,7 +172,9 @@ def _ls_remote(url: str) -> str:
     except subprocess.TimeoutExpired as exc:
         raise OSError(f"git ls-remote took over {TIMEOUT_SECONDS} seconds") from exc
     if result.returncode:
-        raise OSError(f"git ls-remote exited {result.returncode}: {result.stderr.strip()}")
+        raise OSError(
+            f"git ls-remote exited {result.returncode}: {printable(result.stderr.strip())}"
+        )
     return result.stdout
 
 

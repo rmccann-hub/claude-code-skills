@@ -1,6 +1,6 @@
 # RESEARCH RUN R09: Python and Python for data
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 3 · Written 22 September 2026, updated 26 October 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 26 October 2026.
 
 This run informs these categories: python, and the Python side of data-and-sql and excel.
 
@@ -36,7 +36,7 @@ This run informs these categories: python, and the Python side of data-and-sql a
 7. **Depth over breadth.** Finish the Priority questions fully. If you run out of room, list the
    rest under "Not covered".
 8. **Beliefs marked "(the standard, date)"** come from this repository's own standard,
-   PROJECT-BOOTSTRAP-AND-AUDIT v0.35.0, in its section of dated facts. Checking them also
+   PROJECT-BOOTSTRAP-AND-AUDIT v0.48.1, in its section of dated facts. Checking them also
    checks that standard, so say plainly when one is wrong.
 
 ## Output
@@ -65,8 +65,8 @@ Then these sections, in this order:
 
 ## What we believe (confirm or correct each)
 
-- Python 3.14 was released in October 2025; Python 3.15 is due in October 2026; Python 3.10 reaches end of life in October 2026, and 3.9 reached it in October 2025.
-- (the standard, 2026-09) Python 3.14.x has been stable since October 2025, and 3.13.x is still maintained. uv carries the momentum, Poetry is fully supported, and pip-tools suits minimalists. Dependency groups are standardised.
+- Python 3.14 was released in October 2025 and Python 3.15 on 9 October 2026; Python 3.10 reaches end of life in October 2026, and 3.9 reached it in October 2025.
+- (the standard, 2026-10) Python 3.15.x was released on 2026-10-09, and 3.14.x and 3.13.x are still maintained. uv carries the momentum, Poetry is fully supported, and pip-tools suits minimalists. Dependency groups are standardised.
 - Python 3.14 added deferred evaluation of annotations (PEP 649 and 749), template strings (PEP 750), official free-threaded support (PEP 779), `concurrent.interpreters` (PEP 734), `compression.zstd` (PEP 784), and a default `data` filter for tarfile extraction.
 - uv (Astral) is the fastest-growing Python package and project manager, and ruff is the dominant linter and formatter; Astral's ty and Meta's pyrefly type checkers are in beta or early release.
 - PEP 751 (pylock.toml) was accepted in 2025; PEP 735 dependency groups are supported by uv and pip; PEP 639 standardized SPDX licence expressions in metadata.
@@ -76,7 +76,7 @@ Then these sections, in this order:
 
 ### Priority
 
-1. Python release status today: the latest patch release of each supported branch, end-of-life dates, the 3.15 schedule and its headline features (confirm the PEP numbers), and which versions a new project should target and test.
+1. Python release status today: the latest patch release of each supported branch, end-of-life dates, 3.15's headline features (confirm the PEP numbers) and the 3.16 schedule, and which versions a new project should target and test.
 2. Modern idioms a professional uses today that an older codebase won't have:
    - typing: type parameter syntax (PEP 695), `type` aliases, `Self`, `TypeIs`, `override`
    - data classes: dataclasses versus attrs versus Pydantic v2
@@ -108,3 +108,4 @@ Then these sections, in this order:
 9. Command-line tools and apps: argparse versus click versus typer; logging configuration; configuration with pydantic-settings; packaging a CLI (uv tool, pipx).
 10. Legacy Python: reading and migrating Python 2 and early 3.x code (2to3 is removed; pyupgrade and ruff's UP rules; six and future), and upgrading 3.8 and 3.9 codebases.
 11. Mistakes AI assistants make in Python, from studies or vendor guidance.
+12. Untrusted text and downloads in Python: printing text from outside to a terminal or a log (control characters and escape sequences, and how to escape them); hidden and bidirectional Unicode in source code (Trojan Source, CVE-2021-42574) and which linters flag it; which exceptions a fetch with urllib or requests can raise beyond `OSError` (for example `http.client.IncompleteRead`); and verifying a downloaded artifact by signature or provenance (sigstore-python, PEP 740 attestations) rather than a checksum published beside it.

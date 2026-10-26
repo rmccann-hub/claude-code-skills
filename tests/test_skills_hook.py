@@ -82,9 +82,9 @@ def test_a_newer_release_replaces_its_own_removes_the_retired_and_spares_others(
         ({"version": "1.0.0", "skills": "alpha"}, {}, "needs a version and a list of skills"),
         ({"version": "1.0.0", "skills": ["Alpha"]}, {}, "names 'Alpha', which isn't a skill"),
         ({"version": "1.0.0", "skills": [1]}, {}, "names 1, which isn't a skill"),
-        ({"version": "1.0.0", "skills": ["alpha"]}, {"other": skill()}, "holds other/SKILL.md"),
-        ({"version": "1.0.0", "skills": ["alpha"]}, {"alpha": {"../x": "y"}}, "holds alpha/../x"),
-        ({"version": "1.0.0", "skills": ["alpha"]}, {"alpha": {"a\\b": "y"}}, "holds alpha/a"),
+        ({"version": "1.0.0", "skills": ["alpha"]}, {"other": skill()}, "holds 'other/SKILL.md'"),
+        ({"version": "1.0.0", "skills": ["alpha"]}, {"alpha": {"../x": "y"}}, "holds 'alpha/../x'"),
+        ({"version": "1.0.0", "skills": ["alpha"]}, {"alpha": {"a\\b": "y"}}, "holds 'alpha/a"),
         ({"version": "1.0.0", "skills": ["alpha"]}, {"alpha": {"x.md": "y"}}, "no alpha/SKILL.md"),
     ],
 )
@@ -92,6 +92,22 @@ def test_an_archive_that_isnt_a_release_installs_nothing(tmp_path, manifest, fil
     with pytest.raises(ValueError, match=message):
         install(archive("", files, manifest), tmp_path / "skills")
     assert not (tmp_path / "skills").exists()
+
+
+@pytest.mark.parametrize("char", ["\u202e", "\u200b", "\U000e0041"])
+def test_a_skill_carrying_a_hidden_character_installs_nothing(tmp_path, char):
+    files = {"SKILL.md": f"Looks{char} harmless.", "assets/logo.png": "\x89PNG"}
+    with pytest.raises(ValueError, match=r"'alpha/SKILL.md' holds U\+"):
+        install(archive("1.0.0", {"alpha": files}), tmp_path / "skills")
+    assert not (tmp_path / "skills").exists()
+
+
+def test_a_binary_file_is_not_read_as_text(tmp_path):
+    buffer = io.BytesIO(archive("1.0.0", {"alpha": skill()}))
+    with zipfile.ZipFile(buffer, "a") as out:
+        out.writestr("alpha/assets/image.png", b"\xff\xfe\x00\xe2\x80\x8b")
+    install(buffer.getvalue(), tmp_path / "skills")
+    assert (tmp_path / "skills/alpha/assets/image.png").is_file()
 
 
 def test_a_failed_download_keeps_the_installed_skills(tmp_path, capsys):

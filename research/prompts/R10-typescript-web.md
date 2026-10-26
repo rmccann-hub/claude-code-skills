@@ -1,6 +1,6 @@
 # RESEARCH RUN R10: TypeScript, JavaScript, Node.js, HTML, CSS and the web front end
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 3 · Written 22 September 2026, updated 26 October 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 26 October 2026.
 
 This run informs these categories: typescript-javascript, html-css, accessibility (web), visual-theme (CSS).
 
@@ -36,7 +36,7 @@ This run informs these categories: typescript-javascript, html-css, accessibilit
 7. **Depth over breadth.** Finish the Priority questions fully. If you run out of room, list the
    rest under "Not covered".
 8. **Beliefs marked "(the standard, date)"** come from this repository's own standard,
-   PROJECT-BOOTSTRAP-AND-AUDIT v0.35.0, in its section of dated facts. Checking them also
+   PROJECT-BOOTSTRAP-AND-AUDIT v0.48.1, in its section of dated facts. Checking them also
    checks that standard, so say plainly when one is wrong.
 
 ## Output
@@ -97,3 +97,4 @@ Then these sections, in this order:
 8. CSS: Baseline status of nesting, :has(), container queries, @layer, @scope, anchor positioning, view transitions, `light-dark()` and `text-wrap`; Tailwind v4; methodology (utility-first, BEM, CSS modules).
 9. Web security: CSP Level 3 (strict CSP with nonces or hashes), Trusted Types, the Sanitizer API's status, SRI, COOP and COEP, cookies (SameSite defaults, CHIPS, the status of third-party cookies in Chrome), Permissions-Policy.
 10. Legacy web: jQuery 4.0's status, migration paths off AngularJS (end of life), CommonJS-to-ESM migration, and Internet Explorer-era patterns to remove.
+11. Untrusted text and downloads in TypeScript and web: text from outside in a Node CLI's terminal output (escape sequences), and in the DOM (`textContent` against `innerHTML`, beyond Trusted Types); hidden and bidirectional Unicode in source and which ESLint rules or plugins catch it; and npm provenance: how `npm audit signatures` verifies it, what it proves and what it doesn't.

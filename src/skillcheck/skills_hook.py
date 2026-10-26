@@ -26,6 +26,13 @@ URL = "https://github.com/REPOSITORY/releases/latest/download/skills.zip"
 MANIFEST = "release.json"
 LEDGER = ".claude-code-skills.json"
 NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
+# Characters that render as nothing or reorder text, so what a reviewer saw differs from what an
+# agent reads. The same as ``skillcheck.core.text.HIDDEN``, which a test keeps equal: this file
+# runs on its own, without that package. A release already passed the check; the hook checks
+# again because what arrives is what the session reads.
+HIDDEN = re.compile(
+    "[\u00ad\u180e\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff\U000e0000-\U000e007f]"
+)
 
 
 def main(url: str = URL, home: Path | None = None) -> int:
@@ -103,7 +110,14 @@ def _manifest(archive: zipfile.ZipFile) -> tuple[str, list[str]]:
     for entry in entries:
         parts = entry.split("/")
         if entry != MANIFEST and (parts[0] not in names or ".." in parts or "\\" in entry):
-            raise ValueError(f"the archive holds {entry}, outside its skills")
+            raise ValueError(f"the archive holds {entry!r}, outside its skills")
+        try:
+            text = archive.read(entry).decode("utf-8")
+        except UnicodeDecodeError:  # an image or another binary file has no text to hide in
+            continue
+        hidden = HIDDEN.search(text)
+        if hidden:
+            raise ValueError(f"{entry!r} holds U+{ord(hidden.group()):04X}, a hidden character")
     for name in names:
         if f"{name}/SKILL.md" not in entries:
             raise ValueError(f"the archive has no {name}/SKILL.md")

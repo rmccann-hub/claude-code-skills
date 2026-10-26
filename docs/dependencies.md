@@ -1,6 +1,6 @@
 # Dependency map
 
-What `claude-code-skills` 0.1.19 is built from, runs on and relies on: the
+What `claude-code-skills` 0.1.20 is built from, runs on and relies on: the
 plugins it ships, the languages it's written in, its runtimes and tools, every package
 at its exact version, the GitHub Actions it pins, the services it uses, and the sources
 its skills' facts cite.
@@ -16,16 +16,16 @@ freshness run and the release workflow both run it.
 
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
-| `standards` | 0.1.19 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.1 |
-| `engineering` | 0.1.19 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
-| `engineering` | 0.1.19 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
+| `standards` | 0.1.20 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.1 |
+| `engineering` | 0.1.20 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
+| `engineering` | 0.1.20 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 67 |
-| Python | 49 |
+| Markdown | 72 |
+| Python | 51 |
 | YAML | 22 |
 | JSON | 20 |
 | Shell | 3 |
@@ -36,12 +36,12 @@ freshness run and the release workflow both run it.
 | Name | Version | Set in | Note |
 |---|---|---|---|
 | Python | 3.15 | `.python-version` | `pyproject.toml` requires >=3.14 |
-| uv_build | >=0.13.0,<0.14 | `pyproject.toml` | build backend |
+| uv_build | >=0.13.1,<0.14 | `pyproject.toml` | build backend |
 | GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` | — |
 | Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
-| uv | 0.13.1 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
+| uv | 0.13.5 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
 | vale | v3.24.0 | `.github/workflows/prose.yml` | — |
 
 ## Python packages

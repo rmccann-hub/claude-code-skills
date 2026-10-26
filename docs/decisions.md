@@ -2,6 +2,24 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Release 0.1.20, the finished fixes apart from the drafts
+
+- **Asked, by the owner:** "yes do all", to a list that recommended moving the finished fixes
+  off the draft pull request #73 to a branch of their own, with Dependabot's #74, merging once
+  checks pass, and releasing 0.1.20.
+- **Why apart:** two of the owner's repositories pin 0.1.18 for their weekly `--outdated`, which
+  ends its run on a transfer cut short. The fix sat on #73, which can't merge while its two
+  modules, `review-loops` and `supply-chain-security`, are drafts.
+- **Carries:**
+  - the cut-transfer fixes in `--verify` and `--outdated`;
+  - the hidden-character scan widened to `src/`, `tests/`, `docs/`, `.github/` and every root
+    file, the install hook's refusal of hidden characters, and escaped outside text;
+  - uv 0.13.5 in CI, past GHSA-hq85-5cpj-mr62, and Dependabot's `uv_build` floor;
+  - the GitHub date in `actions-security`, ten lessons in `ROADMAP.md`, the wave 1 and R21
+    prompts brought up to date, and the five research results filed with what was checked.
+- **Left on #73:** the two drafts and their decision entries. Each commit here names the #73
+  commit it was picked from.
+
 ## 2026-10-21 — Release 0.1.19
 
 - **Asked, by the owner:** "do everything you can up to 6 and release. plan 7 for the next
