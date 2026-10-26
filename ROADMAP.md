@@ -100,7 +100,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `types` | `coding` | Static and gradual typing, strictness, type checkers, types at trust boundaries | planned | core | R03 |
 | `input-handling` | `coding` | Validation, sanitization and output encoding by context | planned | core | R04 |
 | `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | planned | core | R04 |
-| `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21 |
+| `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
 | `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
 | `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
 | `testing-patterns` | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06 |

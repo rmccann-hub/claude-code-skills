@@ -1,6 +1,6 @@
 # Research runs
 
-Twenty-three prompts, one file each. Each file is the whole prompt: paste all of it into a new
+Twenty-four prompts, one file each. Each file is the whole prompt: paste all of it into a new
 claude.ai chat with Research turned on (or Web search, if Research isn't offered). Run them
 in any order, several at a time in separate chats. Priority 1 first.
 
@@ -32,6 +32,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R21 | 1 | [R21-fewest-dependencies-newest-versions.md](R21-fewest-dependencies-newest-versions.md) | Fewest dependencies and newest versions: what a dependency costs, when to add or remove one, which runtime versions to target and test, and CI that checks less | project-bootstrap-and-audit (dimensions 2, 6 and 8), keeping-current, supply-chain-security, ci-cd, and the dependency advice in every language skill |
 | R23 | 2 | [R23-human-factors.md](R23-human-factors.md) | Human factors: the habits, notions and mindsets common to people that look wasteful from outside and serve a purpose, how to tell one from a bias, designing and automating with them, and the limit that keeps agents gathering facts unbiased | human-factors, optimization-and-scheduling, and every skill that designs, automates or optimizes work people do |
 | R22 | 1 | [R22-one-command-front-door.md](R22-one-command-front-door.md) | One command from any repository: the route into sessions and knowing which copy ran, fewer and better questions for an existing repository, the new-project interview and recommendation, answers kept between runs, and testing the front door | project-bootstrap-and-audit (the routing table, Phases 1, 3 and 8, Choosing a Language and Runtime, Choosing the Shape, Starter File Contents, Standards Distribution, Cross-Repository Contracts), skill-builder (distribution, versions and trigger tests), agent-context-files, ai-agent-security (repository content as data) |
+| R24 | 1 | [R24-installs-provenance-registries.md](R24-installs-provenance-registries.md) | Installing exactly what was locked, verifying provenance on install and on update, and registries' defences against invented names | supply-chain-security, keeping-current, ci-cd, and the install advice in every language skill |
 
 Already covered in the building session, so there's no run for them: the skill-authoring
 rules; licensing and ownership; the licences of reference sources; this repository's own
