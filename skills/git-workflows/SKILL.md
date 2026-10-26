@@ -18,19 +18,21 @@ run the commands; on claude.ai, give them to the person to run.
 1. **Choose the merge strategy by whether anything cites your commits.** A merge commit keeps a
    branch's commits; squash and rebase-merge don't (`branches-and-merging`).
 2. **Never delete a branch until you've checked what still needs it,** and never bulk-delete
-   remote branches from `git branch -r --merged` (`branches-and-merging`).
+   remote branches from `git branch -r --merged` (`rebasing-and-recovery`).
 3. **Never rewrite shared or cited history.** Revert, or add a commit. The one exception is
-   removing personal information at the owner's request (`leaked-data`).
+   removing personal information at the owner's request (`rebasing-and-recovery`,
+   `leaked-data`).
 4. **Never get to green by going around a check.** No `--no-verify`, and no skipping or
    quarantining a failing test. Fix the cause (`ci-workflows`, `git-hooks`).
 5. **Write down one commit grammar and check it** (`commits-and-pull-requests`).
 6. **Harden every workflow:** `permissions:` at the top, `timeout-minutes` on every job, actions
    pinned to a full commit SHA, installs that fail on lockfile drift, runs on the branches where
-   work happens, and no path filter on a required check (`actions-security`, `ci-workflows`).
+   work happens, and no path filter on a required check (`actions-security`, `action-pinning`,
+   `ci-workflows`).
 7. **Release from an annotated tag on the release commit's SHA,** after the changelog entry and
    after CI is green on that commit (`releases-and-versions`).
 8. **Read Git's output whole,** and never read an exit status through a pipe
-   (`branches-and-merging`).
+   (`rebasing-and-recovery`, `ci-workflows`).
 9. **Keep a second release line only when users need it** (`releases-and-versions`).
 
 Before anything destructive, show what it will do, and wait for confirmation. That covers
@@ -46,9 +48,12 @@ as fact `node20`, and the fact's row is in whichever module holds it.
 | Module | Read it for |
 |---|---|
 | [`commits-and-pull-requests`](references/commits-and-pull-requests.md) | writing a commit message, naming a branch, opening or reviewing a pull request, choosing and checking the commit grammar, or the address commits carry |
-| [`branches-and-merging`](references/branches-and-merging.md) | the branching model, protecting the default branch, the merge strategy, deleting branches, rebasing, conflicts, recovering a lost commit, or renaming `master` |
-| [`ci-workflows`](references/ci-workflows.md) | a GitHub Actions workflow's triggers, timeouts, installs, path filters and required checks; how long CI should take; proving a gate or a test job works |
-| [`actions-security`](references/actions-security.md) | a workflow's permissions, pinned actions, untrusted input, `pull_request_target`, Node 20 actions, or scanning workflows with zizmor |
+| [`branches-and-merging`](references/branches-and-merging.md) | the branching model, protecting the default branch, choosing and enforcing the merge strategy, or moving off Git Flow or `master` |
+| [`rebasing-and-recovery`](references/rebasing-and-recovery.md) | deleting a branch, rebasing and pushing your own branch, conflicts and conflict markers, recovering a lost commit, leaving shared history alone, reading Git's paths with `-z`, or 64-character commit IDs |
+| [`ci-workflows`](references/ci-workflows.md) | a GitHub Actions workflow's triggers, timeouts, installs, path filters and required checks; linting workflows; proving a gate, a test job or a workflow works |
+| [`ci-speed`](references/ci-speed.md) | how long CI should take, which suites run before and after merge, making CI faster without testing less, caching builds, timing tests, and timeouts that come and go |
+| [`actions-security`](references/actions-security.md) | a workflow's permissions and credentials, untrusted input in a `run:` step, `pull_request_target` and `workflow_run`, approving fork runs, or scanning workflows with actionlint, zizmor or CodeQL |
+| [`action-pinning`](references/action-pinning.md) | pinning a workflow's actions to commit SHAs, finding a tag's commit, workflow dependency lockfiles, Dependabot for actions, the SHA-pinning policy, or moving off Node 20 actions |
 | [`git-hooks`](references/git-hooks.md) | writing, installing or testing a commit or push hook, or a hook that didn't run |
 | [`releases-and-versions`](references/releases-and-versions.md) | cutting a release or tag, a release workflow, changelog entries, version numbers, release lines and backports |
 | [`leaked-data`](references/leaked-data.md) | a secret or personal information that reached a commit, and rewriting history to remove it |

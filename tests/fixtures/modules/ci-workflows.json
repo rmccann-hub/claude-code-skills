@@ -8,16 +8,17 @@
     "should_trigger": true
   },
   {
-    "query": "Our CI takes 15 minutes before a PR can merge and another 25 on main after it merges. I don't want to weaken the tests, but is all of that needed?",
-    "should_trigger": true
-  },
-  {
     "query": "A test keeps failing randomly. Can we just skip it so CI goes green?",
     "should_trigger": true
   },
   {
     "query": "How do I prove the new CI check actually catches the problem it's for?",
     "should_trigger": true
+  },
+  {
+    "query": "A test on CI times out every so often but never locally. Do we raise the timeout?",
+    "should_trigger": false,
+    "note": "ci-speed"
   },
   {
     "query": "Pin the actions in .github/workflows/ci.yml to commit SHAs.",

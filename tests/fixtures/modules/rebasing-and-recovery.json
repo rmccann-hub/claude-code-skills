@@ -1,0 +1,33 @@
+[
+  {
+    "query": "Is it safe to delete all the branches that git branch -r --merged lists?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm halfway through a rebase with conflicts and git checkout --ours is giving me the wrong side. What's going on?",
+    "should_trigger": true
+  },
+  {
+    "query": "I ran git reset --hard and my last two commits are gone. Can I get them back?",
+    "should_trigger": true
+  },
+  {
+    "query": "I rebased my feature branch onto main. How do I push it without clobbering anyone?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we squash-merge or use merge commits? Our decision records cite commit hashes.",
+    "should_trigger": false,
+    "note": "branches-and-merging"
+  },
+  {
+    "query": "I committed an API key and pushed it. What now?",
+    "should_trigger": false,
+    "note": "leaked-data"
+  },
+  {
+    "query": "Write a pre-push hook that stops me pushing to main by accident.",
+    "should_trigger": false,
+    "note": "git-hooks"
+  }
+]

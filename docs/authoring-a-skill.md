@@ -114,7 +114,10 @@ and dependencies. A second version of a published rule drifts from the first.
      `Why` (for each rule that matters, the advice, the reason, what other projects do and why,
      what each choice costs, and when to choose differently), `Facts` and `Sources` (each
      source with its license). It opens with one line on when to read it, and a table of
-     contents once it passes 300 lines.
+     contents once it passes 300 lines. It stays within 16,000 characters, aiming at 15,000:
+     claude.ai's file viewer drops the middle of a longer file (the owner's test, 2026-10-26),
+     which once cut a module's Mistakes, Audit and Why. Trim it, or split it by topic.
+     `skillcheck` fails a module over the limit.
    - **One level deep:** a module never sends the reader on to another file, by link or by
      naming it. It names another module in words, by its name. Naming a fact by its ID is the
      one exception, because a fact is looked up, not read on to.

@@ -18,6 +18,10 @@ ROUTER_COLUMNS = ("Module", "Read it for")
 # Every module has these, so a module moved elsewhere takes its whole story with it.
 SECTIONS = ("Rules", "Mistakes", "Audit", "Why", "Facts", "Sources")
 FIXTURES = "tests/fixtures/modules"
+# claude.ai's file viewer keeps about 8,000 characters from each end of a longer file and drops
+# the middle, which the owner measured on 2026-10-26 (docs/decisions.md). Claude Code reads files
+# whole, but a module must work on both.
+MAX_CHARACTERS = 16_000
 # The mark `skillcheck --new-module` leaves on each part still to be written.
 PLACEHOLDER = "TODO(new-skill)"
 NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
@@ -115,10 +119,18 @@ def _check_module(root: Path, module: Module, add: Add) -> None:
     if not module.path.is_file():
         add(f"skills/{module.skill}/SKILL.md", "modules", f"`{module.name}` has no file at {where}")
         return
-    headings = sections(module.path.read_text(encoding="utf-8"))
+    text = module.path.read_text(encoding="utf-8")
+    headings = sections(text)
     missing = [name for name in SECTIONS if name not in headings]
     if missing:
         add(where, "modules", f"missing the section(s) {', '.join(missing)}")
+    if len(text) > MAX_CHARACTERS:
+        add(
+            where,
+            "modules",
+            f"{len(text):,} characters: claude.ai drops the middle of a file over "
+            f"{MAX_CHARACTERS:,}, so trim it or split it",
+        )
     _check_fixture(root, module, add)
 
 
