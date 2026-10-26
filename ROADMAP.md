@@ -59,7 +59,7 @@ research. These rules are that structure.
 
 | Skill | Plugin | Loads when | Status |
 |---|---|---|---|
-| `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.48.1 | shipped |
+| `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.48.2 | shipped |
 | `git-workflows` | `engineering` | Commits, branches, pull requests, CI, hooks, tags, changelogs and releases | shipped |
 | `house-style` | `engineering` | Writing prose, Markdown, READMEs and documentation | shipped |
 | `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | planned |
@@ -1226,6 +1226,9 @@ The owner's answers on 2026-10-15 added one more, applied in v0.45.0:
 - **F153, in v0.48.0:** UTC is the stamp of every time a run writes, and Phase 0 asks the time
   zone and clock the human reads times in, so a local time worked out from the stamp goes beside
   each time the run gives them. The owner asked for it on 2026-10-19.
+- **F155, in v0.48.2:** *Language toolchains* brought to 2026-10 from research R09, R10, R11
+  and R21: every supported Python, the 2026-11-10 ends of PowerShell 7.4 and 7.5 and .NET 8
+  and 9, Pester 6, Node 26 and Rust 1.99. The owner approved it on 2026-10-26.
 - **F154, in v0.48.1:** Phase 0's fifth question also asks which comes first, the local
   time or the UTC stamp. The owner chose local time first on 2026-10-20.
 - **F150, in v0.47.0:** *Language toolchains* names Python 3.15, released 2026-10-09. A run

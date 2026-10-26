@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.48.1"
-  updated: "2026-10-20"
-  supersedes: "0.48.0"
+  version: "0.48.2"
+  updated: "2026-10-26"
+  supersedes: "0.48.1"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -797,14 +797,14 @@ action for each page they're on. Each is in the account's Settings, under the pr
 **Used by *Choosing a language and runtime* and dimension 2. Check the current release before
 pinning anything — and check what answered you, per the probe rule above.**
 
-| Stack | Current at 2026-09 | Lockfile | Notes |
+| Stack | Current at 2026-10 | Lockfile | Notes |
 |---|---|---|---|
-| **Python** | 3.15.x, released 2026-10-09 (python.org's release list, read 2026-10-16); 3.14.x and 3.13.x still maintained; `uv` carries the momentum, Poetry fully supported, pip-tools for minimalists | `uv.lock` / `poetry.lock` | `ruff` for lint and format, `pytest`, `src/` layout. Dependency groups are standardized |
-| **PowerShell** | 7.6.x | none exists | Pester 5.7.x is the safe pin — 6 exists and breaks things. `PSScriptAnalyzer` for lint. **Windows PowerShell 5.1 is a component of Windows** and follows its support lifecycle; 7 installs beside it |
-| **.NET / C#** | 10, LTS | `packages.lock.json`, opt-in | `Directory.Build.props` for shared properties, `Directory.Packages.props` for central versions |
-| **JS / TS** | Node 22 and 24 both LTS | `package-lock.json` / `pnpm-lock.yaml` | Biome 2.x for a new project; ESLint plus Prettier where plugins already exist. Vitest for new tests |
+| **Python** | 3.15.x, released 2026-10-09; 3.14 still gets bug fixes, and 3.13, 3.12 and 3.11 security fixes only, until 3.11's end in 2027-10; 3.10 ended on 2026-10-01 (Python's devguide, read 2026-10-26); `uv` carries the momentum, Poetry fully supported, pip-tools for minimalists | `uv.lock` / `poetry.lock` | `ruff` for lint and format, `pytest`, `src/` layout. Dependency groups are standardized |
+| **PowerShell** | 7.6.x, LTS until 2028-11-14; 7.4 and 7.5 end on 2026-11-10 (Microsoft's lifecycle page, read 2026-10-26) | none exists | Pester 6.x (6.2.0 at 2026-10). Its migration guide says most v5 suites run on v6 unchanged, so a project on 5.x moves once its suite passes on 6; 5.9.1 is the newest 5.x. `PSScriptAnalyzer` for lint. **Windows PowerShell 5.1 is a component of Windows** and follows its support lifecycle; 7 installs beside it |
+| **.NET / C#** | 10, LTS until 2028-11-14; 8 and 9 end on 2026-11-10 (Microsoft's support policy, read 2026-10-26) | `packages.lock.json`, opt-in | `Directory.Build.props` for shared properties, `Directory.Packages.props` for central versions |
+| **JS / TS** | Node 26 for new work, Active LTS from 2026-10-28; 24 in maintenance since 2026-10-20; 22 ends 2027-04-30 (Node's release schedule, read 2026-10-26) | `package-lock.json` / `pnpm-lock.yaml` | Biome 2.x for a new project; ESLint plus Prettier where plugins already exist. Vitest for new tests |
 | **Go** | 1.27 | `go.mod` + `go.sum`, both committed | `go vet`, `go test -race`, `gofmt`. Pin `golangci-lint` by version in CI |
-| **Rust** | 1.98.x, edition 2024 | `Cargo.lock`, **committed for libraries too** | `cargo fmt --check`, `clippy -D warnings`. That lockfile guidance reversed in 2023 — old advice says otherwise |
+| **Rust** | 1.99.x (1.99.1, 2026-10-15), edition 2024 | `Cargo.lock`, **committed for libraries too** | `cargo fmt --check`, `clippy -D warnings`. That lockfile guidance reversed in 2023 — old advice says otherwise |
 | **C with meson** | `meson.options` is the current filename; `meson_options.txt` still works | none | Every building directory carries its own `meson.build` |
 | **Shell** | — | none | `shellcheck`, `shfmt`, `bats` |
 
@@ -5291,6 +5291,12 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.48.2**: **one change**, F155, which the owner approved on 2026-10-26: *Language
+toolchains* is brought to 2026-10 from research R09, R10, R11 and R21, each row checked at its
+source. Python names every supported branch and 3.10's end; PowerShell 7.4 and 7.5 and .NET 8
+and 9 end on 2026-11-10; Pester 6 replaces the 5.7.x pin; Node 26 is the default for new work;
+Rust is 1.99.x.
 
 **0.48.1**: **one change**, F154, which the owner asked for on 2026-10-20: Phase 0's fifth
 question also asks whether the local time or the UTC stamp comes first, and `display_time`
