@@ -1,0 +1,55 @@
+[
+  {
+    "query": "Set up a new Python CLI project with uv, Ruff and mypy, and show me the pyproject.toml.",
+    "should_trigger": true
+  },
+  {
+    "query": "Review this Python function that runs subprocess.run(f\"convert {name}\", shell=True) on an uploaded file name.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our Python service compares datetime.utcnow() with timestamps from the API and crashes with TypeError: can't compare offset-naive and offset-aware datetimes. Fix it.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it OK to use yaml.load or pickle to read the config files users upload to our Flask app?",
+    "should_trigger": true
+  },
+  {
+    "query": "Add type hints to this Python module so it passes mypy --strict.",
+    "should_trigger": true
+  },
+  {
+    "query": "What should requires-python be for a new library, and which Python versions are still supported?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I stop a user's file name from escaping the uploads folder in my Python download endpoint?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write pytest fixtures and mocks for this payment client, and tell me what to test.",
+    "should_trigger": false,
+    "note": "testing (planned): test design; this module names pytest only as the runner"
+  },
+  {
+    "query": "Should we pin every Python dependency by hash and check PyPI packages for provenance before adding them?",
+    "should_trigger": false,
+    "note": "supply-chain-security (planned), and project-bootstrap-and-audit for lockfiles"
+  },
+  {
+    "query": "Add retries with exponential backoff and a circuit breaker around our calls to the billing API.",
+    "should_trigger": false,
+    "note": "error-handling, a planned module of coding"
+  },
+  {
+    "query": "My pandas groupby is slow and SettingWithCopyWarning keeps showing up. Clean up this DataFrame code.",
+    "should_trigger": false,
+    "note": "the planned data skill"
+  },
+  {
+    "query": "Write a GitHub Actions workflow that runs our Python tests on every pull request.",
+    "should_trigger": false,
+    "note": "git-workflows' ci-workflows"
+  }
+]

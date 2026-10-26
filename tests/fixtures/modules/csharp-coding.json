@@ -1,0 +1,46 @@
+[
+  {
+    "query": "Our .NET 8 console app needs upgrading before support ends. Should we target net9.0 or net10.0, and what changes in the csproj?",
+    "should_trigger": true
+  },
+  {
+    "query": "Review this C# service: it calls .Result on an HttpClient call inside a WPF button handler and the window freezes.",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I turn on nullable and warnings as errors for every project in the solution without editing each csproj?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it safe to build this SqlCommand by interpolating the customer name into the query string?",
+    "should_trigger": true
+  },
+  {
+    "query": "My LibraryImport for MessageBox throws EntryPointNotFoundException. What's wrong with the declaration?",
+    "should_trigger": true
+  },
+  {
+    "query": "We want to publish our CLI tool with NativeAOT, but System.Text.Json serialization fails after publish. How do we fix it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a PowerShell script that restarts a Windows service on a list of servers.",
+    "should_trigger": false,
+    "note": "powershell-scripts"
+  },
+  {
+    "query": "Create a GPO that maps a network drive for everyone in the Sales OU.",
+    "should_trigger": false,
+    "note": "windows-admin (planned module)"
+  },
+  {
+    "query": "Which xUnit assertions should I use, and how should I structure test fixtures for my repository classes?",
+    "should_trigger": false,
+    "note": "testing (planned skill)"
+  },
+  {
+    "query": "Turn on NuGet vulnerability auditing and Dependabot for our .NET repository.",
+    "should_trigger": false,
+    "note": "supply-chain-security"
+  }
+]

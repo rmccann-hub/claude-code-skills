@@ -58,10 +58,10 @@ the fact's row is in whichever module holds it.
 
 | Module | Read it for |
 |---|---|
-| [`python-coding`](references/python-coding.md) | TODO(new-skill) the requests it answers |
-| [`javascript-coding`](references/javascript-coding.md) | TODO(new-skill) the requests it answers |
-| [`html-coding`](references/html-coding.md) | TODO(new-skill) the requests it answers |
-| [`csharp-coding`](references/csharp-coding.md) | TODO(new-skill) the requests it answers |
+| [`python-coding`](references/python-coding.md) | Python 3: `pyproject.toml`, uv, Ruff and a strict type checker, type hints and idioms, `subprocess`, `eval`, `pickle` and `yaml.load` on untrusted data, temporary files and paths, time zones with `zoneinfo`, and `requires-python` |
+| [`javascript-coding`](references/javascript-coding.md) | TypeScript and JavaScript on Node.js: `tsconfig` strictness, ES modules, type stripping, the built-ins that replace packages, lint setup, promise mistakes, and shell injection, `eval`, prototype pollution, path traversal and ReDoS |
+| [`html-coding`](references/html-coding.md) | HTML and CSS: semantic markup, the WCAG 2.2 basics (labels, alt text, headings, focus, contrast), forms, modern CSS with dark mode and reduced motion, and browser security: escaping, `innerHTML` and `setHTML()`, CSP, Trusted Types, SRI and `noopener` |
+| [`csharp-coding`](references/csharp-coding.md) | C# on modern .NET: the target framework and its support dates, nullable and warnings as errors, `Directory.Build.props`, analyzers and `dotnet format`, async and disposal, `HttpClient`, System.Text.Json, NativeAOT, P/Invoke, and SQL, process and path security |
 | [`powershell-scripts`](references/powershell-scripts.md) | TODO(new-skill) the requests it answers |
 | [`bash-coding`](references/bash-coding.md) | TODO(new-skill) the requests it answers |
 
