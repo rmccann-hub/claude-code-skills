@@ -1,0 +1,42 @@
+[
+  {
+    "query": "Is it safe to build this SqlCommand by interpolating the customer name into the query string?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our C# service still deserializes uploaded files with BinaryFormatter, and .NET 9 broke it. What should replace it?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I run git from C# with a file name the user typed, without risking shell injection?",
+    "should_trigger": true
+  },
+  {
+    "query": "This ASP.NET Core download endpoint does Path.Combine(root, fileName) with a value from the query string. Is that safe?",
+    "should_trigger": true
+  },
+  {
+    "query": "Which .NET analyzer settings make the build catch SQL injection and DLL hijacking in our C# solution?",
+    "should_trigger": true
+  },
+  {
+    "query": "My WPF window freezes when a button handler calls .Result on an HttpClient task. How do I fix it?",
+    "should_trigger": false,
+    "note": "csharp-coding"
+  },
+  {
+    "query": "Write a Python script that runs a shell command built from user input, safely.",
+    "should_trigger": false,
+    "note": "python-security"
+  },
+  {
+    "query": "Check this PowerShell script that passes user input to Invoke-Expression.",
+    "should_trigger": false,
+    "note": "powershell-security"
+  },
+  {
+    "query": "Should our C# solution pin NuGet packages with a lockfile, and how do we audit them for known vulnerabilities?",
+    "should_trigger": false,
+    "note": "supply-chain-security"
+  }
+]

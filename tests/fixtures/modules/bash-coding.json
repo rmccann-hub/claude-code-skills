@@ -20,12 +20,13 @@
     "should_trigger": true
   },
   {
-    "query": "Is it safe to pass our API token to curl with -H in a shell script?",
+    "query": "Write a shell script that cleans up its temp directory even when it's interrupted.",
     "should_trigger": true
   },
   {
-    "query": "Write a shell script that cleans up its temp directory even when it's interrupted.",
-    "should_trigger": true
+    "query": "Could an empty variable make the rm -rf in my cleanup script delete the wrong directory?",
+    "should_trigger": false,
+    "note": "bash-security"
   },
   {
     "query": "Add a GitHub Actions job that runs ShellCheck on every pull request.",

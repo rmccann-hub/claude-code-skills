@@ -131,11 +131,17 @@ Grouped by subject; the Skill column is each module's one home.
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
 | `python-coding` | `coding` | Python 3, its toolchain and idioms | shipped | core | R09 |
+| `python-security` | `coding` | Python's untrusted-input calls: shells, `eval`, deserialization, SQL, archives, paths, tokens | shipped | core | R09 |
 | `javascript-coding` | `coding` | TypeScript, JavaScript, Node.js | shipped | core | R10 |
-| `html-coding` | `coding` | HTML, CSS, front-end security | shipped | core | R10 |
+| `javascript-security` | `coding` | Node.js input handling: shells, `eval`, prototype pollution, paths, ReDoS, SQL | shipped | core | R10 |
+| `html-coding` | `coding` | HTML, CSS, accessibility basics, forms | shipped | core | R10 |
+| `web-security` | `coding` | Browser-side security: output encoding, sanitizing, Trusted Types, CSP, SRI, `noopener` | shipped | core | R10 |
 | `csharp-coding` | `coding` | C# and .NET | shipped | core | R11 |
+| `csharp-security` | `coding` | C# deserialization, SQL, processes, batch files, paths, DLL search paths, analyzers | shipped | core | R11 |
 | `powershell-scripts` | `coding` | PowerShell 7 and Windows PowerShell 5.1 | shipped | core | R11 |
+| `powershell-security` | `coding` | PowerShell credentials, `Invoke-Expression`, batch-file arguments, execution policy, signing | shipped | core | R11 |
 | `bash-coding` | `coding` | Bash and POSIX sh | shipped | core | R15 |
+| `bash-security` | `coding` | Bash and POSIX sh: guarded deletes, `eval`, arithmetic on input, secrets, input checks | shipped | core | R15 |
 | `vba-coding` | `coding` | VBA in Office applications | planned | core | R16 |
 | `go-coding` | `coding` | Go | planned | standard | R12 |
 | `rust-coding` | `coding` | Rust | planned | standard | R12 |

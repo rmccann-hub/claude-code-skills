@@ -2,6 +2,31 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — `coding`'s modules split to fit claude.ai's file viewer
+
+- **Found, by the owner's test:** claude.ai's file viewer keeps about 8,000 characters from each
+  end of a file over 16,000 characters, and drops the middle, with a notice such as
+  `< truncated lines 40-349 >`. The model there read the limit from its own tool's description.
+  A 35,500-character module lost its Mistakes, Audit and Why sections; a 19,000-character one
+  lost 53 lines. Claude Code reads files whole. No public documentation states claude.ai's limit:
+  Anthropic's text editor tool takes it as a setting, `max_characters`.
+- **Asked, by the owner:** "i want it", to making the modules fit.
+- **Done:** at 16,000, trimming alone couldn't work, since the facts tables alone ran 9,000 to
+  14,000 characters. Each language module split into itself and a security module, each at most
+  15,000 characters, by one writer per language, each reviewed before it was committed. Old
+  names stay, so nothing that refers to them breaks. The router reads a language's security
+  module too when the code takes input, runs commands or handles secrets.
+- **Found while splitting:** CA2100 and CA2326 are off by default in .NET 10, even at
+  `latest-Recommended`, confirmed in the SDK's rule files and by a build. The old `csharp-coding`
+  implied they ran. Turning the security analyzers on is now a rule.
+- **Reviewed:** a cold reader compared each pair with its original. No safety advice was lost.
+  It found one gap, now fixed: the delete guards had left `bash-coding`, so the router and
+  `bash-coding` now send a script that deletes or overwrites files to `bash-security`. It also
+  found five compression errors, all fixed: two audit rows that lost a condition, two garbled
+  sentences, and a dropped warning that `Promise.all` leaves the other work running.
+- **Next:** five `git-workflows` modules and `writing-style` are also over 16,000, and a
+  `skillcheck` rule will fail any module over that, in a change of their own.
+
 ## 2026-10-26 — Release 0.1.22, the `coding` skill
 
 - **Asked, by the owner:** to build `coding` and release it, with one try in place of twelve

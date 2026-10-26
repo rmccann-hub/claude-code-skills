@@ -25,9 +25,9 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 81 |
+| Markdown | 87 |
 | Python | 51 |
-| JSON | 26 |
+| JSON | 32 |
 | YAML | 22 |
 | Shell | 3 |
 | TOML | 2 |
@@ -120,11 +120,11 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
-| `coding` | learn.microsoft.com | 56 |
+| `coding` | learn.microsoft.com | 59 |
 | `coding` | docs.python.org | 18 |
 | `coding` | nodejs.org | 16 |
 | `coding` | www.w3.org | 16 |
-| `coding` | tiswww.case.edu | 14 |
+| `coding` | tiswww.case.edu | 15 |
 | `coding` | developer.mozilla.org | 13 |
 | `coding` | raw.githubusercontent.com | 9 |
 | `coding` | cheatsheetseries.owasp.org | 7 |

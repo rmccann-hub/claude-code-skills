@@ -16,16 +16,17 @@
     "should_trigger": true
   },
   {
-    "query": "Review this .ps1: it takes the service account password as a string parameter and calls Invoke-Expression.",
-    "should_trigger": true
-  },
-  {
     "query": "How do I stop a scheduled PowerShell job from hanging on Read-Host?",
     "should_trigger": true
   },
   {
     "query": "PSScriptAnalyzer says my function name uses an unapproved verb. What should it be called?",
     "should_trigger": true
+  },
+  {
+    "query": "Review this .ps1: it takes the service account password as a string parameter and calls Invoke-Expression.",
+    "should_trigger": false,
+    "note": "powershell-security"
   },
   {
     "query": "Create 50 Active Directory users from a CSV and put them in the right OUs.",

@@ -4,15 +4,7 @@
     "should_trigger": true
   },
   {
-    "query": "Review this Python function that runs subprocess.run(f\"convert {name}\", shell=True) on an uploaded file name.",
-    "should_trigger": true
-  },
-  {
     "query": "Our Python service compares datetime.utcnow() with timestamps from the API and crashes with TypeError: can't compare offset-naive and offset-aware datetimes. Fix it.",
-    "should_trigger": true
-  },
-  {
-    "query": "Is it OK to use yaml.load or pickle to read the config files users upload to our Flask app?",
     "should_trigger": true
   },
   {
@@ -24,8 +16,13 @@
     "should_trigger": true
   },
   {
-    "query": "How do I stop a user's file name from escaping the uploads folder in my Python download endpoint?",
+    "query": "This Python script reads a CSV fine on my Mac but garbles the accented names on a Windows server. What's wrong with how I open the file?",
     "should_trigger": true
+  },
+  {
+    "query": "Review this Python function that runs subprocess.run(f\"convert {name}\", shell=True) on an uploaded file name.",
+    "should_trigger": false,
+    "note": "python-security: shells and subprocess on input"
   },
   {
     "query": "Write pytest fixtures and mocks for this payment client, and tell me what to test.",

@@ -1,0 +1,42 @@
+[
+  {
+    "query": "Review this Python function that runs subprocess.run(f\"convert {name}\", shell=True) on an uploaded file name.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it OK to use yaml.load or pickle to read the config files users upload to our Flask app?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I stop a user's file name from escaping the uploads folder in my Python download endpoint?",
+    "should_trigger": true
+  },
+  {
+    "query": "My Python code builds the sqlite query with an f-string from the search box. Is that a problem, and how should I write it?",
+    "should_trigger": true
+  },
+  {
+    "query": "We generate password reset tokens in Python with random.choice over letters and digits. Is that safe enough?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a new Python CLI project with uv, Ruff and mypy, and show me the pyproject.toml.",
+    "should_trigger": false,
+    "note": "python-coding: the project and its tools"
+  },
+  {
+    "query": "Escape user comments before we render them into the HTML page, and add a Content-Security-Policy header.",
+    "should_trigger": false,
+    "note": "web-security, another module of coding"
+  },
+  {
+    "query": "Should we pin every Python dependency by hash and check PyPI packages for provenance before adding them?",
+    "should_trigger": false,
+    "note": "supply-chain-security (planned)"
+  },
+  {
+    "query": "Design the login flow for our Django app: password hashing, sessions and multi-factor sign-in.",
+    "should_trigger": false,
+    "note": "secure-coding (planned): authentication and cryptography"
+  }
+]

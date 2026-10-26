@@ -53,18 +53,26 @@ The contract every change meets:
 
 ## Modules
 
-Read the module for the language at hand, and each one a request spans. Each holds its rules,
+Read the module for the language at hand. Read its security module too when the code takes
+input from outside, runs commands, deletes or overwrites files, or handles secrets, and each
+other module a request spans. Each holds its rules,
 mistakes, audit checks, reasons, dated facts and sources. A module names a fact by its ID, and
 the fact's row is in whichever module holds it.
 
 | Module | Read it for |
 |---|---|
-| [`python-coding`](references/python-coding.md) | Python 3: `pyproject.toml`, uv, Ruff and a strict type checker, type hints and idioms, `subprocess`, `eval`, `pickle` and `yaml.load` on untrusted data, temporary files and paths, time zones with `zoneinfo`, and `requires-python` |
-| [`javascript-coding`](references/javascript-coding.md) | TypeScript and JavaScript on Node.js: `tsconfig` strictness, ES modules, type stripping, the built-ins that replace packages, lint setup, promise mistakes, and shell injection, `eval`, prototype pollution, path traversal and ReDoS |
-| [`html-coding`](references/html-coding.md) | HTML and CSS: semantic markup, the WCAG 2.2 basics (labels, alt text, headings, focus, contrast), forms, modern CSS with dark mode and reduced motion, and browser security: escaping, `innerHTML` and `setHTML()`, CSP, Trusted Types, SRI and `noopener` |
-| [`csharp-coding`](references/csharp-coding.md) | C# on modern .NET: the target framework and its support dates, nullable and warnings as errors, `Directory.Build.props`, analyzers and `dotnet format`, async and disposal, `HttpClient`, System.Text.Json, NativeAOT, P/Invoke, and SQL, process and path security |
-| [`powershell-scripts`](references/powershell-scripts.md) | PowerShell 7 or Windows PowerShell 5.1, and writing for both: advanced functions, `-WhatIf` and `-Confirm`, `try` and `catch` with exit codes, strict mode, prompts in jobs, credentials, `Invoke-Expression` and execution policy, PSScriptAnalyzer and Pester 6 |
-| [`bash-coding`](references/bash-coding.md) | Bash and POSIX `sh`: the shebang and the shell, `set -euo pipefail` and its traps, quoting, arrays, reading lines and file names, `mktemp` and cleanup, safe deletes, secrets, macOS and dash portability, ShellCheck, shfmt and bats |
+| [`python-coding`](references/python-coding.md) | Python 3: `pyproject.toml`, uv, Ruff and a strict type checker, type hints and idioms, explicit encodings, time zones with `zoneinfo`, and `requires-python` |
+| [`python-security`](references/python-security.md) | Python code that takes outside input: `subprocess` and shells, `eval`, `pickle` and `yaml.load`, SQL placeholders, archive extraction, temporary files, confining paths, and `secrets` for tokens |
+| [`javascript-coding`](references/javascript-coding.md) | TypeScript and JavaScript on Node.js: `tsconfig` strictness, ES modules, Node versions and the built-ins that replace packages, type stripping, promise mistakes, and lint setup |
+| [`javascript-security`](references/javascript-security.md) | Untrusted input in Node.js code: `eval` and `new Function`, `exec` and `shell: true`, prototype pollution, path traversal, ReDoS, and SQL placeholders |
+| [`html-coding`](references/html-coding.md) | HTML and CSS: semantic markup and ARIA, the WCAG 2.2 basics (labels, alt text, headings, focus, contrast, target size), forms and where they need CSRF protection, and modern CSS with dark mode and reduced motion |
+| [`web-security`](references/web-security.md) | Browser-side security: untrusted data in pages, attributes and URLs, `innerHTML` against `setHTML()` and DOMPurify, Trusted Types, Content Security Policy, Subresource Integrity, and `noopener` |
+| [`csharp-coding`](references/csharp-coding.md) | C# on modern .NET: the target framework and its support dates, nullable and warnings as errors, `Directory.Build.props` and central packages, analyzers and `dotnet format`, async and disposal, `HttpClient`, System.Text.Json, NativeAOT, trimming and P/Invoke |
+| [`csharp-security`](references/csharp-security.md) | C# handling outside data: `BinaryFormatter` and `TypeNameHandling`, SQL parameters, processes without a shell and batch files, paths from input, DLL search paths, and turning on the security analyzers |
+| [`powershell-scripts`](references/powershell-scripts.md) | PowerShell 7 or Windows PowerShell 5.1 and writing for both: encoding, advanced functions and output, `-WhatIf` and `-Confirm`, `try` and `catch` with exit codes, strict mode, prompts in jobs, modules, PSScriptAnalyzer and Pester 6 |
+| [`powershell-security`](references/powershell-security.md) | PowerShell credentials and untrusted input: `[pscredential]` and SecretManagement, plain-text passwords, `Invoke-Expression`, argument arrays and batch files, `-LiteralPath`, execution policy, and signing |
+| [`bash-coding`](references/bash-coding.md) | Bash and POSIX `sh`: the shebang, `set -euo pipefail` and its traps, quoting, tests and globs, arrays, reading lines and file names, `mktemp` and cleanup, macOS and dash portability, ShellCheck, shfmt and bats |
+| [`bash-security`](references/bash-security.md) | Shell scripts that delete, run code or take input: guarding `rm -rf` with `${var:?}`, `--` and a dry run, `eval` and piped downloads, arithmetic on input, secrets off the command line, and validating input |
 
 ## Check before you act
 

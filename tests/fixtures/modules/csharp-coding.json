@@ -12,10 +12,6 @@
     "should_trigger": true
   },
   {
-    "query": "Is it safe to build this SqlCommand by interpolating the customer name into the query string?",
-    "should_trigger": true
-  },
-  {
     "query": "My LibraryImport for MessageBox throws EntryPointNotFoundException. What's wrong with the declaration?",
     "should_trigger": true
   },
@@ -42,5 +38,10 @@
     "query": "Turn on NuGet vulnerability auditing and Dependabot for our .NET repository.",
     "should_trigger": false,
     "note": "supply-chain-security"
+  },
+  {
+    "query": "Our C# API deserializes request bodies with Newtonsoft.Json and TypeNameHandling.All. Is that a problem?",
+    "should_trigger": false,
+    "note": "csharp-security"
   }
 ]
