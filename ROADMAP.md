@@ -500,6 +500,28 @@ lessons in when it's built, and its reasons cite them.
   that a step finished. "Copy OK", "confirmed across 3 re-reads" and "read successfully" were
   printed over tracks whose audio a checksum database showed was wrong, and readers took each
   as a verdict.
+- **L50, `testing-patterns`:** a tool that reports on its own output is scored by its worst
+  case, an output that's wrong and reported as fine, not by how many are right. Every output is
+  checked against a source the tool doesn't control, and scored right, wrong but reported, or
+  wrong and reported as fine. One scoring of 178 outputs found 14 wrong, and 9 of those
+  reported as fine, a figure no pass rate showed.
+- **L51, `supply-chain-security`:** a build from source is pinned by the full commit SHA, the
+  commit it landed on is compared with that SHA, and a dirty tree stops the build. One app
+  built a dependency at a 7-character prefix, never compared the full commit, and only warned
+  on a dirty tree. An update is verified by provenance, not by a checksum published beside it,
+  which anyone who can replace the file can replace too, and a downgrade is refused.
+- **L52, `input-handling`:** text from outside is escaped for where it lands: a terminal, a log
+  another program parses, an issue an agent reads, a GUI that renders markup. One checker put
+  a remote server's error text, unescaped, into a weekly issue that agents read.
+- **L53, `ai-agent-security`:** code and tests get the hidden-character scan that agent files
+  get, and a test plants a hidden character as an escape, never as the character. Three tests
+  held the characters they planted literally, and the repository's own scan skipped code. An
+  agent writing escape sequences checks the bytes that landed: one agent's tool turned
+  `\u202e` into the character itself three times in one night, the third in this lesson,
+  in a root file the scan skipped.
+- **L54, `review-loops`:** a reviewer checks what the code already does before recommending
+  it. A coordinator listed two gaps that the app had closed a month before, an outbound
+  control-character check and an inbound one, because it read the app's plans but not its code.
 
 ## Rebuilding `project-bootstrap-and-audit`
 
