@@ -11,8 +11,8 @@ dimension, and this module doesn't restate it. Pinning GitHub Actions is `action
 secret that reached a commit is `leaked-data`; tags, changelogs and version numbers are
 `releases-and-versions`.
 
-<!-- Draft, 2026-10-26. Built from research R05 (2026-09-23), checked again for each fact used
-here, and lessons L51 and L53 in ROADMAP.md. Not reviewed under docs/authoring-a-skill.md yet. -->
+<!-- Draft, 2026-10-26. Built from research R05 (2026-09-23) and R21 (2026-10-26), checked
+again for each fact used here, and lessons L51 and L53 in ROADMAP.md. Not reviewed under docs/authoring-a-skill.md yet. -->
 
 ## Rules
 
@@ -22,9 +22,11 @@ here, and lessons L51 and L53 in ROADMAP.md. Not reviewed under docs/authoring-a
 2. **Install from the lockfile, frozen,** so an install can't quietly resolve something new:
    `npm ci` (fact `npm-ci`), `uv sync --locked` (fact `uv-locked`), pip with hashes (fact
    `pip-require-hashes`).
-3. **Give a new release time before it installs,** at install time as well as in the update
-   bot: the bot's wait doesn't stop an install pulling a new transitive version. pnpm waits a
-   day by default (fact `pnpm-release-age`); uv takes a cutoff date (fact `uv-exclude-newer`).
+3. **Give a new release a day or more before it installs,** at install time as well as in the
+   update bot: the bot's wait doesn't stop an install pulling a new transitive version. The
+   2025 npm compromises were live for hours (facts `chalk-window`, `nx-window`). pnpm waits a
+   day by default (fact `pnpm-release-age`); npm counts days (fact `npm-min-release-age`); uv
+   takes a duration (fact `uv-cooldown`).
 4. **Don't run dependencies' install scripts by default.** Allow them by name for the packages
    that need them (fact `pnpm-scripts-off`).
 5. **Build from source at a full commit SHA, check the commit you landed on, and refuse a dirty
@@ -41,7 +43,13 @@ here, and lessons L51 and L53 in ROADMAP.md. Not reviewed under docs/authoring-a
 
 - **Name the need first,** and check whether the standard library or a dependency already in
   the project covers it. Each new package is code you now run, and its own dependencies too.
-  TODO(new-skill) The fewest-dependencies rule, from research R21 when it's run.
+- **Judge a package by the tree it brings,** counted in the lockfile's diff, not by its own
+  size. Most unused dependencies are transitive: in one study of Maven, bloated direct
+  dependencies were 2.7% of all relationships, and transitive ones 57% (fact `maven-bloat`).
+  Pruning what you declared saves little; choosing direct dependencies with small trees saves
+  more. Unused dependencies still cost CI time (fact `ci-unused-deps`).
+- **Keep security-sensitive code in a mature package:** cryptography, parsing untrusted input,
+  dates and time zones. Fewer dependencies never means writing these yourself.
 - **Check the name letter by letter** against the project's own documentation, not a search
   result or a model's memory. Typosquats differ by one character, and an assistant's
   suggestion can name a package that has never existed.
@@ -99,6 +107,9 @@ fi
   lockfile is current (fact `uv-locked`).
 - **Configuring the bot's cooldown and not the installer's, or the reverse.** Each guards a
   different path.
+- **Copying a release-age number between tools.** npm counts days and pnpm minutes, so `1440`
+  in `.npmrc` is about four years. An npm older than `min-release-age` doesn't apply it, so pin
+  the package manager's version too.
 - **Pinning a source build to a short SHA,** or checking out the pin and building without
   comparing the commit or checking the tree.
 - **Verifying a download against a checksum from the same release.** It proves the file
@@ -166,6 +177,36 @@ Severity uses the standard's status words.
 - **When to choose differently:** an installer that can't reach the transparency log, such as
   one offline, can pin a public key it ships with instead.
 
+### A day or more before a new release installs
+
+- **The advice:** wait at least a day before installing a version, at install time and in the
+  update bot, with security updates exempt.
+- **The reason:** malicious versions are usually found and pulled within hours. chalk and
+  debug's were available for about 2 hours (fact `chalk-window`), and nx's for 4 (fact
+  `nx-window`), so a one-day wait at install time would have kept both out.
+- **What others do, and why:** pnpm waits a day by default (fact `pnpm-release-age`); npm and
+  uv leave it off until set (facts `npm-min-release-age`, `uv-cooldown`). The standard's
+  *Dependencies* dimension covers the update bot's three-day default.
+- **What it costs:** a day before a fix that isn't a security update reaches you.
+- **When to choose differently:** a security fix takes priority, as the update bot's exemption
+  does. A worm that keeps publishing new versions restarts the clock each time, so the wait
+  still holds as long as nothing younger than it installs.
+
+### Fewer dependencies, chosen by their trees
+
+- **The advice:** judge a package by what its tree adds, and keep security-sensitive code in
+  mature packages.
+- **The reason:** each direct dependency decides a tree, and most bloat sits in the tree, not in
+  what was declared (fact `maven-bloat`). Unused dependencies cost CI time too (fact
+  `ci-unused-deps`).
+- **What others do, and why:** a search in October 2026 found no study linking fewer
+  dependencies to fewer incidents. The case is a smaller attack surface, well reasoned and not
+  measured.
+- **What it costs:** sometimes a few lines of your own instead of a package, and the
+  maintenance of those lines.
+- **When to choose differently:** cryptography, parsing and time zones, where a mature package
+  is safer than your own code.
+
 ## Facts
 
 Versions, dates and defaults, each named elsewhere in this module by its ID. Checked
@@ -174,6 +215,13 @@ Versions, dates and defaults, each named elsewhere in this module by its ID. Che
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
 | `package-hallucination` | A study of code-generating models found at least 5.2% of suggested packages hallucinated for commercial models and 21.7% for open-source ones, with 205,474 unique hallucinated names; to appear at USENIX Security 2025 | [Spracklen et al., arXiv:2406.10279](https://arxiv.org/abs/2406.10279) | "the average percentage of hallucinated packages is at least 5.2% for commercial models and 21.7% for open-source models" | 2026-10-26 | 2027-10-26 |
+| `package-hallucination-2026` | A 2026 replication across five models and 199,845 prompts measured package hallucination at 4.62% to 6.10% | [Churilov, arXiv:2605.17062](https://arxiv.org/abs/2605.17062) | "between 4.62% (Claude Haiku 4.5) and 6.10% (GPT-5.4-mini)" | 2026-10-26 | 2027-10-26 |
+| `maven-bloat` | Of the dependency relationships in a study of Maven Central, 75.1% were bloated: 2.7% bloated direct, 15.4% inherited from a parent, 57% transitive | [Soto-Valero et al., arXiv:2001.07808](https://arxiv.org/abs/2001.07808) | "75.1% of the analyzed dependency relationships are bloated" | 2026-10-26 | 2027-10-26 |
+| `ci-unused-deps` | In 1,487 npm projects, 55.88% of the CI build time tied to dependency updates was triggered only by unused dependencies (FSE 2024) | [Weeraddana, Alfadel and McIntosh](https://rebels.cs.uwaterloo.ca/confpaper/2024/07/16/dependency-induced-waste-in-continuous-integration.html) | "55.88% of the CI build time that is associated with dependency updates" | 2026-10-26 | 2027-10-26 |
+| `chalk-window` | The malicious versions of chalk and debug, in September 2025, were available for about 2 hours | [Wiz](https://www.wiz.io/blog/widespread-npm-supply-chain-attack-breaking-down-impact-scope-across-debug-chalk) | "during the short 2-hour timeframe in which the versions were available for download" | 2026-10-26 | 2027-10-26 |
+| `nx-window` | nx's malicious packages, in August 2025, were live for 4 hours | [Nx postmortem](https://nx.dev/blog/s1ngularity-postmortem) | "The malicious packages were active for 4 hours before being completely removed from the registry." | 2026-10-26 | 2027-10-26 |
+| `npm-min-release-age` | npm's `min-release-age` installs only versions published more than that many days ago, and is off by default | [npm config](https://docs.npmjs.com/cli/v11/using-npm/config) | "only versions that were available more than the given number of days ago" | 2026-10-26 | 2027-04-26 |
+| `uv-cooldown` | uv's `exclude-newer` takes a duration, such as `1 week`, as a cooldown | [uv resolution](https://docs.astral.sh/uv/concepts/resolution/) | "Define a dependency cooldown by specifying a duration instead of an absolute value." | 2026-10-26 | 2027-04-26 |
 | `npm-ci` | `npm ci` needs a lockfile, fails when it disagrees with `package.json`, and never writes either | [npm ci](https://docs.npmjs.com/cli/v11/commands/npm-ci) | "It will never write to package.json or any of the package-locks: installs are essentially frozen." | 2026-10-26 | 2027-04-26 |
 | `pip-require-hashes` | pip's hash-checking mode needs a hash for every requirement, and an unlisted dependency is an error | [Secure installs](https://pip.pypa.io/en/stable/topics/secure-installs/) | "If there is a dependency that is not spelled out and hashed in the requirements file, it will result in an error." | 2026-10-26 | 2027-04-26 |
 | `pnpm-release-age` | pnpm's `minimumReleaseAge` defaults to 1440 minutes, so a version installs once it's a day old | [Supply chain security](https://pnpm.io/supply-chain-security) | "newly published packages will not be resolved until they are at least 1 day old" | 2026-10-26 | 2027-04-26 |
@@ -191,10 +239,13 @@ stated in our own words with a link.
 | Source | Used for | License |
 |---|---|---|
 | [Spracklen et al., arXiv:2406.10279](https://arxiv.org/abs/2406.10279) | How often models name packages that don't exist | arXiv's non-exclusive license: a fact with a short quote |
+| [Churilov, arXiv:2605.17062](https://arxiv.org/abs/2605.17062) and [Soto-Valero et al., arXiv:2001.07808](https://arxiv.org/abs/2001.07808) | Hallucination in 2026; where bloat sits | arXiv's non-exclusive license: facts with short quotes |
+| [Weeraddana, Alfadel and McIntosh, FSE 2024](https://rebels.cs.uwaterloo.ca/confpaper/2024/07/16/dependency-induced-waste-in-continuous-integration.html) | CI time spent on unused dependencies | Not stated on the page: a fact with a short quote |
+| [Wiz](https://www.wiz.io/blog/widespread-npm-supply-chain-attack-breaking-down-impact-scope-across-debug-chalk) and [Nx](https://nx.dev/blog/s1ngularity-postmortem) | How long two compromises were live | Not stated on the pages: facts with short quotes |
 | [npm documentation](https://docs.npmjs.com/) | Frozen installs | TODO(new-skill) its license |
 | [pip documentation](https://pip.pypa.io/) | Hash-checking mode | MIT: a fact with a short quote |
 | [pnpm documentation](https://pnpm.io/) | Release age and install scripts | TODO(new-skill) its license |
 | [uv documentation](https://docs.astral.sh/uv/) | Excluding new uploads | TODO(new-skill) its license |
 | [Git documentation](https://git-scm.com/docs) | Short object names | GPL-2.0: a fact with a short quote |
 | [GitHub changelog](https://github.blog/changelog/) and [GitHub CLI manual](https://cli.github.com/manual/) | Attestations and their verification | © GitHub, and the CLI's MIT: facts with short quotes |
-| This repository's research R05, 2026-09-23 | Leads, each checked again at its source | This repository's own |
+| This repository's research R05, 2026-09-23, and R21, 2026-10-26 | Leads, each checked again at its source | This repository's own |
