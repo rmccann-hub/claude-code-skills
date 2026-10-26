@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:04b9631a-b442-5a4e-b1b7-c647acf5a554",
+  "serialNumber": "urn:uuid:6b097050-c655-5ded-86cb-223fc3796dc2",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 69 file(s)"
+          "value": "Markdown: 72 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,11 +41,11 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 22 file(s)"
+          "value": "YAML: 22 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "YAML: 22 file(s)"
+          "value": "JSON: 20 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -718,9 +718,9 @@
     },
     {
       "type": "library",
-      "bom-ref": "tool:uv_build@>=0.13.0,<0.14",
+      "bom-ref": "tool:uv_build@>=0.13.1,<0.14",
       "name": "uv_build",
-      "version": ">=0.13.0,<0.14",
+      "version": ">=0.13.1,<0.14",
       "properties": [
         {
           "name": "claude-code-skills:set-in",
@@ -851,7 +851,7 @@
         "tool:Node.js@24",
         "tool:Python@3.15",
         "tool:uv@0.13.5",
-        "tool:uv_build@>=0.13.0,<0.14"
+        "tool:uv_build@>=0.13.1,<0.14"
       ]
     },
     {

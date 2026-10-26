@@ -24,10 +24,10 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 69 |
+| Markdown | 72 |
 | Python | 51 |
-| JSON | 22 |
 | YAML | 22 |
+| JSON | 20 |
 | Shell | 3 |
 | TOML | 2 |
 
@@ -36,7 +36,7 @@ freshness run and the release workflow both run it.
 | Name | Version | Set in | Note |
 |---|---|---|---|
 | Python | 3.15 | `.python-version` | `pyproject.toml` requires >=3.14 |
-| uv_build | >=0.13.0,<0.14 | `pyproject.toml` | build backend |
+| uv_build | >=0.13.1,<0.14 | `pyproject.toml` | build backend |
 | GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` | — |
 | Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
