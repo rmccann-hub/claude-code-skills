@@ -6,6 +6,12 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.20] - 2026-10-26
+
+### Changed
+
+- The build backend's floor is `uv_build` 0.13.1, from Dependabot's pull request #74.
+
 ### Fixed
 
 - `skillcheck --verify` and `--outdated` report a source whose transfer was cut short as
