@@ -1,9 +1,11 @@
 """A release publishes what it says, from the commit being released, or nothing at all."""
 
+import base64
 import hashlib
 import io
 import json
 import os
+import shutil
 import subprocess
 import zipfile
 from pathlib import Path
@@ -329,8 +331,23 @@ def test_the_cloud_setup_lines_install_the_hook_once_and_keep_other_settings(tmp
     assert "REPOSITORY" not in script and "HOOK_SOURCE" not in script
     url = "https://github.com/example/fixture/releases/latest/download/skills.zip"
     assert script.count(url) == 1
-    # Run against the built file, as the hook would fetch it from the release.
+    # Run against the built file, as the hook would fetch it from the release, with the
+    # attestation the release workflow adds beside it, unsigned: the PATH below has no gh.
     script = script.replace(url, (out / "skills.zip").as_uri())
+    workflow = {"repository": "https://github.com/example/fixture"}
+    workflow["path"] = ".github/workflows/release.yml"
+    digest = hashlib.sha256((out / "skills.zip").read_bytes()).hexdigest()
+    statement = {
+        "subject": [{"name": "skills.zip", "digest": {"sha256": digest}}],
+        "predicate": {"buildDefinition": {"externalParameters": {"workflow": workflow}}},
+    }
+    payload = base64.b64encode(json.dumps(statement).encode()).decode()
+    envelope = json.dumps({"dsseEnvelope": {"payload": payload}})
+    (out / "attestation.sigstore.json").write_text(envelope, encoding="utf-8")
+    tools = tmp_path / "bin"
+    tools.mkdir()
+    for tool in ("cat", "mkdir", "python3"):
+        (tools / tool).symlink_to(shutil.which(tool))
     home = tmp_path / "home"
     settings = home / ".claude/settings.json"
     settings.parent.mkdir(parents=True)
@@ -338,9 +355,16 @@ def test_the_cloud_setup_lines_install_the_hook_once_and_keep_other_settings(tmp
     settings.write_text(
         json.dumps({"model": "kept", "hooks": {"SessionStart": [other]}}), encoding="utf-8"
     )
-    env = {"HOME": str(home), "PATH": os.environ["PATH"]}
-    for _ in range(2):
-        subprocess.run(["bash", "-c", script], env=env, check=True, capture_output=True)
+    env = {"HOME": str(home), "PATH": str(tools)}
+    said = [
+        subprocess.run(
+            [shutil.which("bash"), "-c", script], env=env, check=True, capture_output=True
+        ).stderr
+        for _ in range(2)
+    ]
+    # The first run installs, saying what it checked; the second finds the release there.
+    assert said[0].decode().endswith("isn't checked without gh\n")
+    assert said[1] == b""
     written = json.loads(settings.read_text(encoding="utf-8"))
     command = 'python3 "$HOME/.claude/hooks/claude-code-skills.py"'
     assert written == {

@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:ce61f0be-c12e-5a35-9e03-59656ce2fc4a",
+  "serialNumber": "urn:uuid:cfc0be90-ec4f-53fc-8bf8-df75ce371913",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 72 file(s)"
+          "value": "Markdown: 74 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,11 +41,11 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "YAML: 22 file(s)"
+          "value": "JSON: 22 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 20 file(s)"
+          "value": "YAML: 22 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -59,6 +59,23 @@
     }
   },
   "components": [
+    {
+      "type": "application",
+      "bom-ref": "pkg:github/actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6",
+      "name": "actions/attest",
+      "version": "v4.2.2",
+      "purl": "pkg:github/actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6",
+      "properties": [
+        {
+          "name": "claude-code-skills:used-in",
+          "value": ".github/workflows/release.yml"
+        },
+        {
+          "name": "claude-code-skills:pinned-commit",
+          "value": "1e69f48acb82d1966a394da916b4c1698aa569d6"
+        }
+      ]
+    },
     {
       "type": "application",
       "bom-ref": "pkg:github/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
@@ -834,6 +851,7 @@
     {
       "ref": "claude-code-skills",
       "dependsOn": [
+        "pkg:github/actions/attest@1e69f48acb82d1966a394da916b4c1698aa569d6",
         "pkg:github/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
         "pkg:github/actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333",
         "pkg:github/actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e",

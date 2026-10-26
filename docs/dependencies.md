@@ -24,10 +24,10 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 72 |
+| Markdown | 74 |
 | Python | 51 |
+| JSON | 22 |
 | YAML | 22 |
-| JSON | 20 |
 | Shell | 3 |
 | TOML | 2 |
 
@@ -89,6 +89,7 @@ package.json
 
 | Action | Version | Pinned commit | Used in |
 |---|---|---|---|
+| `actions/attest` | v4.2.2 | `1e69f48acb82d1966a394da916b4c1698aa569d6` | `.github/workflows/release.yml` |
 | `actions/checkout` | v7.0.1 | `3d3c42e5aac5ba805825da76410c181273ba90b1` | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` |
 | `actions/download-artifact` | v8.0.2 | `9000827ccba6bdab643e8b6fd33ac0654aef8333` | `.github/workflows/release.yml` |
 | `actions/setup-go` | v7.0.0 | `b7ad1dad31e06c5925ef5d2fc7ad053ef454303e` | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` |
