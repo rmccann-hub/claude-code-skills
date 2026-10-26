@@ -2,6 +2,24 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-26 — Audit reports go to a private repository, not by attachment
+
+Supersedes the last two points of "How a repository that uses these skills is audited", below.
+
+- **Asked, by the owner:** not to carry the report files ("i will not download both files"), and
+  that checking which skills loaded is this session's job, not theirs.
+- **Decided:** the owner made a private repository, `rmccann-hub/audit-reports`. An audit
+  session attaches it and pushes its two files there, under `<repository>/<date>/`, and puts
+  nothing in the repository it audits. This session reads them there, grades them, and checks
+  each finding against the code. Its README holds the layout and the rules: add, never edit or
+  delete, and no secrets.
+- **Why a repository of its own:** the audited repositories are public, and a report lists
+  unfixed findings, so it can't go on a branch there. This repository is public too, and names no
+  repository its skills ran on. The private companion repository is for company skills, and
+  these audits aren't company work.
+- **Unchanged:** an audit judges the default branch's tip, reviews only, and its skill feedback
+  names no repository, so for anyone else it can still come back as an issue here.
+
 ## 2026-10-26 — How a repository that uses these skills is audited
 
 - **Asked, by the owner:** "should we make a rule, and an announcement, that an audit only
