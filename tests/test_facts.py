@@ -233,6 +233,39 @@ def test_verify_reports_a_missing_quote_and_an_unreadable_source():
     ]
 
 
+def test_a_quote_on_a_source_that_failed_is_not_called_gone():
+    def fetch(source: str) -> str:
+        if source == "https://example.com/down":
+            raise OSError("HTTP Error 404: Not Found")
+        return "the first package's version"
+
+    checked = [
+        fact(
+            "two-pages",
+            "https://example.com/up",
+            "https://example.com/down",
+            quotes=("the first package's version", "the second package's version"),
+        )
+    ]
+    assert [problem for _, problem in facts.verify(checked, fetch)] == [
+        'the quote is not in the sources read: "the second package\'s version"; '
+        "https://example.com/down could not be read (HTTP Error 404: Not Found)"
+    ]
+
+
+def test_a_source_that_fails_once_is_tried_again():
+    calls: list[str] = []
+
+    def fetch(source: str) -> str:
+        calls.append(source)
+        if len(calls) == 1:
+            raise OSError("HTTP Error 404: Not Found")
+        return "a quote"
+
+    assert list(facts.verify([fact("flaky", "https://example.com/flaky")], fetch)) == []
+    assert calls == ["https://example.com/flaky"] * 2
+
+
 def test_a_server_s_words_are_escaped_before_they_reach_a_report_or_an_issue(monkeypatch):
     def fetch(source: str) -> str:
         raise OSError("HTTP Error 500: \x1b[2J\nforged line")

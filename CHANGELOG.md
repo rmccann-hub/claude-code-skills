@@ -17,6 +17,10 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
+- `skillcheck --verify` tries an unreadable source a second time, and when a quote isn't found
+  while another of the fact's sources couldn't be read, it says so instead of calling the quote
+  gone. The PowerShell Gallery's 404s, about one request in three, had made a current fact look
+  stale.
 - `csharp-security` says the SQL and type-handling analyzers, CA2100 and CA2326, are off by
   default in .NET 10, even at `latest-Recommended`, and how to turn them on. The old module
   implied they ran.

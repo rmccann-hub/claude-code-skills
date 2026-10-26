@@ -125,12 +125,7 @@ def verify(facts: list[Fact], fetch: Fetch | None = None) -> Iterator[tuple[Fact
         texts, failures = [], []
         for source in fact.sources:
             if source not in pages:
-                try:
-                    pages[source] = _plain(fetch(source))
-                # urllib's errors are OSErrors, but a transfer cut short raises IncompleteRead,
-                # an HTTPException, and one unreadable source mustn't end the whole run.
-                except (OSError, http.client.HTTPException) as exc:
-                    pages[source] = exc
+                pages[source] = _fetch_once_more(fetch, source)
             page = pages[source]
             if isinstance(page, Exception):
                 failures.append(f"{source} could not be read ({printable(str(page))})")
@@ -141,7 +136,30 @@ def verify(facts: list[Fact], fetch: Fetch | None = None) -> Iterator[tuple[Fact
             continue
         for quote in fact.quotes:
             if not any(_holds(text, quote) for text in texts):
-                yield fact, f'the quote is no longer at its source: "{quote}"'
+                if failures:
+                    # The quote may be on the page that couldn't be read, so say so rather than
+                    # call it gone.
+                    unread = "; ".join(failures)
+                    yield fact, f'the quote is not in the sources read: "{quote}"; {unread}'
+                else:
+                    yield fact, f'the quote is no longer at its source: "{quote}"'
+
+
+def _fetch_once_more(fetch: Fetch, source: str) -> str | Exception:
+    """A source's plain text, or the error from its second try.
+
+    One retry, because some sources fail now and then: the PowerShell Gallery answered 404 to
+    about one request in three on 2026-10-26, for a page it served the rest of the time.
+    """
+    try:
+        return _plain(fetch(source))
+    # urllib's errors are OSErrors, but a transfer cut short raises IncompleteRead, an
+    # HTTPException, and one unreadable source mustn't end the whole run.
+    except OSError, http.client.HTTPException:
+        try:
+            return _plain(fetch(source))
+        except (OSError, http.client.HTTPException) as exc:
+            return exc
 
 
 def fetch_text(source: str) -> str:
