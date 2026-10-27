@@ -4,11 +4,11 @@ Read this for Python code that takes input from outside: running a command with 
 `eval` and `exec`, `pickle` and `yaml.load`, SQL, archives, temporary files, paths built from
 input, `assert` as a check, and tokens and secrets.
 
-`python-coding` covers the rest of Python: the project, uv, Ruff and its rule sets, types,
-idioms, encodings and time zones. Injection beyond these calls, authentication and cryptography
-are `secure-coding`'s, and escaping for a web page is `web-security`'s. Where a project keeps its
-secrets, and how CI reads them, is the project-bootstrap-and-audit standard's. Which
-dependencies to trust is `supply-chain-security`.
+`python-coding` covers the rest of Python: the project, uv, Ruff and its rule sets, types, idioms,
+encodings and time zones. Other injection, authentication and cryptography are `secure-coding`'s,
+and escaping for a web page is `web-security`'s. Where a project keeps its secrets, and how CI reads
+them, is the project-bootstrap-and-audit standard's. Which dependencies to trust is
+`supply-chain-security`.
 
 ## Rules
 
@@ -180,7 +180,7 @@ Each named by its ID, here or in `python-coding`.
 | `py-ruff-s603` | `S603` flags calls without a shell, with false positives; `S607`, a program found on `PATH` | [S603](https://docs.astral.sh/ruff/rules/subprocess-without-shell-equals-true/), [S607](https://docs.astral.sh/ruff/rules/start-process-with-partial-path/) | "initiate a subprocess without a shell" and "Prone to false positives" and "by adjusting the PATH environment variable" | 2026-10-27 | 2027-04-27 |
 | `py-subprocess-text` | `text=True` decodes with the default unless `encoding` is given | [subprocess](https://docs.python.org/3/library/subprocess.html) | "using the specified encoding and errors or the io.TextIOWrapper default" | 2026-10-27 | 2027-10-27 |
 | `py-assert-o` | `python -O` drops `assert` | [statements](https://docs.python.org/3/reference/simple_stmts.html) | "emits no code for an assert statement" | 2026-10-26 | 2027-10-26 |
-| `py-sql-params` | Python's `sqlite3` docs warn against building queries with string operations | [sqlite3](https://docs.python.org/3/library/sqlite3.html) | "as they are vulnerable to SQL injection attacks" | 2026-10-26 | 2027-10-26 |
+| `py-sql-params` | `sqlite3`'s docs warn against queries built from strings | [sqlite3](https://docs.python.org/3/library/sqlite3.html) | "as they are vulnerable to SQL injection attacks" | 2026-10-26 | 2027-10-26 |
 | `py-secrets` | `random` is for modeling, `secrets` for security | [secrets](https://docs.python.org/3/library/secrets.html) | "designed for modelling and simulation, not security or cryptography" and "the most secure source of randomness that your operating system provides" | 2026-10-26 | 2027-10-26 |
 | `py-subprocess-shell` | With `shell=True`, quoting input is the caller's job, and on Windows a batch file runs in a shell regardless | [subprocess](https://docs.python.org/3/library/subprocess.html) | "it is the application's responsibility to ensure that all whitespace and metacharacters are quoted appropriately" and "may be launched by the operating system in a system shell regardless of the arguments passed to this library." | 2026-10-26 | 2027-10-26 |
 | `py-eval` | `eval` runs arbitrary code | [Built-in functions](https://docs.python.org/3/library/functions.html) | "Calling it with untrusted user-supplied input will lead to security vulnerabilities." | 2026-10-26 | 2027-10-26 |
@@ -189,8 +189,8 @@ Each named by its ID, here or in `python-coding`.
 | `py-yaml-load` | PyYAML's `yaml.load` isn't safe on untrusted data | [PyYAML documentation](https://pyyaml.org/wiki/PyYAMLDocumentation) | "It is not safe to call yaml.load with any data received from an untrusted source!" | 2026-10-26 | 2027-10-26 |
 | `py-mktemp` | `tempfile.mktemp` is deprecated and unsafe | [tempfile](https://docs.python.org/3/library/tempfile.html) | "Use of this function may introduce a security hole in your program." | 2026-10-26 | 2027-10-26 |
 | `py-is-relative-to` | `PurePath.is_relative_to` compares strings, and doesn't resolve `..` | [pathlib](https://docs.python.org/3/library/pathlib.html) | "This method is string-based; it neither accesses the filesystem nor treats" ... "segments specially." | 2026-10-26 | 2027-10-26 |
-| `py-tar-filter` | `tarfile` extraction defaults to the `data` filter from 3.14; earlier versions need it set | [tarfile](https://docs.python.org/3/library/tarfile.html) | "Changed in version 3.14: The filter parameter now defaults to 'data'." and "a less secure default (3.13 and lower)" | 2026-10-26 | 2027-10-26 |
-| `py-zip-extract` | `zipfile` extraction from an untrusted archive can write outside the target | [zipfile](https://docs.python.org/3/library/zipfile.html) | "It is possible that files are created outside of path" | 2026-10-26 | 2027-10-26 |
+| `py-tar-filter` | `tarfile` defaults to the `data` filter from 3.14, not before | [tarfile](https://docs.python.org/3/library/tarfile.html) | "Changed in version 3.14: The filter parameter now defaults to 'data'." and "a less secure default (3.13 and lower)" | 2026-10-26 | 2027-10-26 |
+| `py-zip-extract` | `zipfile` can extract outside the target | [zipfile](https://docs.python.org/3/library/zipfile.html) | "It is possible that files are created outside of path" | 2026-10-26 | 2027-10-26 |
 
 ## Sources
 

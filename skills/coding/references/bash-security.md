@@ -125,7 +125,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| Unsafe deletes | `rm -r` or `rm -f` on a variable path without `:?` or `--`, or after `cd "$dir"`; a deleting script with no dry run | `BLOCKER` where the value can come from input or the environment, or be empty; `GAP` where the file sets it to a constant, or to a checked `mktemp` result | `"${dir:?}/"`, `--`, and a listing by default |
+| Unsafe deletes | `rm -r` or `rm -f` on a variable path without `:?` or `--`, or after `cd "$dir"`; a deleting script with no dry run | `BLOCKER` where the value can come from input or the environment, or be empty; `GAP` where it's assigned once, unconditionally, a non-empty literal or a checked `mktemp` result, before the delete | `"${dir:?}/"`, `--`, and a listing by default |
 | Secrets on the command line | Tokens or passwords in arguments, or printed to the log | `BLOCKER` | A file or environment variable the tool reads |
 | Arithmetic on input | `(( ))`, `$(( ))`, `let` or `[[ -eq ]]`-style tests on a value from arguments, files or the network with no digits check before it | `BLOCKER` | `[[ $x =~ ^[0-9]+$ ]]` first (fact `sh-arith-eval`) |
 | `eval` and fetched code | `eval`, `bash -c` or `source` on input; a downloaded script piped into a shell | `BLOCKER` | `case` dispatch; download, verify, read, run |
@@ -139,8 +139,8 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 **Why.** An empty variable in a delete path deletes from the root directory, and `${dir:?}`
 costs four characters (fact `sh-sc2115`). A file named `-rf` becomes an option without `--`.
 
-**Severity.** A value from input or the environment can be empty: `BLOCKER`. A constant set in
-the file, or a checked `mktemp` result, can't: `GAP`, as the guard costs nothing.
+**Severity.** A value from input or the environment can be empty: `BLOCKER`. One assigned once,
+unconditionally, a non-empty literal or a checked `mktemp` result, can't: `GAP`.
 
 **What it costs.** A second run to delete for real. A script run unattended, such as from
 cron, passes `--delete` in its schedule, so the default stays safe.
