@@ -1,8 +1,8 @@
 # Releases and versions
 
 Read this for cutting a release, making or protecting a release tag, writing or fixing a release
-workflow, writing a changelog entry, choosing a version number, or keeping a release line and
-backporting to it.
+workflow, writing a changelog entry, choosing a version number, or keeping and backporting to a
+release line.
 
 The commits it releases are `commits-and-pull-requests`; the checks that must pass first are
 `ci-workflows`.
@@ -10,12 +10,12 @@ The commits it releases are `commits-and-pull-requests`; the checks that must pa
 ## Rules
 
 1. **Release from an annotated tag on the release commit's SHA,** after the changelog entry and
-   after CI is green on that commit.
+   after CI is green on that commit. The tag is optional where the project's records make a
+   release a commit named in a committed manifest that consumers pin by SHA.
 2. **A tag or release a job makes with `GITHUB_TOKEN` starts no other workflow** (fact
-   `token-no-trigger`), so one listening for `on: push: tags` or `on: release` never runs.
+   `token-no-trigger`), so a workflow on `push: tags` or `release` never runs.
    Publish in the same job, or call the publish workflow with `workflow_call`.
-3. **Add the changelog entry in the same pull request as the change,** written for the people
-   using the project.
+3. **Add the changelog entry in the same pull request as the change,** written for its users.
 4. **Keep a second release line only when users need it,** and backport to it with
    `git cherry-pick -x`, one focused pull request per fix.
 
@@ -23,26 +23,24 @@ The commits it releases are `commits-and-pull-requests`; the checks that must pa
 
 1. **Write the changelog entry,** under the version's heading, before the tag.
 2. **Read CI's conclusion on the exact commit you're releasing.** A green run on another commit
-   proves nothing about this one.
+   proves nothing here.
 3. **Tag that commit by its SHA,** never a branch, whose tip may have moved on, and before a
    later commit changes a workflow: a job's token can't push a tag whose commit carries a
    workflow file no branch still has as it was (fact `workflow-scope`).
-4. **Make an annotated tag** (facts `tag-kinds`, `describe`). `gh release create` with a new
-   tag name makes a tag that isn't annotated (fact `gh-release-tag`), so push the annotated tag
-   first, then run `gh release create --verify-tag`.
-   With no local clone, a `workflow_dispatch` job makes it, by project-bootstrap-and-audit's
-   release gate (*How a tag gets cut when there is no local clone*).
+4. **Make an annotated tag** (facts `tag-kinds`, `describe`), and push it before
+   `gh release create --verify-tag` (fact `gh-release-tag`). With no local clone, a
+   `workflow_dispatch` job makes it (project-bootstrap-and-audit's release gate).
 5. **Publish in the release job, or call the publish workflow** (rule 2).
 6. **With immutable releases,** create the release as a draft, attach its assets, then publish.
    Then the tag can't move, and a deleted release's tag name can't be reused (fact `immutable`).
 
 Example, tested: [assets/workflows/release.yml](../assets/workflows/release.yml) takes a version
 and a commit SHA. It refuses a version that isn't Semantic Versioning, and a commit off the
-default branch, with no `CHANGELOG.md` section for the version, carrying a workflow file no branch
-has as it is, or with a check not passed or none at all (its own earlier runs don't count).
-Then it makes the annotated tag on that commit as `github-actions[bot]` (fact
-`bot-identity`), and pushes it. A run that fails after pushing can be run again: it carries on
-from a tag it would have made. Only its job may write, and checkout keeps no credentials.
+default branch, with no `CHANGELOG.md` section for it, carrying a workflow file no branch has
+as it is, or with a check not passed or none at all (its own earlier runs don't count). Then
+it makes and pushes the annotated tag as `github-actions[bot]` (fact `bot-identity`). Rerun
+after failing past the push, it goes on from that tag. Only its job may write, and checkout
+keeps no credentials.
 
 **Protect the release tags.**
 [assets/rulesets/release-tags.json](../assets/rulesets/release-tags.json) stops a `v*` tag
@@ -50,45 +48,44 @@ being moved, deleted or force-pushed, and leaves creation open for the release j
 under Settings, Rules, Rulesets (fact `ruleset-import`).
 
 **Test a release job without spending a tag,** which immutable releases never give back: in a
-fork, a test repository, or with a pre-release version such as `1.4.0-rc.1`.
+fork, a test repository, or with a pre-release, say `1.4.0-rc.1`.
 
-**Moving from lightweight tags:** make every new tag annotated, and leave published ones. With
-immutable releases you can't replace them (fact `immutable`), and others' clones have them.
+**Moving from lightweight tags:** make every new tag annotated, and leave published ones: an
+immutable release's tag can't be replaced (fact `immutable`), and others' clones have them.
 
-**Signed tags.** If you sign, sign release tags with `git tag -s`, which makes an annotated
-tag. A release job then needs a signing key it can reach: decide where it lives first.
+**Signed tags.** If you sign, sign release tags with `git tag -s`, which annotates them. A
+release job then needs a key it can reach: decide where it lives.
 
 ### Changelog entries
 
 Keep a Changelog 2.0.0 (fact `kac`) keeps 1.1.0's format, so a 1.1.0 changelog stays valid:
-update the link in its preamble, and take up the new guidance.
+update its preamble's link, and take up the new guidance.
 
-- `## [Unreleased]` sits at the top, and entries go under six headings: **Added**, **Changed**,
-  **Deprecated**, **Removed**, **Fixed** and **Security**. Dates are `YYYY-MM-DD`, a pulled
-  release is marked `[YANKED]`, and each version links to a compare view of its diff.
+- `## [Unreleased]` sits at the top, and entries go under six headings: Added, Changed,
+  Deprecated, Removed, Fixed and Security. Dates are `YYYY-MM-DD`, a pulled release is marked
+  `[YANKED]`, and each version links to a compare view of its diff.
 - Write what changed for the people using the project, not the commit log. A commit has a
-  different reader, so draft one from the other if you like, then rewrite it.
-- A **Security** entry that has a CVE starts with it.
-- Mark a breaking change, and give the upgrade steps beside it.
-- At release, the `Unreleased` entries move under the new version before the tag is made.
-- Where coding agents work on the project, the changelog brief goes in their context file
-  (fact `kac-agents`).
+  different reader: draft one from the other, then rewrite it.
+- A Security entry that has a CVE starts with it.
+- Mark a breaking change, with its upgrade steps beside it.
+- At release, the `Unreleased` entries move under the new version, before the tag.
+- Where coding agents work, the changelog brief goes in their context file (fact
+  `kac-agents`).
 
 ### Version numbers
 
 The scheme, what counts as a major change, and deprecating before removing are
-project-bootstrap-and-audit's rules (dimension 10, *Documentation, versioning and handoff*). It
-uses Semantic Versioning (fact `semver`), which works only once the project declares its public
-API. pip numbers releases by the calendar instead (fact `pip-calver`), and semantic-release
-derives each version from Conventional Commits (fact `semantic-release`).
+project-bootstrap-and-audit's rules (dimension 10). It uses Semantic Versioning (fact
+`semver`), which works only once the project declares its public API. pip numbers releases by
+the calendar instead (fact `pip-calver`), and semantic-release derives each version from
+Conventional Commits (fact `semantic-release`).
 
 ### Release lines and backports
 
 - **Each line has a branch,** `release/X.Y`.
 - **A fix lands on the default branch first,** then goes to the line with `git cherry-pick -x`,
-  so the commit names its source (fact `cherry-x`). FFmpeg does this for 78 of the last 80
-  commits on its `release/9.0`.
-- **A fix meant for a backport stays focused,** so it applies cleanly and is quick to review,
+  so the commit names its source (fact `cherry-x`), as FFmpeg does.
+- **A fix meant for a backport stays focused,** so it applies cleanly and reviews quickly,
   as FFmpeg's developer guide asks.
 - **Each backport is its own pull request against the release branch,** so that line's CI runs
   on it. At FFmpeg, a label on the merged pull request opens the backport.
@@ -100,8 +97,8 @@ derives each version from Conventional Commits (fact `semantic-release`).
 ## Mistakes
 
 - **A release staged and never published.** Work committed after it, under its dated changelog
-  heading, makes the heading describe what the tag won't hold, and whatever waits on the release waits silently. Publish
-  it, or move the heading back to `Unreleased`.
+  heading, makes the heading describe what the tag won't hold, and whatever waits on it waits
+  silently. Publish it, or move the heading back to `Unreleased`.
 - **A release candidate proved only in the working tree.** One candidate's suite failed a
   freshness check on a clean checkout, and its regeneration step named every derived file but
   two. Build each candidate from a clean checkout, regenerate with one command, and move the
@@ -121,12 +118,13 @@ derives each version from Conventional Commits (fact `semantic-release`).
 
 ## Audit
 
-Severity uses the status words in this skill's `SKILL.md`. Whether a tag ruleset exists needs
-admin access to the settings, or it's `UNVERIFIABLE-HERE`.
+Severity uses the status words in this skill's `SKILL.md`. A public repository's rulesets read
+without authentication (fact `rest-public`); a private one's need access, or it's
+`UNVERIFIABLE-HERE`.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| Release tags are lightweight, or the release route makes them so | `git for-each-ref refs/tags --format='%(refname:short) %(objecttype)'`; `commit` is lightweight | `GAP`; rate how the next tag gets made | An annotated tag on the release commit's SHA, made by a job (fact `gh-release-tag`) |
+| Release tags are lightweight, or the release route makes them so | `git for-each-ref refs/tags --format='%(refname:short) %(objecttype)'`; `commit` is lightweight | `GAP`, rating how the next tag is made. `N/A` only where the project's records make a release a commit named in a committed manifest that consumers pin by SHA | An annotated tag on the release commit's SHA, made by a job (fact `gh-release-tag`) |
 | A release made with `GITHUB_TOKEN` that another workflow is meant to publish | Look for `on: release` or `on: push: tags` workflows | `BLOCKER` where the docs say releases publish | Publish in the same job, or `workflow_call` (fact `token-no-trigger`) |
 | A second release line with no branch, or backports without `-x` | `git log release/X.Y --grep 'cherry picked from'` | `GAP` | A `release/X.Y` branch, and `git cherry-pick -x` for each backport (fact `cherry-x`) |
 | Release tags can be moved or deleted | A tag ruleset matching the release tags | `GAP` where releases are tagged and the plan allows rulesets | Import `assets/rulesets/release-tags.json` |
@@ -140,20 +138,23 @@ changelog entry.
 
 **Why.** Git's documentation keeps annotated tags for releases (fact `tag-kinds`), and
 `git describe` counts only them by default (fact `describe`). An annotated tag records who
-tagged, when, and why. A tag on a commit whose CI you haven't read releases
-whatever that commit holds.
+tagged, when, and why. A tag on a commit whose CI you haven't read releases whatever
+that commit holds.
 
 **What others do.** Many projects release from GitHub's release page or `gh release create`,
-which, given a new tag name, makes a lightweight tag (fact `gh-release-tag`). semantic-release versions and publishes
-from the commit messages. towncrier builds notes from one file per change, so parallel pull
-requests don't conflict over one changelog (fact `towncrier`).
+which, given a new tag name, makes a lightweight tag (fact `gh-release-tag`). semantic-release
+versions and publishes from the commit messages. towncrier builds notes from one file per
+change, so parallel pull requests don't conflict over one file (fact `towncrier`).
 
 **What each choice costs.** A job's annotated tag takes one more step than clicking "Publish
 release". A generated changelog saves writing, but reads like the commit log it came from.
 
+**When to choose differently.** For a release rule 1 lets go untagged, the pinned SHA can't
+move, as a protected tag can't. The manifest is the record; a tag adds a name.
+
 ### Release lines and backports
 
-**The advice.** Keep a second release line only when users need one. Backport with
+**The advice.** A second line only when users need one, backported to with
 `git cherry-pick -x`, one focused pull request per fix.
 
 **What others do.**
@@ -162,7 +163,7 @@ release". A generated changelog saves writing, but reads like the commit log it 
 |---|---|---|
 | Linux kernel | A fix goes into mainline, then back to stable lines, at most 100 lines (fact `kernel-stable`) | A fix only on a stable line regresses at the next upgrade |
 | Git | Bug fixes build up on `maint`, and `master` contains all of `maint` (fact `git-branches`) | One commit ID serves both lines, so nothing needs `-x` |
-| FFmpeg | Cherry-picks with `-x` on each release branch | Each backport names its source commit |
+| FFmpeg | Cherry-picks with `-x`: 78 of the last 80 commits on its `release/9.0` | Each backport names its source commit |
 
 **What each choice costs.** Merging forward keeps one commit ID, but the fix is written against
 the old code. Cherry-picking back is simpler when the lines have drifted, and `-x` records where

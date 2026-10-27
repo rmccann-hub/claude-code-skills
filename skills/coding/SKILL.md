@@ -3,7 +3,7 @@ name: coding
 description: "Writes, reviews and fixes code: the contract every change meets, then Python, TypeScript and JavaScript, HTML and CSS, C# and .NET, PowerShell, and Bash. Use when writing, reviewing, debugging or modernizing code in these languages."
 license: Apache-2.0
 metadata:
-  reviewed: "2026-10-26"
+  reviewed: "2026-10-27"
 ---
 
 # Coding
@@ -42,10 +42,14 @@ The contract every change meets:
 7. **Never write a version, a default or a date from memory.** Take it from the module's Facts,
    the standard's *Language toolchains*, or the project's own pins, and check the source when a
    fact is past its check-by date.
-8. **Prove it before you say it's done.** Run the project's own lint, format, type check and
-   tests, as its context file lists them. Report what failed, with the output, and never skip,
-   disable or loosen a check to get to green. The one exception is a single finding you've
-   checked by hand, suppressed on its own line with a comment saying what was checked.
+8. **Prove it before you say it's done.** Run the project's own lint, format, type check and tests,
+   as its context file lists them. Report what failed, with the output, and never skip, disable or
+   loosen a check to get to green. There are two exceptions. A single finding you've checked by hand
+   can be suppressed on its own line, with a comment saying what was checked. A rule that flags
+   calls even when they're safe, such as Ruff's `S607`, can be ignored for a directory no outside
+   input reaches, with a dated comment in the linter's config saying what was checked, and each new
+   call there gets the same review. Rules that catch a shell, `eval` or unsafe deserialization stay
+   on.
 9. **Show a destructive command before running it,** with its dry run or a confirmation: deleting
    files, dropping data, force-pushing, or anything a typo turns into a disaster.
 10. **No hidden or bidirectional characters in source.** They make a reviewer read one thing
@@ -62,7 +66,7 @@ the fact's row is in whichever module holds it.
 | Module | Read it for |
 |---|---|
 | [`python-coding`](references/python-coding.md) | Python 3: `pyproject.toml`, uv, Ruff and a strict type checker, type hints and idioms, explicit encodings, time zones with `zoneinfo`, and `requires-python` |
-| [`python-security`](references/python-security.md) | Python code that takes outside input: `subprocess` and shells, `eval`, `pickle` and `yaml.load`, SQL placeholders, archive extraction, temporary files, confining paths, and `secrets` for tokens |
+| [`python-security`](references/python-security.md) | Python code that takes outside input: `subprocess` and shells, `eval`, `pickle` and `yaml.load`, SQL placeholders, archive extraction, temporary files, confining paths, `assert` as a check, and `secrets` for tokens |
 | [`javascript-coding`](references/javascript-coding.md) | TypeScript and JavaScript on Node.js: `tsconfig` strictness, ES modules, Node versions and the built-ins that replace packages, type stripping, promise mistakes, and lint setup |
 | [`javascript-security`](references/javascript-security.md) | Untrusted input in Node.js code: `eval` and `new Function`, `exec` and `shell: true`, prototype pollution, path traversal, ReDoS, and SQL placeholders |
 | [`html-coding`](references/html-coding.md) | HTML and CSS: semantic markup and ARIA, the WCAG 2.2 basics (labels, alt text, headings, focus, contrast, target size), forms and where they need CSRF protection, and modern CSS with dark mode and reduced motion |
@@ -90,7 +94,10 @@ Each module's Audit section checks code in its language. For a repository's conf
 and dependencies, use project-bootstrap-and-audit, whose rating wins where the two differ. The
 status words are the standard's:
 
-- **`BLOCKER`:** a live exposure, or a check reporting success while measuring nothing.
+- **`BLOCKER`:** a live exposure, or a check reporting success while measuring nothing, such
+  as a test helper that can't run its probe, prints `UNPROBED` and exits 0, in any language.
+  The fix is to fail, or, only where another environment runs the check, to skip so the test
+  runner counts it.
 - **`DRIFT`:** configured, but no longer doing what it says.
 - **`GAP`:** missing something the project needs.
 - **`OVER`:** heavier than the project needs.

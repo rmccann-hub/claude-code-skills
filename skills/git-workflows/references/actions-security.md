@@ -1,7 +1,8 @@
 # Actions security
 
 Read this for writing or reviewing a workflow's permissions and credentials, untrusted input in a
-`run:` step, triggers that run with secrets such as `pull_request_target`, or scanning workflows.
+`run:` step, triggers that run with secrets such as `pull_request_target`, or linting and
+scanning workflows.
 
 It covers what a workflow can be made to do by someone else. Pinning third-party actions, and
 moving off Node 20 actions, are `action-pinning`. Triggers, timeouts and required checks are
@@ -61,15 +62,17 @@ contains, so pass it through an environment variable (fact `injection`):
   requests' workflows run. The default asks only first-time contributors, and one merged
   change, however small, ends that (fact `fork-approval`).
 
-### Scanning workflows
+### Linting and scanning workflows
 
-- **actionlint** checks that a workflow is valid, and with ShellCheck it checks the scripts in
-  `run:` steps (fact `actionlint`). It catches things like an unquoted `: ` in a step name,
-  which makes the file invalid YAML.
+- **actionlint** checks syntax, expressions and job wiring, and with ShellCheck on the path, the
+  scripts in `run:` steps (fact `actionlint`). It catches things like an unquoted `: ` in a step
+  name, which makes the file invalid YAML.
 - **zizmor** looks for security problems: dangerous triggers, template injection, credentials
-  left in a checkout, and over-broad permissions (fact `zizmor`). Its injection audit follows
-  more contexts than a search for `${{ github.event` can.
-- Run both in CI, with the tools pinned by version.
+  left in a checkout (its `artipacked` audit, fact `zizmor-artipacked`), and over-broad
+  permissions (fact `zizmor`). Its injection audit follows more contexts than a search for
+  `${{ github.event` can. How to read its Dependabot cooldown finding is in `action-pinning`.
+- **Run both in CI, with the tools pinned by version.** Both run offline. Neither can tell you
+  the workflow ran, only that it could.
 - **CodeQL's default setup** is available on every public repository, under Settings, Advanced
   Security (fact `codeql-default`). It adds a check to each pull request, and a release job that
   waits on every check then waits on it too.
@@ -101,6 +104,8 @@ the trigger policy and the token's default need admin access to the settings, or
 | `pull_request_target` or `workflow_run` runs a pull request's code | Read those workflows' checkout and `run:` steps | `BLOCKER` | Move it to `pull_request`, which runs a fork's code without your secrets |
 | `pull_request_target` on a public repository with no event policy | Read the workflows, and the repository's Actions policy | `GAP`: it stops from 2 December 2026 (fact `prt-default`) | Move it, or set a policy |
 | Untrusted text inside a `run:` script | `grep -nE -e '[$][{][{] *github[.]event' -e '[$][{][{] *github[.]head_ref' .github/workflows/*.y*ml`, then zizmor, whose injection audit follows more contexts | `BLOCKER` where the value is user-written | An environment variable (fact `injection`) |
+| A checkout keeps its credentials, and no later step in the job pushes | `grep -n -A4 'actions/checkout' .github/workflows/*.y*ml` for `persist-credentials: false`, or zizmor's `artipacked` audit | `GAP` per checkout | `persist-credentials: false` (facts `persist-creds`, `zizmor-artipacked`) |
+| Workflows aren't linted and scanned in CI | A job running actionlint and zizmor, each pinned by version | `GAP` | Add both, pinned (facts `actionlint`, `zizmor`) |
 | The token's default is read and write | Settings, Actions, General, Workflow permissions | `GAP`, whatever the workflows declare: one that forgets its block gets write access | The read-only setting (fact `workflow-permissions`) |
 
 ## Why
@@ -116,6 +121,18 @@ The repository's default catches the workflow that forgets its block.
 **What it costs.** A job that needs to write must say so, and one that forgets fails with a
 permissions error the first time it runs.
 
+### Dropping the checkout's credentials
+
+**Why.** A token left in the checkout reaches every later step, third-party actions too, and a
+step that uploads the workspace can publish it (fact `zizmor-artipacked`). **Cost:** a job that
+pushes keeps them, or sets them back for that step.
+
+### Linting and scanning in CI
+
+**Why.** A workflow that isn't valid never runs its jobs, and actionlint says so before the
+push. A scan in CI catches an injection or a widened permission in review, not after a release.
+**Cost:** a few seconds a run, and a pinned version to keep current.
+
 ## Facts
 
 | ID | Fact | Source | Quote | Checked | Check by |
@@ -129,6 +146,9 @@ permissions error the first time it runs.
 | `workflow-permissions` | Settings, Actions, General, Workflow permissions sets the token's default, read and write or read-only, and whether it can create and approve pull requests | [Actions settings](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) | "read access for the contents and packages permissions (the restricted setting)" and "Allow GitHub Actions to create and approve pull requests" | 2026-10-05 | 2027-04-05 |
 | `token-default` | A new personal repository's token starts read-only, unable to create or approve pull requests | [Actions settings](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) | "in your personal account, GITHUB_TOKEN only has read access" and "not allowed to create or approve pull requests" | 2026-10-05 | 2027-04-05 |
 | `fork-approval` | Public repositories hold a first-time contributor's workflows for approval; one merged change ends that, and a stricter setting covers every external contributor | [Actions settings](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository) | "all first-time contributors require approval" and "any commit or pull request merged into the repository will not require approval" and "Require approval for all external contributors" | 2026-10-05 | 2027-04-05 |
+| `actionlint` | actionlint's newest tag is v1.7.12 | `git ls-remote --tags https://github.com/rhysd/actionlint` | `refs/tags/v1.7.12` | 2026-09-30 | 2026-12-31 |
+| `zizmor` | zizmor 1.30.1, released 2026-09-09, MIT: static security analysis for workflows | [PyPI](https://pypi.org/project/zizmor/) | version 1.30.1, uploaded 2026-09-09 | 2026-09-30 | 2026-12-31 |
+| `zizmor-artipacked` | zizmor's `artipacked` audit flags a checkout that keeps its credential on disk, at lower severity from checkout v6, which keeps it under `$RUNNER_TEMP` | [zizmor audits](https://docs.zizmor.sh/audits/) | "Detects local filesystem git credential storage on GitHub Actions" and "this audit produces lower-severity findings when v6.0.0 or higher of actions/checkout is used" | 2026-10-27 | 2027-04-27 |
 | `codeql-default` | CodeQL's default setup is on every public repository, under Settings, Advanced Security | [Default setup](https://docs.github.com/en/code-security/code-scanning/enabling-code-scanning/configuring-default-setup-for-code-scanning) | "Public repositories on GitHub.com" and "click Advanced Security" | 2026-10-05 | 2027-04-05 |
 
 ## Sources
@@ -138,3 +158,4 @@ permissions error the first time it runs.
 | [GitHub Docs](https://docs.github.com/) (security hardening, workflow syntax, Actions settings, code scanning) | Permissions, injection, approval, scanning | CC BY 4.0: facts in our own words, with short quotes |
 | [GitHub changelog](https://github.blog/changelog/) (2025-11-07, 2026-06-18, 2026-09-17) | Dated platform changes | © GitHub: short quotes only |
 | [actions/checkout README](https://github.com/actions/checkout) | Credentials left in a checkout | MIT: facts with short quotes |
+| [zizmor's audits](https://docs.zizmor.sh/audits/), its [PyPI page](https://pypi.org/project/zizmor/), and tags of [actionlint](https://github.com/rhysd/actionlint) | What zizmor flags, and tool versions | MIT: facts with short quotes, versions only |

@@ -3,9 +3,8 @@
 Read this for writing a commit message, naming a branch, opening or reviewing a pull request,
 choosing and checking the commit grammar, or setting the address commits carry.
 
-It covers what a commit and a pull request say. Merging is `branches-and-merging`, and which
-branches to keep, `rebasing-and-recovery`; the changelog and the version number,
-`releases-and-versions`.
+It covers what a commit and a pull request say. Merging is `branches-and-merging`; which
+branches to keep, `rebasing-and-recovery`; changelogs and versions, `releases-and-versions`.
 
 ## Rules
 
@@ -32,16 +31,17 @@ Two families work:
   `area-prefix`). FFmpeg uses it for nearly all its commits, and its commit-message check
   rejects Conventional Commits.
 
-Where pull requests are squashed, set the default squash commit title to the pull request's
-title, and check the title: GitHub's default otherwise takes a one-commit pull request's own
-message (fact `squash-default`), and whoever merges can edit it. A `commit-msg` hook helps only
-where a persistent local clone installs it (`git-hooks`).
+Where pull requests are squashed, set the default squash title to the pull request's title,
+and check that: otherwise GitHub takes a one-commit pull request's own message (fact
+`squash-default`), and whoever merges can edit it. A `commit-msg` hook helps only where a
+persistent local clone installs it (`git-hooks`).
 
 [assets/workflows/commit-subjects.yml](../assets/workflows/commit-subjects.yml), tested, checks
-a pull request's commits against "area: summary": it passes `git revert`'s subjects, refuses
-unsquashed `fixup!` and `squash!` commits, and fails on finding none, so "couldn't check" never
-passes. Give Dependabot a prefix, such as `commit-message: prefix: "deps"`, and its subjects
-pass too (fact `dependabot-prefix`).
+a pull request's commits against the grammar its `GRAMMAR` line names, `area` or
+`conventional`. It passes `git revert`'s subjects, refuses unsquashed `fixup!` and `squash!`
+commits, and fails on finding none or on an unknown grammar, so "couldn't check" never passes.
+Give Dependabot a prefix, such as `commit-message: prefix: "deps"`, and its subjects pass too
+(fact `dependabot-prefix`).
 
 ### The subject and the body
 
@@ -49,7 +49,7 @@ pass too (fact `dependabot-prefix`).
   playlist", not "fixed stuff" (fact `area-prefix`).
 - 50 characters or fewer is git's soft limit, with no full stop (fact `subject-50`). Tools that
   show one line per commit cut a long subject.
-- A blank line follows the subject. Wrap the body to read in a terminal, near 72 columns.
+- A blank line follows the subject. Wrap the body near 72 columns, for a terminal.
 - The body says **why**: the cause, the effect on users, and what a reviewer or a later
   `git bisect` needs. The diff shows what changed.
 
@@ -90,13 +90,13 @@ the current default branch, fetched first.
 
 - **Title:** in the commit grammar, since under squash merging it can become the commit's
   subject (fact `squash-default`).
-- **Description:** what changes and why; how it was tested, with the commands and what they
-  showed; what's left out on purpose; breaking changes and upgrade steps; linked issues; which
+- **Description:** what changes and why; how it was tested, with the commands and their
+  output; what's left out on purpose; breaking changes and upgrade steps; linked issues; which
   files or commits to read first.
 - **Size:** reviewable in one sitting. Why is project-bootstrap-and-audit's *Review, with one
   maintainer*.
 - **Before asking for review,** read your own diff whole, for debug output, commented-out code,
-  a TODO with no issue behind it, a secret, and files you didn't mean to change.
+  a TODO with no issue, a secret, and files you didn't mean to change.
 
 ### Review comments
 
@@ -126,7 +126,7 @@ the current default branch, fetched first.
   for two months, until a search for upstream's code found it. Say whose code it is. Before
   reporting it, reproduce it on a build of upstream's head, and point each file and line there.
 - **A "current state" section in `CLAUDE.md`,** or any context file. It goes stale within days.
-  Status lives in the pull request and its issues, and plans in one planning file.
+  Status lives in the pull request and its issues; plans, in one planning file.
 
 ## Audit
 
@@ -134,7 +134,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| The commit grammar is unstated or unchecked | The context file, and CI checking commits, or titles under squash merging (fact `squash-default`) | `GAP` from T2 | Name it in the context file; check it with the commit-subjects example |
+| The commit grammar is unstated or unchecked | The context file, and CI checking commits, or titles under squash merging (fact `squash-default`) | `GAP` from T2 | Name it in the context file; check it with the commit-subjects example, set to that grammar |
 | The context file has a status section | Read it | `DRIFT`: it goes stale | Plans to one planning file, status to the pull request or issue |
 | Public commits carry an address meant to stay private | `git log --format='%ae' \| sort \| uniq -c`, or the commits API's author logins | `GAP` for commits to come | The noreply address in each clone, and both email settings (facts `commit-email`, `email-push-block`). Never rewrite published history for it |
 
@@ -193,7 +193,7 @@ configuration.
 | `squash-default` | GitHub's default squash message for a one-commit pull request is that commit's; a repository can change it | [Commit squashing](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/configuring-commit-squashing-for-pull-requests) | "the commit title and message if the pull request contains only 1 commit" | 2026-09-30 | 2027-03-31 |
 | `co-authored` | GitHub credits each `Co-authored-by:` author whose address is tied to their account | [Multiple authors](https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors) | "Co-authored-by trailers" and "associated with their account on GitHub.com" | 2026-09-30 | 2027-09-30 |
 | `close-keywords` | A closing keyword in a description or a commit message closes the issue only on a merge into the default branch | [Linking issues](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/linking-a-pull-request-to-an-issue) | "fix fixes fixed" | 2026-09-30 | 2027-09-30 |
-| `commit-email` | "Keep my email addresses private" gives GitHub's own operations the noreply address; a clone's commits use its Git configuration, and earlier ones keep the old address | [Commit email](https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address) | "select Keep my email addresses private" and "still associated with your previous email address" | 2026-10-05 | 2027-04-05 |
+| `commit-email` | "Keep my email addresses private" covers GitHub's own operations; a clone's commits use its Git configuration, and earlier ones keep their address | [Commit email](https://docs.github.com/en/account-and-profile/how-tos/email-preferences/setting-your-commit-email-address) | "select Keep my email addresses private" and "still associated with your previous email address" | 2026-10-05 | 2027-04-05 |
 | `email-push-block` | The push-blocking setting refuses a push whose newest commit's author address is private on the account | [Blocking pushes](https://docs.github.com/en/account-and-profile/how-tos/email-preferences/blocking-command-line-pushes-that-expose-your-personal-email-address) | "a private email on your GitHub account, we will block the push" | 2026-10-05 | 2027-04-05 |
 | `dependabot-prefix` | Dependabot adds a colon after a `commit-message.prefix` ending in a letter or number | [Dependabot options](https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference) | "Dependabot inserts a colon after the prefix" and "when the value ends with a letter, number" | 2026-09-30 | 2027-03-31 |
 | `kernel-subject` | The kernel's subject is "subsystem: summary phrase", in the imperative | [Submitting patches](https://docs.kernel.org/process/submitting-patches.html) | "subsystem: summary phrase" and "in imperative mood" | 2026-09-30 | 2027-03-31 |
@@ -208,4 +208,4 @@ configuration.
 | [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) | One commit grammar | CC BY 3.0: summarized, attributed |
 | [Linux kernel docs](https://docs.kernel.org/process/submitting-patches.html) | The kernel's subjects | Not stated: short quotes only |
 | [Go contribution guide](https://go.dev/doc/contribute) | Package prefixes, Gerrit's `Change-Id` | Not stated: short quotes only |
-| FFmpeg, read from its tree and history on 2026-09-30 | Its "area: summary" grammar and check, `Fixes:` and `Found-by:` | Facts about the project, in our own words |
+| FFmpeg's tree and history, read 2026-09-30 | Its "area: summary" grammar and check, `Fixes:` and `Found-by:` | Facts about the project, in our own words |

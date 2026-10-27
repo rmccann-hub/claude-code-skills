@@ -13,12 +13,13 @@ planned testing skill. Layout and when to use Python: project-bootstrap-and-audi
 1. **Name the shell in the shebang:** `#!/usr/bin/env bash`, or `#!/bin/sh` only for POSIX
    linted as `sh`.
 2. **Start Bash with `set -euo pipefail`, and know its gaps:** conditions, functions called
-   from them, `local`, and `((n++))` at zero.
+   from them, `local`, and `((n++))` at zero. Leave out `-e` only for a hook that must never fail
+   its caller, or a probe collecting every result, and say so by `set`.
 3. **Quote every expansion:** `"$var"`, `"$(cmd)"`, `"${list[@]}"`, or say why not in a
    ShellCheck directive.
 4. **Hold a list in an array, never a string:** a Bash array, or `"$@"` in `sh`.
-5. **Read lines with `while IFS= read -r`, and names with `-print0` or `find -exec … {} +`.**
-   Never parse `ls`.
+5. **Read lines with `while IFS= read -r`, and names with `-print0`, `find -exec … {} +` or
+   git's `-z`.** Never parse `ls`.
 6. **`mktemp` for temporary files, removed in an `EXIT` trap.**
 7. **Run ShellCheck and shfmt, locally and in CI;** bats runs the tests.
 8. **A script that deletes or overwrites follows bash-security's guards:** `${var:?}`, `--`,
@@ -104,6 +105,8 @@ maybe-empty list as `${args[@]+"${args[@]}"}`.
   variables. Feed it with `done < <(cmd)`.
 - **Names hold spaces, newlines and dashes.** `-print0` and `xargs -0` are POSIX since 2024
   (fact `sh-posix-print0`); `find -exec … {} +` works everywhere.
+- **git quotes a name with a byte over 0x80,** as `"Bj\303\266rk.flac"`, in `ls-files`,
+  `diff --name-only` and `status` (fact `sh-git-quotepath`): `'\.flac$'` misses it. Use `-z`.
 
 ```bash
 while IFS= read -r line || [[ -n $line ]]; do
@@ -115,6 +118,8 @@ find . -type f -name '*.md' -exec grep -l -e 'TODO' -- {} +
 while IFS= read -r -d '' path; do
   printf 'found: %s\n' "$path"
 done < <(find . -type f -name '*.log' -print0)
+
+git diff -z --name-only main -- '*.flac' | xargs -0 -r flac --test --
 ```
 
 ### Temporary files and cleanup
@@ -139,7 +144,9 @@ sort -- "$1" >"$tmpdir/sorted"
 ### Tools and portability
 
 - **ShellCheck** (fact `sh-shellcheck`) reads the shebang: `shellcheck bin/* lib/*.sh`. Fix,
-  or disable on the line, saying why.
+  or disable on the line, saying why. Not installed? `uvx --from shellcheck-py shellcheck` runs
+  it from PyPI (fact `sh-shellcheck-py`). Failing that, read for the gaps above by hand, and
+  mark the lint `UNVERIFIABLE-HERE`.
 - **shfmt** (fact `sh-shfmt`) reads `.editorconfig`; `shfmt -d bin lib` fails with a diff.
 - **bats** (fact `sh-bats-version`) runs `.bats` files: `bats tests`.
 - **`sed -i` differs on BSD** (fact `sh-sed-inplace`): write a temporary file, then `mv`.
@@ -163,9 +170,10 @@ Severity uses the standard's status words.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| ShellCheck | `shellcheck` on every script | `GAP` per warning; `BLOCKER` for SC2115 | Fix, or disable on the line with why |
+| ShellCheck | `shellcheck` on every script | `GAP` per warning; SC2115 as bash-security's unsafe deletes; `UNVERIFIABLE-HERE` where it can't run | Fix, or disable on the line with why |
 | Dialect | `shellcheck --shell=sh` on `#!/bin/sh`: `[[`, arrays, `source`, unprobed `pipefail` | `DRIFT` | Name Bash, or port it |
-| Strict mode | Bash without `set -euo pipefail` | `GAP` | Add it; fix what breaks |
+| Strict mode | Bash without `set -euo pipefail` | `GAP`, unless rule 2's hook or probe says so by `set` and checks each command it needs | Add it; fix what breaks |
+| git name lists | `ls-files`, `diff --name-only` or `status` read without `-z`, then matched by a pattern | `BLOCKER` where a check passes on names it never matched, else `GAP` | `-z`, read with `-d ''` |
 | Masked failures | `local`, `export` or `readonly` with `$(…)`; `((n++))` under `-e`; a side-effecting function as an `if` condition | `GAP` | Split; `n=$((n + 1))`; check in the function |
 | Temporary files | Fixed `/tmp` paths; `mktemp` with no `EXIT` trap | `GAP` | `mktemp` and a trap |
 | Formatting | `shfmt -d` | `DRIFT` | `shfmt -w`, and a CI step |
@@ -181,7 +189,12 @@ or with structured data, use Python.
 
 **Strict mode.** Without `-e`, the next step runs on bad input; without `pipefail`, a failed
 download piped to `tar` succeeds; without `-u`, a typo is empty. Costs: `grep` and the like
-need `if` or `|| true`. Checking each status by hand is more code to get wrong.
+need `if` or `|| true`. Checking each status by hand is more code to get wrong. Otherwise: in
+rule 2's two cases stopping costs more, so each command relied on is checked.
+
+**git's `-z`.** By default git quotes a name with a byte over 0x80, so a check filtering the
+list by pattern passes having read nothing. `core.quotePath=false` still escapes tabs, newlines,
+quotes and backslashes; `-z` escapes none.
 
 **Quoting and arrays.** Unquoted, a script breaks on a name with a space, `*` or `-`; a string
 can't hold arguments with spaces. Costs: noise, and arrays need Bash.
@@ -190,22 +203,17 @@ can't hold arguments with spaces. Costs: noise, and arrays need Bash.
 
 **Tools.** The standard's *Language toolchains* names these three. ShellCheck finds unquoted
 expansions, masked statuses (SC2155) and unguarded deletes (SC2115); shfmt ends layout debates.
-Costs: three tools to pin, and some directives.
+Costs: three tools to pin, and some directives. A hand read misses most of what ShellCheck
+finds, so the lint stays `UNVERIFIABLE-HERE`.
 
 ## Facts
 
-Checked 2026-10-26; bash-security holds the facts both modules use.
+bash-security holds the versions and the shared facts.
 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
-| `sh-bash-current` | 5.3 is current | [Bash](https://tiswww.case.edu/php/chet/bash/bashtop.html) | "The current version of bash is bash-5.3" | 2026-10-26 | 2027-04-26 |
-| `sh-bash53-nofork` | 5.3 added `${ cmd; }` | [NEWS](https://tiswww.case.edu/php/chet/bash/NEWS) | "capture the output of COMMAND without forking" | 2026-10-26 | 2027-10-26 |
-| `sh-bash-versions` | 4.0: `declare -A`, `mapfile`; 4.4: `inherit_errexit` | [NEWS](https://tiswww.case.edu/php/chet/bash/NEWS) | "associative array variables" and "populate an array with lines" and "command substitutions to inherit the -e option" | 2026-10-26 | 2027-10-26 |
 | `sh-bash44-empty-array` | 4.4 allows empty arrays under `-u` | [CHANGES](https://tiswww.case.edu/php/chet/bash/CHANGES) | "nounset option is enabled no longer throws an unbound variable error" | 2026-10-26 | 2027-10-26 |
-| `sh-macos-bash` | macOS has Bash 3.2 | [Apple](https://raw.githubusercontent.com/apple-oss-distributions/bash/main/bash-3.2/configure.in) | "Configure script for bash-3.2" | 2026-10-26 | 2027-04-26 |
 | `sh-macos-zsh` | zsh since macOS 10.15 | [Apple](https://support.apple.com/en-us/102360) | "Starting with macOS 10.15, your Mac uses zsh" | 2026-10-26 | 2027-10-26 |
-| `sh-debian-dash` | Debian 13: dash 0.5.12 | [Debian](https://packages.debian.org/trixie/dash) | "dash (0.5.12-12)" and "the default system shell" | 2026-10-26 | 2027-04-26 |
-| `sh-dash-pipefail` | dash 0.5.13 added it | [SC3040](https://www.shellcheck.net/wiki/SC3040) | "dash version 5.13 included pipefail" | 2026-10-26 | 2027-10-26 |
 | `sh-posix-pipefail` | POSIX.1-2024 added it | [POSIX](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html) | "adding -o pipefail" | 2026-10-26 | 2027-10-26 |
 | `sh-posix-print0` | POSIX.1-2024 added `-print0`, `-0` | [find](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/find.html), [xargs](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/xargs.html) | "adding the -print0 primary" and "adding the -r and -0 options" | 2026-10-26 | 2027-10-26 |
 | `sh-errexit` | `-e` is off in conditions | [Manual](https://tiswww.case.edu/php/chet/bash/bashref.html) | "part of the test in an if statement" and "shell function executes in a context where -e is being ignored" | 2026-10-26 | 2027-10-26 |
@@ -219,8 +227,7 @@ Checked 2026-10-26; bash-security holds the facts both modules use.
 | `sh-sed-inplace` | BSD needs a suffix | [GNU](https://man7.org/linux/man-pages/man1/sed.1.html), [FreeBSD](https://man.freebsd.org/cgi/man.cgi?query=sed&sektion=1) | "-i[SUFFIX], --in-place[=SUFFIX]" and "[-i extension]" | 2026-10-26 | 2027-10-26 |
 | `sh-google` | Bash only; rewrite past 100 lines | [Google](https://google.github.io/styleguide/shellguide.html) | "the only shell scripting language permitted" and "more than 100 lines long" and "rewrite it in a more structured language" | 2026-10-26 | 2027-10-26 |
 | `sh-google-license` | Google's guides: CC BY 3.0 | [LICENSE](https://raw.githubusercontent.com/google/styleguide/gh-pages/LICENSE) | "Attribution 3.0 Unported" | 2026-10-26 | 2027-10-26 |
-| `sh-shellcheck` | 0.11.0 (2025-08-03); next flags `grep -q` | [Changelog](https://raw.githubusercontent.com/koalaman/shellcheck/master/CHANGELOG.md) | "v0.11.0 - 2025-08-03" and "in pipelines under pipefail" | 2026-10-26 | 2027-04-26 |
-| `sh-bats-version` | bats-core 1.14.0 (2026-07-21) | [Changelog](https://raw.githubusercontent.com/bats-core/bats-core/master/docs/CHANGELOG.md) | "[1.14.0] - 2026-07-21" | 2026-10-26 | 2027-04-26 |
+| `sh-git-quotepath` | git quotes unusual names unless given `-z` | [git-config](https://git-scm.com/docs/git-config) | "bytes with values larger than 0x80" and "Double-quotes, backslash and control characters are always escaped" and "verbatim using the -z option" and "The default value is true." | 2026-10-27 | 2027-10-27 |
 
 ## Sources
 
@@ -231,4 +238,5 @@ Checked 2026-10-26; bash-security holds the facts both modules use.
 | [ShellCheck](https://www.shellcheck.net/) | dash, releases | GPL-3.0; wiki states none: short quotes |
 | [shfmt](https://github.com/mvdan/sh), [bats-core](https://github.com/bats-core/bats-core) | Releases | BSD-3-Clause, MIT: pointed to |
 | [Google](https://google.github.io/styleguide/shellguide.html) | Shell choice | CC BY 3.0 (fact `sh-google-license`): short quotes, attributed |
+| [git](https://git-scm.com/docs/git-config), [shellcheck-py](https://pypi.org/project/shellcheck-py/) | `core.quotePath`; ShellCheck from PyPI | GPL-2.0, MIT: short quotes |
 | [man7.org](https://man7.org/linux/man-pages/), [FreeBSD](https://man.freebsd.org/), [Apple](https://support.apple.com/en-us/102360), [Debian](https://packages.debian.org/trixie/dash) | `sed -i`, default shells | Each site's terms: short quotes |

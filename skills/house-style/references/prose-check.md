@@ -1,8 +1,7 @@
 # Prose check
 
 Read this for adding the house style's Vale check to a repository, running it locally, tuning it
-for a repository's own names and records, or dealing with a rule that flags something it
-shouldn't.
+for a repository's own names and records, or a rule that flags something it shouldn't.
 
 It covers the check, which finds breaks of rules 3, 8 and 12 in this skill's `SKILL.md`. What
 the rules mean, and the rest of them, is `writing-style`.
@@ -23,11 +22,19 @@ published as `HouseStyle.zip` on each release. It checks three of the rules:
 | Rule | Vale rule | What it catches |
 |---|---|---|
 | 3 | `HouseStyle.Filler` | The six words, in any case |
-| 8 | `HouseStyle.Headings` | A heading that isn't in sentence case, apart from listed proper nouns and the repository's own vocabulary |
+| 8 | `HouseStyle.Headings` | A heading that isn't in sentence case, apart from listed proper nouns and the repository's own vocabulary. A capital may follow a colon (fact `heading-colon`), but not a dash, by this style's choice |
 | 12 | `HouseStyle.Spelling` | Common British spellings, with the American form to use |
 
-The rest are for review. Vale can't tell whether the answer comes first, or whether a fact was
-checked at its source. Rule 11's commit subjects have their own check, in git-workflows.
+The spelling rule lists the words it changes, most by a pattern: -ise and -isation to -ize and
+-ization (organize, organization, recognize); -our to -or (behavior, color, favor); -re to -er
+(center); -ogue to -og (catalog); -ence to -ense in some nouns (license, defense, offense); a
+doubled `l` to one before -ed and -ing (labeled, canceled, modeling); and -ement after -dg to
+-ment (judgment, acknowledgment). So it leaves alone -ise words the same in both, such as
+advise, exercise, promise, otherwise and expertise.
+
+Rule 8's wrap has its own check, below. The rest are for review: Vale can't tell whether the
+answer comes first, or whether a fact was checked. Rule 11's commit subjects have their own
+check, in git-workflows.
 
 ### What it takes
 
@@ -38,9 +45,8 @@ checked at its source. Rule 11's commit subjects have their own check, in git-wo
   `vale-packages`).
 - **A `.vale.ini`** at the repository's root, and one CI job.
 
-Naming the latest release's package means a change to the style reaches every repository at
-its next CI run, with no change there. The price is that a new rule can fail a repository that
-was passing yesterday. Each release's notes say what changed.
+Naming the latest release's package brings a change to the style to every repository's next CI
+run, with no change there. Each release's notes say what changed.
 
 ### The configuration
 
@@ -52,8 +58,9 @@ MinAlertLevel = suggestion
 Packages = https://github.com/rmccann-hub/claude-code-skills/releases/latest/download/HouseStyle.zip
 ```
 
-The package carries its own configuration, which runs HouseStyle on every Markdown file. The
-repository's own configuration overrides it (fact `vale-layers`).
+The package's own configuration runs HouseStyle on every Markdown file and skips words in
+double quotes. The repository's configuration overrides its settings (fact `vale-layers`) and
+adds to its lists.
 
 Add what `vale sync` installs to `.gitignore`, so it isn't committed:
 
@@ -89,15 +96,24 @@ BasedOnStyles =
 Leave these alone:
 
 - an append-only record's history, such as a decision record or dated research results;
-- files a fork shares with its upstream project;
+- files kept byte for byte the same as another repository's, such as a fork's upstream files;
 - third-party files, such as vendored code and other projects' licenses.
 
-Where a file quotes its sources in double quotes, such as a facts table, skip the quotes and
-check the rest:
+### Quoted words
+
+The package's `TokenIgnores` skips words in double quotes (fact `vale-tokenignores`). A quote
+opens only after a space, a line's start or punctuation, so `5"` or a `"` after a backtick
+opens none. It may wrap, but stops at its paragraph's end and at a line opening a list item,
+heading, block quote, table row or code fence. Two cases still hide the words up to the
+paragraph's next `"`: a stray `"` after a space, such as `5 "`, and one after a space inside
+inline code, such as `` `a "b` ``. Typographic quotes aren't skipped.
+
+A repository's own `TokenIgnores` adds to the package's (fact `vale-list-keys`), so it names
+only its own markup:
 
 ```ini
-[docs/facts.md]
-TokenIgnores = "(?:[^"\\]|\\.)*"
+[docs/*.md]
+TokenIgnores = (:[a-z_]+:)
 ```
 
 ### The CI job
@@ -114,10 +130,10 @@ Copy [assets/workflows/prose.yml](../assets/workflows/prose.yml) into the reposi
 4. **Check every tracked Markdown file.** The files to leave alone are set in `.vale.ini`, not
    in the workflow, so a person running `vale` locally gets the same answer as CI.
 
-It runs on each pull request and on each push to `main`, with no path filter, so it can be a
-required check. A repository whose default branch has another name puts that name in place of
-`main`. A branch with no pull request gets no run. Its action pins go stale like any other. In claude-code-skills, Dependabot moves the copy
-it runs, and the asset follows.
+It runs on each pull request and each push to `main` (or the default branch's own name), with
+no path filter, so it can be a required check. A branch with no pull request gets no run. Its
+action pins go stale like any other; in claude-code-skills, Dependabot moves the copy it runs,
+and the asset follows.
 
 ### Running it locally
 
@@ -131,11 +147,21 @@ Vale is also packaged for Homebrew, Chocolatey and others. Any install of the sa
 the same answer. A build from `go install` reports its version as `master`, and
 `go version -m "$(command -v vale)"` shows the version it was built from.
 
+### The wrap check
+
+[scripts/wrap-check.sh](../scripts/wrap-check.sh), tested, names each line over 100
+characters (fact `awk-length`), skipping frontmatter, fenced code, tables and URLs, and fails
+if it finds one. With `HOUSE_STYLE` set to this skill's directory:
+
+```sh
+git ls-files -z '*.md' | xargs -0 sh "$HOUSE_STYLE/scripts/wrap-check.sh"
+```
+
 ### When a rule doesn't fit
 
 - **A proper noun is flagged:** add it to the repository's vocabulary.
-- **A quote is flagged:** put it in double quotes in a file that skips quotes, or in a block
-  quote, and say where it's from.
+- **A quote is flagged:** put it in double quotes, and say where it's from. A block quote is
+  checked like any prose. A label or value from code goes in code formatting.
 - **A rule is wrong for the repository:** set it to a warning in `.vale.ini`, under the files'
   section, such as `HouseStyle.Headings = warning`. Record why in the decision record, and tell
   claude-code-skills, because a rule that's wrong in one repository may be wrong in all of them.
@@ -153,6 +179,7 @@ the same answer. A build from `go install` reports its version as `master`, and
 - **Turning a rule off for one flagged word.** Add the word to the vocabulary instead, so the
   rule still catches the rest.
 - **Committing what `vale sync` installs.** It's fetched each run; ignore it.
+- **Quoting your own words to quiet the check.** Fix the text instead.
 
 ## Audit
 
@@ -165,6 +192,7 @@ Severity uses the standard's status words: `BLOCKER`, `DRIFT`, `GAP`, `OVER`, `M
 | The check measures nothing | The workflow's canary step, which fails unless all three rules report | `BLOCKER` where the job can pass with no style installed | Restore the canary step from the shipped workflow |
 | The job is path-filtered | The workflow's `on:` block | `GAP`: it can't be a required check | Remove the filter |
 | Records are checked | `.vale.ini` sections for append-only records and third-party files | `DRIFT`: past entries get flagged, and someone rewrites them | Add an empty `BasedOnStyles =` section for each |
+| A quote pattern of the repository's own | A `TokenIgnores` in `.vale.ini` matching double quotes | `DRIFT`: one crossing a blank line hides prose after a stray mark | Remove it; the package skips quotes |
 | What `vale sync` installs is committed | `git ls-files .vale/styles/HouseStyle` | `DRIFT` | Remove it, and ignore it |
 | Vale's version is behind | The workflow's pinned version, against fact `vale-current` | `DRIFT` | Move the pin, and the version in the local install command |
 
@@ -193,9 +221,24 @@ this repository's own tooling would only run here.
 **What could be better.** The heading rule's list of proper nouns is a guess at what's common.
 Each repository adds its own to its vocabulary, and names that recur belong in the package.
 
+### Skipping quoted words
+
+**The advice.** The package skips words in double quotes, within one paragraph.
+
+**Why.** The style leaves a source's words as written, so flagging them is wrong, and a fix per
+file, in each repository, is one more thing to miss.
+
+**What it costs.** A writer can hide a word by quoting it, which review has to catch. A stray
+mark hides little, since a quote opens only where one can and stops at its paragraph, a list,
+a table or code. A quote wrapped onto such a line is checked: the safe way to be wrong. The
+pattern sees text, not Markdown, so the two cases under *Quoted words* remain.
+
+**When to choose differently.** A repository's own patterns only add (fact `vale-list-keys`),
+so one that wants its quotes checked asks here for a change.
+
 ## Facts
 
-Vale's version and behavior, each named elsewhere by its ID. Checked 2026-10-05.
+Vale's version and behavior, and the guides the heading rule follows, each named by its ID.
 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
@@ -205,13 +248,19 @@ Vale's version and behavior, each named elsewhere by its ID. Checked 2026-10-05.
 | `vale-packages` | A package is a ZIP holding one folder named for it. `.vale.ini` lists it by URL under `Packages`, and `vale sync` installs it | [Packages](https://vale.sh/docs/keys/packages) | "A URL to a .zip archive." and "the archive has to hold one folder with that name" and "Packages lists what vale sync installs into the StylesPath" | 2026-10-05 | 2027-04-05 |
 | `vale-layers` | A package's configuration is overridden by later packages, and by the project's own | [Packages](https://vale.sh/docs/keys/packages) | "the first package is overridden by the second, and local configuration overrides both" | 2026-10-05 | 2027-04-05 |
 | `vale-sections` | In `.vale.ini`, a later section matching the same files replaces the earlier list of styles | [.vale.ini](https://vale.sh/docs/vale-ini) | "A later matching section replaces the list rather than adding to it." | 2026-10-05 | 2027-04-05 |
+| `vale-tokenignores` | Vale skips a `TokenIgnores` match by wrapping it as inline code | [TokenIgnores](https://docs.vale.sh/keys/tokenignores) | "They work by wrapping each match in the format's inline code delimiter" | 2026-10-27 | 2027-04-27 |
+| `vale-list-keys` | A list key, such as `TokenIgnores`, gathers every configuration file's values, as `vale ls-config` showed on Vale 3.25.1 | [.vale.ini](https://docs.vale.sh/topics/.vale.ini) | "A list key gathers every value from every file" | 2026-10-27 | 2027-04-27 |
+| `heading-colon` | Google and Microsoft capitalize after a heading's colon. Google puts a colon, not a dash, after a label; Microsoft's em dash sets off a remark | [Google](https://developers.google.com/style/capitalization), [dashes](https://developers.google.com/style/dashes); [Microsoft](https://learn.microsoft.com/en-us/style-guide/capitalization), [dashes](https://learn.microsoft.com/en-us/style-guide/punctuation/dashes-hyphens/emes) | "the first word in a subheading after a colon" and "Appendix A: My first appendix" and "If a title or heading includes a colon, capitalize the first word after it." and "parenthetical remark that you want to add within a sentence" | 2026-10-27 | 2027-04-27 |
+| `awk-length` | awk's `length` counts characters, and in the POSIX locale each is one byte | [awk](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html), [locale](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap06.html) | "return the length, in characters, of arg taken as a string" and "The POSIX locale shall contain 256 single-byte characters" | 2026-10-27 | 2027-10-27 |
 | `vale-exceptions` | Capitalization and substitution rules take a list of exceptions, and accept the project's vocabularies unless told not to | [capitalization](https://vale.sh/docs/checks/capitalization) | "An array of strings to be ignored." and "If false, disables all active vocabularies for this rule (default: true)." | 2026-10-05 | 2027-04-05 |
 
 ## Sources
 
 | Source | Used for | License |
 |---|---|---|
-| [Vale's documentation](https://vale.sh/docs) | How packages, configuration sections and rule exceptions work | No license stated: facts with short quotes |
+| [Vale's documentation](https://docs.vale.sh) | How packages, configuration, rule exceptions and `TokenIgnores` work | No license stated: facts with short quotes |
+| [POSIX](https://pubs.opengroup.org/onlinepubs/9799919799/) | How awk counts a line's length | Facts with short quotes |
+| Google's and Microsoft's style guides | Colons and dashes in headings | As in `writing-style`: short quotes, attributed |
 | [Vale](https://github.com/vale-cli/vale) | The checker | MIT (fact `vale-license`): run as a tool, nothing copied from it |
 
 The HouseStyle package's rules are original to this skill.

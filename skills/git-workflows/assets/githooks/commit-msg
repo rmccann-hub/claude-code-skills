@@ -1,15 +1,25 @@
 #!/bin/sh
-# Refuses a commit whose subject doesn't read "area: summary", and warns past
-# git's 50-character soft limit. Install once per clone:
+# Refuses a commit whose subject doesn't follow the grammar below, and warns
+# past git's 50-character soft limit. Install once per clone:
 #   git config core.hooksPath .githooks
 # Git hands this hook the message before it strips comments and blank lines,
 # so the subject is the first line left once they are gone, as Git will see it.
+
+# The grammar the context file names: area, for "core/io: fix a leak", or
+# conventional, for Conventional Commits' "fix(io)!: drop the old reader".
+grammar=area
+
+case "$grammar" in
+  area) pattern='^[A-Za-z0-9_./-]+(, ?[A-Za-z0-9_./-]+)*: [^ ]' ;;
+  conventional) pattern='^[A-Za-z]+(\([^()]+\))?!?: [^ ]' ;;
+  *) echo "commit-msg: grammar is '$grammar'; set it to area or conventional" >&2; exit 1 ;;
+esac
 subject=$(git stripspace --strip-comments < "$1" | sed -n 1p)
 case "$subject" in
   "Merge "* | "Revert \""* | "Reapply \""* | "fixup! "* | "squash! "* | "amend! "*) exit 0 ;;
 esac
-if ! printf '%s\n' "$subject" | grep -Eq '^[A-Za-z0-9_./-]+(, ?[A-Za-z0-9_./-]+)*: [^ ]'; then
-  echo "commit-msg: the subject should read 'area: summary', got: $subject" >&2
+if ! printf '%s\n' "$subject" | grep -Eq "$pattern"; then
+  echo "commit-msg: the subject should follow the $grammar grammar, got: $subject" >&2
   exit 1
 fi
 if [ "${#subject}" -gt 50 ]; then

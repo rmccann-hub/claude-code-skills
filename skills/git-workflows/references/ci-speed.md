@@ -32,12 +32,14 @@ on the pins, the build script's hash and the toolchain version.
 - Cache dependencies and build outputs. A pull request restores caches from its own branch or
   the default branch, so the default branch's runs fill the cache pull requests read (fact
   `cache-scope`).
-- Cancel a pull request's superseded run when a new push arrives (fact `cancel-in-progress`).
-  Don't cancel on the default branch, where every commit should be tested.
-- Don't run every job twice. `push` on every branch plus `pull_request` tests each pull
-  request's commits once as the head and once as the merge (fact `pr-merge-ref`). That doubles
-  the minutes, and on a Free account the two runs share 20 concurrent jobs (fact
-  `concurrent-jobs`).
+- Cancel a pull request's superseded run when a new push arrives: `concurrency` with
+  `cancel-in-progress` (fact `cancel-in-progress`). Don't cancel on the default branch, where
+  every commit should be tested.
+- Where CI is slow, don't run every job twice. `push` on every branch plus `pull_request`, which
+  `ci-workflows` advises by default, tests each pull request's commits as the head and as the
+  merge (fact `pr-merge-ref`). That doubles the minutes, and on a Free account the two runs
+  share 20 concurrent jobs (fact `concurrent-jobs`). Narrow `push` to the default and release
+  branches, and open a pull request before reading a branch's CI.
 - Put fast checks, such as lint and types, in their own job, so a failure shows in a minute.
 
 ### Is the run on the default branch needed?
@@ -90,6 +92,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 |---|---|---|---|
 | A job builds its dependencies from unpinned source every run | `git clone` or a build script in `run:` steps, with no `actions/cache` | `GAP` | Pin each one in one place, and cache the output keyed on the pins |
 | `cancel-in-progress` cancels default-branch runs | The `concurrency` block | `DRIFT` | Cancel only on `pull_request` (fact `cancel-in-progress`) |
+| Pull request runs aren't canceled when a new push supersedes them | `grep -L cancel-in-progress .github/workflows/*.y*ml`, among the workflows `pull_request` starts | `GAP` where runs queue or take minutes | `concurrency` grouped by pull request, with `cancel-in-progress` on `pull_request` only |
 | The default branch's run repeats the pull request's jobs, though nothing lands but through a strictly checked pull request or a queue | Both runs' jobs, the ruleset and its bypass list | `OVER` | Keep only what differs there, filling the cache among it (facts `strict-checks`, `cache-scope`) |
 
 ## Why
@@ -116,11 +119,19 @@ what lands. Weaken no test to save time: change where and how often it runs.
 **When to choose differently.** A repository that deploys from its default branch on every
 merge needs the full suite before merge, because a red run after merge has already shipped.
 
-**What could be better.** git-workflows advises `push` on every branch plus `pull_request`, so
-that branches without a pull request, which agents' cloud sessions often push, still get CI.
-That runs each pull request's commits twice. It costs about a minute in this skill's own
-repository, but it would double a 15-minute suite. The alternative is `push` on the default
-branch only, plus `pull_request`, and opening a draft pull request for every branch.
+**Where `ci-workflows` and this module meet.** Both guard against a change landing untested,
+so neither narrows what runs on the default branch, release branches or pull requests. `push`
+on every branch is extra cover, for branches read before their pull request, as agents' cloud
+sessions push. It runs each pull request's commits twice: about a minute in this skill's own
+repository, but it would double a 15-minute suite. So it's the default where CI is fast. Where
+CI is slow, `push` on the default and release branches plus `pull_request` is enough, and no
+finding, when each branch gets a pull request, a draft if need be, before anyone reads its CI.
+
+### Canceling superseded runs
+
+**Why.** A run on a commit a new push replaced answers a question nobody asks, and holds
+runners the new run waits for (fact `concurrent-jobs`). On the default branch each commit's run
+is the record of what landed, so it finishes. **Cost:** a canceled run's partial results.
 
 ### Pinned builds, timing tests and timeouts
 
@@ -147,13 +158,14 @@ Versions, dates and practices, each named elsewhere by its ID.
 | `fowler-build` | Fowler: a ten-minute build before merge is reasonable, with slower tests later | [Continuous Integration](https://martinfowler.com/articles/continuousIntegration.html) | "the XP guideline of a ten minute build is perfectly within reason" and "The commit build is the one that has to be done quickly" | 2026-09-30 | 2027-09-30 |
 | `llvm-policy` | LLVM tags a subject's area in brackets for post-commit review, and reverts first when a commit breaks something | [Developer policy](https://llvm.org/docs/DeveloperPolicy.html) | "This helps email filters and searches for post-commit reviews." and "please revert and investigate offline" | 2026-09-30 | 2027-03-31 |
 | `rust-queue` | Rust's bors runs the full suite on each approved pull request's merge commit before pushing it, and batches trivial ones into rollups | [rustc-dev-guide: CI](https://rustc-dev-guide.rust-lang.org/tests/ci.html) | "bors will create a merge commit and run the full test suite on it" and "to reduce CI costs and merge delays" | 2026-09-30 | 2027-03-31 |
+| `cancel-in-progress` | `concurrency` with `cancel-in-progress: true` cancels the run already going in its group | [Using concurrency](https://docs.github.com/en/actions/using-jobs/using-concurrency) | "specify cancel-in-progress: true" | 2026-09-30 | 2027-03-31 |
 | `rust-pr-builds` | Rust's build on each push to a pull request is a short subset of the full suite | [rustc-dev-guide: CI](https://rustc-dev-guide.rust-lang.org/tests/ci.html) | "relatively short (~40 minutes) and lightweight test suite" | 2026-09-30 | 2027-03-31 |
 
 ## Sources
 
 | Source | Used for | License |
 |---|---|---|
-| [GitHub Docs](https://docs.github.com/) (protected branches, caching, limits) | What GitHub tests, and its limits | CC BY 4.0: facts in our own words, with short quotes |
+| [GitHub Docs](https://docs.github.com/) (protected branches, caching, limits, concurrency) | What GitHub tests, and its limits | CC BY 4.0: facts in our own words, with short quotes |
 | [Software Engineering at Google, chapter 23](https://abseil.io/resources/swe-book/html/ch23.html) | Presubmit and post-submit tests, flake classification | CC BY-NC-ND 4.0: quoted, never adapted |
 | [Chromium CQ](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/infra/cq.md) | What runs before a change lands | Not stated on the page: short quotes only |
 | [Prow jobs](https://docs.prow.k8s.io/docs/jobs/) | Kubernetes' presubmit, postsubmit and periodic jobs | Apache-2.0: a fact with a short quote |

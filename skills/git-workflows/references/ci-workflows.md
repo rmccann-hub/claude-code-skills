@@ -4,9 +4,10 @@ Read this for writing or fixing a GitHub Actions workflow's triggers, timeouts, 
 filters and required checks, or proving that a gate, a test job or a workflow works.
 
 It covers the jobs that run checks and how to trust them. How long CI should take, where each
-suite runs, caching and slow tests are `ci-speed`; a workflow's permissions and untrusted input are
-`actions-security`, and pinned actions `action-pinning`; local hooks are `git-hooks`; the release job is
-`releases-and-versions`. How to design the tests themselves belongs to a testing skill.
+suite runs, canceling superseded runs, caching and slow tests are `ci-speed`; permissions,
+untrusted input and linting workflows are `actions-security`, and pinned actions
+`action-pinning`; local hooks are `git-hooks`; the release job is `releases-and-versions`. How
+to design the tests themselves belongs to a testing skill.
 
 ## Rules
 
@@ -17,7 +18,8 @@ suite runs, caching and slow tests are `ci-speed`; a workflow's permissions and 
 3. **Install from the lockfile, in a mode that fails on drift:** `npm ci`, or `uv sync --locked`.
    `uv sync --frozen` doesn't check the lockfile at all (fact `uv-locked`).
    project-bootstrap-and-audit has the command for each ecosystem (dimension 2).
-4. **Run where work happens,** and make every required check report on every pull request.
+4. **Run where work lands and where it's read,** and make every required check report on every
+   pull request.
 5. **A gate you've only watched pass hasn't been tested.** Run it against the state it exists
    to catch.
 
@@ -26,11 +28,12 @@ properties that matter, each with its reason.
 
 ### Triggers
 
-- **Run on `push` and `pull_request` with no branch filter,** so work gets checked on the branch
-  where it happens, not only after it merges. That runs a pull request's commits twice, as the
-  branch and merged with its base (fact `pr-merge-ref`). `ci-speed` weighs that cost.
-- **`concurrency` with `cancel-in-progress` for pull request runs only** (fact
-  `cancel-in-progress`). A run on the default branch should finish.
+- **No change lands on the default or a release branch without a run:** `pull_request` with
+  no branch filter, and `push` on each branch that takes merges or pushes.
+- **`push` with no branch filter by default,** so a branch read before its pull request, as
+  agents' cloud sessions push, is checked too. That runs a pull request's commits twice (fact
+  `pr-merge-ref`). Where CI is slow, narrow `push` to the branches above, and open a pull
+  request before reading a branch's CI. `ci-speed` weighs the cost.
 - **A merge queue runs workflows on `merge_group`,** so a required check's workflow lists it
   in `on:`. Merge queues exist only on organization-owned repositories (fact `merge-queue`).
 - **A scheduled scan in a public repository stops after 60 days without activity** (fact
@@ -47,20 +50,12 @@ properties that matter, each with its reason.
   fails if any of them failed.
 - **Path filters:** use `paths` or `paths-ignore`, never both on one event (fact `paths-both`).
 
-### Lint the workflows
-
-**Lint workflows with actionlint, and scan them with zizmor** (facts `actionlint`, `zizmor`), in
-CI, with both tools pinned by version. actionlint checks syntax, expressions and job wiring, and
-with ShellCheck on the path it checks every `run:` script. Both run offline. Neither can tell
-you the workflow ran, only that it could.
-
 ### Test jobs prove the suite ran to the end
 
-A test run that stops early can still exit 0. A test job checks that its report exists, and
-that the number of tests it counts meets a recorded baseline. The standard's starter CI file
-has only the collection guard, which counts what was collected.
-[assets/workflows/tests.yml](../assets/workflows/tests.yml), tested, adds the completion guard:
-the test report must exist, and count at least as many tests as `.test-baseline`.
+A test run that stops early can still exit 0. So
+[assets/workflows/tests.yml](../assets/workflows/tests.yml), tested, has a completion guard, as
+project-bootstrap-and-audit's starter CI file does: the test report must exist, and count at
+least as many tests as `.test-baseline`.
 
 ### Prove a gate works
 
@@ -126,7 +121,9 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 |---|---|---|---|
 | Every job sets `timeout-minutes` | Read each job | `GAP` | Set it from the job's usual time, with room (fact `timeout`) |
 | The install doesn't fail on lockfile drift | Look for `pip install -r`, `npm install` or `uv sync --frozen` | `GAP`; `BLOCKER` where the docs call it a lockfile gate | `npm ci`, `uv sync --locked` (fact `uv-locked`) |
-| CI doesn't run where work lands | The `on:` blocks, against the branches people push | `BLOCKER` where anything counts on it | `push` and `pull_request` with no branch filter |
+| A change can land with no run on it | The `on:` blocks, against the branches that take merges or pushes, and the ruleset's bypass list | `BLOCKER` where anything counts on CI | `pull_request` with no branch filter, and `push` on those branches |
+| A branch read before its pull request gets no run | `push` narrowed by `branches:`, against branches pushed and read with no pull request | `GAP` | `push` with no branch filter, or a draft pull request per branch |
+| A test job doesn't prove the suite ran to the end | The steps after the test run: a report it reads, and a count held to a recorded baseline | `GAP`; `BLOCKER` where the runner exits 0 having run no tests | The completion guard in `assets/workflows/tests.yml` |
 | A required check comes from a path-filtered workflow | The ruleset's required checks, against each workflow's `on:` | `GAP`: pull requests that skip it can't merge | Remove the filter, or stop requiring the check (fact `skipped-pending`) |
 | A required check comes from a job with an `if:` | The required checks, against each job's `if:` | `BLOCKER` where the condition can skip it on a pull request that changes code: it reports success having run nothing (fact `job-if-success`) | Remove the condition, or require a final job that `needs:` the others and fails if any failed |
 | `paths` and `paths-ignore` on one event | Read the `on:` blocks | `DRIFT`: the workflow is invalid | Keep one (fact `paths-both`) |
@@ -143,15 +140,31 @@ green.
 **Why.** A skipped check reports nothing, and a quarantined test goes on failing where nobody
 looks. An assistant under pressure to finish will take either route unless it's ruled out.
 
-**What others do.** Large projects do take flaky tests out of the blocking path, with machinery
-behind it. Google classifies flakes by statistics across the company, so an engineer can tell
-whether their change broke a test or the test is unstable (fact `google-presubmit`). Chromium's
-commit queue runs some jobs as experiments, which report without blocking (fact `chromium-cq`).
-In both, someone owns the test, and its failures stay visible.
+**What others do.** Large projects take flaky tests out of the blocking path, with machinery
+behind it. Google classifies flakes company-wide, so an engineer can tell a test their change
+broke from an unstable one (fact `google-presubmit`). Chromium's commit queue runs some jobs as
+experiments, which report without blocking (fact `chromium-cq`). In both, someone owns the
+test, and its failures stay visible.
 
 **When to choose differently.** Quarantine is reasonable when a named person owns the test,
 there is an open issue, and its results stay visible. The rule forbids the version with none of
 these.
+
+### Where CI runs
+
+**The advice.** No change lands without a run, and `push` on every branch unless CI is slow.
+
+**Why.** The risk is a change reaching the default branch, or a release, untested. A
+`pull_request` run tests the merge (fact `pr-merge-ref`); a `push` run covers what lands
+without one, such as a bypass. A branch read before its pull request needs `push` too.
+
+**What it costs.** Each pull request's commits run twice. A narrowed `push` loses nothing where
+every branch gets a pull request before anyone reads its CI.
+
+### The completion guard
+
+**Why.** A test that calls `os._exit(0)` ends the run at exit 0. A report that must exist, and
+a count held to a baseline, fail it. **Cost:** raising `.test-baseline` with each new test.
 
 ### Timeouts, lockfiles and path filters
 
@@ -159,9 +172,8 @@ these.
   that other jobs wait for.
 - **Lockfile drift.** An install that quietly resolves new versions tests code nobody reviewed
   (fact `uv-locked`).
-- **Path filters.** A required check that a filter skips stays pending, so the pull request
-  can't merge (fact `skipped-pending`). The opposite trap: a job skipped by its own `if:`
-  reports success, even when it is required (fact `job-if-success`).
+- **Path filters.** A required check a filter skips stays pending (fact `skipped-pending`);
+  one its `if:` skips passes having run nothing (fact `job-if-success`).
 
 ## Facts
 
@@ -177,17 +189,13 @@ Versions, dates and defaults, each named elsewhere by its ID.
 | `schedule-60` | In a public repository, scheduled workflows turn off after 60 days with no activity | [Disabling and enabling a workflow](https://docs.github.com/en/actions/using-workflows/disabling-and-enabling-a-workflow) | "scheduled workflows are automatically disabled when no repository activity has occurred in 60 days" | 2026-09-30 | 2027-03-31 |
 | `uv-locked` | `uv sync --locked` fails when the lockfile needs updating; `--frozen` doesn't check it | [uv CLI reference](https://docs.astral.sh/uv/reference/cli/) | "If the lockfile is missing or needs to be updated, uv will exit with an error." | 2026-09-30 | 2027-03-31 |
 | `pr-merge-ref` | A `pull_request` run tests the merge commit, `refs/pull/<number>/merge`, not the head | [Events that trigger workflows](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows) | "Last merge commit on the GITHUB_REF branch" | 2026-09-30 | 2027-03-31 |
-| `cancel-in-progress` | `concurrency` with `cancel-in-progress: true` cancels the run already going in its group | [Using concurrency](https://docs.github.com/en/actions/using-jobs/using-concurrency) | "specify cancel-in-progress: true" | 2026-09-30 | 2027-03-31 |
 | `merge-queue` | Merge queues need an organization-owned repository, public or on Enterprise Cloud, and the `merge_group` trigger | [Managing a merge queue](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue) | "available in any public repository owned by an organization" | 2026-09-30 | 2027-03-31 |
-| `actionlint` | actionlint's newest tag is v1.7.12 | `git ls-remote --tags https://github.com/rhysd/actionlint` | `refs/tags/v1.7.12` | 2026-09-30 | 2026-12-31 |
-| `zizmor` | zizmor 1.30.1, released 2026-09-09, MIT: static security analysis for workflows | [PyPI](https://pypi.org/project/zizmor/) | version 1.30.1, uploaded 2026-09-09 | 2026-09-30 | 2026-12-31 |
 
 ## Sources
 
 | Source | Used for | License |
 |---|---|---|
-| [GitHub Docs](https://docs.github.com/) (workflow syntax, events, conditions, concurrency, disabling workflows, merge queues, workflow jobs API) | GitHub Actions' behavior | CC BY 4.0: facts in our own words, with short quotes |
+| [GitHub Docs](https://docs.github.com/) (workflow syntax, events, conditions, disabling workflows, merge queues, workflow jobs API) | GitHub Actions' behavior | CC BY 4.0: facts in our own words, with short quotes |
 | [uv CLI reference](https://docs.astral.sh/uv/reference/cli/) | `--locked` against `--frozen` | MIT or Apache-2.0: a fact with a short quote |
-| PyPI's page for [zizmor](https://pypi.org/project/zizmor/); tags of [actionlint](https://github.com/rhysd/actionlint) | Tool versions | MIT: versions only |
 | [Software Engineering at Google, chapter 23](https://abseil.io/resources/swe-book/html/ch23.html); [Chromium CQ](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/infra/cq.md) | Flaky tests at scale | CC BY-NC-ND 4.0, and not stated: short quotes only |
 | Two live repositories of this skill's owner, unnamed here | A push after a failed suite | Observed practice, in our own words |

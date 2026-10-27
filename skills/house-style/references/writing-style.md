@@ -4,8 +4,7 @@ Read this for writing or reviewing prose or Markdown: headings, lists, wrapping,
 links, file names, a README's sections, word choice and spelling, and why each rule is what it is.
 
 It details the thirteen rules in this skill's `SKILL.md`, numbered as there. Running the check
-is `prose-check`. Commit subjects, the changelog and the decision record follow rule 11, detailed
-in git-workflows.
+is `prose-check`; commits and the changelog, git-workflows.
 
 ## Rules
 
@@ -16,12 +15,15 @@ in git-workflows.
 - **One `#` heading per file,** as its title, then `##` and `###` in order, none skipped and
   none deeper than `####`. A file that needs a fifth level wants splitting.
 - **A heading names what follows,** with no trailing full stop, and is never used for emphasis.
+- **A colon, not a dash, joins a label to its title,** and the word after it is capitalized:
+  "Decision 30: Choose a database". Words after a dash continue the heading, in lowercase.
 - **A name lowercase by nature,** such as a repository or a command, goes in code formatting or
   the repository's vocabulary, so the check accepts it.
 
 ### Paragraphs and line length
 
-- **Wrap prose at 100 characters.** A table row, a URL or a code line can run longer.
+- **Wrap prose at 100 characters.** A table row, a URL or a code line can run longer, and so
+  can a line a program parses, such as a skill's frontmatter.
 - **One idea per paragraph,** led by its point (rule 1).
 - **A rule or a list item may open with its point in bold,** then the detail, as here.
 - **Blank lines surround each heading, list, table and code block.** No line ends in spaces,
@@ -78,6 +80,9 @@ Configuration after Usage.
 | Security | How to report a vulnerability, or a link to `SECURITY.md` |
 | License | Its license, by name, linked to the file |
 
+A section a program generates from another file is fixed in that file, and generated again. A
+comment says where the output starts and ends, and what writes it.
+
 ### Words to cut, and what to use instead
 
 Rule 3 names six words, and HouseStyle's `Filler` rule finds each.
@@ -110,22 +115,13 @@ Rule 2: a common word where one exists, and one term for each thing.
 
 ### American spelling
 
-HouseStyle's `Spelling` rule finds common British forms and gives the American (rule 12), most
-by a pattern:
+HouseStyle's `Spelling` rule finds common British forms, such as -ise, -our and -re, and gives
+the American (rule 12); `prose-check` lists the patterns. Names, such as the Open Government
+Licence, and quotes keep their own spelling.
 
-| British | American | For example |
-|---|---|---|
-| -ise, -isation | -ize, -ization | organize, organization, recognize |
-| -our | -or | behavior, color, favor |
-| -re | -er | center |
-| -ogue | -og | catalog |
-| -ence (some nouns) | -ense | license, defense, offense |
-| a doubled `l` before -ed, -ing | a single `l` | labeled, canceled, modeling |
-| -ement after -dg | -ment | judgment, acknowledgment |
-
-The rule lists the words it changes, so it leaves alone -ise words that are the same in both,
-such as advise, exercise, promise, otherwise and expertise. Names, such as the Open
-Government Licence, and quotes keep their own spelling.
+A label or value the code defines, such as a button's text, is written as the code spells it,
+in code formatting, which the check skips. In the project's own code, fix the spelling there
+first, and the documentation follows.
 
 ### Records and dates
 
@@ -134,23 +130,27 @@ Government Licence, and quotes keep their own spelling.
   local time, if wanted, is derived from the stamp and shown with it, each with its zone, in the
   order the reader chose: `8:55 PM EDT, Fri Oct 16 (2026-10-17 00:55 UTC)`. A time with no zone
   guesses at the reader's clock, and a local time without its stamp goes wrong twice a year.
-- **A time copied from a source keeps its zone,** and is converted to UTC from it. One audit copied a
-  log's `5. October 2026, 22:48 (UTC-04:00)` as `2026-10-05 22:48`, so its date disagreed with
-  the file it cited, named for the next day, the date in UTC.
-- **An append-only record's past entries stay as written.** New entries follow the style.
+- **A time copied from a source keeps its zone,** and is converted to UTC from it. An audit
+  copied a log's `5. October 2026, 22:48 (UTC-04:00)` as `2026-10-05 22:48`, so its date
+  disagreed with the file it cited, named for the next day, the date in UTC.
+- **An append-only record's past entries stay as written, in their order.** New entries follow
+  the style. A new record runs newest first; an oldest-first one keeps its order, and says so
+  at its top.
 
 ## Mistakes
 
 - **Title Case headings,** copied from a template or another guide (rule 8).
+- **A capital after a dash in a heading:** use a colon (rule 8).
 - **"Just", "simply" and the rest of the six,** in any sense: the check flags `just` meaning
   "only" too (rule 3).
 - **A hedge where the fact can be checked,** such as "should work" (rule 4).
 - **Three names for one thing,** such as "the record", "the log" and "the history" (rule 2).
 - **Session detail,** such as "as we discussed" or "the earlier run", which a reader who wasn't
   there can't follow (rule 7).
-- **Restyling what the style leaves alone:** upstream-shared files, third-party files, quotes,
-  and an append-only record's past entries.
-- **Converting a quote to American spelling** (rule 12).
+- **Restyling what the style leaves alone:** shared files, third-party files, quotes, generated
+  output, and an append-only record's past entries or their order.
+- **Converting a quote to American spelling,** or an app's label in the documentation only
+  (rule 12).
 - **Link text that says "here"** or "this link".
 
 ## Audit
@@ -164,7 +164,7 @@ Severity uses the standard's status words: `BLOCKER`, `DRIFT`, `GAP`, `OVER`, `M
 | The answer comes first | The first paragraph of each README, report and pull request description | `GAP` where it opens with background | Move the result to the top |
 | Facts carry sources and dates | Versions, dates and support windows in the prose | `GAP` per stale-prone fact lacking either | Check it and add both, or say it wasn't checked |
 | The README's sections | Each README's headings, against rule 10's order | `GAP` per missing section | Add it; short is fine |
-| Lines wrap at 100 | `awk 'length > 100' FILE`, leaving out tables, URLs and code | `DRIFT` | Rewrap the paragraph |
+| Lines wrap at 100 | `prose-check`'s wrap check, which skips frontmatter, code and tables, and doesn't count URLs | `DRIFT` | Rewrap the paragraph |
 | File names | `git ls-files` for capitals or underscores outside the usual root files | `DRIFT` | Rename, and fix the links |
 
 ## Why
@@ -188,14 +188,14 @@ English mandatory (fact `govuk-avoid`). **Cost:** plainer prose, which is the in
 ### 3. No filler, hype or unearned hedging
 
 **Why:** each of the six adds nothing or claims what the text should show. Google calls `just`
-usually filler, and asks writers to try cutting `simply` (fact `google-just`), since what's
-simple for one reader isn't for another. Google avoids `leverage` meaning "use" (fact
-`google-leverage`). GOV.UK avoids it outside finance, and `robust` unless of a sturdy object,
-as vague (fact `govuk-avoid`). `very` and `seamless` are this style's own: an intensifier or a
-claim stands in for the fact. **Others:** Google and GOV.UK list many more words. This style
-keeps the six seen in practice, so the check stays quiet on fine text. **Cost:** finding the
-precise word or the number, and rewording `just` meaning "only". A word mentioned as a word, as
-here, goes in code formatting, which the check skips.
+usually filler, and asks writers to try cutting `simply` (fact `google-just`): what's simple
+for one reader isn't for another. Google avoids `leverage` meaning "use" (fact
+`google-leverage`); GOV.UK avoids it outside finance, and `robust` unless of a sturdy object
+(fact `govuk-avoid`). `very` and `seamless` are this style's own: each stands in for the fact.
+**Others:** Google and GOV.UK list many more. This style keeps the six seen in practice, so the
+check stays quiet on fine text. **Cost:** finding the precise word, and rewording `just`
+meaning "only". A word mentioned as a word, as here, goes in code formatting, which the check
+skips.
 
 ### 4. Checked facts
 
@@ -224,8 +224,11 @@ agent, has only the text.
 
 **Why:** sentence case is Google's and Microsoft's choice (facts `google-sentence-case`,
 `ms-sentence-case`). It's quicker to read, with no doubt over which small words to capitalize.
-Wrapped lines make a diff show the sentence that changed, and spare a reviewer scrolling
-sideways. Fenced code with a language gets highlighted, and stands apart from prose.
+Both capitalize after a colon in a heading. Google puts a colon, not a dash, after a label, and
+Microsoft's em dash sets off a remark (fact `heading-colon`). Those pages don't say what follows
+a dash in a heading, so lowercase there is this style's own choice, and the check flags a
+capital. Wrapped lines make a diff show the sentence that changed, and spare a reviewer
+scrolling sideways. Fenced code with a language gets highlighted.
 **Others:** some guides use title case. The check takes one side, so a repository mixing the two
 is flagged. **Cost:** rewrapping a paragraph changes every line after the edit. Wrapping at
 sentence ends would avoid that, at the price of ragged files, so this style wraps by length.
@@ -239,20 +242,23 @@ URL.
 ### 10. One README layout
 
 **Why:** a reader who knows one repository can find the install steps in all of them. **Cost:**
-a small repository has some short sections. Short is fine; missing makes a reader hunt.
+a small repository has some short sections. Short is fine; missing makes a reader hunt. A fix
+made in generated output is undone by the next run, so it goes to the source.
 
 ### 11. Commits, changelogs and decisions
 
-git-workflows has the reasons and the alternatives.
+git-workflows has the reasons and the alternatives, and accepts either grammar, so a recorded
+one holds. A record read newest first opens on the current state. Reordering an old record
+moves every past entry, so it keeps its order, and the line at its top says which end is new.
 
 ### 12. American spelling
 
 **Why:** the owner chose it. The tools and platforms these repositories use write American
 English, and so does their code: a skill's frontmatter has a `license` field, and GitHub has
 organizations. Mixed spelling reads as two authors, and a search for one form misses the other.
-**Cost:** converting British text, once. Quotes keep their own spelling. **Choose differently:**
-a project whose readers write British English, such as a UK public body's, would choose
-British.
+**Cost:** converting British text, once. A label respelled in the documentation alone
+disagrees with the screen, and a search of the code for it finds nothing. **Choose
+differently:** a project whose readers write British English, such as a UK public body's.
 
 ### 13. Formatters for code
 
@@ -277,6 +283,6 @@ Rules here are in this skill's own words, and each brief, attributed quote is a 
 
 | Source | Used for | License |
 |---|---|---|
-| [Google developer documentation style guide](https://developers.google.com/style) | Sentence case; "just", "simply", "leverage" | CC BY 4.0 (fact `google-license`): short quotes, attributed |
-| [Microsoft Writing Style Guide](https://learn.microsoft.com/en-us/style-guide/welcome/) | Sentence-style capitalization | Microsoft's terms of use: one short quote, for a fact |
+| [Google developer documentation style guide](https://developers.google.com/style) | Sentence case and colons in headings; "just", "simply", "leverage" | CC BY 4.0 (fact `google-license`): short quotes, attributed |
+| [Microsoft Writing Style Guide](https://learn.microsoft.com/en-us/style-guide/welcome/) | Sentence-style capitalization, colons and em dashes | Microsoft's terms of use: short quotes, for facts |
 | [GOV.UK style guide](https://www.gov.uk/guidance/style-guide/a-to-z) | Plain English; "leverage", "robust" | Open Government Licence v3.0: short quotes, attributed |
