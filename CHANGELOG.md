@@ -6,6 +6,35 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- `coding`, `git-workflows` and `house-style` take in what two audits of real repositories found
+  wrong or missing in them, each claim checked first:
+  - `coding`:
+    - names git's `-z` for file names;
+    - covers `subprocess` text mode in the encoding rule;
+    - treats `["sh", "-c", …]` as a shell;
+    - grades unguarded deletes by risk;
+    - runs ShellCheck through `shellcheck-py` where it can't be installed;
+    - allows a whole-directory ignore for a rule that flags every call of a kind, once each call
+      is checked.
+  - `git-workflows`:
+    - its commit-subject workflow and hook take a grammar, `area` or `conventional`;
+    - `ci-workflows` and `ci-speed` agree on when CI runs;
+    - four rules gain audit rows;
+    - a Dependabot cooldown is read against GitHub's default;
+    - a release named by commit in a pinned manifest needs no tag.
+  - `house-style`:
+    - commit subjects follow the grammar a repository records;
+    - an existing oldest-first record keeps its order;
+    - the shipped Vale style skips quoted text within a paragraph;
+    - the wrap check skips tables, code and URLs.
+
+### Fixed
+
+- This repository's own Vale setting for skill modules let a quote run on past a blank line and
+  hid a heading that broke the style; it's gone, and "SQL" is allowed in headings.
+
 ## [0.1.23] - 2026-10-26
 
 ### Changed

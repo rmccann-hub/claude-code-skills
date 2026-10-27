@@ -3,7 +3,7 @@ name: house-style
 description: "Writes and checks prose and Markdown in one house style: the answer first, plain words, facts with sources, American spelling. Ships a Vale style. Use for a README, docs, records, changelogs, pull requests and reports."
 license: Apache-2.0
 metadata:
-  reviewed: "2026-10-16"
+  reviewed: "2026-10-27"
 ---
 
 # House style

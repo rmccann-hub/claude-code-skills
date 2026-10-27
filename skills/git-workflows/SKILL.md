@@ -3,7 +3,7 @@ name: git-workflows
 description: "Sets up and runs Git and GitHub work: commits, branches, pull requests, merges, conflicts, GitHub Actions CI, hooks, leaked secrets, tags, changelogs, versions and releases. Use when writing, fixing or speeding up any of these."
 license: Apache-2.0
 metadata:
-  reviewed: "2026-10-16"
+  reviewed: "2026-10-27"
 ---
 
 # Git workflows

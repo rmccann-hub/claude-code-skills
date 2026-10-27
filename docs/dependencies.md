@@ -17,9 +17,9 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.23 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.2 |
-| `engineering` | 0.1.23 | Apache-2.0 | `coding` | reviewed 2026-10-26 |
-| `engineering` | 0.1.23 | Apache-2.0 | `git-workflows` | reviewed 2026-10-16 |
-| `engineering` | 0.1.23 | Apache-2.0 | `house-style` | reviewed 2026-10-16 |
+| `engineering` | 0.1.23 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
+| `engineering` | 0.1.23 | Apache-2.0 | `git-workflows` | reviewed 2026-10-27 |
+| `engineering` | 0.1.23 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
 
 ## Languages
 
@@ -121,29 +121,30 @@ again.
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
 | `coding` | learn.microsoft.com | 59 |
-| `coding` | docs.python.org | 18 |
+| `coding` | docs.python.org | 19 |
 | `coding` | nodejs.org | 16 |
+| `coding` | tiswww.case.edu | 16 |
 | `coding` | www.w3.org | 16 |
-| `coding` | tiswww.case.edu | 15 |
 | `coding` | developer.mozilla.org | 13 |
 | `coding` | raw.githubusercontent.com | 9 |
 | `coding` | cheatsheetseries.owasp.org | 7 |
+| `coding` | docs.astral.sh | 7 |
 | `coding` | devblogs.microsoft.com | 5 |
 | `coding` | html.spec.whatwg.org | 5 |
-| `coding` | docs.astral.sh | 4 |
 | `coding` | dotnet.microsoft.com | 4 |
 | `coding` | packaging.python.org | 4 |
 | `coding` | pubs.opengroup.org | 4 |
 | `coding` | man7.org | 3 |
+| `coding` | pypi.org | 3 |
 | `coding` | typescript-eslint.io | 3 |
 | `coding` | web.dev | 3 |
 | `coding` | curl.se | 2 |
 | `coding` | devguide.python.org | 2 |
 | `coding` | eslint.org | 2 |
-| `coding` | pypi.org | 2 |
 | `coding` | www.shellcheck.net | 2 |
 | `coding` | biomejs.dev | 1 |
 | `coding` | cwe.mitre.org | 1 |
+| `coding` | git-scm.com | 1 |
 | `coding` | google.github.io | 1 |
 | `coding` | jinja.palletsprojects.com | 1 |
 | `coding` | man.freebsd.org | 1 |
@@ -155,12 +156,13 @@ again.
 | `coding` | support.apple.com | 1 |
 | `coding` | www.powershellgallery.com | 1 |
 | `coding` | www.typescriptlang.org | 1 |
-| `git-workflows` | docs.github.com | 41 |
+| `git-workflows` | docs.github.com | 43 |
 | `git-workflows` | git-scm.com | 18 |
 | `git-workflows` | raw.githubusercontent.com | 9 |
-| `git-workflows` | github.blog | 5 |
+| `git-workflows` | github.blog | 6 |
 | `git-workflows` | docs.kernel.org | 3 |
 | `git-workflows` | pypi.org | 3 |
+| `git-workflows` | docs.zizmor.sh | 2 |
 | `git-workflows` | github.com | 2 |
 | `git-workflows` | keepachangelog.com | 2 |
 | `git-workflows` | rustc-dev-guide.rust-lang.org | 2 |
@@ -182,9 +184,10 @@ again.
 | `git-workflows` | semver.org | 1 |
 | `git-workflows` | towncrier.readthedocs.io | 1 |
 | `git-workflows` | www.conventionalcommits.org | 1 |
-| `house-style` | developers.google.com | 4 |
+| `house-style` | developers.google.com | 5 |
 | `house-style` | vale.sh | 4 |
+| `house-style` | docs.vale.sh | 2 |
+| `house-style` | learn.microsoft.com | 2 |
 | `house-style` | raw.githubusercontent.com | 2 |
 | `house-style` | github.com | 1 |
-| `house-style` | learn.microsoft.com | 1 |
 | `house-style` | www.gov.uk | 1 |

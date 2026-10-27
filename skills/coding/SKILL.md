@@ -3,7 +3,7 @@ name: coding
 description: "Writes, reviews and fixes code: the contract every change meets, then Python, TypeScript and JavaScript, HTML and CSS, C# and .NET, PowerShell, and Bash. Use when writing, reviewing, debugging or modernizing code in these languages."
 license: Apache-2.0
 metadata:
-  reviewed: "2026-10-26"
+  reviewed: "2026-10-27"
 ---
 
 # Coding
