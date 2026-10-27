@@ -18,7 +18,8 @@ programs and escaping output. Test design is the planned testing skill's. The st
 3. **Give every allocation one owner; copy and free a library's objects with its functions.**
 4. **Check the room left at every write into a buffer,** not once before the first.
 5. **Check every call that can fail, `fclose` included, and report the first failure.**
-6. **A test exits 0 to pass and 77 to skip;** one that can't run its probe skips.
+6. **A test exits 0 to pass and 77 to skip;** one that can't run its probe fails, unless
+   another environment runs it.
 7. **Move old code one standard at a time,** and let the compiler's errors list the work.
 
 ### Standards and compilers
@@ -108,7 +109,8 @@ int format_pair(struct buf *b, const char *key, const char *value)
     if (buf_append(b, key, strlen(key)) != 0 || buf_append(b, "=", 1) != 0 ||
         buf_append(b, value, strlen(value)) != 0 || buf_append(b, "\n", 1) != 0) {
         b->len = start;
-        b->data[start] = '\0';
+        if (start < b->cap)
+            b->data[start] = '\0';
         return -1;
     }
     return 0;
@@ -146,16 +148,16 @@ int write_file(const char *path, const void *data, size_t size)
 }
 ```
 
-`"wb"` empties an existing file first, losing it on failure. To replace one, write a temporary
-file in its directory (c-security's `mkstemp`), `fflush`, `fsync` and `fclose` it, then `rename`
-it over the old: readers see old or new, never half. `fsync` the directory too (fact
-`c-replace`).
+`"wb"` empties an existing file first, losing it on failure. To replace it, write a temporary
+file in its directory (c-security's `mkstemp`); `fflush`, `fsync`, `fchmod` to the old mode and
+`fclose` it; then `rename` it over the old, so readers never see half of it, and `fsync`
+the directory (fact `c-replace`).
 
 ### Tests
 
 `meson test` passes 0, skips 77 and calls 99 an error (fact `c-meson-exit-codes`). A test that
-can't run its probe prints why and returns 77, never 0. Test write errors with Linux's
-`/dev/full`, which fails with `ENOSPC`.
+can't run its probe prints why and fails, or returns 77 where another job runs it. Test write
+errors with Linux's `/dev/full`, which gives `ENOSPC`.
 
 ### Moving old code forward
 
@@ -175,8 +177,7 @@ Build with the target standard named, and fix in this order:
 - **Relying on the default standard:** AI assistants write `nullptr`, or `bool` with no
   header; GCC 15's default builds it, and Clang 18's rejects it.
 - **`p = realloc(p, n)`:** on failure the old block stays allocated (fact `c-realloc`) and the
-  pointer to it is lost. Assign to a temporary; replace `p` on success.
-- **Rewriting a file in place with `fopen(path, "w")`,** which a full disk leaves cut short.
+  pointer to it is lost. Assign to a temporary; on success, to `p`.
 
 ## Audit
 
@@ -190,7 +191,7 @@ Severity uses the standard's status words.
 | Unchecked writes | `fwrite`, `fflush`, `fclose` or the product's `stdout` unchecked; a later status replacing the first | `BLOCKER` where the output is the product, else `GAP` | Check each; keep the first error |
 | In-place rewrites | `"w"` on a file that must survive failure | `GAP` | Temporary file, `rename` |
 | Undefined behavior | `x + 1 < x`; a null test after a dereference; casts between pointer types | `BLOCKER` where outside data reaches it, else `GAP` | Test before the operation; `memcpy` |
-| Unprobed tests | Exit 0 when the test couldn't run | `BLOCKER` | Exit 77 |
+| Unprobed tests | Exit 0 when the test couldn't run | `BLOCKER` | Fail, or 77 if another job runs it |
 | Old C | K&R definitions; `()` called with arguments; `bool` typedefs | `DRIFT` | Prototypes; `<stdbool.h>` |
 
 ## Why
@@ -213,7 +214,7 @@ an arena, which frees everything at once.
 
 **5. Every call, and the first failure.** Buffering moves a full disk's error to `fclose`, so a
 program checking only `fwrite` reports success for data it lost. The first failure is the
-cause; later ones are echoes. Cost: lines, and an error path to test. Otherwise: a write whose
+cause. Cost: an error path to test. Otherwise: a write whose
 loss doesn't matter, said in a comment.
 
 **6. Test exit codes.** A test that exits 0 unprobed is a pass that measured nothing. Meson

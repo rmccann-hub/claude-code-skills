@@ -116,15 +116,16 @@ build flags (facts `cb-debian`, `cb-fedora`), which a developer's `gcc` never se
 - **`-fanalyzer`** is for C, and slow (fact `cb-analyzer`): a job of its own.
 - **clang-tidy** is Meson's `clang-tidy` target with a `.clang-tidy`, failing only on checks
   named in `WarningsAsErrors` (fact `cb-clang-tidy`).
-- **scan-build** is `SCANBUILD='scan-build --status-bugs' ninja -C build scan-build`; the
-  target takes no arguments (fact `cb-scan-build`).
+- **scan-build** is `SCANBUILD='scan-build --status-bugs' ninja -C build scan-build`, or a
+  versioned `scan-build-NN`; the target takes none
+  (fact `cb-scan-build`).
 - **cppcheck** needs `--error-exitcode=1`, with `--project=build/compile_commands.json` (fact
   `cb-cppcheck`).
 
 ### Fuzzing
 
 A target hands any bytes to the parser and never calls `exit()` (fact `cb-libfuzzer`). Build it
-with Clang and `-Dfuzzing=true`; `./fuzz-parse corpus/*` replays a corpus.
+with Clang and `-Dfuzzing=true`; `build/fuzz/fuzz-parse corpus/*` replays a corpus.
 
 ```c
 #include <stddef.h>
@@ -172,7 +173,7 @@ Severity uses the standard's status words.
 
 **The count gate.** OpenSSF keeps blanket `-Werror` to development: in shipped source it ties
 the build to one compiler (fact `cb-openssf`). Counting under the release's flags is this
-repository's own advice, from a lesson, unpublished elsewhere: a CI-only `-Werror` job at
+repository's own lesson: a CI-only `-Werror` job at
 `-O0` misses warnings GCC gives only when optimizing (fact `cb-gcc-opt-warnings`), and a limit
 lets old code ratchet down. Cost: the pattern fits GCC and Clang, not MSVC.
 Otherwise: OpenSSF's `-Dwerror=true` in CI, on a pinned compiler.
