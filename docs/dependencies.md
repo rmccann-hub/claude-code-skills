@@ -25,9 +25,9 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 91 |
+| Markdown | 95 |
 | Python | 51 |
-| JSON | 35 |
+| JSON | 38 |
 | YAML | 22 |
 | Shell | 3 |
 | TOML | 2 |
@@ -120,40 +120,56 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
-| `coding` | learn.microsoft.com | 59 |
+| `coding` | learn.microsoft.com | 60 |
 | `coding` | docs.python.org | 19 |
 | `coding` | nodejs.org | 16 |
 | `coding` | tiswww.case.edu | 16 |
 | `coding` | www.w3.org | 16 |
 | `coding` | developer.mozilla.org | 13 |
-| `coding` | raw.githubusercontent.com | 9 |
+| `coding` | man7.org | 11 |
+| `coding` | mesonbuild.com | 11 |
+| `coding` | raw.githubusercontent.com | 11 |
+| `coding` | gcc.gnu.org | 9 |
+| `coding` | pubs.opengroup.org | 8 |
 | `coding` | cheatsheetseries.owasp.org | 7 |
 | `coding` | docs.astral.sh | 7 |
 | `coding` | devblogs.microsoft.com | 5 |
 | `coding` | html.spec.whatwg.org | 5 |
+| `coding` | clang.llvm.org | 4 |
 | `coding` | dotnet.microsoft.com | 4 |
 | `coding` | packaging.python.org | 4 |
-| `coding` | pubs.opengroup.org | 4 |
-| `coding` | man7.org | 3 |
+| `coding` | curl.se | 3 |
+| `coding` | cwe.mitre.org | 3 |
 | `coding` | pypi.org | 3 |
 | `coding` | typescript-eslint.io | 3 |
 | `coding` | web.dev | 3 |
-| `coding` | curl.se | 2 |
+| `coding` | best.openssf.org | 2 |
 | `coding` | devguide.python.org | 2 |
 | `coding` | eslint.org | 2 |
 | `coding` | www.shellcheck.net | 2 |
 | `coding` | biomejs.dev | 1 |
-| `coding` | cwe.mitre.org | 1 |
+| `coding` | documentation.ubuntu.com | 1 |
 | `coding` | git-scm.com | 1 |
+| `coding` | git.kernel.org | 1 |
+| `coding` | gmplib.org | 1 |
 | `coding` | google.github.io | 1 |
 | `coding` | jinja.palletsprojects.com | 1 |
+| `coding` | llvm.org | 1 |
 | `coding` | man.freebsd.org | 1 |
+| `coding` | manpages.debian.org | 1 |
 | `coding` | mypy.readthedocs.io | 1 |
 | `coding` | oxc.rs | 1 |
 | `coding` | packages.debian.org | 1 |
 | `coding` | pester.dev | 1 |
 | `coding` | pyyaml.org | 1 |
+| `coding` | savannah.gnu.org | 1 |
+| `coding` | sourceware.org | 1 |
+| `coding` | src.fedoraproject.org | 1 |
 | `coding` | support.apple.com | 1 |
+| `coding` | valgrind.org | 1 |
+| `coding` | www.cisa.gov | 1 |
+| `coding` | www.gnu.org | 1 |
+| `coding` | www.open-std.org | 1 |
 | `coding` | www.powershellgallery.com | 1 |
 | `coding` | www.typescriptlang.org | 1 |
 | `git-workflows` | docs.github.com | 43 |

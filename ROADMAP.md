@@ -145,11 +145,12 @@ Grouped by subject; the Skill column is each module's one home.
 | `powershell-security` | `coding` | PowerShell credentials, `Invoke-Expression`, batch-file arguments, execution policy, signing | shipped | core | R11 |
 | `bash-coding` | `coding` | Bash and POSIX sh | shipped | core | R15 |
 | `bash-security` | `coding` | Bash and POSIX sh: guarded deletes, `eval`, arithmetic on input, secrets, input checks | shipped | core | R15 |
+| `c-coding` | `coding` | C: standards and compilers, undefined behavior, ownership, bounds, checked I/O, porting | shipped | core | R12 |
+| `c-build` | `coding` | C built with Meson: options, the warning gate, hardening, sanitizers, analyzers, fuzzing | shipped | core | R12 |
+| `c-security` | `coding` | C handling outside data: strings and buffers, format strings, overflow, paths, processes, output | shipped | core | R12 |
 | `vba-coding` | `coding` | VBA in Office applications | planned | core | R16 |
 | `go-coding` | `coding` | Go | planned | standard | R25 |
 | `rust-coding` | `coding` | Rust | planned | standard | R25 |
-| `c-coding` | `coding` | C, and its build with Meson | planned | core | R12 |
-| `c-security` | `coding` | C handling outside data: buffers and strings, format strings, integer overflow, paths, running programs, temporary files | planned | core | R12 |
 | `cpp-coding` | `coding` | C++ | planned | standard | R25 |
 | `java-coding` | `coding` | Java | planned | standard | R13 |
 | `kotlin-coding` | `coding` | Kotlin | planned | standard | R13 |

@@ -6,6 +6,21 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- C in the `coding` skill, in three modules, from research run R12 with each claim checked at
+  its source:
+  - `c-coding`: the standard to target and how compilers' defaults differ, undefined behavior,
+    ownership and copying a library's structs, bounds at every write, checked writes, test exit
+    codes, and porting to C17 or C23;
+  - `c-build`: building and checking with Meson: its options and version floor, the CI warning
+    gate, hardening flags, sanitizers and Valgrind that really fail a test, analyzers, fuzzing;
+  - `c-security`: C handling outside data: strings and buffers, format strings, overflow in sizes
+    and counts, file names from outside data, running programs, temporary files, escaping
+    output, and secrets in `argv`.
+- `skillcheck --examples` compiles a `c` block with Clang, warnings as errors, never linking or
+  running it, at C17 unless the fence names another standard (`c std=c23`).
+
 ### Changed
 
 - `coding`, `git-workflows` and `house-style` take in what two audits of real repositories found

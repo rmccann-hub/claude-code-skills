@@ -1,14 +1,55 @@
 [
   {
-    "query": "TODO(new-skill) a request this module should answer",
+    "query": "Set up the meson.build for a new C command-line tool: C standard, warnings, and hardening flags.",
     "should_trigger": true
   },
   {
-    "query": "TODO(new-skill) another one, worded differently",
+    "query": "Our C project sets werror=true in default_options and users on newer GCC can't build it. What should CI do instead?",
     "should_trigger": true
   },
   {
-    "query": "TODO(new-skill) a near miss another module takes",
-    "should_trigger": false
+    "query": "Add an AddressSanitizer and UBSan job for our Meson C project, and make sure it actually fails on errors.",
+    "should_trigger": true
+  },
+  {
+    "query": "meson test --wrapper=valgrind passes even though Valgrind prints leaks. Why?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a libFuzzer harness for the packet parser in our C library and build it with Meson.",
+    "should_trigger": true
+  },
+  {
+    "query": "Which static analyzer should we run on our C code in CI: -fanalyzer, clang-tidy, scan-build or cppcheck?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is _FORTIFY_SOURCE already on with Debian's gcc, or do I have to add it to my Meson build?",
+    "should_trigger": true
+  },
+  {
+    "query": "This C function copies a struct holding a malloc'd pointer with memcpy and then frees both. Is that safe?",
+    "should_trigger": false,
+    "note": "c-coding"
+  },
+  {
+    "query": "Review this C code that builds a file path from a device's serial number and opens it for writing.",
+    "should_trigger": false,
+    "note": "c-security"
+  },
+  {
+    "query": "Should our C project use meson.options or meson_options.txt, and where do the meson.build files go?",
+    "should_trigger": false,
+    "note": "project-bootstrap-and-audit, its Language toolchains and Project shapes and layout"
+  },
+  {
+    "query": "Write a GitHub Actions workflow that caches the Meson build directory between runs.",
+    "should_trigger": false,
+    "note": "git-workflows"
+  },
+  {
+    "query": "Turn on nullable warnings as errors in our .NET solution with Directory.Build.props.",
+    "should_trigger": false,
+    "note": "csharp-coding"
   }
 ]
