@@ -21,11 +21,22 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
-      - name: 'Check that each commit subject reads "area: summary"'
+      - name: Check each commit subject against the grammar
         env:
           BASE: ${{ github.event.pull_request.base.sha }}
           HEAD: ${{ github.event.pull_request.head.sha }}
+          # The grammar the context file names: area, for "core/io: fix a leak",
+          # or conventional, for Conventional Commits' "fix(io)!: drop the old reader".
+          GRAMMAR: area
         run: |
+          case "$GRAMMAR" in
+            area) pattern='^[A-Za-z0-9_./-]+(, ?[A-Za-z0-9_./-]+)*: [^ ]' ;;
+            conventional) pattern='^[A-Za-z]+(\([^()]+\))?!?: [^ ]' ;;
+            *)
+              echo "::error::GRAMMAR is '$GRAMMAR'; set it to area or conventional"
+              exit 1
+              ;;
+          esac
           # A failed git log ends the step under bash -e, so "couldn't read the
           # commits" fails rather than passing with nothing checked.
           subjects=$(git log --no-merges --format=%s "$BASE..$HEAD")
@@ -45,10 +56,10 @@ jobs:
                 continue
                 ;;
             esac
-            if ! printf '%s\n' "$subject" | grep -Eq '^[A-Za-z0-9_./-]+(, ?[A-Za-z0-9_./-]+)*: [^ ]'; then
-              echo "::error::not 'area: summary': $subject"
+            if ! printf '%s\n' "$subject" | grep -Eq "$pattern"; then
+              echo "::error::not in the $GRAMMAR grammar: $subject"
               bad=1
             fi
           done <<< "$subjects"
-          echo "checked $(printf '%s\n' "$subjects" | wc -l) commit subject(s)"
+          echo "checked $(printf '%s\n' "$subjects" | wc -l) commit subject(s) ($GRAMMAR)"
           exit "$bad"

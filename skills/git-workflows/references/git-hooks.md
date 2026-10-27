@@ -38,8 +38,9 @@ are `ci-workflows`, which is the gate wherever no persistent clone installs the 
 
 Examples, both tested:
 
-- [assets/githooks/commit-msg](../assets/githooks/commit-msg) refuses a subject that doesn't
-  read "area: summary", and notes one longer than 50 characters.
+- [assets/githooks/commit-msg](../assets/githooks/commit-msg) refuses a subject outside the
+  grammar its `grammar=` line names, `area` or `conventional`, as the commit-subjects workflow
+  does, and notes one longer than 50 characters.
 - [assets/githooks/pre-push](../assets/githooks/pre-push) refuses a push that updates `main`
   directly, from whichever branch.
 

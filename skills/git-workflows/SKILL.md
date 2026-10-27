@@ -26,11 +26,13 @@ run the commands; on claude.ai, give them to the person to run.
    quarantining a failing test. Fix the cause (`ci-workflows`, `git-hooks`).
 5. **Write down one commit grammar and check it** (`commits-and-pull-requests`).
 6. **Harden every workflow:** `permissions:` at the top, `timeout-minutes` on every job, actions
-   pinned to a full commit SHA, installs that fail on lockfile drift, runs on the branches where
-   work happens, and no path filter on a required check (`actions-security`, `action-pinning`,
-   `ci-workflows`).
+   pinned to a full commit SHA, installs that fail on lockfile drift, a run on every change
+   before or as it lands, and no path filter on a required check (`actions-security`,
+   `action-pinning`, `ci-workflows`).
 7. **Release from an annotated tag on the release commit's SHA,** after the changelog entry and
-   after CI is green on that commit (`releases-and-versions`).
+   after CI is green on that commit. Where the project's records make a release a commit named
+   in a committed manifest that consumers pin by SHA, the tag is optional
+   (`releases-and-versions`).
 8. **Read Git's output whole,** and never read an exit status through a pipe
    (`rebasing-and-recovery`, `ci-workflows`).
 9. **Keep a second release line only when users need it** (`releases-and-versions`).
@@ -50,10 +52,10 @@ as fact `node20`, and the fact's row is in whichever module holds it.
 | [`commits-and-pull-requests`](references/commits-and-pull-requests.md) | writing a commit message, naming a branch, opening or reviewing a pull request, choosing and checking the commit grammar, or the address commits carry |
 | [`branches-and-merging`](references/branches-and-merging.md) | the branching model, protecting the default branch, choosing and enforcing the merge strategy, or moving off Git Flow or `master` |
 | [`rebasing-and-recovery`](references/rebasing-and-recovery.md) | deleting a branch, rebasing and pushing your own branch, conflicts and conflict markers, recovering a lost commit, leaving shared history alone, reading Git's paths with `-z`, or 64-character commit IDs |
-| [`ci-workflows`](references/ci-workflows.md) | a GitHub Actions workflow's triggers, timeouts, installs, path filters and required checks; linting workflows; proving a gate, a test job or a workflow works |
-| [`ci-speed`](references/ci-speed.md) | how long CI should take, which suites run before and after merge, making CI faster without testing less, caching builds, timing tests, and timeouts that come and go |
-| [`actions-security`](references/actions-security.md) | a workflow's permissions and credentials, untrusted input in a `run:` step, `pull_request_target` and `workflow_run`, approving fork runs, or scanning workflows with actionlint, zizmor or CodeQL |
-| [`action-pinning`](references/action-pinning.md) | pinning a workflow's actions to commit SHAs, finding a tag's commit, workflow dependency lockfiles, Dependabot for actions, the SHA-pinning policy, or moving off Node 20 actions |
+| [`ci-workflows`](references/ci-workflows.md) | a GitHub Actions workflow's triggers, timeouts, installs, path filters and required checks; proving a gate, a test job or a workflow works |
+| [`ci-speed`](references/ci-speed.md) | how long CI should take, which suites run before and after merge, making CI faster without testing less, canceling superseded runs, caching builds, timing tests, and timeouts that come and go |
+| [`actions-security`](references/actions-security.md) | a workflow's permissions and credentials, untrusted input in a `run:` step, `pull_request_target` and `workflow_run`, approving fork runs, or linting and scanning workflows with actionlint, zizmor or CodeQL |
+| [`action-pinning`](references/action-pinning.md) | pinning a workflow's actions to commit SHAs, finding a tag's commit, workflow dependency lockfiles, Dependabot for actions and its cooldown, the SHA-pinning policy, or moving off Node 20 actions |
 | [`git-hooks`](references/git-hooks.md) | writing, installing or testing a commit or push hook, or a hook that didn't run |
 | [`releases-and-versions`](references/releases-and-versions.md) | cutting a release or tag, a release workflow, changelog entries, version numbers, release lines and backports |
 | [`leaked-data`](references/leaked-data.md) | a secret or personal information that reached a commit, and rewriting history to remove it |
@@ -77,7 +79,7 @@ Tested examples to copy, each described in its module:
 | Question | Command |
 |---|---|
 | Which merge methods does the repository allow? | `gh api repos/OWNER/REPO --jq '.allow_merge_commit, .allow_squash_merge, .allow_rebase_merge'` |
-| Which rulesets protect the branches and tags? | `gh api repos/OWNER/REPO/rulesets --jq '.[].id'`, then `gh api repos/OWNER/REPO/rulesets/<id>` for each one's rules |
+| Which rulesets protect the branches and tags? | `gh api repos/OWNER/REPO/rulesets --jq '.[].id'`, then `gh api repos/OWNER/REPO/rulesets/<id>` for each one's rules, or `gh api repos/OWNER/REPO/rules/branches/<branch>` for every rule on one branch |
 | Is this cited commit still on the default branch? | `git merge-base --is-ancestor <commit> origin/main && echo reachable` |
 | Which branches hold this commit? | `git branch -r --contains <commit>` |
 | Which local branches lost their remote branch? | `git fetch --prune`, then `git for-each-ref --format='%(if:equals=[gone])%(upstream:track)%(then)%(refname:short)%(end)' refs/heads`; check each one's pull request before deleting it |
@@ -86,8 +88,15 @@ Tested examples to copy, each described in its module:
 | Is the workflow valid? | `actionlint`, then `zizmor .` |
 | Which local branches tracking a shared branch are merged into it? | `git branch --dry-run --delete-merged 'origin/*'` (Git 2.56 or later; it skips most branches made with `git push -u`) |
 
-The first two answer from the refs you have. In a shallow or single-branch clone, such as CI's
-or a cloud session's, fetch every branch first, with `--unshallow` if
+Without `gh`, as in a cloud session that lacks it, a public repository answers the same paths
+without authentication, such as `curl -s https://api.github.com/repos/OWNER/REPO/rulesets`
+(fact `rest-public`).
+The merge settings come back only to a token with write access, and a ruleset's bypass list
+only to one that can edit it, so read those in the settings, or report them
+`UNVERIFIABLE-HERE`.
+
+The Git commands answer from the refs you have. In a shallow or single-branch clone, such as
+CI's or a cloud session's, fetch every branch first, with `--unshallow` if
 `git rev-parse --is-shallow-repository` prints `true`.
 
 ## Reviewing a repository

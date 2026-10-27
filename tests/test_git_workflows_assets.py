@@ -30,7 +30,7 @@ PULL_REQUEST_PARAMETERS = {
     "required_approving_review_count",
     "required_review_thread_resolution",
 }
-SUBJECTS_STEP = 'Check that each commit subject reads "area: summary"'
+SUBJECTS_STEP = "Check each commit subject against the grammar"
 RELEASE_CHECK = "Check the version, the commit and its changelog"
 RELEASE_CHECKS_PASSED = "Check that every check on the commit has passed"
 RELEASE_WORKFLOWS = "Check that a branch has the commit's workflow files"
@@ -73,6 +73,53 @@ def test_commit_msg_hook(tmp_path, message, code):
     assert run(["sh", HOOKS / "commit-msg", path], tmp_path).returncode == code
 
 
+def hook_for(tmp_path: Path, grammar: str) -> Path:
+    """The shipped hook, with its grammar line set as an adopter would set it."""
+    text = (HOOKS / "commit-msg").read_text(encoding="utf-8")
+    assert text.count("\ngrammar=area\n") == 1
+    hook = tmp_path / "commit-msg"
+    hook.write_text(text.replace("\ngrammar=area\n", f"\ngrammar={grammar}\n"), "utf-8")
+    return hook
+
+
+@pytest.mark.parametrize(
+    ("subject", "code"),
+    [
+        ("feat(parser)!: drop the old reader", 0),
+        ("fix: handle an empty playlist", 0),
+        ("chore(deps): bump ruff", 0),
+        ('Revert "feat: add the parser"', 0),
+        ("core/io: fix a leak", 1),
+        ("feat(parser):no space", 1),
+        ("fixed stuff", 1),
+    ],
+)
+def test_commit_msg_hook_takes_conventional_commits(tmp_path, subject, code):
+    path = tmp_path / "COMMIT_EDITMSG"
+    path.write_text(subject + "\n", encoding="utf-8")
+    hook = hook_for(tmp_path, "conventional")
+    assert run(["sh", hook, path], tmp_path).returncode == code
+
+
+def test_commit_msg_hook_refuses_an_unknown_grammar(tmp_path):
+    path = tmp_path / "COMMIT_EDITMSG"
+    path.write_text("core: add the parser\n", encoding="utf-8")
+    result = run(["sh", hook_for(tmp_path, "angular"), path], tmp_path)
+    assert result.returncode == 1
+    assert "set it to area or conventional" in result.stderr
+
+
+def grammar_patterns(text: str) -> dict[str, str]:
+    return dict(re.findall(r"^ *(area|conventional)\) pattern='([^']+)'", text, re.MULTILINE))
+
+
+def test_hook_and_workflow_check_the_same_grammars():
+    hook = grammar_patterns((HOOKS / "commit-msg").read_text(encoding="utf-8"))
+    workflow = grammar_patterns(step_script("commit-subjects.yml", "subjects", SUBJECTS_STEP))
+    assert set(hook) == {"area", "conventional"}
+    assert hook == workflow
+
+
 def test_commit_msg_hook_notes_a_long_subject_without_refusing(tmp_path):
     message = tmp_path / "COMMIT_EDITMSG"
     message.write_text("core: " + "x" * 60 + "\n", encoding="utf-8")
@@ -103,7 +150,7 @@ def test_commit_msg_hook_works_through_git_commit(tmp_path):
         work,
     )
     assert refused.returncode == 1
-    assert "should read 'area: summary'" in refused.stderr
+    assert "should follow the area grammar" in refused.stderr
     # An editor leaves the template's comment first; Git strips it after the hook has run.
     edited = tmp_path / "edited"
     edited.write_text("# From the commit template\n\ncore: add a\n", encoding="utf-8")
@@ -209,10 +256,21 @@ def commit(repo: Path, subject: str) -> str:
     return git(repo, "rev-parse", "HEAD")
 
 
-def check_subjects(repo: Path, base: str, head: str):
-    script = step_script("commit-subjects.yml", "subjects", SUBJECTS_STEP)
-    env = {**os.environ, "BASE": base, "HEAD": head}
-    return run(["bash", "-e", "-c", script], repo, env)
+def subjects_step() -> dict:
+    steps = yaml.safe_load((WORKFLOWS / "commit-subjects.yml").read_text(encoding="utf-8"))
+    [step] = [s for s in steps["jobs"]["subjects"]["steps"] if s.get("name") == SUBJECTS_STEP]
+    return step
+
+
+def check_subjects(repo: Path, base: str, head: str, grammar: str | None = None):
+    step = subjects_step()
+    grammar = step["env"]["GRAMMAR"] if grammar is None else grammar
+    env = {**os.environ, "BASE": base, "HEAD": head, "GRAMMAR": grammar}
+    return run(["bash", "-e", "-c", step["run"]], repo, env)
+
+
+def test_subject_check_ships_with_the_area_grammar():
+    assert subjects_step()["env"]["GRAMMAR"] == "area"
 
 
 def test_this_repository_runs_the_shipped_subject_check():
@@ -251,6 +309,40 @@ def test_subject_check_fails_when_it_checked_nothing(repo):
     head = git(repo, "rev-parse", "HEAD")
     assert check_subjects(repo, head, head).returncode == 1
     assert check_subjects(repo, "0" * 40, head).returncode != 0
+
+
+def test_subject_check_takes_conventional_commits_when_set_to(repo):
+    base = git(repo, "rev-parse", "HEAD")
+    for subject in ("feat(parser)!: drop the old reader", "fix: handle an empty playlist"):
+        head = commit(repo, subject)
+    # The area grammar refuses what Conventional Commits writes, and the other way round.
+    assert check_subjects(repo, base, head).returncode == 1
+    result = check_subjects(repo, base, head, "conventional")
+    assert result.returncode == 0, result.stdout
+    assert "checked 2 commit subject(s) (conventional)" in result.stdout
+    scoped = commit(repo, "chore(deps): bump ruff from 0.16.8 to 0.16.10")
+    assert check_subjects(repo, base, scoped, "conventional").returncode == 0
+    area = commit(repo, "core/io, docs: explain why the buffer is reused")
+    assert check_subjects(repo, base, area, "conventional").returncode == 1
+
+
+def test_subject_check_under_conventional_passes_reverts_and_refuses_fixups(repo):
+    base = git(repo, "rev-parse", "HEAD")
+    reverted = commit(repo, 'Revert "feat: add the parser"')
+    assert check_subjects(repo, base, reverted, "conventional").returncode == 0
+    fixup = commit(repo, "fixup! feat: add the parser")
+    result = check_subjects(repo, base, fixup, "conventional")
+    assert result.returncode == 1
+    assert "squash this before merging" in result.stdout
+
+
+def test_subject_check_refuses_an_unknown_grammar(repo):
+    base = git(repo, "rev-parse", "HEAD")
+    head = commit(repo, "core: add the parser")
+    for grammar in ("", "angular"):
+        result = check_subjects(repo, base, head, grammar)
+        assert result.returncode == 1
+        assert "set it to area or conventional" in result.stdout
 
 
 def release_step(repo: Path, name: str, **env: str):
