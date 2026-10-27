@@ -26,18 +26,12 @@ published as `HouseStyle.zip` on each release. It checks three of the rules:
 | 8 | `HouseStyle.Headings` | A heading that isn't in sentence case, apart from listed proper nouns and the repository's own vocabulary. A capital after a colon passes (fact `heading-colon`); after a dash, by this style's choice, it doesn't |
 | 12 | `HouseStyle.Spelling` | Common British spellings, with the American form to use |
 
-The spelling rule lists the words it changes, most by a pattern, so it leaves alone -ise words
-the same in both, such as advise, exercise, promise, otherwise and expertise:
-
-| British | American | For example |
-|---|---|---|
-| -ise, -isation | -ize, -ization | organize, organization, recognize |
-| -our | -or | behavior, color, favor |
-| -re | -er | center |
-| -ogue | -og | catalog |
-| -ence (some nouns) | -ense | license, defense, offense |
-| a doubled `l` before -ed, -ing | a single `l` | labeled, canceled, modeling |
-| -ement after -dg | -ment | judgment, acknowledgment |
+The spelling rule lists the words it changes, most by a pattern: -ise and -isation to -ize and
+-ization (organize, organization, recognize); -our to -or (behavior, color, favor); -re to -er
+(center); -ogue to -og (catalog); -ence to -ense in some nouns (license, defense, offense); a
+doubled `l` to one before -ed and -ing (labeled, canceled, modeling); and -ement after -dg to
+-ment (judgment, acknowledgment). So it leaves alone -ise words the same in both, such as
+advise, exercise, promise, otherwise and expertise.
 
 Rule 8's wrap at 100 characters has a check of its own, below. The rest are for review. Vale
 can't tell whether the answer comes first, or whether a fact was checked at its source. Rule
@@ -109,11 +103,15 @@ Leave these alone:
 
 ### Quoted words
 
-The package's `TokenIgnores` skips words in double quotes in every Markdown file (fact
-`vale-tokenignores`). A quote may wrap, but stops at its paragraph's end and at a line opening a
-bullet, heading, block quote, table row or code fence, so a stray `"` can't hide the prose
-after it. A repository's own `TokenIgnores` adds to the package's (fact `vale-list-keys`), so
-it names only its own markup:
+The package's `TokenIgnores` skips words in double quotes (fact `vale-tokenignores`). A quote
+opens only after a space, a line's start or punctuation, so `5"` or a `"` after a backtick
+opens none. It may wrap, but stops at its paragraph's end and at a line opening a list item,
+heading, block quote, table row or code fence. Two cases still hide the words up to the
+paragraph's next `"`: a stray `"` after a space, such as `5 "`, and one after a space inside
+inline code, such as `` `a "b` ``. Typographic quotes aren't skipped.
+
+A repository's own `TokenIgnores` adds to the package's (fact `vale-list-keys`), so it names
+only its own markup:
 
 ```ini
 [docs/*.md]
@@ -153,15 +151,12 @@ the same answer. A build from `go install` reports its version as `master`, and
 
 ### The wrap check
 
-This names each line over 100 characters, leaving out frontmatter, fenced code, table rows and
-lines with a URL. Any other line a program parses may run longer too. mawk counts bytes, so it
-can name a line holding a dash a few characters early; gawk counts characters.
+[scripts/wrap-check.sh](../scripts/wrap-check.sh), tested, names each line over 100
+characters (fact `awk-length`), skipping frontmatter, fenced code, tables and URLs, and fails
+if it finds one. With `HOUSE_STYLE` set to this skill's directory:
 
 ```sh
-awk 'FNR == 1 { fence = 0; front = /^---$/; if (front) next }
-  front { if (/^---$/) front = 0; next }
-  /^ *(```|~~~)/ { fence = !fence; next }
-  !fence && !/^ *\|/ && !/https?:\/\// && length > 100 { print FILENAME ":" FNR }' *.md
+git ls-files -z '*.md' | xargs -0 sh "$HOUSE_STYLE/scripts/wrap-check.sh"
 ```
 
 ### When a rule doesn't fit
@@ -235,9 +230,10 @@ Each repository adds its own to its vocabulary, and names that recur belong in t
 **Why.** The style leaves a source's words as written, so a check that flags them is wrong,
 and a fix written per file, in each repository, is one more thing to miss.
 
-**What it costs.** A writer can hide a word by quoting it, which review has to catch. A quote
-stops at its paragraph, and before a bullet, table or code, so a stray mark hides little. A quote
-wrapped onto a line opening with one of those marks is checked: the safe way to be wrong.
+**What it costs.** A writer can hide a word by quoting it, which review has to catch. A stray
+mark hides little, since a quote opens only where one can and stops at its paragraph, a list,
+a table or code. A quote wrapped onto such a line is checked: the safe way to be wrong. The
+pattern sees text, not Markdown's structure, so the two cases under *Quoted words* remain.
 
 **When to choose differently.** A repository's own patterns only add (fact `vale-list-keys`),
 so one that wants its quotes checked too asks here for the default to change.
@@ -257,6 +253,7 @@ Vale's version and behavior, and the guides the heading rule follows, each named
 | `vale-tokenignores` | `TokenIgnores` patterns are skipped in Markdown by wrapping each match as inline code | [TokenIgnores](https://docs.vale.sh/keys/tokenignores) | "They work by wrapping each match in the format's inline code delimiter" | 2026-10-27 | 2027-04-27 |
 | `vale-list-keys` | A list key, such as `TokenIgnores`, gathers every value from every configuration file read; seen with `vale ls-config` on Vale 3.25.1 | [.vale.ini](https://docs.vale.sh/topics/.vale.ini) | "A list key gathers every value from every file" | 2026-10-27 | 2027-04-27 |
 | `heading-colon` | Google and Microsoft capitalize after a colon in a heading. Google puts a colon, not a dash, after a label; Microsoft's em dash sets off a remark | [Google](https://developers.google.com/style/capitalization), [dashes](https://developers.google.com/style/dashes); [Microsoft](https://learn.microsoft.com/en-us/style-guide/capitalization), [dashes](https://learn.microsoft.com/en-us/style-guide/punctuation/dashes-hyphens/emes) | "the first word in a subheading after a colon" and "Appendix A: My first appendix" and "If a title or heading includes a colon, capitalize the first word after it." and "parenthetical remark that you want to add within a sentence" | 2026-10-27 | 2027-04-27 |
+| `awk-length` | awk's `length` counts characters, and in the POSIX locale each is one byte | [awk](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/awk.html), [locale](https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap06.html) | "return the length, in characters, of arg taken as a string" and "The POSIX locale shall contain 256 single-byte characters" | 2026-10-27 | 2027-10-27 |
 | `vale-exceptions` | Capitalization and substitution rules take a list of exceptions, and accept the project's vocabularies unless told not to | [capitalization](https://vale.sh/docs/checks/capitalization) | "An array of strings to be ignored." and "If false, disables all active vocabularies for this rule (default: true)." | 2026-10-05 | 2027-04-05 |
 
 ## Sources
@@ -264,6 +261,7 @@ Vale's version and behavior, and the guides the heading rule follows, each named
 | Source | Used for | License |
 |---|---|---|
 | [Vale's documentation](https://docs.vale.sh) | How packages, configuration, rule exceptions and `TokenIgnores` work | No license stated: facts with short quotes |
+| [POSIX](https://pubs.opengroup.org/onlinepubs/9799919799/) | How awk counts a line's length | Facts with short quotes |
 | Google's and Microsoft's style guides | Colons and dashes in headings | As in `writing-style`: short quotes, attributed |
 | [Vale](https://github.com/vale-cli/vale) | The checker | MIT (fact `vale-license`): run as a tool, nothing copied from it |
 
