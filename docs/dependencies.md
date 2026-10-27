@@ -29,7 +29,7 @@ freshness run and the release workflow both run it.
 | Python | 51 |
 | JSON | 35 |
 | YAML | 22 |
-| Shell | 3 |
+| Shell | 4 |
 | TOML | 2 |
 
 ## Runtimes and tools
@@ -190,4 +190,5 @@ again.
 | `house-style` | learn.microsoft.com | 2 |
 | `house-style` | raw.githubusercontent.com | 2 |
 | `house-style` | github.com | 1 |
+| `house-style` | pubs.opengroup.org | 1 |
 | `house-style` | www.gov.uk | 1 |
