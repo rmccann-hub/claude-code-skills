@@ -11,7 +11,8 @@ git-workflows.
 
 1. **Set `meson_version` to the oldest Meson that builds the project,** and prove it in CI.
 2. **Configure in `project()`, and add flags with `add_project_arguments`.**
-3. **Ship without `werror`. CI counts warnings under the shipped flags** and fails above a limit.
+3. **Ship without `werror`, and only `-Werror=` flags whose meaning doesn't grow,** such as the
+   four below. **CI counts warnings under the shipped flags** and fails above a limit.
 4. **Ask for hardening yourself,** filtered by `cc.get_supported_arguments`.
 5. **Test under ASan and UBSan, and Valgrind on a plain build;** ask the binary if it's
    instrumented.
@@ -89,7 +90,8 @@ if ((count > limit)); then
 fi
 ```
 
-Ninja shows warnings only for files it compiles, and color breaks the pattern.
+Ninja shows warnings only for files it compiles, and color breaks the pattern. A gate run by
+`meson test` reads `meson.project_build_root()`, never a fixed `build/` (fact `cb-build-root`).
 
 ### Hardening and the distributions
 
@@ -161,10 +163,12 @@ Severity uses the standard's status words.
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
 | Floor | A feature above `meson_version` | `DRIFT` | Raise it; build on it |
-| Shipped flags | `werror=true` or `c_args` in `default_options` | `GAP` | Move them |
-| Warning gate | None, or flags other than the release's | `GAP` | The count gate |
+| Shipped flags | `werror=true` or `c_args` in `default_options`; a broad `-Werror=` group, such as `format`; `add_global_arguments` | `GAP` | Move them; narrow `-Werror=` |
+| Warning gate | None, or flags other than the release's; a fixed build path | `GAP`; `DRIFT` for the path | The count gate |
 | Hardening | Flags missing, or `_FORTIFY_SOURCE=2` | `GAP` | The set above |
 | Sanitizer job | None, or not checked by `nm` | `GAP`; `BLOCKER` if uninstrumented | `b_sanitize` |
+| Valgrind, threads | No Valgrind setup; threaded code with no TSan job | `GAP` | The setup above; `b_sanitize=thread` |
+| Static analysis | No analyzer in CI | `GAP` | A job above |
 | Silent checkers | A checker that can't fail | `BLOCKER` | The flags above |
 | Fuzzing | A parser of outside data unfuzzed | `GAP` | A target |
 | Wraps | `revision = HEAD`; no `source_hash` | `DRIFT` | Pin |
@@ -195,6 +199,7 @@ each day, at the cost of updating by hand.
 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
+| `cb-build-root` | The project's build root | [meson](https://mesonbuild.com/Reference-manual_builtin_meson.html) | "Try using meson.current_build_dir() or meson.project_build_root()" | 2026-10-27 | 2027-10-27 |
 | `cb-feature-new` | Newer features warn | [0.47](https://mesonbuild.com/Release-notes-for-0-47-0.html) | "that's newer than the version specified inside project()" | 2026-10-27 | 2027-10-27 |
 | `cb-c-std` | `c_std` lists, 1.3; `gnuXX` on MSVC | [Options](https://mesonbuild.com/Builtin-options.html) | "Since 1.3.0 c_std and cpp_std options now accept a list of values." and "will become an hard error" | 2026-10-27 | 2027-04-27 |
 | `cb-meson-defaults` | Defaults | [Options](https://mesonbuild.com/Builtin-options.html) | "werror false" and "b_pie false" and "-Ddebug=false does not cause the compiler preprocessor macro NDEBUG to be defined" | 2026-10-27 | 2027-04-27 |

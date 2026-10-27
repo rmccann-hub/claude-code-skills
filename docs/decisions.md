@@ -2,6 +2,25 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-27 — The C modules take in their first audit
+
+- **Asked, by the owner:** a C-only audit of a repository already audited, before its review
+  was sent, to test the new C modules as much as the code. Its feedback names neither the
+  repository nor its code.
+- **Taken in:** 12 feedback items, each checked first: the two compiler claims were tried with
+  GCC 13.3 and Clang 18.1, and the three new facts confirmed at their sources by
+  `skillcheck --verify`. One item isn't the modules' text: the session's installed copy predated
+  them, because installed copies come from a release. The next release carries them.
+- **What the audit missed:** an answer key written before the run held four problems it didn't
+  report: a library's struct copied from an object that then frees it, an append past a fixed
+  array after a capped loop, a flush's status replacing a write's error, and a fixed-length
+  scheme comparison. An independent check confirmed all four. The first three now have words
+  in their rows: the audit had checked the right row in the wrong file. The fourth is a logic
+  error no C module should own.
+- **Size:** the three modules end between 15,700 and 15,900 characters, under the limit and over
+  the 15,000 target. The next C coverage, threads and signals, is a fourth module, not more
+  here.
+
 ## 2026-10-27 — C in the `coding` skill: `c-coding`, `c-build` and `c-security`
 
 - **Asked, by the owner:** after the first audit of a C program found no C module to judge it

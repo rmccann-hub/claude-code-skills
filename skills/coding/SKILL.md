@@ -86,7 +86,7 @@ the fact's row is in whichever module holds it.
 | Question | Where to look |
 |---|---|
 | How does this project lint, format, type-check and test? | Its `AGENTS.md` or `CLAUDE.md` Commands section, then its CI workflow, then its manifest (`pyproject.toml`, `package.json`, `*.csproj`) |
-| Which version of the language does it target? | The manifest or a version file (`.python-version`, `.nvmrc`, `global.json`, `#Requires`), never the one installed on this machine |
+| Which version of the language does it target? | The manifest or a version file (`.python-version`, `.nvmrc`, `global.json`, `#Requires`, `meson.build`'s `c_std`), never the one installed on this machine |
 | What does the code around the change do with errors, names and comments? | The same file, then its neighbors |
 | Is there already a function or a dependency for this? | A search of the project for the task's verbs and nouns, before writing a new one |
 | What changed, and what did the checks say? | `git diff`, and each check's own output, read whole |
@@ -128,8 +128,8 @@ status words are the standard's:
 - The owner's earlier language skills, as lists of topics, checks and lessons. Nothing was
   copied from them. What each kept, dropped and why is in this skill's repository, in the
   research results of 2026-10-26.
-- Research runs R09 (Python), R10 (TypeScript and the web), R11 (.NET and PowerShell) and R15
-  (shell), filed in this skill's repository. They were leads until each claim was checked at
+- Research runs R09 (Python), R10 (TypeScript and the web), R11 (.NET and PowerShell), R15
+  (shell) and R12 (C and Meson), filed in this skill's repository. They were leads until each claim was checked at
   its source.
 
 ## When something here is wrong
