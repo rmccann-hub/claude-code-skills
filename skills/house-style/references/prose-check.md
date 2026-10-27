@@ -23,7 +23,7 @@ published as `HouseStyle.zip` on each release. It checks three of the rules:
 | Rule | Vale rule | What it catches |
 |---|---|---|
 | 3 | `HouseStyle.Filler` | The six words, in any case |
-| 8 | `HouseStyle.Headings` | A heading that isn't in sentence case, apart from listed proper nouns and the repository's own vocabulary. A capital after a colon passes, and after a dash it doesn't (fact `heading-colon`) |
+| 8 | `HouseStyle.Headings` | A heading that isn't in sentence case, apart from listed proper nouns and the repository's own vocabulary. A capital after a colon passes (fact `heading-colon`); after a dash, by this style's choice, it doesn't |
 | 12 | `HouseStyle.Spelling` | Common British spellings, with the American form to use |
 
 The spelling rule lists the words it changes, most by a pattern, so it leaves alone -ise words

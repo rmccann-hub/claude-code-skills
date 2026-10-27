@@ -100,18 +100,31 @@ def quoted(text: str) -> list[str]:
 
 def test_the_style_skips_a_quote_wrapped_within_its_paragraph():
     assert quoted('The "colour of\n  the sky" is blue.') == ['"colour of\n  the sky"']
+    assert quoted('"Colour,\n2026 and 3.5 more" (and "this")') == [
+        '"Colour,\n2026 and 3.5 more"',
+        '"this"',
+    ]
     assert quoted('A "say \\"hi\\" colour" here.') == ['"say \\"hi\\" colour"']
 
 
+def test_an_inch_mark_or_a_quote_in_code_opens_no_quote():
+    # A mark after a letter, a digit or a backtick opens nothing, so it can't pair with the
+    # next quote and hide the words between.
+    assert quoted('A 3" board with colour and "a quote".') == ['"a quote"']
+    assert quoted('A 3.5" board, 4"x2" and colour.') == []
+    assert quoted('Use `"` in code, then colour and "x".') == ['"x"']
+
+
 @pytest.mark.parametrize("blank", ["", "   "])
-def test_a_stray_quote_never_hides_the_next_paragraph(blank):
-    # The colour after an inch mark is still checked.
-    assert not any("colour" in match for match in quoted(f'A 5" board.\n{blank}\nThe colour".'))
+def test_an_unclosed_quote_never_hides_the_next_paragraph(blank):
+    assert not any("colour" in match for match in quoted(f'Say "hi.\n{blank}\nThe colour".'))
 
 
-@pytest.mark.parametrize("opener", ["- ", "* ", "+ ", "| ", "```", "~~~", "# ", "> "])
-def test_a_stray_quote_never_hides_a_bullet_table_fence_heading_or_block_quote(opener):
-    assert not any("colour" in match for match in quoted(f'A 5" board.\n{opener}colour".'))
+@pytest.mark.parametrize(
+    "opener", ["- ", "* ", "+ ", "1. ", "2) ", "10. ", "| ", "```", "~~~", "# ", "> "]
+)
+def test_an_unclosed_quote_never_hides_a_list_table_fence_heading_or_block_quote(opener):
+    assert not any("colour" in match for match in quoted(f'Say "hi:\n{opener}colour".'))
 
 
 def test_this_repository_checks_itself_with_the_style_from_its_source():

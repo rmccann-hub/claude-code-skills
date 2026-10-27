@@ -224,8 +224,10 @@ agent, has only the text.
 
 **Why:** sentence case is Google's and Microsoft's choice (facts `google-sentence-case`,
 `ms-sentence-case`). It's quicker to read, with no doubt over which small words to capitalize.
-Both capitalize after a colon in a heading, and neither after a dash (fact `heading-colon`), so
-the check flags that capital. Wrapped lines make a diff show the sentence that changed, and
+Both capitalize after a colon in a heading. Google puts a colon, not a dash, after a label, and
+Microsoft's em dash sets off a remark (fact `heading-colon`). Neither says what follows a dash
+in a heading, so lowercase there is this style's own choice, and the check flags a capital.
+Wrapped lines make a diff show the sentence that changed, and
 spare a reviewer scrolling sideways. Fenced code with a language gets highlighted.
 **Others:** some guides use title case. The check takes one side, so a repository mixing the two
 is flagged. **Cost:** rewrapping a paragraph changes every line after the edit. Wrapping at
