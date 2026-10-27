@@ -9,6 +9,10 @@ Each fenced block in a skill's Markdown is checked by the language its info stri
 - **Shell** (``sh``, ``bash``, ``shell``): parsed by ``bash -n`` or ``sh -n``, then linted by
   ShellCheck at its warning level.
 - **PowerShell:** parsed by ``pwsh``'s own parser.
+- **C:** compiled by ``clang`` for syntax and warnings, ``-Wall -Wextra -Werror``, and never
+  linked or run. The standard is C17 unless the fence names another, as in ````` ```c std=c23 `````;
+  ``gnu17`` and ``gnu23`` work too. An example that uses POSIX defines ``_POSIX_C_SOURCE``
+  itself, as real code under ``-std=c17`` must.
 
 A placeholder such as ``<branch>`` or ``<path | none>`` stands for a value the reader supplies,
 so in shell and YAML it's read as a plain word first. In YAML one may run onto a second line.
@@ -39,6 +43,8 @@ UNCHECKED = re.compile(r"^\s*<!--\s*example:\s*unchecked\b[,:;—-]?\s*(?P<reaso
 SHELL_PLACEHOLDER = re.compile(r"<[A-Za-z0-9][^<>\n]*>")
 YAML_PLACEHOLDER = re.compile(r"<[A-Za-z0-9][^<>]*>")
 SHELLS = {"sh": "sh", "bash": "bash", "shell": "bash"}
+C_STD = re.compile(r"(?:c|gnu)(?:99|11|17|23)")
+C_ERROR = re.compile(r"^<stdin>:(\d+):\d+: (?:fatal )?error: (.*)$", re.MULTILINE)
 
 
 class ToolMissing(RuntimeError):
@@ -52,6 +58,7 @@ class Block:
     language: str
     text: str
     skip_reason: str | None = None
+    options: tuple[str, ...] = ()
 
 
 @dataclass
@@ -98,7 +105,14 @@ def blocks(path: Path) -> list[Block]:
             body.append(line[indent:] if line[:indent].strip() == "" else line.lstrip())
             index += 1
         found.append(
-            Block(path, start, language, "\n".join(body) + "\n", marker and marker["reason"])
+            Block(
+                path,
+                start,
+                language,
+                "\n".join(body) + "\n",
+                marker and marker["reason"],
+                tuple(info[1:]),
+            )
         )
         index += 1
     return found
@@ -116,7 +130,7 @@ def check(root: Path, run: Callable = subprocess.run) -> Result:
                 else:
                     result.skipped.append(f"{where}: skipped: {block.skip_reason}")
                 continue
-            checker = _checker(block.language)
+            checker = _checker(block.language, block.options)
             if checker is None:
                 result.unchecked[block.language or "no language"] += 1
                 continue
@@ -130,9 +144,11 @@ def check(root: Path, run: Callable = subprocess.run) -> Result:
     return result
 
 
-def _checker(language: str) -> Callable[[str, Callable], str] | None:
+def _checker(language: str, options: tuple[str, ...] = ()) -> Callable[[str, Callable], str] | None:
     if language in SHELLS:
         return lambda text, run: _shell(SHELLS[language], text, run)
+    if language == "c":
+        return lambda text, run: _c(text, run, options)
     return {
         "python": _python,
         "py": _python,
@@ -214,6 +230,33 @@ def _powershell(text: str, run: Callable) -> str:
     )
     parsed = _tool(run, ["pwsh", "-NoProfile", "-NonInteractive", "-Command", command], text)
     return " ".join(parsed.stdout.split())
+
+
+def _c(text: str, run: Callable, options: tuple[str, ...]) -> str:
+    stds = [option.removeprefix("std=") for option in options if option.startswith("std=")]
+    std = stds[-1] if stds else "c17"
+    if not C_STD.fullmatch(std):
+        return (
+            f"std={std} isn't a C standard this check knows; "
+            "use c99, c11, c17 or c23, or its gnu form"
+        )
+    # -fsyntax-only stops before code generation, so nothing is linked or run.
+    command = [
+        "clang",
+        "-x",
+        "c",
+        f"-std={std}",
+        "-fsyntax-only",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-",
+    ]
+    compiled = _tool(run, command, text)
+    if not compiled.returncode:
+        return ""
+    errors = [f"line {line}: {message}" for line, message in C_ERROR.findall(compiled.stderr)]
+    return "; ".join(errors) or " ".join(compiled.stderr.split())
 
 
 def _tool(run: Callable, command: list[str], text: str) -> subprocess.CompletedProcess:
