@@ -45,7 +45,9 @@ The contract every change meets:
 8. **Prove it before you say it's done.** Run the project's own lint, format, type check and
    tests, as its context file lists them. Report what failed, with the output, and never skip,
    disable or loosen a check to get to green. The one exception is a single finding you've
-   checked by hand, suppressed on its own line with a comment saying what was checked.
+   checked by hand, suppressed on its own line with a comment saying what was checked. Where a
+   rule flags every call of a kind across a directory, and each was checked, it can be ignored
+   for that directory in the linter's config, with that comment there.
 9. **Show a destructive command before running it,** with its dry run or a confirmation: deleting
    files, dropping data, force-pushing, or anything a typo turns into a disaster.
 10. **No hidden or bidirectional characters in source.** They make a reviewer read one thing
@@ -62,7 +64,7 @@ the fact's row is in whichever module holds it.
 | Module | Read it for |
 |---|---|
 | [`python-coding`](references/python-coding.md) | Python 3: `pyproject.toml`, uv, Ruff and a strict type checker, type hints and idioms, explicit encodings, time zones with `zoneinfo`, and `requires-python` |
-| [`python-security`](references/python-security.md) | Python code that takes outside input: `subprocess` and shells, `eval`, `pickle` and `yaml.load`, SQL placeholders, archive extraction, temporary files, confining paths, and `secrets` for tokens |
+| [`python-security`](references/python-security.md) | Python code that takes outside input: `subprocess` and shells, `eval`, `pickle` and `yaml.load`, SQL placeholders, archive extraction, temporary files, confining paths, `assert` as a check, and `secrets` for tokens |
 | [`javascript-coding`](references/javascript-coding.md) | TypeScript and JavaScript on Node.js: `tsconfig` strictness, ES modules, Node versions and the built-ins that replace packages, type stripping, promise mistakes, and lint setup |
 | [`javascript-security`](references/javascript-security.md) | Untrusted input in Node.js code: `eval` and `new Function`, `exec` and `shell: true`, prototype pollution, path traversal, ReDoS, and SQL placeholders |
 | [`html-coding`](references/html-coding.md) | HTML and CSS: semantic markup and ARIA, the WCAG 2.2 basics (labels, alt text, headings, focus, contrast, target size), forms and where they need CSRF protection, and modern CSS with dark mode and reduced motion |
@@ -90,7 +92,9 @@ Each module's Audit section checks code in its language. For a repository's conf
 and dependencies, use project-bootstrap-and-audit, whose rating wins where the two differ. The
 status words are the standard's:
 
-- **`BLOCKER`:** a live exposure, or a check reporting success while measuring nothing.
+- **`BLOCKER`:** a live exposure, or a check reporting success while measuring nothing, such
+  as a test helper that can't run its probe, prints `UNPROBED` and exits 0, in any language.
+  The fix is to fail, or to skip so the test runner counts it.
 - **`DRIFT`:** configured, but no longer doing what it says.
 - **`GAP`:** missing something the project needs.
 - **`OVER`:** heavier than the project needs.

@@ -28,6 +28,9 @@ Containers and Linux administration are the planned operations skill's.
   empty deletes from `/`; `"${dir:?}/"*` stops the script instead (fact `sh-sc2115`).
 - **Quote the operand, and put `--` before it.** Unquoted, `$file` is split and globbed (fact
   `sh-expansion`), and a name starting with `-` is read as an option.
+- **`cd "$dir" && rm -rf ./*` doesn't guard an empty `dir`:** before Bash 5.3, `cd ""`
+  succeeds and stays put (fact `sh-cd-empty`), so the delete runs where the script stands.
+  Write `cd -- "${dir:?}"`.
 - **List first, act second.** A script that deletes prints what it would delete by default:
 
 ```bash
@@ -122,7 +125,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| Unsafe deletes | `rm -r` or `rm -f` on a variable path without `:?` or `--`; a deleting script with no dry run | `BLOCKER` | `"${dir:?}/"`, `--`, and a listing by default |
+| Unsafe deletes | `rm -r` or `rm -f` on a variable path without `:?` or `--`, or after `cd "$dir"`; a deleting script with no dry run | `BLOCKER` where the value can come from input or the environment, or be empty; `GAP` where the file sets it to a constant, or to a checked `mktemp` result | `"${dir:?}/"`, `--`, and a listing by default |
 | Secrets on the command line | Tokens or passwords in arguments, or printed to the log | `BLOCKER` | A file or environment variable the tool reads |
 | Arithmetic on input | `(( ))`, `$(( ))`, `let` or `[[ -eq ]]`-style tests on a value from arguments, files or the network with no digits check before it | `BLOCKER` | `[[ $x =~ ^[0-9]+$ ]]` first (fact `sh-arith-eval`) |
 | `eval` and fetched code | `eval`, `bash -c` or `source` on input; a downloaded script piped into a shell | `BLOCKER` | `case` dispatch; download, verify, read, run |
@@ -135,6 +138,9 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 
 **Why.** An empty variable in a delete path deletes from the root directory, and `${dir:?}`
 costs four characters (fact `sh-sc2115`). A file named `-rf` becomes an option without `--`.
+
+**Severity.** A variable set to a constant in the same file can't be empty, so it's a `GAP`: the
+guard costs nothing and survives an edit. A value from input or the environment can be.
 
 **What it costs.** A second run to delete for real. A script run unattended, such as from
 cron, passes `--delete` in its schedule, so the default stays safe.
@@ -183,8 +189,8 @@ its author didn't think of.
 
 ## Facts
 
-Versions, dates and defaults, each named elsewhere by its ID; bash-coding names several of these
-too. Checked 2026-10-26.
+Versions, dates and defaults, each named elsewhere by its ID. bash-coding names most of these;
+this one holds the shells' and tools' versions.
 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
@@ -197,6 +203,16 @@ too. Checked 2026-10-26.
 | `sh-mktemp` | GNU `mktemp` creates files readable and writable only by their owner | [mktemp(1)](https://man7.org/linux/man-pages/man1/mktemp.1.html) | "Files are created u+rw, and directories u+rwx, minus umask restrictions." | 2026-10-26 | 2027-10-26 |
 | `sh-exit-trap` | POSIX lets a shell skip the `EXIT` trap when a signal ends it | [POSIX.1-2024, Shell Command Language](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/V3_chap02.html) | "may occur when the shell terminates abnormally as a result of delivery of a signal" | 2026-10-26 | 2027-10-26 |
 | `sh-echo` | `echo` isn't portable with escapes or a leading option | [POSIX.1-2024 echo](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html) | "It is not possible to use echo portably across all POSIX systems unless escape sequences are omitted" | 2026-10-26 | 2027-10-26 |
+| `sh-cd-empty` | Bash 5.3 made `cd ""` an error; before it, `cd ""` succeeds | [CHANGES](https://tiswww.case.edu/php/chet/bash/CHANGES) | "Per POSIX, a null pathname argument to" and "is now an error" | 2026-10-27 | 2027-10-27 |
+| `sh-shellcheck` | 0.11.0 (2025-08-03); next flags `grep -q` | [Changelog](https://raw.githubusercontent.com/koalaman/shellcheck/master/CHANGELOG.md) | "v0.11.0 - 2025-08-03" and "in pipelines under pipefail" | 2026-10-26 | 2027-04-26 |
+| `sh-shellcheck-py` | PyPI's `shellcheck-py` 0.11.0.1 wraps ShellCheck | [PyPI](https://pypi.org/pypi/shellcheck-py/json) | "Python wrapper around invoking shellcheck" and "shellcheck-py/0.11.0.1" | 2026-10-27 | 2027-04-27 |
+| `sh-bats-version` | bats-core 1.14.0 (2026-07-21) | [Changelog](https://raw.githubusercontent.com/bats-core/bats-core/master/docs/CHANGELOG.md) | "[1.14.0] - 2026-07-21" | 2026-10-26 | 2027-04-26 |
+| `sh-bash-current` | 5.3 is current | [Bash](https://tiswww.case.edu/php/chet/bash/bashtop.html) | "The current version of bash is bash-5.3" | 2026-10-26 | 2027-04-26 |
+| `sh-bash53-nofork` | 5.3 added `${ cmd; }` | [NEWS](https://tiswww.case.edu/php/chet/bash/NEWS) | "capture the output of COMMAND without forking" | 2026-10-26 | 2027-10-26 |
+| `sh-macos-bash` | macOS has Bash 3.2 | [Apple](https://raw.githubusercontent.com/apple-oss-distributions/bash/main/bash-3.2/configure.in) | "Configure script for bash-3.2" | 2026-10-26 | 2027-04-26 |
+| `sh-debian-dash` | Debian 13: dash 0.5.12 | [Debian](https://packages.debian.org/trixie/dash) | "dash (0.5.12-12)" and "the default system shell" | 2026-10-26 | 2027-04-26 |
+| `sh-bash-versions` | 4.0: `declare -A`, `mapfile`; 4.4: `inherit_errexit` | [NEWS](https://tiswww.case.edu/php/chet/bash/NEWS) | "associative array variables" and "populate an array with lines" and "command substitutions to inherit the -e option" | 2026-10-26 | 2027-10-26 |
+| `sh-dash-pipefail` | dash 0.5.13 added it | [SC3040](https://www.shellcheck.net/wiki/SC3040) | "dash version 5.13 included pipefail" | 2026-10-26 | 2027-10-26 |
 | `sh-shfmt` | 3.14.1 (2026-09-06); reads EditorConfig | [Changelog](https://raw.githubusercontent.com/mvdan/sh/master/CHANGELOG.md), [shfmt(1)](https://raw.githubusercontent.com/mvdan/sh/master/cmd/shfmt/shfmt.1.scd) | "[3.14.1] - 2026-09-06" and "If any EditorConfig files are found" | 2026-10-26 | 2027-04-26 |
 
 ## Sources
@@ -206,7 +222,7 @@ fact above.
 
 | Source | Used for | License |
 |---|---|---|
-| [Bash Reference Manual](https://tiswww.case.edu/php/chet/bash/bashref.html), the maintainer's copy | Arithmetic evaluation, expansions | GFDL 1.3: facts in our own words, short quotes |
+| [Bash Reference Manual](https://tiswww.case.edu/php/chet/bash/bashref.html), the maintainer's copy, and [CHANGES](https://tiswww.case.edu/php/chet/bash/CHANGES) | Arithmetic evaluation, expansions, `cd ""` | GFDL 1.3: facts in our own words, short quotes |
 | [ShellCheck wiki](https://www.shellcheck.net/wiki/SC2115) | SC2115 | The wiki states no license: facts in our own words, short quotes |
 | [man7.org](https://man7.org/linux/man-pages/) (proc_pid_cmdline(5), mktemp(1)) | Command-line visibility, `mktemp` | Each page's own license: short quotes |
 | [curl manual](https://curl.se/docs/manpage.html) | Headers from a file, credentials off the command line | curl license, MIT style: short quotes |
