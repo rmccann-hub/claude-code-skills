@@ -2,6 +2,20 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-27 — Release 0.1.24, C in the `coding` skill
+
+- **Asked, by the owner:** "release the new version of the skills now". The C audit's session
+  had an installed `coding` without the C modules, because plugin installs and cloud sessions
+  take a release, not `main`; it read them from the repository instead.
+- **Carries:** how a repository using these skills is audited, and where its reports go (#89,
+  #90), research prompts R12 and R25 (#91), what the first two audits found wrong in three
+  skills (#92), `coding`'s three C modules and C in
+  `skillcheck --examples` (#93), and what the C audit found wrong in them (#94). claude.ai has
+  had each since its merge.
+- **Unchanged for consumers:** no skill or module was renamed or removed, so nothing that names
+  one breaks, and it's a patch release. Three modules and `house-style`'s `wrap-check.sh` are
+  new.
+
 ## 2026-10-27 — The C modules take in their first audit
 
 - **Asked, by the owner:** a C-only audit of a repository already audited, before its review

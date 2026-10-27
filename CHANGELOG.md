@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.24] - 2026-10-27
+
 ### Added
 
 - C in the `coding` skill, in three modules, from research run R12 with each claim checked at
