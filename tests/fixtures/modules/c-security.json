@@ -1,0 +1,55 @@
+[
+  {
+    "query": "Review this C function that builds an output file name from a serial number the device sends us, then opens it for writing.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is strncpy(dst, src, sizeof dst) safe in C, or should I switch to strlcpy or snprintf?",
+    "should_trigger": true
+  },
+  {
+    "query": "My C program calls system() with a file name from the config file to run gzip. How do I do this without a shell?",
+    "should_trigger": true
+  },
+  {
+    "query": "The record count in this binary header comes straight from the file. How do I stop it overflowing the malloc size or my fixed array?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our C daemon logs the user name it receives over the network. Could someone forge log lines with it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Clang warns 'format string is not a string literal' on printf(msg) in our C code. Is that a real security problem?",
+    "should_trigger": true
+  },
+  {
+    "query": "What does CISA's memory-safety roadmap mean for our C project, and what should we publish?",
+    "should_trigger": true
+  },
+  {
+    "query": "Which -fsanitize flags and Meson b_sanitize settings should our C test suite run with?",
+    "should_trigger": false,
+    "note": "c-build"
+  },
+  {
+    "query": "Should this C library target C17 or C23, and what changes when I compile old K&R code with -std=c23?",
+    "should_trigger": false,
+    "note": "c-coding"
+  },
+  {
+    "query": "My C program copies a struct with memcpy and then crashes with a double free. What's wrong?",
+    "should_trigger": false,
+    "note": "c-coding"
+  },
+  {
+    "query": "How do I safely build file paths from uploaded file names in my Python Flask app?",
+    "should_trigger": false,
+    "note": "python-security"
+  },
+  {
+    "query": "Our bash wrapper script passes user input to rm -rf. How do I guard it?",
+    "should_trigger": false,
+    "note": "bash-security"
+  }
+]

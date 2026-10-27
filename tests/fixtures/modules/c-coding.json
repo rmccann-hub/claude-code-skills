@@ -1,0 +1,55 @@
+[
+  {
+    "query": "My C program builds fine with GCC 15 but Clang says bool is undeclared and MSVC rejects a variable-length array. Which C standard should we target?",
+    "should_trigger": true
+  },
+  {
+    "query": "We memcpy a struct we got from a library into our own array, and now it crashes with a double free when we clean up. What's wrong?",
+    "should_trigger": true
+  },
+  {
+    "query": "Review this C function that writes a report with fwrite and fclose. If the disk fills up, will it still say it succeeded?",
+    "should_trigger": true
+  },
+  {
+    "query": "Help me port this old K&R-style C code so it compiles as C23.",
+    "should_trigger": true
+  },
+  {
+    "query": "My C test needs a device that isn't on the CI runner. How should it exit so meson test doesn't count it as a pass?",
+    "should_trigger": true
+  },
+  {
+    "query": "Why did gcc -O2 remove my overflow check `if (x + 1 < x)` in this C code?",
+    "should_trigger": true
+  },
+  {
+    "query": "This C function builds a line with several memcpy calls into a fixed buffer. Is each write bounds-checked?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up our meson.build with hardening flags and a CI job that runs AddressSanitizer and UBSan.",
+    "should_trigger": false,
+    "note": "c-build"
+  },
+  {
+    "query": "Our C daemon builds a file path from a name it reads over the network and opens it. Is that safe?",
+    "should_trigger": false,
+    "note": "c-security"
+  },
+  {
+    "query": "Is strncpy safe for copying a username from a packet into a fixed char array in C?",
+    "should_trigger": false,
+    "note": "c-security"
+  },
+  {
+    "query": "Write a Rust CLI that parses a CSV file and prints totals.",
+    "should_trigger": false,
+    "note": "rust-coding (planned)"
+  },
+  {
+    "query": "How should I structure test fixtures and doubles for our C library's test suite?",
+    "should_trigger": false,
+    "note": "testing (planned)"
+  }
+]

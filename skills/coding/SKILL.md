@@ -75,6 +75,9 @@ the fact's row is in whichever module holds it.
 | [`powershell-security`](references/powershell-security.md) | PowerShell credentials and untrusted input: `[pscredential]` and SecretManagement, plain-text passwords, `Invoke-Expression`, argument arrays and batch files, `-LiteralPath`, execution policy, and signing |
 | [`bash-coding`](references/bash-coding.md) | Bash and POSIX `sh`: the shebang, `set -euo pipefail` and its traps, quoting, tests and globs, arrays, reading lines and file names, `mktemp` and cleanup, macOS and dash portability, ShellCheck, shfmt and bats |
 | [`bash-security`](references/bash-security.md) | Shell scripts that delete, run code or take input: guarding `rm -rf` with `${var:?}`, `--` and a dry run, `eval` and piped downloads, arithmetic on input, secrets off the command line, and validating input |
+| [`c-coding`](references/c-coding.md) | TODO(new-skill) the requests it answers |
+| [`c-build`](references/c-build.md) | TODO(new-skill) the requests it answers |
+| [`c-security`](references/c-security.md) | TODO(new-skill) the requests it answers |
 
 ## Check before you act
 
