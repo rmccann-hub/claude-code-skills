@@ -35,24 +35,34 @@ it to the text you hand back.
    apart from the usual capitalized root files, such as `README.md`.
 10. Every README has the same sections in the same order: what it is, install, usage,
     development, operations, security and license.
-11. Commit subjects read "area: summary". Changelogs follow Keep a Changelog, and decisions go
-    in one record, newest first.
-12. American spelling throughout.
+11. Commit subjects follow the grammar the repository records, and "area: summary" where it
+    records none. Changelogs follow Keep a Changelog. Decisions go in one append-only record,
+    newest first; an existing record that runs oldest first keeps its order, and says so at its
+    top.
+12. American spelling throughout. A label or value the code defines is written as the code
+    spells it, in code formatting; in the project's own code, fix the spelling there first.
 13. Code follows its language's own formatter and linter, which project-bootstrap-and-audit sets
     up.
 
 **What the style leaves alone**
 
-- **Files a fork shares with its upstream project** keep upstream's format. Reformatting them
-  would make every merge from upstream conflict. The style covers what's yours: your documents,
-  your commits and your new files.
+- **Files kept byte for byte the same as another repository's,** such as those a fork shares
+  with its upstream project, or a file two repositories keep identical, keep the format they
+  share. Reformatting one copy makes every merge or sync conflict. The style covers what's
+  yours: your documents, your commits, your new files, and your own block inside a shared file,
+  such as a fork's section of upstream's README. A section a rule requires, such as rule 10's,
+  goes inside that block, not over upstream's structure. A file the fork now writes alone, such
+  as a changelog upstream started, is the fork's own: its past entries stay, as below.
 - **Third-party files,** such as licenses and vendored code, stay exactly as they came.
 - **Words quoted from a source** stay as the source wrote them, spelling included.
 - **Past entries in an append-only record,** such as a decision record or a dated research
-  result, stay as written. New entries follow the style.
+  result, stay as written, in their order. New entries follow the style.
+- **Generated text,** such as a README section a script builds from another file, is fixed at
+  its source and generated again. A comment marks where the output starts and ends, and names
+  what writes it.
 
 HouseStyle, a Vale style shipped in [assets/vale/HouseStyle/](assets/vale/HouseStyle/.vale.ini),
-checks rules 3, 8 and 12. The rest are for review.
+checks rules 3, 8 and 12, and skips words in double quotes. The rest are for review.
 
 ## Modules
 
