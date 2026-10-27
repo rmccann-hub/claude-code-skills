@@ -1,6 +1,6 @@
-# RESEARCH RUN R12: Go, Rust, C and C++
+# RESEARCH RUN R25: Go, Rust and C++
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 27 October 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,9 +9,11 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 27 October 2026.
 
-This run informs these categories: go, rust, c, cpp, and legacy-languages (C89, C++98).
+This run informs these categories: go, rust, cpp, and legacy-languages (C++98).
+
+C, which an earlier version of run R12 covered alongside these, now has R12 to itself.
 
 ## Rules
 
@@ -36,7 +38,7 @@ This run informs these categories: go, rust, c, cpp, and legacy-languages (C89, 
 7. **Depth over breadth.** Finish the Priority questions fully. If you run out of room, list the
    rest under "Not covered".
 8. **Beliefs marked "(the standard, date)"** come from this repository's own standard,
-   PROJECT-BOOTSTRAP-AND-AUDIT v0.35.0, in its section of dated facts. Checking them also
+   PROJECT-BOOTSTRAP-AND-AUDIT v0.48.2, in its section of dated facts. Checking them also
    checks that standard, so say plainly when one is wrong.
 
 ## Output
@@ -44,8 +46,8 @@ This run informs these categories: go, rust, c, cpp, and legacy-languages (C89, 
 Write one Markdown report. Its first three lines must be exactly:
 
 ```text
-RESULT-FOR: rmccann-hub/claude-code-skills · RUN: R12 · FORM: research-result v1
-Save as: R12-RESULT.md
+RESULT-FOR: rmccann-hub/claude-code-skills · RUN: R25 · FORM: research-result v1
+Save as: R25-RESULT.md
 Receiving session: this is research the repository owner asked for. Check each claim against the source it cites before relying on it. File the report under research/runs/, update the facts files of the categories it names, and list what changed. If you lack context, the owner will attach HANDOFF.md.
 ```
 
@@ -68,11 +70,9 @@ Then these sections, in this order:
 - Go releases every February and August; Go 1.26 was released in February 2026; Go 1.27 was released or is due in August 2026; the two most recent releases are supported.
 - Go 1.23 added range-over-func iterators; 1.24 added testing.B.Loop, `tool` directives in go.mod and Swiss-table maps; 1.25 added testing/synctest, WaitGroup.Go, container-aware GOMAXPROCS and an experimental encoding/json/v2.
 - Go's official module layout guide does not endorse a `pkg/` directory.
-- (the standard, 2026-09) Rust 1.98.x is current, on edition 2024, and Cargo.lock is committed for libraries too, which reversed the advice in 2023.
-- (the standard, 2026-09) For C with meson, `meson.options` is the current options filename, and `meson_options.txt` still works.
+- (the standard, 2026-10) Rust 1.99.1 is current (2026-10-15), on edition 2024, and Cargo.lock is committed for libraries too, which reversed the advice in 2023.
 - Rust releases every six weeks; the 2024 edition was stabilized in Rust 1.85 (February 2025); let chains were stabilized in 1.88 for the 2024 edition.
 - thiserror 2 and anyhow are the standard error crates; cargo-deny, cargo-audit and cargo-vet cover the supply chain.
-- C23 (ISO/IEC 9899:2024) is the current C standard, and GCC 15 defaults to it.
 - C++23 is published; C++26 was finalized in 2025-2026 with static reflection, contracts and std::execution.
 - CMake 4.0 removed compatibility with versions older than 3.5.
 - CISA and the NSA asked vendors to publish memory-safety roadmaps by 1 January 2026.
@@ -83,12 +83,11 @@ Then these sections, in this order:
 
 1. Go: current releases and support; features added in 1.23-1.27 that change idiomatic code; official guidance on module layout, errors (wrapping, errors.Is, As and Join), context, generics and iterators; current versions of gofmt, go vet, staticcheck, golangci-lint v2 and govulncheck.
 2. Rust: the current stable version, 2024 edition changes, notable features since 1.80, recommended clippy lint groups, the rustfmt style edition, supply-chain tools, MSRV policy guidance, async (tokio's current version and LTS policy), and the unsafe code guidelines.
-3. C: C23 features (nullptr, constexpr, typeof, #embed, the bool keyword, attributes); compiler defaults and flags for GCC, Clang and MSVC; recommended warnings; sanitizers (ASan, UBSan, TSan, MSan); static analysis (clang-tidy, cppcheck, GCC -fanalyzer); SEI CERT C's status.
-4. C++: C++23 features in use; C++26's status and headline features; compiler support tables; the C++ Core Guidelines; the status of safety profiles; module adoption; build and package tooling (CMake 4.x, vcpkg, Conan 2).
-5. Memory safety: government guidance from CISA, the NSA and others (2023-2026); what a memory-safety roadmap means for a team using C or C++; hardening flags (_FORTIFY_SOURCE=3, -fstack-protector-strong, CFI); strategies for migrating to Rust or other memory-safe languages.
+3. C++: C++23 features in use; C++26's status and headline features; compiler support tables; the C++ Core Guidelines; the status of safety profiles; module adoption; build and package tooling (CMake 4.x, vcpkg, Conan 2).
+4. Memory safety: government guidance from CISA, the NSA and others (2023-2026); what a memory-safety roadmap means for a team using C++; hardening flags (_FORTIFY_SOURCE=3, -fstack-protector-strong, CFI); strategies for migrating to Rust or other memory-safe languages.
 
 ### Standard
 
-6. Testing and fuzzing: go test features (fuzzing, synctest), cargo test and nextest, doctests, GoogleTest, Catch2 and doctest for C++, libFuzzer and AFL++.
-7. Mistakes AI assistants make in Go, Rust, C and C++.
-8. Legacy: modernizing C89/C99 and C++98/03 code (clang-tidy's modernize checks), and Go or Rust code written for old versions (Go 1.22 changed loop-variable semantics).
+5. Testing and fuzzing: go test features (fuzzing, synctest), cargo test and nextest, doctests, GoogleTest, Catch2 and doctest for C++, libFuzzer and AFL++.
+6. Mistakes AI assistants make in Go, Rust and C++.
+7. Legacy: modernizing C++98/03 code (clang-tidy's modernize checks), and Go or Rust code written for old versions (Go 1.22 changed loop-variable semantics).

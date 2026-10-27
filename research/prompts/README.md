@@ -1,6 +1,6 @@
 # Research runs
 
-Twenty-four prompts, one file each. Each file is the whole prompt: paste all of it into a new
+Twenty-five prompts, one file each. Each file is the whole prompt: paste all of it into a new
 claude.ai chat with Research turned on (or Web search, if Research isn't offered). Run them
 in any order, several at a time in separate chats. Priority 1 first.
 
@@ -20,7 +20,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R09 | 2 | [R09-python.md](R09-python.md) | Python and Python for data | python, and the Python side of data-and-sql and excel |
 | R10 | 2 | [R10-typescript-web.md](R10-typescript-web.md) | TypeScript, JavaScript, Node.js, HTML, CSS and the web front end | typescript-javascript, html-css, accessibility (web), visual-theme (CSS) |
 | R11 | 2 | [R11-dotnet-powershell-windows.md](R11-dotnet-powershell-windows.md) | C# and .NET, PowerShell, Windows Server and Active Directory | csharp-dotnet, powershell, windows-server, and legacy-languages (.NET Framework, Windows PowerShell 5.1, VBScript) |
-| R12 | 3 | [R12-go-rust-c-cpp.md](R12-go-rust-c-cpp.md) | Go, Rust, C and C++ | go, rust, c, cpp, and legacy-languages (C89, C++98) |
+| R12 | 1 | [R12-c-and-meson.md](R12-c-and-meson.md) | C built with Meson: standards, compilers, warnings, hardening, sanitizers, static analysis, Meson itself, and C security | c (`c-coding` and `c-security`), and the standard's C with Meson rows |
 | R13 | 3 | [R13-java-kotlin-php-ruby-perl.md](R13-java-kotlin-php-ruby-perl.md) | Java, Kotlin, PHP, Ruby and Perl | java, kotlin, php, ruby, and legacy-languages (Perl, PHP 5-7, Java 8) |
 | R14 | 2 | [R14-data-sql.md](R14-data-sql.md) | Data and SQL | data-and-sql, epicor-kinetic (SQL Server), excel (data connections) |
 | R15 | 3 | [R15-shell-config-containers-linux-cloud.md](R15-shell-config-containers-linux-cloud.md) | Shell, configuration formats, containers, Kubernetes, infrastructure as code, Linux, networking and cloud | shell, config-formats, containers, kubernetes, infrastructure-as-code, cloud, linux, networking-security, linux-gaming |
@@ -33,6 +33,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R23 | 2 | [R23-human-factors.md](R23-human-factors.md) | Human factors: the habits, notions and mindsets common to people that look wasteful from outside and serve a purpose, how to tell one from a bias, designing and automating with them, and the limit that keeps agents gathering facts unbiased | human-factors, optimization-and-scheduling, and every skill that designs, automates or optimizes work people do |
 | R22 | 1 | [R22-one-command-front-door.md](R22-one-command-front-door.md) | One command from any repository: the route into sessions and knowing which copy ran, fewer and better questions for an existing repository, the new-project interview and recommendation, answers kept between runs, and testing the front door | project-bootstrap-and-audit (the routing table, Phases 1, 3 and 8, Choosing a Language and Runtime, Choosing the Shape, Starter File Contents, Standards Distribution, Cross-Repository Contracts), skill-builder (distribution, versions and trigger tests), agent-context-files, ai-agent-security (repository content as data) |
 | R24 | 1 | [R24-installs-provenance-registries.md](R24-installs-provenance-registries.md) | Installing exactly what was locked, verifying provenance on install and on update, and registries' defences against invented names | supply-chain-security, keeping-current, ci-cd, and the install advice in every language skill |
+| R25 | 3 | [R25-go-rust-cpp.md](R25-go-rust-cpp.md) | Go, Rust and C++, split from R12 | go, rust, cpp, and legacy-languages (C++98) |
 
 Already covered in the building session, so there's no run for them: the skill-authoring
 rules; licensing and ownership; the licences of reference sources; this repository's own
