@@ -72,8 +72,8 @@ strict = true
 - **A mutable default is shared across calls** (fact `py-mutable-default`): default to `None`,
   as below. Ruff's `B006` catches it.
 - **Pass `encoding="utf-8"` to every text `open()`,** `read_text()` and `write_text()`, and to
-  `subprocess` in text mode the encoding the command writes: usually UTF-8, else its own, or
-  `errors="replace"` (fact `py-subprocess-text`). 3.15 made UTF-8 the default, and still asks
+  `subprocess` in text mode the command's own, usually UTF-8, with `errors="replace"`
+  where bad bytes may pass (fact `py-subprocess-text`). 3.15 made UTF-8 the default, and still asks
   for it: older Pythons use the locale's (fact `py-utf8-default`).
 - **Use `pathlib` for paths,** and `with` for anything that must be closed.
 

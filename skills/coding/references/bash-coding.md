@@ -193,8 +193,8 @@ need `if` or `|| true`. Checking each status by hand is more code to get wrong. 
 rule 2's two cases stopping costs more, so each command relied on is checked.
 
 **git's `-z`.** By default git quotes a name with a byte over 0x80, so a check filtering the
-list by pattern passes having read nothing. `core.quotePath=false` still quotes a tab or a newline;
-`-z` quotes nothing.
+list by pattern passes having read nothing. `core.quotePath=false` still escapes tabs, newlines,
+quotes and backslashes; `-z` escapes none.
 
 **Quoting and arrays.** Unquoted, a script breaks on a name with a space, `*` or `-`; a string
 can't hold arguments with spaces. Costs: noise, and arrays need Bash.
@@ -227,7 +227,7 @@ bash-security holds the versions and the shared facts.
 | `sh-sed-inplace` | BSD needs a suffix | [GNU](https://man7.org/linux/man-pages/man1/sed.1.html), [FreeBSD](https://man.freebsd.org/cgi/man.cgi?query=sed&sektion=1) | "-i[SUFFIX], --in-place[=SUFFIX]" and "[-i extension]" | 2026-10-26 | 2027-10-26 |
 | `sh-google` | Bash only; rewrite past 100 lines | [Google](https://google.github.io/styleguide/shellguide.html) | "the only shell scripting language permitted" and "more than 100 lines long" and "rewrite it in a more structured language" | 2026-10-26 | 2027-10-26 |
 | `sh-google-license` | Google's guides: CC BY 3.0 | [LICENSE](https://raw.githubusercontent.com/google/styleguide/gh-pages/LICENSE) | "Attribution 3.0 Unported" | 2026-10-26 | 2027-10-26 |
-| `sh-git-quotepath` | git quotes unusual names by default; `-z` doesn't | [git-config](https://git-scm.com/docs/git-config) | "bytes with values larger than 0x80" and "control characters are always escaped" and "verbatim using the -z option" and "The default value is true." | 2026-10-27 | 2027-10-27 |
+| `sh-git-quotepath` | git quotes unusual names unless given `-z` | [git-config](https://git-scm.com/docs/git-config) | "bytes with values larger than 0x80" and "Double-quotes, backslash and control characters are always escaped" and "verbatim using the -z option" and "The default value is true." | 2026-10-27 | 2027-10-27 |
 
 ## Sources
 

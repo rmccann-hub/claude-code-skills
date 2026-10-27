@@ -16,8 +16,8 @@ Notable changes to this repository. The format follows
     - treats `["sh", "-c", …]` as a shell;
     - grades unguarded deletes by risk;
     - runs ShellCheck through `shellcheck-py` where it can't be installed;
-    - allows a whole-directory ignore for a rule that flags every call of a kind, once each call
-      is checked.
+    - allows a whole-directory ignore only for a rule that flags calls even when they're safe,
+      where no outside input reaches, with a dated comment.
   - `git-workflows`:
     - its commit-subject workflow and hook take a grammar, `area` or `conventional`;
     - `ci-workflows` and `ci-speed` agree on when CI runs;
@@ -28,7 +28,7 @@ Notable changes to this repository. The format follows
     - commit subjects follow the grammar a repository records;
     - an existing oldest-first record keeps its order;
     - the shipped Vale style skips quoted text within a paragraph;
-    - the wrap check skips tables, code and URLs.
+    - the wrap check is a tested script that skips tables, code and URLs' length.
 
 ### Fixed
 

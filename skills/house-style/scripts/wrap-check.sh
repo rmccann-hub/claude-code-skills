@@ -9,6 +9,7 @@
 LC_ALL=C
 export LC_ALL
 exec awk '
+  { sub(/\r$/, "") }
   FNR == 1 { fence = ""; front = /^---$/; if (front) next }
   front { if (/^---$/) front = 0; next }
   match($0, /^ *(```+|~~~+)/) {

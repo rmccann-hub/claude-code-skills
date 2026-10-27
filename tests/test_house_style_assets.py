@@ -233,3 +233,8 @@ def test_the_wrap_check_skips_fenced_code_and_closes_a_fence_only_on_its_own_mar
 
 def test_a_rule_after_the_first_line_is_not_frontmatter(tmp_path):
     assert wrap_check(tmp_path, f"{LONG}\n---\n{LONG}\n---\n") == (1, [1, 3])
+
+
+def test_the_wrap_check_reads_windows_line_endings_as_the_same_lines(tmp_path):
+    text = f"---\r\ndescription: {LONG}\r\n---\r\n```text\r\n{LONG}\r\n```\r\n{LONG}\r\n"
+    assert wrap_check(tmp_path, text) == (1, [7])
