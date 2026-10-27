@@ -20,7 +20,8 @@ programs and escaping output. Test design is the planned testing skill's. The st
 5. **Check every call that can fail, `fclose` included, and report the first failure.**
 6. **A test exits 0 to pass and 77 to skip;** one that can't run its probe fails, unless
    another environment runs it.
-7. **Move old code one standard at a time,** and let the compiler's errors list the work.
+7. **Move old code one standard at a time,** and let the compiler's errors list the work. A
+   newer standard's header isn't on that list: search for it.
 
 ### Standards and compilers
 
@@ -31,6 +32,9 @@ programs and escaping output. Test design is the planned testing skill's. The st
   `_POSIX_C_SOURCE` is defined before the first `#include`, and GCC 14 and Clang 18 fail the
   call (fact `c-gcc14-errors`).
 - **MSVC has no variable-length arrays and plans none** (fact `c-msvc-default`).
+- **A newer header compiles under an older standard:** GCC 13 and Clang 18 at `-std=c99
+  -pedantic` take C11's `<stdatomic.h>` silently (tried 2026-10-27). Search for `<stdatomic.h>`,
+  `<threads.h>` and `<stdckdint.h>`.
 
 ### Undefined behavior that bites
 
@@ -157,7 +161,9 @@ the directory (fact `c-replace`).
 
 `meson test` passes 0, skips 77 and calls 99 an error (fact `c-meson-exit-codes`). A test that
 can't run its probe prints why and fails, or returns 77 where another job runs it. Test write
-errors with Linux's `/dev/full`, which gives `ENOSPC`.
+errors with Linux's `/dev/full`, which gives `ENOSPC`, or, where the program names its own
+files, a small `tmpfs` given as the output directory; it needs root or `unshare -rm`, so
+without either the test returns 77 where another job runs it.
 
 ### Moving old code forward
 
@@ -185,13 +191,14 @@ Severity uses the standard's status words.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| Standard | No `-std` or `c_std`; C23 features in a C17 project | `GAP`; `DRIFT` for the mismatch | Name C17 |
-| Shallow copies | `=` or `memcpy` of a struct with owned pointers | `BLOCKER` where both copies are freed, else `GAP` | The library's copy |
-| Bounds | A buffer write with no check of the room left at that write | `BLOCKER` where outside data sets the length, else `GAP` | One checked append |
-| Unchecked writes | `fwrite`, `fflush`, `fclose` or the product's `stdout` unchecked; a later status replacing the first | `BLOCKER` where the output is the product, else `GAP` | Check each; keep the first error |
+| Standard | No `-std` or `c_std`; a feature newer than the standard named | `GAP`; `DRIFT` for the mismatch | Name C17 |
+| Shallow copies | `=` or `memcpy` of a struct with owned pointers, in every file; a library's struct copied out of an object that later frees it | `BLOCKER` where both copies are freed, else `GAP` | The library's copy |
+| Bounds | A buffer or fixed-array write with no check of the room left at that write, such as an append after a capped loop | `BLOCKER` where outside data sets the length, else `GAP` | One checked append |
+| Unchecked writes | `fwrite`, `fflush`, `fclose` or the product's `stdout` unchecked; a later call's status, a flush's included, replacing the first | `BLOCKER` where the output is the product, else `GAP` | Check each; keep the first error |
+| Allocations | `p = realloc(p, n)`; an allocation, a library's included, unchecked | `BLOCKER` where outside data sizes it, else `GAP` | A temporary; check each |
 | In-place rewrites | `"w"` on a file that must survive failure | `GAP` | Temporary file, `rename` |
 | Undefined behavior | `x + 1 < x`; a null test after a dereference; casts between pointer types | `BLOCKER` where outside data reaches it, else `GAP` | Test before the operation; `memcpy` |
-| Unprobed tests | Exit 0 when the test couldn't run | `BLOCKER` | Fail, or 77 if another job runs it |
+| Unprobed tests | Exit 0 when any check the test depends on couldn't run | `BLOCKER` | Fail, or 77 if another job runs it |
 | Old C | K&R definitions; `()` called with arguments; `bool` typedefs | `DRIFT` | Prototypes; `<stdbool.h>` |
 
 ## Why

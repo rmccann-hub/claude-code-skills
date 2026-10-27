@@ -23,6 +23,17 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- `coding`'s C modules take in what their first audit, of a C program built with Meson, found
+  wrong or missing in them, each claim checked first:
+  - `c-coding`: newer headers compile silently under an older standard, so search for them; an
+    allocations row; shallow copies searched in every file; appends after a capped loop; a
+    flush's status replacing the first error; a test unprobed in any of its checks; a `tmpfs`
+    where `/dev/full` can't be named;
+  - `c-build`: which `-Werror=` flags may ship; a gate in `meson test` reads the project's build
+    root; rows for Valgrind, threads and static analysis;
+  - `c-security`: `strtol` with `end` unchecked, rated by what the number reaches; C17's
+    overflow check; names the program builds; a response's size cap; HTTPS checked before it's
+    prescribed. Its fact summaries are shorter, to stay under the size limit.
 - `coding`, `git-workflows` and `house-style` take in what two audits of real repositories found
   wrong or missing in them, each claim checked first:
   - `coding`:
