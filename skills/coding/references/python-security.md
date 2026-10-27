@@ -142,22 +142,20 @@ the project's own tools whose calls all pass lists, ignore both there, saying wh
 
 ## Why
 
-**1 to 5. Input that becomes commands, code, queries or files.** List arguments for
-`subprocess`, JSON or `safe_load` for data, placeholders for SQL, `tempfile`'s safe functions,
-and a containment check on every path from input. Each unsafe call runs or writes what the input
-says, and Python's own docs warn on every one (facts `py-subprocess-shell`, `py-eval`,
-`py-pickle`, `py-yaml-load`, `py-sql-params`, `py-mktemp`). Cost: pipes and globbing are written
-in Python instead, and the containment check also rejects a symlink in the base that points out,
-since `resolve()` follows it. Otherwise: `pickle` between processes inside one trust boundary,
-such as a cache only the program writes, signed with `hmac` where it could be tampered with.
+**1 to 5. Input that becomes commands, code, queries or files.** List arguments for `subprocess`,
+JSON or `safe_load` for data, placeholders for SQL, `tempfile`'s safe functions, and a containment
+check on every path from input. A list that starts a shell, such as `["sh", "-c", …]`, parses its
+command string as `shell=True` does. Each unsafe call runs or writes what the input says, and
+Python's own docs warn on every one (facts `py-subprocess-shell`, `py-eval`, `py-pickle`,
+`py-yaml-load`, `py-sql-params`, `py-mktemp`). Cost: pipes and globbing are written in Python
+instead, and the containment check also rejects a symlink in the base that points out, since
+`resolve()` follows it. Otherwise: `pickle` between processes inside one trust boundary, such as a
+cache only the program writes, signed with `hmac` where it could be tampered with.
 
-A list that starts a shell, such as `["sh", "-c", …]`, parses its command string as shell
-syntax, as `shell=True` does, so input inside it runs.
-
-**`S603` and `S607` by directory.** Ruff calls `S603` prone to false positives, and hundreds
-of `noqa` lines bury the few that matter. Cost: the ignore hides new calls there, a `sh -c`
-included, so review them, and `git grep -n -e '"-c"' -- tools` finds a shell. Otherwise: where
-calls take outside input, as in a service, suppress each line.
+**`S603` and `S607` by directory.** Ruff calls `S603` prone to false positives (fact
+`py-ruff-s603`), and hundreds of `noqa` lines bury the few that matter. Cost: the ignore hides new
+calls there, a `sh -c` included, so review them, and `git grep -n -e '"-c"' -- tools` finds a shell.
+Otherwise: where calls take outside input, as in a service, suppress each line.
 
 **6. `secrets` for tokens.** `random` is built for modeling and simulation, so its output can be
 predicted; `secrets` draws on the operating system's secure source (fact `py-secrets`). It costs

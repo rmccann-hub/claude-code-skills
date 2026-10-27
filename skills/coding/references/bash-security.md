@@ -139,8 +139,8 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 **Why.** An empty variable in a delete path deletes from the root directory, and `${dir:?}`
 costs four characters (fact `sh-sc2115`). A file named `-rf` becomes an option without `--`.
 
-**Severity.** A variable set to a constant in the same file can't be empty, so it's a `GAP`: the
-guard costs nothing and survives an edit. A value from input or the environment can be.
+**Severity.** A value from input or the environment can be empty: `BLOCKER`. A constant set in
+the file, or a checked `mktemp` result, can't: `GAP`, as the guard costs nothing.
 
 **What it costs.** A second run to delete for real. A script run unattended, such as from
 cron, passes `--delete` in its schedule, so the default stays safe.
@@ -205,7 +205,7 @@ this one holds the shells' and tools' versions.
 | `sh-echo` | `echo` isn't portable with escapes or a leading option | [POSIX.1-2024 echo](https://pubs.opengroup.org/onlinepubs/9799919799/utilities/echo.html) | "It is not possible to use echo portably across all POSIX systems unless escape sequences are omitted" | 2026-10-26 | 2027-10-26 |
 | `sh-cd-empty` | Bash 5.3 made `cd ""` an error; before it, `cd ""` succeeds | [CHANGES](https://tiswww.case.edu/php/chet/bash/CHANGES) | "Per POSIX, a null pathname argument to" and "is now an error" | 2026-10-27 | 2027-10-27 |
 | `sh-shellcheck` | 0.11.0 (2025-08-03); next flags `grep -q` | [Changelog](https://raw.githubusercontent.com/koalaman/shellcheck/master/CHANGELOG.md) | "v0.11.0 - 2025-08-03" and "in pipelines under pipefail" | 2026-10-26 | 2027-04-26 |
-| `sh-shellcheck-py` | PyPI's `shellcheck-py` 0.11.0.1 wraps ShellCheck | [PyPI](https://pypi.org/pypi/shellcheck-py/json) | "Python wrapper around invoking shellcheck" and "shellcheck-py/0.11.0.1" | 2026-10-27 | 2027-04-27 |
+| `sh-shellcheck-py` | PyPI's `shellcheck-py` wraps ShellCheck | [PyPI](https://pypi.org/pypi/shellcheck-py/json) | "Python wrapper around invoking shellcheck" | 2026-10-27 | 2027-04-27 |
 | `sh-bats-version` | bats-core 1.14.0 (2026-07-21) | [Changelog](https://raw.githubusercontent.com/bats-core/bats-core/master/docs/CHANGELOG.md) | "[1.14.0] - 2026-07-21" | 2026-10-26 | 2027-04-26 |
 | `sh-bash-current` | 5.3 is current | [Bash](https://tiswww.case.edu/php/chet/bash/bashtop.html) | "The current version of bash is bash-5.3" | 2026-10-26 | 2027-04-26 |
 | `sh-bash53-nofork` | 5.3 added `${ cmd; }` | [NEWS](https://tiswww.case.edu/php/chet/bash/NEWS) | "capture the output of COMMAND without forking" | 2026-10-26 | 2027-10-26 |

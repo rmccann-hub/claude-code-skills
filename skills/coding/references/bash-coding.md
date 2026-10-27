@@ -203,11 +203,12 @@ can't hold arguments with spaces. Costs: noise, and arrays need Bash.
 
 **Tools.** The standard's *Language toolchains* names these three. ShellCheck finds unquoted
 expansions, masked statuses (SC2155) and unguarded deletes (SC2115); shfmt ends layout debates.
-Costs: three tools to pin, and some directives.
+Costs: three tools to pin, and some directives. A hand read misses most of what ShellCheck
+finds, so the lint stays `UNVERIFIABLE-HERE`.
 
 ## Facts
 
-bash-security holds the shells' and tools' versions, and the facts both modules use.
+bash-security holds the versions and the shared facts.
 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
