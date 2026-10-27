@@ -32,8 +32,8 @@ Notable changes to this repository. The format follows
   - `c-build`: which `-Werror=` flags may ship; a gate in `meson test` reads the project's build
     root; rows for Valgrind, threads and static analysis;
   - `c-security`: `strtol` with `end` unchecked, rated by what the number reaches; C17's
-    overflow check; names the program must make; a response's size cap; HTTPS checked before
-    it's prescribed.
+    overflow check; names the program builds; a response's size cap; HTTPS checked before it's
+    prescribed. Its fact summaries are shorter, to stay under the size limit.
 - `coding`, `git-workflows` and `house-style` take in what two audits of real repositories found
   wrong or missing in them, each claim checked first:
   - `coding`:

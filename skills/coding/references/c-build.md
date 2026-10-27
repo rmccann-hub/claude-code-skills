@@ -11,8 +11,9 @@ git-workflows.
 
 1. **Set `meson_version` to the oldest Meson that builds the project,** and prove it in CI.
 2. **Configure in `project()`, and add flags with `add_project_arguments`.**
-3. **Ship without `werror`, and only `-Werror=` flags whose meaning doesn't grow,** such as the
-   four below. **CI counts warnings under the shipped flags** and fails above a limit.
+3. **Ship without `werror`; the only `-Werror=` flags are the four below,** which OpenSSF
+   recommends (fact `cb-openssf`). Under Clang, `incompatible-pointer-types` also fails a dropped
+   `const`. **CI counts warnings under the shipped flags** and fails above a limit.
 4. **Ask for hardening yourself,** filtered by `cc.get_supported_arguments`.
 5. **Test under ASan and UBSan, and Valgrind on a plain build;** ask the binary if it's
    instrumented.
@@ -91,7 +92,8 @@ fi
 ```
 
 Ninja shows warnings only for files it compiles, and color breaks the pattern. A gate run by
-`meson test` reads `meson.project_build_root()`, never a fixed `build/` (fact `cb-build-root`).
+`meson test` takes `meson.project_build_root()` as an argument, never a fixed `build/` (fact
+`cb-build-root`).
 
 ### Hardening and the distributions
 
@@ -164,7 +166,7 @@ Severity uses the standard's status words.
 |---|---|---|---|
 | Floor | A feature above `meson_version` | `DRIFT` | Raise it; build on it |
 | Shipped flags | `werror=true` or `c_args` in `default_options`; a broad `-Werror=` group, such as `format`; `add_global_arguments` | `GAP` | Move them; narrow `-Werror=` |
-| Warning gate | None, or flags other than the release's; a fixed build path | `GAP`; `DRIFT` for the path | The count gate |
+| Warning gate | None, or flags other than the release's; a gate under `meson test` that assumes `build/` | `GAP`; `DRIFT` for the path | The count gate |
 | Hardening | Flags missing, or `_FORTIFY_SOURCE=2` | `GAP` | The set above |
 | Sanitizer job | None, or not checked by `nm` | `GAP`; `BLOCKER` if uninstrumented | `b_sanitize` |
 | Valgrind, threads | No Valgrind setup; threaded code with no TSan job | `GAP` | The setup above; `b_sanitize=thread` |
@@ -210,7 +212,7 @@ each day, at the cost of updating by hand.
 | `cb-sanitizers` | UBSan continues; TSan alone | [GCC](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html) | "may indicate success even when errors have been reported" and "cannot be combined with -fsanitize=address" | 2026-10-27 | 2027-10-27 |
 | `cb-fortify3` | Level 3 floors | [2.33](https://lists.gnu.org/archive/html/info-gnu/2021-02/msg00000.html), [2.35](https://savannah.gnu.org/news/?id=10075) | "available only on LLVM 9 and later" and "compiling with glibc and gcc 12 and later" | 2026-10-27 | 2027-10-27 |
 | `cb-valgrind` | Status passed through | [Valgrind](https://valgrind.org/docs/manual/manual-core.html) | "will always be the return value of the process being simulated" | 2026-10-27 | 2027-10-27 |
-| `cb-openssf` | Guide of 2026-08-20 | [OpenSSF](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html) | "2026-08-20" and "should not be used in this blanket form when distributing source code" and "Requires -O1 or higher" and "2× to 4× slowdown" and "20× to 50×" and "CC BY 4.0" | 2026-10-27 | 2027-04-27 |
+| `cb-openssf` | Guide of 2026-08-20 | [OpenSSF](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html) | "2026-08-20" and "should not be used in this blanket form when distributing source code" and "treating obsolete C constructs as errors" and "Requires -O1 or higher" and "2× to 4× slowdown" and "20× to 50×" and "CC BY 4.0" | 2026-10-27 | 2027-04-27 |
 | `cb-gcc-opt-warnings` | Warnings need `-O` | [GCC](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html) | "may not be issued at all unless optimization is enabled" | 2026-10-27 | 2027-10-27 |
 | `cb-ubuntu` | Ubuntu patches GCC | [Ubuntu](https://documentation.ubuntu.com/security/docs/security-features/security-features-overview/) | "Built with Fortify Source gcc patch" | 2026-10-27 | 2027-04-27 |
 | `cb-debian` | Debian | [dpkg-buildflags](https://manpages.debian.org/testing/dpkg-dev/dpkg-buildflags.1.en.html) | "during build of Debian packages" and "adds -D_FORTIFY_SOURCE=2" and "if relro is not enabled. Disabled by default." | 2026-10-27 | 2027-04-27 |

@@ -15,11 +15,15 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   report: a library's struct copied from an object that then frees it, an append past a fixed
   array after a capped loop, a flush's status replacing a write's error, and a fixed-length
   scheme comparison. An independent check confirmed all four. The first three now have words
-  in their rows: the audit had checked the right row in the wrong file. The fourth is a logic
+  in their rows; the audit checked the shallow-copy row in one file only. The fourth is a logic
   error no C module should own.
-- **Size:** the three modules end between 15,700 and 15,900 characters, under the limit and over
-  the 15,000 target. The next C coverage, threads and signals, is a fourth module, not more
-  here.
+- **Reviewed:** a cold reader found two high problems, both fixed: a claim that four
+  `-Werror=` flags never grow, false under Clang, and mapping a value's `/` after the template
+  was filled, when it can no longer be told from the template's own. Six medium and five low
+  were fixed too.
+- **Size:** c-security's fact summaries were shortened to fit. The three modules end between
+  15,800 and 15,950 characters, under the limit and over the 15,000 target. The next C
+  coverage, threads and signals, is a fourth module, not more here.
 
 ## 2026-10-27 — C in the `coding` skill: `c-coding`, `c-build` and `c-security`
 

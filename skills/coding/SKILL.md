@@ -128,9 +128,9 @@ status words are the standard's:
 - The owner's earlier language skills, as lists of topics, checks and lessons. Nothing was
   copied from them. What each kept, dropped and why is in this skill's repository, in the
   research results of 2026-10-26.
-- Research runs R09 (Python), R10 (TypeScript and the web), R11 (.NET and PowerShell), R15
-  (shell) and R12 (C and Meson), filed in this skill's repository. They were leads until each claim was checked at
-  its source.
+- Research runs R09 (Python), R10 (TypeScript and the web), R11 (.NET and PowerShell), R12
+  (C and Meson) and R15 (shell), filed in this skill's repository. They were leads until each
+  claim was checked at its source.
 
 ## When something here is wrong
 

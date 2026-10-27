@@ -12,9 +12,10 @@ The language is c-coding's; flags, sanitizers and fuzzing, c-build's; secret sto
    `strcat`, `sprintf` or `scanf("%s")` on outside data.
 2. **A format string is always a literal:** `printf("%s", s)`, never `printf(s)`.
 3. **Parse numbers with `strtol`, and check counts from outside:** against the array they
-   index, and with `ckd_*` before they size an allocation.
-4. **A name from outside is one allowlisted component,** opened with `openat`, `O_NOFOLLOW`,
-   and `O_CREAT | O_EXCL` to create. `fstat` after, never `stat` before.
+   index, and for overflow before they size an allocation.
+4. **A name from outside is one allowlisted component,** or, built by the program, mapped as
+   below; opened with `openat`, `O_NOFOLLOW`, and `O_CREAT | O_EXCL` to create. `fstat` after,
+   never `stat` before.
 5. **Run programs with `posix_spawn` or `execve` and an argument array,** never `system` or
    `popen` with outside data.
 6. **Make temporary files with `mkstemp` or `tmpfile`,** never `tmpnam` or `mktemp`.
@@ -35,21 +36,20 @@ The language is c-coding's; flags, sanitizers and fuzzing, c-build's; secret sto
 
 ### Numbers, sizes and counts from outside
 
-- **Parse with `strtol` or `strtoul`, never `atoi` or `sscanf("%d")`,** which miss errors
-  (fact `csec-numbers`). Set `errno = 0`, then require digits, the terminator at `end`, no
-  `ERANGE`, and a range check. `strtoul` takes `-1` as a huge value.
-- **`strtol(s, NULL, 10)` loses errors as `atoi` does:** letters parse as 0.
+- **Parse with `strtol` or `strtoul` and `&end`, never `atoi`, `sscanf("%d")` or a null
+  `end`,** which miss errors (fact `csec-numbers`). Set `errno = 0`, then require digits, the
+  terminator at `end`, no `ERANGE`, and a range check. `strtoul` takes `-1` as a huge value.
 - **Check a count against the array it indexes,** and run C23's `ckd_mul(&total, n, size)`
-  (GCC 14, Clang 18) before `malloc(total)` (fact `csec-ckd`). In C17, GCC's and Clang's
-  `__builtin_mul_overflow` (fact `csec-overflow-builtins`), or `size && n > SIZE_MAX / size`.
+  before `malloc(total)` (fact `csec-ckd`). In C17, `__builtin_mul_overflow` (fact
+  `csec-overflow-builtins`), or refuse `size != 0 && n > SIZE_MAX / size`, both `size_t`.
 
 ### Paths from outside data
 
 Reject, don't repair, a name a caller supplies: the allowlist refuses `/`, `..`, an empty name,
-a leading `-`, spaces and control bytes. A name the program must make, from a template filled
-with metadata, can't be refused: after filling it, map each component that is empty, `.` or
-`..`, and each `/` and control byte in a value, to safe text. `O_NOFOLLOW` checks only the last component (fact `csec-nofollow`), hence one;
-for more, Linux 5.6's `openat2` with `RESOLVE_BENEATH` (fact `csec-openat2`).
+a leading `-`, spaces and control bytes. A name built from a template and outside values can't
+be refused: map each value's `/` and control bytes before filling, then each empty, `.` or `..`
+component. `O_NOFOLLOW` checks only the last component (fact `csec-nofollow`), hence one; for
+more, Linux 5.6's `openat2` with `RESOLVE_BENEATH` (fact `csec-openat2`).
 
 ```c
 #define _POSIX_C_SOURCE 200809L
@@ -113,8 +113,8 @@ without setting `errno` (fact `csec-system`).
   or the environment, and never log `argv` whole.
 - **libcurl allows every protocol it has** (fact `csec-curl`): set `CURLOPT_PROTOCOLS_STR` and
   `CURLOPT_REDIR_PROTOCOLS_STR` to `"https"`; leave `CURLOPT_SSL_VERIFYPEER` on. Cap a
-  response with `CURLOPT_MAXFILESIZE_LARGE` (fact `csec-curl-max`) and in the write callback.
-  Before prescribing HTTPS, check that the host answers it.
+  response with `CURLOPT_MAXFILESIZE_LARGE`, mid-transfer from curl 8.4.0 (fact
+  `csec-curl-max`), or count bytes in the write callback. Check a host answers HTTPS first.
 - **Wipe a secret with `explicit_bzero` or C23's `memset_explicit`,** not `memset`, which
   the compiler may remove (fact `csec-wipe`).
 
@@ -132,19 +132,19 @@ without setting `errno` (fact `csec-system`).
 |---|---|---|---|
 | Copies | `gets`, `strcpy`, `strcat`, `sprintf`, `scanf("%s"`; returns dropped | `BLOCKER` if reachable, else `GAP` | Bound and check (fact `csec-strlcpy`) |
 | Formats | A non-literal format; no `-Wformat=2` | `BLOCKER` if reachable, else `GAP` | `"%s"` (fact `csec-format`) |
-| Numbers, sizes | `atoi`, `sscanf("%d")`, `strtol` with `end` unchecked; an unchecked index or size from input | `BLOCKER` where it indexes or sizes memory, else `GAP` | A bound; `ckd_mul` (fact `csec-ckd`) |
-| Paths | Input joined into a path; a made component left `.` or `..`; no `O_NOFOLLOW`; `stat` before `open` | `BLOCKER` if reachable, else `GAP` | Allowlist, `openat` (fact `csec-nofollow`) |
+| Numbers, sizes | `atoi`, `sscanf("%d")`, `strtol` with `end` unchecked; an unchecked index or size from input | `BLOCKER` where input reaches it and it indexes or sizes memory, else `GAP` | A bound; `ckd_mul` (fact `csec-ckd`) |
+| Paths | Input joined into a path; a made component left empty, `.` or `..`; no `O_NOFOLLOW`; `stat` before `open` | `BLOCKER` if reachable, else `GAP` | Allowlist, `openat` (fact `csec-nofollow`) |
 | Commands | `system`, `popen`; `execvp` in privileged code | `BLOCKER` if reachable, else `GAP` | `posix_spawn` (fact `csec-system`) |
 | Temporary files | `tmpnam`, `mktemp`, a fixed `/tmp` name | `BLOCKER` if privileged, else `GAP` | `mkstemp` (fact `csec-mktemp`) |
 | Output | Raw outside text in a log, terminal or parsed file | `GAP` | Escape it (fact `csec-output`) |
-| Secrets, transport | A secret in `argv`, a log or unwiped; `http://`; verification off; no size cap | `BLOCKER` if reachable, else `GAP`; `GAP` where the host has no HTTPS | Facts `csec-cmdline`, `csec-wipe`, `csec-curl` |
+| Secrets, transport | A secret in `argv`, a log or unwiped; `http://`; verification off; no size cap | `BLOCKER` if reachable, else `GAP`; `GAP` for no size cap, and for `http://` to a host with no HTTPS | Facts `csec-cmdline`, `csec-wipe`, `csec-curl` |
 | Roadmap | Shipped C parsing input, with no memory-safety plan | `GAP` | Publish one (fact `csec-cisa`) |
 
 ## Why
 
 **1 and 3. Bounds and counts.** Out-of-bounds writes are fifth in the 2025 CWE Top 25 (fact
-`csec-top25`); an entry check misses a later write. Others: Annex K, which a 2015 WG14 paper
-proposed removing (fact `csec-annex-k`). Cost: a size with every buffer.
+`csec-top25`); an entry check misses a later write. Others: Annex K, proposed for removal (fact
+`csec-annex-k`). Cost: a size with every buffer.
 
 **2. Literal formats.** An outside format reads and writes memory through `%s` and `%n`.
 Cost: none. A wrapper taking a format needs `__attribute__((format(printf, …)))`.
@@ -160,8 +160,8 @@ in C. Otherwise: `system` on a constant.
 change what's fetched. Cost: an escape step, a secret file.
 
 **The roadmap.** CISA and the FBI's non-binding guidance asked for one by the end of 2025 (fact
-`csec-cisa`). This module's advice: name the code parsing input, what guards it (c-build), and
-whether it could move to a memory-safe language, dated.
+`csec-cisa`): name the code parsing input, what guards it (c-build), and whether it could move
+to a memory-safe language, dated.
 
 ## Facts
 
@@ -172,8 +172,8 @@ whether it could move to a memory-safe language, dated.
 | `csec-annex-k` | Annex K: optional; removal proposed | [N1967](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1967.htm) | "new, optional functions" and "we propose that Annex K be either removed" | 2026-10-27 | 2027-10-27 |
 | `csec-format` | `format-security` skips calls with arguments | [OpenSSF](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html) | "2026-08-20" and "used without arguments as errors" and "(-Wformat-nonliteral)" | 2026-10-27 | 2027-04-27 |
 | `csec-ckd` | `<stdckdint.h>`: GCC 14, Clang 18 | [GCC 14](https://gcc.gnu.org/gcc-14/changes.html), [Clang](https://clang.llvm.org/c_status.html) | "The <stdckdint.h> header" and "Towards Integer Safety N2683 Clang 18" | 2026-10-27 | 2027-04-27 |
-| `csec-overflow-builtins` | GCC's and Clang's checked arithmetic | [GCC](https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html), [Clang](https://clang.llvm.org/docs/LanguageExtensions.html) | "checking whether the operations overflowed" and "Clang provides the following checked arithmetic builtins" | 2026-10-27 | 2027-10-27 |
-| `csec-curl-max` | libcurl's size cap | [MAXFILESIZE_LARGE](https://curl.se/libcurl/c/CURLOPT_MAXFILESIZE_LARGE.html) | "If the transfer instead exceeds the limit while it is in progress, libcurl aborts it at that point." | 2026-10-27 | 2027-04-27 |
+| `csec-overflow-builtins` | Checked arithmetic | [GCC](https://gcc.gnu.org/onlinedocs/gcc/Integer-Overflow-Builtins.html), [Clang](https://clang.llvm.org/docs/LanguageExtensions.html) | "checking whether the operations overflowed" and "Clang provides the following checked arithmetic builtins" | 2026-10-27 | 2027-10-27 |
+| `csec-curl-max` | libcurl's size cap | [MAXFILESIZE_LARGE](https://curl.se/libcurl/c/CURLOPT_MAXFILESIZE_LARGE.html) | "If the transfer instead exceeds the limit while it is in progress, libcurl aborts it at that point." and "Before curl 8.4.0, the limit was not applied to transfers in progress." | 2026-10-27 | 2027-04-27 |
 | `csec-nofollow` | `O_NOFOLLOW`: last component only | [open(2)](https://man7.org/linux/man-pages/man2/open.2.html) | "earlier components of the pathname will still be followed" | 2026-10-27 | 2027-10-27 |
 | `csec-openat2` | `openat2`: Linux 5.6, no glibc wrapper | [openat2(2)](https://man7.org/linux/man-pages/man2/openat2.2.html) | "Linux 5.6." and "glibc provides no wrapper for openat2()" | 2026-10-27 | 2027-04-27 |
 | `csec-system` | `system`, `popen`; `secure_getenv`; `posix_spawn` | [system](https://pubs.opengroup.org/onlinepubs/9799919799/functions/system.html), [posix_spawn](https://pubs.opengroup.org/onlinepubs/9799919799/functions/posix_spawn.html), [popen](https://pubs.opengroup.org/onlinepubs/9799919799/functions/popen.html), [system(3)](https://man7.org/linux/man-pages/man3/system.3.html), [getenv(3)](https://man7.org/linux/man-pages/man3/getenv.3.html) | "invoked the sh utility using" and "PATH could be manipulated" and "returns NULL in cases where" and "an error number shall be returned" | 2026-10-27 | 2027-10-27 |
@@ -196,7 +196,7 @@ Rules and examples are this module's own; sources are quoted briefly.
 | [POSIX.1-2024](https://pubs.opengroup.org/onlinepubs/9799919799/) | C library and processes | The Open Group, all rights reserved |
 | [Linux man-pages](https://man7.org/linux/man-pages/) | Libraries and system calls | Linux-man-pages-copyleft |
 | [WG14 N1967](https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1967.htm) | Annex K | WG14 document |
-| [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/c_status.html) | `ckd_*` | GFDL; Apache-2.0 |
+| [GCC](https://gcc.gnu.org/), [Clang](https://clang.llvm.org/) | Overflow checks | GFDL; Apache-2.0 |
 | [OpenSSF guide](https://best.openssf.org/Compiler-Hardening-Guides/Compiler-Options-Hardening-Guide-for-C-and-C++.html) | Format warnings | CC BY 4.0, attributed |
 | [CISA](https://www.cisa.gov/resources-tools/resources/product-security-bad-practices) | Roadmaps, commands | US government work |
 | [CWE](https://cwe.mitre.org/) | Top 25, CWE-117 | CWE Terms of Use |

@@ -162,7 +162,8 @@ the directory (fact `c-replace`).
 `meson test` passes 0, skips 77 and calls 99 an error (fact `c-meson-exit-codes`). A test that
 can't run its probe prints why and fails, or returns 77 where another job runs it. Test write
 errors with Linux's `/dev/full`, which gives `ENOSPC`, or, where the program names its own
-files, a small `tmpfs` given as the output directory.
+files, a small `tmpfs` given as the output directory; it needs root or `unshare -rm`, so
+without either the test returns 77 where another job runs it.
 
 ### Moving old code forward
 
@@ -191,7 +192,7 @@ Severity uses the standard's status words.
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
 | Standard | No `-std` or `c_std`; a feature newer than the standard named | `GAP`; `DRIFT` for the mismatch | Name C17 |
-| Shallow copies | `=` or `memcpy` of a struct with owned pointers, in every file; a library's struct copied from an object it frees | `BLOCKER` where both copies are freed, else `GAP` | The library's copy |
+| Shallow copies | `=` or `memcpy` of a struct with owned pointers, in every file; a library's struct copied out of an object that later frees it | `BLOCKER` where both copies are freed, else `GAP` | The library's copy |
 | Bounds | A buffer or fixed-array write with no check of the room left at that write, such as an append after a capped loop | `BLOCKER` where outside data sets the length, else `GAP` | One checked append |
 | Unchecked writes | `fwrite`, `fflush`, `fclose` or the product's `stdout` unchecked; a later call's status, a flush's included, replacing the first | `BLOCKER` where the output is the product, else `GAP` | Check each; keep the first error |
 | Allocations | `p = realloc(p, n)`; an allocation, a library's included, unchecked | `BLOCKER` where outside data sizes it, else `GAP` | A temporary; check each |
