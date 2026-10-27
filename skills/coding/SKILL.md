@@ -42,12 +42,14 @@ The contract every change meets:
 7. **Never write a version, a default or a date from memory.** Take it from the module's Facts,
    the standard's *Language toolchains*, or the project's own pins, and check the source when a
    fact is past its check-by date.
-8. **Prove it before you say it's done.** Run the project's own lint, format, type check and
-   tests, as its context file lists them. Report what failed, with the output, and never skip,
-   disable or loosen a check to get to green. The one exception is a single finding you've
-   checked by hand, suppressed on its own line with a comment saying what was checked. Where a
-   rule flags every call of a kind across a directory, and each was checked, it can be ignored
-   for that directory in the linter's config, with that comment there.
+8. **Prove it before you say it's done.** Run the project's own lint, format, type check and tests,
+   as its context file lists them. Report what failed, with the output, and never skip, disable or
+   loosen a check to get to green. There are two exceptions. A single finding you've checked by hand
+   can be suppressed on its own line, with a comment saying what was checked. A rule that flags
+   calls even when they're safe, such as Ruff's `S607`, can be ignored for a directory no outside
+   input reaches, with a dated comment in the linter's config saying what was checked, and each new
+   call there gets the same review. Rules that catch a shell, `eval` or unsafe deserialization stay
+   on.
 9. **Show a destructive command before running it,** with its dry run or a confirmation: deleting
    files, dropping data, force-pushing, or anything a typo turns into a disaster.
 10. **No hidden or bidirectional characters in source.** They make a reviewer read one thing
@@ -97,7 +99,8 @@ status words are the standard's:
 
 - **`BLOCKER`:** a live exposure, or a check reporting success while measuring nothing, such
   as a test helper that can't run its probe, prints `UNPROBED` and exits 0, in any language.
-  The fix is to fail, or to skip so the test runner counts it.
+  The fix is to fail, or, only where another environment runs the check, to skip so the test
+  runner counts it.
 - **`DRIFT`:** configured, but no longer doing what it says.
 - **`GAP`:** missing something the project needs.
 - **`OVER`:** heavier than the project needs.

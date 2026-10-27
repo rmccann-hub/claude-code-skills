@@ -4,12 +4,11 @@ Read this for Python code that takes input from outside: running a command with 
 `eval` and `exec`, `pickle` and `yaml.load`, SQL, archives, temporary files, paths built from
 input, `assert` as a check, and tokens and secrets.
 
-It covers the Python calls that turn input into code, commands, queries or file writes.
-`python-coding` covers the rest of Python: the project, uv, Ruff and its rule sets, types,
-idioms, encodings and time zones. Injection beyond these calls, authentication and cryptography
-are `secure-coding`'s, and escaping for a web page is `web-security`'s. Where a project keeps its
-secrets, and how CI reads them, is the project-bootstrap-and-audit standard's. Which
-dependencies to trust is `supply-chain-security`.
+`python-coding` covers the rest of Python: the project, uv, Ruff and its rule sets, types, idioms,
+encodings and time zones. Other injection, authentication and cryptography are `secure-coding`'s,
+and escaping for a web page is `web-security`'s. Where a project keeps its secrets, and how CI reads
+them, is the project-bootstrap-and-audit standard's. Which dependencies to trust is
+`supply-chain-security`.
 
 ## Rules
 
@@ -131,13 +130,14 @@ Severity uses the standard's status words. The `S` codes are Ruff's, run as
 | Weak tokens | `random` making a token, password or code: `S311` | `BLOCKER` where it guards access, else `GAP` | `secrets` (fact `py-secrets`) |
 | `assert` for checks | `assert` outside tests guarding input or permissions: `S101` | `GAP` | Raise an exception (fact `py-assert-o`) |
 
-`S603` and `S607` flag safe calls too (fact `py-ruff-s603`). Review each; for a directory of
-the project's own tools whose calls all pass lists, ignore both there, saying what was checked:
+`S603` and `S607` flag safe calls too (fact `py-ruff-s603`); review each. Keep `S603` on: it
+alone sees a `sh -c` list. `S607`, a program found on `PATH`, can be ignored for a directory of
+the project's own tools that no outside input reaches, saying when and what was checked:
 
 ```toml
 [tool.ruff.lint.per-file-ignores]
-# Reviewed 2026-10-27: every call in tools/ passes a list, no shell; S602 stays on.
-"tools/**" = ["S603", "S607"]
+# 2026-10-27: tools/ runs programs from PATH by design, on no outside input.
+"tools/**" = ["S607"]
 ```
 
 ## Why
@@ -152,10 +152,11 @@ instead, and the containment check also rejects a symlink in the base that point
 `resolve()` follows it. Otherwise: `pickle` between processes inside one trust boundary, such as a
 cache only the program writes, signed with `hmac` where it could be tampered with.
 
-**`S603` and `S607` by directory.** Ruff calls `S603` prone to false positives (fact
-`py-ruff-s603`), and hundreds of `noqa` lines bury the few that matter. Cost: the ignore hides new
-calls there, a `sh -c` included, so review them, and `git grep -n -e '"-c"' -- tools` finds a shell.
-Otherwise: where calls take outside input, as in a service, suppress each line.
+**`S607` by directory.** `S607` guards against a changed `PATH` (fact `py-ruff-s603`), which a
+developer's own tools rely on by design, and hundreds of `noqa` lines bury the few that matter.
+`S603` is prone to false positives, but it alone sees a shell list. Cost: a new call there that
+should name a full path goes unflagged. Otherwise: where calls take outside input, suppress each
+line.
 
 **6. `secrets` for tokens.** `random` is built for modeling and simulation, so its output can be
 predicted; `secrets` draws on the operating system's secure source (fact `py-secrets`). It costs
@@ -176,11 +177,11 @@ Each named by its ID, here or in `python-coding`.
 | `py-ruff-defaults` | Ruff's defaults span several categories, `B006` among them | [Ruff](https://docs.astral.sh/ruff/rules/) | "omitting any stylistic rules that overlap with the use of a formatter" | 2026-10-26 | 2027-04-26 |
 | `py-ruff-plw1514` | `PLW1514` is in preview, for `open` and related calls | [PLW1514](https://docs.astral.sh/ruff/rules/unspecified-encoding/) | "This rule is unstable and in preview." and "open and related calls" | 2026-10-27 | 2027-04-27 |
 | `py-ruff-unused-noqa` | RUF100 flags a `noqa` that applies to nothing | [RUF100](https://docs.astral.sh/ruff/rules/unused-noqa/) | "noqa directives that are no longer applicable" | 2026-10-27 | 2027-04-27 |
-| `py-ruff-s603` | `S603` flags calls without a shell, with false positives | [S603](https://docs.astral.sh/ruff/rules/subprocess-without-shell-equals-true/) | "initiate a subprocess without a shell" and "Prone to false positives" | 2026-10-27 | 2027-04-27 |
+| `py-ruff-s603` | `S603` flags calls without a shell, with false positives; `S607`, a program found on `PATH` | [S603](https://docs.astral.sh/ruff/rules/subprocess-without-shell-equals-true/), [S607](https://docs.astral.sh/ruff/rules/start-process-with-partial-path/) | "initiate a subprocess without a shell" and "Prone to false positives" and "by adjusting the PATH environment variable" | 2026-10-27 | 2027-04-27 |
 | `py-subprocess-text` | `text=True` decodes with the default unless `encoding` is given | [subprocess](https://docs.python.org/3/library/subprocess.html) | "using the specified encoding and errors or the io.TextIOWrapper default" | 2026-10-27 | 2027-10-27 |
 | `py-assert-o` | `python -O` drops `assert` | [statements](https://docs.python.org/3/reference/simple_stmts.html) | "emits no code for an assert statement" | 2026-10-26 | 2027-10-26 |
-| `py-sql-params` | Python's `sqlite3` docs warn against building queries with string operations | [sqlite3](https://docs.python.org/3/library/sqlite3.html) | "as they are vulnerable to SQL injection attacks" | 2026-10-26 | 2027-10-26 |
-| `py-secrets` | `secrets`, not `random`, for security tokens; `random` is for modeling and simulation | [secrets](https://docs.python.org/3/library/secrets.html) | "designed for modelling and simulation, not security or cryptography" and "the most secure source of randomness that your operating system provides" | 2026-10-26 | 2027-10-26 |
+| `py-sql-params` | `sqlite3`'s docs warn against queries built from strings | [sqlite3](https://docs.python.org/3/library/sqlite3.html) | "as they are vulnerable to SQL injection attacks" | 2026-10-26 | 2027-10-26 |
+| `py-secrets` | `random` is for modeling, `secrets` for security | [secrets](https://docs.python.org/3/library/secrets.html) | "designed for modelling and simulation, not security or cryptography" and "the most secure source of randomness that your operating system provides" | 2026-10-26 | 2027-10-26 |
 | `py-subprocess-shell` | With `shell=True`, quoting input is the caller's job, and on Windows a batch file runs in a shell regardless | [subprocess](https://docs.python.org/3/library/subprocess.html) | "it is the application's responsibility to ensure that all whitespace and metacharacters are quoted appropriately" and "may be launched by the operating system in a system shell regardless of the arguments passed to this library." | 2026-10-26 | 2027-10-26 |
 | `py-eval` | `eval` runs arbitrary code | [Built-in functions](https://docs.python.org/3/library/functions.html) | "Calling it with untrusted user-supplied input will lead to security vulnerabilities." | 2026-10-26 | 2027-10-26 |
 | `py-literal-eval` | `ast.literal_eval` isn't recommended for untrusted data | [ast](https://docs.python.org/3/library/ast.html) | "Calling it on untrusted data is thus not recommended." | 2026-10-26 | 2027-10-26 |
@@ -188,8 +189,8 @@ Each named by its ID, here or in `python-coding`.
 | `py-yaml-load` | PyYAML's `yaml.load` isn't safe on untrusted data | [PyYAML documentation](https://pyyaml.org/wiki/PyYAMLDocumentation) | "It is not safe to call yaml.load with any data received from an untrusted source!" | 2026-10-26 | 2027-10-26 |
 | `py-mktemp` | `tempfile.mktemp` is deprecated and unsafe | [tempfile](https://docs.python.org/3/library/tempfile.html) | "Use of this function may introduce a security hole in your program." | 2026-10-26 | 2027-10-26 |
 | `py-is-relative-to` | `PurePath.is_relative_to` compares strings, and doesn't resolve `..` | [pathlib](https://docs.python.org/3/library/pathlib.html) | "This method is string-based; it neither accesses the filesystem nor treats" ... "segments specially." | 2026-10-26 | 2027-10-26 |
-| `py-tar-filter` | `tarfile` extraction defaults to the `data` filter from 3.14; earlier versions need it set | [tarfile](https://docs.python.org/3/library/tarfile.html) | "Changed in version 3.14: The filter parameter now defaults to 'data'." and "to support Python versions with a less secure default (3.13 and lower)" | 2026-10-26 | 2027-10-26 |
-| `py-zip-extract` | `zipfile` extraction from an untrusted archive can write outside the target | [zipfile](https://docs.python.org/3/library/zipfile.html) | "It is possible that files are created outside of path" | 2026-10-26 | 2027-10-26 |
+| `py-tar-filter` | `tarfile` defaults to the `data` filter from 3.14, not before | [tarfile](https://docs.python.org/3/library/tarfile.html) | "Changed in version 3.14: The filter parameter now defaults to 'data'." and "a less secure default (3.13 and lower)" | 2026-10-26 | 2027-10-26 |
+| `py-zip-extract` | `zipfile` can extract outside the target | [zipfile](https://docs.python.org/3/library/zipfile.html) | "It is possible that files are created outside of path" | 2026-10-26 | 2027-10-26 |
 
 ## Sources
 

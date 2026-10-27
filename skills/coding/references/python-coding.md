@@ -71,10 +71,10 @@ strict = true
 
 - **A mutable default is shared across calls** (fact `py-mutable-default`): default to `None`,
   as below. Ruff's `B006` catches it.
-- **Pass `encoding="utf-8"` to every text `open()`,** `read_text()`, `write_text()` and
-  `subprocess` call with `text=True` or `universal_newlines=True` (fact `py-subprocess-text`).
-  3.15 made UTF-8 the default, and still asks for it: older Pythons use the locale's (fact
-  `py-utf8-default`).
+- **Pass `encoding="utf-8"` to every text `open()`,** `read_text()` and `write_text()`, and to
+  `subprocess` in text mode the command's own, usually UTF-8, with `errors="replace"`
+  where bad bytes may pass (fact `py-subprocess-text`). 3.15 made UTF-8 the default, and still asks
+  for it: older Pythons use the locale's (fact `py-utf8-default`).
 - **Use `pathlib` for paths,** and `with` for anything that must be closed.
 
 ```python
@@ -89,7 +89,7 @@ def add_tag(tag: str, tags: list[str] | None = None) -> list[str]:
 - **`datetime.now(UTC)`, never `utcnow()`,** which returns a naive value and is deprecated
   (fact `py-utcnow`). Store, compare and compute in UTC.
 - **`ZoneInfo("America/New_York")` for a named zone,** at input and display. Declare `tzdata`
-  where there may be no time zone database, as on Windows (fact `py-tzdata`).
+  where there's no time zone database, as on Windows (fact `py-tzdata`).
 - **Naive and aware values don't mix:** subtracting or ordering them raises `TypeError`.
 - **Adding a `timedelta` to a local time moves the wall clock,** not elapsed time. Across a
   daylight-saving change, "a day later" in New York is 25 hours on:
@@ -130,7 +130,7 @@ Severity uses the standard's status words. `DTZ` is Ruff's; the `S` checks are
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
 | Naive datetimes | `DTZ` | `GAP` | `datetime.now(UTC)`, `zoneinfo` (facts `py-utcnow`, `py-naive-aware`) |
-| Text opened with no encoding | `open(`, `read_text(`, `write_text(` or `text=True` with no `encoding=`: `PLW1514`, then the grep below | `GAP` | `encoding="utf-8"` (facts `py-utf8-default`, `py-subprocess-text`) |
+| Text opened with no encoding | `open(`, `read_text(`, `write_text(` or `text=True` with no `encoding=`: `PLW1514`, then the grep below | `GAP` | `encoding="utf-8"`, or what the command writes (facts `py-utf8-default`, `py-subprocess-text`) |
 | Ruff's security and time zone rules | `[tool.ruff.lint]` without `S` and `DTZ` | `GAP` | `extend-select = ["S", "DTZ"]` |
 | No type checker, or not strict | No mypy or Pyrefly settings; mypy with neither `strict = true` nor every flag it sets | `GAP` | Strict mode, raised module by module |
 | Empty suppressions | `RUF100`: a `noqa` code unused, or for a rule not enabled | `DRIFT` | Delete it, or enable the rule (fact `py-ruff-unused-noqa`) |
@@ -158,18 +158,17 @@ Ruff config in their directory (fact `py-ruff-target`) with `target-version` at 
 you test, named in the context file too.
 
 **2. Ruff, with `S` and `DTZ`.** Ruff's defaults catch classic mistakes such as a mutable default
-(fact `py-ruff-defaults`), but not `shell=True` (`S602`) or `datetime.now()` with no zone
-(`DTZ005`) (fact `py-ruff-security-off`). Others run flake8 with plugins, isort and Black, which
-Ruff replaces, and Bandit, from which the `S` rules derive. Cost: `S603` and `S607` flag safe
-`subprocess` calls too; `python-security` says how to review them. Otherwise: a project on
-flake8 and Black can stay, and add Bandit.
+(fact `py-ruff-defaults`), but not `shell=True` (`S602`) or `datetime.now()` with no zone (`DTZ005`)
+(fact `py-ruff-security-off`). Others run flake8 with plugins, isort and Black, which Ruff replaces,
+and Bandit, from which the `S` rules derive. Cost: `S603` and `S607` flag safe calls too: see
+`python-security`. Otherwise: a project on flake8 and Black can stay, and add Bandit.
 
 **3. Annotations and strict checking.** A checker sees only what's annotated, so an unannotated
-module passes unchecked; strict mode finds `Any` leaking from parsed data, `None` where a value
-is needed, and missing returns. Many type gradually, strict for new modules and lenient for old,
-as mypy's guide to existing code describes. Cost: time, and on
-old code, hundreds of errors at once. Otherwise: on a large untyped codebase, start with
-`disallow_untyped_defs` per module, and raise the rest module by module.
+module passes unchecked; strict mode finds `Any` leaking from parsed data, `None` where a value is
+needed, and missing returns. Many type gradually, strict for new modules and lenient for old, as
+mypy's guide to existing code describes. Cost: time, and on old code, hundreds of errors at once.
+Otherwise: on a large untyped codebase, start with `disallow_untyped_defs` per module, and raise the
+rest module by module.
 
 **4. Aware datetimes, UTC inside.** A naive value doesn't say which clock it's on, mixing the two
 raises `TypeError` (fact `py-naive-aware`), and local arithmetic moves the wall clock (fact
@@ -184,33 +183,33 @@ file or a command's output differently on another machine. Cost: a keyword per c
 `py-requires-upper`), and a floor below what you test promises what nobody checked. Otherwise:
 an application on one known interpreter pins it in `.python-version`, which `uv init` writes.
 
-**Suppressions.** A `noqa` records a hand check; one for a rule not enabled records a check that
+**Suppressions.** A `noqa` records a hand check; one for a rule not enabled records a check
 nothing runs.
 
 ## Facts
 
-Each named in this module by its ID; `python-security` holds `py-subprocess-text` and the Ruff
+Each named here by its ID; `python-security` holds `py-subprocess-text` and the Ruff
 facts.
 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
 | `py-eol-311` | 3.11 gets security fixes until 2027-10 | [versions](https://devguide.python.org/versions/) | "3.11 PEP 664 security 2022-10-24 2027-10" | 2026-10-26 | 2027-04-26 |
-| `py-eol-310` | 3.10 reached its end of life on 2026-10-01 | [versions](https://devguide.python.org/versions/) | "3.10 PEP 619 end-of-life 2021-10-04 2026-10-01" | 2026-10-26 | 2027-04-26 |
-| `py-uv-init` | `uv init` uses `src/`, and a build system since uv 0.12 | [uv init](https://docs.astral.sh/uv/concepts/projects/init/) | "place source files in a dedicated src/" and "Prior to v0.12, uv did not define a build system" | 2026-10-26 | 2027-04-26 |
-| `py-src-layout` | The src layout keeps the working tree off the import path | [src layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/) | "prevent accidental usage of the in-development copy" | 2026-10-26 | 2027-10-26 |
+| `py-eol-310` | 3.10 ended on 2026-10-01 | [versions](https://devguide.python.org/versions/) | "3.10 PEP 619 end-of-life 2021-10-04 2026-10-01" | 2026-10-26 | 2027-04-26 |
+| `py-uv-init` | `uv init` uses `src/` and a build system, for applications since uv 0.12 | [uv init](https://docs.astral.sh/uv/concepts/projects/init/) | "place source files in a dedicated src/" and "Prior to v0.12, uv did not define a build system for applications by default" | 2026-10-26 | 2027-04-26 |
+| `py-src-layout` | src keeps the working tree off the import path | [src layout](https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/) | "prevent accidental usage of the in-development copy" | 2026-10-26 | 2027-10-26 |
 | `py-dep-groups` | Dependency groups stay out of the built package | [groups](https://packaging.python.org/en/latest/specifications/dependency-groups/) | "not included in project metadata when it is built" | 2026-10-26 | 2027-10-26 |
-| `py-inline-script` | A one-file script can declare its dependencies inline | [inline](https://packaging.python.org/en/latest/specifications/inline-script-metadata/) | "can be embedded in single-file Python scripts" | 2026-10-26 | 2027-10-26 |
-| `py-requires-upper` | The packaging guide warns against an upper bound | [pyproject](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) | "Think twice before applying an upper bound" | 2026-10-26 | 2027-10-26 |
+| `py-inline-script` | A script can declare dependencies inline | [inline](https://packaging.python.org/en/latest/specifications/inline-script-metadata/) | "can be embedded in single-file Python scripts" | 2026-10-26 | 2027-10-26 |
+| `py-requires-upper` | The guide warns against an upper bound | [pyproject](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/) | "Think twice before applying an upper bound" | 2026-10-26 | 2027-10-26 |
 | `py-mypy-untyped` | mypy skips unannotated bodies; `--strict`'s flags may change | [mypy](https://mypy.readthedocs.io/en/stable/command_line.html) | "the bodies of functions without annotations are not type checked" and "the exact list of flags enabled by running --strict may change over time" | 2026-10-27 | 2027-04-27 |
-| `py-pyrefly-stable` | Pyrefly is marked stable on PyPI | [pyrefly](https://pypi.org/pypi/pyrefly/json) | "Development Status :: 5 - Production/Stable" | 2026-10-26 | 2027-04-26 |
-| `py-ty-beta` | ty is marked beta on PyPI | [ty](https://pypi.org/pypi/ty/json) | "Development Status :: 4 - Beta" | 2026-10-26 | 2027-04-26 |
+| `py-pyrefly-stable` | Pyrefly: stable on PyPI | [pyrefly](https://pypi.org/pypi/pyrefly/json) | "Development Status :: 5 - Production/Stable" | 2026-10-26 | 2027-04-26 |
+| `py-ty-beta` | ty: beta on PyPI | [ty](https://pypi.org/pypi/ty/json) | "Development Status :: 4 - Beta" | 2026-10-26 | 2027-04-26 |
 | `py-type-stmt` | The `type` statement arrived in 3.12 | [statements](https://docs.python.org/3/reference/simple_stmts.html) | "type is a soft keyword." and "Added in version 3.12." | 2026-10-26 | 2027-10-26 |
 | `py-mutable-default` | A default argument is evaluated once | [tutorial](https://docs.python.org/3/tutorial/controlflow.html) | "evaluated only once" | 2026-10-26 | 2027-10-26 |
 | `py-utf8-default` | 3.15 defaults to UTF-8, and still asks for an explicit one | [3.15](https://docs.python.org/3/whatsnew/3.15.html) | "Python now uses UTF-8 as the default encoding" and "an explicit encoding argument is always provided" | 2026-10-26 | 2027-04-26 |
 | `py-utcnow` | `utcnow()` returns a naive value, deprecated since 3.12 | [datetime](https://docs.python.org/3/library/datetime.html) | "with tzinfo None." and "Deprecated since version 3.12" | 2026-10-26 | 2027-10-26 |
 | `py-naive-aware` | Subtracting naive from aware raises `TypeError` | [datetime](https://docs.python.org/3/library/datetime.html) | "If one is aware and the other is naive, TypeError is raised." | 2026-10-26 | 2027-10-26 |
 | `py-wall-clock` | Adding a `timedelta` makes no time zone adjustment | [datetime](https://docs.python.org/3/library/datetime.html) | "no time zone adjustments are done" | 2026-10-26 | 2027-10-26 |
-| `py-tzdata` | `zoneinfo` may need `tzdata`, notably on Windows | [zoneinfo](https://docs.python.org/3/library/zoneinfo.html) | "declare a dependency on tzdata" | 2026-10-26 | 2027-10-26 |
+| `py-tzdata` | `zoneinfo` may need `tzdata`, as on Windows | [zoneinfo](https://docs.python.org/3/library/zoneinfo.html) | "declare a dependency on tzdata" | 2026-10-26 | 2027-10-26 |
 
 ## Sources
 

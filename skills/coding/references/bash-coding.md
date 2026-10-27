@@ -13,7 +13,8 @@ planned testing skill. Layout and when to use Python: project-bootstrap-and-audi
 1. **Name the shell in the shebang:** `#!/usr/bin/env bash`, or `#!/bin/sh` only for POSIX
    linted as `sh`.
 2. **Start Bash with `set -euo pipefail`, and know its gaps:** conditions, functions called
-   from them, `local`, and `((n++))` at zero. Leave out `-e` only with a comment saying why.
+   from them, `local`, and `((n++))` at zero. Leave out `-e` only for a hook that must never fail
+   its caller, or a probe collecting every result, and say so by `set`.
 3. **Quote every expansion:** `"$var"`, `"$(cmd)"`, `"${list[@]}"`, or say why not in a
    ShellCheck directive.
 4. **Hold a list in an array, never a string:** a Bash array, or `"$@"` in `sh`.
@@ -169,9 +170,9 @@ Severity uses the standard's status words.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| ShellCheck | `shellcheck` on every script | `GAP` per warning; `BLOCKER` for SC2115; `UNVERIFIABLE-HERE` where it can't run | Fix, or disable on the line with why |
+| ShellCheck | `shellcheck` on every script | `GAP` per warning; SC2115 as bash-security's unsafe deletes; `UNVERIFIABLE-HERE` where it can't run | Fix, or disable on the line with why |
 | Dialect | `shellcheck --shell=sh` on `#!/bin/sh`: `[[`, arrays, `source`, unprobed `pipefail` | `DRIFT` | Name Bash, or port it |
-| Strict mode | Bash without `set -euo pipefail` | `GAP`, unless a comment by `set` says why `-e` is out, and each needed command is checked | Add it; fix what breaks |
+| Strict mode | Bash without `set -euo pipefail` | `GAP`, unless rule 2's hook or probe says so by `set` and checks each command it needs | Add it; fix what breaks |
 | git name lists | `ls-files`, `diff --name-only` or `status` read without `-z`, then matched by a pattern | `BLOCKER` where a check passes on names it never matched, else `GAP` | `-z`, read with `-d ''` |
 | Masked failures | `local`, `export` or `readonly` with `$(…)`; `((n++))` under `-e`; a side-effecting function as an `if` condition | `GAP` | Split; `n=$((n + 1))`; check in the function |
 | Temporary files | Fixed `/tmp` paths; `mktemp` with no `EXIT` trap | `GAP` | `mktemp` and a trap |
@@ -188,13 +189,12 @@ or with structured data, use Python.
 
 **Strict mode.** Without `-e`, the next step runs on bad input; without `pipefail`, a failed
 download piped to `tar` succeeds; without `-u`, a typo is empty. Costs: `grep` and the like
-need `if` or `|| true`. Checking each status by hand is more code to get wrong. Otherwise: a
-hook that must never fail its caller, or a probe collecting every result, leaves out `-e`, says
-why by the `set` line, and checks each command it relies on.
+need `if` or `|| true`. Checking each status by hand is more code to get wrong. Otherwise: in
+rule 2's two cases stopping costs more, so each command relied on is checked.
 
 **git's `-z`.** By default git quotes a name with a byte over 0x80, so a check filtering the
-list by pattern passes having read nothing. `core.quotePath=false` still quotes a tab, a newline,
-a quote or a backslash; `-z` quotes nothing.
+list by pattern passes having read nothing. `core.quotePath=false` still escapes tabs, newlines,
+quotes and backslashes; `-z` escapes none.
 
 **Quoting and arrays.** Unquoted, a script breaks on a name with a space, `*` or `-`; a string
 can't hold arguments with spaces. Costs: noise, and arrays need Bash.
@@ -227,7 +227,7 @@ bash-security holds the versions and the shared facts.
 | `sh-sed-inplace` | BSD needs a suffix | [GNU](https://man7.org/linux/man-pages/man1/sed.1.html), [FreeBSD](https://man.freebsd.org/cgi/man.cgi?query=sed&sektion=1) | "-i[SUFFIX], --in-place[=SUFFIX]" and "[-i extension]" | 2026-10-26 | 2027-10-26 |
 | `sh-google` | Bash only; rewrite past 100 lines | [Google](https://google.github.io/styleguide/shellguide.html) | "the only shell scripting language permitted" and "more than 100 lines long" and "rewrite it in a more structured language" | 2026-10-26 | 2027-10-26 |
 | `sh-google-license` | Google's guides: CC BY 3.0 | [LICENSE](https://raw.githubusercontent.com/google/styleguide/gh-pages/LICENSE) | "Attribution 3.0 Unported" | 2026-10-26 | 2027-10-26 |
-| `sh-git-quotepath` | git quotes unusual names by default; `-z` doesn't | [git-config](https://git-scm.com/docs/git-config) | "bytes with values larger than 0x80" and "Double-quotes, backslash and control characters are always escaped" and "verbatim using the -z option" and "The default value is true." | 2026-10-27 | 2027-10-27 |
+| `sh-git-quotepath` | git quotes unusual names unless given `-z` | [git-config](https://git-scm.com/docs/git-config) | "bytes with values larger than 0x80" and "Double-quotes, backslash and control characters are always escaped" and "verbatim using the -z option" and "The default value is true." | 2026-10-27 | 2027-10-27 |
 
 ## Sources
 

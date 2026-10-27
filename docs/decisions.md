@@ -2,6 +2,39 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-27 — Three skills take in what the first audits found wrong in them
+
+- **Asked, by the owner:** to audit two repositories that use these skills, "as an audit of sorts
+  for both us and them". Each audit wrote feedback on the skills alone, naming neither
+  repository.
+- **Taken in:** about 35 items across `coding`, `git-workflows` and `house-style`, one writer per
+  skill, each claim checked first; changes to the standard went to the owner as a proposal
+  instead. Two claims were partly wrong and were corrected rather than taken as written:
+  - Ruff's `PLW1514` finds nothing unless preview is on;
+  - `cd ""` succeeds only before Bash 5.3.
+- **A rule loosened, and bounded:** `coding`'s contract rule 8 allows a whole-directory ignore,
+  but only for a rule that flags calls even when they're safe, such as `S607`, where no outside
+  input reaches, with a dated comment; the rules that catch a shell, `eval` or unsafe
+  deserialization stay on. Other loosened rules are bounded the same way:
+  - deletes graded by risk;
+  - leaving out `-e` in two named cases;
+  - an untagged release only where a pinned manifest names it.
+- **A check added in passing:** this repository's own Vale setting let a quote run on past a
+  blank line, and had hidden a heading that broke the style. It's gone; the skill's shipped
+  default covers quotes, and its limits are written down.
+- **Reviewed:** a cold reader checked the whole branch and found 11 problems and two small ones:
+  - four high: the loosened rules were too loose, and two modules contradicted each other;
+  - five medium, including a quote pattern that still hid text and a fact that didn't support
+    its claim;
+  - the rest low.
+
+  Each went back to its writer and was fixed. The reader then re-checked every one: all fixed,
+  with two documented limits left in the quote pattern. The fixes introduced three small errors,
+  fixed in this change: a dropped condition on git's quoting, `errors="replace"` offered without
+  an encoding, and the wrap check misreading Windows line endings, now with a test.
+- **Size:** two `house-style` modules end just under the 16,000-character limit, at 15,996 and
+  15,925. Splitting one is the next change to that skill.
+
 ## 2026-10-26 — Audit reports go to a private repository, not by attachment
 
 Supersedes the last two points of "How a repository that uses these skills is audited", below.

@@ -30,8 +30,8 @@ run the commands; on claude.ai, give them to the person to run.
    before or as it lands, and no path filter on a required check (`actions-security`,
    `action-pinning`, `ci-workflows`).
 7. **Release from an annotated tag on the release commit's SHA,** after the changelog entry and
-   after CI is green on that commit. Where the project's records make a release a commit named
-   in a committed manifest that consumers pin by SHA, the tag is optional
+   after CI is green on that commit. The tag is optional where the project's records make a
+   release a commit named in a committed manifest that consumers pin by SHA
    (`releases-and-versions`).
 8. **Read Git's output whole,** and never read an exit status through a pipe
    (`rebasing-and-recovery`, `ci-workflows`).
