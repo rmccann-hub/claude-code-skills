@@ -2,6 +2,35 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-27 — C in the `coding` skill: `c-coding`, `c-build` and `c-security`
+
+- **Asked, by the owner:** after the first audit of a C program found no C module to judge it
+  by, to run research R12 and build C: "give me the r12 and i will run it and give to you, then
+  build".
+- **Done:** three modules, not the two planned, since one C module and one for security couldn't
+  hold the build and its checks within the 15,000-character target with their facts: `c-coding`
+  (the language and the code), `c-build` (Meson, the warning gate, hardening, sanitizers,
+  analyzers, fuzzing) and `c-security` (outside data). One writer each, from R12 as leads, every
+  fact checked at its primary source (51 of them), every C example compiled by the example
+  checker and built and run besides, every Meson example run with Meson 1.12.1 and its declared
+  floor. R12's verification table records what was verified, contradicted and unverifiable.
+- **Added in passing:** `skillcheck --examples` compiles `c` blocks with Clang, warnings as
+  errors, never linking or running them, at C17 unless the fence names another standard.
+- **Reviewed:** a cold reader with C experience attacked every example (boundary sizes,
+  hostile file names, integer extremes, signals, under ASan and UBSan) and checked about 40 fact
+  quotes at their sources. It found one high problem, a scan-build check that exits 0 with bugs
+  found, seven medium (among them a file-writing example that destroyed the old file on a full
+  disk, a `posix_spawn` example that lost its error, sanitizers credited with finding
+  uninitialized reads, an example laid out against the standard, and missing number parsing
+  and secret wiping) and eight low. Each went back to its writer and was fixed; the reader then
+  re-checked them all fixed. The fixes added five small problems, fixed in this change: a test
+  that can't probe now fails unless another job runs it, as the contract says; a buffer of zero
+  capacity is no longer written on failure (run under both sanitizers); the versioned
+  `scan-build-NN` name; the fuzzer's path; and `fchmod` before replacing a file.
+- **Approved, by the owner, for the contract:** rule 8's whole-directory ignore, as merged in
+  #92 ("well then, merge it"), after the difference was put to them with an example.
+- **Next:** a C-only audit of the program that showed the gap, as the real test of the three.
+
 ## 2026-10-27 — Three skills take in what the first audits found wrong in them
 
 - **Asked, by the owner:** to audit two repositories that use these skills, "as an audit of sorts

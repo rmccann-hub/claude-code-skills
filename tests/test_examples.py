@@ -190,3 +190,65 @@ def test_a_block_left_open_at_the_end_is_still_checked(tmp_path):
     lines, summary, _ = examples.check(skill(tmp_path, '```json\n{"open": [\n')).report()
     assert lines[0].startswith("skills/fixture/references/module.md:1: json: ")
     assert summary.startswith("skillcheck: 1 example(s) checked, 1 failed")
+
+
+C_GOOD = """\
+```c
+#include <stddef.h>
+size_t twice(size_t n) { return n * 2; }
+```
+
+```c std=c23
+#include <stdckdint.h>
+#include <stddef.h>
+bool doubled(size_t n, size_t *out) { return !ckd_mul(out, n, 2); }
+```
+"""
+
+C_BAD = """\
+```c
+int unused(void) { int x; return 0; }
+```
+
+```c std=c23
+#include <stdckdint.h>
+int f(void) { return undeclared; }
+```
+
+```c std=k&r
+int f();
+```
+"""
+
+
+def test_c_is_compiled_at_the_standard_its_fence_names(tmp_path):
+    lines, summary, code = examples.check(skill(tmp_path, C_GOOD)).report()
+    assert (lines, code) == ([], 0)
+    assert summary.startswith("skillcheck: 2 example(s) checked, 0 failed")
+
+
+def test_a_c_warning_fails_and_names_its_line(tmp_path):
+    lines, _, code = examples.check(skill(tmp_path, C_BAD)).report()
+    where = "skills/fixture/references/module.md"
+    assert code == 1
+    assert lines[0].startswith(f"{where}:1: c: line 1: unused variable 'x'")
+    assert lines[1].startswith(f"{where}:5: c: line 2: use of undeclared identifier")
+    assert lines[2] == (
+        f"{where}:10: c: std=k&r isn't a C standard this check knows; "
+        "use c99, c11, c17 or c23, or its gnu form"
+    )
+
+
+def test_c_is_never_linked_or_run_and_an_odd_failure_is_reported_whole(tmp_path, monkeypatch):
+    seen = []
+
+    def run(command, **options):
+        seen.append(command)
+        return subprocess.CompletedProcess(command, 1, stdout="", stderr="clang: crashed\n")
+
+    monkeypatch.setattr(examples.shutil, "which", lambda tool: f"/usr/bin/{tool}")
+    lines, _, _ = examples.check(skill(tmp_path, "```c std=gnu23\nint x;\n```\n"), run).report()
+    assert lines == ["skills/fixture/references/module.md:1: c: clang: crashed"]
+    assert seen == [
+        ["clang", "-x", "c", "-std=gnu23", "-fsyntax-only", "-Wall", "-Wextra", "-Werror", "-"]
+    ]

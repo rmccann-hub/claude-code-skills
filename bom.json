@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:a04c5fe9-9008-522a-8cf6-0b92609138de",
+  "serialNumber": "urn:uuid:fdc269a2-ad53-55fc-9510-57376234940c",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 91 file(s)"
+          "value": "Markdown: 95 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 35 file(s)"
+          "value": "JSON: 38 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -489,7 +489,7 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "learn.microsoft.com: 59 fact(s)"
+              "value": "learn.microsoft.com: 60 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -509,11 +509,27 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "man7.org: 14 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "developer.mozilla.org: 13 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "raw.githubusercontent.com: 9 fact(s)"
+              "value": "mesonbuild.com: 11 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 11 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "gcc.gnu.org: 8 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pubs.opengroup.org: 8 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -533,6 +549,10 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "clang.llvm.org: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "dotnet.microsoft.com: 4 fact(s)"
             },
             {
@@ -541,11 +561,11 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "pubs.opengroup.org: 4 fact(s)"
+              "value": "curl.se: 3 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "man7.org: 3 fact(s)"
+              "value": "cwe.mitre.org: 3 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -561,7 +581,7 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "curl.se: 2 fact(s)"
+              "value": "best.openssf.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -581,11 +601,19 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "cwe.mitre.org: 1 fact(s)"
+              "value": "documentation.ubuntu.com: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
               "value": "git-scm.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "git.kernel.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "gmplib.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -597,7 +625,19 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "lists.gnu.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "llvm.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "man.freebsd.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "manpages.debian.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -621,7 +661,31 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "savannah.gnu.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "sourceware.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "src.fedoraproject.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "support.apple.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "valgrind.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.cisa.gov: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.open-std.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
