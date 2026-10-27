@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:3963ce80-e2ae-5b2f-9829-1367e65e11b4",
+  "serialNumber": "urn:uuid:fdc269a2-ad53-55fc-9510-57376234940c",
   "version": 1,
   "metadata": {
     "tools": {
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 40 file(s)"
+          "value": "JSON: 38 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -509,11 +509,11 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "developer.mozilla.org: 13 fact(s)"
+              "value": "man7.org: 14 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "man7.org: 11 fact(s)"
+              "value": "developer.mozilla.org: 13 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -525,7 +525,7 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "gcc.gnu.org: 9 fact(s)"
+              "value": "gcc.gnu.org: 8 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -625,6 +625,10 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "lists.gnu.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "llvm.org: 1 fact(s)"
             },
             {
@@ -678,10 +682,6 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "www.cisa.gov: 1 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "www.gnu.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",

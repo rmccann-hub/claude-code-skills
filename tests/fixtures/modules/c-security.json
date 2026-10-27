@@ -28,6 +28,10 @@
     "should_trigger": true
   },
   {
+    "query": "Is atoi safe for reading the port number from our config file in C, and how should I wipe the password buffer afterwards?",
+    "should_trigger": true
+  },
+  {
     "query": "Which -fsanitize flags and Meson b_sanitize settings should our C test suite run with?",
     "should_trigger": false,
     "note": "c-build"

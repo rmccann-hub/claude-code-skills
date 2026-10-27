@@ -1,13 +1,13 @@
 # C coding
 
-Read this for writing, reviewing or fixing C: the standard and how GCC, Clang and MSVC differ,
-undefined behavior, ownership and copying a library's structs, bounds at every write, checking
-every write and close, test exit codes, and moving old code to C17 or C23.
+Read this for writing, reviewing or fixing C: the standard and compilers, undefined behavior,
+ownership and copying a library's structs, bounds at every write, checking every write and
+close, test exit codes, and moving old code to C17 or C23.
 
 Meson, warnings, hardening, sanitizers, static analysis and fuzzing are c-build's. Outside data
-is c-security's: strings, format strings, integer overflow and `ckd_*`, paths, running programs
-and escaping output. Test design is the planned testing skill's. The standard's *Language
-toolchains* names no C compiler, so take versions from the project's own pins.
+is c-security's: strings, format strings, integer overflow, paths, temporary files, running
+programs and escaping output. Test design is the planned testing skill's. The standard's
+*Language toolchains* names no C compiler, so take versions from the project's own pins.
 
 ## Rules
 
@@ -25,7 +25,7 @@ toolchains* names no C compiler, so take versions from the project's own pins.
 
 - **The defaults differ and move:** GCC 15 and later use `gnu23`, Clang `gnu17`, and MSVC
   without `/std:c11` or `/std:c17` C89 with extensions (facts `c-gcc-default`,
-  `c-clang-default`, `c-msvc-default`). c-build sets `c_std`.
+  `c-clang-default`, `c-msvc-default`).
 - **A strict mode hides POSIX:** under `-std=c17`, glibc declares no `strdup` until
   `_POSIX_C_SOURCE` is defined before the first `#include`, and GCC 14 and Clang 18 fail the
   call (fact `c-gcc14-errors`).
@@ -38,16 +38,17 @@ toolchains* names no C compiler, so take versions from the project's own pins.
 - **A null test after a dereference** is deleted (fact `c-gcc-ub-opts`).
 - **Reading an object through a pointer to another type,** other than a character type, breaks
   strict aliasing, assumed from `-O2`. Copy the bytes with `memcpy`.
-- **Uninitialized reads, use after `free`, and pointers past one beyond an array's end.**
-  c-build's sanitizers find them.
+- **Use after `free`,** which AddressSanitizer finds; **uninitialized reads,** which only
+  Valgrind or Clang's MemorySanitizer find; **a pointer past one beyond an array,** caught only
+  when dereferenced.
 
 ### Ownership
 
 Copying a struct copies its pointers. `b = a` or `memcpy(&b, &a, sizeof a)` on a struct owning
 heap memory makes two owners: freeing `a` leaves `b.label` dangling, a use after free, and
 freeing `b` frees it again, a double free. Use the library's copy and free functions; GMP warns
-against copying its objects at all (fact `c-gmp-copy`). Where there are none, lend a pointer, or
-write a deep copy beside the type:
+against copying its objects at all (fact `c-gmp-copy`). Otherwise lend a pointer, or write a
+deep copy:
 
 ```c
 #include <stdlib.h>
@@ -79,7 +80,7 @@ void reading_free(struct reading *r)
 ### Bounds at every write
 
 Keep pointer, length and capacity together, and send every write through one function that
-checks the room left, terminator included. `snprintf` and `strlcpy` are c-security's.
+checks the room left, terminator included. On failure, take back the partial record.
 
 ```c
 #include <stddef.h>
@@ -103,21 +104,25 @@ static int buf_append(struct buf *b, const char *s, size_t n)
 
 int format_pair(struct buf *b, const char *key, const char *value)
 {
+    size_t start = b->len;
     if (buf_append(b, key, strlen(key)) != 0 || buf_append(b, "=", 1) != 0 ||
-        buf_append(b, value, strlen(value)) != 0 || buf_append(b, "\n", 1) != 0)
+        buf_append(b, value, strlen(value)) != 0 || buf_append(b, "\n", 1) != 0) {
+        b->len = start;
+        b->data[start] = '\0';
         return -1;
+    }
     return 0;
 }
 ```
 
 ### Errors and files
 
-- **A `FILE` buffers,** so `fwrite` and `fprintf` succeed on a full disk and the error comes at
-  `fflush` or `fclose` (fact `c-close-errors`). Check `fwrite`'s count, every `fflush` and
+- **A `FILE` buffers,** so `fwrite` and `fprintf` succeed on a full disk, and the error comes
+  at `fflush` or `fclose` (fact `c-posix-stdio`). Check `fwrite`'s count, every `fflush` and
   `fclose`; after unchecked `fprintf` or `putc` calls, test `ferror` before `fclose`.
-- **`fclose` closes the stream even when it fails** (fact `c-posix-stdio`): never call it again.
-- **Keep the first error.** Save `errno` at once, since the next call may change it (fact
-  `c-posix-stdio`), and never let a cleanup call's status replace it.
+- **`fclose` closes the stream even if it fails:** never call it twice.
+- **Keep the first error:** save `errno` at once, since the next call may change it, and never
+  let a cleanup call's status, or `perror` after one, replace it.
 - **Check `stdout` before exiting** where output is the product: `fflush(stdout) == EOF ||
   ferror(stdout)`. Unchecked, `prog > /dev/full` exits 0.
 
@@ -126,7 +131,7 @@ int format_pair(struct buf *b, const char *key, const char *value)
 #include <errno.h>
 #include <stdio.h>
 
-/* Returns 0, or the errno of the first call that failed. */
+/* Writes a new file. Returns 0, or the errno of the first failure. */
 int write_file(const char *path, const void *data, size_t size)
 {
     FILE *f = fopen(path, "wb");
@@ -134,42 +139,44 @@ int write_file(const char *path, const void *data, size_t size)
         return errno;
     int err = 0;
     if (fwrite(data, 1, size, f) != size)
-        err = errno;
+        err = errno ? errno : EIO; /* only POSIX promises errno here */
     if (fclose(f) == EOF && err == 0) /* a full disk may show only here */
-        err = errno;
+        err = errno ? errno : EIO;
     return err;
 }
 ```
 
+`"wb"` empties an existing file first, losing it on failure. To replace one, write a temporary
+file in its directory (c-security's `mkstemp`), `fflush`, `fsync` and `fclose` it, then `rename`
+it over the old: readers see old or new, never half. `fsync` the directory too (fact
+`c-replace`).
+
 ### Tests
 
 `meson test` passes 0, skips 77 and calls 99 an error (fact `c-meson-exit-codes`). A test that
-can't run its probe prints why and returns 77, never 0. On Linux, writing to `/dev/full` fails
-with `ENOSPC`, which `write_file` returns and a version checking only `fwrite` misses: test it,
-skipping where `/dev/full` isn't writable.
+can't run its probe prints why and returns 77, never 0. Test write errors with Linux's
+`/dev/full`, which fails with `ENOSPC`.
 
 ### Moving old code forward
 
-Name the target standard, build, and fix what fails in this order:
+Build with the target standard named, and fix in this order:
 
 1. **C99's removals:** implicit `int` and calls to undeclared functions are errors from GCC 14
    (fact `c-gcc14-errors`). Add the type; include the header.
 2. **`f()`:** C23 reads it as `f(void)`, so a call with arguments fails (fact `c-gcc15-c23`).
-3. **K&R definitions,** `int f(a) int a; {…}`: removed in C23 (fact `c-clang-knr`). Clang 18
-   rejects them; GCC 13 warns. Rewrite as prototypes.
+3. **K&R definitions,** `int f(a) int a; {…}`: removed in C23 (fact `c-clang-knr`). In C23
+   mode Clang 18 rejects them and GCC 13 warns; in `gnu17` Clang warns and GCC is silent.
 4. **New keywords:** `bool`, `true`, `false`, `nullptr`, `thread_local` and others (fact
    `c-gcc15-c23`), so `typedef int bool;` fails. Use `<stdbool.h>`, but `bool` isn't `int` in
-   the ABI: check structs written to files or shared with other libraries.
+   the ABI: check structs in files and interfaces.
 
 ## Mistakes
 
-- **Relying on the default standard:** what GCC 15 builds fails on Clang or MSVC. AI
-  assistants write `nullptr`, `bool` with no header, or `[[nodiscard]]` in a C17 project.
-- **`memcpy` or `=` on a struct that owns memory, then freeing both copies.**
-- **One length check before several writes,** or one that forgets the terminator.
-- **`sizeof buf` on a parameter declared `char buf[64]`:** the pointer's size. Pass the length.
-- **`fclose(f);` unchecked,** `rc = fclose(f)` replacing a write's failure, or `perror` after
-  a cleanup call, reporting the cleanup's `errno`.
+- **Relying on the default standard:** AI assistants write `nullptr`, or `bool` with no
+  header; GCC 15's default builds it, and Clang 18's rejects it.
+- **`p = realloc(p, n)`:** on failure the old block stays allocated (fact `c-realloc`) and the
+  pointer to it is lost. Assign to a temporary; replace `p` on success.
+- **Rewriting a file in place with `fopen(path, "w")`,** which a full disk leaves cut short.
 
 ## Audit
 
@@ -179,9 +186,9 @@ Severity uses the standard's status words.
 |---|---|---|---|
 | Standard | No `-std` or `c_std`; C23 features in a C17 project | `GAP`; `DRIFT` for the mismatch | Name C17 |
 | Shallow copies | `=` or `memcpy` of a struct with owned pointers | `BLOCKER` where both copies are freed, else `GAP` | The library's copy |
-| Bounds | A buffer write with no check of the room left at that write | `BLOCKER` where outside data sets the length, else `GAP` | One checked append function |
-| Unchecked writes | `fwrite`, `fflush`, `fclose` or the product's `stdout` unchecked | `BLOCKER` where the output is the product, else `GAP` | Check each; test with `/dev/full` |
-| First error lost | A later status or `errno` replacing an earlier failure | `GAP` | Save it at once |
+| Bounds | A buffer write with no check of the room left at that write | `BLOCKER` where outside data sets the length, else `GAP` | One checked append |
+| Unchecked writes | `fwrite`, `fflush`, `fclose` or the product's `stdout` unchecked; a later status replacing the first | `BLOCKER` where the output is the product, else `GAP` | Check each; keep the first error |
+| In-place rewrites | `"w"` on a file that must survive failure | `GAP` | Temporary file, `rename` |
 | Undefined behavior | `x + 1 < x`; a null test after a dereference; casts between pointer types | `BLOCKER` where outside data reaches it, else `GAP` | Test before the operation; `memcpy` |
 | Unprobed tests | Exit 0 when the test couldn't run | `BLOCKER` | Exit 77 |
 | Old C | K&R definitions; `()` called with arguments; `bool` typedefs | `DRIFT` | Prototypes; `<stdbool.h>` |
@@ -193,31 +200,27 @@ Severity uses the standard's status words.
 Linux kernel names `gnu11` (fact `c-kernel-flags`). Cost: no `nullptr` or `ckd_*`. Otherwise:
 C23 where each compiler's status page lists every feature used.
 
-**2. Undefined behavior.** A check that can only fire after undefined behavior is deleted, so the
-bug ships unguarded (fact `c-gcc-ub-opts`). The kernel turns three such assumptions off (fact
-`c-kernel-flags`). Cost: a test before the operation. Otherwise: for code too large to audit,
-the kernel's flags, which c-build weighs.
+**2. Undefined behavior.** A check that can only fire after undefined behavior is deleted (fact
+`c-gcc-ub-opts`). Linux turns such assumptions off (fact `c-kernel-flags`), a choice c-build
+weighs. Cost: a test before the operation.
 
 **3. Ownership.** An audit found a library's struct copied with `memcpy`, then both copies
-freed: a use after free, then a double free. GMP discourages any copy (fact `c-gmp-copy`). Cost:
-a copy function per type. Otherwise: an arena, which frees everything at once.
+freed. GMP discourages any copy (fact `c-gmp-copy`). Cost: a copy function per type. Otherwise:
+an arena, which frees everything at once.
 
-**4. Bounds at every write.** One check before the first write covers that write; writes added
-later run unchecked. GLib's `GString` grows instead of failing. Cost: a call per write.
-Otherwise: grow the buffer when the format sets no limit.
+**4. Bounds at every write.** A check before the first write misses writes added later. GLib's
+`GString` grows instead of failing. Cost: a call per write. Otherwise: grow when no limit is set.
 
 **5. Every call, and the first failure.** Buffering moves a full disk's error to `fclose`, so a
-program checking only `fwrite` reports success for data it lost. GNU says to check every system
-call (fact `c-gnu-check-calls`). The first failure is the cause; later ones are its echoes.
-Cost: lines, and an error path to test. Otherwise: a write whose loss doesn't matter, such as a
-last message to `stderr`, said in a comment.
+program checking only `fwrite` reports success for data it lost. The first failure is the
+cause; later ones are echoes. Cost: lines, and an error path to test. Otherwise: a write whose
+loss doesn't matter, said in a comment.
 
 **6. Test exit codes.** A test that exits 0 unprobed is a pass that measured nothing. Meson
-reads 77, or `1..0 # SKIP` from a TAP test, as a skip (fact `c-meson-exit-codes`). Cost: none.
+reads 77, or `1..0 # SKIP` from a TAP test, as a skip (fact `c-meson-exit-codes`).
 
-**7. One standard at a time.** GCC 14 made errors of old warnings (fact `c-gcc14-errors`), and
-C23 changes meanings; small steps keep diffs reviewable. Cost: a CI job per standard while
-moving. Otherwise: pin `gnu17` for code no one will change.
+**7. One standard at a time.** GCC 14 made old warnings errors (fact `c-gcc14-errors`), and C23
+changes meanings. Cost: a CI job per standard. Otherwise: pin `gnu17` for code no one changes.
 
 ## Facts
 
@@ -226,26 +229,24 @@ moving. Otherwise: pin `gnu17` for code no one will change.
 | `c-gcc-default` | GCC's default C mode | [GCC](https://gcc.gnu.org/onlinedocs/gcc/Standards.html) | "The default, if no C language dialect options are given, is -std=gnu23." | 2026-10-27 | 2027-04-27 |
 | `c-clang-default` | Clang's default C mode | [Clang](https://clang.llvm.org/docs/UsersManual.html) | "If no -std option is specified, clang defaults to gnu17 mode." | 2026-10-27 | 2027-04-27 |
 | `c-msvc-default` | MSVC's C modes; no VLAs | [/std](https://learn.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version?view=msvc-170) | "implements ANSI C89, but includes several Microsoft extensions" and "/std:c17 Enables ISO C17 conformance" and "Variable length array (VLA) support isn't planned." | 2026-10-27 | 2027-04-27 |
-| `c-gcc15-c23` | GCC 15 moved to C23: `()` and keywords | [GCC 15](https://gcc.gnu.org/gcc-15/porting_to.html) | "from -std=gnu17 to -std=gnu23" and "In C23 such declarations mean (void)" and "including bool, true, false, nullptr, and thread_local" and "the bool type is not the same as int at ABI level" | 2026-10-27 | 2027-10-27 |
-| `c-gcc14-errors` | GCC 14's errors; strict modes hide extensions | [GCC 14](https://gcc.gnu.org/gcc-14/porting_to.html) | "In GCC 14, these issues are now reported as errors" and "The GNU C library automatically suppresses these extensions in standard C mode" | 2026-10-27 | 2027-10-27 |
-| `c-clang-knr` | C23 drops K&R definitions; Clang 15 | [Clang](https://clang.llvm.org/c_status.html) | "Remove support for function definitions with identifier lists N2432 Clang 15" | 2026-10-27 | 2027-10-27 |
-| `c-gcc-ub-opts` | Null tests after use; strict aliasing | [GCC](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html) | "if a pointer is checked after it has already been dereferenced, it cannot be null" and "The -fstrict-aliasing option is enabled at levels -O2, -O3, -Os." | 2026-10-27 | 2027-10-27 |
-| `c-kernel-flags` | Linux's standard and flags | [Makefile](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Makefile) | "-std=gnu11" and "-fno-strict-aliasing" and "-fno-delete-null-pointer-checks" and "-fno-strict-overflow" | 2026-10-27 | 2027-04-27 |
-| `c-gmp-copy` | GMP: don't copy its objects | [GMP](https://gmplib.org/manual/Variable-Conventions) | "it is discouraged to make copies of the GMP object itself" | 2026-10-27 | 2027-10-27 |
-| `c-close-errors` | Errors surface at close | [close(2)](https://man7.org/linux/man-pages/man2/close.2.html) | "errors on a previous write(2) operation are reported only on the final close()" | 2026-10-27 | 2027-10-27 |
-| `c-posix-stdio` | `fclose` and `errno` | [fclose](https://pubs.opengroup.org/onlinepubs/9799919799/functions/fclose.html), [errno](https://pubs.opengroup.org/onlinepubs/9799919799/functions/errno.html) | "Whether or not the call succeeds, the stream shall be disassociated from the file" and "until it is changed by the next function call" | 2026-10-27 | 2027-10-27 |
-| `c-gnu-check-calls` | GNU: check every system call | [GNU](https://www.gnu.org/prep/standards/html_node/Semantics.html) | "Check every system call for an error return" | 2026-10-27 | 2027-10-27 |
+| `c-gcc15-c23` | GCC 15 moved to C23 | [GCC 15](https://gcc.gnu.org/gcc-15/porting_to.html) | "from -std=gnu17 to -std=gnu23" and "In C23 such declarations mean (void)" and "including bool, true, false, nullptr, and thread_local" and "the bool type is not the same as int at ABI level" | 2026-10-27 | 2027-10-27 |
+| `c-gcc14-errors` | GCC 14's errors; strict modes | [GCC 14](https://gcc.gnu.org/gcc-14/porting_to.html) | "In GCC 14, these issues are now reported as errors" and "The GNU C library automatically suppresses these extensions in standard C mode" | 2026-10-27 | 2027-10-27 |
+| `c-clang-knr` | C23 drops K&R | [Clang](https://clang.llvm.org/c_status.html) | "Remove support for function definitions with identifier lists N2432 Clang 15" | 2026-10-27 | 2027-10-27 |
+| `c-gcc-ub-opts` | Null tests after use; aliasing | [GCC](https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html) | "if a pointer is checked after it has already been dereferenced, it cannot be null" and "The -fstrict-aliasing option is enabled at levels -O2, -O3, -Os." | 2026-10-27 | 2027-10-27 |
+| `c-kernel-flags` | Linux's standard and flags | [Makefile](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Makefile) | "-std=gnu11" and "-fno-strict-aliasing" and "-fno-delete-null-pointer-checks" | 2026-10-27 | 2027-04-27 |
+| `c-gmp-copy` | GMP: don't copy | [GMP](https://gmplib.org/manual/Variable-Conventions) | "it is discouraged to make copies of the GMP object itself" | 2026-10-27 | 2027-10-27 |
+| `c-posix-stdio` | `fclose` flushes; `errno` | [fclose](https://pubs.opengroup.org/onlinepubs/9799919799/functions/fclose.html), [fwrite](https://pubs.opengroup.org/onlinepubs/9799919799/functions/fwrite.html), [errno](https://pubs.opengroup.org/onlinepubs/9799919799/functions/errno.html) | "Any unwritten buffered data for the stream shall be written to the file" and "Whether or not the call succeeds, the stream shall be disassociated from the file" and "[CX] and errno shall be set" and "until it is changed by the next function call" | 2026-10-27 | 2027-10-27 |
+| `c-realloc` | A failed `realloc` keeps the block | [malloc(3)](https://man7.org/linux/man-pages/man3/realloc.3.html) | "If these functions fail, the original block is left untouched" | 2026-10-27 | 2027-10-27 |
+| `c-replace` | Atomic `rename`; `fsync` the directory | [rename](https://pubs.opengroup.org/onlinepubs/9799919799/functions/rename.html), [fsync(2)](https://man7.org/linux/man-pages/man2/fsync.2.html) | "shall remain visible to other threads throughout the renaming operation" and "an explicit fsync() on a file descriptor for the directory is also needed" | 2026-10-27 | 2027-10-27 |
 | `c-meson-exit-codes` | `meson test`: 77 skips, 99 errors | [Meson](https://mesonbuild.com/Unit-tests.html) | "error code 77" and "1..0 # SKIP" and "error code 99" | 2026-10-27 | 2027-04-27 |
 
 ## Sources
 
-The rules and examples are this module's own words and code.
-
 | Source | Used for | License |
 |---|---|---|
-| [GCC](https://gcc.gnu.org/onlinedocs/gcc/), [GNU](https://www.gnu.org/prep/standards/), [GMP](https://gmplib.org/manual/) | Defaults, C23, checks, copies | GFDL 1.3; GCC's release notes, verbatim only: short quotes |
+| [GCC](https://gcc.gnu.org/onlinedocs/gcc/), [GMP](https://gmplib.org/manual/) | Defaults, C23, copies | GFDL 1.3; GCC's release notes, verbatim only: short quotes |
 | [Clang](https://clang.llvm.org/docs/) | Defaults, K&R | Apache-2.0 with LLVM exception: short quotes |
 | [Microsoft Learn](https://learn.microsoft.com/en-us/cpp/) | MSVC | CC BY 4.0: short quotes, attributed |
-| [POSIX.1-2024](https://pubs.opengroup.org/onlinepubs/9799919799/), [man7.org](https://man7.org/linux/man-pages/man2/close.2.html) | `fclose`, `errno`, `close` | All rights reserved; the page's own: short quotes |
+| [POSIX.1-2024](https://pubs.opengroup.org/onlinepubs/9799919799/), [man7.org](https://man7.org/linux/man-pages/) | Files, `errno`, `realloc` | All rights reserved; each page's own: short quotes |
 | [Meson](https://mesonbuild.com/Unit-tests.html) | Test exit codes | CC BY-SA 4.0: short quotes, attributed |
 | [Linux](https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Makefile), [GLib](https://docs.gtk.org/glib/struct.String.html) | What others do | GPL-2.0, LGPL-2.1-or-later: pointed to |

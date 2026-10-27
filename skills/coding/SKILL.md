@@ -77,9 +77,9 @@ the fact's row is in whichever module holds it.
 | [`powershell-security`](references/powershell-security.md) | PowerShell credentials and untrusted input: `[pscredential]` and SecretManagement, plain-text passwords, `Invoke-Expression`, argument arrays and batch files, `-LiteralPath`, execution policy, and signing |
 | [`bash-coding`](references/bash-coding.md) | Bash and POSIX `sh`: the shebang, `set -euo pipefail` and its traps, quoting, tests and globs, arrays, reading lines and file names, `mktemp` and cleanup, macOS and dash portability, ShellCheck, shfmt and bats |
 | [`bash-security`](references/bash-security.md) | Shell scripts that delete, run code or take input: guarding `rm -rf` with `${var:?}`, `--` and a dry run, `eval` and piped downloads, arithmetic on input, secrets off the command line, and validating input |
-| [`c-coding`](references/c-coding.md) | C: the standard to target and how GCC, Clang and MSVC defaults differ, undefined behavior, ownership and copying a library's structs, bounds at every write, checked `fwrite` and `fclose`, test exit codes, and porting to C17 or C23 |
+| [`c-coding`](references/c-coding.md) | C: the standard to target and how GCC, Clang and MSVC defaults differ, undefined behavior, ownership, copying a library's structs and `realloc`, bounds at every write, checked writes, replacing files safely, test exit codes, and porting to C17 or C23 |
 | [`c-build`](references/c-build.md) | Building and checking C with Meson: `meson_version`, `c_std` and options, the CI warning gate, hardening flags and what distributions add, sanitizers and Valgrind that really fail, static analyzers, fuzz targets, and pinned wraps |
-| [`c-security`](references/c-security.md) | C handling outside data: `strncpy`, `snprintf` truncation and `strlcpy`, format strings, `ckd_*` on sizes and counts, file names with `openat` and `O_NOFOLLOW`, `posix_spawn` not `system`, `mkstemp`, escaping logs, secrets in `argv`, HTTPS |
+| [`c-security`](references/c-security.md) | C handling outside data: `strncpy`, `snprintf` and `strlcpy`, format strings, `strtol` not `atoi`, `ckd_*` on counts, file names with `openat` and `O_NOFOLLOW`, `posix_spawn` not `system`, `mkstemp`, escaping logs, wiping secrets, secrets in `argv`, HTTPS |
 
 ## Check before you act
 

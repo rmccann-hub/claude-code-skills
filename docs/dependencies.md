@@ -27,7 +27,7 @@ freshness run and the release workflow both run it.
 |---|---|
 | Markdown | 95 |
 | Python | 51 |
-| JSON | 40 |
+| JSON | 38 |
 | YAML | 22 |
 | Shell | 4 |
 | TOML | 2 |
@@ -125,11 +125,11 @@ again.
 | `coding` | nodejs.org | 16 |
 | `coding` | tiswww.case.edu | 16 |
 | `coding` | www.w3.org | 16 |
+| `coding` | man7.org | 14 |
 | `coding` | developer.mozilla.org | 13 |
-| `coding` | man7.org | 11 |
 | `coding` | mesonbuild.com | 11 |
 | `coding` | raw.githubusercontent.com | 11 |
-| `coding` | gcc.gnu.org | 9 |
+| `coding` | gcc.gnu.org | 8 |
 | `coding` | pubs.opengroup.org | 8 |
 | `coding` | cheatsheetseries.owasp.org | 7 |
 | `coding` | docs.astral.sh | 7 |
@@ -154,6 +154,7 @@ again.
 | `coding` | gmplib.org | 1 |
 | `coding` | google.github.io | 1 |
 | `coding` | jinja.palletsprojects.com | 1 |
+| `coding` | lists.gnu.org | 1 |
 | `coding` | llvm.org | 1 |
 | `coding` | man.freebsd.org | 1 |
 | `coding` | manpages.debian.org | 1 |
@@ -168,7 +169,6 @@ again.
 | `coding` | support.apple.com | 1 |
 | `coding` | valgrind.org | 1 |
 | `coding` | www.cisa.gov | 1 |
-| `coding` | www.gnu.org | 1 |
 | `coding` | www.open-std.org | 1 |
 | `coding` | www.powershellgallery.com | 1 |
 | `coding` | www.typescriptlang.org | 1 |
