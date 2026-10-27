@@ -164,7 +164,7 @@ Severity uses the standard's status words: `BLOCKER`, `DRIFT`, `GAP`, `OVER`, `M
 | The answer comes first | The first paragraph of each README, report and pull request description | `GAP` where it opens with background | Move the result to the top |
 | Facts carry sources and dates | Versions, dates and support windows in the prose | `GAP` per stale-prone fact lacking either | Check it and add both, or say it wasn't checked |
 | The README's sections | Each README's headings, against rule 10's order | `GAP` per missing section | Add it; short is fine |
-| Lines wrap at 100 | `prose-check`'s wrap check, which skips frontmatter, code, tables and URLs | `DRIFT` | Rewrap the paragraph |
+| Lines wrap at 100 | `prose-check`'s wrap check, which skips frontmatter, code and tables, and doesn't count URLs | `DRIFT` | Rewrap the paragraph |
 | File names | `git ls-files` for capitals or underscores outside the usual root files | `DRIFT` | Rename, and fix the links |
 
 ## Why
@@ -225,10 +225,10 @@ agent, has only the text.
 **Why:** sentence case is Google's and Microsoft's choice (facts `google-sentence-case`,
 `ms-sentence-case`). It's quicker to read, with no doubt over which small words to capitalize.
 Both capitalize after a colon in a heading. Google puts a colon, not a dash, after a label, and
-Microsoft's em dash sets off a remark (fact `heading-colon`). Neither says what follows a dash
-in a heading, so lowercase there is this style's own choice, and the check flags a capital.
-Wrapped lines make a diff show the sentence that changed, and
-spare a reviewer scrolling sideways. Fenced code with a language gets highlighted.
+Microsoft's em dash sets off a remark (fact `heading-colon`). Those pages don't say what follows
+a dash in a heading, so lowercase there is this style's own choice, and the check flags a
+capital. Wrapped lines make a diff show the sentence that changed, and spare a reviewer
+scrolling sideways. Fenced code with a language gets highlighted.
 **Others:** some guides use title case. The check takes one side, so a repository mixing the two
 is flagged. **Cost:** rewrapping a paragraph changes every line after the edit. Wrapping at
 sentence ends would avoid that, at the price of ragged files, so this style wraps by length.

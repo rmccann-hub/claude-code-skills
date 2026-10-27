@@ -1,7 +1,8 @@
-"""The house-style skill's Vale style and prose workflow work as its references say."""
+"""The house-style skill's Vale style, prose workflow and wrap check work as its references say."""
 
 import configparser
 import re
+import subprocess
 import zipfile
 from io import BytesIO
 from pathlib import Path
@@ -18,6 +19,8 @@ STYLE = PACKAGE / "styles" / "HouseStyle"
 WORKFLOW = SKILL / "assets" / "workflows" / "prose.yml"
 RULES = sorted(path.stem for path in STYLE.glob("*.yml"))
 CANARY = "Prove the style catches each kind of mistake"
+WRAP_CHECK = SKILL / "scripts" / "wrap-check.sh"
+LONG = "x" * 101
 
 
 class UniqueKeys(yaml.SafeLoader):
@@ -190,3 +193,43 @@ def test_this_repository_runs_the_shipped_prose_check():
     # The repository checks its own prose with the example, unchanged.
     own = ROOT / ".github" / "workflows" / "prose.yml"
     assert own.read_bytes() == WORKFLOW.read_bytes()
+
+
+def wrap_check(tmp_path: Path, text: str) -> tuple[int, list[int]]:
+    """The wrap check's exit status, and the line numbers it names, on one file."""
+    page = tmp_path / "page.md"
+    page.write_text(text, encoding="utf-8")
+    run = subprocess.run(
+        ["sh", str(WRAP_CHECK), str(page)], capture_output=True, text=True, check=False
+    )
+    return run.returncode, [int(line.rsplit(":", 1)[1]) for line in run.stdout.splitlines()]
+
+
+def test_the_wrap_check_passes_lines_of_100_characters_counted_as_characters(tmp_path):
+    # An em dash is three bytes in UTF-8 and one character.
+    assert wrap_check(tmp_path, "x" * 100 + "\n" + "\u2014" * 100 + "\n") == (0, [])
+    assert wrap_check(tmp_path, f"# Title\n\n{LONG}\n") == (1, [3])
+
+
+def test_the_wrap_check_skips_frontmatter_tables_and_the_length_of_a_url(tmp_path):
+    text = (
+        f"---\ndescription: {LONG}\n---\n"
+        f"| {LONG} |\n"
+        f"see https://example.com/{LONG}\n"
+        f"a [link](https://example.com/) then {LONG}\n"
+    )
+    assert wrap_check(tmp_path, text) == (1, [6])
+
+
+def test_the_wrap_check_skips_fenced_code_and_closes_a_fence_only_on_its_own_mark(tmp_path):
+    text = (
+        f"````markdown\n```\n{LONG}\n```\n{LONG}\n````\n"
+        f"~~~\n```\n{LONG}\n~~~\n"
+        f"  ```sh\n  {LONG}\n  ```\n"
+        f"{LONG}\n"
+    )
+    assert wrap_check(tmp_path, text) == (1, [14])
+
+
+def test_a_rule_after_the_first_line_is_not_frontmatter(tmp_path):
+    assert wrap_check(tmp_path, f"{LONG}\n---\n{LONG}\n---\n") == (1, [1, 3])
