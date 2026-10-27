@@ -146,10 +146,11 @@ Grouped by subject; the Skill column is each module's one home.
 | `bash-coding` | `coding` | Bash and POSIX sh | shipped | core | R15 |
 | `bash-security` | `coding` | Bash and POSIX sh: guarded deletes, `eval`, arithmetic on input, secrets, input checks | shipped | core | R15 |
 | `vba-coding` | `coding` | VBA in Office applications | planned | core | R16 |
-| `go-coding` | `coding` | Go | planned | standard | R12 |
-| `rust-coding` | `coding` | Rust | planned | standard | R12 |
-| `c-coding` | `coding` | C | planned | standard | R12 |
-| `cpp-coding` | `coding` | C++ | planned | standard | R12 |
+| `go-coding` | `coding` | Go | planned | standard | R25 |
+| `rust-coding` | `coding` | Rust | planned | standard | R25 |
+| `c-coding` | `coding` | C, and its build with Meson | planned | core | R12 |
+| `c-security` | `coding` | C handling outside data: buffers and strings, format strings, integer overflow, paths, running programs, temporary files | planned | core | R12 |
+| `cpp-coding` | `coding` | C++ | planned | standard | R25 |
 | `java-coding` | `coding` | Java | planned | standard | R13 |
 | `kotlin-coding` | `coding` | Kotlin | planned | standard | R13 |
 | `php-coding` | `coding` | PHP | planned | standard | R13 |
@@ -252,7 +253,7 @@ palettes in `visual-design`, not in `excel-master`.
    | 1 | R15, R09, R11, R10 | `coding` with its contract, `bash-coding`, `python-coding`, `powershell-scripts`, `csharp-coding`, `javascript-coding`, `html-coding` | the six old language skills |
    | 2 | R06, R07, R14, R19, R23 | `testing`; `coding`'s `error-handling`; `operations`' `log-analysis`; `data`; `architecture`'s `api-patterns`; `human-factors`; `optimization-and-scheduling` | `testing-patterns`, `error-handling`, `log-parser`, `sql-craftsman`, `api-patterns`, `human-factor-audit` |
    | 3 | R16, R11 | `coding`'s `vba-coding`; `business-apps`; `operations`' `windows-admin` | `vba-coding`, `excel-master`, `epicor-bpm`, `solidworks-automation`, `procedure-generator`, `windows-admin` |
-   | 4 | R12, R13, R15, R20 | `coding`'s `go-coding`, `rust-coding`, `php-coding`, `ruby-coding`; `operations`' `docker-containers`, `linux`, `networking-security`; `visual-design` | those seven, `linux-troubleshooting`, `my-theme` once the company palette is in the private companion, and last `code-standards` |
+   | 4 | R25, R13, R15, R20 | `coding`'s `go-coding`, `rust-coding`, `php-coding`, `ruby-coding`; `operations`' `docker-containers`, `linux`, `networking-security`; `visual-design` | those seven, `linux-troubleshooting`, `my-theme` once the company palette is in the private companion, and last `code-standards` |
    | When needed | R15 | `linux-gaming` | `linux-gaming` |
 
    Each rebuild takes the old skill's topics from the intake, writes from primary sources with
