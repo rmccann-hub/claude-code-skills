@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-29 — One archive rule for every repository, before the next release
+
+- **Asked, by the owner:** "everyone, including you, should do this all the same way. if here
+  is a reason to do it otherwise, it should be compelling, and documented." Work that is
+  finished but worth keeping goes on an archive branch, tagged by version, release or date.
+- **Now:** nothing changes. Each repository keeps such work differently: in the main branch, in
+  history only, or in an `evidence` branch for rip runs. This session's audit kit is in ignored
+  `scratch/`.
+- **Next:** before the next skills release, the rule is proposed to the standard for the
+  owner's approval. Then this repository, the audit kit and the audited repositories are
+  brought into line, each exception recorded with its reason. `ROADMAP.md` tracks it under
+  *Repository*.
+
 ## 2026-10-27 — Release 0.1.24, C in the `coding` skill
 
 - **Asked, by the owner:** "release the new version of the skills now". The C audit's session
