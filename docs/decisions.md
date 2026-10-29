@@ -2,6 +2,17 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-29 — What stays on the main branch, and what lives elsewhere
+
+- **Said, by the owner:** "you have to keep on the main what needs to be kept. what everyone else
+  expects from a new release, what you expect to read, what you need to have, what other repos
+  expect to see, what users and end users expct to read about. but records, archives, logs from
+  old builds, things like this, these can live elsewhere"
+- **The line for the proposal:** the main branch holds what a new release is expected to carry:
+  what users and end users read, what developers and agents work from, and what partner
+  repositories read from it. Records, archives and old builds' logs live on the auxiliary branch,
+  as the entry below says.
+
 ## 2026-10-29 — What the archive rule asks each repository to decide
 
 - **Said, by the owner:** what a repository keeps can differ: "in one repo it might make sense to
