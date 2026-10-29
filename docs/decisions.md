@@ -24,6 +24,11 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   version, release or date, on an auxiliary branch rather than the main one. When in doubt, keep
   it: more than seems needed, in case another repository or reviewer uses it. The answers
   themselves may differ.
+- **Not pared to nothing:** the owner, the same day: "you have to keep in your branch what you and
+  the user and dev need. you cant just pair it down to nothing. keep what is needed, extra can go
+  to the other branch, that can always be pruned as needed later." The main branch keeps what its
+  users, developers and agents work from. Only the extra moves to the auxiliary branch, which can
+  be pruned later.
 
 ## 2026-10-29 — The archive rule asks for consistency, not sameness
 
