@@ -8,15 +8,22 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   record a ton of logs, and other files plus the evidence files, in another the evidence file
   might be enough", and "it should be intentional and look at what is needed for record, what
   might be wanted for an external audit by other reviewers (if public especially, but even
-  private)", while keeping such material out of the main branches.
-- **For the proposal:** every repository answers the same three questions and writes the answers
+  private)", while keeping such material out of the main branches. And the partners: "many of
+  these are needed to handshake or communicate to other repos. so its no just a 1 repo ideal.
+  its better to offload off the main branch to an auxiliary branch what is not needed there, but
+  keep more than you think in case someone else might use it".
+- **For the proposal:** every repository answers the same four questions and writes the answers
   down with their reasons, where a reader finds them:
   - What does its own record need to keep: evidence, logs, laps, old READMEs and changelogs?
   - What would an outside reviewer want to see?
+  - What does a partner repository need from it, such as the laps, contracts and run evidence a
+    handshake reads?
   - What is worth keeping but doesn't belong in the main branch, such as communications, raw
     logs, run output or finished plans?
 - **The same everywhere:** the answers are recorded and obvious, and whatever is kept is tagged by
-  version, release or date, outside the main branch. The answers themselves may differ.
+  version, release or date, on an auxiliary branch rather than the main one. When in doubt, keep
+  it: more than seems needed, in case another repository or reviewer uses it. The answers
+  themselves may differ.
 
 ## 2026-10-29 — The archive rule asks for consistency, not sameness
 
