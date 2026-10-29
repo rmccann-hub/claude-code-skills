@@ -2,6 +2,15 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-29 — The archive rule asks for consistency, not sameness
+
+- **Clarified, by the owner:** "i did not say to do it all the same way, just that we need to be
+  consistent. and if we have a reason to do otherwise, it should be noted and obvious." And: "i
+  would love it all to be exactly the same, but i realize it might not need to be, or should be."
+- **Changes the entry below:** the rule is one consistent way of keeping finished work, identical
+  where that serves. An archive branch is a candidate form, not a requirement. A repository that
+  differs records why, where a reader of that repository sees it. `ROADMAP.md`'s row now says so.
+
 ## 2026-10-29 — One archive rule for every repository, before the next release
 
 - **Asked, by the owner:** "everyone, including you, should do this all the same way. if here
