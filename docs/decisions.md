@@ -2,6 +2,34 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-10-29 — What the archive rule asks each repository to decide
+
+- **Said, by the owner:** what a repository keeps can differ: "in one repo it might make sense to
+  record a ton of logs, and other files plus the evidence files, in another the evidence file
+  might be enough", and "it should be intentional and look at what is needed for record, what
+  might be wanted for an external audit by other reviewers (if public especially, but even
+  private)", while keeping such material out of the main branches. And the partners: "many of
+  these are needed to handshake or communicate to other repos. so its no just a 1 repo ideal.
+  its better to offload off the main branch to an auxiliary branch what is not needed there, but
+  keep more than you think in case someone else might use it".
+- **For the proposal:** every repository answers the same four questions and writes the answers
+  down with their reasons, where a reader finds them:
+  - What does its own record need to keep: evidence, logs, laps, old READMEs and changelogs?
+  - What would an outside reviewer want to see?
+  - What does a partner repository need from it, such as the laps, contracts and run evidence a
+    handshake reads?
+  - What is worth keeping but doesn't belong in the main branch, such as communications, raw
+    logs, run output or finished plans?
+- **The same everywhere:** the answers are recorded and obvious, and whatever is kept is tagged by
+  version, release or date, on an auxiliary branch rather than the main one. When in doubt, keep
+  it: more than seems needed, in case another repository or reviewer uses it. The answers
+  themselves may differ.
+- **Not pared to nothing:** the owner, the same day: "you have to keep in your branch what you and
+  the user and dev need. you cant just pair it down to nothing. keep what is needed, extra can go
+  to the other branch, that can always be pruned as needed later." The main branch keeps what its
+  users, developers and agents work from. Only the extra moves to the auxiliary branch, which can
+  be pruned later.
+
 ## 2026-10-29 — The archive rule asks for consistency, not sameness
 
 - **Clarified, by the owner:** "i did not say to do it all the same way, just that we need to be
