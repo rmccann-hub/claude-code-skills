@@ -6,6 +6,11 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- `skillcheck` leaves out agents' worktrees under `.claude/worktrees/`, counts a file a merge
+  left unresolved once in the dependency map, and no longer flags an ISO offset as a time.
+
 ### Changed
 
 - `git-workflows`' `ci-speed` times a release's run as well as a pull request's, as standard

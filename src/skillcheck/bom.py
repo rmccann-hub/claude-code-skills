@@ -359,7 +359,8 @@ def _languages(root: Path) -> dict[str, int]:
         ["git", "-C", str(root), "ls-files", "-z"], capture_output=True, text=True, check=True
     ).stdout
     count: Counter[str] = Counter()
-    for name in filter(None, listed.split("\0")):
+    # A file a merge left unresolved is listed once per side; it's still one file.
+    for name in sorted(set(filter(None, listed.split("\0")))):
         path = root / name
         language = NAMED.get(path.name) or LANGUAGES.get(path.suffix)
         if language is None and not path.suffix and path.is_file():

@@ -86,6 +86,19 @@ def test_times_with_their_zone_pass(repo):
     assert findings(repo) == []
 
 
+@pytest.mark.parametrize("stamp", ["2026-10-17T02:55+02:00", "2026-10-17T02:55-04:00"])
+def test_an_iso_time_with_an_offset_passes(repo, stamp):
+    written(repo, "docs/notes.md", f"Released at {stamp}.\n")
+    assert findings(repo) == []
+
+
+def test_a_range_still_holds_its_second_time_to_the_rule(repo):
+    written(repo, "docs/notes.md", "Open 12:00 UTC-13:00.\n")
+    assert [f[2] for f in findings(repo)] == [
+        "line 1: 13:00 names no zone; write the stamp in UTC, such as 13:00 UTC"
+    ]
+
+
 def test_a_time_with_no_zone_fires_alone(repo):
     written(repo, "docs/notes.md", "# Notes\n\nIt ran at 12:34 that day.\n")
     assert findings(repo) == [

@@ -2,6 +2,22 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — Three `skillcheck` bugs: worktrees, unresolved files, ISO offsets
+
+- **Found:** the same night, by this session and the mutation run.
+  - **Agents' worktrees were scanned.** Claude Code keeps an agent's isolated copy under
+    `.claude/worktrees/`, and the hidden-character, conflict-marker, `times` and content scans
+    read `.claude`, so the main checkout reported 20 findings that were another checkout's.
+    `core/paths.py` now leaves that folder out, relative to the repository's root, so a
+    repository that itself sits inside a worktree still scans its own files.
+  - **The dependency map counted an unresolved file once per side.** `git ls-files` lists a
+    conflicted file three times, so a map regenerated before `git add` was wrong, and CI
+    refused it on #113. Each listed name now counts once.
+  - **`times` flagged an ISO offset,** the `02:00` of `2026-10-17T02:55+02:00`, as a time with
+    no zone, against its own docstring. A time just after a digit and a sign is now skipped.
+- **Tests:** 12, each planting the defect; each fails on the code before the fix.
+  `.test-baseline` moves from 634 to 646.
+- **Asked, by the owner:** "Do all you recommend" (2026-11-03).
 ## 2026-11-03 — `ci-speed` times a release's run too
 
 - **Why:** standard v0.49.0's dimension 6 asks an audit to record how long a pull request's CI
