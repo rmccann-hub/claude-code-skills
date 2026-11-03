@@ -54,77 +54,10 @@ when the base branch moves into a conflict (fact `autofix-conflicts`).
 
 ### What the file answers
 
-Copy this skeleton, replacing each angle-bracketed part with the repository's answer, or with
-"none" and why.
-
-```markdown
----
-name: steward
-description: How sessions drive this repository's pull requests: merging, holds, conflicts, red or stalled CI, review, releases, and when to stop and report. Read before acting on any pull request event.
----
-
-# Steward
-
-Owner: <name>. Reviewed: <YYYY-MM-DD>. This file applies to <which pull requests: the session's
-own, or any>, into <branches>. Changes to it are merged by the owner.
-
-## Merging
-
-- Method: <merge commit, squash or rebase>, matching the repository's settings.
-- A session may merge <its own pull requests / none> when every required check passed on the
-  head commit, no blocking thread is open, there's no conflict, and no hold covers it.
-- Drafts are never merged; <who> marks one ready.
-- Pull requests the session didn't open: <comment only, or push with the author's word>.
-- Dependabot's: <merged by whom, after which test>.
-- Optional checks: <which block anyway>; a failure is reported, never ignored.
-- Standing words from the owner, quoted with their dates: <none, or each>.
-
-## Holds
-
-Live holds: <label, draft state or issue>, enforced by <a required check that fails while the
-label is on>. Read them again at the moment of merging, releasing or sending anything out.
-
-| Standing hold | Covers | Set by, when | Lifted by |
-|---|---|---|---|
-| <release nothing> | <merges, releases or messages out> | <owner, date> | <the owner's word> |
-
-## Conflicts and stale branches
-
-- No event arrives for a conflict with the base: check mergeability <when>.
-- Resolve by <merging the base in, or rebasing an unshared branch>; never force-push a branch
-  someone else pushed to.
-- Idle <N> days: <ping, close or report>.
-
-## Red or stalled CI
-
-- This pull request's own failure: find the cause and push a fix.
-- A failure on the base branch too: <port the fix, and comment once>.
-- Re-run a failed job once when the failure isn't this pull request's code: the runner died
-  before any test ran, or the job passed on this head before. A second failure on the same head
-  is real. A test that fails on time is measured first.
-- Known stalls: <job and step>, <what to do and how often, before reporting it>.
-- A failing secret scan or security finding: stop pushing, print no value, report to the owner.
-- Never skip, disable or quarantine a test to get green.
-
-## Review
-
-- Blocking: <human change requests, these bots' findings>. Not blocking: <labels or markers>.
-- A bot's finding is checked before it's fixed. Only the reviewer resolves a person's thread.
-- Small asks are fixed and pushed; larger ones get a reply with a proposal first.
-
-## Releases and other repositories
-
-- A release or tag needs <the owner's word>. A message to another repository goes out only
-  after <its pull request is merged and green>.
-
-## When unsure, and when to stop
-
-- Unsure: hold and ask; never merge on a guess. One session per pull request.
-- Stop when it's merged; ready (green on the head, no open thread, no conflict); blocked on the
-  owner; or after <two> failed fixes for one failure. Report then.
-- Say what was measured: platforms, commits, which reverts failed which tests. Answer each
-  review item as `done <commit>`, `already <where>`, `not doing: <why>` or `wrong: <what>`.
-```
+Copy [assets/steward/SKILL.md.template](../assets/steward/SKILL.md.template) to
+`.claude/skills/steward/SKILL.md`, replacing each angle-bracketed part with the repository's
+answer, or with "none" and why. Its sections are merging, holds, conflicts and stale branches,
+red or stalled CI, review, releases and other repositories, and when to stop.
 
 ## Mistakes
 
@@ -146,8 +79,8 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
-| No steward file | Sessions open or merge pull requests here, and `.claude/skills/steward/SKILL.md` is missing, or `CLAUDE.md` doesn't name it | `GAP` | Write it from the skeleton above |
-| A decision left unanswered | Each skeleton section, against what sessions did in the last pull requests | `GAP` | Answer it, or say "none" and why |
+| No steward file | Sessions open or merge pull requests here, and `.claude/skills/steward/SKILL.md` is missing, or `CLAUDE.md` doesn't name it | `GAP` | Write it from `assets/steward/SKILL.md.template` |
+| A decision left unanswered | Each section of the template, against what sessions did in the last pull requests | `GAP` | Answer it, or say "none" and why |
 | Holds only in the file | No live place for holds, or no scope or lift for one | `GAP` | A label, draft state or issue, named in the file |
 | The file can change itself | With more than one reviewer, no `CODEOWNERS` entry or required review on `.claude/skills/steward/` | `GAP`; `MIRROR` on a one-person account | Add both; alone, say so in the file |
 | The file disagrees with the repository | Its merge method and checks against the settings and the ruleset, read through the REST API on a public repository (fact `rest-public`) | `DRIFT` | Make them agree, in whichever is wrong |
@@ -161,7 +94,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 
 ### A file each repository owns
 
-- **The advice:** a short steward file in the repository, written from this skeleton.
+- **The advice:** a short steward file in the repository, written from the template.
 - **The reason:** a session driving pull requests unattended decides when to merge, hold or
   re-run. Without a file, each session decides afresh, and the owner's rules live in
   conversations that aren't kept. In one audit cycle, rules lived across `CLAUDE.md`, notes and
