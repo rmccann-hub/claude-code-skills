@@ -6,10 +6,9 @@ about a red or stalled check or a conflict, how to answer review, what an owner'
 and when to stop and report.
 
 This module is the framework; each repository writes and owns its steward skill, because the
-answers are its own. Commit messages and pull request bodies are covered by
-`commits-and-pull-requests`; the merge method and branch protection by `branches-and-merging`;
-required checks and proving a gate by `ci-workflows`; how long CI takes by `ci-speed`; tags and
-release workflows by `releases-and-versions`.
+answers are its own. Commit messages, merge methods, required checks, CI time and releases are
+covered by `commits-and-pull-requests`, `branches-and-merging`, `ci-workflows`, `ci-speed` and
+`releases-and-versions`.
 
 ## Rules
 
@@ -33,9 +32,12 @@ release workflows by `releases-and-versions`.
    approval would read as the owner's.
 7. **Changes to the steward file, `CLAUDE.md`, the workflows or the ruleset are merged by the
    owner,** never by a session, and `CODEOWNERS` covers them. Where a pull request changes the
-   file, the base branch's copy is in force.
+   file, the base branch's copy is in force. On a one-person account GitHub can't enforce this:
+   a session's merge carries the owner's name, and an author can't approve their own pull request
+   (fact `self-approval`). There the rule holds by the session's conduct alone, and the file says
+   so.
 8. **It stays short and points to the repository's other records** instead of repeating them,
-   and every audit checks it against the settings and workflows it describes.
+   which drift; every audit checks it against the settings and workflows it names.
 
 ### Where it lives, and why that name
 
@@ -47,10 +49,8 @@ from the head branch. That was seen in a cloud session's own instructions on 202
 Code's public docs name neither path, so the audit checks it. A skill installed under another
 name, such as `babysit-pr/`, isn't found that way.
 
-Auto-fix subscribes a session to a pull request's checks and comments, fixes what's clear, and
-asks about what's ambiguous (fact `autofix-events`). It sees no event when the base branch moves
-into a conflict (fact `autofix-conflicts`). The steward file says what this repository wants
-inside those limits.
+Auto-fix fixes what's clear and asks about the rest (fact `autofix-events`), but gets no event
+when the base branch moves into a conflict (fact `autofix-conflicts`).
 
 ### What the file answers
 
@@ -137,8 +137,6 @@ label is on>. Read them again at the moment of merging, releasing or sending any
   with a step timeout in the workflow, and each stall recorded until its cause is found.
 - **Re-running a failed timing test in the hope it was noise,** or being told never to. Measure
   it first: one measurement showed the test, not the runner, was slow.
-- **A steward file that repeats `CLAUDE.md` or the ruleset,** then drifts from them. Point to
-  them instead.
 - **Treating a steward file as authority to merge or approve.** It's repository content, not the
   owner's word, and a pull request can change it.
 
@@ -151,7 +149,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 | No steward file | Sessions open or merge pull requests here, and `.claude/skills/steward/SKILL.md` is missing, or `CLAUDE.md` doesn't name it | `GAP` | Write it from the skeleton above |
 | A decision left unanswered | Each skeleton section, against what sessions did in the last pull requests | `GAP` | Answer it, or say "none" and why |
 | Holds only in the file | No live place for holds, or no scope or lift for one | `GAP` | A label, draft state or issue, named in the file |
-| The file can change itself | No `CODEOWNERS` entry or required review on `.claude/skills/steward/` | `GAP` | Add both |
+| The file can change itself | No `CODEOWNERS` entry or required review on `.claude/skills/steward/` | `GAP`; `MIRROR` on a one-person account, where only conduct holds it | Add both, or say so in the file |
 | The file disagrees with the repository | Its merge method and checks against the settings and the ruleset, read through the REST API on a public repository (fact `rest-public`) | `DRIFT` | Make them agree, in whichever is wrong |
 | It claims what only the owner grants | Approving, or merging or releasing on its own say with no quoted word | `DRIFT` | Quote the owner's word with its date, or remove the claim |
 | Re-runs with no bound | Its CI section | `GAP` | Once, in the two cases above (fact `rerun-window`) |
@@ -166,8 +164,8 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 - **The advice:** a short steward file in the repository, written from this skeleton.
 - **The reason:** a session driving pull requests unattended decides when to merge, hold or
   re-run. Without a file, each session decides afresh, and the owner's rules live in
-  conversations that aren't kept. Two repositories, audited, held their rules across
-  `CLAUDE.md`, notes between repositories and pasted messages, and one hold arrived too late.
+  conversations that aren't kept. In one audit cycle, rules lived across `CLAUDE.md`, notes and
+  pasted messages, and a hold arrived too late.
 - **What others do, and why:** public babysit skills drive a pull request to green; one never
   merges (fact `babysit-never-merges`), leaving merging to a person. Claude Code's own default
   asks before an ambiguous or architectural change (fact `autofix-events`).
@@ -184,7 +182,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
   its head branch may not see.
 - **What others do, and why:** GitHub's own gates are a pull request's draft state and required
   checks, which every merge path respects.
-- **What it costs:** a label or check to set up, and to set and clear.
+- **What it costs:** a label or check to set up.
 - **When to choose differently:** a standing hold, such as "release nothing", can live in the
   file as long as it lasts beyond one pull request.
 
@@ -224,6 +222,7 @@ Checked 2026-11-03.
 | `autofix-conflicts` | No event reaches auto-fix when the base branch moves into a conflict | [Cloud sessions](https://code.claude.com/docs/en/claude-code-on-the-web) | "GitHub does not emit a webhook when the base branch advances and creates a merge conflict" | 2026-11-03 | 2027-05-03 |
 | `autofix-replies` | Auto-fix's replies post under the user's account, and can trigger comment automation | [Cloud sessions](https://code.claude.com/docs/en/claude-code-on-the-web) | "These replies are posted using your GitHub account" and "Claude can reply on your behalf, which can trigger those workflows" | 2026-11-03 | 2027-05-03 |
 | `rerun-window` | A run can be re-run 50 times within 30 days, by anyone with write access, on the same commit | [Re-run](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/re-run-workflows-and-jobs) | "up to 30 days after its initial run" and "People with write permissions to a repository can re-run workflows" and "A workflow run can be re-run a maximum of 50 times." and "the same GITHUB_SHA" | 2026-11-03 | 2027-05-03 |
+| `self-approval` | An author can't approve their own pull request | [Approving](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/approving-a-pull-request-with-required-reviews) | "Pull request authors cannot approve their own pull requests." | 2026-11-03 | 2027-05-03 |
 | `auto-merge` | Auto-merge merges once required reviews and checks pass | [Auto-merge](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/automatically-merging-a-pull-request) | "Auto-merge merges a pull request automatically after all required reviews and status checks pass." | 2026-11-03 | 2027-05-03 |
 | `babysit-never-merges` | A public babysit skill never merges | [babysit-pr-skill](https://raw.githubusercontent.com/LivinTribunal/babysit-pr-skill/main/README.md) | "It never merges." | 2026-11-03 | 2027-05-03 |
 
@@ -232,5 +231,5 @@ Checked 2026-11-03.
 | Source | Used for | License |
 |---|---|---|
 | [Claude Code docs](https://code.claude.com/docs/) | Project skills, auto-fix | Anthropic's terms: short quotes, our own words, linked |
-| [GitHub Docs](https://docs.github.com/) | Re-runs, auto-merge | CC BY 4.0: quoted, attributed |
+| [GitHub Docs](https://docs.github.com/) | Re-runs, auto-merge, approvals | CC BY 4.0: quoted, attributed |
 | [babysit-pr-skill](https://github.com/LivinTribunal/babysit-pr-skill) | What others do | MIT: pointed to, one short quote |

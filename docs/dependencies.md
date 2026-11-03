@@ -172,7 +172,7 @@ again.
 | `coding` | www.open-std.org | 1 |
 | `coding` | www.powershellgallery.com | 1 |
 | `coding` | www.typescriptlang.org | 1 |
-| `git-workflows` | docs.github.com | 45 |
+| `git-workflows` | docs.github.com | 46 |
 | `git-workflows` | git-scm.com | 18 |
 | `git-workflows` | raw.githubusercontent.com | 10 |
 | `git-workflows` | github.blog | 6 |
