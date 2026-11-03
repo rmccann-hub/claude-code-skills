@@ -138,7 +138,7 @@ and the asset follows.
 ### Running it locally
 
 ```sh
-go install github.com/vale-cli/vale/v3/cmd/vale@v3.24.0
+go install github.com/vale-cli/vale/v3/cmd/vale@v3.26.0
 vale sync
 git ls-files -z '*.md' | xargs -0 vale
 ```
@@ -242,9 +242,9 @@ Vale's version and behavior, and the guides the heading rule follows, each named
 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
-| `vale-current` | Vale's newest release is v3.24.0 | `git ls-remote --tags https://github.com/vale-cli/vale` | `refs/tags/v3.24.0` | 2026-10-05 | 2027-01-05 |
-| `vale-module` | Vale installs with `go install`, from the module `github.com/vale-cli/vale/v3` | [go.mod at v3.24.0](https://raw.githubusercontent.com/vale-cli/vale/v3.24.0/go.mod) | "module github.com/vale-cli/vale/v3" | 2026-10-05 | 2027-04-05 |
-| `vale-license` | Vale is under the MIT license | [LICENSE at v3.24.0](https://raw.githubusercontent.com/vale-cli/vale/v3.24.0/LICENSE) | "MIT License" | 2026-10-05 | 2027-04-05 |
+| `vale-current` | Vale's newest release is v3.26.0 | `git ls-remote --tags https://github.com/vale-cli/vale` | `refs/tags/v3.26.0` | 2026-11-03 | 2027-02-03 |
+| `vale-module` | Vale installs with `go install`, from the module `github.com/vale-cli/vale/v3` | [go.mod at v3.26.0](https://raw.githubusercontent.com/vale-cli/vale/v3.26.0/go.mod) | "module github.com/vale-cli/vale/v3" | 2026-11-03 | 2027-05-03 |
+| `vale-license` | Vale is under the MIT license | [LICENSE at v3.26.0](https://raw.githubusercontent.com/vale-cli/vale/v3.26.0/LICENSE) | "MIT License" | 2026-11-03 | 2027-05-03 |
 | `vale-packages` | A package is a ZIP holding one folder named for it. `.vale.ini` lists it by URL under `Packages`, and `vale sync` installs it | [Packages](https://vale.sh/docs/keys/packages) | "A URL to a .zip archive." and "the archive has to hold one folder with that name" and "Packages lists what vale sync installs into the StylesPath" | 2026-10-05 | 2027-04-05 |
 | `vale-layers` | A package's configuration is overridden by later packages, and by the project's own | [Packages](https://vale.sh/docs/keys/packages) | "the first package is overridden by the second, and local configuration overrides both" | 2026-10-05 | 2027-04-05 |
 | `vale-sections` | In `.vale.ini`, a later section matching the same files replaces the earlier list of styles | [.vale.ini](https://vale.sh/docs/vale-ini) | "A later matching section replaces the list rather than adding to it." | 2026-10-05 | 2027-04-05 |

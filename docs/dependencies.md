@@ -37,13 +37,13 @@ freshness run and the release workflow both run it.
 | Name | Version | Set in | Note |
 |---|---|---|---|
 | Python | 3.15 | `.python-version` | `pyproject.toml` requires >=3.14 |
-| uv_build | >=0.13.1,<0.14 | `pyproject.toml` | build backend |
+| uv_build | >=0.13.5,<0.14 | `pyproject.toml` | build backend |
 | GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/hold.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` | — |
 | Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
-| Node.js | 24 | `.github/workflows/ci.yml` | — |
+| Node.js | 26 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
 | uv | 0.13.5 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
-| vale | v3.24.0 | `.github/workflows/prose.yml` | — |
+| vale | v3.26.0 | `.github/workflows/prose.yml` | — |
 
 ## Python packages
 
@@ -52,18 +52,18 @@ plugins ship.
 
 ```text
 skillcheck 0.0.0 (this repository's checks)
-├── pytest 9.1.1 (dev)
+├── pytest 9.2.0 (dev)
 │   ├── colorama 0.4.6 (dev; only when sys_platform == 'win32')
 │   ├── iniconfig 2.3.1 (dev)
 │   ├── packaging 26.3 (dev)
 │   ├── pluggy 1.7.0 (dev)
 │   └── pygments 2.21.0 (dev)
 ├── pytest-cov 7.1.0 (dev)
-│   ├── coverage 7.16.2 (dev)
+│   ├── coverage 7.17.0 (dev)
 │   ├── pluggy 1.7.0 (dev)
-│   └── pytest 9.1.1 (dev) (listed above)
+│   └── pytest 9.2.0 (dev) (listed above)
 ├── pyyaml 6.0.3
-├── ruff 0.17.1 (dev)
+├── ruff 0.17.3 (dev)
 ├── shellcheck-py 0.11.0.1 (dev)
 └── zizmor 1.31.1 (dev)
 ```
@@ -75,15 +75,15 @@ plugins ship.
 
 ```text
 package.json
-└── @anthropic-ai/claude-code 2.1.302 (dev)
-    ├── @anthropic-ai/claude-code-darwin-arm64 2.1.302 (dev; optional)
-    ├── @anthropic-ai/claude-code-darwin-x64 2.1.302 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-arm64 2.1.302 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-arm64-musl 2.1.302 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-x64 2.1.302 (dev; optional)
-    ├── @anthropic-ai/claude-code-linux-x64-musl 2.1.302 (dev; optional)
-    ├── @anthropic-ai/claude-code-win32-arm64 2.1.302 (dev; optional)
-    └── @anthropic-ai/claude-code-win32-x64 2.1.302 (dev; optional)
+└── @anthropic-ai/claude-code 2.1.310 (dev)
+    ├── @anthropic-ai/claude-code-darwin-arm64 2.1.310 (dev; optional)
+    ├── @anthropic-ai/claude-code-darwin-x64 2.1.310 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-arm64 2.1.310 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-arm64-musl 2.1.310 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-x64 2.1.310 (dev; optional)
+    ├── @anthropic-ai/claude-code-linux-x64-musl 2.1.310 (dev; optional)
+    ├── @anthropic-ai/claude-code-win32-arm64 2.1.310 (dev; optional)
+    └── @anthropic-ai/claude-code-win32-x64 2.1.310 (dev; optional)
 ```
 
 ## GitHub Actions
@@ -96,7 +96,7 @@ package.json
 | `actions/setup-go` | v7.0.0 | `b7ad1dad31e06c5925ef5d2fc7ad053ef454303e` | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` |
 | `actions/setup-node` | v7.1.0 | `949feb2413d6458794dcd2491c4babbbce0c15c1` | `.github/workflows/ci.yml` |
 | `actions/upload-artifact` | v7.0.2 | `cf430e030ddbb5b0abf93d22962f4752f3646cd9` | `.github/workflows/release.yml` |
-| `astral-sh/setup-uv` | v10.3.0 | `1c37ad07a6a961277cf70c0d37d6f313000f5884` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
+| `astral-sh/setup-uv` | v10.3.3 | `68559e99cc807c1eb7e9238fd43a15bba460eec2` | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` |
 
 ## Services
 
