@@ -18,16 +18,16 @@ freshness run and the release workflow both run it.
 |---|---|---|---|---|
 | `standards` | 0.1.24 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.48.2 |
 | `engineering` | 0.1.24 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
-| `engineering` | 0.1.24 | Apache-2.0 | `git-workflows` | reviewed 2026-10-27 |
+| `engineering` | 0.1.24 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.24 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 95 |
+| Markdown | 96 |
 | Python | 51 |
-| JSON | 38 |
+| JSON | 39 |
 | YAML | 22 |
 | Shell | 4 |
 | TOML | 2 |
@@ -172,10 +172,11 @@ again.
 | `coding` | www.open-std.org | 1 |
 | `coding` | www.powershellgallery.com | 1 |
 | `coding` | www.typescriptlang.org | 1 |
-| `git-workflows` | docs.github.com | 43 |
+| `git-workflows` | docs.github.com | 45 |
 | `git-workflows` | git-scm.com | 18 |
-| `git-workflows` | raw.githubusercontent.com | 9 |
+| `git-workflows` | raw.githubusercontent.com | 10 |
 | `git-workflows` | github.blog | 6 |
+| `git-workflows` | code.claude.com | 4 |
 | `git-workflows` | docs.kernel.org | 3 |
 | `git-workflows` | pypi.org | 3 |
 | `git-workflows` | docs.zizmor.sh | 2 |

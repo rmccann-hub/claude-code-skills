@@ -1,9 +1,9 @@
 ---
 name: git-workflows
-description: "Sets up and runs Git and GitHub work: commits, branches, pull requests, merges, conflicts, GitHub Actions CI, hooks, leaked secrets, tags, changelogs, versions and releases. Use when writing, fixing or speeding up any of these."
+description: "Sets up and runs Git and GitHub work: commits, branches, pull requests and agents tending them, merges, conflicts, GitHub Actions CI, hooks, leaked secrets, tags, changelogs, versions, releases. Use when writing, fixing or speeding up any of these."
 license: Apache-2.0
 metadata:
-  reviewed: "2026-10-27"
+  reviewed: "2026-11-03"
 ---
 
 # Git workflows
@@ -60,6 +60,7 @@ as fact `node20`, and the fact's row is in whichever module holds it.
 | [`releases-and-versions`](references/releases-and-versions.md) | cutting a release or tag, a release workflow, changelog entries, version numbers, release lines and backports |
 | [`leaked-data`](references/leaked-data.md) | a secret or personal information that reached a commit, and rewriting history to remove it |
 | [`gitignore`](references/gitignore.md) | writing or debugging `.gitignore`, ignoring secrets, committing lockfiles, or untracking a file |
+| [`pr-stewardship`](references/pr-stewardship.md) | writing or auditing a repository's steward skill, the file that tells agent sessions when to merge or hold a pull request, what to do about red or stalled CI, how to answer review, and what an owner's hold covers |
 
 Tested examples to copy, each described in its module:
 

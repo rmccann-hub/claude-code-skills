@@ -6,6 +6,14 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `git-workflows`' `pr-stewardship` module: the framework for a repository's own steward skill,
+  the file at `.claude/skills/steward/SKILL.md` that tells agent sessions when to merge or hold a
+  pull request, what to do about red or stalled CI, how to answer review, what an owner's hold
+  covers and what to report. It gives a skeleton to copy and the audit's checks; each
+  repository writes and owns its file.
+
 ## [0.1.24] - 2026-10-27
 
 ### Added
