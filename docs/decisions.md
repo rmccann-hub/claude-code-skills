@@ -2,6 +2,22 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — An `archive` branch, and this repository's answer on records
+
+- **The owner's word:** "Do all you recommend" (2026-11-03), which took up the standard proposal
+  of 2026-11-03, item A, with its three defaults. The standard's own change lands on its own,
+  as v0.49.0; this entry is the repository's part.
+- **Built:** an orphan `archive` branch with a README; `docs/archive.md`, answering the four
+  questions and indexing the branch; and `AGENTS.md`'s split line, which moved finished work by
+  deleting it, now moves it to `archive`.
+- **The deliberate difference:** the proposal said the audit kit moves here from
+  `audit-reports`' `audit-log` branch. It doesn't: the kit and the messages to other
+  repositories name audited repositories, which this public repository can't hold. They stay
+  private, and `docs/archive.md` says so.
+- **Homes considered for the index:** `AGENTS.md`, over its line budget, and the decision
+  record, which is a log rather than an index. `docs/` holds the repository's other records.
+- **Left to the owner:** a ruleset protecting `archive` from force-pushes and deletion, as the
+  rule asks; a session can't set one.
 ## 2026-11-03 — `ci-workflows`: a gate passing a check that ran and failed
 
 - **Asked, by the owner:** "Do all you recommend" (2026-11-03), after this session recommended
