@@ -2,6 +2,38 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — Mutation tests of `core/times.py` and `core/text.py`
+
+- **Asked, by the owner:** "Do all you recommend", after a review found an audited repository's
+  graders could not fail. Full line coverage shows a line ran, not that a test fails when the
+  line is wrong, so the two modules whose job is to fail bad input were mutated: the `times`
+  check, and `HIDDEN` and `CONTROL`, which the `unicode` check and `printable` use.
+- **Tool:** mutmut 3.8.1, run with `uv run --with mutmut` in a scratch copy, whose
+  `pyproject.toml` alone carried its settings. Each mutant faced `tests/test_times.py` and
+  `tests/test_text.py`. mutmut mutates function bodies only, so a second set of 51 hand-written
+  mutants changed the module-level patterns: each run of `HIDDEN` and `CONTROL` dropped or
+  narrowed at one end, and each part of the `times` patterns, `SINCE`, `ROOTS` and `EXCLUDED`.
+  Each faced its module's tests, then the whole suite if it lived.
+- **Before:** mutmut made 112 mutants, killed 105 and missed 7; the hand set killed 24 of 51.
+  The real gaps: `stamp` taking the machine's zone for UTC; a fence's closing line ending the
+  scan; nine ends of `HIDDEN`'s runs (U+00AD, U+180E, U+202A, U+2060 to U+2064, U+2069, U+E0000,
+  U+E007F); five ends of `CONTROL` (U+0000 to U+0008, U+007F, U+009F); the look-behind's dot,
+  colon and word character; seconds; morning local times; a local time with no zone name; tilde
+  and indented fences; four of the five roots.
+- **Tests added,** 24, in `tests/test_times.py` and `tests/test_text.py`, which plant each
+  defect. `.test-baseline` moves from 610 to 634.
+- **After:** mutmut killed 107 of 112, and the hand set 50 of 51. The six left change nothing
+  that matters: `lstrip("XX0XX")` on digits; `encoding=None`, UTF-8 under Python 3.15's UTF-8
+  mode; `"UTF-8"` for `"utf-8"`; `fenced = None`, as falsy as `False`; dropping `\b` after `UTC`
+  or `GMT`, which differs only for a word that starts with either; and replacing a code span
+  with `XXXX`, not nothing, which differs only where a span touches a time or its zone.
+- **Time:** about 35 minutes in all. mutmut took 37 seconds a run, the hand set 805 seconds
+  before the tests and 86 after.
+- **Found, not fixed:** the `times` check reads an ISO 8601 offset, the `02:00` in
+  `2026-10-17T02:55+02:00`, as a time with no zone, though the module says ISO 8601 times are
+  left alone. No file here holds one. Changing the check is a separate change, and it waits on
+  the owner's word.
+
 ## 2026-11-03 — The steward template moves out of `pr-stewardship`
 
 - **Why:** the module stood at 15,998 characters, two short of the 16,000 limit past which
