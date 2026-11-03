@@ -16,6 +16,8 @@ Notable changes to this repository. The format follows
   unattended run given no answers, a requested report form, the `curl` form without `gh`,
   zizmor's cooldown finding, a bare-name `skillOverrides` key, and a finished plan file's status.
 
+- `git-workflows`' `ci-workflows`: proving a gate now includes a check that ran and failed, and
+  the audit asks whether each gate has ever been seen to fail.
 - `git-workflows`' `pr-stewardship` links a template file for the steward skill,
   `assets/steward/SKILL.md.template`, where it held the skeleton inline, leaving the module room
   under the size limit.
@@ -30,6 +32,8 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- An `archive` branch for finished work kept off `main`, and `docs/archive.md`, which says what
+  this repository keeps where and lists the branch's contents.
 - This repository's own steward skill, `.claude/skills/steward/SKILL.md`, and a `hold` check
   that fails while a pull request carries the `hold` label.
 - `git-workflows`' `pr-stewardship` module: the framework for a repository's own steward skill,

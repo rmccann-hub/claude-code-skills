@@ -44,6 +44,35 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   steward, and every sample's Phase 3 replies are given. The new ratings any sample could meet,
   such as dimension 10's `GAP` for no recorded answer, land on dimensions its baseline already
   rates `GAP` or worse, so no status can move.
+## 2026-11-03 — An `archive` branch, and this repository's answer on records
+
+- **The owner's word:** "Do all you recommend" (2026-11-03), which took up the standard proposal
+  of 2026-11-03, item A, with its three defaults. The standard's own change lands on its own,
+  as v0.49.0; this entry is the repository's part.
+- **Built:** an orphan `archive` branch with a README; `docs/archive.md`, answering the four
+  questions and indexing the branch; and `AGENTS.md`'s split line, which moved finished work by
+  deleting it, now moves it to `archive`.
+- **The deliberate difference:** the proposal said the audit kit moves here from
+  `audit-reports`' `audit-log` branch. It doesn't: the kit and the messages to other
+  repositories name audited repositories, which this public repository can't hold. They stay
+  private, and `docs/archive.md` says so.
+- **Homes considered for the index:** `AGENTS.md`, over its line budget, and the decision
+  record, which is a log rather than an index. `docs/` holds the repository's other records.
+- **Left to the owner:** a ruleset protecting `archive` from force-pushes and deletion, as the
+  rule asks; a session can't set one.
+## 2026-11-03 — `ci-workflows`: a gate passing a check that ran and failed
+
+- **Asked, by the owner:** "Do all you recommend" (2026-11-03), after this session recommended
+  teaching the 2026-11-03 Full run's main lesson: a green run whose graders couldn't fail.
+- **What it found:** an audited repository's acceptance step counted a post-rip check as done
+  when it had run, whatever it found, so a failed integrity check passed. Rule 5 already said to
+  prove a gate against the state it exists to catch; nothing named this case, and no audit row
+  checked the rule at all.
+- **Changed:** *Prove a gate works* gains "a check that ran and failed", and the audit gains "A
+  gate has never been seen to fail". The module goes from 14,990 to 15,387 characters, over the
+  15,000 target and under the 16,000 limit; the next addition here splits it first.
+- **Review:** `docs/authoring-a-skill.md`'s checks that apply to a rule's case and an audit row
+  (size, prose, wrap, the row's status words) passed. The claude.ai tries follow the merge.
 
 ## 2026-11-03 — The steward template moves out of `pr-stewardship`
 

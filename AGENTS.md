@@ -53,7 +53,7 @@ skills run in sessions there, some reaching production, so a change here changes
 ## Budgets
 
 The standard's and the Agent Skills spec's figures: targets are smells, limits are enforced.
-Split by the standard's recipe, logs and finished work first, deleting what moved in one commit.
+Split by the standard's recipe, logs and finished work first, to [`archive`](docs/archive.md).
 
 - `AGENTS.md`: under 150 lines; `CLAUDE.md`: about 30; a rule file: about 50. `skillcheck`
   holds `AGENTS.md` and `CLAUDE.md` within 300 lines and 32 KiB each.
