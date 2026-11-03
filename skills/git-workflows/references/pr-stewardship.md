@@ -31,11 +31,11 @@ covered by `commits-and-pull-requests`, `branches-and-merging`, `ci-workflows`, 
    never approves: its replies post under the owner's account (fact `autofix-replies`), so its
    approval would read as the owner's.
 7. **Changes to the steward file, `CLAUDE.md`, the workflows or the ruleset are merged by the
-   owner,** never by a session, and `CODEOWNERS` covers them. Where a pull request changes the
-   file, the base branch's copy is in force. On a one-person account GitHub can't enforce this:
-   a session's merge carries the owner's name, and an author can't approve their own pull request
-   (fact `self-approval`). There the rule holds by the session's conduct alone, and the file says
-   so.
+   owner,** never by a session; with more than one reviewer, `CODEOWNERS` covers them, as the
+   standard's dimension 3 says. The base branch's copy of the file is in force. On a one-person
+   account GitHub can't enforce this: a session's merge carries the owner's name, and an author
+   can't approve their own pull request (fact `self-approval`). There the rule holds by the
+   session's conduct alone, and the file says so.
 8. **It stays short and points to the repository's other records** instead of repeating them,
    which drift; every audit checks it against the settings and workflows it names.
 
@@ -54,8 +54,8 @@ when the base branch moves into a conflict (fact `autofix-conflicts`).
 
 ### What the file answers
 
-Copy this skeleton, and replace every angle-bracketed part with the repository's own answer, or
-with "none" and why.
+Copy this skeleton, replacing each angle-bracketed part with the repository's answer, or with
+"none" and why.
 
 ```markdown
 ---
@@ -149,7 +149,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 | No steward file | Sessions open or merge pull requests here, and `.claude/skills/steward/SKILL.md` is missing, or `CLAUDE.md` doesn't name it | `GAP` | Write it from the skeleton above |
 | A decision left unanswered | Each skeleton section, against what sessions did in the last pull requests | `GAP` | Answer it, or say "none" and why |
 | Holds only in the file | No live place for holds, or no scope or lift for one | `GAP` | A label, draft state or issue, named in the file |
-| The file can change itself | No `CODEOWNERS` entry or required review on `.claude/skills/steward/` | `GAP`; `MIRROR` on a one-person account, where only conduct holds it | Add both, or say so in the file |
+| The file can change itself | With more than one reviewer, no `CODEOWNERS` entry or required review on `.claude/skills/steward/` | `GAP`; `MIRROR` on a one-person account | Add both; alone, say so in the file |
 | The file disagrees with the repository | Its merge method and checks against the settings and the ruleset, read through the REST API on a public repository (fact `rest-public`) | `DRIFT` | Make them agree, in whichever is wrong |
 | It claims what only the owner grants | Approving, or merging or releasing on its own say with no quoted word | `DRIFT` | Quote the owner's word with its date, or remove the claim |
 | Re-runs with no bound | Its CI section | `GAP` | Once, in the two cases above (fact `rerun-window`) |
@@ -169,7 +169,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 - **What others do, and why:** public babysit skills drive a pull request to green; one never
   merges (fact `babysit-never-merges`), leaving merging to a person. Claude Code's own default
   asks before an ambiguous or architectural change (fact `autofix-events`).
-- **What it costs:** a file to keep current, checked at each audit.
+- **What it costs:** a file to keep current.
 - **When to choose differently:** a repository where no session ever opens or merges a pull
   request needs none; say so in its `CLAUDE.md`.
 
