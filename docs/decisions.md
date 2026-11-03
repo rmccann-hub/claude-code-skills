@@ -14,6 +14,9 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   module, on `main` as on any rewording of its router row. The skill's own rule 7 answers the
   commonest release question itself, so the model has no reason to read on. How much a skill's
   top-level rules should say is a design question, left open.
+- **`pr-stewardship` agrees with the standard on `CODEOWNERS`:** only with more than one
+  reviewer, as dimension 3 says. The module is now 15,998 characters; its next addition splits
+  it.
 
 ## 2026-11-03 — `pr-stewardship` on claude.ai: both tries pass, and a limit found
 
