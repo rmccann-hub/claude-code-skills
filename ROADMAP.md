@@ -59,7 +59,7 @@ research. These rules are that structure.
 
 | Skill | Plugin | Loads when | Status |
 |---|---|---|---|
-| `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.48.2 | shipped |
+| `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.49.0 | shipped |
 | `git-workflows` | `engineering` | Commits, branches, pull requests, CI, hooks, tags, changelogs and releases | shipped |
 | `house-style` | `engineering` | Writing prose, Markdown, READMEs and documentation | shipped |
 | `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | shipped |
@@ -1241,6 +1241,40 @@ The owner's answers on 2026-10-15 added one more, applied in v0.45.0:
 - **F155, in v0.48.2:** *Language toolchains* brought to 2026-10 from research R09, R10, R11
   and R21: every supported Python, the 2026-11-10 ends of PowerShell 7.4 and 7.5 and .NET 8
   and 9, Pester 6, Node 26 and Rust 1.99. The owner approved it on 2026-10-26.
+
+The two audits of 2026-10-27 found seven more in the standard. The owner approved the first six
+on 2026-11-03, and they're applied in v0.49.0:
+
+- **F156:** an unattended run told not to wait, and given no answers, records each Phase 3
+  question as `unanswered`, applies its default, and rates on the lowest tier the evidence
+  supports, with `tier_basis: draft`.
+- **F157:** where the request names the report's files, form or place, the run follows it,
+  keeps every schema block, and records the difference in `overrides`.
+- **F158:** Phase 2 gives the `curl` form for a public repository without `gh`, and a dated fact
+  says which paths answer with no token.
+- **F159:** zizmor's `dependabot-cooldown` finding is informational where the platform's default
+  applies, and the cooldown fact gives GitHub's own words.
+- **F160:** a bare-name `skillOverrides` key matches a synced skill listed as
+  `anthropic-skills:<name>`, observed on 2026-10-27.
+- **F161:** a plan file left after merge is `OVER` on dimension 3, or `DRIFT` on dimension 10
+  where it also asserts something false today.
+- **F165, planned:** an audit reads *Before you start*, *The run*, *File governance* and, with a
+  second repository, *Cross-repository contracts*: about 3,600 of v0.48.2's 6,534 lines, while
+  adherence may decay as a session lengthens. *The run* is split by dimension, so a run reads
+  the dimension it's rating, or each dimension opens with a short checklist naming each rule's
+  line. It's a restructure of its own, beside R22's work on the routing table, and the rebuild's
+  one file per dimension, above, is where it lands.
+
+The owner's words of 2026-10-29 and 2026-11-03 added three, approved with them and applied in
+v0.49.0:
+
+- **F162:** dimension 10 asks where a repository keeps what's finished but worth keeping: four
+  recorded questions, an add-only, protected auxiliary branch indexed on the default branch,
+  three defaults and four ratings.
+- **F163:** dimension 6 rates how long CI and a release's tests take, by `git-workflows`'
+  `ci-speed`, and the starter CI cancels a pull request's superseded runs and caches.
+- **F164:** where agent sessions drive pull requests, dimension 6 asks for a steward skill at
+  `.claude/skills/steward/SKILL.md`, by `git-workflows`' `pr-stewardship`.
 - **F154, in v0.48.1:** Phase 0's fifth question also asks which comes first, the local
   time or the UTC stamp. The owner chose local time first on 2026-10-20.
 - **F150, in v0.47.0:** *Language toolchains* names Python 3.15, released 2026-10-09. A run
@@ -1350,4 +1384,4 @@ trigger.
 | `upstream-defects.md` | The standard's register of upstream defects shared across repositories | planned | the first upstream defect found |
 | Map refresh on dependency updates | Dependabot's pull requests change the lockfiles but not `bom.json` or `docs/dependencies.md`. CI's `--bom-check` fails such a pull request until a session regenerates the map in its branch before merging, as the owner chose on 2026-10-13 | shipped | done |
 | Fewest dependencies here | This repository's own dependencies and pins, in `pyproject.toml`, `package.json` and CI, held to the R21 rule | planned | the rule is in the standard |
-| One archive rule for every repository | Every repository keeps what is finished but worth keeping in a consistent way, tagged by version, release or date. Identical where that serves, with an archive branch beside any `evidence` branch as one candidate form; where a repository does otherwise, the difference is deliberate, recorded with its reason, and obvious to a reader of that repository. Today each does it differently: one audited repository keeps a `docs/archive/` folder in its main branch, another deletes finished work and keeps it in history, this repository deletes it too, and the audit kit sits in ignored `scratch/`. The rule goes into the standard as a proposal for the owner's approval; then this repository, the audit kit and the repositories the standard audits are brought into line, by audit | planned | before the next skills release, on the owner's word of 2026-10-29 |
+| One archive rule for every repository | Every repository keeps what is finished but worth keeping in a consistent way, tagged by version, release or date. Identical where that serves, with an archive branch beside any `evidence` branch as one candidate form; where a repository does otherwise, the difference is deliberate, recorded with its reason, and obvious to a reader of that repository. Today each does it differently: one audited repository keeps a `docs/archive/` folder in its main branch, another deletes finished work and keeps it in history, this repository deletes it too, and the audit kit sits in ignored `scratch/`. The rule is in the standard from v0.49.0, in dimension 10, approved on 2026-11-03; this repository, the audit kit and the repositories the standard audits are brought into line next, by audit | planned | before the next skills release, on the owner's word of 2026-10-29 |

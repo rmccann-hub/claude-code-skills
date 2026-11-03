@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.48.2"
-  updated: "2026-10-26"
-  supersedes: "0.48.1"
+  version: "0.49.0"
+  updated: "2026-11-03"
+  supersedes: "0.48.2"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -324,6 +324,9 @@ consequences can be sorted, not so anything can be demanded.
   answer first, then every emission block. **The human must never have to assemble a report
   by copying pieces out of the conversation.** Emission blocks still appear in the reply as
   the run proceeds; the file is the durable copy and the only thing that has to travel.
+  **Where the request names the report's files, form or place, follow it,** keep every schema
+  block, and record the difference in `overrides`. One audit's owner asked for two files in a
+  private repository, and the run had no rule saying the request wins.
 - **Emit the schema, and only its fields.** Every phase has a required field set and every
   phase has `notes` for anything the fields cannot hold. Fill every field. **Do not add
   fields.**
@@ -689,13 +692,14 @@ reads as diligence.
 | Push protection comes in two kinds. **For users**, it is on by default and stops a user's own pushes of secrets to public repositories, with no alert when they bypass it. **For the repository**, it is off until someone turns it on, it blocks pushes containing secrets from reaching that repository, and only it raises an alert for a bypass | 2026-10 | Dimension 7. The users' default isn't the repository's control |
 | Code owners: public repositories on any plan, including GitHub Free; private repositories only on GitHub Pro, Team or Enterprise | 2026-09 | Dimension 3. Decides `GAP` against `N/A` for a missing `CODEOWNERS` |
 | Immutable releases are a **repository or organization setting**, not a default. When on: tag and assets frozen at publish, title and notes still editable, and assets must be uploaded while the release is a draft | 2026-09 | The release gate. Read the setting; do not assume either way |
-| Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt. The period is set with `default-days` under `cooldown:`, with per-semver keys alongside; a bare `cooldown: 0` is not a documented form | 2026-09 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
+| Dependency-update pull requests wait three days after a release by default, with no configuration; security updates are exempt. The period is set with `default-days` under `cooldown:`, with per-semver keys alongside; a bare `cooldown: 0` is not a documented form. GitHub's *Dependabot options reference*, read 2026-11-03: "Apply a default cooldown period of 3 days to version updates, even when `cooldown` is not configured" | 2026-11 | Dimension 8. A config matching the default is `OVER`; a longer one is not |
 | A tag can be created in the browser at publish time, with no clone | 2026-09 | The only reason the release gate is reachable at all without a working copy |
 | A workflow `run` step with no `shell:` runs under `bash -e` on Linux and macOS runners: it stops at the first failing command, a failing command substitution included, with no `pipefail`. Naming `shell: bash` adds `-o pipefail` | 2026-09 | The starter CI template's guard, and reading any step's exit status |
 | `actions/checkout` is at v7 (v7.0.1, commit `3d3c42e5aac5ba805825da76410c181273ba90b1`) | 2026-09 | *Starter file contents*. A template's action versions go stale like any other pin |
 | `actions/checkout` keeps the token for later steps' git commands until the job ends, unless `persist-credentials: false`, and the input defaults to `true` (checkout's README). zizmor's `artipacked` audit flags a checkout that keeps it (zizmor's audit documentation) | 2026-10 | *Starter file contents*. Why the template's checkout drops its credentials |
 | GitHub's secure-use reference calls a workflow dependency lockfile the strongest protection available, superseding SHA pins for a repository that adopts one. Lockfiles are in public preview: `.github/workflows/actions.lock`, generated by the `gh actions-lock` extension, records the exact commit of every action the workflows use, those the actions call included. For a repository that can't adopt one, it says to pin each action to a full-length commit SHA. Dependabot raises no security alert for an action pinned to a SHA (GitHub's Secure use reference, and its Workflow dependency lockfiles page) | 2026-10 | *Starter file contents* and dimension 8. Why the template pins commits while lockfiles are in preview, and why version updates must stay on. Check again when lockfiles are generally available |
 | A job with no `timeout-minutes` runs for up to 360 minutes before GitHub cancels it (GitHub's workflow syntax page) | 2026-10 | Dimension 6 and *Starter file contents*. What a job that hangs costs |
+| For a public repository, `GET /repos/<owner>/<repo>` and its `rulesets`, `rules/branches/<branch>` and `private-vulnerability-reporting` paths answer with no token, since each "can be used without authentication or the aforementioned permissions if only public resources are requested". `immutable-releases` needs admin read access and `code-scanning/default-setup` a token; the merge settings come back only to a token with contents write, and a ruleset's bypass list only to one that can edit it (GitHub's REST reference for repositories, rules and code scanning, read 2026-11-03) | 2026-11 | Phase 2. What a run without `gh` can read, and what it asks for instead |
 | `pull_request_target` and `workflow_run` run with the base repository's secrets, and an expression in a `run:` step is replaced before the shell runs it, so untrusted input goes through an intermediate environment variable: "Use an intermediate environment variable" (GitHub's security hardening guide for Actions) | 2026-10 | Dimension 6. A workflow that interpolates an issue title or a branch name runs whatever its author wrote |
 | GitHub's default squash message is the commit's title and message for a one-commit pull request, and the pull request's title and list of commits for two or more. The API returns the title's setting as `squash_merge_commit_title`: `COMMIT_OR_PR_TITLE` takes a one-commit pull request's own title, as the default message does, and `PR_TITLE` always takes the pull request's title (GitHub's page on configuring commit squashing, and its REST reference) | 2026-10 | Dimension 10. Under squash, whether the grammar check reads the subject |
 | Events a workflow makes with its `GITHUB_TOKEN` create no new workflow run, apart from `workflow_dispatch` and `repository_dispatch`, and a pull request it opens or updates, whose runs then wait for approval (GitHub's `GITHUB_TOKEN` page) | 2026-10 | The release gate. Why a release hands off through `workflow_dispatch` |
@@ -731,7 +735,7 @@ to pass, by the names their checks report.
 | Release immutability | On, once the release workflow uploads its files while the release is a draft | General, Releases | From T2, where releases are published, as the release gate says |
 | Wiki, Projects, Discussions | Off, unless something uses them | General, Features | Every repository |
 | Default-branch ruleset | Deletion and force pushes blocked. A pull request required, with no approval for one maintainer and at least one for several. The CI checks required | Rules, Rulesets | Public, or private on a paid plan |
-| Evidence-branch ruleset | Deletion and force pushes blocked on `evidence` | Rules, Rulesets | Where an evidence branch exists: public, or private on a paid plan |
+| Evidence-branch ruleset | Deletion and force pushes blocked on `evidence`, and on each other auxiliary branch dimension 10 describes | Rules, Rulesets | Where an evidence or auxiliary branch exists: public, or private on a paid plan |
 | Release-tag ruleset | `v*` tags can't be updated, deleted or force-pushed | Rules, Rulesets | Where releases are tagged: public, or private on a paid plan |
 | Workflow permissions | Read repository contents and packages permissions, with Allow GitHub Actions to create and approve pull requests unticked | Actions, General | Every repository with workflows. A new one in a personal account starts this way |
 | SHA-pinned actions | Require actions to be pinned to a full-length commit SHA, once every action, and every action those call, is pinned | Actions, General, Actions permissions | Where dimension 8 rates tag pins, or every action is pinned already |
@@ -774,7 +778,8 @@ action for each page they're on. Each is in the account's Settings, under the pr
 | Adherence to written instructions may decay within a session — about 5.6% lower odds of compliance per additional function generated, an exploratory, non-monotonic finding; the same study found no detectable effect of file size, position, structure or conflicts (`arXiv:2605.10039`) | 2026-09 | Why the gates exist, and why the conformance block sits last |
 | Audits of public skill marketplaces found between a quarter and a third of published skills flawed (Snyk: 36.82% of 3,984; `arXiv:2601.10338`: 26.1% of 42,447), with confirmed coordinated malicious campaigns | 2026-09 | Dimension 4's inventory of hooks, skills and plugins |
 | `claude plugin validate --strict` (2.1.280) checks manifests and agents, but reported none of five planted skill defects and accepted a reserved marketplace name | 2026-09 | Dimension 9. A passing validator is not a review of the skills |
-| `syncClaudeAiSkills: false`, and `syncClaudeAiPlugins: false` for plugins, are read from user, local and managed settings only, so a project's committed `.claude/settings.json` can't stop the sync. Any settings file, the committed one included, can hide a skill with `skillOverrides`, which the docs say doesn't reach plugin skills and don't say of synced ones. On 2026-10-15, in a cloud session on Claude Code 2.1.301, `"off"` in a repository's committed `.claude/settings.json` hid synced skills: calling one was refused as "disabled for model invocation in skillOverrides settings". The changelog documents `Skill(anthropic-skills:<name>)` permission rules that match synced skills (2.1.282, 2.1.283), not yet tried | 2026-10 | Dimension 4. A repository can't stop the sync, and can hide a synced skill in its own sessions |
+| `syncClaudeAiSkills: false`, and `syncClaudeAiPlugins: false` for plugins, are read from user, local and managed settings only, so a project's committed `.claude/settings.json` can't stop the sync. Any settings file, the committed one included, can hide a skill with `skillOverrides`, which the docs say doesn't reach plugin skills and don't say of synced ones. On 2026-10-15, in a cloud session on Claude Code 2.1.301, `"off"` in a repository's committed `.claude/settings.json` hid synced skills: calling one was refused as "disabled for model invocation in skillOverrides settings". The changelog documents `Skill(anthropic-skills:<name>)` permission rules that match synced skills (2.1.282, 2.1.283), not yet tried. **A bare-name key matches a synced skill listed as `anthropic-skills:<name>`**, observed on 2026-10-27 in this standard's own repository: its committed file keyed 17 synced skills by bare name, the 15 set to `"off"` were missing from the session's skill list, and the two set to `"name-only"` were listed as `anthropic-skills:docs` and `anthropic-skills:google-workspace` with no description | 2026-10 | Dimension 4. A repository can't stop the sync, and can hide a synced skill in its own sessions |
+| A Claude Code cloud session driving a pull request is told to read `.claude/skills/steward/SKILL.md` from the head branch, or `.claude/skills/babysit/SKILL.md` where there's no steward. Seen in a cloud session's own instructions on 2026-11-03; Claude Code's public docs name neither path | 2026-11 | Dimension 6. Why the steward skill has that path, and why an audit checks it still holds |
 | A plugin catalog entry whose skill paths all miss loads the plugin's whole skills folder, with no error | 2026-09 | Dimension 9. One typo ships everything |
 | Plugins enabled on a claude.ai account load as `<name>@synced` in Cowork sessions and in terminal sessions signed in with that account, and the docs name no cloud session for them. Skills enabled on the account load in cloud sessions as well, and one account's arrived there on 2026-09-23, 2026-09-28 and 2026-10-05. Anthropic support said on 2026-09-30 that plugins are meant to load in cloud sessions too, that the docs' silence is a gap, and that an empty plugin list isn't expected, and named two causes to rule out: a plugin shown as available but never installed, and `SKIP_PLUGIN_MARKETPLACE=true` in the cloud environment. In that account's cloud sessions on 2026-09-30 and 2026-10-05, the platform set that variable itself, in the process that launches Claude Code, the environment manager and Claude Code (2.1.280, then 2.1.289), and the synced plugins folder was empty. On 2026-09-30 the environment's own variables were empty, and no plugin was enabled on the account | 2026-10 | *Standards distribution*. Check again once a plugin is installed on the account and the variable is gone. Until then, a skill uploaded to the account is the route that reaches a cloud session |
 | An organization's GitHub-synced plugin marketplace must be a private or internal repository | 2026-09 | *Standards distribution*. A public repository reaches an organization's members only by upload |
@@ -1136,8 +1141,13 @@ default branch nobody noticed is a finding in its own right, and local gates can
 **Read the platform's settings with read-only calls**, against *Platform settings, and where
 each is* in *Facts with an expiry date*. On GitHub that is `gh api repos/<owner>/<repo>` and its
 `rulesets`, `immutable-releases`, `private-vulnerability-reporting` and
-`code-scanning/default-setup` paths. A session often can't read the Actions settings, and Phase
-3 asks for what it can't read. **On a private repository, a `rulesets` call that answers 403 and
+`code-scanning/default-setup` paths. **Without `gh`**, a public repository answers some of the
+same paths to plain `curl`, and `rules/branches/<branch>` beside them, such as
+`curl -s https://api.github.com/repos/<owner>/<repo>/rulesets`. Some fields need
+authentication: *Facts with an expiry date* lists which paths answer with no token, and what
+comes back only to one. A field the run can't read that way is read in the settings or asked
+for at the Phase 3 wait. A session often can't read the Actions settings, and Phase 3 asks for
+what it can't read. **On a private repository, a `rulesets` call that answers 403 and
 says to upgrade to GitHub Pro means the account is on GitHub Free**, which answers the plan. **In
 a public repository, read the addresses on the human's own commits**, those whose platform
 author is the human: a personal address there is public, and it stays on every commit already
@@ -1328,6 +1338,14 @@ any of Phase 0's five left at its default, so a wrong tier is caught before anyt
 That is the one case in which the confirmation moves to Phase 6. It isn't a deviation, and
 `waits_observed` counts it.
 
+**An unattended run told not to wait, and given no answers,** records each Phase 3 question as
+`unanswered`, applies the default this file states for it, and records `answers_source: none,
+defaults applied`. Where a default is a tier, it rates on the lowest tier the evidence supports,
+with `tier_basis: draft`, and rates `UNVERIFIABLE-HERE` every status that would change at
+another tier. Every question goes first in Phase 6's list of decisions only the human can
+supply. Two audits given such a prompt each improvised, one carrying the recorded tier forward
+and the other rating on its drafts, so their reports couldn't be compared.
+
 **A question the given answers leave out is `unanswered`, never `not sure`.** "Not sure" is an
 answer someone gave, and recording it for a person who wasn't asked puts words in their mouth:
 every parity run of 0.40.0 met this, on its new question about co-maintainers. The run applies
@@ -1500,7 +1518,7 @@ Record the answers in `inception`. **Do not ask a fourth question to be thorough
 
 ```yaml
 phase: 3
-answers_source: <recon report path | given in the prompt | asked directly>
+answers_source: <recon report path | given in the prompt | asked directly | none, defaults applied>
 drafts: [{q: <1-6 | p0-4>, draft: "...", evidence: "<path:line>", confidence: high | medium | low,
           reply: confirmed | corrected | not sure | unanswered}]
        # on a re-check, only the questions the prior entry doesn't hold
@@ -1513,9 +1531,9 @@ dependents: <who | none | unknown>
 blast_radius: B0-B3
 audience: A0-A3
 tier: T0-T3
-tier_basis: current | imminent
-tier_reasoning: <required when basis is imminent, when inbound and output differ, or when an
-                 answer the tier rests on is unknown>
+tier_basis: current | imminent | draft   # draft: no answers given, and the run told not to wait
+tier_reasoning: <required when basis is imminent or draft, when inbound and output differ, or
+                 when an answer the tier rests on is unknown>
 tier_previous: <T0-T3 | none>
 irreversible_resolved: [{rank: 1, decision: "...", state: "decided now | settled | locked"}]
 irreversible_open: [<ranks still undecided>]
@@ -1638,6 +1656,9 @@ and run reports that a project's runs keep adding, as *File governance* defines 
 lands on every clone, whatever the stakes. Moving it to its own branch isn't the restructuring
 this dimension warns against: the layout stays, and only the branch the files are kept on
 changes. Under 10 MB in all, it isn't rated, as *File governance* says.
+
+**A plan file left after merge is `OVER` here**, or `DRIFT` on dimension 10 where it also
+asserts something false today, as *File governance* says.
 
 **Restructuring an established repository is rarely worth it** — say so, and record the cost,
 unless the layout is actively causing the confusion.
@@ -2052,6 +2073,16 @@ lands is `GAP`, and `BLOCKER` where a badge or a required check shows another br
 as this one's. A job with no timeout is `GAP`, and so are a configuration users are told to
 build that CI never builds and a test that skips when the history it reads is missing.
 
+**How long CI and a release's tests take is rated, by `git-workflows`' `ci-speed` module.** At
+setup, the starter CI follows it: a pull request's superseded runs are canceled, what a job
+installs or builds is cached, every job has a timeout, and fast checks run before merge. At
+audit, the run records how long a pull request's CI takes and how long a release's tests take,
+from the platform's recent runs, and applies the module's audit rows. The module's guide is
+about ten minutes before merge, with slower suites after it. Slow CI with no recorded reason is
+`GAP`, and a suite weakened to save time, such as tests skipped or cut with speed as the reason,
+is `DRIFT`. Where the run can't read the runs' times, they're `UNVERIFIABLE-HERE`. One audited
+repository's CI took 18 to 43 minutes, and fell to 6 to 8 once someone looked at it.
+
 **A merge's conflict markers pass every test that doesn't parse the file they're in.** A live
 merge's output was cut short, hiding a conflict, and its markers shipped through nine green
 jobs. So a sweep over the tree refuses any line that starts with seven `<`, `>` or `|`. Seven
@@ -2197,6 +2228,17 @@ Where more than one person maintains, each one missing is `GAP` from T2. The sha
 contact is due only where dimension 7 wants a contact at all, and required approval is `N/A`
 where the plan can't enforce it, as the table above says.
 
+#### Pull requests that agent sessions drive
+
+**A repository whose pull requests agent sessions open or merge keeps a steward skill** at
+`.claude/skills/steward/SKILL.md`, written against `git-workflows`' `pr-stewardship` module, which
+says what it answers and holds a template to copy. At setup the run proposes it where sessions
+will drive pull requests; at audit it applies the module's audit rows. Where no session opens
+or merges a pull request, it's `N/A`. The path is load-bearing: a cloud session driving a pull
+request looks for a steward under that name, as *Facts with an expiry date* records, and one
+repository's, installed under another name, went unread. In one audit cycle a hold sent as a
+message arrived after the merge it was meant to stop, which the module's live holds answer.
+
 ### 7. Secrets, security and data classification
 
 <constraints>
@@ -2292,6 +2334,12 @@ three cases differ and only one is a finding:
 | A cooldown set to roughly three days | `OVER` — it configures what the platform now does anyway, and it will drift from the default when that moves |
 | A longer window, seven or ten days | **Not a finding.** A deliberate hardening choice above the default, and the reasoning belongs in the decision record if it is not already there |
 | `default-days: 0` under `cooldown:`, or a window below the default | A question rather than a verdict. Someone opted out of a supply-chain control; ask why before proposing anything |
+
+**zizmor's `dependabot-cooldown` finding is informational where the platform's default
+applies.** zizmor flags an entry with no cooldown, and `git-workflows` recommends zizmor, so a run
+using both would get opposite advice; `git-workflows`' `action-pinning` module says how to record
+it. A cooldown kept to match another check is a decision to record, with its reason, not a
+reason to keep it unrecorded.
 
 **Do not propose adding a cooldown that matches the default.** It is the same `OVER` in the
 making, one run later.
@@ -2673,6 +2721,45 @@ since nothing is written before the gate. Where the owner has put a hold on push
 handoff says what's unpushed and why, and quotes no unpushed hash as one that resolves.
 **Each action a session hands its owner is one thing to paste or run**, with the steps
 beside it, as Phase 6's third list is written. A report to read is not an action.
+
+**Where a repository keeps what's finished but worth keeping is decided on purpose, and in
+writing.** The decision is consistent across the owner's repositories, and identical where that
+serves. Any difference is deliberate, recorded with its reason, and obvious to a reader. The
+record answers four questions:
+
+1. What does the repository's own record need?
+2. What would an outside reviewer want?
+3. What do partner repositories need from it?
+4. What is worth keeping but doesn't belong on the default branch?
+
+**The default branch carries what a new release is expected to carry:** what users, end users,
+developers, agents and partner repositories read. It's never pared to nothing. **An auxiliary
+branch holds the rest:** records, archives, communications and old builds' logs. It's add-only
+and protected, indexed by a manifest on the default branch, and each item is named or tagged by
+version, release or date. When in doubt, keep it there; it can be pruned later. The model is the
+`evidence` branch in *Generated evidence*, the agreement two audited repositories already share:
+an orphan branch, add-only and protected, with a manifest on the default branch.
+
+Unless the human answers otherwise, three defaults hold:
+
+- **A folder named by date and build counts as tagged,** since an evidence branch is never
+  tagged, as *Generated evidence* says.
+- **Each auxiliary branch has a README at its root** saying what it holds.
+- **Laps, and documents a checker reads, stay on the default branch.**
+
+The ratings:
+
+- no recorded answer to the four questions: `GAP`;
+- archives on the default branch with no recorded reason: `DRIFT`;
+- an auxiliary branch that isn't protected, or has no index on the default branch: `GAP`, with
+  protection `N/A` where the plan allows no ruleset, as *Platform settings, and where each is*
+  says;
+- finished records deleted rather than kept: `GAP`. History still holds them, so the amendment
+  records where the next ones go, and restores nothing.
+
+A plan file left after merge is rated as *File governance* says, not here. The owner set the
+rule on 2026-10-29, when their repositories were found keeping finished work three ways: a
+folder on the default branch, history alone, and an ignored folder.
 
 <constraints>
 
@@ -3944,6 +4031,11 @@ on:
 permissions:
   contents: read
 
+# A new push to a pull request makes its last run stale. A run on a branch finishes.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   gate:
     runs-on: ubuntu-latest
@@ -3954,7 +4046,7 @@ jobs:
           persist-credentials: false
 
       - name: Set up toolchain
-        run: echo "substitute the setup action for this ecosystem"
+        run: echo "substitute the setup action for this ecosystem, with its dependency cache on"
 
       - name: Install from the lockfile, failing on drift
         run: echo "substitute the install from dimension 2 that fails on drift"
@@ -4020,6 +4112,12 @@ jobs:
 - **`timeout-minutes` on the job.** Without it, a job that hangs runs for the platform's
   default of 360 minutes. Set it a few times above the job's usual run, and raise it in a
   reviewed change when the suite grows.
+- **`concurrency` cancels a pull request's superseded run, and only a pull request's.** A run
+  on a commit a new push replaced holds runners the new run waits for, while on the default
+  branch each commit's run is the record of what landed, so it finishes. With the setup
+  action's dependency cache, this is what dimension 6 asks of CI's speed, by `git-workflows`'
+  `ci-speed` module. Where the suite takes more than a few minutes, format, lint and type
+  checks move to a job of their own, so a failure shows in a minute.
 - **`permissions: contents: read`** at the top. The default token is broader than a test run
   needs, and narrowing it is free. **Every workflow, not most of them** — a live run found a
   repository with a custom gate enforcing exactly this, and the one workflow missing the
@@ -4271,6 +4369,7 @@ home.** It answers one question per row: **why does this live exactly here?**
 | `.claude/settings.json` | The enforced layer, project scope | **Yes** | Living | Committed, or it enforces nothing for anyone but the machine it sits on |
 | `.claude/settings.local.json` | Personal overrides | **No** | Transient | Gitignored. Often generated by the session itself — **finding one tracked is a finding** |
 | `.claude/rules/*.md` | Scoped rules loaded per file | Yes | Living | Out of the always-loaded context, which is the entire point of the split |
+| `.claude/skills/steward/SKILL.md` | The steward skill: when a session driving a pull request merges, holds or stops | Yes, where agent sessions open or merge pull requests | Living | That exact path, where a cloud session driving a pull request looks (dimension 6) |
 | `.mcp.json` | Tool-server configuration | Yes | Living | Root. **Absent unless justified and recorded** — each server is reachable surface |
 | `.github/workflows/*.yml` | The gates that actually enforce | Yes | Living | Server-side, runs on every push, independent of any local machine |
 | `.github/dependabot.yml` | Dependency update policy | Yes | Living | Platform-read from this exact path; nowhere else works |
@@ -4406,6 +4505,13 @@ elsewhere, a second README, committed build output, conversation transcripts.
 
 Substitute, in order: the reply body, the commit message, the gitignored `scratch/`, an
 existing file.
+
+**A plan file left after merge is `OVER` on dimension 3, or `DRIFT` on dimension 10 where the
+file also asserts something false today.** It leaves the default branch: to the auxiliary
+branch where the repository's answer in dimension 10 keeps finished plans, and deleted
+otherwise. One audit found 16 executed or superseded plans in one repository, and with no
+dimension named, it chose `OVER` on dimension 3 where another run could have chosen `DRIFT` on
+dimension 10.
 
 <constraints>
 
@@ -4552,6 +4658,10 @@ together; a file only links elsewhere; content is duplicated; nothing references
 transient expiry fired; it describes something gone.
 
 **Delete on absorb** — content moving from A to B means A goes in the same commit.
+
+**A finished record worth keeping is moved, not deleted.** Where the repository's answer in
+dimension 10 keeps it, a deletion above is a move to the auxiliary branch, with its manifest
+row, and dimension 10 rates a finished record deleted instead.
 
 **Update only when reality changed.** Leave alone when only the writing would change.
 
@@ -5291,6 +5401,28 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.49.0**: **nine changes**, F156 to F164, which the owner approved on 2026-11-03 ("Do all
+you recommend").
+
+From the two audits of 2026-10-27, F156 to F161. *An unattended run told not to wait, and given
+no answers*, in Phase 3, applies each question's default, rates on the lowest tier the evidence
+supports with `tier_basis: draft`, and puts every question first at Phase 6. *Every run produces
+exactly one file* follows a request that names the report's files, form or place. Phase 2 gives
+the `curl` form for a public repository without `gh`, and *Facts with an expiry date* says which
+paths answer with no token. Dimension 8 reads zizmor's `dependabot-cooldown` finding against the
+platform's default, and the cooldown fact gives its source and quote. The `skillOverrides` fact
+records that a bare-name key matches a synced skill. A plan file left after merge is `OVER` on
+dimension 3, or `DRIFT` on dimension 10 where it also asserts something false.
+
+From the owner's words of 2026-10-29 and 2026-11-03, F162 to F164. Dimension 10 asks where a
+repository keeps what's finished but worth keeping, by four recorded questions, with an
+add-only, protected auxiliary branch indexed on the default branch, three defaults and four
+ratings. *Merge, delete, leave alone* moves a finished record worth keeping rather than deleting
+it. Dimension 6 rates how long CI and a release's tests take, by `git-workflows`' `ci-speed`, and
+the starter CI cancels a pull request's superseded runs and caches dependencies. Dimension 6
+asks for a steward skill at `.claude/skills/steward/SKILL.md` where agent sessions drive pull
+requests, by `git-workflows`' `pr-stewardship`, and the file map and the facts record its path.
 
 **0.48.2**: **one change**, F155, which the owner approved on 2026-10-26: *Language
 toolchains* is brought to 2026-10 from research R09, R10, R11 and R21, each row checked at its
