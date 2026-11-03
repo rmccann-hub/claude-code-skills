@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — `pr-stewardship` on claude.ai: both tries pass, and a limit found
+
+- **Tried, by the owner, on claude.ai:** the steward request loaded `git-workflows` and read
+  `pr-stewardship` first, a pass. The merge-strategy near miss answered from
+  `branches-and-merging` without reading `pr-stewardship`, a pass.
+- **A limit the first try found:** on a one-person account, GitHub can't enforce "the owner merges
+  changes to the steward file". A session's merge carries the owner's name, and an author can't
+  approve their own pull request. Rule 7 now says so: there the rule holds by the session's
+  conduct, and the file says so. The audit rates it `MIRROR` there. To fit, the module's scope
+  paragraph and two passages were cut, and its drift mistake folded into rule 8.
+- **Also found:** this repository has no steward skill of its own, though its sessions merge
+  their own pull requests. Writing one against the framework is due before the next release.
+
 ## 2026-11-03 — `pr-stewardship`: the framework for each repository's steward skill
 
 - **Asked, by the owner:** each repository that agent sessions drive should write and own a
