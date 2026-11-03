@@ -2,6 +2,20 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — The steward template moves out of `pr-stewardship`
+
+- **Why:** the module stood at 15,998 characters, two short of the 16,000 limit past which
+  claude.ai drops a module's middle. The round 37 review will add to it, so it needed room first.
+- **What moved:** the skeleton steward file, word for word, to
+  `skills/git-workflows/assets/steward/SKILL.md.template`. The module links it and names its
+  sections, and now stands at 13,020 characters. The `.template` suffix keeps any loader from
+  taking it for a skill of its own.
+- **Homes considered:** a new module, which a template isn't, and `assets/`, where the skill's
+  other files to copy already live, chosen.
+- **Review:** a move with no change of meaning; `docs/authoring-a-skill.md`'s checks that apply
+  to it (size, links, prose, the audit rows naming the template) passed. No claude.ai tries are
+  needed, since no rule changed.
+
 ## 2026-11-03 — #107 and #108 merged on the owner's word
 
 - **The owner's word:** "do everything you can, merge all you can, remove any uneeded branches".

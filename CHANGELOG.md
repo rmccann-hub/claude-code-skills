@@ -8,6 +8,9 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- `git-workflows`' `pr-stewardship` links a template file for the steward skill,
+  `assets/steward/SKILL.md.template`, where it held the skeleton inline, leaving the module room
+  under the size limit.
 - Dependencies brought up together, each past the three-day wait: ruff 0.17.3, pytest 9.2.0,
   coverage 7.17.0, the `uv_build` floor 0.13.5, Claude Code 2.1.310, `astral-sh/setup-uv`
   v10.3.3, Vale v3.26.0 and CI's Node.js 26, now an LTS line. `house-style`'s `prose-check`
