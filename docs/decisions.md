@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — #107 and #108 merged on the owner's word
+
+- **The owner's word:** "do everything you can, merge all you can, remove any uneeded branches".
+  #107 and #108 change `.claude/` and the workflows, which the steward leaves to the owner, so a
+  session merged them on that word, given in the conversation, as the steward's rule 6 allows.
+  #107 merged first under the setting's own title, and #108, stacked on it, was moved to `main`
+  and merged after.
+- **Branches:** the merged branches were already gone, deleted by the setting on merge. #96 to
+  #99, superseded by #108, were closed with a note; three of their branches were deleted. The
+  fourth, which changes a workflow, refused deletion from a session, and is Dependabot's or the
+  owner's to delete. Draft #73's branch stays, by the steward.
+- **Left to the owner:** adding `subjects` and `hold` to the ruleset's required checks.
+
 ## 2026-11-03 — This repository's steward skill, and a live hold
 
 - **Asked, by the owner:** "this repo should get the most comprehensive steward file of anyone",
