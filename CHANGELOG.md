@@ -15,6 +15,8 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- This repository's own steward skill, `.claude/skills/steward/SKILL.md`, and a `hold` check
+  that fails while a pull request carries the `hold` label.
 - `git-workflows`' `pr-stewardship` module: the framework for a repository's own steward skill,
   the file at `.claude/skills/steward/SKILL.md` that tells agent sessions when to merge or hold a
   pull request, what to do about red or stalled CI, how to answer review, what an owner's hold

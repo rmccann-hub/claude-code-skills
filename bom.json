@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:65125dfa-1631-5990-a9b0-237c78628718",
+  "serialNumber": "urn:uuid:611c1c2c-2ae2-581b-80c3-1b569d5fa247",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 96 file(s)"
+          "value": "Markdown: 97 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -45,7 +45,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "YAML: 22 file(s)"
+          "value": "YAML: 23 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -914,7 +914,7 @@
       "properties": [
         {
           "name": "claude-code-skills:set-in",
-          "value": ".github/workflows/ci.yml, .github/workflows/commit-subjects.yml, .github/workflows/freshness.yml, .github/workflows/prose.yml, .github/workflows/release.yml"
+          "value": ".github/workflows/ci.yml, .github/workflows/commit-subjects.yml, .github/workflows/freshness.yml, .github/workflows/hold.yml, .github/workflows/prose.yml, .github/workflows/release.yml"
         }
       ]
     },
@@ -1005,7 +1005,7 @@
         "name": "GitHub"
       },
       "name": "GitHub Actions",
-      "description": "Runs the workflows: ci, commit-subjects, freshness, prose, release.",
+      "description": "Runs the workflows: ci, commit-subjects, freshness, hold, prose, release.",
       "endpoints": [
         "https://github.com/rmccann-hub/claude-code-skills/actions"
       ]

@@ -25,10 +25,10 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 96 |
+| Markdown | 97 |
 | Python | 51 |
 | JSON | 39 |
-| YAML | 22 |
+| YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
 
@@ -38,7 +38,7 @@ freshness run and the release workflow both run it.
 |---|---|---|---|
 | Python | 3.15 | `.python-version` | `pyproject.toml` requires >=3.14 |
 | uv_build | >=0.13.1,<0.14 | `pyproject.toml` | build backend |
-| GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` | — |
+| GitHub-hosted runner | ubuntu-latest | `.github/workflows/ci.yml`, `.github/workflows/commit-subjects.yml`, `.github/workflows/freshness.yml`, `.github/workflows/hold.yml`, `.github/workflows/prose.yml`, `.github/workflows/release.yml` | — |
 | Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
 | Node.js | 24 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
@@ -103,7 +103,7 @@ package.json
 | Service | Provider | What for | Address |
 |---|---|---|---|
 | GitHub | GitHub | Hosts the repository, its pull requests, its rulesets and its releases. | https://github.com/rmccann-hub/claude-code-skills |
-| GitHub Actions | GitHub | Runs the workflows: ci, commit-subjects, freshness, prose, release. | https://github.com/rmccann-hub/claude-code-skills/actions |
+| GitHub Actions | GitHub | Runs the workflows: ci, commit-subjects, freshness, hold, prose, release. | https://github.com/rmccann-hub/claude-code-skills/actions |
 | Dependabot | GitHub | Opens pull requests that update dependencies: github-actions, npm, uv. | documented at https://docs.github.com/en/code-security/dependabot |
 | PyPI | Python Software Foundation | Serves the Python packages in `uv.lock`. | https://pypi.org/simple |
 | npm registry | GitHub | Serves the packages in `package-lock.json`. | https://registry.npmjs.org |

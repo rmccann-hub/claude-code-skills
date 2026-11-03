@@ -15,3 +15,6 @@ and `code-planner`, with `skill-creator` left on here, where skills are built.
 The release's `cloud-setup.sh` hook installs every skill here into `~/.claude/skills` as a
 cloud session starts, so the settings turn off each skill under `skills/` by name, and the
 `own-copies` rule fails them if one is missing.
+
+Sessions driving a pull request here follow `.claude/skills/steward/SKILL.md`, as the base
+branch holds it.

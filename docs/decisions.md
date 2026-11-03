@@ -2,6 +2,32 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — This repository's steward skill, and a live hold
+
+- **Asked, by the owner:** "this repo should get the most comprehensive steward file of anyone",
+  then "do everything you need to" on four recommendations, taken as approved:
+  1. the owner merges any pull request that changes `.claude/`, `AGENTS.md`, `CLAUDE.md`, a
+     workflow or a ruleset, and sessions merge the rest as before;
+  2. a live hold: a `hold` label, and a `hold` check that fails while it's on;
+  3. `subjects` and `hold` become required checks, which the owner adds to the ruleset;
+  4. no pull-request rule in the ruleset; every change landing by pull request holds by conduct.
+- **Built:** `.claude/skills/steward/SKILL.md`, written against `pr-stewardship`, and
+  `.github/workflows/hold.yml`, which reads the labels through the API when it runs. `AGENTS.md`
+  and `CLAUDE.md` name the steward. The workflow test allows the one workflow that uses no
+  action. `.test-baseline` moves from 609 to 610. The `hold` label was created the same day.
+- **Reviewed:** a cold reader found four high problems, all fixed:
+  - a plain-text filler word that would have failed `prose`;
+  - a re-run that would lift a hold, because a re-run reuses its event's labels, so the check
+    now reads them live;
+  - auto-merge, which ignores checks the ruleset doesn't require;
+  - a Dependabot batch touching workflows, now the owner's to merge.
+
+  Twelve medium and low points were fixed too.
+- **A slip found:** 39 merges on `main` carry the title "Merge pull request #N from …", among
+  them each merge this session made, passing it itself, while the setting names a merge by the
+  pull request's title and number. The steward now leaves the title to the setting.
+- **This pull request is the owner's to merge,** by its own first rule.
+
 ## 2026-11-03 — Lockfiles are generally available; `releases-and-versions`' routing, diagnosed
 
 - **Lockfiles:** the weekly check's quote for fact `actions-lockfile` was gone because GitHub made
