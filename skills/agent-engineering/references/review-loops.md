@@ -21,13 +21,18 @@ Drafts, from one loop's records. Each holds until evidence says otherwise.
    round to close, and what proves it, before any work. A round with no fixed close drifts.
 2. **Commit in advance to how the next verdict is decided:** "our next message says GO unless
    the run shows X". Rounds that did this closed in three messages; before it, one took 37.
-3. **Name one writer for every next message.** A status line saying "yours, or ours first" has
-   named no one, and both sides wrote the same message.
+3. **Name one writer for every next message, and hold anything written out of turn.** A status
+   line saying "yours, or ours first" has named no one, and both sides wrote the same message.
+   The last message names who holds the turn; a side that writes anyway marks its message held
+   and doesn't release it until the turn comes back. If two cross all the same, the one that
+   reached the reader's branch first counts, by the branch's commit time, and the other is
+   answered as a reply to it.
 4. **Read the other side's committed files, not relayed copies.** Each side reads the other's
    default branch, every branch, at the start of a session and before it ends a turn. A relayed
    copy goes stale, and a fetch of one branch hides the rest.
 5. **A message counts as sent only once it's marked released,** on a branch the other side
-   reads. A draft isn't a message.
+   reads. A draft isn't a message, and neither is a held one merged to the default branch: write
+   the agreed meaning of "sent" so it says which marker wins when the two disagree.
 6. **Cite every claim as `owner/repo@commit:path:line`,** and paste every hash from a command's
    output, never retype it.
 7. **Keep rules about evidence, cut rules about choreography.** Envelopes, digests, ledgers and
@@ -51,6 +56,10 @@ doesn't support.
 
 - **Two sessions writing the same message.** Both read "yours, or ours first" as theirs. Name
   one writer.
+- **Messages crossing, twice in one round,** with a rule naming one writer already in place.
+  Each side wrote while waiting, and released on finishing. Hold what's written out of turn.
+- **A green run read as a correct one.** The run's graders asked whether each check ran, not
+  what it found, so two wrong tracks passed, and both sides' verdicts rested on the run.
 - **Reading a relayed copy, or one fetched branch.** A coordinator reported a side idle for an
   hour while it had pushed twice, because its clone fetched only the default branch.
 - **Retyping a hash.** One draft's hash had its first 16 characters right and the rest invented.
