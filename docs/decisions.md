@@ -2,6 +2,33 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — `pr-stewardship`: the framework for each repository's steward skill
+
+- **Asked, by the owner:** each repository that agent sessions drive should write and own a
+  steward skill, and "the skill checker should give a framework for you", thoroughly, in this
+  release if it can be.
+- **Built:** a `git-workflows` module, from the auto-fix and project-skill pages of Claude Code's
+  docs, GitHub's re-run and auto-merge pages, one public babysit skill (MIT) as what others do,
+  and what the first audit cycle showed: a hold that arrived after a merge, a one-platform
+  "green", a stall cancelled by hand four times. It gives the rules, a skeleton `SKILL.md` to
+  copy and the audit's checks; each repository writes its own file.
+- **One claim is marked, not sourced:** that cloud sessions driving a pull request read
+  `.claude/skills/steward/SKILL.md`, or `babysit/`, comes from a session's own instructions on
+  2026-11-03. Claude Code's public docs name neither path, so the module says so and the audit
+  checks it.
+- **Reviewed:** a cold reader found four high problems, all fixed. Holds written only in the
+  committed file arrive as late as a message, so holds now live where a session reads them live.
+  Auto-merge passes a hold GitHub can't see. The file could authorize its own change, so the
+  owner now merges changes to it. Re-runs aren't unlimited: GitHub allows 50, on the same commit.
+  Eight medium and three low were fixed too, among them conflicts, drafts, Dependabot, security
+  findings and when to stop.
+- **Triggers:** the module's 12 requests all routed. The skill's description now names the
+  agents that tend pull requests, kept at 248 characters. `releases-and-versions` misses 3 or 4
+  of its 7 requests on `main` and on this branch alike: the skill loads but the module isn't
+  read. That's a follow-up of its own.
+- **Size:** 15,698 characters, under the limit and over the 15,000 target, most of it the
+  skeleton.
+
 ## 2026-10-29 — What stays on the main branch, and what lives elsewhere
 
 - **Said, by the owner:** "you have to keep on the main what needs to be kept. what everyone else

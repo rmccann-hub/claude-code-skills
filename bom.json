@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:36ae4ce2-1b43-5947-8de2-a96b21af1e4b",
+  "serialNumber": "urn:uuid:efac0b36-8664-5946-902b-2d30af9b7a81",
   "version": 1,
   "metadata": {
     "tools": {
@@ -701,7 +701,7 @@
           "type": "data",
           "bom-ref": "skill:git-workflows",
           "name": "git-workflows",
-          "description": "reviewed 2026-10-27",
+          "description": "reviewed 2026-11-03",
           "licenses": [
             {
               "expression": "Apache-2.0"
@@ -710,7 +710,7 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "docs.github.com: 43 fact(s)"
+              "value": "docs.github.com: 45 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -718,11 +718,15 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "raw.githubusercontent.com: 9 fact(s)"
+              "value": "raw.githubusercontent.com: 10 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
               "value": "github.blog: 6 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "code.claude.com: 4 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",

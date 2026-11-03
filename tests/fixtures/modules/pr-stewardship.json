@@ -1,0 +1,56 @@
+[
+  {
+    "query": "Our Claude sessions open and merge their own pull requests. Write the repository's steward skill so they know when to merge, when to hold, and what to do when CI is red.",
+    "should_trigger": true
+  },
+  {
+    "query": "The session merged a PR I'd told it to hold, because my message arrived after the merge. How do we write holds down so that can't happen again?",
+    "should_trigger": true
+  },
+  {
+    "query": "Audit our .claude/skills/steward/SKILL.md: does it match our ruleset and what our agents actually do?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a babysit skill for this repo so a cloud session can keep its PRs green without me watching.",
+    "should_trigger": true
+  },
+  {
+    "query": "Write the rule for when our agent sessions may re-run a stalled CI job, and how often.",
+    "should_trigger": true
+  },
+  {
+    "query": "Should our cloud sessions merge Dependabot's pull requests on their own?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we squash-merge or use merge commits on main, and how do we enforce it?",
+    "should_trigger": false,
+    "note": "branches-and-merging"
+  },
+  {
+    "query": "The required check on my pull request has been pending forever and I can't merge.",
+    "should_trigger": false,
+    "note": "ci-workflows"
+  },
+  {
+    "query": "Our CI takes 30 minutes on every pull request. How do we make it faster without dropping tests?",
+    "should_trigger": false,
+    "note": "ci-speed"
+  },
+  {
+    "query": "Write a good description for this pull request.",
+    "should_trigger": false,
+    "note": "commits-and-pull-requests"
+  },
+  {
+    "query": "Tag and publish v2.1.0 from main.",
+    "should_trigger": false,
+    "note": "releases-and-versions"
+  },
+  {
+    "query": "My branch conflicts with main; rebase it for me.",
+    "should_trigger": false,
+    "note": "rebasing-and-recovery"
+  }
+]

@@ -111,6 +111,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `rebasing-and-recovery` | `git-workflows` | Deleting branches, rebasing, conflicts, recovering lost commits, and reading Git's output | shipped | core | R08 |
 | `ci-workflows` | `git-workflows` | GitHub Actions triggers, timeouts, installs, required checks, proving a gate works | shipped | core | R08, R21 |
 | `ci-speed` | `git-workflows` | How long CI takes, where suites run, caching builds, and slow tests | shipped | core | R08, R21 |
+| `pr-stewardship` | `git-workflows` | A repository's own steward skill: how its sessions drive pull requests, when to merge or hold, re-running a stalled job, what an owner's hold covers, and auditing it | shipped | core | R08 |
 | `actions-security` | `git-workflows` | Workflow permissions, untrusted input, `pull_request_target`, scanning workflows | shipped | core | R08 |
 | `action-pinning` | `git-workflows` | SHA-pinned actions, lockfiles, the pinning policy, Dependabot for actions, Node 20 actions | shipped | core | R08 |
 | `git-hooks` | `git-workflows` | Writing, installing and testing hooks, and where CI is the gate instead | shipped | core | R08 |
