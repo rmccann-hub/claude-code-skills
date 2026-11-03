@@ -12,8 +12,9 @@ belongs to a testing skill.
 
 1. **Weaken no test to save time.** Change where and how often it runs instead.
 2. **Run fast, reliable checks before merge, and make sure the full suite runs on what lands.**
-3. **Measure before you speed anything up.** A job's steps are timed in its log, and queueing,
-   setup and installs often cost more than the tests.
+3. **Measure before you speed anything up,** a release's run as well as a pull request's. A
+   job's steps are timed in its log, and queueing, setup and installs often cost more than the
+   tests.
 4. **Pin what a job builds from source, then cache the result.**
 5. **Know each slow test's headroom under its timeout,** and find the cause of a timeout before
    raising the limit.
@@ -91,6 +92,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 | Check | What to look for | Severity | Fix |
 |---|---|---|---|
 | A job builds its dependencies from unpinned source every run | `git clone` or a build script in `run:` steps, with no `actions/cache` | `GAP` | Pin each one in one place, and cache the output keyed on the pins |
+| How long CI takes isn't known | The last runs of a pull request's CI and of the release workflow, from the platform's run history | `GAP` where neither time is recorded | Record both, with each job's slowest steps |
 | `cancel-in-progress` cancels default-branch runs | The `concurrency` block | `DRIFT` | Cancel only on `pull_request` (fact `cancel-in-progress`) |
 | Pull request runs aren't canceled when a new push supersedes them | `grep -L cancel-in-progress .github/workflows/*.y*ml`, among the workflows `pull_request` starts | `GAP` where runs queue or take minutes | `concurrency` grouped by pull request, with `cancel-in-progress` on `pull_request` only |
 | The default branch's run repeats the pull request's jobs, though nothing lands but through a strictly checked pull request or a queue | Both runs' jobs, the ruleset and its bypass list | `OVER` | Keep only what differs there, filling the cache among it (facts `strict-checks`, `cache-scope`) |

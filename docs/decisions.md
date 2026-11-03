@@ -18,6 +18,15 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 - **Tests:** 12, each planting the defect; each fails on the code before the fix.
   `.test-baseline` moves from 634 to 646.
 - **Asked, by the owner:** "Do all you recommend" (2026-11-03).
+## 2026-11-03 — `ci-speed` times a release's run too
+
+- **Why:** standard v0.49.0's dimension 6 asks an audit to record how long a pull request's CI
+  and a release's tests take, by `ci-speed`, and the module named only the first. Found while
+  applying the standard, under the owner's "Do all you recommend" of 2026-11-03.
+- **Changed:** rule 3 measures a release's run as well as a pull request's, and the audit gains
+  "How long CI takes isn't known". The module goes from 14,927 to 15,193 characters.
+- **Review:** the checks of `docs/authoring-a-skill.md` that apply to a widened rule and one
+  audit row passed. The claude.ai tries follow the merge.
 
 ## 2026-11-03 — Mutation tests of `core/times.py` and `core/text.py`
 
