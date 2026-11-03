@@ -175,7 +175,7 @@ again.
 | `git-workflows` | docs.github.com | 46 |
 | `git-workflows` | git-scm.com | 18 |
 | `git-workflows` | raw.githubusercontent.com | 10 |
-| `git-workflows` | github.blog | 6 |
+| `git-workflows` | github.blog | 7 |
 | `git-workflows` | code.claude.com | 4 |
 | `git-workflows` | docs.kernel.org | 3 |
 | `git-workflows` | pypi.org | 3 |

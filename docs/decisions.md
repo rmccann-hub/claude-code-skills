@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — Lockfiles are generally available; `releases-and-versions`' routing, diagnosed
+
+- **Lockfiles:** the weekly check's quote for fact `actions-lockfile` was gone because GitHub made
+  workflow dependency lockfiles generally available on 2026-10-28, on Free plans too. The
+  module's rule kept SHA pins "until it's generally available", so it now offers a lockfile or
+  SHA pins. GitHub's own words: for an onboarded workflow, "SHA pinning within workflow files is
+  no longer necessary". This repository and the ones it audits pin by SHA today; whether each
+  moves to a lockfile is a consistency question for the next audit, not part of this change.
+- **`releases-and-versions`' routing:** its trigger requests reach `git-workflows` but not the
+  module, on `main` as on any rewording of its router row. The skill's own rule 7 answers the
+  commonest release question itself, so the model has no reason to read on. How much a skill's
+  top-level rules should say is a design question, left open.
+
 ## 2026-11-03 — `pr-stewardship` on claude.ai: both tries pass, and a limit found
 
 - **Tried, by the owner, on claude.ai:** the steward request loaded `git-workflows` and read

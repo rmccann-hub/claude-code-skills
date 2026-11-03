@@ -6,6 +6,13 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- `git-workflows`' `action-pinning`: workflow dependency lockfiles are generally available from
+  2026-10-28, on Free plans too. For a workflow onboarded to one, GitHub calls the lockfile
+  better than SHA pins, so the module now offers either, where it kept SHA pins until general
+  availability.
+
 ### Added
 
 - `git-workflows`' `pr-stewardship` module: the framework for a repository's own steward skill,
