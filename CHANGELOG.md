@@ -43,6 +43,8 @@ Notable changes to this repository. The format follows
   pull request, what to do about red or stalled CI, how to answer review, what an owner's hold
   covers and what to report. It gives a skeleton to copy and the audit's checks; each
   repository writes and owns its file.
+- 24 tests for the `times` check and the hidden and control characters, each killing a mutant
+  the tests missed, found by mutation testing `core/times.py` and `core/text.py`.
 
 ## [0.1.24] - 2026-10-27
 

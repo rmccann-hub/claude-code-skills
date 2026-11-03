@@ -1,5 +1,7 @@
 """UTC is the stamp, and local times are derived from it and shown first (core/times.py)."""
 
+import time
+
 import pytest
 
 from skillcheck.cli import main
@@ -34,6 +36,18 @@ def written(repo, path: str, text: str) -> None:
 )
 def test_a_stamp_is_given_in_utc_and_derived_in_the_zone(text, zone, expected):
     assert times.stamp(text, zone) == expected
+
+
+def test_a_stamp_is_utc_whatever_zone_the_machine_keeps(monkeypatch):
+    # A session on a machine set to another zone still writes UTC, never the machine's time.
+    monkeypatch.setenv("TZ", "Asia/Kolkata")
+    time.tzset()
+    try:
+        assert times.stamp("2026-10-17T00:55Z") == "2026-10-17 00:55 UTC"
+        assert times.stamp("2026-10-17T00:55Z", NEW_YORK).startswith("8:55 PM EDT")
+    finally:
+        monkeypatch.undo()
+        time.tzset()
 
 
 @pytest.mark.parametrize(
@@ -79,6 +93,67 @@ def test_a_time_with_no_zone_fires_alone(repo):
             "docs/notes.md",
             "times",
             "line 3: 12:34 names no zone; write the stamp in UTC, such as 12:34 UTC",
+        )
+    ]
+
+
+@pytest.mark.parametrize(
+    "line",
+    [
+        # An address and port reads like a time after a dot.
+        "Reach it at 192.0.2.10:22 over SSH.",
+        # An ISO 8601 time's minutes and seconds read like a time after its colon.
+        "Logged at 2026-10-17T10:15:30.123Z by the runner.",
+        "Seen at 9:05 AM EST, Mon Nov 2 (2026-11-02 14:05 UTC).",
+    ],
+    ids=["address-and-port", "iso-with-fraction", "morning-local-time"],
+)
+def test_a_line_with_no_bare_time_passes(repo, line):
+    written(repo, "docs/notes.md", f"{line}\n")
+    assert findings(repo) == []
+
+
+@pytest.mark.parametrize(
+    "path",
+    [
+        "README.md",
+        "skills/a-skill/references/notes.md",
+        "docs/notes.md",
+        "research/prompts/notes.md",
+        ".claude/rules/notes.md",
+        ".github/notes.md",
+    ],
+)
+def test_a_time_with_no_zone_under_each_root_fires(repo, path):
+    written(repo, path, "It ran at 12:34 that day.\n")
+    assert [f for f in findings(repo) if f[1] == "times"] == [
+        (path, "times", "line 1: 12:34 names no zone; write the stamp in UTC, such as 12:34 UTC")
+    ]
+
+
+def test_a_time_with_seconds_and_no_zone_fires(repo):
+    written(repo, "docs/notes.md", "It ran at 12:34:56 that day.\n")
+    assert [message for _, _, message in findings(repo)] == [
+        "line 1: 12:34:56 names no zone; write the stamp in UTC, such as 12:34:56 UTC"
+    ]
+
+
+def test_a_local_time_with_no_zone_name_fires_beside_its_stamp(repo):
+    written(repo, "docs/notes.md", "Seen at 8:55 PM, Fri Oct 16 (2026-10-17 00:55 UTC).\n")
+    assert [message for _, _, message in findings(repo)] == [
+        "line 1: 8:55 names no zone; write the stamp in UTC, such as 8:55 UTC"
+    ]
+
+
+@pytest.mark.parametrize("fence", ["```", "~~~", "  ```"])
+def test_a_time_after_a_fenced_block_fires(repo, fence):
+    # A fence's own lines are left alone, and the lines after it are still checked.
+    written(repo, "docs/notes.md", f"{fence}text\nat 09:30\n{fence}\n\nIt ran at 12:34.\n")
+    assert findings(repo) == [
+        (
+            "docs/notes.md",
+            "times",
+            "line 5: 12:34 names no zone; write the stamp in UTC, such as 12:34 UTC",
         )
     ]
 
