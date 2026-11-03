@@ -46,7 +46,8 @@ def test_each_workflow_is_narrow_bounded_and_pinned(path):
     assert workflow["permissions"] == {"contents": "read"}
     assert all("timeout-minutes" in job for job in workflow["jobs"].values())
     uses = [line.strip().removeprefix("- ") for line in text.splitlines() if "uses:" in line]
-    assert uses, "each workflow checks out code"
+    # A workflow may use no action at all, such as the hold check; any it uses is pinned.
+    assert uses or path.name == "hold.yml", "each workflow but the hold check checks out code"
     assert all(USES.fullmatch(line) for line in uses), uses
     steps = [step for job in workflow["jobs"].values() for step in job["steps"]]
     checkouts = [step for step in steps if step.get("uses", "").startswith("actions/checkout@")]

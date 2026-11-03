@@ -1,0 +1,31 @@
+name: Hold
+
+# A live hold on a pull request: the owner adds the `hold` label, and this check fails until it
+# comes off. As a required check it stops every merge path, auto-merge and a session's merge
+# alike, which a hold sent as a message can't. The steward skill names it.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+
+# A newer label event or push makes the last answer stale, so it stops.
+concurrency:
+  group: hold-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  hold:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Fail while the pull request carries the hold label
+        env:
+          HELD: ${{ contains(github.event.pull_request.labels.*.name, 'hold') }}
+        run: |
+          if [ "$HELD" = true ]; then
+            echo "::error::This pull request is on hold. The owner removes the hold label to lift it."
+            exit 1
+          fi
+          echo "No hold on this pull request."
