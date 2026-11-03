@@ -28,6 +28,8 @@ import re
 from collections.abc import Callable, Iterator
 from pathlib import Path
 
+from skillcheck.core import paths
+
 Add = Callable[[str, str, str], None]
 
 NAMES = ".github/private-names.sha256"
@@ -198,10 +200,7 @@ def _files(
     if every_root_file:
         found += sorted(p for p in root.iterdir() if p.is_file() and p.suffix in suffixes)
     for directory in roots:
-        if (root / directory).is_dir():
-            found += sorted(
-                p for p in (root / directory).rglob("*") if p.is_file() and p.suffix in suffixes
-            )
+        found += paths.files_under(root, directory, suffixes)
     return [p for p in found if p.relative_to(root).as_posix() != NAMES]
 
 

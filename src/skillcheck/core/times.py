@@ -15,6 +15,8 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
+from skillcheck.core import paths
+
 # The rule holds what's written from the day the owner set it. Past entries in an append-only
 # record stay as they were written.
 SINCE = date(2026, 10, 19)
@@ -26,7 +28,8 @@ ROOTS = ("skills", "docs", "research", ".claude", ".github")
 EXCLUDED = ("research/runs/",)
 
 TIME = re.compile(
-    r"(?<![\w:.])(?P<t>(?:[01]?\d|2[0-3]):[0-5]\d(?::[0-5]\d)?)(?![\w:])"
+    # The second look-behind skips an ISO 8601 offset, the 02:00 of T02:55+02:00.
+    r"(?<![\w:.])(?<!\d[+-])(?P<t>(?:[01]?\d|2[0-3]):[0-5]\d(?::[0-5]\d)?)(?![\w:])"
     # A look-ahead, so the text after one time never hides the next time on the line.
     r"(?=(?P<after>[^\n]{0,12}))"
 )
@@ -76,7 +79,7 @@ def check(root: Path, add: Add) -> None:
 def _markdown(root: Path) -> list[Path]:
     files = sorted(p for p in root.glob("*.md") if p.is_file())
     for directory in ROOTS:
-        files += sorted((root / directory).rglob("*.md"))
+        files += paths.files_under(root, directory, {".md"})
     return [p for p in files if not p.relative_to(root).as_posix().startswith(EXCLUDED)]
 
 

@@ -356,3 +356,19 @@ def test_the_command_line_writes_and_checks_the_map(tmp_path, capsys):
     assert out.endswith("skillcheck: dependency map written, 24 dependencies, 8 services\n")
     assert main([str(root), "--bom-check"]) == 0
     assert capsys.readouterr().out.endswith("8 services, 0 file(s) out of date\n")
+
+
+def test_a_file_a_merge_left_unresolved_counts_once(tmp_path):
+    root = fixture(tmp_path)
+    git(root, "-c", "user.name=t", "-c", "user.email=t@example.com", "commit", "-qm", "base")
+    git(root, "branch", "-q", "base")
+    for branch, text in (("ours", "ours\n"), ("theirs", "theirs\n")):
+        git(root, "checkout", "-q", "-b", branch, "base")
+        (root / "notes.md").write_text(text, encoding="utf-8")
+        git(root, "add", "notes.md")
+        git(root, "-c", "user.name=t", "-c", "user.email=t@example.com", "commit", "-qm", branch)
+    before = bom.collect(root).languages["Markdown"]
+    git(root, "checkout", "-q", "ours")
+    merged = subprocess.run(["git", "-C", str(root), "merge", "-q", "theirs"], capture_output=True)
+    assert merged.returncode != 0  # the conflict is the point
+    assert bom.collect(root).languages["Markdown"] == before

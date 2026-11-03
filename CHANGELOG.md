@@ -6,6 +6,11 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- `skillcheck` leaves out agents' worktrees under `.claude/worktrees/`, counts a file a merge
+  left unresolved once in the dependency map, and no longer flags an ISO offset as a time.
+
 ### Changed
 
 - Standard v0.49.0, nine changes the owner approved on 2026-11-03. Dimension 10 asks where a

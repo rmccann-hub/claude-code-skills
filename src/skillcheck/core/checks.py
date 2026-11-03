@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from skillcheck.core import content, facts, frontmatter, modules, reporting, standard, times
+from skillcheck.core.paths import WORKTREES
 from skillcheck.core.text import HIDDEN
 
 SKILLS_DIR = "skills"
@@ -519,7 +520,11 @@ def _check_context_size(path: Path, report: Report) -> None:
 
 
 def _files_under(directory: Path) -> list[Path]:
-    return sorted(p for p in directory.rglob("*") if p.is_file())
+    # Agents' worktrees sit inside `.claude`, and hold another checkout's files.
+    skip = directory / WORKTREES.name if directory.name == WORKTREES.parent.name else None
+    return sorted(
+        p for p in directory.rglob("*") if p.is_file() and (skip is None or skip not in p.parents)
+    )
 
 
 def _check_hidden_characters(root: Path, files: list[Path], report: Report) -> None:
