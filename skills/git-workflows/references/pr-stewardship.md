@@ -1,4 +1,4 @@
-# PR stewardship
+# Pull request stewardship
 
 Read this for writing, reviewing or auditing a repository's own steward skill: the file that
 tells any agent session driving that repository's pull requests when to merge or hold, what to do
@@ -133,7 +133,7 @@ label is on>. Read them again at the moment of merging, releasing or sending any
   live, and give each message the condition it depends on.
 - **"Full suite green" from one platform,** while the macOS job failed. Name every platform a
   claim covers.
-- **Cancelling the same stalled job by hand, four times.** A known stall belongs in the file,
+- **Canceling the same stalled job by hand, four times.** A known stall belongs in the file,
   with a step timeout in the workflow, and each stall recorded until its cause is found.
 - **Re-running a failed timing test in the hope it was noise,** or being told never to. Measure
   it first: one measurement showed the test, not the runner, was slow.
@@ -177,7 +177,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 
 ### Holds read live, again when acting
 
-- **The advice:** each hold where a session reads it live, checked again just before acting.
+- **The advice:** each hold where a session reads it live, checked again right before acting.
 - **The reason:** a hold set in a message is lost when the conversation is summarized or the
   session restarts, and a message can arrive after the action it meant to stop. A hold written
   only in the committed file takes effect when that commit merges, which a session working from
