@@ -2,6 +2,21 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — Release 0.1.25, standard v0.49.0 and checks that must fail
+
+- **The owner's word:** "Do all you recommend" (2026-11-03), after this session listed release
+  0.1.25 among its recommendations, once the changes before it landed.
+- **Carries:** standard v0.49.0 (#113); the `ci-workflows` rule on a gate that passes a check
+  which ran and failed (#111); `ci-speed` timing a release's run (#114); the steward template
+  moved to `git-workflows`' assets (#110); the `archive` branch and `docs/archive.md` (#112); the
+  mutation tests (#116) and three `skillcheck` fixes (#117); `.claude/worktrees/` ignored
+  (#115). Also #104 to #109, merged since 0.1.24: `pr-stewardship`, workflow lockfiles in
+  `action-pinning`, this repository's steward and `hold` check, and the dependency batch.
+- **Unchanged for consumers:** no skill or module was renamed or removed, so it's a patch release.
+  `pr-stewardship` is new since 0.1.24, and the standard's file is renamed with its version, as
+  each version is.
+- **After it:** the claude.ai tries for `ci-workflows` and `ci-speed`, which the owner runs.
+
 ## 2026-11-03 — Three `skillcheck` bugs: worktrees, unresolved files, ISO offsets
 
 - **Found:** the same night, by this session and the mutation run.

@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.25] - 2026-11-03
+
 ### Fixed
 
 - `skillcheck` leaves out agents' worktrees under `.claude/worktrees/`, counts a file a merge
