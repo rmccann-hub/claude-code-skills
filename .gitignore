@@ -27,3 +27,6 @@ scratch/*
 # What vale sync installs from the house style. The vocabulary under .vale/ is tracked.
 .vale/styles/HouseStyle/
 .vale/styles/.vale-config/
+
+# Agents' isolated working copies, made by Claude Code; never part of the repository
+.claude/worktrees/
