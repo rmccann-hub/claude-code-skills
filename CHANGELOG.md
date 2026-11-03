@@ -8,6 +8,8 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- `git-workflows`' `ci-speed` times a release's run as well as a pull request's, as standard
+  v0.49.0's dimension 6 asks.
 - `git-workflows`' `ci-workflows`: proving a gate now includes a check that ran and failed, and
   the audit asks whether each gate has ever been seen to fail.
 - `git-workflows`' `pr-stewardship` links a template file for the steward skill,
