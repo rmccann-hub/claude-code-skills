@@ -67,6 +67,8 @@ right. Run it against the state it exists to catch:
   there, and it should fail.
 - **A planted failure.** Break the thing three ways: remove it, reorder it so it runs too late,
   and disable it where it stands. The gate should fail each time.
+- **A check that ran and failed.** Feed it a record whose check ran and found a fault. A gate
+  that asks only whether a check ran, not what it found, passes the failure.
 - **The "couldn't check" case.** Make its input unavailable, with an unknown ref, an empty
   range or a missing file. It should fail, not pass having checked nothing.
 - **Every value its input states.** Change each value the checked record states, one at a
@@ -124,6 +126,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 | A change can land with no run on it | The `on:` blocks, against the branches that take merges or pushes, and the ruleset's bypass list | `BLOCKER` where anything counts on CI | `pull_request` with no branch filter, and `push` on those branches |
 | A branch read before its pull request gets no run | `push` narrowed by `branches:`, against branches pushed and read with no pull request | `GAP` | `push` with no branch filter, or a draft pull request per branch |
 | A test job doesn't prove the suite ran to the end | The steps after the test run: a report it reads, and a count held to a recorded baseline | `GAP`; `BLOCKER` where the runner exits 0 having run no tests | The completion guard in `assets/workflows/tests.yml` |
+| A gate has never been seen to fail | Each gate's tests, for a planted fault, a check that ran and failed, and missing input | `GAP`; `BLOCKER` where a release or merge rests on it | A test per case in *Prove a gate works* |
 | A required check comes from a path-filtered workflow | The ruleset's required checks, against each workflow's `on:` | `GAP`: pull requests that skip it can't merge | Remove the filter, or stop requiring the check (fact `skipped-pending`) |
 | A required check comes from a job with an `if:` | The required checks, against each job's `if:` | `BLOCKER` where the condition can skip it on a pull request that changes code: it reports success having run nothing (fact `job-if-success`) | Remove the condition, or require a final job that `needs:` the others and fails if any failed |
 | `paths` and `paths-ignore` on one event | Read the `on:` blocks | `DRIFT`: the workflow is invalid | Keep one (fact `paths-both`) |
