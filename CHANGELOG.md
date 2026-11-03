@@ -8,6 +8,14 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- Standard v0.49.0, nine changes the owner approved on 2026-11-03. Dimension 10 asks where a
+  repository keeps what's finished but worth keeping, with an auxiliary branch for records and
+  archives. Dimension 6 rates how long CI and a release's tests take, by `ci-speed`, and asks
+  for a steward skill where agent sessions drive pull requests, by `pr-stewardship`; the starter
+  CI cancels superseded pull request runs. Six fixes from the audits of 2026-10-27: a rule for an
+  unattended run given no answers, a requested report form, the `curl` form without `gh`,
+  zizmor's cooldown finding, a bare-name `skillOverrides` key, and a finished plan file's status.
+
 - `git-workflows`' `pr-stewardship` links a template file for the steward skill,
   `assets/steward/SKILL.md.template`, where it held the skeleton inline, leaving the module room
   under the size limit.

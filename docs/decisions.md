@@ -2,6 +2,49 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-03 — Standard v0.49.0: what a repository keeps, CI time, steward files and six fixes
+
+- **Asked, by the owner,** at about 07:40 UTC: "Do all you recommend", told that the
+  recommendations included both pending standard proposals. That approves the proposal of
+  2026-11-03, A, B and C, with A's three defaults standing, and items 1 to 6 of the proposal
+  from the audits of 2026-10-27, as proposed.
+- **Changed, in the standard, as F156 to F164 and a change of its own:**
+  - **F156:** Phase 3, *An unattended run told not to wait, and given no answers*, with `none,
+    defaults applied` and `tier_basis: draft` in its block; `SKILL.md`'s third step points to
+    it.
+  - **F157:** *Every run produces exactly one file* follows a request naming the report's files,
+    form or place, and records the difference in `overrides`.
+  - **F158:** Phase 2 gives the `curl` form without `gh`, and *Platform capability* gains a fact,
+    checked against GitHub's REST reference on 2026-11-03: a public repository's repository,
+    `rulesets`, `rules/branches/<branch>` and `private-vulnerability-reporting` paths answer with
+    no token; `immutable-releases` and `code-scanning/default-setup` don't. It matches
+    `git-workflows`' fact `rest-public`.
+  - **F159:** dimension 8 reads zizmor's `dependabot-cooldown` finding against the default, and
+    the cooldown fact quotes GitHub's *Dependabot options reference*, read again on 2026-11-03.
+    `git-workflows`' `action-pinning` already carries the matching note, so it's unchanged.
+  - **F160:** the `skillOverrides` fact records that a bare-name key matches a synced skill.
+  - **F161:** *What not to create* and dimension 3 rate a plan file left after merge.
+  - **F162, proposal A:** dimension 10's four questions, auxiliary branch, defaults and ratings.
+    *Merge, delete, leave alone* moves a finished record worth keeping rather than deleting it,
+    and the evidence-branch ruleset row covers any auxiliary branch, so the standard doesn't
+    contradict itself.
+  - **F163, proposal B:** dimension 6 rates CI and release test time by `ci-speed`, and the
+    starter CI gains a `concurrency` block and a cached setup step.
+  - **F164, proposal C:** dimension 6's *Pull requests that agent sessions drive*, with a row in
+    *The configuration file map* and a dated fact for the steward path.
+- **Planned, not applied:** item 7, splitting *The run* by dimension, is F165 in `ROADMAP.md`,
+  with the rebuild.
+- **Left out:** the borderline Python 3.11 item, which wasn't recommended.
+- **Not done here:** A's bullet for this repository. The audit kit stays out of this public
+  repository, since it names audited repositories, and `AGENTS.md` is changed separately.
+- **Found, not fixed:** `ci-speed` covers a pull request's CI and the default branch's run, and
+  says nothing of a release's tests. The standard asks for both; the module's gap is a change of
+  its own.
+- **Not done:** no parity run. No sample holds a plan file, an archive, an auxiliary branch or a
+  steward, and every sample's Phase 3 replies are given. The new ratings any sample could meet,
+  such as dimension 10's `GAP` for no recorded answer, land on dimensions its baseline already
+  rates `GAP` or worse, so no status can move.
+
 ## 2026-11-03 — The steward template moves out of `pr-stewardship`
 
 - **Why:** the module stood at 15,998 characters, two short of the 16,000 limit past which
