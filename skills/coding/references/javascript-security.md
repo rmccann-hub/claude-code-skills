@@ -170,7 +170,7 @@ Versions, dates and defaults, each named elsewhere in this module by its ID. Che
 | `js-hasown` | `Object.hasOwn` works on null-prototype objects and overridden `hasOwnProperty` | [MDN: Object.hasOwn()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) | "It is recommended over Object.prototype.hasOwnProperty()" | 2026-10-26 | 2027-10-26 |
 | `js-disable-proto` | `--disable-proto=delete` removes `Object.prototype.__proto__` | [Command-line options](https://nodejs.org/api/cli.html) | "Disable the Object.prototype.__proto__ property." | 2026-10-26 | 2027-10-26 |
 | `js-redos` | Node's guide: nested quantifiers make a regular expression vulnerable | [Don't block the event loop](https://nodejs.org/en/learn/asynchronous-work/dont-block-the-event-loop) | "Avoid nested quantifiers like (a+)*." | 2026-10-26 | 2027-10-26 |
-| `js-sql-params` | OWASP: parameterized queries for data values | [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) | "Use parameterized queries for data values" | 2026-10-26 | 2027-10-26 |
+| `js-sql-params` | OWASP: parameterized queries for data values, and a fixed allow-list for table and column names | [OWASP SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html) | "use parameterized queries for dynamic data values" | 2026-11-10 | 2027-11-10 |
 | `js-cwe22` | CWE-22: canonicalize a path before checking it | [CWE-22](https://cwe.mitre.org/data/definitions/22.html) | "produces the canonical version of the pathname" | 2026-10-26 | 2027-10-26 |
 
 ## Sources

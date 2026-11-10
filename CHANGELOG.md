@@ -6,6 +6,12 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Fixed
+
+- `coding`: two facts whose sources reworded them, found by the weekly freshness run. ESLint's
+  support page now gives v9's end of life, still 2026-08-06, in its table; OWASP now says
+  "dynamic data values" and names the allow-list for table and column names.
+
 ## [0.1.25] - 2026-11-03
 
 ### Fixed
