@@ -27,26 +27,29 @@ Drafts, from one loop's records. Each holds until evidence says otherwise.
    and doesn't release it until the turn comes back. If two cross all the same, the one that
    reached the reader's branch first counts, by the branch's commit time, and the other is
    answered as a reply to it.
-4. **Read the other side's committed files, not relayed copies.** Each side reads the other's
+4. **A request the owner gives both sides names one builder.** The other side reviews. Both
+   sides built the same test runner the same evening when it didn't, and the round then spent
+   laps choosing between them.
+5. **Read the other side's committed files, not relayed copies.** Each side reads the other's
    default branch, every branch, at the start of a session and before it ends a turn. A relayed
    copy goes stale, and a fetch of one branch hides the rest.
-5. **A message counts as sent only once it's marked released,** on a branch the other side
+6. **A message counts as sent only once it's marked released,** on a branch the other side
    reads. A draft isn't a message, and neither is a held one merged to the default branch: write
    the agreed meaning of "sent" so it says which marker wins when the two disagree.
-6. **Cite every claim as `owner/repo@commit:path:line`,** and paste every hash from a command's
+7. **Cite every claim as `owner/repo@commit:path:line`,** and paste every hash from a command's
    output, never retype it.
-7. **Keep rules about evidence, cut rules about choreography.** Envelopes, digests, ledgers and
+8. **Keep rules about evidence, cut rules about choreography.** Envelopes, digests, ledgers and
    deadlines that never fired cost more than they caught.
-8. **Know what the agents can't supply:** time on hardware, a design both sides agree on, and
+9. **Know what the agents can't supply:** time on hardware, a design both sides agree on, and
    acts only the owner can do, such as syncing a fork or giving a release its word. No number
    of messages stands in for them. Ask once, in writing, and say what waits on the answer.
-9. **Write the owner's words down once, verbatim,** with who said them and when, and quote them
+10. **Write the owner's words down once, verbatim,** with who said them and when, and quote them
    where they apply. An answer from one side isn't a settlement.
-10. **A change both sides must make is agreed word for word,** and each side checks it against
+11. **A change both sides must make is agreed word for word,** and each side checks it against
     the other's tree from a fresh clone.
-11. **A new output line ships after the reader that parses it,** never before: the producer
+12. **A new output line ships after the reader that parses it,** never before: the producer
     proposes the wording, the consumer ships its reader, then the producer releases.
-12. **A session that stops with work outstanding says what it waits on, and from whom.** An idle
+13. **A session that stops with work outstanding says what it waits on, and from whom.** An idle
     session doesn't wake itself; the coordinator watches for one that has gone quiet.
 
 TODO(new-skill) Settle the rules' order, merge the overlaps, and cut any the next evidence
