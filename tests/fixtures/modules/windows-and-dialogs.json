@@ -1,0 +1,14 @@
+[
+  {
+    "query": "TODO(new-skill) a request this module should answer",
+    "should_trigger": true
+  },
+  {
+    "query": "TODO(new-skill) another one, worded differently",
+    "should_trigger": true
+  },
+  {
+    "query": "TODO(new-skill) a near miss another module takes",
+    "should_trigger": false
+  }
+]
