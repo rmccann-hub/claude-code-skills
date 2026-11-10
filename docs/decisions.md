@@ -2,6 +2,24 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-10 — `user-experience` planned, and research for it and `review-loops`
+
+- **Asked, by the owner:** "lets make the testing-patterns and review-loops skills next ... what
+  about a gui review and a gui end user use and a gui ease of use type skill ... make sure
+  things like windows dont start before they should or hide things, or give you options in many
+  places, or behind 20 options choices" (2026-11-10).
+- **Planned:** a new skill, `user-experience`, since how a program behaves for its user is a
+  kind of situation no skill covers: `visual-design` is how it looks, `human-factors` what people
+  do. Four modules: `usability-review`, `windows-and-dialogs`, `settings-and-options` and
+  `gui-testing`. `accessibility` stays in `visual-design`, and the new skill points to it.
+- **Research:** R26 for `review-loops`, which rested on one loop's records alone, and R27 for
+  `user-experience`, in R06's form. The owner runs R06, R26 and R27; each result is checked
+  before a rule rests on it.
+- **Evidence already in hand for `user-experience`, from an audited GUI application:** a status
+  line that kept the last rip's result through the next rip; a drive shown after it was gone; a
+  hidden modal dialog left behind by each update offer; a picker that opened by itself under the
+  next dialog; and a console with two file pickers of different meaning.
+
 ## 2026-11-10 — R06, the testing research, asks what the audits found
 
 - **Asked, by the owner:** "all existing and new repos/claude outputs/scripts/code should benefit
