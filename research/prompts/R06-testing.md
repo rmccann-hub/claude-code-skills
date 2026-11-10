@@ -1,6 +1,6 @@
 # RESEARCH RUN R06: Testing
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 3 · Written 10 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 10 November 2026.
 
 This run informs these categories: testing, and the testing file of every language skill.
 
@@ -36,7 +36,7 @@ This run informs these categories: testing, and the testing file of every langua
 7. **Depth over breadth.** Finish the Priority questions fully. If you run out of room, list the
    rest under "Not covered".
 8. **Beliefs marked "(the standard, date)"** come from this repository's own standard,
-   PROJECT-BOOTSTRAP-AND-AUDIT v0.35.0, in its section of dated facts. Checking them also
+   PROJECT-BOOTSTRAP-AND-AUDIT v0.49.0, in its section of dated facts. Checking them also
    checks that standard, so say plainly when one is wrong.
 
 ## Output
@@ -65,7 +65,7 @@ Then these sections, in this order:
 
 ## What we believe (confirm or correct each)
 
-- pytest 9 is current, and Hypothesis is the standard Python property-based testing library.
+- pytest 9.2 is current, and Hypothesis is the standard Python property-based testing library.
 - Jest 30 was released in 2025; Vitest 3 or 4 is current; Playwright is the most widely used browser end-to-end tool.
 - xUnit v3, MSTest 3 or 4 and NUnit 4 are current, and TUnit is newer.
 - (the standard, 2026-09) Pester 6 has been released and breaks things; 5.7.x is the safe pin.
@@ -84,6 +84,37 @@ Then these sections, in this order:
 3. Test doubles: current guidance on mocks, stubs, fakes and spies; "don't mock what you don't own"; contract testing (Pact) status.
 4. Coverage: meaningful targets, branch versus line coverage, why coverage should not be gamed, and the tools per language (coverage.py, c8/istanbul, coverlet, go test -cover, cargo-llvm-cov).
 5. Flaky tests: detection, quarantine and fixing practices from large engineering organizations (Google, Microsoft, GitHub), with sources.
+
+### From this repository's audits (priority, after question 5)
+
+These come from audits of repositories set up against this one, where a test suite and an
+acceptance run were green while the output was wrong. For each, give the established practice,
+who uses it, its cost, and when it isn't worth it, with sources.
+
+A. **Checks that can't fail.** How do mature projects prove a test, a CI gate or a grader can
+   fail: planting the defect it exists to catch, mutating the checker itself rather than the
+   product, and testing the "couldn't check" path (missing input, an empty range)? Sources on
+   mutation testing applied to test oracles and graders, and Google's experience with mutation
+   testing at scale.
+B. **Test oracles and independent authorities.** When a tool reports on its own output, what
+   counts as an independent check, and how do projects avoid grading output against the same
+   code or data that produced it? Include differential testing against another implementation,
+   and checking a reference's own settings before trusting a match with it.
+C. **Scoring the worst case.** Guidance on scoring a system by its outputs that are wrong and
+   reported as fine, rather than by its pass rate (silent failures, false assurance), including
+   how safety-critical and storage or backup software measure it.
+D. **Finding what you don't know is missing:** coverage of a whole system or acceptance run
+   compared with its unit-test coverage; inventories of features, commands and settings checked
+   against the tests that exercise them; mining past run records for checks whose result never
+   varies.
+E. **Acceptance and hardware-in-the-loop testing:** how projects that depend on physical devices
+   (drives, printers, embedded boards) structure unattended acceptance runs: preconditions that
+   stop a run, a lost device mid-run, run-size tiers, evidence bundles, and how often to run.
+F. **Fault injection for ordinary applications:** a full disk, an unwritable folder, a network
+   that drops or stalls, a device removed mid-operation; tools and patterns per language.
+G. **Tests that agents write.** Documented failure modes of AI coding assistants writing or
+   fixing tests: asserting the current output, weakening a test to pass, mocking the subject,
+   tests that pass for the wrong reason. Anthropic's and others' guidance on reviewing them.
 
 ### Standard
 

@@ -2,6 +2,18 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-10 — R06, the testing research, asks what the audits found
+
+- **Asked, by the owner:** "all existing and new repos/claude outputs/scripts/code should benefit
+  form everything here" (2026-11-10). Twenty of `ROADMAP.md`'s 57 lessons wait for `testing`,
+  more than for any other skill, and R06, its research prompt, predates them.
+- **Changed:** R06 is version 3. Seven priority questions come from the audits: checks that
+  can't fail, independent test oracles, scoring the worst case, finding what's missing,
+  acceptance runs on hardware, fault injection, and tests that agents write. Its date and the
+  standard's version are current.
+- **Next:** the owner runs R06 on claude.ai; the result is checked against its sources; then
+  `testing` is built from it and the lessons, and `ci-workflows`' gate cases move there.
+
 ## 2026-11-10 — What the two repositories' week taught `git-workflows`
 
 - **Asked, by the owner:** "loook at both repos, see if anything shoulld be done here and
