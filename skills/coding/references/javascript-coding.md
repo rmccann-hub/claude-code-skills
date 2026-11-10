@@ -218,7 +218,7 @@ Severity uses the standard's status words.
 | `js-floating-biome` | In Biome's nursery | [Biome](https://biomejs.dev/linter/rules/no-floating-promises/) | "This rule is part of the nursery group." | 2026-10-26 | 2027-04-26 |
 | `js-oxlint-type-aware` | TypeScript 7; 59 of 61 | [Oxc](https://oxc.rs/blog/2026-07-22-type-aware-linting-stable) | "tracks TypeScript v7.0.2" and "59 of typescript-eslint's 61 type-aware rules" | 2026-10-26 | 2027-04-26 |
 | `js-eslint10-eslintrc` | ESLint 10 removed eslintrc | [ESLint](https://eslint.org/blog/2026/02/eslint-v10.0.0-released/) | "the eslintrc config system has been completely removed" | 2026-10-26 | 2027-10-26 |
-| `js-eslint9-eol` | ESLint 9 ended 2026-08-06 | [ESLint](https://eslint.org/version-support/) | "ESLint v9.x reached end-of-life on 2026-08-06" | 2026-10-26 | 2027-10-26 |
+| `js-eslint9-eol` | ESLint 9 ended 2026-08-06: the page's release-line table lists v9 as EOL from that date, and v10 as current | [ESLint](https://eslint.org/version-support/) | "six months of limited support for the previous version" | 2026-11-10 | 2027-11-10 |
 
 ## Sources
 
