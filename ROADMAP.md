@@ -104,7 +104,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
 | `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
 | `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
-| `testing-patterns` | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06 |
+| `testing-patterns` | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06, R06b |
 | `api-patterns` | `architecture` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
 | `sql-craftsman` | `data` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
 | `commits-and-pull-requests` | `git-workflows` | Commit grammar and messages, trailers, the author's address, branch names, pull requests and review comments | shipped | core | R08 |
@@ -258,7 +258,7 @@ palettes in `visual-design`, not in `excel-master`.
    | Wave | Research | Skills and modules | Old copies deleted when it ships |
    |---|---|---|---|
    | 1 | R15, R09, R11, R10 | `coding` with its contract, `bash-coding`, `python-coding`, `powershell-scripts`, `csharp-coding`, `javascript-coding`, `html-coding` | the six old language skills |
-   | 2 | R06, R07, R14, R19, R23 | `testing`; `coding`'s `error-handling`; `operations`' `log-analysis`; `data`; `architecture`'s `api-patterns`; `human-factors`; `optimization-and-scheduling` | `testing-patterns`, `error-handling`, `log-parser`, `sql-craftsman`, `api-patterns`, `human-factor-audit` |
+   | 2 | R06, R06b, R07, R14, R19, R23 | `testing`; `coding`'s `error-handling`; `operations`' `log-analysis`; `data`; `architecture`'s `api-patterns`; `human-factors`; `optimization-and-scheduling` | `testing-patterns`, `error-handling`, `log-parser`, `sql-craftsman`, `api-patterns`, `human-factor-audit` |
    | 3 | R16, R11 | `coding`'s `vba-coding`; `business-apps`; `operations`' `windows-admin` | `vba-coding`, `excel-master`, `epicor-bpm`, `solidworks-automation`, `procedure-generator`, `windows-admin` |
    | 4 | R25, R13, R15, R20 | `coding`'s `go-coding`, `rust-coding`, `php-coding`, `ruby-coding`; `operations`' `docker-containers`, `linux`, `networking-security`; `visual-design` | those seven, `linux-troubleshooting`, `my-theme` once the company palette is in the private companion, and last `code-standards` |
    | When needed | R15 | `linux-gaming` | `linux-gaming` |
