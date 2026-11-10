@@ -11,6 +11,8 @@ Notable changes to this repository. The format follows
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
   bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
   install and reads what a failed publish made before retrying.
+- Dependencies brought up together, each past the three-day wait: ruff 0.17.4, coverage 7.17.2,
+  zizmor 1.32.0, Claude Code 2.1.319 and the `uv_build` floor 0.13.6.
 
 ### Fixed
 
