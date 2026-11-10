@@ -6,6 +6,12 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
+  bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
+  install and reads what a failed publish made before retrying.
+
 ### Fixed
 
 - `coding`: two facts whose sources reworded them, found by the weekly freshness run. ESLint's
@@ -20,6 +26,10 @@ Notable changes to this repository. The format follows
   left unresolved once in the dependency map, and no longer flags an ISO offset as a time.
 
 ### Changed
+
+- `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
+  bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
+  install and reads what a failed publish made before retrying.
 
 - `git-workflows`' `ci-speed` times a release's run as well as a pull request's, as standard
   v0.49.0's dimension 6 asks.

@@ -102,7 +102,11 @@ Conventional Commits (fact `semantic-release`).
 - **A release candidate proved only in the working tree.** One candidate's suite failed a
   freshness check on a clean checkout, and its regeneration step named every derived file but
   two. Build each candidate from a clean checkout, regenerate with one command, and move the
-  same artifact between channels, never a rebuild.
+  same artifact between channels, never a rebuild. Check what consumers install, the archive or
+  package, and change one checksum digit in it to see the check fail.
+- **A publish retried after a server error, blind.** A 5xx doesn't say what was made: one
+  release took three tries to create. Read what exists, the release, each asset and its
+  attestation, then retry only what's missing.
 - **`gh release create` with a new tag name,** which makes a lightweight tag (fact
   `gh-release-tag`). Push the annotated tag first, then use `--verify-tag`.
 - **Tagging a branch instead of a commit.** With immutable releases it can't be undone. Tag the
