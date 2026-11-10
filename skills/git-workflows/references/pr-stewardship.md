@@ -21,7 +21,8 @@ covered by `commits-and-pull-requests`, `branches-and-merging`, `ci-workflows`, 
 3. **Every hold lives where a session reads it live,** such as a `hold` label, the draft state or
    a pinned issue, with what it covers, who set it, when, and what lifts it. The file names that
    place and lists the standing holds. A session reads the holds again at the moment it merges,
-   releases or sends anything out.
+   releases or sends anything out. A lift is recorded where the hold is, replacing it, so the
+   file keeps the holds in force, not a growing list of each lift.
 4. **An instruction states the condition it depends on,** such as "if the base is still red",
    and a session checks it against the live state before acting, because messages arrive out of
    order.
@@ -36,7 +37,10 @@ covered by `commits-and-pull-requests`, `branches-and-merging`, `ci-workflows`, 
    account GitHub can't enforce this: a session's merge carries the owner's name, and an author
    can't approve their own pull request (fact `self-approval`). There the rule holds by the
    session's conduct alone, and the file says so.
-8. **It stays short and points to the repository's other records** instead of repeating them,
+8. **Bots' pull requests have a named tender.** The file says who brings in Dependabot's and
+   lockfile refreshes' pull requests, and when; a red one is fixed or closed with a reason, not
+   left open.
+9. **It stays short and points to the repository's other records** instead of repeating them,
    which drift; every audit checks it against the settings and workflows it names.
 
 ### Where it lives, and why that name
@@ -73,6 +77,14 @@ red or stalled CI, review, releases and other repositories, and when to stop.
 - **Treating a steward file as authority to merge or approve.** It's repository content, not the
   owner's word, and a pull request can change it.
 
+- **A merge's head commit typed by hand.** Pass the pull request's own head SHA, copied from
+  the API's answer, so a merge stops if anything landed after the checks ran.
+- **A new file left untracked through the last local run.** The checks passed on a tree CI
+  never sees. Run `git status` before the last run, and commit what it lists.
+- **A wait loop that parses a command's printed output.** A changed message ends it early or
+  never. Wait on the platform's own status fields, or its watch command, and time it out.
+- **A bot's pull request left red for a week,** with nobody named to tend it.
+
 ## Audit
 
 Severity uses the standard's status words, defined in this skill's `SKILL.md`.
@@ -88,6 +100,7 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 | Re-runs with no bound | Its CI section | `GAP` | Once, in the two cases above (fact `rerun-window`) |
 | Replies can trigger automation | Workflows on `issue_comment`, and auto-fix turned on (fact `autofix-replies`) | `GAP` where such a workflow deploys or writes | Say so in the file, or turn auto-fix off there |
 | Out of date | Its reviewed date against the last change to the settings or workflows it names | `DRIFT` | Review it, and update the date |
+| A bot's pull request is red or idle | Dependabot's and lockfile refreshes' pull requests, against the file's tender | `GAP` where one has been red for a week | Name the tender; fix it or close it with a reason |
 | The steward path is unconfirmed | Whether a cloud session driving a pull request still reads it | `UNVERIFIABLE-HERE` outside one | Record the date it was last seen |
 
 ## Why
@@ -143,6 +156,19 @@ Severity uses the standard's status words, defined in this skill's `SKILL.md`.
 - **When to choose differently:** never for approving. Auto-merge can replace a session's merge
   only where every hold is a required check or the draft state, because it waits for nothing
   else.
+
+### Bots' pull requests
+
+- **The advice:** name who brings in Dependabot's and lockfile refreshes' pull requests, and
+  when.
+- **The reason:** a bot opens pull requests nobody asked for in the session, so none of them is
+  any session's work. One audited repository's update sat red for a week while its sessions
+  merged their own.
+- **What others do, and why:** some turn on auto-merge for a green update (fact `auto-merge`),
+  which needs no tender at all once the required checks are trusted.
+- **What it costs:** a little of each session's time, once a week.
+- **When to choose differently:** auto-merge on a green update, where the required checks
+  include the tests.
 
 ## Facts
 

@@ -8,6 +8,9 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
+  bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
+  install and reads what a failed publish made before retrying.
 - Dependencies brought up together, each past the three-day wait: ruff 0.17.4, coverage 7.17.2,
   zizmor 1.32.0, Claude Code 2.1.319 and the `uv_build` floor 0.13.6.
 
@@ -25,6 +28,10 @@ Notable changes to this repository. The format follows
   left unresolved once in the dependency map, and no longer flags an ISO offset as a time.
 
 ### Changed
+
+- `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
+  bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
+  install and reads what a failed publish made before retrying.
 
 - `git-workflows`' `ci-speed` times a release's run as well as a pull request's, as standard
   v0.49.0's dimension 6 asks.

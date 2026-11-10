@@ -2,6 +2,29 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-10 — What the two repositories' week taught `git-workflows`
+
+- **Asked, by the owner:** "loook at both repos, see if anything shoulld be done here and
+  improve accordingly" (2026-11-10). A read-only review of both repositories' week, from
+  2026-11-03 to 2026-11-10, its claims checked before use.
+- **`pr-stewardship`:** a lifted hold replaces the hold where it's recorded, since one
+  repository's release hold grows a sentence per release; a new rule names who tends bots' pull
+  requests, since one repository's update sat red for a week; four mistakes (a head commit
+  typed by hand, a file left untracked through the last run, a wait loop parsing printed
+  output, an untended bot pull request); an audit row; a Why section. 13,020 to 14,848
+  characters.
+- **`releases-and-versions`:** check what consumers install, with one planted wrong checksum
+  digit; and read what a failed publish made before retrying it, since one release took three
+  tries to create. 15,005 to 15,339 characters.
+- **`ROADMAP.md`:** lessons L55 to L57, on laps crossing despite per-side numbers, four more ways
+  a gate passed its defect, and parallel agents colliding on one record. L56 waits on splitting
+  `ci-workflows`, which is too near its limit to take them.
+- **Not taken here:** the standard's round rules against practice, and turn-taking in its
+  *Other repositories*, go to the owner as a proposal; `skillcheck` for a repository's own
+  `.claude/skills/` is planned in `ROADMAP.md`'s infrastructure rows.
+- **Review:** the checks of `docs/authoring-a-skill.md` that apply to added rules and mistakes
+  passed. The claude.ai tries follow the merge.
+
 ## 2026-11-03 — Release 0.1.25, standard v0.49.0 and checks that must fail
 
 - **The owner's word:** "Do all you recommend" (2026-11-03), after this session listed release

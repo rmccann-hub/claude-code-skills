@@ -534,6 +534,21 @@ lessons in when it's built, and its reasons cite them.
 - **L54, `review-loops`:** a reviewer checks what the code already does before recommending
   it. A coordinator listed two gaps that the app had closed a month before, an outbound
   control-character check and an inbound one, because it read the app's plans but not its code.
+- **L55, `review-loops`:** lap numbers per side (L26) still let both sides write the same lap
+  when each writes while waiting: one loop's laps crossed three times in two rounds. The last
+  lap names who holds the turn; a lap written out of turn is held; a clash that happens anyway
+  is renumbered by the commit that reached the reader's branch first, without asking the owner.
+  A request the owner gives both sessions names one builder: both built the same test runner
+  the same evening.
+- **L56, `testing-patterns`:** four more ways a gate passed its defect, beyond `ci-workflows`'
+  *Prove a gate works*: a mangled key in a header, a pattern matching its word inside an
+  unrelated phrase, a fixture holding a state the code can never reach, and a test-count
+  baseline taken from a local run that CI's collection didn't match. Each case gets a planted
+  test. `ci-workflows` is at 15,387 characters, so it splits before these go in.
+- **L57, `agent-context-files`:** parallel helper agents on one record collide: two took the
+  same task number, rows were duplicated, and a failure showed only on the combined tree. Each
+  branch takes its own range of numbers, citations are restored from `-x` trailers, and the
+  gate runs once on the combined tree.
 
 ## Rebuilding `project-bootstrap-and-audit`
 
@@ -1380,6 +1395,7 @@ trigger.
 | Weekly currency check | The Freshness workflow, each Monday: facts due or whose quote is gone (`--due`, `--verify`), and dependencies behind their newest release (`--outdated`), each kept as one open issue | shipped | done, 2026-10-20 |
 | End-of-life warning | A runtime or dependency whose support ends within six months, which the weekly check doesn't yet name | planned | the first category skill ships |
 | `copier` template | The standard's starter files, so a new repository is set up without a session | planned | the first repository set up from this one |
+| A repository's own skills | `skillcheck` on a consuming repository's `.claude/skills/`, without this catalog's checks, with a marker for a draft and a check of a skill's scripts and tests beside it. Both audited repositories' steward skills asked for it; `--verify` there also needs to tell a source that wants credentials from a quote that's gone | planned | the next audit of either repository |
 | Reusable workflows | This repository's CI gates, callable from other repositories | planned | a second repository wants this CI |
 | `upstream-defects.md` | The standard's register of upstream defects shared across repositories | planned | the first upstream defect found |
 | Map refresh on dependency updates | Dependabot's pull requests change the lockfiles but not `bom.json` or `docs/dependencies.md`. CI's `--bom-check` fails such a pull request until a session regenerates the map in its branch before merging, as the owner chose on 2026-10-13 | shipped | done |
