@@ -6,6 +6,10 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Changed
+
+- CI, the freshness run and the release workflow install uv 0.13.7, past the three-day wait.
+
 ## [0.1.25] - 2026-11-03
 
 ### Fixed

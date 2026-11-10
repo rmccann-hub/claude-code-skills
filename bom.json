@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:99f12bba-a3c8-565a-9b44-b4138692563f",
+  "serialNumber": "urn:uuid:62f6cd3b-f3f4-5328-9bfb-c48eb00cb40f",
   "version": 1,
   "metadata": {
     "tools": {
@@ -960,9 +960,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "tool:uv@0.13.5",
+      "bom-ref": "tool:uv@0.13.7",
       "name": "uv",
-      "version": "0.13.5",
+      "version": "0.13.7",
       "properties": [
         {
           "name": "claude-code-skills:set-in",
@@ -1105,7 +1105,7 @@
         "tool:Go@1.27",
         "tool:Node.js@26",
         "tool:Python@3.15",
-        "tool:uv@0.13.5",
+        "tool:uv@0.13.7",
         "tool:uv_build@>=0.13.5,<0.14"
       ]
     },

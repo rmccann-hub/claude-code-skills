@@ -42,7 +42,7 @@ freshness run and the release workflow both run it.
 | Go | 1.27 | `.github/workflows/ci.yml`, `.github/workflows/prose.yml` | — |
 | Node.js | 26 | `.github/workflows/ci.yml` | — |
 | gitleaks | v8.30.1 | `.github/workflows/ci.yml` | — |
-| uv | 0.13.5 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
+| uv | 0.13.7 | `.github/workflows/ci.yml`, `.github/workflows/freshness.yml`, `.github/workflows/release.yml` | — |
 | vale | v3.26.0 | `.github/workflows/prose.yml` | — |
 
 ## Python packages
