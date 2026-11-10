@@ -11,6 +11,12 @@ Notable changes to this repository. The format follows
 - Dependencies brought up together, each past the three-day wait: ruff 0.17.4, coverage 7.17.2,
   zizmor 1.32.0, Claude Code 2.1.319 and the `uv_build` floor 0.13.6.
 
+### Fixed
+
+- `coding`: two facts whose sources reworded them, found by the weekly freshness run. ESLint's
+  support page now gives v9's end of life, still 2026-08-06, in its table; OWASP now says
+  "dynamic data values" and names the allow-list for table and column names.
+
 ## [0.1.25] - 2026-11-03
 
 ### Fixed
