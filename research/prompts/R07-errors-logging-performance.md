@@ -1,6 +1,6 @@
 # RESEARCH RUN R07: Error handling, logging, observability, performance, concurrency, and log analysis
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026, updated 10 November 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 3 · Written 22 September 2026, updated 11 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -76,28 +76,28 @@ Then these sections, in this order:
 1. Error handling per language (Python, TypeScript/JavaScript, C#, PowerShell, Go, Rust, Java, PHP, Ruby, Bash): current idioms and official guidance on exception design, error wrapping and causes, result types, and what to catch where. Cite each language's documentation.
 2. Resilience: retries with exponential backoff and jitter, timeouts and deadlines, idempotency, circuit breakers and bulkheads. Give the current library per language (for example tenacity or stamina, p-retry, Polly v8, resilience4j, backon), with versions.
 3. API errors: RFC 9457 adoption and examples; mapping errors to HTTP status codes under RFC 9110; user-facing error messages in plain, actionable language, citing style guides (GOV.UK, Microsoft, Nielsen Norman Group).
-4. Logging:
+4. Results that say what happened, with published guidance for each: exit codes that carry one meaning each (POSIX, `sysexits.h` and other documented conventions); telling "not found" from "couldn't look" in a return value or result type; why a broad catch around a whole validator fails open; recording a child process's exit status (including one never reaped), its arguments as run, and long output cut to head and tail with a count of what was cut; and, in logs, timestamps that carry their offset (RFC 3339) and status lines that name the outcome checked rather than a step finished.
+5. Log analysis: Windows event log tools (Get-WinEvent, EvtxECmd, Chainsaw, Hayabusa), crash dump analysis (current WinDbg), journald and journalctl, common query languages (KQL, LogQL), and whether python-evtx is maintained.
+6. Logging:
    - structured logging practice, log levels, correlation IDs, W3C Trace Context
    - what never to log (secrets, personal data), and log injection
    - the current standard libraries per language: Python logging and structlog, pino, Serilog and Microsoft.Extensions.Logging, Go's slog, Rust's tracing, Monolog, Ruby's Logger
-5. OpenTelemetry: current stability for each signal in each major language SDK, the semantic conventions' status, the Collector, and a recommended starting setup for a small team.
 
 ### Standard
 
-6. Metrics and alerting: the RED and USE methods, SLOs and error budgets (Google SRE book), Prometheus and OpenMetrics status.
-7. Performance: profiling tools per language with current versions, and benchmarking pitfalls:
+7. OpenTelemetry: current stability for each signal in each major language SDK, the semantic conventions' status, the Collector, and a recommended starting setup for a small team.
+8. Metrics and alerting: the RED and USE methods, SLOs and error budgets (Google SRE book), Prometheus and OpenMetrics status.
+9. Performance: profiling tools per language with current versions, and benchmarking pitfalls:
    - Python: cProfile, py-spy, Scalene, the Python 3.15 profiler
    - Node.js: --cpu-prof, Chrome DevTools, clinic.js
    - .NET: dotnet-trace, dotnet-counters, BenchmarkDotNet
    - Go: pprof
    - Rust: cargo flamegraph, criterion
    - Java: async-profiler, JFR
-8. Concurrency: current guidance and pitfalls per language:
+10. Concurrency: current guidance and pitfalls per language:
    - Python: asyncio (TaskGroup, timeouts), free-threading status and library compatibility
    - JavaScript: the event loop, workers
    - C#: async/await (ConfigureAwait, ValueTask, cancellation)
    - Go: goroutines, data races, context
    - Rust: Send and Sync, tokio
    - Java: virtual threads, structured concurrency status
-9. Log analysis: Windows event log tools (Get-WinEvent, EvtxECmd, Chainsaw, Hayabusa), crash dump analysis (current WinDbg), journald and journalctl, common query languages (KQL, LogQL), and whether python-evtx is maintained.
-10. Results that say what happened, with published guidance for each: exit codes that carry one meaning each (POSIX, `sysexits.h` and other documented conventions); telling "not found" from "couldn't look" in a return value or result type; why a broad catch around a whole validator fails open; recording a child process's exit status (including one never reaped), its arguments as run, and long output cut to head and tail with a count of what was cut; and, in logs, timestamps that carry their offset (RFC 3339) and status lines that name the outcome checked rather than a step finished.

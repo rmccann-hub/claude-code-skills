@@ -1,6 +1,6 @@
 # RESEARCH RUN R23: Human factors: habits that look wasteful and serve a purpose
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 16 October 2026, updated 10 November 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 3 · Written 16 October 2026, updated 11 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -151,7 +151,7 @@ Then these sections, in this order:
 5. Optimizers and schedules: the operations research and ergonomics literature on models that
    treat people as deterministic, ignore their preferences, or plan to full utilization, and
    what happened when their plans met the shop floor. Leave fatigue and shift design to run
-   R19, which already covers them.
+   R28, which covers them.
 6. Interfaces and software: the laws and heuristics with evidence behind them (Fitts, Hick and
    Hyman, Nielsen's heuristics, consistency, defaults), and what redesign studies show about the
    cost of breaking familiarity.

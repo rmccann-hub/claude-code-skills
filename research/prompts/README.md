@@ -1,6 +1,6 @@
 # Research runs
 
-Twenty-nine prompts, one file each. Each file is the whole prompt: paste all of it into a new
+Thirty-one prompts, one file each. Each file is the whole prompt: paste all of it into a new
 claude.ai chat with Research turned on (or Web search, if Research isn't offered). Run them
 in any order, several at a time in separate chats. Priority 1 first.
 
@@ -29,7 +29,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R16 | 2 | [R16-office-epicor-solidworks.md](R16-office-epicor-solidworks.md) | Office (Excel, Word, VBA), Epicor Kinetic and SOLIDWORKS | excel, vba, word-documents, epicor-kinetic, solidworks-api, legacy-languages (VBA, VBScript) |
 | R17 | 3 | [R17-legacy-modernization.md](R17-legacy-modernization.md) | Legacy languages and modernization | legacy-languages, legacy-modernization |
 | R18 | 3 | [R18-accessibility-i18n-privacy-licensing.md](R18-accessibility-i18n-privacy-licensing.md) | Accessibility, internationalization, privacy and licensing compliance | accessibility, internationalization, privacy-and-compliance, documentation (licences and notices) |
-| R19 | 3 | [R19-architecture-api-planning-optimization.md](R19-architecture-api-planning-optimization.md) | Architecture, API design, planning, optimization and scheduling | architecture-and-design, api-design, optimization-and-scheduling |
+| R19 | 3 | [R19-architecture-api-planning-optimization.md](R19-architecture-api-planning-optimization.md) | Architecture, API design and planning (optimization and scheduling moved to R28) | architecture-and-design, api-design |
 | R20 | 3 | [R20-design-dataviz-documents.md](R20-design-dataviz-documents.md) | Visual design, data visualization, documents and output formats | visual-theme, data-visualization, documentation (output), word-documents (styling) |
 | R21 | 1 | [R21-fewest-dependencies-newest-versions.md](R21-fewest-dependencies-newest-versions.md) | Fewest dependencies and newest versions: what a dependency costs, when to add or remove one, which runtime versions to target and test, and CI that checks less | project-bootstrap-and-audit (dimensions 2, 6 and 8), keeping-current, supply-chain-security, ci-cd, and the dependency advice in every language skill |
 | R23 | 2 | [R23-human-factors.md](R23-human-factors.md) | Human factors: the habits, notions and mindsets common to people that look wasteful from outside and serve a purpose, how to tell one from a bias, designing and automating with them, and the limit that keeps agents gathering facts unbiased | human-factors, optimization-and-scheduling, and every skill that designs, automates or optimizes work people do |
@@ -38,6 +38,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R25 | 3 | [R25-go-rust-cpp.md](R25-go-rust-cpp.md) | Go, Rust and C++, split from R12 | go, rust, cpp, and legacy-languages (C++98) |
 | R26 | 2 | [R26-review-loops.md](R26-review-loops.md) | Agents reviewing each other's work: published practice on multi-agent review, AI code review, human review that carries over, contracts between codebases, turn-taking and stopping | review-loops |
 | R27 | 2 | [R27-user-experience.md](R27-user-experience.md) | User experience: heuristic review, windows and dialogs, settings and options, status and feedback, testing a GUI by machine and with people | user-experience (usability-review, windows-and-dialogs, settings-and-options, gui-testing), accessibility (basics) |
+| R28 | 2 | [R28-optimization-and-scheduling.md](R28-optimization-and-scheduling.md) | Optimization and scheduling with the people in the plan: solvers, scheduling models, fatigue and shift design, lead-time quoting, and checking a plan without trusting the solver | optimization-and-scheduling, human-factors |
 
 Already covered in the building session, so there's no run for them: the skill-authoring
 rules; licensing and ownership; the licences of reference sources; this repository's own
