@@ -85,7 +85,7 @@ Grouped by subject; the Skill column is each module's one home.
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
 | `keeping-current` | `project-bootstrap-and-audit` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
-| `skill-builder` | `agent-engineering` | Design, write, test and tune a skill | planned | core | done |
+| `skill-builder` | `agent-engineering` | Design, write, test and tune a skill | shipped | core | done |
 | `agent-context-files` | `agent-engineering` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | shipped | core | R01 |
 | `review-loops` | `agent-engineering` | Agent sessions in two repositories reviewing each other's work: the few rules that end rounds, the ones that cost more than they caught, and where agents have to stop for a person | shipped | core | R26 |
 

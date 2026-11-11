@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — `agent-engineering`'s `skill-builder`
+
+- **Asked, by the owner:** "finish what you can ... to a fully complete stage" (2026-11-11).
+  Planned since the skill-authoring research of 2026-09-23, marked "done" on the roadmap.
+- **Built:** by one helper agent, reviewed here, from the Agent Skills specification,
+  Anthropic's skill documentation, Claude Code's plugin-evals page, and this repository's own
+  process (`docs/authoring-a-skill.md`, `skillcheck`), every fact fetched on 2026-11-11.
+- **Found:** Anthropic's skills README now says its document skills are Apache-2.0 too.
+  AGENTS.md's rule against taking anything from them stands; whether its reason still holds
+  is the owner's question.
+- **Sources:** agentskills.io, Anthropic's documentation (restricted: facts in our own words),
+  and Anthropic's skill-creator (Apache-2.0, a reference only: nothing copied).
+
 ## 2026-11-11 — `agent-engineering`'s `agent-context-files` and `ai-agent-security`
 
 - **Asked, by the owner:** "finish what you can ... and anything else in the repo but partially

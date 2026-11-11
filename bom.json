@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:d0eaac3a-fe22-5a68-8b14-aea0e54130b5",
+  "serialNumber": "urn:uuid:9f19f8e8-1194-5a6b-9b2c-c93b0b71c46f",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 108 file(s)"
+          "value": "Markdown: 109 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 42 file(s)"
+          "value": "JSON: 43 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -489,7 +489,7 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "code.claude.com: 23 fact(s)"
+              "value": "code.claude.com: 27 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -497,11 +497,19 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "agentskills.io: 5 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "docs.github.com: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "raw.githubusercontent.com: 2 fact(s)"
+              "value": "platform.claude.com: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -558,6 +566,10 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "simonwillison.net: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "support.claude.com: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",

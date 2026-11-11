@@ -1,6 +1,6 @@
 ---
 name: agent-engineering
-description: "Runs and audits AI agent sessions that review each other's work: rounds between two repositories, turns, closing on evidence, contracts, AI code reviewers' findings, and where agents stop for a person. Use when agents review agents."
+description: "Builds, secures and runs AI agents: AGENTS.md and CLAUDE.md, settings and hooks, Agent Skills, prompt injection and permissions, and agent sessions reviewing each other's work. Use when setting up, securing or reviewing agents."
 license: Apache-2.0
 metadata:
   reviewed: "2026-11-11"
@@ -9,12 +9,12 @@ metadata:
 # Agent engineering
 
 How to build and run AI agents that work with each other and with people: the context files
-that steer a session, defending a session against text that tries to steer it, and agent
-sessions reviewing each other's work, within one repository or across two that depend on each
-other. Building and tuning skills is a planned module, `skill-builder`.
-Driving one repository's own pull requests to green is `git-workflows`' `pr-stewardship`; the
-standard's *Cross-repository contracts* section sets what an audit checks between repositories,
-and this skill says how the sessions meet it.
+that steer a session, the skills it loads, defending it against text that tries to steer it,
+and agent sessions reviewing each other's work, within one repository or across two that
+depend on each other. Driving one repository's own pull requests to green is `git-workflows`'
+`pr-stewardship`. The standard rules on agent context files' budgets and placement, and its
+*Cross-repository contracts* section sets what an audit checks between repositories; this
+skill cites both and says how the work meets them.
 
 ## What applies to every module
 
@@ -37,6 +37,7 @@ mistakes, audit checks, reasons, dated facts and sources.
 | [`review-loops`](references/review-loops.md) | Agent sessions reviewing each other's work: rounds and turns between two repositories, messages, closing a round on evidence, shared contracts, AI reviewers' findings, and stopping for a person |
 | [`agent-context-files`](references/agent-context-files.md) | Writing and keeping AGENTS.md, CLAUDE.md and rule files: what earns a line, hooks and deny rules for what must always or never happen, path-scoped rules, settings, subagents' tools, project MCP servers, other tools' files, and parallel helpers |
 | [`ai-agent-security`](references/ai-agent-security.md) | Prompt injection and what limits its reach, the lethal trifecta, permissions, sandboxes and network allow-lists, secrets kept out of context, MCP servers and skills as code you run, and hidden Unicode |
+| [`skill-builder`](references/skill-builder.md) | Designing, writing, testing and tuning an Agent Skill: frontmatter and descriptions, a router with modules, sourced facts, runnable examples, trigger tests with near misses, measuring with and without the skill, and distribution |
 
 ## When something here is wrong
 

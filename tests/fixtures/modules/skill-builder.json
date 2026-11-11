@@ -1,0 +1,30 @@
+[
+  {
+    "query": "I want to turn our deployment runbook into a Claude skill my teammates can install. Where do I start, and what goes in the SKILL.md?",
+    "should_trigger": true
+  },
+  {
+    "query": "my skill only ever runs when I type its slash command, Claude never picks it up by itself. what's wrong with it?",
+    "should_trigger": true
+  },
+  {
+    "query": "claude.ai rejects my upload with \"Unexpected key(s) in SKILL.md frontmatter: argument-hint\". How do I fix the file so it works there and in Claude Code?",
+    "should_trigger": true
+  },
+  {
+    "query": "How can I show that the plugin I wrote actually makes Claude's answers better than without it, and not just that it passes?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our SKILL.md has grown to 900 lines and Claude keeps missing the part about migrations. How should I split it up?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should this repo's test and lint commands go in CLAUDE.md or a .claude/rules file scoped to src/?",
+    "should_trigger": false
+  },
+  {
+    "query": "I found a skill on a public marketplace I'd like to install. How do I check it won't send my code anywhere before I turn it on?",
+    "should_trigger": false
+  }
+]
