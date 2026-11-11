@@ -67,7 +67,7 @@ Then these sections, in this order:
 
 ## What we believe (confirm or correct each)
 
-- Go releases every February and August; Go 1.26 was released in February 2026; Go 1.27 was released or is due in August 2026; the two most recent releases are supported.
+- Go releases every February and August; Go 1.26 was released in February 2026; Go 1.27.0 was released on 19 August 2026 and go1.27.4 on 10 November 2026; the two most recent releases are supported.
 - Go 1.23 added range-over-func iterators; 1.24 added testing.B.Loop, `tool` directives in go.mod and Swiss-table maps; 1.25 added testing/synctest, WaitGroup.Go, container-aware GOMAXPROCS and an experimental encoding/json/v2.
 - Go's official module layout guide does not endorse a `pkg/` directory.
 - (the standard, 2026-11) Rust 1.99.1 is current (2026-10-15), on edition 2024, and Cargo.lock is committed for libraries too, which reversed the advice in 2023.
