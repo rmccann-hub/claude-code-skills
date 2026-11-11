@@ -33,7 +33,9 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
     checker re-checks every plan; what a run stopped at a limit reports; the solver by problem
     class; rules as data; CP-SAT in snake_case with workers and a time limit set; people in the
     plan (HSG256, learning, utilization); lead time from measured throughput, with backlog over
-    nameplate capacity a floor.
+    nameplate capacity a floor. A team that divides by capacity on purpose is not faulted: the
+    audit asks for the decision's reason (the owner, 2026-11-11, on their own lead-time board:
+    "i think we intentionally do it our way").
   - `coding`'s `error-handling`: narrow catches, "not found" against "couldn't look", exit codes
     with one meaning, a child's whole result, causes, retries, timeouts, circuit breakers,
     RFC 9457 and messages for people. Lessons L16, L17, L18 and L43 taken in.

@@ -33,7 +33,8 @@ python-coding module.
 7. **Quote lead time from measured throughput.** Backlog over nameplate capacity is a floor,
    not a forecast. Convert orders to bottleneck hours with a per-product rate table, divide by
    the hours delivered over a recent window (fact `os-little`), add a variability allowance,
-   and count on a working-day calendar held as data. Report floor and allowance apart.
+   and count on a working-day calendar held as data. Report floor and allowance apart. A team
+   may divide by capacity on purpose; then the decision record says why.
 
 ### Choosing a solver
 
@@ -79,7 +80,7 @@ Severity uses the standard's status words.
 | PuLP 4 expecting CBC | `PULP_CBC_CMD`; `pulp>=4` with no solver dependency | `BLOCKER` | `pulp[cbc]` and `COIN_CMD`, or HiGHS |
 | Exact-assignment tests | Golden schedules compared field by field | `GAP` | Pin version, seed, workers; assert bounds |
 | Rules or durations in code | Shift limits, rest gaps, calendars, task times as literals | `GAP` | Tables, each row sourced |
-| Lead time from nameplate | Backlog divided by rated capacity | `BLOCKER` where customers get the date | Measured throughput plus an allowance |
+| Lead time from nameplate, no reason recorded | Backlog over rated capacity, and no decision saying why | `GAP` | Ask; then throughput plus an allowance, or record why |
 | A solver near end of support | Timefold 1.x; a Gurobi major over three years old | `DRIFT` | Plan the move (facts `os-timefold-editions`, `os-gurobi`) |
 
 ## Why
@@ -135,13 +136,15 @@ Severity uses the standard's status words.
 
 - **The advice:** W = L / λ, with λ the throughput realized, in the backlog's units.
 - **The reason:** Little's law needs no stationarity (fact `os-little`). Nameplate capacity
-  exceeds realized throughput whenever there is downtime, absence, scrap or a slow mix, so a
-  manufacturer's lead-time board dividing open orders by daily capacity understates every date.
+  exceeds realized throughput whenever there is downtime, absence, scrap or a slow mix, so
+  open orders over rated daily capacity understate every date.
 - **What others do:** CONWIP (Spearman, Woodruff and Hopp, 1990) caps work in process, and so
   lead time.
 - **What it costs:** a throughput history. For a new product, quote the floor plus a stated
   allowance.
-- **When to choose differently:** an item shipped from stock needs no queue model.
+- **When to choose differently:** an item shipped from stock needs no queue model. Where
+  planners keep the capacity figure themselves and adjust it to what the shop delivers, the
+  divisor is already a realized rate: keep it, and record that.
 
 ## Facts
 
