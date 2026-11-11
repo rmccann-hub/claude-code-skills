@@ -57,9 +57,18 @@ To check another repository's prose against the house style, follow the house-st
 | Skill | Plugin | What it does |
 |---|---|---|
 | `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.49.0) |
+| `agent-engineering` | `engineering` | AI agent sessions reviewing each other's work: closing rounds on evidence, holding the turn, one builder per request, contracts both sides check, AI reviewers' findings, and where agents stop for a person, with the reasons and the research behind each |
 | `coding` | `engineering` | The contract every code change meets, then Python, TypeScript and JavaScript, HTML and CSS, C# and .NET, PowerShell, and Bash: rules, common mistakes, review checks and the reasons for each, with dated facts |
 | `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
 | `house-style` | `engineering` | One style for prose and Markdown in every repository, with the reasons for each rule, and the Vale style and CI job that check it |
+| `testing` | `engineering` | Tests and checks a pass can be trusted from: proving a test, gate or grader can fail, checking results against an independent reference, scoring by the worst case, and flaky tests, with the reasons for each |
+| `user-experience` | `engineering` | How a desktop or web program behaves for its user: heuristic reviews with severity ratings, status that stays current, windows and dialogs that appear when they should, settings with good defaults and one place each, and GUI tests by machine and with people |
+| `architecture` | `engineering` | Where each file and folder goes: layouts by ecosystem, tests' places, feature or layer folders, naming, one repository or several, and moving files without losing history |
+| `coding` | `engineering` | The contract every code change meets, then Python, TypeScript and JavaScript, HTML and CSS, C# and .NET, PowerShell, and Bash: rules, common mistakes, review checks and the reasons for each, with dated facts |
+| `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
+| `house-style` | `engineering` | One style for prose and Markdown in every repository, with the reasons for each rule, and the Vale style and CI job that check it |
+| `security` | `engineering` | Threat modeling, authentication, sessions and passwords, authorization, cryptography and randomness, security logging, and security review, against OWASP Top 10:2025, ASVS 5.0.0 and the CWE Top 25 |
+| `operations` | `engineering` | Running, troubleshooting and hardening Windows Server and Active Directory, Linux hosts, Docker images and Compose, and office or home networks, with every change rehearsed or reversible |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill

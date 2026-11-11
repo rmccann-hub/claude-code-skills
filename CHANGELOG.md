@@ -8,17 +8,31 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- `operations`, a new skill: `windows-admin`, `linux`, `docker-containers` and
+  `networking-security`.
 - `git-workflows` gains `ci-cd` (environments, OIDC, promotion, rollback) and
   `versioning-and-releases` (release notes, support windows, advisories).
 - `coding` gains five modules: `code-style`, `types`, `input-handling`, `configuration` and
   `config-formats`.
 - `house-style`'s `documentation`: the four kinds of page, reference generated from code, docs
   checked in CI, diagrams as text, docs sites, and splitting long documents.
+- `testing`, a new skill: `test-gates` proves a test, gate, checker or grader can fail;
+  `test-oracles` covers what a result is checked against and scoring by the worst case;
+  `flaky-tests` covers tests that pass and fail on the same code. `ci-workflows`' gate cases
+  moved to `test-gates`.
+- `agent-engineering`, a new skill: `review-loops` (agent sessions reviewing each other's work,
+  closing rounds on evidence, holding the turn by a compare-and-set), `agent-context-files`,
+  `ai-agent-security` and `skill-builder`.
+- `user-experience`, a new skill: `usability-review`, `windows-and-dialogs`,
+  `settings-and-options` and `gui-testing`.
+- `security`, a new skill, with `secure-coding`; and `architecture`, a new skill, with
+  `repo-structure`.
 
 ### Changed
 
 - `house-style`'s Vale rule for sentence-case headings accepts AI, GUI, HTML, KDE, MCP,
-  OIDC, TODO, URL and XML, as it accepts JSON, SQL and YAML.
+  OIDC, TODO, URL and XML, as it accepts JSON, SQL and YAML, and system names such as
+  SELinux, systemd, WireGuard, Group Policy and AD CS.
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
   bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
   install and reads what a failed publish made before retrying.

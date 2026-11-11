@@ -1,0 +1,36 @@
+[
+  {
+    "query": "Starting a new Python library. Should the package go under src/ or sit at the top of the repo?",
+    "should_trigger": true
+  },
+  {
+    "query": "We have three TypeScript packages in three repos and every change needs a PR in all of them. Should we combine them, and how should the combined repo be laid out?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our app has components/, hooks/, services/ and types/ folders, and every feature touches all four. Is there a better way to organize it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Where do the tests go in a Go project, and do I need a pkg/ folder?",
+    "should_trigger": true
+  },
+  {
+    "query": "I need to move a bunch of files into new folders without losing git blame. What's the safe way?",
+    "should_trigger": true
+  },
+  {
+    "query": "How should I name the projects, folders and files in a new .NET solution?",
+    "should_trigger": true
+  },
+  {
+    "query": "Add a .gitignore for this Node project.",
+    "should_trigger": false,
+    "note": "git-workflows' gitignore"
+  },
+  {
+    "query": "Audit this repository's configuration against the standard and tell me what's missing.",
+    "should_trigger": false,
+    "note": "project-bootstrap-and-audit"
+  }
+]

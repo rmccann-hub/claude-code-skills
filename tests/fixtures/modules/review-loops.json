@@ -1,0 +1,36 @@
+[
+  {
+    "query": "Our two repos each have a Claude session reviewing the other's changes, and every round drags on for 30 messages. How do we make rounds end?",
+    "should_trigger": true
+  },
+  {
+    "query": "Both agent sessions wrote the same reply at the same time and pushed it. How do we stop them talking over each other?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a protocol so the app's agent and the library's agent check each other's releases before either ships.",
+    "should_trigger": true
+  },
+  {
+    "query": "My builder agent and my reviewer agent keep agreeing with each other and the bugs still get through. What should the reviewer demand before it signs off?",
+    "should_trigger": true
+  },
+  {
+    "query": "Copilot's review left twelve comments on my agent's pull request and it re-raised two we already resolved. How should the agent work through them, and can Copilot's approval count?",
+    "should_trigger": true
+  },
+  {
+    "query": "When should my two coding agents stop going back and forth and ask me instead?",
+    "should_trigger": true
+  },
+  {
+    "query": "Review this pull request for bugs.",
+    "should_trigger": false,
+    "note": "reviewing code itself: the coding skill"
+  },
+  {
+    "query": "Write the CLAUDE.md for this repository.",
+    "should_trigger": false,
+    "note": "agent-context-files"
+  }
+]

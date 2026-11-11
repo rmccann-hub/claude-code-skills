@@ -2,6 +2,27 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — `operations`, with four modules, replacing three old skills
+
+- **Asked, by the owner:** "finish what you can ... to a fully complete stage" (2026-11-11).
+  Planned for wave 4 of the rebuild, with R11 and R15 run on 2026-10-26.
+- **Built:** `windows-admin`, `linux`, `docker-containers` and `networking-security`, one
+  helper agent each, reviewed here, every fact fetched on 2026-11-11. Corrections to the
+  research: Windows Update for Business is now Windows Update client policies; Server 2022's
+  mainstream support ended 2026-10-14; Debian 12's regular security support ends 2026-07-11,
+  not 06-10; Suricata is at 8.0.8 and Zeek's LTS at 9.0.1. `log-analysis` waits for R07;
+  `kubernetes`, `cloud` and `infrastructure-as-code` stay on request.
+- **Old copies, before this merges:** the owner's claude.ai skills `windows-admin`,
+  `docker-containers` and `networking-security` share these modules' names. The owner deletes
+  them, in their own settings and in the organization library's inventory, by
+  `docs/authoring-a-skill.md` step 12. Among the synced skills, `networking-security` names
+  the other two and `windows-admin` names `networking-security`; all three go together, so
+  none is left naming a deleted one.
+- **Sources:** Microsoft Learn, distribution and systemd documentation, OpenSSH, Docker's and
+  Podman's documentation, nftables, WireGuard, the Wi-Fi Alliance, CISA, NIST and the
+  Suricata and Zeek projects. Facts in our own words, with short quotes. Nothing adapted.
+- **Merged by the owner,** because `.claude/settings.json` turns off the new skill's installed
+  copy here.
 ## 2026-11-11 — `git-workflows`' `ci-cd` and `versioning-and-releases`
 
 - **Asked, by the owner:** "finish what you can ... and anything else in the repo but partially
@@ -44,6 +65,118 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 - **Sources:** Diátaxis, GitHub Docs (CC BY 4.0), Mermaid, MkDocs, Material, Zensical, Sphinx,
   Docusaurus, the Python and Rust documentation, and Django's contributing guide. Facts in our
   own words, with short quotes. Nothing adapted.
+## 2026-11-11 — `testing`, its first three modules
+
+- **Asked, by the owner:** "lets make the testing-patterns and review-loops skills next"
+  (2026-11-10), then "finish what you can" (2026-11-11).
+- **Built:** the skill `testing`, with `test-gates` (proving a test, gate, checker or grader
+  can fail), `test-oracles` (what a result is checked against, scoring by the worst case) and
+  `flaky-tests`. Each module was written by one helper agent from R06's checked claims
+  (`research/runs/2026-11-10-R06-testing.md`) and the roadmap's lessons, and reviewed here:
+  the Audit tables' status words were corrected to the standard's.
+- **Lessons taken in:** L1, L5 to L10, L31 and L56 (`test-gates`); L2, L12, L14, L15, L41,
+  L42, L47 and L50 (`test-oracles`); L13 and L32 (`flaky-tests`). They stay listed, marked
+  with the module that took them, so their numbers resolve. L11 waits for R06b.
+- **Moved:** `ci-workflows`' *Prove a gate works* cases to `test-gates`, which drops
+  `ci-workflows` from 15,387 to about 14,350 characters, under the 15,000 target.
+- **Sources:** Google's mutation-testing papers (arXiv's licence, and the authors'
+  copyright), Google's, Microsoft's and GitHub's published flaky-test practice, and Claude
+  Code's plugin-evals documentation (Anthropic's, restricted). Facts in our own words, with
+  short quotes. Nothing adapted under another licence.
+- **Not yet:** `testing-patterns` (strategy, doubles, fixtures, coverage, property-based and
+  mutation tools, each language's frameworks, hardware acceptance runs and fault injection)
+  waits for R06b. The old claude.ai skill `testing-patterns` stays until it ships, since it
+  still covers those; two synced skills, `go-coding` and `ruby-coding`, name it.
+## 2026-11-11 — `agent-engineering`'s `skill-builder`
+
+- **Asked, by the owner:** "finish what you can ... to a fully complete stage" (2026-11-11).
+  Planned since the skill-authoring research of 2026-09-23, marked "done" on the roadmap.
+- **Built:** by one helper agent, reviewed here, from the Agent Skills specification,
+  Anthropic's skill documentation, Claude Code's plugin-evals page, and this repository's own
+  process (`docs/authoring-a-skill.md`, `skillcheck`), every fact fetched on 2026-11-11.
+- **Found:** Anthropic's skills README now says its document skills are Apache-2.0 too.
+  AGENTS.md's rule against taking anything from them stands; whether its reason still holds
+  is the owner's question.
+- **Sources:** agentskills.io, Anthropic's documentation (restricted: facts in our own words),
+  and Anthropic's skill-creator (Apache-2.0, a reference only: nothing copied).
+
+## 2026-11-11 — `agent-engineering`'s `agent-context-files` and `ai-agent-security`
+
+- **Asked, by the owner:** "finish what you can ... and anything else in the repo but partially
+  complete, to a fully complete stage" (2026-11-11). Both were planned, with R01 run on
+  2026-09-23, and never built.
+- **Built:** one helper agent per module, reviewed here. Claude Code and MCP change fast and
+  R01 is seven weeks old, so every fact was fetched again on 2026-11-11, with check-by dates
+  three months out for Claude Code's.
+- **Lessons taken in:** L39 and L57 (`agent-context-files`), L53 (`ai-agent-security`). L53
+  recurred while the module was written: a tool turned an escape for U+202E into the
+  character itself, twice, and `skillcheck` would have failed it.
+- **Found for a follow-up:** `skillcheck`'s hidden-character scan leaves out variation
+  selectors, which OWASP's 2026 list names as a way to hide instructions.
+- **Sources:** Claude Code's documentation (Anthropic's, restricted: facts in our own words),
+  OWASP (CC BY-SA 4.0: brief quotes), Simon Willison and Meta on the trifecta and the rule of
+  two, the MCP specification, GitHub's, Cursor's and Gemini's documentation, and the Trojan
+  Source paper. Nothing adapted.
+
+## 2026-11-11 — `agent-engineering`, with `review-loops`
+
+- **Asked, by the owner:** "start on the skeleton of the review-loop too, this is important"
+  (2026-10-21), "lets make the testing-patterns and review-loops skills next" (2026-11-10),
+  and "finish what you can" (2026-11-11).
+- **Built:** the skill `agent-engineering`, with its first module, `review-loops`, from draft
+  #73's skeleton, eleven of the roadmap's lessons (L26, L28, L30, L35 to L38, L45, L46, L54,
+  L55) and R26's checked claims (`research/runs/2026-11-10-R26-review-loops.md`). One helper
+  agent finished the module; it was reviewed here.
+- **R26 changed the draft:** a round closes on evidence, not agreement, since voting explains
+  most of debate's gains and agents talk each other out of right answers; turn and stop rules
+  stay, since MAST counts inter-agent misalignment and unawareness of termination among the
+  failures; and the turn is held by a compare-and-set, a push that lands only if the branch
+  hasn't moved, with the turn number as a fencing token. That revises proposal D, still the
+  owner's to answer for the standard: a convention alone orders crossings but prevents none.
+- **Sources:** arXiv papers under CC BY 4.0 and CC BY-NC-ND 4.0 (quoted, never adapted),
+  Anthropic's and GitHub's documentation, Google's review guide, Kleppmann, Git's manual, Pact
+  and oasdiff. Facts in our own words, with short quotes. Nothing adapted.
+- **Draft #73:** its `review-loops` part is superseded by this; its `supply-chain-security`
+  draft stays open there until R24 is run.
+## 2026-11-11 — `user-experience`, with four modules
+
+- **Asked, by the owner:** "what about a gui review and a gui end user use and a gui ease of
+  use type skill ... make sure things like windows dont start before they should or hide
+  things, or give you options in many places, or behind 20 options choices" (2026-11-10), then
+  "finish what you can" (2026-11-11). Planned in the decision of 2026-11-10 below.
+- **Built:** `usability-review`, `windows-and-dialogs`, `settings-and-options` and
+  `gui-testing`, one helper agent each, from R27's checked claims
+  (`research/runs/2026-11-10-R27-user-experience.md`) and the evidence from an audited desktop
+  application named in that decision. Reviewed here; two Audit tables' status words were
+  corrected to the standard's.
+- **What R27 changed:** choice overload is conditional, so the modules never cut a useful
+  option to shorten a list, which suits the owner's power-user programs; Apple no longer
+  forbids a modal on a modal; undo beats a confirmation; the platforms, not the toolkits, set
+  the guidelines; GTK 4 is driven through AT-SPI.
+- **This repository's own practice, said so where used,** since no primary source states them:
+  one place per setting, nothing shown before it's ready, and no verdict word over a failure.
+- **Sources:** NN/g and Apple (all rights reserved), KDE (CC BY-SA 4.0), GNOME (licence not
+  stated on its pages), Microsoft Learn, Qt (GFDL), GTK (LGPL), the choice-overload papers, and
+  each test tool's registry. Facts in our own words, with short quotes. Nothing adapted.
+- **Merged by the owner,** because `.claude/settings.json` turns off the new skill's installed
+  copy here.
+## 2026-11-11 — `security` and `architecture`, each with its first module
+
+- **Asked, by the owner:** "finish what you can, then give me followup research reports to do
+  to finish them, and anything else in the repo but partially complete, to a fully complete
+  stage" (2026-11-11). Both skills were planned, with research run on 2026-09-23 (R04, R02).
+- **Built:** `security` with `secure-coding`, and `architecture` with `repo-structure`, one
+  helper agent per module, reviewed here. The research is seven weeks old, so every fact was
+  fetched again on 2026-11-11; the editions cited are OWASP Top 10:2025, ASVS 5.0.0 and the
+  2025 CWE Top 25.
+- **Not yet:** `security`'s `supply-chain-security` waits for R24, and its draft stays on #73;
+  `privacy-and-compliance` for R18. `architecture`'s `api-patterns` and
+  `architecture-and-design` wait for R19, and `legacy-modernization` for R17.
+- **Sources:** OWASP (Top 10 pages CC BY 3.0; cheat sheets and ASVS CC BY-SA 4.0: brief
+  quotes, our own words otherwise), MITRE's CWE, NIST SP 800-63B-4, the Python, Go, Node,
+  .NET, Rust and Git documentation, and Google's engineering book. Nothing adapted.
+- **Merged by the owner,** because `.claude/settings.json` turns off the new skills' installed
+  copies here.
 
 ## 2026-11-10 — `user-experience` planned, and research for it and `review-loops`
 

@@ -63,15 +63,15 @@ research. These rules are that structure.
 | `git-workflows` | `engineering` | Commits, branches, pull requests, CI, hooks, tags, changelogs and releases | shipped |
 | `house-style` | `engineering` | Writing prose, Markdown, READMEs and documentation | shipped |
 | `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | shipped |
-| `testing` | `engineering` | Writing, reviewing or fixing tests, and choosing a test strategy | planned |
-| `architecture` | `engineering` | Designing systems, APIs, layouts and plans, and modernizing old code | planned |
+| `testing` | `engineering` | Writing, reviewing or fixing tests, and choosing a test strategy | shipped |
+| `architecture` | `engineering` | Designing systems, APIs, layouts and plans, and modernizing old code | shipped |
 | `data` | `engineering` | SQL, schemas, migrations, indexes and transactions | planned |
-| `security` | `engineering` | Threat models, authentication, cryptography, dependencies and the supply chain, privacy and licenses | planned |
-| `agent-engineering` | `engineering` | Building skills and agent context files, agents reviewing each other, and defending agents against injection | planned |
-| `operations` | `engineering` | Running, troubleshooting or hardening Windows Server, Linux, containers, networks and cloud, and reading their logs and crash dumps | planned |
+| `security` | `engineering` | Threat models, authentication, cryptography, dependencies and the supply chain, privacy and licenses | shipped |
+| `agent-engineering` | `engineering` | Building skills and agent context files, agents reviewing each other, and defending agents against injection | shipped |
+| `operations` | `engineering` | Running, troubleshooting or hardening Windows Server, Linux, containers, networks and cloud, and reading their logs and crash dumps | shipped |
 | `business-apps` | `engineering` | Automating or extending Excel, Word, Epicor Kinetic and SOLIDWORKS | planned |
 | `visual-design` | `engineering` | Themes, palettes, charts and accessibility | planned |
-| `user-experience` | `engineering` | Reviewing, designing or testing how a program behaves for the person using it: status and feedback, windows and dialogs, settings and options, and whether it's easy to learn and to use | planned |
+| `user-experience` | `engineering` | Reviewing, designing or testing how a program behaves for the person using it: status and feedback, windows and dialogs, settings and options, and whether it's easy to learn and to use | shipped |
 | `optimization-and-scheduling` | `engineering` | Solvers, schedules and plans, with the people in them | planned |
 | `human-factors` | `engineering` | Designing or changing what people do: the habits that look wasteful and serve a purpose. It never bends a factual finding | planned |
 | `linux-gaming` | `personal` | Proton, Steam and handheld PCs | planned |
@@ -85,26 +85,29 @@ Grouped by subject; the Skill column is each module's one home.
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
 | `keeping-current` | `project-bootstrap-and-audit` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
-| `skill-builder` | `agent-engineering` | Design, write, test and tune a skill | planned | core | done |
-| `agent-context-files` | `agent-engineering` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
-| `review-loops` | `agent-engineering` | Agent sessions in two repositories reviewing each other's work: the few rules that end rounds, the ones that cost more than they caught, and where agents have to stop for a person | planned | core | R26 |
+| `skill-builder` | `agent-engineering` | Design, write, test and tune a skill | shipped | core | done |
+| `agent-context-files` | `agent-engineering` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | shipped | core | R01 |
+| `review-loops` | `agent-engineering` | Agent sessions in two repositories reviewing each other's work: the few rules that end rounds, the ones that cost more than they caught, and where agents have to stop for a person | shipped | core | R26 |
 
 ### B. Engineering practice, for every language
 
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
-| `repo-structure` | `architecture` | Layouts by project type, where each file goes, naming files and folders | planned | core | R02 |
+| `repo-structure` | `architecture` | Layouts by project type, where each file goes, naming files and folders | shipped | core | R02 |
 | `writing-style` | `house-style` | Prose and Markdown: voice, headings, lists, wrapping, code, tables, links, file names, a README's sections, words to cut, American spelling | shipped | core | R02 |
 | `prose-check` | `house-style` | The Vale check: the HouseStyle package, `.vale.ini`, the CI job with its canary, a repository's vocabulary, files left alone | shipped | core | R02 |
 | `documentation` | `house-style` | Docs sites, diagrams, file size and splitting, beyond the README sections, records and prose that `writing-style` covers | shipped | core | R02 |
 | `code-style` | `coding` | Naming, formatting, structure, comments and docstrings | shipped | core | R03 |
 | `types` | `coding` | Static and gradual typing, strictness, type checkers, types at trust boundaries | shipped | core | R03 |
 | `input-handling` | `coding` | Validation, sanitization and output encoding by context | shipped | core | R04 |
-| `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | planned | core | R04 |
+| `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | shipped | core | R04 |
 | `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
-| `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
+| `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | shipped | core | R01 |
 | `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
-| `testing-patterns` | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06, R06b |
+| `testing-patterns` | `testing` | Strategy, test doubles, fixtures, coverage, property-based and mutation testing, each language's frameworks, hardware acceptance runs, fault injection | planned | core | R06, R06b |
+| `test-gates` | `testing` | Proving a test, gate, checker or grader can fail: the parent commit, a planted defect, the couldn't-check path, mutating the checker | shipped | core | R06 |
+| `test-oracles` | `testing` | What a result is checked against: independent references, recorded samples, baselines, scoring by the worst case | shipped | core | R06 |
+| `flaky-tests` | `testing` | A test that passes and fails on the same code: the cause, races in the program, quarantine, keeping a fix | shipped | core | R06 |
 | `api-patterns` | `architecture` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
 | `sql-craftsman` | `data` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
 | `commits-and-pull-requests` | `git-workflows` | Commit grammar and messages, trailers, the author's address, branch names, pull requests and review comments | shipped | core | R08 |
@@ -127,10 +130,10 @@ Grouped by subject; the Skill column is each module's one home.
 | `configuration` | `coding` | Layered config, environment variables, validation at startup, secret stores | shipped | standard | R04 |
 | `architecture-and-design` | `architecture` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
 | `human-factors` | `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | planned | standard | R23 |
-| `usability-review` | `user-experience` | A heuristic review of a program's interface: status that's current, consistency, error prevention and recovery, recognition over recall, severity ratings | planned | standard | R27 |
-| `windows-and-dialogs` | `user-experience` | When a window or dialog appears, modality, focus and stacking, nothing shown before it's ready or hidden behind another, long operations and notifications | planned | standard | R27 |
-| `settings-and-options` | `user-experience` | Defaults, presets, progressive disclosure, each setting in one place, and how many choices is too many | planned | standard | R27 |
-| `gui-testing` | `user-experience` | Testing a GUI by machine, through accessibility interfaces and toolkit helpers, and with people, by task-based tests | planned | standard | R27 |
+| `usability-review` | `user-experience` | A heuristic review of a program's interface: status that's current, consistency, error prevention and recovery, recognition over recall, severity ratings | shipped | standard | R27 |
+| `windows-and-dialogs` | `user-experience` | When a window or dialog appears, modality, focus and stacking, nothing shown before it's ready or hidden behind another, long operations and notifications | shipped | standard | R27 |
+| `settings-and-options` | `user-experience` | Defaults, presets, progressive disclosure, each setting in one place, and how many choices is too many | shipped | standard | R27 |
+| `gui-testing` | `user-experience` | Testing a GUI by machine, through accessibility interfaces and toolkit helpers, and with people, by task-based tests | shipped | standard | R27 |
 | `accessibility` | `visual-design` | WCAG 2.2, ARIA, contrast, testing tools | planned | standard | R18 |
 | `internationalization` | `coding` | Unicode, locales, time zones, formats, right-to-left text | planned | standard | R18 |
 | `privacy-and-compliance` | `security` | Personal data, retention, licenses and notices, obligations on software publishers | planned | standard | R18 |
@@ -174,14 +177,14 @@ Grouped by subject; the Skill column is each module's one home.
 
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
-| `windows-admin` | `operations` | AD, Group Policy, DNS/DHCP, certificates, file services, updates, hardening | planned | core | R11 |
+| `windows-admin` | `operations` | AD, Group Policy, DNS/DHCP, certificates, file services, updates, hardening | shipped | core | R11 |
 | `excel-master` | `business-apps` | Workbooks from code, formulas, Power Query, DAX, Office Scripts, add-ins | planned | core | R16 |
 | `word-documents` | `business-apps` | Generating and filling Word templates | planned | core | R16 |
 | `epicor-kinetic` | `business-apps` | BPM, BAQ, REST API v2, Functions, from public knowledge only | planned | core | R16 |
 | `solidworks-automation` | `business-apps` | VBA and C# macros, documents, drawings, sheet metal, exports | planned | core | R16 |
-| `linux` | `operations` | Administration and troubleshooting across distributions | planned | standard | R15 |
-| `networking-security` | `operations` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | planned | standard | R15 |
-| `docker-containers` | `operations` | Dockerfiles, Compose, hardening, registries | planned | standard | R15 |
+| `linux` | `operations` | Administration and troubleshooting across distributions | shipped | standard | R15 |
+| `networking-security` | `operations` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | shipped | standard | R15 |
+| `docker-containers` | `operations` | Dockerfiles, Compose, hardening, registries | shipped | standard | R15 |
 | `log-analysis` | `operations` | Event logs, crash dumps, journals, application logs | planned | standard | R07 |
 | `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | planned | standard | R19, R23 |
 | `linux-gaming` | `linux-gaming` | Proton, Steam, handhelds | planned | on request | R15 |
@@ -311,12 +314,12 @@ lessons in when it's built, and its reasons cite them. A lesson taken in stays h
 with the module that took it, so its number still resolves, until the next split of this file
 moves it to the archive.
 
-- **L1, `testing-patterns`:** check the fact, not a symptom the failure path shares. When one check is
+- **L1, `test-gates`, taken in:** check the fact, not a symptom the failure path shares. When one check is
   re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
   live repository's acceptance step passed an identification because rows had loaded. They were
   the placeholders its app loads when a lookup finds nothing. A sibling check, re-keyed onto the
   identifier after the same symptom fooled it once before, caught it two steps later.
-- **L2, `testing-patterns`:** a test that needs outside data, such as an entry in a public catalog,
+- **L2, `test-oracles`, taken in:** a test that needs outside data, such as an entry in a public catalog,
   names the fixture it expects, and says so when the fixture is the cause. The same rig made
   three acceptance runs in 40 minutes, on two inputs the catalog didn't know. Each one read as
   a failed step, not as the wrong input.
@@ -326,31 +329,31 @@ moves it to the archive.
 - **L4, `logging-and-observability`:** an evidence bundle lists what it left out, and the raw
   facts each verdict was computed from. That bundle did both, so "nothing was missing" could be
   told from "nothing was collected", and a wrong label could be checked against its inputs.
-- **L5, `testing-patterns`:** a regression test for a wiring bug goes through the production entry
+- **L5, `test-gates`, taken in:** a regression test for a wiring bug goes through the production entry
   point. Four releases claimed a fix whose test handed the fact straight to the renderer, while
   nothing in the app ever passed it on.
-- **L6, `testing-patterns`:** grep for a call site before believing a documented capability. Four
+- **L6, `test-gates`, taken in:** grep for a call site before believing a documented capability. Four
   cancel methods were documented and never called.
-- **L7, `testing-patterns`:** a test asserts the invariant, not today's state, and a rule about releases
+- **L7, `test-gates`, taken in:** a test asserts the invariant, not today's state, and a rule about releases
   runs on the release path. A unit test blocked every commit during a review round, and didn't
   block the releases it was for.
-- **L8, `testing-patterns`:** the command typed locally stands in for CI's, so it matches CI's import
+- **L8, `test-gates`, taken in:** the command typed locally stands in for CI's, so it matches CI's import
   path and compiler flags. `python -m pytest` adds the current directory to `sys.path` and the
   `pytest` script doesn't; a bare `gcc` passed code the project's flags reject.
-- **L9, `testing-patterns`:** a gate never picks its subject by sort or directory order. The "newest
+- **L9, `test-gates`, taken in:** a gate never picks its subject by sort or directory order. The "newest
   verification" was whichever file the directory listed last.
-- **L10, `testing-patterns`:** a scripted edit with several parts asserts each part landed. One assert
+- **L10, `test-gates`, taken in:** a scripted edit with several parts asserts each part landed. One assert
   covered one replacement while the others silently did nothing.
 - **L11, `testing-patterns`:** a stand-in for hardware can be a fault-injection shim. An `LD_PRELOAD`
   shim that fails reads found a hang no drive run had, and reproduced a damaged disc on demand.
-- **L12, `testing-patterns`:** a parser that offline tests never reach is tested against a recorded
+- **L12, `test-oracles`, taken in:** a parser that offline tests never reach is tested against a recorded
   response. Tests that all ran offline left a network parser at 27% branch coverage, hiding
   three crashes.
-- **L13, `testing-patterns`:** an intermittent failure can be a race in the program, not the test. One
+- **L13, `flaky-tests`, taken in:** an intermittent failure can be a race in the program, not the test. One
   was a signal arriving after the loop, fixed in the program. This adds to F87.
-- **L14, `testing-patterns`:** filed evidence is read as a set of claims. Two defects sat for weeks in
+- **L14, `test-oracles`, taken in:** filed evidence is read as a set of claims. Two defects sat for weeks in
   logs both sides had filed and nobody had read.
-- **L15, `testing-patterns`:** a check is independent of another by the time between them, not the
+- **L15, `test-oracles`, taken in:** a check is independent of another by the time between them, not the
   date. Two checks on consecutive dates were 26 minutes apart.
 - **L16, `error-handling`:** a broad `try` around a whole validator fails open. One field of
   the wrong type made the validator return no errors, and a path-traversal template was saved.
@@ -378,7 +381,7 @@ moves it to the archive.
   precedence. Order by a release sequence.
 - **L25, `house-style`:** a claim takes the strongest verb its evidence supports and no
   stronger, names the artifact, and says what an absence means.
-- **L26, `review-loops`:** what one loop of two repositories learned over 31 rounds and eight
+- **L26, `review-loops`, taken in:** what one loop of two repositories learned over 31 rounds and eight
   protocol versions, as a starting set:
   - **What worked:**
     - Close conditions fixed at the first lap.
@@ -415,12 +418,12 @@ moves it to the archive.
   at a prompt after reading "open Konsole". Say what the screen looks like instead, such as
   "you're in the terminal when you see a `$`". Each command goes in its own block, with what
   its output should look like.
-- **L28, `review-loops`:** a change both sides must make is agreed word for word, and then each
+- **L28, `review-loops`, taken in:** a change both sides must make is agreed word for word, and then each
   side runs its checker against the other's tree from a fresh clone. After a history rewrite,
   a stale local branch made one checker read an old map and report 13 false refusals.
 - **L29, `documentation`, taken in:** a field whose format a test enforces has the format written beside
   the field. One session learned a status field's format only from a failing test.
-- **L30, `review-loops`:** what one round that moved both sides' evidence taught about running
+- **L30, `review-loops`, taken in:** what one round that moved both sides' evidence taught about running
   the loop, on 2026-10-14 and 15:
   - **The reporting that worked:** eight fixed diagnostic keys in every lap, a seven-heading
     round summary in each side's last lap, and a five-line handoff block ending each reply that
@@ -434,7 +437,7 @@ moves it to the archive.
     and rule numbers were wrong by the time they were read. Each side caught them by checking
     its own tree.
 
-- **L31, `testing-patterns`:** a check must be able to fail, and these tests show it can:
+- **L31, `test-gates`, taken in:** a check must be able to fail, and these tests show it can:
   - it compares the whole value, and the value the document wrote. A checker that cut two
     hashes to 16 characters, and another that never read the hash a record wrote beside its
     citation, both passed a changed hash;
@@ -446,7 +449,7 @@ moves it to the archive.
     "complete" list built for one build left out a flag only the other build took;
   - a sweep over a population carries a minimum count, and each fix is reverted once to show
     its test fails. Two probes found tests that couldn't fail.
-- **L32, `testing-patterns`:** a flaky failure is fixed where it is, then a ratchet refuses the
+- **L32, `flaky-tests`, taken in:** a flaky failure is fixed where it is, then a ratchet refuses the
   pattern coming back: it fails closed on code it can't place, and its allowlist may only
   shrink. Two flakes from one directory walk racing a parallel worker's cleanup were the same
   shape, and a third had been written before the ratchet.
@@ -459,34 +462,34 @@ moves it to the archive.
 - **L34, `api-patterns`:** where two sides validate the same value, they agree one rule on the
   same raw bytes, the stricter side's, and a property test runs one side's code against a port
   of the other's. A looser rule would have passed a code the other side's own report flagged.
-- **L35, `review-loops`:** take in every message the other side has released before writing
+- **L35, `review-loops`, taken in:** take in every message the other side has released before writing
   anything that sums up the exchange. A digest written before one released lap was filed could
   not be reproduced by its reader, and a counter that included one's own unreleased lap refused
   the other side's verdict.
-- **L36, `review-loops`:** a message says what is established now, names what it waits on by
+- **L36, `review-loops`, taken in:** a message says what is established now, names what it waits on by
   the condition it must meet rather than a version number, commits in advance to how the next
   verdict will be decided, and says what it doesn't ask. A round closed in three laps on that.
   An owner's `I thought we just needed X?` is the instruction, and reading it as a question
   cost a round trip.
-- **L37, `review-loops`:** a shorter acceptance run is scoped from the diff, lists what it leaves
+- **L37, `review-loops`, taken in:** a shorter acceptance run is scoped from the diff, lists what it leaves
   out and the risk, and replaces an agreed close condition only by the owner's recorded
   override. A step that can hang runs last, under a time limit nothing can raise.
-- **L38, `review-loops`:** a file both sides must hold identically is written by one side,
+- **L38, `review-loops`, taken in:** a file both sides must hold identically is written by one side,
   copied byte for byte by the other and checked by SHA-256, never retyped. Every hash in a
   message is pasted from a command's output: one draft's hash had its first 16 characters
   right and the rest invented.
-- **L39, `agent-context-files`:** parallel helper sessions pay for read-only audits, which found
+- **L39, `agent-context-files`, taken in:** parallel helper sessions pay for read-only audits, which found
   real defects, but not for running full test suites at once: seven on four cores pushed one
   suite past its limit. Helpers run their targeted tests, and one integrator runs the suite.
 - **L40, `documentation`, taken in:** a status block that code checks stays current, and prose that no
   test reads drifts. One audit found 103 statements in a project's documentation that its
   tree no longer supported, and the checked block caught a stale line the same week.
-- **L41, `testing-patterns`:** a reference is checked against an independent authority before
+- **L41, `test-oracles`, taken in:** a reference is checked against an independent authority before
   matching it counts as correct. One project's test called matching another tool's output
   "parity", and called a re-read that converged on that output "the feature working". On that
   item the reference was wrong: the main checksum database disagreed at its highest
   confidence, and the project's own later audit said so.
-- **L42, `testing-patterns`:** a second source corroborates a result only when it's
+- **L42, `test-oracles`, taken in:** a second source corroborates a result only when it's
   independent of the first and carries weight. One app showed a green "verified" from a
   secondary database on 8 of 26 results whose primary check rejected a part. Each match was
   one entry, most likely from the same user and a read with the same fault, while over a
@@ -501,15 +504,15 @@ moves it to the archive.
   the verdict beside it. One report carried a first-pass count, 12 of 14, beside a verdict of
   13 of 14 written after a corrective pass, because the count was copied from the tool's first
   log.
-- **L45, `review-loops`:** a cause read from a small sample is called a correlation, and it's
+- **L45, `review-loops`, taken in:** a cause read from a small sample is called a correlation, and it's
   withdrawn in writing as soon as the side holding the data shows otherwise. A coordinator
   advised re-reading a misread track more slowly, because a faster build had misread it. The
   other side's reading of the same runs found that build right at the higher speed, the older
   build wrong at nearly the lower one, and a drive that takes no speed setting.
-- **L46, `review-loops`:** a coordinator sends one file of record, naming each earlier file it
+- **L46, `review-loops`, taken in:** a coordinator sends one file of record, naming each earlier file it
   replaces. Four reports went to two sessions in one day, each correcting the one before, so a
   reader holding an earlier one would have worked from a claim since withdrawn.
-- **L47, `testing-patterns`:** a reference's settings are read from its own artifacts before
+- **L47, `test-oracles`, taken in:** a reference's settings are read from its own artifacts before
   they're stated. A report said a baseline had run without a two-pass mode, and every log in
   that baseline carried the mode's second checksum.
 - **L48, `documentation`, taken in:** figures cited from a tool come from the implementation in use, at
@@ -519,7 +522,7 @@ moves it to the archive.
   that a step finished. "Copy OK", "confirmed across 3 re-reads" and "read successfully" were
   printed over tracks whose audio a checksum database showed was wrong, and readers took each
   as a verdict.
-- **L50, `testing-patterns`:** a tool that reports on its own output is scored by its worst
+- **L50, `test-oracles`, taken in:** a tool that reports on its own output is scored by its worst
   case, an output that's wrong and reported as fine, not by how many are right. Every output is
   checked against a source the tool doesn't control, and scored right, wrong but reported, or
   wrong and reported as fine. One scoring of 178 outputs found 14 wrong, and 9 of those
@@ -532,27 +535,27 @@ moves it to the archive.
 - **L52, `input-handling`, taken in:** text from outside is escaped for where it lands: a terminal, a log
   another program parses, an issue an agent reads, a GUI that renders markup. One checker put
   a remote server's error text, unescaped, into a weekly issue that agents read.
-- **L53, `ai-agent-security`:** code and tests get the hidden-character scan that agent files
+- **L53, `ai-agent-security`, taken in:** code and tests get the hidden-character scan that agent files
   get, and a test plants a hidden character as an escape, never as the character. Three tests
   held the characters they planted literally, and the repository's own scan skipped code. An
   agent writing escape sequences checks the bytes that landed: one agent's tool turned
   `\u202e` into the character itself three times in one night, the third in this lesson,
   in a root file the scan skipped.
-- **L54, `review-loops`:** a reviewer checks what the code already does before recommending
+- **L54, `review-loops`, taken in:** a reviewer checks what the code already does before recommending
   it. A coordinator listed two gaps that the app had closed a month before, an outbound
   control-character check and an inbound one, because it read the app's plans but not its code.
-- **L55, `review-loops`:** lap numbers per side (L26) still let both sides write the same lap
+- **L55, `review-loops`, taken in:** lap numbers per side (L26) still let both sides write the same lap
   when each writes while waiting: one loop's laps crossed three times in two rounds. The last
   lap names who holds the turn; a lap written out of turn is held; a clash that happens anyway
   is renumbered by the commit that reached the reader's branch first, without asking the owner.
   A request the owner gives both sessions names one builder: both built the same test runner
   the same evening.
-- **L56, `testing-patterns`:** four more ways a gate passed its defect, beyond `ci-workflows`'
+- **L56, `test-gates`, taken in:** four more ways a gate passed its defect, beyond `ci-workflows`'
   *Prove a gate works*: a mangled key in a header, a pattern matching its word inside an
   unrelated phrase, a fixture holding a state the code can never reach, and a test-count
   baseline taken from a local run that CI's collection didn't match. Each case gets a planted
   test. `ci-workflows` is at 15,387 characters, so it splits before these go in.
-- **L57, `agent-context-files`:** parallel helper agents on one record collide: two took the
+- **L57, `agent-context-files`, taken in:** parallel helper agents on one record collide: two took the
   same task number, rows were duplicated, and a failure showed only on the combined tree. Each
   branch takes its own range of numbers, citations are restored from `-x` trailers, and the
   gate runs once on the combined tree.
