@@ -38,6 +38,14 @@ COMMAND = re.compile(rf"`({LS_REMOTE}https://[^`\s]+)`")
 QUOTED = re.compile(r'"((?:[^"\\]|\\.)+)"')
 CODE = re.compile(r"`([^`]+)`")
 ISO_DATE = re.compile(r"\d{4}-\d{2}-\d{2}")
+# A source served as one of these has no text to search: its quote is checked by hand.
+NOT_TEXT = ("application/pdf",)
+
+
+class NotText(Exception):
+    """A source whose content has no text to search, such as a PDF."""
+
+
 # How a skill's other files name a fact: "(fact `node20`)", "(facts `pre-commit`, `prek`)".
 REFERENCE = re.compile(r"\b[Ff]acts?((?:,?\s+(?:and\s+)?`[^`\n]+`)+)")
 # A quote that leaves words out marks the gap with an ellipsis. Each piece is looked for alone.
@@ -115,7 +123,9 @@ def verify(facts: list[Fact], fetch: Fetch | None = None) -> Iterator[tuple[Fact
     """Yield each fact whose quote isn't found at any of its sources, with the reason.
 
     The quote is the cell's text in double quotes, or, for a command's output, in backticks. A
-    cell holding neither has nothing to look for, and is left to be checked by hand.
+    cell holding neither has nothing to look for, and is left to be checked by hand, as is a
+    quote whose only sources are PDFs: their text can't be searched without a PDF reader, and
+    reading them as text would report every quote gone.
     """
     fetch = fetch or fetch_text
     pages: dict[str, str | Exception] = {}
@@ -127,12 +137,15 @@ def verify(facts: list[Fact], fetch: Fetch | None = None) -> Iterator[tuple[Fact
             if source not in pages:
                 pages[source] = _fetch_once_more(fetch, source)
             page = pages[source]
+            if isinstance(page, NotText):
+                continue
             if isinstance(page, Exception):
                 failures.append(f"{source} could not be read ({printable(str(page))})")
             else:
                 texts.append(page)
         if not texts:
-            yield fact, "; ".join(failures)
+            if failures:
+                yield fact, "; ".join(failures)
             continue
         for quote in fact.quotes:
             if not any(_holds(text, quote) for text in texts):
@@ -153,6 +166,8 @@ def _fetch_once_more(fetch: Fetch, source: str) -> str | Exception:
     """
     try:
         return _plain(fetch(source))
+    except NotText as exc:
+        return exc
     # urllib's errors are OSErrors, but a transfer cut short raises IncompleteRead, an
     # HTTPException, and one unreadable source mustn't end the whole run.
     except OSError, http.client.HTTPException:
@@ -169,6 +184,8 @@ def fetch_text(source: str) -> str:
     request = urllib.request.Request(source, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:
         charset = response.headers.get_content_charset() or "utf-8"
+        if response.headers.get_content_type() in NOT_TEXT:
+            raise NotText(response.headers.get_content_type())
         body = response.read().decode(charset, errors="replace")
         if response.headers.get_content_type() != "text/html":
             return body
