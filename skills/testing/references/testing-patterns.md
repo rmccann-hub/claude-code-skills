@@ -65,8 +65,8 @@ A dash is a tool not checked yet. Idioms such as fixtures, parameters and async 
 ### Strategy, still being checked
 
 The test pyramid, the trophy and Google's test sizes disagree on the mix of tests. Their
-sources, test-data patterns and metamorphic testing wait on research run R06c. Hardware
-acceptance runs and fault injection are the planned `acceptance-runs` module.
+sources, test-data patterns and metamorphic testing are in research run R06c, not yet here.
+Hardware acceptance runs and fault injection are the `acceptance-runs` module.
 
 ## Mistakes
 

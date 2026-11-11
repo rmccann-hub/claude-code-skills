@@ -106,7 +106,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
 | `testing-patterns` | `testing` | Strategy, test doubles and contract tests, coverage, each framework's settings that fail open, frameworks per language, property-based and mutation tools | shipped | core | R06, R06b |
 | `agent-written-tests` | `testing` | Tests an AI coding agent writes, changes or runs: tests first, high-risk test diffs, gaming, holdout tests, mutation-testing what it wrote | shipped | core | R06b |
-| `acceptance-runs` | `testing` | Unattended acceptance runs on hardware: preconditions, a device lost mid-run, run tiers, evidence; fault injection for ordinary programs | planned | core | R06c |
+| `acceptance-runs` | `testing` | Unattended acceptance runs on hardware: preconditions, a device lost mid-run, run tiers, evidence; fault injection for ordinary programs | shipped | core | R06c |
 | `test-gates` | `testing` | Proving a test, gate, checker or grader can fail: the parent commit, a planted defect, the couldn't-check path, mutating the checker | shipped | core | R06 |
 | `test-oracles` | `testing` | What a result is checked against: independent references, recorded samples, baselines, scoring by the worst case | shipped | core | R06 |
 | `flaky-tests` | `testing` | A test that passes and fails on the same code: the cause, races in the program, quarantine, keeping a fix | shipped | core | R06 |
@@ -346,7 +346,7 @@ moves it to the archive.
   verification" was whichever file the directory listed last.
 - **L10, `test-gates`, taken in:** a scripted edit with several parts asserts each part landed. One assert
   covered one replacement while the others silently did nothing.
-- **L11, `acceptance-runs`:** a stand-in for hardware can be a fault-injection shim. An `LD_PRELOAD`
+- **L11, `acceptance-runs`, taken in:** a stand-in for hardware can be a fault-injection shim. An `LD_PRELOAD`
   shim that fails reads found a hang no drive run had, and reproduced a damaged disc on demand.
 - **L12, `test-oracles`, taken in:** a parser that offline tests never reach is tested against a recorded
   response. Tests that all ran offline left a network parser at 27% branch coverage, hiding

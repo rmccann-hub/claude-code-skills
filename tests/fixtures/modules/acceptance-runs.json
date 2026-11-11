@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Our overnight test rig runs the suite against three USB drives. Last night one drive dropped off the bus halfway through and the report shows 40 failures. How should the harness handle a device that disappears mid-run?",
+    "should_trigger": true
+  },
+  {
+    "query": "What should our hardware test bench check before it starts a run, and what do we do with a board that fails that check?",
+    "should_trigger": true
+  },
+  {
+    "query": "I want to test what my C program does when read() fails with EIO or the disk fills up, without a broken disk. How do I fake those errors on Linux?",
+    "should_trigger": true
+  },
+  {
+    "query": "My LD_PRELOAD shim works on Linux, but DYLD_INSERT_LIBRARIES does nothing on the Mac build. How do I inject faults into a macOS app?",
+    "should_trigger": true
+  },
+  {
+    "query": "What should an unattended device test run save so someone can judge a failure the next morning without re-running it?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I use Application Verifier to make file calls fail in my Windows app, and what probability should I set?",
+    "should_trigger": true
+  },
+  {
+    "query": "One unit test fails about one run in twenty on CI with no code change. Should I add a retry or quarantine it?",
+    "should_trigger": false
+  },
+  {
+    "query": "How do I add retries with exponential backoff and a circuit breaker around our HTTP client calls?",
+    "should_trigger": false
+  }
+]
