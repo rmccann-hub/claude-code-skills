@@ -21,6 +21,7 @@ exceptions:
   - Git
   - GitHub
   - GitHub Actions
+  - HTML
   - JSON
   - JavaScript
   - Keep a Changelog
@@ -36,9 +37,14 @@ exceptions:
   - SHA-256
   - SQL
   - Semantic Versioning
+  - TODO
+  - TODOs
   - TOML
   - TypeScript
+  - URL
+  - URLs
   - Vale
   - Windows
+  - XML
   - YAML
   - macOS
