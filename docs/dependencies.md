@@ -17,17 +17,19 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.25 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.0 |
+| `engineering` | 0.1.25 | Apache-2.0 | `architecture` | reviewed 2026-11-11 |
 | `engineering` | 0.1.25 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
 | `engineering` | 0.1.25 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.25 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
+| `engineering` | 0.1.25 | Apache-2.0 | `security` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 104 |
+| Markdown | 108 |
 | Python | 53 |
-| JSON | 39 |
+| JSON | 41 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -120,6 +122,19 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
+| `architecture` | learn.microsoft.com | 3 |
+| `architecture` | git-scm.com | 2 |
+| `architecture` | go.dev | 2 |
+| `architecture` | abseil.io | 1 |
+| `architecture` | angular.dev | 1 |
+| `architecture` | doc.rust-lang.org | 1 |
+| `architecture` | docs.npmjs.com | 1 |
+| `architecture` | github.com | 1 |
+| `architecture` | nodejs.org | 1 |
+| `architecture` | packaging.python.org | 1 |
+| `architecture` | peps.python.org | 1 |
+| `architecture` | pkg.go.dev | 1 |
+| `architecture` | pnpm.io | 1 |
 | `coding` | learn.microsoft.com | 60 |
 | `coding` | docs.python.org | 19 |
 | `coding` | nodejs.org | 16 |
@@ -209,3 +224,9 @@ again.
 | `house-style` | github.com | 1 |
 | `house-style` | pubs.opengroup.org | 1 |
 | `house-style` | www.gov.uk | 1 |
+| `security` | cheatsheetseries.owasp.org | 7 |
+| `security` | owasp.org | 6 |
+| `security` | cwe.mitre.org | 1 |
+| `security` | go.dev | 1 |
+| `security` | pages.nist.gov | 1 |
+| `security` | www.threatmodelingmanifesto.org | 1 |

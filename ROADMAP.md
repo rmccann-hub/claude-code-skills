@@ -64,9 +64,9 @@ research. These rules are that structure.
 | `house-style` | `engineering` | Writing prose, Markdown, READMEs and documentation | shipped |
 | `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | shipped |
 | `testing` | `engineering` | Writing, reviewing or fixing tests, and choosing a test strategy | planned |
-| `architecture` | `engineering` | Designing systems, APIs, layouts and plans, and modernizing old code | planned |
+| `architecture` | `engineering` | Designing systems, APIs, layouts and plans, and modernizing old code | shipped |
 | `data` | `engineering` | SQL, schemas, migrations, indexes and transactions | planned |
-| `security` | `engineering` | Threat models, authentication, cryptography, dependencies and the supply chain, privacy and licenses | planned |
+| `security` | `engineering` | Threat models, authentication, cryptography, dependencies and the supply chain, privacy and licenses | shipped |
 | `agent-engineering` | `engineering` | Building skills and agent context files, agents reviewing each other, and defending agents against injection | planned |
 | `operations` | `engineering` | Running, troubleshooting or hardening Windows Server, Linux, containers, networks and cloud, and reading their logs and crash dumps | planned |
 | `business-apps` | `engineering` | Automating or extending Excel, Word, Epicor Kinetic and SOLIDWORKS | planned |
@@ -93,14 +93,14 @@ Grouped by subject; the Skill column is each module's one home.
 
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
-| `repo-structure` | `architecture` | Layouts by project type, where each file goes, naming files and folders | planned | core | R02 |
+| `repo-structure` | `architecture` | Layouts by project type, where each file goes, naming files and folders | shipped | core | R02 |
 | `writing-style` | `house-style` | Prose and Markdown: voice, headings, lists, wrapping, code, tables, links, file names, a README's sections, words to cut, American spelling | shipped | core | R02 |
 | `prose-check` | `house-style` | The Vale check: the HouseStyle package, `.vale.ini`, the CI job with its canary, a repository's vocabulary, files left alone | shipped | core | R02 |
 | `documentation` | `house-style` | Docs sites, diagrams, file size and splitting, beyond the README sections, records and prose that `writing-style` covers | planned | core | R02 |
 | `code-style` | `coding` | Naming, formatting, structure, comments and docstrings | planned | core | R03 |
 | `types` | `coding` | Static and gradual typing, strictness, type checkers, types at trust boundaries | planned | core | R03 |
 | `input-handling` | `coding` | Validation, sanitization and output encoding by context | planned | core | R04 |
-| `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | planned | core | R04 |
+| `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | shipped | core | R04 |
 | `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
 | `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
 | `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |

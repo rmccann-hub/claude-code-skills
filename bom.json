@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:90ec4f9f-b591-5c35-a3d2-38a63a8f348b",
+  "serialNumber": "urn:uuid:0088c034-18a8-5995-a41c-c751ef1515d1",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 104 file(s)"
+          "value": "Markdown: 108 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 39 file(s)"
+          "value": "JSON: 41 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -478,6 +478,71 @@
       "components": [
         {
           "type": "data",
+          "bom-ref": "skill:architecture",
+          "name": "architecture",
+          "description": "reviewed 2026-11-11",
+          "licenses": [
+            {
+              "expression": "Apache-2.0"
+            }
+          ],
+          "properties": [
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "learn.microsoft.com: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "git-scm.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "go.dev: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "abseil.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "angular.dev: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "doc.rust-lang.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.npmjs.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "github.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "nodejs.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "packaging.python.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "peps.python.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pkg.go.dev: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pnpm.io: 1 fact(s)"
+            }
+          ]
+        },
+        {
+          "type": "data",
           "bom-ref": "skill:coding",
           "name": "coding",
           "description": "reviewed 2026-10-27",
@@ -868,6 +933,43 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "www.gov.uk: 1 fact(s)"
+            }
+          ]
+        },
+        {
+          "type": "data",
+          "bom-ref": "skill:security",
+          "name": "security",
+          "description": "reviewed 2026-11-11",
+          "licenses": [
+            {
+              "expression": "Apache-2.0"
+            }
+          ],
+          "properties": [
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "cheatsheetseries.owasp.org: 7 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "owasp.org: 6 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "cwe.mitre.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "go.dev: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pages.nist.gov: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.threatmodelingmanifesto.org: 1 fact(s)"
             }
           ]
         }

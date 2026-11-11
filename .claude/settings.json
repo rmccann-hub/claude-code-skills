@@ -20,6 +20,7 @@
   },
   "skillOverrides": {
     "algorithmic-art": "off",
+    "architecture": "off",
     "canvas-design": "off",
     "code-planner": "off",
     "coding": "off",
@@ -34,6 +35,7 @@
     "morning": "off",
     "procedure-generator": "off",
     "project-bootstrap-and-audit": "off",
+    "security": "off",
     "skill-creator": "on",
     "skill-orchestrator": "off",
     "skill-stress-tester": "off",
