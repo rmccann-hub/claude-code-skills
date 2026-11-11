@@ -2,6 +2,26 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — The owner's answers: merging new skills, D, E, F, the old copy and 0.1.26
+
+- **Merging, a standing word:** a session may merge #140, and any later pull request whose only
+  change under `.claude/` is a `skillOverrides` line turning off a new skill's installed copy,
+  once CI is green (the owner, 2026-11-11, choosing "Yes, standing word" to: "Merge #140 now,
+  and later pull requests whose only .claude/ change is a skillOverrides line for a new skill,
+  once CI is green. Changes to AGENTS.md, CLAUDE.md, workflows or anything else in .claude/
+  still wait for you."). Every other change to `.claude/`, `AGENTS.md`, `CLAUDE.md` or a
+  workflow still waits for the owner.
+- **Approved for the standard, as 0.49.1 in a pull request of its own:** D, turns in a review
+  loop, in two tiers; and E, secrets from the environment or a secret store, never the
+  repository, a command line or a log.
+- **Approved for `AGENTS.md` and the authoring review:** F, Anthropic's document skills may be
+  adapted under Apache-2.0, from a pinned commit whose licence was confirmed, since the
+  licence files in `docx` and `xlsx` say Apache 2.0 (read 2026-11-11). The owner merges it.
+- **The old `testing-patterns` on claude.ai:** deleted by the owner on the session's word,
+  once the `testing-patterns` module is ready, before it merges.
+- **Release 0.1.26:** once #140 and `testing-patterns` are merged and green, without asking
+  again.
+
 ## 2026-11-11 — `operations`, with four modules, replacing three old skills
 
 - **Asked, by the owner:** "finish what you can ... to a fully complete stage" (2026-11-11).

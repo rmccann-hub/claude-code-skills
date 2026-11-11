@@ -196,7 +196,7 @@ Versions, dates and defaults, each named elsewhere by its ID.
 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
-| `git-current` | Git 2.56.0, released 2026-09-28, is the current source release | [git-scm.com](https://git-scm.com/) | "Latest source release 2.56.0 Release Notes (2026-09-28)" | 2026-09-30 | 2026-12-31 |
+| `git-current` | Git 2.56.1, released 2026-10-26, is the current source release | [git-scm.com](https://git-scm.com/) | "Latest source release 2.56.1 Release Notes (2026-10-26)" | 2026-11-11 | 2027-02-11 |
 | `git3` | Git 3.0 will make SHA-256 the default hash for new repositories, and has no release date | [BreakingChanges](https://git-scm.com/docs/BreakingChanges) | "There is no planned release date for this breaking version yet." | 2026-09-30 | 2026-12-31 |
 | `delete-merged` | `git branch --delete-merged <pattern>` deletes local branches only when their tip is reachable from their configured upstream, and takes `--dry-run`. It skips a branch whose upstream is gone, and one whose push would update its upstream | [git-branch](https://git-scm.com/docs/git-branch) | "Delete local branches whose configured upstream matches <pattern>, but only when their tip is reachable from that upstream" and "A branch is not deleted when: its configured upstream ref no longer exists" and "would update its upstream" | 2026-09-30 | 2027-03-31 |
 | `quotepath` | Git quotes a path holding a byte above 0x80 in its output, with octal escapes, unless the command is given `-z`. `core.quotePath` is true by default | [git-config](https://git-scm.com/docs/git-config) | "Many commands can output pathnames completely verbatim using the `-z` option. The default value is true." | 2026-10-15 | 2027-04-15 |
