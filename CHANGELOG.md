@@ -15,8 +15,8 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
-- `house-style`'s Vale rule for sentence-case headings accepts HTML, TODO, URL and XML, as
-  it accepts JSON, SQL and YAML.
+- `house-style`'s Vale rule for sentence-case headings accepts AI, GUI, HTML, KDE, MCP,
+  OIDC, TODO, URL and XML, as it accepts JSON, SQL and YAML.
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
   bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
   install and reads what a failed publish made before retrying.

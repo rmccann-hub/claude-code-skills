@@ -8,6 +8,7 @@ indicators:
   - ":"
   - "."
 exceptions:
+  - AI
   - API
   - APIs
   - Anthropic
@@ -18,16 +19,20 @@ exceptions:
   - CodeQL
   - Dependabot
   - Docker
+  - GUI
   - Git
   - GitHub
   - GitHub Actions
   - HTML
   - JSON
   - JavaScript
+  - KDE
   - Keep a Changelog
   - Linux
+  - MCP
   - Markdown
   - Node.js
+  - OIDC
   - PowerShell
   - PyPI
   - Python
