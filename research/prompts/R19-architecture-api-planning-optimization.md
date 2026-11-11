@@ -1,6 +1,6 @@
-# RESEARCH RUN R19: Architecture, API design, planning, optimization and scheduling
+# RESEARCH RUN R19: Architecture, API design and planning
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026, updated 10 November 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 3 · Written 22 September 2026, updated 11 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -11,7 +11,8 @@ current against. It holds Agent Skills for Claude Code (Markdown guidance plus s
 checks that test them, and research like this. Professional developers will judge it, so it must
 be current, precise and sourced. Today is 10 November 2026.
 
-This run informs these categories: architecture-and-design, api-design, optimization-and-scheduling.
+This run informs these categories: architecture-and-design, api-design. Optimization and
+scheduling moved to run R28 on 11 November 2026, so it gets priority questions of its own.
 
 ## Rules
 
@@ -66,7 +67,6 @@ Then these sections, in this order:
 - RFC 9110 renamed status 422 "Unprocessable Content"; RFC 9457 defines problem details; IETF drafts cover the Idempotency-Key and RateLimit headers.
 - OAuth 2.1 is a draft, RFC 9700 is the OAuth security BCP, and RFC 8725 is the JWT BCP.
 - MADR 4.0 is the current ADR template; the C4 model and arc42 are common ways to document architecture.
-- Google OR-Tools (v9.x) CP-SAT is the leading open-source constraint solver, and its Python API added PEP 8 (snake_case) method names; HiGHS is a leading open-source LP and MIP solver; Timefold succeeds OptaPlanner.
 - Spec-driven development with AI agents (for example GitHub Spec Kit, 2025) is an emerging practice.
 
 ## Questions
@@ -85,7 +85,5 @@ Then these sections, in this order:
 
 ### Standard
 
-6. Optimization and scheduling: OR-Tools' current version and CP-SAT Python API naming, HiGHS, SCIP (and its current licence), Pyomo, PuLP, Timefold; modelling business rules as constraints (hard versus soft, penalties); the job-shop and flow-shop examples in the official docs.
-7. Human factors in scheduling: peer-reviewed or standards sources on fatigue and shift design, time-of-day effects, changeover and setup behaviour and learning curves, and how schedulers should account for them (for example ISO 10075, HSE guidance, the operations research literature). Label any unsourced heuristic as a heuristic.
-8. Refactoring: the current web edition of Fowler's refactoring catalogue (second edition), a safe refactoring workflow, and tool support per language.
-9. Contracts between programs that read each other's output, from published practice: consumer-driven contracts and contract testing (for example Pact); the tolerant reader and expand-and-contract (parallel change), so a consumer that reads both the old and the new form ships before the producer changes; machine-readable output rather than parsing messages written for people; and two sides that validate the same value agreeing one rule, tested by running one side's property tests against the other's implementation.
+6. Refactoring: the current web edition of Fowler's refactoring catalogue (second edition), a safe refactoring workflow, and tool support per language.
+7. Contracts between programs that read each other's output, from published practice: consumer-driven contracts and contract testing (for example Pact); the tolerant reader and expand-and-contract (parallel change), so a consumer that reads both the old and the new form ships before the producer changes; machine-readable output rather than parsing messages written for people; and two sides that validate the same value agreeing one rule, tested by running one side's property tests against the other's implementation.

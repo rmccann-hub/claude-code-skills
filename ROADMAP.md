@@ -188,7 +188,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `networking-security` | `operations` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | shipped | standard | R15 |
 | `docker-containers` | `operations` | Dockerfiles, Compose, hardening, registries | shipped | standard | R15 |
 | `log-analysis` | `operations` | Event logs, crash dumps, journals, application logs | planned | standard | R07 |
-| `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | planned | standard | R19, R23 |
+| `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | planned | standard | R28, R23 |
 | `linux-gaming` | `linux-gaming` | Proton, Steam, handhelds | planned | on request | R15 |
 | `kubernetes` | `operations` | Clusters, workloads, the Gateway API | planned | on request | R15 |
 | `cloud` | `operations` | Azure, AWS and Google Cloud baselines | planned | on request | R15 |
@@ -263,7 +263,7 @@ palettes in `visual-design`, not in `excel-master`.
    | Wave | Research | Skills and modules | Old copies deleted when it ships |
    |---|---|---|---|
    | 1 | R15, R09, R11, R10 | `coding` with its contract, `bash-coding`, `python-coding`, `powershell-scripts`, `csharp-coding`, `javascript-coding`, `html-coding` | the six old language skills |
-   | 2 | R06, R06b, R07, R14, R19, R23 | `testing`; `coding`'s `error-handling`; `operations`' `log-analysis`; `data`; `architecture`'s `api-patterns`; `human-factors`; `optimization-and-scheduling` | `testing-patterns`, `error-handling`, `log-parser`, `sql-craftsman`, `api-patterns`, `human-factor-audit` |
+   | 2 | R06, R06b, R07, R14, R19, R23, R28 | `testing`; `coding`'s `error-handling`; `operations`' `log-analysis`; `data`; `architecture`'s `api-patterns`; `human-factors`; `optimization-and-scheduling` | `testing-patterns`, `error-handling`, `log-parser`, `sql-craftsman`, `api-patterns`, `human-factor-audit` |
    | 3 | R16, R11 | `coding`'s `vba-coding`; `business-apps`; `operations`' `windows-admin` | `vba-coding`, `excel-master`, `epicor-bpm`, `solidworks-automation`, `procedure-generator`, `windows-admin` |
    | 4 | R25, R13, R15, R20 | `coding`'s `go-coding`, `rust-coding`, `php-coding`, `ruby-coding`; `operations`' `docker-containers`, `linux`, `networking-security`; `visual-design` | those seven, `linux-troubleshooting`, `my-theme` once the company palette is in the private companion, and last `code-standards` |
    | When needed | R15 | `linux-gaming` | `linux-gaming` |
