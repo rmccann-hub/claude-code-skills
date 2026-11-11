@@ -1,0 +1,34 @@
+[
+  {
+    "query": "My service reads os.getenv all over the place and crashes hours after deploy when a value is wrong. How should I restructure how it loads its settings?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our CLI takes a config file, env vars and command-line flags. Which one should win when they disagree, and how do I document it?",
+    "should_trigger": true
+  },
+  {
+    "query": "What should I name the environment variables for my app, and how do I parse a boolean one like DEBUG properly?",
+    "should_trigger": true
+  },
+  {
+    "query": "The API key is currently passed as --api-key on the command line. What's a better way for the program to get it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Make the app refuse to start if DATABASE_URL is missing or the port isn't a number, with an error that says which one is wrong",
+    "should_trigger": true
+  },
+  {
+    "query": "We have a dozen feature flags from last year still in the code. How should we manage flags so this doesn't happen again?",
+    "should_trigger": true
+  },
+  {
+    "query": "My YAML file breaks when a value is 'no' or a version like 3.10. How do I quote it so the parser reads it right?",
+    "should_trigger": false
+  },
+  {
+    "query": "I committed an AWS key to the repository last week. How do I get it out of the git history?",
+    "should_trigger": false
+  }
+]
