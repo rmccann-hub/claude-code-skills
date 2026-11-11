@@ -14,6 +14,36 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 - **Lesson taken in:** L24 (`versioning-and-releases`).
 - **Sources:** GitHub Docs (CC BY 4.0), the rest as each states. Facts in our own words, with
   short quotes. Nothing adapted.
+## 2026-11-11 — `coding`'s `code-style`, `types`, `input-handling`, `configuration` and `config-formats`
+
+- **Asked, by the owner:** "finish what you can ... and anything else in the repo but partially
+  complete, to a fully complete stage" (2026-11-11). The five were planned, with research run
+  on 2026-09-23 (R03, R04) and 2026-10-26 (R15), and never built.
+- **Built:** one helper agent per module, reviewed here. The research is weeks old and mostly
+  unchecked, so every fact was fetched again on 2026-11-11; R04 held almost nothing on
+  configuration, and R15 one TOML item, so those two rest on primary sources found today.
+  Corrections found: Google's TODO format is now `TODO(link)`; Python 3.15's `tomllib` reads
+  TOML 1.1; Python's XML docs no longer recommend defusedxml, though OWASP's cheat sheet does.
+- **Lesson taken in:** L52 (`input-handling`).
+- **Raised for the owner:** the standard's dimension 7 has secrets reach code through
+  environment variables only, while systemd and OWASP say environment variables don't suit
+  secrets. `configuration` follows the standard and says a project choosing credential files
+  records that choice. A proposed change to the standard would settle it.
+- **Sources:** language and tool documentation, OWASP cheat sheets (CC BY-SA 4.0: brief
+  quotes, our own words otherwise), Unicode UAX 15, MITRE's CWE, the twelve-factor app, YAML,
+  TOML and JSON specifications, and Google's style guides. Nothing adapted.
+## 2026-11-11 — `house-style`'s `documentation`
+
+- **Asked, by the owner:** "finish what you can, then give me followup research reports to do
+  to finish them" (2026-11-11). The module had waited since R02 ran on 2026-09-23.
+- **Built:** `documentation`, by one helper agent, reviewed here. R02 is seven weeks old, so
+  every fact was fetched again on 2026-11-11 and only what its source still says was used.
+  Corrections to R02: Material for MkDocs now has a fixed end of life, 2027-05-05; Mermaid,
+  Sphinx and Zensical have moved on.
+- **Lessons taken in:** L29, L40, L44 and L48.
+- **Sources:** Diátaxis, GitHub Docs (CC BY 4.0), Mermaid, MkDocs, Material, Zensical, Sphinx,
+  Docusaurus, the Python and Rust documentation, and Django's contributing guide. Facts in our
+  own words, with short quotes. Nothing adapted.
 
 ## 2026-11-10 — `user-experience` planned, and research for it and `review-loops`
 

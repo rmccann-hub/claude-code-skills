@@ -1,0 +1,37 @@
+[
+  {
+    "query": "Our docs folder is one 2,000-line guide nobody can find anything in. How should we break it up?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we still set up MkDocs with the Material theme for our project's docs site, or use something else?",
+    "should_trigger": true
+  },
+  {
+    "query": "Add an architecture diagram to the repo that GitHub will show and that we can keep up to date.",
+    "should_trigger": true
+  },
+  {
+    "query": "The examples in our README keep breaking after releases. How do we catch that before users do?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is this page a tutorial or a how-to? It feels like it's trying to do everything at once.",
+    "should_trigger": true
+  },
+  {
+    "query": "Reword this README intro so it's plainer and leads with what the tool does.",
+    "should_trigger": false,
+    "note": "writing-style"
+  },
+  {
+    "query": "Vale flags our product name in a heading. How do I make it accept it?",
+    "should_trigger": false,
+    "note": "prose-check"
+  },
+  {
+    "query": "Write the description for this pull request.",
+    "should_trigger": false,
+    "note": "git-workflows, commits-and-pull-requests"
+  }
+]

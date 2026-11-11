@@ -80,6 +80,11 @@ the fact's row is in whichever module holds it.
 | [`c-coding`](references/c-coding.md) | C: the standard to target and how GCC, Clang and MSVC defaults differ, undefined behavior, ownership, copying a library's structs and `realloc`, bounds at every write, checked writes, replacing files safely, test exit codes, and porting to C17 or C23 |
 | [`c-build`](references/c-build.md) | Building and checking C with Meson: `meson_version`, `c_std` and options, the CI warning gate, hardening flags and what distributions add, sanitizers and Valgrind that really fail, static analyzers, fuzz targets, and pinned wraps |
 | [`c-security`](references/c-security.md) | C handling outside data: `strncpy`, `snprintf` and `strlcpy`, format strings, `strtol` not `atoi`, `ckd_*` on counts, file names with `openat` and `O_NOFOLLOW`, `posix_spawn` not `system`, `mkstemp`, escaping logs, wiping secrets, secrets in `argv`, HTTPS |
+| [`code-style`](references/code-style.md) | Naming, formatting by the formatter, function size and structure, comments that say why, doc comments per ecosystem, dead code, and matching the code around a change |
+| [`types`](references/types.md) | Adding types to untyped code behind a ratchet, what strict mode turns on, escape hatches such as any and casts, and parsing data from outside at the boundary |
+| [`input-handling`](references/input-handling.md) | Validating input at the trust boundary, allow-lists, parsing into types, canonicalizing paths, Unicode and URLs, size limits, and encoding output for HTML, SQL, shells, logs, terminals and CSV |
+| [`configuration`](references/configuration.md) | How a program takes its settings: precedence, one name per setting, validation at startup, typed config, environment variables, secrets from a store, required settings and feature flags |
+| [`config-formats`](references/config-formats.md) | YAML, JSON, TOML and XML: choosing a format, YAML's implicit types and safe loading, duplicate keys, large JSON numbers, schemas in CI, TOML versions, and parsing untrusted XML safely |
 
 ## Check before you act
 

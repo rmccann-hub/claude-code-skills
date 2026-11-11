@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Our export endpoint writes customer names into a CSV that the finance team opens in Excel. Someone said that's an injection risk. What should the writer do to each cell?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm reviewing a Go service where every handler calls a sanitizeInput() helper that strips quotes, semicolons and angle brackets. Is that a reasonable way to handle untrusted request data?",
+    "should_trigger": true
+  },
+  {
+    "query": "My CLI prints file names it reads from a downloaded archive straight to the terminal. Could a crafted name do anything nasty, and how should I print them?",
+    "should_trigger": true
+  },
+  {
+    "query": "Users pick a report template by name in the query string and I join it onto our templates folder. How do I make sure they can't escape the folder, and should I check before or after normalizing the path?",
+    "should_trigger": true
+  },
+  {
+    "query": "Where should validation live in a Rust API that takes JSON bodies: what limits to set before parsing, and should I keep the raw strings around after checking them?",
+    "should_trigger": true
+  },
+  {
+    "query": "Usernames with full-width letters or accents written two different ways are slipping past our uniqueness check. How should we compare them?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a strict Content Security Policy with nonces for our React app and turn on Trusted Types.",
+    "should_trigger": false
+  },
+  {
+    "query": "Should I switch our structured logs to OpenTelemetry, and which fields belong in every log line?",
+    "should_trigger": false
+  }
+]

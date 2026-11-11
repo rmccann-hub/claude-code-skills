@@ -10,9 +10,15 @@ Notable changes to this repository. The format follows
 
 - `git-workflows` gains `ci-cd` (environments, OIDC, promotion, rollback) and
   `versioning-and-releases` (release notes, support windows, advisories).
+- `coding` gains five modules: `code-style`, `types`, `input-handling`, `configuration` and
+  `config-formats`.
+- `house-style`'s `documentation`: the four kinds of page, reference generated from code, docs
+  checked in CI, diagrams as text, docs sites, and splitting long documents.
 
 ### Changed
 
+- `house-style`'s Vale rule for sentence-case headings accepts AI, GUI, HTML, KDE, MCP,
+  OIDC, TODO, URL and XML, as it accepts JSON, SQL and YAML.
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
   bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
   install and reads what a failed publish made before retrying.
@@ -21,6 +27,8 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
+- `skillcheck`'s `test-data` rule no longer reads a permission level, as in a workflow's
+  `id-token: write`, as a secret's value.
 - `skillcheck --verify` leaves a quote whose only source is a PDF to be checked by hand,
   rather than reading the PDF's bytes as text and reporting the quote gone.
 - `coding`: two facts whose sources reworded them, found by the weekly freshness run. ESLint's
