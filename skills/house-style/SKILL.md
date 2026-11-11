@@ -74,6 +74,7 @@ as fact `vale-current`, and the fact's row is in whichever module holds it.
 |---|---|
 | [`writing-style`](references/writing-style.md) | writing or reviewing prose or Markdown: headings, lists, wrapping, code, tables, links, file names, a README's sections, word choice and spelling, and why each rule is what it is |
 | [`prose-check`](references/prose-check.md) | adding the Vale check to a repository, running it locally, tuning it for a repository's own names and records, or a rule that flags something it shouldn't |
+| [`documentation`](references/documentation.md) | Docs beyond the README: the four kinds of page, reference generated from code, one place per fact, docs checked in CI, diagrams as text, docs sites, splitting long documents, and docs in the same pull request |
 
 ## What this doesn't cover
 

@@ -6,6 +6,11 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `house-style`'s `documentation`: the four kinds of page, reference generated from code, docs
+  checked in CI, diagrams as text, docs sites, and splitting long documents.
+
 ### Changed
 
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
