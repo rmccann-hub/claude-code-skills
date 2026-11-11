@@ -96,7 +96,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `repo-structure` | `architecture` | Layouts by project type, where each file goes, naming files and folders | planned | core | R02 |
 | `writing-style` | `house-style` | Prose and Markdown: voice, headings, lists, wrapping, code, tables, links, file names, a README's sections, words to cut, American spelling | shipped | core | R02 |
 | `prose-check` | `house-style` | The Vale check: the HouseStyle package, `.vale.ini`, the CI job with its canary, a repository's vocabulary, files left alone | shipped | core | R02 |
-| `documentation` | `house-style` | Docs sites, diagrams, file size and splitting, beyond the README sections, records and prose that `writing-style` covers | planned | core | R02 |
+| `documentation` | `house-style` | Docs sites, diagrams, file size and splitting, beyond the README sections, records and prose that `writing-style` covers | shipped | core | R02 |
 | `code-style` | `coding` | Naming, formatting, structure, comments and docstrings | planned | core | R03 |
 | `types` | `coding` | Static and gradual typing, strictness, type checkers, types at trust boundaries | planned | core | R03 |
 | `input-handling` | `coding` | Validation, sanitization and output encoding by context | planned | core | R04 |
@@ -307,7 +307,9 @@ palettes in `visual-design`, not in `excel-master`.
 ## Lessons waiting for their module
 
 What live repositories taught that belongs to a module not built yet. Each module takes its
-lessons in when it's built, and its reasons cite them.
+lessons in when it's built, and its reasons cite them. A lesson taken in stays here, marked
+with the module that took it, so its number still resolves, until the next split of this file
+moves it to the archive.
 
 - **L1, `testing-patterns`:** check the fact, not a symptom the failure path shares. When one check is
   re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
@@ -416,7 +418,7 @@ lessons in when it's built, and its reasons cite them.
 - **L28, `review-loops`:** a change both sides must make is agreed word for word, and then each
   side runs its checker against the other's tree from a fresh clone. After a history rewrite,
   a stale local branch made one checker read an old map and report 13 false refusals.
-- **L29, `documentation`:** a field whose format a test enforces has the format written beside
+- **L29, `documentation`, taken in:** a field whose format a test enforces has the format written beside
   the field. One session learned a status field's format only from a failing test.
 - **L30, `review-loops`:** what one round that moved both sides' evidence taught about running
   the loop, on 2026-10-14 and 15:
@@ -476,7 +478,7 @@ lessons in when it's built, and its reasons cite them.
 - **L39, `agent-context-files`:** parallel helper sessions pay for read-only audits, which found
   real defects, but not for running full test suites at once: seven on four cores pushed one
   suite past its limit. Helpers run their targeted tests, and one integrator runs the suite.
-- **L40, `documentation`:** a status block that code checks stays current, and prose that no
+- **L40, `documentation`, taken in:** a status block that code checks stays current, and prose that no
   test reads drifts. One audit found 103 statements in a project's documentation that its
   tree no longer supported, and the checked block caught a stale line the same week.
 - **L41, `testing-patterns`:** a reference is checked against an independent authority before
@@ -495,7 +497,7 @@ lessons in when it's built, and its reasons cite them.
   extra verification pass when nothing matched a database, a rule meant for inputs the
   database lacks. It also fired when the lookup failed and when every item misread, the two
   cases that most need the extra pass, though the lookup's own answer was in the record.
-- **L44, `documentation`:** every summary in a report is computed from the same final state as
+- **L44, `documentation`, taken in:** every summary in a report is computed from the same final state as
   the verdict beside it. One report carried a first-pass count, 12 of 14, beside a verdict of
   13 of 14 written after a corrective pass, because the count was copied from the tool's first
   log.
@@ -510,7 +512,7 @@ lessons in when it's built, and its reasons cite them.
 - **L47, `testing-patterns`:** a reference's settings are read from its own artifacts before
   they're stated. A report said a baseline had run without a two-pass mode, and every log in
   that baseline carried the mode's second checksum.
-- **L48, `documentation`:** figures cited from a tool come from the implementation in use, at
+- **L48, `documentation`, taken in:** figures cited from a tool come from the implementation in use, at
   a named commit. One project's table of a scoring program's deductions came partly from an
   unmaintained reimplementation, and the program in use differed on four rows.
 - **L49, `logging-and-observability`:** a status line names the outcome that was checked, not

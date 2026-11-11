@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — `house-style`'s `documentation`
+
+- **Asked, by the owner:** "finish what you can, then give me followup research reports to do
+  to finish them" (2026-11-11). The module had waited since R02 ran on 2026-09-23.
+- **Built:** `documentation`, by one helper agent, reviewed here. R02 is seven weeks old, so
+  every fact was fetched again on 2026-11-11 and only what its source still says was used.
+  Corrections to R02: Material for MkDocs now has a fixed end of life, 2027-05-05; Mermaid,
+  Sphinx and Zensical have moved on.
+- **Lessons taken in:** L29, L40, L44 and L48.
+- **Sources:** Diátaxis, GitHub Docs (CC BY 4.0), Mermaid, MkDocs, Material, Zensical, Sphinx,
+  Docusaurus, the Python and Rust documentation, and Django's contributing guide. Facts in our
+  own words, with short quotes. Nothing adapted.
+
 ## 2026-11-10 — `user-experience` planned, and research for it and `review-loops`
 
 - **Asked, by the owner:** "lets make the testing-patterns and review-loops skills next ... what
