@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:2d302df1-3b0d-5e2c-94fd-4eb0fdb61dd7",
+  "serialNumber": "urn:uuid:cbfc5f73-1da5-585a-af7d-d3a4b94bd289",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,11 +33,11 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 135 file(s)"
+          "value": "Markdown: 139 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 64 file(s)"
+          "value": "JSON: 66 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -1364,7 +1364,15 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "code.claude.com: 6 fact(s)"
+              "value": "arxiv.org: 9 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "code.claude.com: 8 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "testing.googleblog.com: 4 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1372,7 +1380,23 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "testing.googleblog.com: 3 fact(s)"
+              "value": "docs.pytest.org: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pypi.org: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "registry.npmjs.org: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "research.google.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.anthropic.com: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1380,11 +1404,63 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "arxiv.org: 1 fact(s)"
+              "value": "api.nuget.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "research.google.com: 1 fact(s)"
+              "value": "coverage.readthedocs.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "crates.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.cypress.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.pact.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "go.dev: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "growing-object-oriented-software.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "jestjs.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pester.dev: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "repo.packagist.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "repo1.maven.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "rubygems.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "testcontainers.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.pantsbuild.org: 1 fact(s)"
             }
           ]
         },

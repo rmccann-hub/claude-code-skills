@@ -1,6 +1,6 @@
 ---
 name: testing
-description: "Writes, reviews and fixes tests and checks so a pass means something: proving a test, gate or grader can fail, what a result is checked against, scoring by the worst case, and flaky tests. Use when a test passes but the output is wrong."
+description: "Writes, reviews and fixes tests: doubles, coverage and each language's framework, checks that can fail, independent oracles, flaky tests, and tests AI agents write. Use when writing tests, or when tests pass but the output is wrong."
 license: Apache-2.0
 metadata:
   reviewed: "2026-11-11"
@@ -12,9 +12,9 @@ How to make a test, a CI gate or a grader worth trusting: one that can fail, che
 something that didn't produce the output, and is scored by what it misses. It comes from audits
 of repositories whose suites and acceptance runs were green while their output was wrong. CI
 triggers, required checks and how long CI takes belong to `git-workflows`; the standard's
-dimension 5 sets the rules for a repository's gates, and this skill says how to meet them. Test
-strategy, test doubles, fixtures, coverage and each language's frameworks are the planned
-`testing-patterns` module, still waiting for research; a GUI's tests are `user-experience`.
+dimension 5 sets the rules for a repository's gates, and this skill says how to meet them. Hardware
+acceptance runs and fault injection are a planned module, `acceptance-runs`, waiting for
+research; a GUI's tests are `user-experience`.
 
 ## What applies to every module
 
@@ -43,6 +43,8 @@ mistakes, audit checks, reasons, dated facts and sources.
 | [`test-gates`](references/test-gates.md) | Proving a test, CI gate, script, checker or eval grader can fail: the parent commit, a planted defect, a script that exits 0 on missing input, a grader that passes without the plugin, tests that pass locally and fail in CI, mutating the checker |
 | [`test-oracles`](references/test-oracles.md) | What a result is checked against: golden files, independent references and their settings, recorded real samples, eval baselines with and without (every case scoring 1.0), LLM graders, and scoring by the worst case |
 | [`flaky-tests`](references/flaky-tests.md) | A test that passes and fails on the same code, on re-run: finding the cause, races in the program, retries, quarantine with an owner and a deadline, keeping a fixed flake fixed. A test that times out because CI is slow is `git-workflows`' `ci-speed` |
+| [`testing-patterns`](references/testing-patterns.md) | Writing a test suite: coverage targets and gates, test doubles and adapters, contract tests with Pact, runner settings that let an empty or skipped run pass, property-based and mutation tools, and each language's framework and version |
+| [`agent-written-tests`](references/agent-written-tests.md) | Tests an AI coding agent writes, changes or runs: tests first and seen failing, the agent told not to touch them, test diffs reviewed as high risk, gaming by special-casing, holdout tests, a way for the agent to stop, and mutation-testing what it wrote |
 
 ## When something here is wrong
 

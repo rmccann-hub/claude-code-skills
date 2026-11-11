@@ -2,6 +2,26 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — `testing`'s `testing-patterns` and `agent-written-tests`, and R06c
+
+- **Asked, by the owner:** R06b's result, attached on 2026-11-11, with "do what you can from
+  here with what you have".
+- **Built:** `testing-patterns` (coverage, doubles and adapters, Pact, runner settings that
+  fail open, property and mutation tools, frameworks per language) and `agent-written-tests`
+  (tests first and seen failing, test diffs reviewed as high risk, gaming that read-only tests
+  don't stop, holdout tests, a way for the agent to stop, mutation-testing what it wrote), one
+  helper agent each, reviewed here, from R06b's checked claims
+  (`research/runs/2026-11-11-R06b-testing.md`) and R06's.
+- **R06b's corrections, checked:** Cypress is at 16.x and 16.0.0 removed `cy.exec()`; pytest 9
+  renamed `xfail_strict` to `strict_xfail`; bats-core 1.14.0 fails an empty run unless told
+  otherwise; Testcontainers lists 13 languages; Google's 2020 post endorses coverage gates a
+  team chooses.
+- **Planned:** `acceptance-runs`, for unattended acceptance runs on hardware and fault
+  injection, which R06b didn't reach; L11 moves to it. R06c asks those questions and the rest
+  R06b listed as not covered.
+- **The old copy:** the owner's claude.ai skill `testing-patterns` is deleted on the session's
+  word before this merges, as the owner chose on 2026-11-11.
+
 ## 2026-11-11 — The owner's answers: merging new skills, D, E, F, the old copy and 0.1.26
 
 - **Merging, a standing word:** a session may merge #140, and any later pull request whose only
