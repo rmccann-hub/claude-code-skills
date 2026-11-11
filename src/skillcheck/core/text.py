@@ -5,10 +5,11 @@ import re
 # Characters that render as nothing or reorder the text around them, so what a reviewer sees
 # differs from what an agent reads: zero-width characters and joiners, bidirectional controls
 # (the Trojan Source attack, CVE-2021-42574), the byte-order mark, the soft hyphen, and Unicode
-# tag characters, which can carry a whole hidden instruction. `skills_hook.py` holds a copy,
-# since it runs without this package, and a test keeps the two the same.
+# tag characters and variation selectors, which can each carry a whole hidden instruction.
+# `skills_hook.py` holds a copy, since it runs without this package, and a test keeps the two
+# the same.
 HIDDEN = re.compile(
-    "[\u00ad\u180e\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff\U000e0000-\U000e007f]"
+    "[\u00ad\u180e\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufe00-\ufe0f\ufeff\U000e0000-\U000e007f\U000e0100-\U000e01ef]"
 )
 # Control characters a terminal, a log viewer or an issue acts on rather than shows: escape
 # sequences, carriage returns that overwrite a line, and newlines that forge one. A tab is shown.

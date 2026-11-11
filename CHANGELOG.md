@@ -21,6 +21,8 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
+- `skillcheck`'s hidden-character scan, and the cloud install hook's copy of it, cover
+  variation selectors, which can carry a hidden instruction; it found one in a filed report.
 - `skillcheck`'s `test-data` rule no longer reads a permission level, as in a workflow's
   `id-token: write`, as a secret's value.
 - `skillcheck --verify` leaves a quote whose only source is a PDF to be checked by hand,
