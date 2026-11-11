@@ -71,7 +71,7 @@ research. These rules are that structure.
 | `operations` | `engineering` | Running, troubleshooting or hardening Windows Server, Linux, containers, networks and cloud, and reading their logs and crash dumps | planned |
 | `business-apps` | `engineering` | Automating or extending Excel, Word, Epicor Kinetic and SOLIDWORKS | planned |
 | `visual-design` | `engineering` | Themes, palettes, charts and accessibility | planned |
-| `user-experience` | `engineering` | Reviewing, designing or testing how a program behaves for the person using it: status and feedback, windows and dialogs, settings and options, and whether it's easy to learn and to use | planned |
+| `user-experience` | `engineering` | Reviewing, designing or testing how a program behaves for the person using it: status and feedback, windows and dialogs, settings and options, and whether it's easy to learn and to use | shipped |
 | `optimization-and-scheduling` | `engineering` | Solvers, schedules and plans, with the people in them | planned |
 | `human-factors` | `engineering` | Designing or changing what people do: the habits that look wasteful and serve a purpose. It never bends a factual finding | planned |
 | `linux-gaming` | `personal` | Proton, Steam and handheld PCs | planned |
@@ -127,10 +127,10 @@ Grouped by subject; the Skill column is each module's one home.
 | `configuration` | `coding` | Layered config, environment variables, validation at startup, secret stores | planned | standard | R04 |
 | `architecture-and-design` | `architecture` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
 | `human-factors` | `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | planned | standard | R23 |
-| `usability-review` | `user-experience` | A heuristic review of a program's interface: status that's current, consistency, error prevention and recovery, recognition over recall, severity ratings | planned | standard | R27 |
-| `windows-and-dialogs` | `user-experience` | When a window or dialog appears, modality, focus and stacking, nothing shown before it's ready or hidden behind another, long operations and notifications | planned | standard | R27 |
-| `settings-and-options` | `user-experience` | Defaults, presets, progressive disclosure, each setting in one place, and how many choices is too many | planned | standard | R27 |
-| `gui-testing` | `user-experience` | Testing a GUI by machine, through accessibility interfaces and toolkit helpers, and with people, by task-based tests | planned | standard | R27 |
+| `usability-review` | `user-experience` | A heuristic review of a program's interface: status that's current, consistency, error prevention and recovery, recognition over recall, severity ratings | shipped | standard | R27 |
+| `windows-and-dialogs` | `user-experience` | When a window or dialog appears, modality, focus and stacking, nothing shown before it's ready or hidden behind another, long operations and notifications | shipped | standard | R27 |
+| `settings-and-options` | `user-experience` | Defaults, presets, progressive disclosure, each setting in one place, and how many choices is too many | shipped | standard | R27 |
+| `gui-testing` | `user-experience` | Testing a GUI by machine, through accessibility interfaces and toolkit helpers, and with people, by task-based tests | shipped | standard | R27 |
 | `accessibility` | `visual-design` | WCAG 2.2, ARIA, contrast, testing tools | planned | standard | R18 |
 | `internationalization` | `coding` | Unicode, locales, time zones, formats, right-to-left text | planned | standard | R18 |
 | `privacy-and-compliance` | `security` | Personal data, retention, licenses and notices, obligations on software publishers | planned | standard | R18 |

@@ -6,6 +6,11 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `user-experience`, a new skill: `usability-review`, `windows-and-dialogs`,
+  `settings-and-options` and `gui-testing`.
+
 ### Changed
 
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends

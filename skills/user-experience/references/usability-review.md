@@ -161,7 +161,7 @@ Each named elsewhere in this module by its ID.
 | `uxr-severity-scale` | Severity runs 0 to 4 | [Severity ratings](https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/) | "4 = Usability catastrophe: imperative to fix this before product can be released" | 2026-11-10 | 2027-05-10 |
 | `uxr-severity-raters` | The mean of three raters | [Severity ratings](https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/) | "using the mean of a set of ratings from three evaluators is satisfactory for many practical purposes." | 2026-11-10 | 2027-05-10 |
 | `uxr-severity-after` | Rate severity after the session | [Severity ratings](https://www.nngroup.com/articles/how-to-rate-the-severity-of-usability-problems/) | "It is difficult to get good severity estimates from the evaluators during a heuristic evaluation session" | 2026-11-10 | 2027-05-10 |
-| `uxr-shneiderman-feedback` | Shneiderman's rule 3: feedback scaled to the action | [Eight golden rules](https://www.cs.umd.edu/~ben/goldenrules.html) | "For frequent and minor actions, the response can be modest, whereas for infrequent and major actions, the response should be more substantial." | 2026-11-10 | 2027-05-10 |
+| `uxr-shneiderman-feedback` | Shneiderman's rule 3: feedback scaled to the action | [Eight golden rules](https://www.cs.umd.edu/~ben/goldenrules.html) | Checked by hand, as the server's certificate chain is incomplete: “For frequent and minor actions, the response can be modest, whereas for infrequent and major actions, the response should be more substantial.” | 2026-11-10 | 2027-05-10 |
 
 ## Sources
 

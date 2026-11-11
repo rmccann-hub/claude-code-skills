@@ -20,14 +20,15 @@ freshness run and the release workflow both run it.
 | `engineering` | 0.1.25 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
 | `engineering` | 0.1.25 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.25 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
+| `engineering` | 0.1.25 | Apache-2.0 | `user-experience` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 104 |
+| Markdown | 109 |
 | Python | 53 |
-| JSON | 39 |
+| JSON | 43 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -209,3 +210,17 @@ again.
 | `house-style` | github.com | 1 |
 | `house-style` | pubs.opengroup.org | 1 |
 | `house-style` | www.gov.uk | 1 |
+| `user-experience` | www.nngroup.com | 16 |
+| `user-experience` | developer.gnome.org | 6 |
+| `user-experience` | develop.kde.org | 5 |
+| `user-experience` | pypi.org | 5 |
+| `user-experience` | developer.apple.com | 3 |
+| `user-experience` | docs.gtk.org | 3 |
+| `user-experience` | chernev.com | 2 |
+| `user-experience` | doc.qt.io | 2 |
+| `user-experience` | learn.microsoft.com | 2 |
+| `user-experience` | playwright.dev | 2 |
+| `user-experience` | api.nuget.org | 1 |
+| `user-experience` | measuringu.com | 1 |
+| `user-experience` | scheibehenne.com | 1 |
+| `user-experience` | www.cs.umd.edu | 1 |
