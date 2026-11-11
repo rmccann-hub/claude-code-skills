@@ -2,9 +2,9 @@
 name: project-bootstrap-and-audit
 description: "Re-runnable configuration standard for one maintainer. One file, read in ranges rather than end to end, that proposes changes to itself at the approval gate. Chooses a language and a shape for something new, sets up the repository, retrofits an existing one, or audits configuration that already exists — against a two-axis stakes model and ten dimensions, then sequences what is left. Emits a fixed schema so two runs on the same repository produce comparable output. Folds in file governance, the release and deploy currency gate, secret handling, licensing, and cross-repository contracts. Stops at a hard approval gate before changing anything."
 metadata:
-  version: "0.49.0"
-  updated: "2026-11-03"
-  supersedes: "0.48.2"
+  version: "0.49.1"
+  updated: "2026-11-11"
+  supersedes: "0.49.0"
   reading: "One file, read in ranges. Start at How to read this file; take only the sections your job names."
   absorbs: "REPO-RECON.md, TEST-PROCEDURE.md, the standalone test procedure for this file — all deleted, their content is below"
   standards_repo: "<asked at the Phase 3 wait, recorded in the Phase 0 block — none is a valid answer>"
@@ -2260,8 +2260,14 @@ scans first and seeds the allowlist from the existing conforming placeholders **
 commit**. Discovering them later as false positives is a defect of the installation, not of
 the repository.
 
-**Secrets reach code through environment variables only.** Never a tracked file, never
-hardcoded — so the filling of those variables stays swappable with no repository change.
+**Secrets reach code from the environment or a secret store, never from the repository.**
+Never a tracked file, never hardcoded, never a command-line argument or a log line — so the
+filling stays swappable with no repository change. **Where the platform mounts secrets at run
+time, prefer that:** systemd credentials, Docker or Kubernetes secrets, a vault. Environment
+variables pass to every child process and reach logs and crash dumps: systemd.exec(5) says
+"environment variables are not suitable for passing secrets", and OWASP's *Secrets Management
+Cheat Sheet* calls them "not recommended unless the other methods are not possible". They stay
+conforming for CI, development and a simple host; a repository using them is not a finding.
 
 **A tracked path that a deployment host also writes is the real exposure, even when the
 committed copy is clean.** Remedy: untrack, `.gitignore`, ship a `.example`, **and ship the
@@ -4921,6 +4927,20 @@ overridden in each of five rounds, and a release-blocking rule for ten releases,
 protocol version deleted both. A rule overridden that often is the rule dimension 6 calls
 wrong.
 
+**Turns are written down, and a crossing is settled without the person.** The last message of
+each turn names whose turn is next, and a message written out of turn is held, not sent. If
+two cross anyway, the one that reached the reader's branch first counts, by that branch's
+commit time, and the other is renumbered and answered as a reply, without asking the person.
+**A request the person gives both repositories names one builder;** the other reviews.
+**Where both sessions can push to one branch, the turn lives there,** and is taken only by a
+push that lands as a fast-forward on the commit its writer read: git refuses a push that
+isn't one, so two writers can't take the same turn, and the turn's number works as a fencing
+token. A convention alone orders crossings and prevents none; the push prevents them. In one
+loop, messages crossed three times in two rounds, each costing a message and a ruling from the
+person, though each side numbered its own; and both sides built the same test runner the same
+evening. **An audit that finds crossed messages, or one request built twice, with no such rule
+recorded rates it `GAP`, and proposes the rule to both sides in the same words.**
+
 </constraints>
 
 **Where the provider is outside your control** — an upstream project, a vendor, another team —
@@ -5401,6 +5421,15 @@ development is for. Versions 1.0.0 through 1.12.1 are the same content as 0.1.0 
 records are append-only and are not edited for this.
 
 ## Entries
+
+**0.49.1**: **two changes**, F166 and F167, which the owner approved on 2026-11-11. *Turns
+are written down, and a crossing is settled without the person*, in *Cross-repository
+contracts*, from proposal D of 2026-11-10 as research R26 revised it: the turn rules every pair
+keeps, one builder per request, and the turn held by a push that lands only on the commit its
+writer read, where both sessions can push to one branch. Dimension 7's secrets rule widens from
+environment variables only to the environment or a secret store, preferring a store the
+platform mounts, after systemd's and OWASP's guidance, found while writing `coding`'s
+`configuration` module.
 
 **0.49.0**: **nine changes**, F156 to F164, which the owner approved on 2026-11-03 ("Do all
 you recommend").
