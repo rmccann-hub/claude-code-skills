@@ -42,7 +42,7 @@ NAME = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 # runs on its own, without that package. A release already passed the check; the hook checks
 # again because what arrives is what the session reads.
 HIDDEN = re.compile(
-    "[\u00ad\u180e\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufeff\U000e0000-\U000e007f]"
+    "[\u00ad\u180e\u200b-\u200f\u202a-\u202e\u2060-\u2064\u2066-\u2069\ufe00-\ufe0f\ufeff\U000e0000-\U000e007f\U000e0100-\U000e01ef]"
 )
 
 
