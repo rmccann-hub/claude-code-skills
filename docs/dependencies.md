@@ -31,8 +31,8 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 135 |
-| JSON | 64 |
+| Markdown | 139 |
+| JSON | 66 |
 | Python | 53 |
 | YAML | 23 |
 | Shell | 4 |
@@ -322,12 +322,31 @@ again.
 | `security` | go.dev | 1 |
 | `security` | pages.nist.gov | 1 |
 | `security` | www.threatmodelingmanifesto.org | 1 |
-| `testing` | code.claude.com | 6 |
+| `testing` | arxiv.org | 9 |
+| `testing` | code.claude.com | 8 |
+| `testing` | testing.googleblog.com | 4 |
 | `testing` | github.blog | 3 |
-| `testing` | testing.googleblog.com | 3 |
+| `testing` | docs.pytest.org | 2 |
+| `testing` | pypi.org | 2 |
+| `testing` | registry.npmjs.org | 2 |
+| `testing` | research.google.com | 2 |
+| `testing` | www.anthropic.com | 2 |
 | `testing` | www.microsoft.com | 2 |
-| `testing` | arxiv.org | 1 |
-| `testing` | research.google.com | 1 |
+| `testing` | api.nuget.org | 1 |
+| `testing` | coverage.readthedocs.io | 1 |
+| `testing` | crates.io | 1 |
+| `testing` | docs.cypress.io | 1 |
+| `testing` | docs.pact.io | 1 |
+| `testing` | go.dev | 1 |
+| `testing` | growing-object-oriented-software.com | 1 |
+| `testing` | jestjs.io | 1 |
+| `testing` | pester.dev | 1 |
+| `testing` | raw.githubusercontent.com | 1 |
+| `testing` | repo.packagist.org | 1 |
+| `testing` | repo1.maven.org | 1 |
+| `testing` | rubygems.org | 1 |
+| `testing` | testcontainers.com | 1 |
+| `testing` | www.pantsbuild.org | 1 |
 | `user-experience` | www.nngroup.com | 16 |
 | `user-experience` | developer.gnome.org | 6 |
 | `user-experience` | develop.kde.org | 5 |

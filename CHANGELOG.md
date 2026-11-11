@@ -8,6 +8,9 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- `testing` gains `testing-patterns` (coverage, doubles, contract tests, runner settings that
+  fail open, frameworks per language) and `agent-written-tests` (tests an AI agent writes or
+  changes).
 - `operations`, a new skill: `windows-admin`, `linux`, `docker-containers` and
   `networking-security`.
 - `git-workflows` gains `ci-cd` (environments, OIDC, promotion, rollback) and

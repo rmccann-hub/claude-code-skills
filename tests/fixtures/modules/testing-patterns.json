@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Our CI test job went green even though it collected zero tests. I think something swallows pytest's exit code 5. How should the runner be set up so that can't happen?",
+    "should_trigger": true
+  },
+  {
+    "query": "Management wants us to enforce 90% line coverage across the whole repo in CI. Is that a good idea, and what should we gate on instead?",
+    "should_trigger": true
+  },
+  {
+    "query": "I mock boto3 clients directly in my unit tests and they keep passing while production breaks. What's the better pattern?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do we use Pact so a consumer change can't be deployed before the provider in that environment supports it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Starting a new .NET library: which test framework, coverage tool and mutation tester are current, and what command runs them?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is there a property-based testing library for TypeScript, and something like mutmut that works with Vitest?",
+    "should_trigger": true
+  },
+  {
+    "query": "This test passes on my machine and fails about one run in ten on CI. How do I track down why?",
+    "should_trigger": false
+  },
+  {
+    "query": "The coding agent keeps editing my unit tests to make them pass instead of fixing the code. How do I stop that?",
+    "should_trigger": false
+  }
+]
