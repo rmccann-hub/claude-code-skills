@@ -63,9 +63,10 @@ SECRET = re.compile(
     r"[\"']?\s*[:=](?!=)\s*"
     r"(?P<value>\$\{\{[^}\n]*\}\}|<[^>\n]*>|\"[^\"\n]*\"|'[^'\n]*'|[^\s,;#)]+)"
 )
+# `read` and `write` are permission levels, as in a workflow's `id-token: write`, never a secret.
 PLACEHOLDER_VALUE = re.compile(
     r"(?i)^(?:|changeme|<[^>]*>|\$\{?\w+\}?|\$\{\{.*\}\}|\{\{.*\}\}|\{\w*\}|%[sd]|%\(\w+\)s"
-    r"|\*+|x+|\.\.\.|none|null|true|false|redacted|example[\w-]*|dummy[\w-]*|fake[\w-]*"
+    r"|\*+|x+|\.\.\.|none|null|true|false|read|write|redacted|example[\w-]*|dummy[\w-]*|fake[\w-]*"
     r"|placeholder[\w-]*|os\.environ.*|env\..*|secrets\..*|getenv.*|\w+\(.*)$"
 )
 REAL_PREFIX = re.compile(
