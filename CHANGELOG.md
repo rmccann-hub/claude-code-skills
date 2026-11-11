@@ -6,6 +6,8 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.26] - 2026-11-11
+
 ### Added
 
 - `testing` gains `testing-patterns` (coverage, doubles, contract tests, runner settings that

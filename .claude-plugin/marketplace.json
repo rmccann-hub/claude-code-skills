@@ -10,7 +10,7 @@
       "source": "./",
       "strict": false,
       "description": "Repository setup and audit: the PROJECT-BOOTSTRAP-AND-AUDIT standard as a skill.",
-      "version": "0.1.25",
+      "version": "0.1.26",
       "author": {
         "name": "rmccann-hub"
       },
@@ -24,8 +24,8 @@
       "name": "engineering",
       "source": "./",
       "strict": false,
-      "description": "Engineering practice: writing and reviewing code, Git, pull requests, CI, hooks, releases, and the house style for prose and Markdown.",
-      "version": "0.1.25",
+      "description": "Engineering practice: writing, testing and securing code, laying out projects, Git, pull requests, CI and releases, running systems, interfaces people use, agents that review each other, and the house style for prose and Markdown.",
+      "version": "0.1.26",
       "author": {
         "name": "rmccann-hub"
       },
