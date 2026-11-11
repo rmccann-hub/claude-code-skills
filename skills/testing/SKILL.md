@@ -37,9 +37,9 @@ mistakes, audit checks, reasons, dated facts and sources.
 
 | Module | Read it for |
 |---|---|
-| [`test-gates`](references/test-gates.md) | Proving a test, CI gate, checker or grader can fail: the parent commit, a planted defect, a check that ran and failed, the couldn't-check path, mutating the checker |
-| [`test-oracles`](references/test-oracles.md) | What a result is checked against: independent references, a reference's own settings, recorded real samples, baselines with and without, scoring by the worst case |
-| [`flaky-tests`](references/flaky-tests.md) | A test that passes and fails on the same code: finding the cause, races in the program, quarantine with an owner and a deadline, and keeping a fixed flake fixed |
+| [`test-gates`](references/test-gates.md) | Proving a test, CI gate, script, checker or eval grader can fail: the parent commit, a planted defect, a script that exits 0 on missing input, a grader that passes without the plugin, tests that pass locally and fail in CI, mutating the checker |
+| [`test-oracles`](references/test-oracles.md) | What a result is checked against: golden files, independent references and their settings, recorded real samples, eval baselines with and without (every case scoring 1.0), LLM graders, and scoring by the worst case |
+| [`flaky-tests`](references/flaky-tests.md) | A test that passes and fails on the same code, on re-run: finding the cause, races in the program, retries, quarantine with an owner and a deadline, keeping a fixed flake fixed. A test that times out because CI is slow is `git-workflows`' `ci-speed` |
 
 ## When something here is wrong
 
