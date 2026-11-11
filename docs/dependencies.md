@@ -17,19 +17,18 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.25 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.0 |
-| `engineering` | 0.1.25 | Apache-2.0 | `architecture` | reviewed 2026-11-11 |
 | `engineering` | 0.1.25 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
 | `engineering` | 0.1.25 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.25 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
-| `engineering` | 0.1.25 | Apache-2.0 | `security` | reviewed 2026-11-11 |
+| `engineering` | 0.1.25 | Apache-2.0 | `operations` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 108 |
+| Markdown | 117 |
 | Python | 53 |
-| JSON | 41 |
+| JSON | 51 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -122,111 +121,158 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
-| `architecture` | learn.microsoft.com | 3 |
-| `architecture` | git-scm.com | 2 |
-| `architecture` | go.dev | 2 |
-| `architecture` | abseil.io | 1 |
-| `architecture` | angular.dev | 1 |
-| `architecture` | doc.rust-lang.org | 1 |
-| `architecture` | docs.npmjs.com | 1 |
-| `architecture` | github.com | 1 |
-| `architecture` | nodejs.org | 1 |
-| `architecture` | packaging.python.org | 1 |
-| `architecture` | peps.python.org | 1 |
-| `architecture` | pkg.go.dev | 1 |
-| `architecture` | pnpm.io | 1 |
-| `coding` | learn.microsoft.com | 60 |
-| `coding` | docs.python.org | 19 |
+| `coding` | learn.microsoft.com | 66 |
+| `coding` | docs.python.org | 25 |
 | `coding` | nodejs.org | 16 |
 | `coding` | tiswww.case.edu | 16 |
 | `coding` | www.w3.org | 16 |
-| `coding` | man7.org | 14 |
+| `coding` | cheatsheetseries.owasp.org | 15 |
+| `coding` | man7.org | 15 |
 | `coding` | developer.mozilla.org | 13 |
+| `coding` | raw.githubusercontent.com | 13 |
 | `coding` | mesonbuild.com | 12 |
-| `coding` | raw.githubusercontent.com | 11 |
+| `coding` | docs.astral.sh | 9 |
 | `coding` | gcc.gnu.org | 9 |
-| `coding` | pubs.opengroup.org | 8 |
-| `coding` | cheatsheetseries.owasp.org | 7 |
-| `coding` | docs.astral.sh | 7 |
+| `coding` | pubs.opengroup.org | 9 |
+| `coding` | pypi.org | 6 |
 | `coding` | clang.llvm.org | 5 |
+| `coding` | cwe.mitre.org | 5 |
 | `coding` | devblogs.microsoft.com | 5 |
 | `coding` | html.spec.whatwg.org | 5 |
+| `coding` | www.typescriptlang.org | 5 |
 | `coding` | curl.se | 4 |
 | `coding` | dotnet.microsoft.com | 4 |
+| `coding` | google.github.io | 4 |
+| `coding` | mypy.readthedocs.io | 4 |
 | `coding` | packaging.python.org | 4 |
-| `coding` | cwe.mitre.org | 3 |
-| `coding` | pypi.org | 3 |
-| `coding` | typescript-eslint.io | 3 |
+| `coding` | typescript-eslint.io | 4 |
+| `coding` | git-scm.com | 3 |
 | `coding` | web.dev | 3 |
 | `coding` | best.openssf.org | 2 |
 | `coding` | devguide.python.org | 2 |
+| `coding` | docs.pydantic.dev | 2 |
 | `coding` | eslint.org | 2 |
+| `coding` | go.dev | 2 |
+| `coding` | pyyaml.org | 2 |
+| `coding` | rust-lang.github.io | 2 |
+| `coding` | www.rfc-editor.org | 2 |
 | `coding` | www.shellcheck.net | 2 |
+| `coding` | yaml.org | 2 |
+| `coding` | 12factor.net | 1 |
+| `coding` | arxiv.org | 1 |
 | `coding` | biomejs.dev | 1 |
+| `coding` | check-jsonschema.readthedocs.io | 1 |
+| `coding` | community.owasp.org | 1 |
+| `coding` | doc.qt.io | 1 |
+| `coding` | docs.github.com | 1 |
 | `coding` | documentation.ubuntu.com | 1 |
-| `coding` | git-scm.com | 1 |
 | `coding` | git.kernel.org | 1 |
 | `coding` | gmplib.org | 1 |
-| `coding` | google.github.io | 1 |
 | `coding` | jinja.palletsprojects.com | 1 |
+| `coding` | json-schema.org | 1 |
 | `coding` | lists.gnu.org | 1 |
 | `coding` | llvm.org | 1 |
 | `coding` | man.freebsd.org | 1 |
 | `coding` | manpages.debian.org | 1 |
-| `coding` | mypy.readthedocs.io | 1 |
+| `coding` | martinfowler.com | 1 |
+| `coding` | neverworkintheory.org | 1 |
 | `coding` | oxc.rs | 1 |
 | `coding` | packages.debian.org | 1 |
+| `coding` | peps.python.org | 1 |
 | `coding` | pester.dev | 1 |
-| `coding` | pyyaml.org | 1 |
+| `coding` | registry.npmjs.org | 1 |
 | `coding` | savannah.gnu.org | 1 |
+| `coding` | services.nvd.nist.gov | 1 |
 | `coding` | sourceware.org | 1 |
+| `coding` | specifications.freedesktop.org | 1 |
 | `coding` | src.fedoraproject.org | 1 |
 | `coding` | support.apple.com | 1 |
+| `coding` | toml.io | 1 |
 | `coding` | valgrind.org | 1 |
 | `coding` | www.cisa.gov | 1 |
+| `coding` | www.freedesktop.org | 1 |
+| `coding` | www.kernel.org | 1 |
 | `coding` | www.open-std.org | 1 |
 | `coding` | www.powershellgallery.com | 1 |
-| `coding` | www.typescriptlang.org | 1 |
-| `git-workflows` | docs.github.com | 46 |
+| `coding` | www.unicode.org | 1 |
+| `coding` | yamllint.readthedocs.io | 1 |
+| `coding` | zod.dev | 1 |
+| `git-workflows` | docs.github.com | 64 |
 | `git-workflows` | git-scm.com | 18 |
 | `git-workflows` | raw.githubusercontent.com | 10 |
 | `git-workflows` | github.blog | 7 |
 | `git-workflows` | code.claude.com | 4 |
+| `git-workflows` | keepachangelog.com | 4 |
 | `git-workflows` | docs.kernel.org | 3 |
 | `git-workflows` | pypi.org | 3 |
+| `git-workflows` | cli.github.com | 2 |
+| `git-workflows` | devguide.python.org | 2 |
 | `git-workflows` | docs.zizmor.sh | 2 |
 | `git-workflows` | github.com | 2 |
-| `git-workflows` | keepachangelog.com | 2 |
+| `git-workflows` | martinfowler.com | 2 |
+| `git-workflows` | nodejs.org | 2 |
+| `git-workflows` | peps.python.org | 2 |
 | `git-workflows` | rustc-dev-guide.rust-lang.org | 2 |
+| `git-workflows` | semver.org | 2 |
+| `git-workflows` | 12factor.net | 1 |
 | `git-workflows` | abseil.io | 1 |
 | `git-workflows` | blog.rust-lang.org | 1 |
 | `git-workflows` | chromium.googlesource.com | 1 |
-| `git-workflows` | cli.github.com | 1 |
 | `git-workflows` | cveawg.mitre.org | 1 |
-| `git-workflows` | devguide.python.org | 1 |
 | `git-workflows` | docs.astral.sh | 1 |
 | `git-workflows` | docs.prow.k8s.io | 1 |
 | `git-workflows` | dora.dev | 1 |
 | `git-workflows` | go.dev | 1 |
 | `git-workflows` | llvm.org | 1 |
-| `git-workflows` | martinfowler.com | 1 |
 | `git-workflows` | nvie.com | 1 |
 | `git-workflows` | pip.pypa.io | 1 |
 | `git-workflows` | semgrep.dev | 1 |
-| `git-workflows` | semver.org | 1 |
+| `git-workflows` | sre.google | 1 |
 | `git-workflows` | towncrier.readthedocs.io | 1 |
 | `git-workflows` | www.conventionalcommits.org | 1 |
 | `house-style` | developers.google.com | 5 |
+| `house-style` | raw.githubusercontent.com | 4 |
 | `house-style` | vale.sh | 4 |
+| `house-style` | www.sphinx-doc.org | 3 |
 | `house-style` | docs.vale.sh | 2 |
+| `house-style` | github.com | 2 |
 | `house-style` | learn.microsoft.com | 2 |
-| `house-style` | raw.githubusercontent.com | 2 |
-| `house-style` | github.com | 1 |
+| `house-style` | diataxis.fr | 1 |
+| `house-style` | doc.rust-lang.org | 1 |
+| `house-style` | docs.djangoproject.com | 1 |
+| `house-style` | docs.github.com | 1 |
+| `house-style` | docs.python.org | 1 |
+| `house-style` | platform.claude.com | 1 |
 | `house-style` | pubs.opengroup.org | 1 |
+| `house-style` | squidfunk.github.io | 1 |
 | `house-style` | www.gov.uk | 1 |
-| `security` | cheatsheetseries.owasp.org | 7 |
-| `security` | owasp.org | 6 |
-| `security` | cwe.mitre.org | 1 |
-| `security` | go.dev | 1 |
-| `security` | pages.nist.gov | 1 |
-| `security` | www.threatmodelingmanifesto.org | 1 |
+| `house-style` | www.mkdocs.org | 1 |
+| `house-style` | zensical.org | 1 |
+| `operations` | learn.microsoft.com | 16 |
+| `operations` | docs.docker.com | 12 |
+| `operations` | ubuntu.com | 3 |
+| `operations` | csrc.nist.gov | 2 |
+| `operations` | docs.fedoraproject.org | 2 |
+| `operations` | github.com | 2 |
+| `operations` | man.openbsd.org | 2 |
+| `operations` | raw.githubusercontent.com | 2 |
+| `operations` | suricata.io | 2 |
+| `operations` | wiki.nftables.org | 2 |
+| `operations` | www.cisa.gov | 2 |
+| `operations` | www.debian.org | 2 |
+| `operations` | www.freedesktop.org | 2 |
+| `operations` | access.redhat.com | 1 |
+| `operations` | blog.snort.org | 1 |
+| `operations` | dnf.readthedocs.io | 1 |
+| `operations` | docs.sigstore.dev | 1 |
+| `operations` | fedoraproject.org | 1 |
+| `operations` | firewalld.org | 1 |
+| `operations` | man7.org | 1 |
+| `operations` | netfilter.org | 1 |
+| `operations` | techcommunity.microsoft.com | 1 |
+| `operations` | wiki.almalinux.org | 1 |
+| `operations` | www.netfilter.org | 1 |
+| `operations` | www.rfc-editor.org | 1 |
+| `operations` | www.wi-fi.org | 1 |
+| `operations` | www.wireguard.com | 1 |
+| `operations` | zeek.org | 1 |

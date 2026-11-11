@@ -1,0 +1,34 @@
+[
+  {
+    "query": "nginx won't start after I rebooted the Ubuntu server, systemctl just says failed. How do I figure out why?",
+    "should_trigger": true
+  },
+  {
+    "query": "My VPS says no space left on device but du only adds up to half the disk. What's eating it?",
+    "should_trigger": true
+  },
+  {
+    "query": "We still have a few boxes on Ubuntu 22.04 and one on Debian 12. When do they stop getting security fixes, and should we go to 26.04 or Debian 13?",
+    "should_trigger": true
+  },
+  {
+    "query": "Lock down SSH on a new Debian host: keys only, no root, without locking myself out",
+    "should_trigger": true
+  },
+  {
+    "query": "httpd gets permission denied reading files under /srv/www on RHEL 10 even though the mode is 755. Should I turn off SELinux?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I stop apt from upgrading the postgres package until we've tested the new version, but keep security updates coming?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write nftables rules for this server so only 22, 80 and 443 are open",
+    "should_trigger": false
+  },
+  {
+    "query": "My bash backup script breaks on filenames with spaces; can you fix the quoting?",
+    "should_trigger": false
+  }
+]

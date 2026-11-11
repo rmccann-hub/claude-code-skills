@@ -68,7 +68,7 @@ research. These rules are that structure.
 | `data` | `engineering` | SQL, schemas, migrations, indexes and transactions | planned |
 | `security` | `engineering` | Threat models, authentication, cryptography, dependencies and the supply chain, privacy and licenses | shipped |
 | `agent-engineering` | `engineering` | Building skills and agent context files, agents reviewing each other, and defending agents against injection | shipped |
-| `operations` | `engineering` | Running, troubleshooting or hardening Windows Server, Linux, containers, networks and cloud, and reading their logs and crash dumps | planned |
+| `operations` | `engineering` | Running, troubleshooting or hardening Windows Server, Linux, containers, networks and cloud, and reading their logs and crash dumps | shipped |
 | `business-apps` | `engineering` | Automating or extending Excel, Word, Epicor Kinetic and SOLIDWORKS | planned |
 | `visual-design` | `engineering` | Themes, palettes, charts and accessibility | planned |
 | `user-experience` | `engineering` | Reviewing, designing or testing how a program behaves for the person using it: status and feedback, windows and dialogs, settings and options, and whether it's easy to learn and to use | shipped |
@@ -177,14 +177,14 @@ Grouped by subject; the Skill column is each module's one home.
 
 | Module | Skill | Covers | Status | Coverage | Research |
 |---|---|---|---|---|---|
-| `windows-admin` | `operations` | AD, Group Policy, DNS/DHCP, certificates, file services, updates, hardening | planned | core | R11 |
+| `windows-admin` | `operations` | AD, Group Policy, DNS/DHCP, certificates, file services, updates, hardening | shipped | core | R11 |
 | `excel-master` | `business-apps` | Workbooks from code, formulas, Power Query, DAX, Office Scripts, add-ins | planned | core | R16 |
 | `word-documents` | `business-apps` | Generating and filling Word templates | planned | core | R16 |
 | `epicor-kinetic` | `business-apps` | BPM, BAQ, REST API v2, Functions, from public knowledge only | planned | core | R16 |
 | `solidworks-automation` | `business-apps` | VBA and C# macros, documents, drawings, sheet metal, exports | planned | core | R16 |
-| `linux` | `operations` | Administration and troubleshooting across distributions | planned | standard | R15 |
-| `networking-security` | `operations` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | planned | standard | R15 |
-| `docker-containers` | `operations` | Dockerfiles, Compose, hardening, registries | planned | standard | R15 |
+| `linux` | `operations` | Administration and troubleshooting across distributions | shipped | standard | R15 |
+| `networking-security` | `operations` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | shipped | standard | R15 |
+| `docker-containers` | `operations` | Dockerfiles, Compose, hardening, registries | shipped | standard | R15 |
 | `log-analysis` | `operations` | Event logs, crash dumps, journals, application logs | planned | standard | R07 |
 | `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | planned | standard | R19, R23 |
 | `linux-gaming` | `linux-gaming` | Proton, Steam, handhelds | planned | on request | R15 |

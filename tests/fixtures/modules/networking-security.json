@@ -1,0 +1,34 @@
+[
+  {
+    "query": "I want to put all my smart plugs and cameras on their own network so they can't see my laptop. How should I set up the VLANs and the rules between them?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write me an nftables config for a Debian VPS that only allows SSH from my office and drops everything else, and tell me how to load it without locking myself out",
+    "should_trigger": true
+  },
+  {
+    "query": "My boss wants to reach the office NAS from home. Is it OK to just forward port 5000 on the router, or is there a better way?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should our small office use WireGuard or OpenVPN for staff working remotely?",
+    "should_trigger": true
+  },
+  {
+    "query": "Router settings page offers WPA2/WPA3 mixed mode and has WPS switched on. What should I pick for the home wifi?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I stop devices on my network from ignoring my Pi-hole and using their own DNS servers?",
+    "should_trigger": true
+  },
+  {
+    "query": "My container's published port 8080 isn't reachable from the host; walk me through debugging Docker's bridge network and port mappings",
+    "should_trigger": false
+  },
+  {
+    "query": "Write a Group Policy to deploy a mapped drive and a printer to every workstation in the Sales OU",
+    "should_trigger": false
+  }
+]

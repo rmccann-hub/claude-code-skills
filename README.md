@@ -68,6 +68,7 @@ To check another repository's prose against the house style, follow the house-st
 | `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
 | `house-style` | `engineering` | One style for prose and Markdown in every repository, with the reasons for each rule, and the Vale style and CI job that check it |
 | `security` | `engineering` | Threat modeling, authentication, sessions and passwords, authorization, cryptography and randomness, security logging, and security review, against OWASP Top 10:2025, ASVS 5.0.0 and the CWE Top 25 |
+| `operations` | `engineering` | Running, troubleshooting and hardening Windows Server and Active Directory, Linux hosts, Docker images and Compose, and office or home networks, with every change rehearsed or reversible |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill
