@@ -1,0 +1,36 @@
+[
+  {
+    "query": "We have 200k lines of untyped Python and want to start type checking without fixing every error first. How do we roll it out so it doesn't get worse?",
+    "should_trigger": true
+  },
+  {
+    "query": "My teammate keeps writing `as any` and `// @ts-ignore` to get the build green. What should our rule be, and how do we enforce it?",
+    "should_trigger": true
+  },
+  {
+    "query": "We do `const user = (await res.json()) as User` everywhere in our API client. Is that OK, or should we be doing something else?",
+    "should_trigger": true
+  },
+  {
+    "query": "What exactly does turning on strict do in TypeScript, mypy and pyright, and which one should our CI gate on?",
+    "should_trigger": true
+  },
+  {
+    "query": "Turning on nullable reference types in our old .NET solution gives 3,000 warnings. How do we migrate it a piece at a time?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it worth adding a type checker step to our GitHub Actions pipeline, and should it block merges?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our search box puts the user's text into an HTML page and a log line. What should we validate and how do we escape it for each?",
+    "should_trigger": false,
+    "note": "input-handling: validation and output encoding by context"
+  },
+  {
+    "query": "Set up a new Python package with uv, Ruff and pytest, and show me the pyproject.toml.",
+    "should_trigger": false,
+    "note": "python-coding: a Python project's setup and tools"
+  }
+]

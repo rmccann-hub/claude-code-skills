@@ -25,9 +25,9 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 104 |
+| Markdown | 109 |
 | Python | 53 |
-| JSON | 39 |
+| JSON | 44 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -120,58 +120,82 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
-| `coding` | learn.microsoft.com | 60 |
-| `coding` | docs.python.org | 19 |
+| `coding` | learn.microsoft.com | 66 |
+| `coding` | docs.python.org | 25 |
 | `coding` | nodejs.org | 16 |
 | `coding` | tiswww.case.edu | 16 |
 | `coding` | www.w3.org | 16 |
-| `coding` | man7.org | 14 |
+| `coding` | cheatsheetseries.owasp.org | 15 |
+| `coding` | man7.org | 15 |
 | `coding` | developer.mozilla.org | 13 |
+| `coding` | raw.githubusercontent.com | 13 |
 | `coding` | mesonbuild.com | 12 |
-| `coding` | raw.githubusercontent.com | 11 |
+| `coding` | docs.astral.sh | 9 |
 | `coding` | gcc.gnu.org | 9 |
-| `coding` | pubs.opengroup.org | 8 |
-| `coding` | cheatsheetseries.owasp.org | 7 |
-| `coding` | docs.astral.sh | 7 |
+| `coding` | pubs.opengroup.org | 9 |
+| `coding` | pypi.org | 6 |
 | `coding` | clang.llvm.org | 5 |
+| `coding` | cwe.mitre.org | 5 |
 | `coding` | devblogs.microsoft.com | 5 |
 | `coding` | html.spec.whatwg.org | 5 |
+| `coding` | www.typescriptlang.org | 5 |
 | `coding` | curl.se | 4 |
 | `coding` | dotnet.microsoft.com | 4 |
+| `coding` | google.github.io | 4 |
+| `coding` | mypy.readthedocs.io | 4 |
 | `coding` | packaging.python.org | 4 |
-| `coding` | cwe.mitre.org | 3 |
-| `coding` | pypi.org | 3 |
-| `coding` | typescript-eslint.io | 3 |
+| `coding` | typescript-eslint.io | 4 |
+| `coding` | git-scm.com | 3 |
 | `coding` | web.dev | 3 |
 | `coding` | best.openssf.org | 2 |
 | `coding` | devguide.python.org | 2 |
+| `coding` | docs.pydantic.dev | 2 |
 | `coding` | eslint.org | 2 |
+| `coding` | go.dev | 2 |
+| `coding` | pyyaml.org | 2 |
+| `coding` | rust-lang.github.io | 2 |
+| `coding` | www.rfc-editor.org | 2 |
 | `coding` | www.shellcheck.net | 2 |
+| `coding` | yaml.org | 2 |
+| `coding` | 12factor.net | 1 |
+| `coding` | arxiv.org | 1 |
 | `coding` | biomejs.dev | 1 |
+| `coding` | check-jsonschema.readthedocs.io | 1 |
+| `coding` | community.owasp.org | 1 |
+| `coding` | doc.qt.io | 1 |
+| `coding` | docs.github.com | 1 |
 | `coding` | documentation.ubuntu.com | 1 |
-| `coding` | git-scm.com | 1 |
 | `coding` | git.kernel.org | 1 |
 | `coding` | gmplib.org | 1 |
-| `coding` | google.github.io | 1 |
 | `coding` | jinja.palletsprojects.com | 1 |
+| `coding` | json-schema.org | 1 |
 | `coding` | lists.gnu.org | 1 |
 | `coding` | llvm.org | 1 |
 | `coding` | man.freebsd.org | 1 |
 | `coding` | manpages.debian.org | 1 |
-| `coding` | mypy.readthedocs.io | 1 |
+| `coding` | martinfowler.com | 1 |
+| `coding` | neverworkintheory.org | 1 |
 | `coding` | oxc.rs | 1 |
 | `coding` | packages.debian.org | 1 |
+| `coding` | peps.python.org | 1 |
 | `coding` | pester.dev | 1 |
-| `coding` | pyyaml.org | 1 |
+| `coding` | registry.npmjs.org | 1 |
 | `coding` | savannah.gnu.org | 1 |
+| `coding` | services.nvd.nist.gov | 1 |
 | `coding` | sourceware.org | 1 |
+| `coding` | specifications.freedesktop.org | 1 |
 | `coding` | src.fedoraproject.org | 1 |
 | `coding` | support.apple.com | 1 |
+| `coding` | toml.io | 1 |
 | `coding` | valgrind.org | 1 |
 | `coding` | www.cisa.gov | 1 |
+| `coding` | www.freedesktop.org | 1 |
+| `coding` | www.kernel.org | 1 |
 | `coding` | www.open-std.org | 1 |
 | `coding` | www.powershellgallery.com | 1 |
-| `coding` | www.typescriptlang.org | 1 |
+| `coding` | www.unicode.org | 1 |
+| `coding` | yamllint.readthedocs.io | 1 |
+| `coding` | zod.dev | 1 |
 | `git-workflows` | docs.github.com | 46 |
 | `git-workflows` | git-scm.com | 18 |
 | `git-workflows` | raw.githubusercontent.com | 10 |

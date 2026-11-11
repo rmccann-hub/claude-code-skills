@@ -6,6 +6,11 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `coding` gains five modules: `code-style`, `types`, `input-handling`, `configuration` and
+  `config-formats`.
+
 ### Changed
 
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends

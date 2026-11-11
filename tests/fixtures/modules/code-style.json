@@ -1,0 +1,34 @@
+[
+  {
+    "query": "what should I call this function? it takes the unpaid invoices and emails a reminder to each customer, right now it's named proc_inv",
+    "should_trigger": true
+  },
+  {
+    "query": "review this module for readability: the names, the comments, and whether the 200-line function should be broken up",
+    "should_trigger": true
+  },
+  {
+    "query": "we want to adopt a formatter on an old repo. should the reformat go in the same PR as the bug fix I'm doing?",
+    "should_trigger": true
+  },
+  {
+    "query": "add docstrings to the public functions in utils.py, Google style",
+    "should_trigger": true
+  },
+  {
+    "query": "there's a lot of commented-out code and TODOs with no ticket in this service. what should I do with them?",
+    "should_trigger": true
+  },
+  {
+    "query": "my teammate's comments just repeat what each line does. how should comments be written instead?",
+    "should_trigger": true
+  },
+  {
+    "query": "turn on strict type checking for this Python package and fix the errors mypy reports",
+    "should_trigger": false
+  },
+  {
+    "query": "how should I lay out the folders for a new FastAPI service with a src directory and tests?",
+    "should_trigger": false
+  }
+]

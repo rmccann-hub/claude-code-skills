@@ -97,9 +97,9 @@ Grouped by subject; the Skill column is each module's one home.
 | `writing-style` | `house-style` | Prose and Markdown: voice, headings, lists, wrapping, code, tables, links, file names, a README's sections, words to cut, American spelling | shipped | core | R02 |
 | `prose-check` | `house-style` | The Vale check: the HouseStyle package, `.vale.ini`, the CI job with its canary, a repository's vocabulary, files left alone | shipped | core | R02 |
 | `documentation` | `house-style` | Docs sites, diagrams, file size and splitting, beyond the README sections, records and prose that `writing-style` covers | planned | core | R02 |
-| `code-style` | `coding` | Naming, formatting, structure, comments and docstrings | planned | core | R03 |
-| `types` | `coding` | Static and gradual typing, strictness, type checkers, types at trust boundaries | planned | core | R03 |
-| `input-handling` | `coding` | Validation, sanitization and output encoding by context | planned | core | R04 |
+| `code-style` | `coding` | Naming, formatting, structure, comments and docstrings | shipped | core | R03 |
+| `types` | `coding` | Static and gradual typing, strictness, type checkers, types at trust boundaries | shipped | core | R03 |
+| `input-handling` | `coding` | Validation, sanitization and output encoding by context | shipped | core | R04 |
 | `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | planned | core | R04 |
 | `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
 | `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
@@ -124,7 +124,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `legacy-modernization` | `architecture` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
 | `logging-and-observability` | `coding` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | planned | standard | R07 |
 | `performance-and-concurrency` | `coding` | Profiling, complexity, caching, async and threads | planned | standard | R07 |
-| `configuration` | `coding` | Layered config, environment variables, validation at startup, secret stores | planned | standard | R04 |
+| `configuration` | `coding` | Layered config, environment variables, validation at startup, secret stores | shipped | standard | R04 |
 | `architecture-and-design` | `architecture` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
 | `human-factors` | `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | planned | standard | R23 |
 | `usability-review` | `user-experience` | A heuristic review of a program's interface: status that's current, consistency, error prevention and recovery, recognition over recall, severity ratings | planned | standard | R27 |
@@ -162,7 +162,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `kotlin-coding` | `coding` | Kotlin | planned | standard | R13 |
 | `php-coding` | `coding` | PHP | planned | standard | R13 |
 | `ruby-coding` | `coding` | Ruby | planned | standard | R13 |
-| `config-formats` | `coding` | YAML, JSON, TOML, XML | planned | standard | R15 |
+| `config-formats` | `coding` | YAML, JSON, TOML, XML | shipped | standard | R15 |
 
 ### D. Languages from the past: read, maintain, modernize
 
@@ -307,7 +307,9 @@ palettes in `visual-design`, not in `excel-master`.
 ## Lessons waiting for their module
 
 What live repositories taught that belongs to a module not built yet. Each module takes its
-lessons in when it's built, and its reasons cite them.
+lessons in when it's built, and its reasons cite them. A lesson taken in stays here, marked
+with the module that took it, so its number still resolves, until the next split of this file
+moves it to the archive.
 
 - **L1, `testing-patterns`:** check the fact, not a symptom the failure path shares. When one check is
   re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
@@ -527,7 +529,7 @@ lessons in when it's built, and its reasons cite them.
   built a dependency at a 7-character prefix, never compared the full commit, and only warned
   on a dirty tree. An update is verified by provenance, not by a checksum published beside it,
   which anyone who can replace the file can replace too, and a downgrade is refused.
-- **L52, `input-handling`:** text from outside is escaped for where it lands: a terminal, a log
+- **L52, `input-handling`, taken in:** text from outside is escaped for where it lands: a terminal, a log
   another program parses, an issue an agent reads, a GUI that renders markup. One checker put
   a remote server's error text, unescaped, into a weekly issue that agents read.
 - **L53, `ai-agent-security`:** code and tests get the hidden-character scan that agent files
