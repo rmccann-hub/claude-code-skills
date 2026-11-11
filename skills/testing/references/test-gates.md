@@ -196,7 +196,7 @@ Severity uses the standard's status words.
   claimed a fix whose test handed the value straight to the renderer, while nothing in the app
   passed it on (L5).
 - **What it costs:** a slower test through more of the app.
-- **When to choose differently:** a unit test of the renderer stays; it just isn't the
+- **When to choose differently:** a unit test of the renderer stays; it isn't the
   regression test for the wiring.
 
 ## Facts
