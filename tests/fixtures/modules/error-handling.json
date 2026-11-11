@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Add retry logic to this function that calls the shipping API. It sometimes times out, and right now it just loops forever until it works.",
+    "should_trigger": true
+  },
+  {
+    "query": "My CLI exits 1 whether the search found nothing, the input file couldn't be read, or the user hit Ctrl-C. What exit codes should it use?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our REST endpoint returns 400 with a plain string when the database is down. What should the error response look like?",
+    "should_trigger": true
+  },
+  {
+    "query": "This validator wraps everything in try/except and returns an empty list of problems if anything throws. Is that a problem?",
+    "should_trigger": true
+  },
+  {
+    "query": "The lookup returns an empty list both when the part isn't in the database and when the query fails, and we skip a check on empty. How should it tell those apart?",
+    "should_trigger": true
+  },
+  {
+    "query": "When the upload fails, users see a Python traceback in the dialog. What should they see instead?",
+    "should_trigger": true
+  },
+  {
+    "query": "Make the app refuse to start if DATABASE_URL is missing or the port isn't a number, with an error naming the bad setting",
+    "should_trigger": false
+  },
+  {
+    "query": "Why doesn't my PowerShell catch block run when Get-Content can't find the file?",
+    "should_trigger": false
+  }
+]

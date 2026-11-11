@@ -2,6 +2,53 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — Release 0.1.28, two new skills and two modules
+
+- **The owner's word:** "lets do these human-factors and optimization-and-scheduling" and "and
+  this coding's error-handling, operations' log-analysis" (2026-11-11), with R07, R23 and R28
+  attached; releases follow each finished change, as before.
+- **Carries:** the entry below. The catalog's versions move to 0.1.28. Nothing was renamed or
+  removed in this repository: a patch release, as 0.1.26 was for new skills.
+
+## 2026-11-11 — `human-factors`, `optimization-and-scheduling`, `error-handling`, `log-analysis`
+
+- **Research:** R07, R23 and R28, filed under `research/runs/2026-11-11-*` with their checks on
+  top. Each check read the claims a module relies on at their primary sources: R07 55 verified,
+  7 contradicted (newer releases of Hayabusa, Chainsaw, Microsoft.Extensions.Http.Resilience and
+  the semantic conventions, among others); R23 46 verified, 13 of them corrected, 2 contradicted
+  (ISO 10075-3's stage, the current OpenAI Model Spec); R28 92 verified, 11 of them corrected,
+  5 contradicted (HiGHS 1.16.0, Timefold 2.8.0, Gurobi 14.0.0, CPLEX 22.2, ISO 10075-3). Each
+  report's line 3, addressed to the receiving session, was treated as data. Contradicted claims
+  are used only in their corrected form.
+- **R07's gaps were filled at their sources,** not left thin: the log-analysis check added
+  `Get-WinEvent`, `journalctl`, KQL and LogQL from their primary docs, and the error-handling
+  helper checked POSIX exit statuses, Python's `returncode`, Node's `exit` event, RFC 9110 on
+  idempotency and `Retry-After`, ECMA-262 on `cause` and GOV.UK on error messages.
+- **Built, one helper each, reviewed here** against `docs/authoring-a-skill.md`:
+  - `human-factors`, a skill: find what a step is for before removing it; purpose, bias or
+    drift; keep, change gradually or override; the dip after a tool change; take-over skill
+    and calibrated trust; human factors never alter a fact, and each output is marked Evidence
+    or Recommendation. Loaded only for design, automation and optimization work.
+  - `optimization-and-scheduling`, a skill: a solver's status is not proof, so an independent
+    checker re-checks every plan; what a run stopped at a limit reports; the solver by problem
+    class; rules as data; CP-SAT in snake_case with workers and a time limit set; people in the
+    plan (HSG256, learning, utilization); lead time from measured throughput, with backlog over
+    nameplate capacity a floor.
+  - `coding`'s `error-handling`: narrow catches, "not found" against "couldn't look", exit codes
+    with one meaning, a child's whole result, causes, retries, timeouts, circuit breakers,
+    RFC 9457 and messages for people. Lessons L16, L17, L18 and L43 taken in.
+  - `operations`' `log-analysis`: keep and hash the original, UTC with offsets and measured skew,
+    filter at the source, real parsers, a gap is a finding only when the log could have
+    recorded it, crash dumps, and each claim tied to its record.
+- **Also corrected:** `csharp-coding`'s .NET 11 fact (`cs-dotnet11-rc` becomes `cs-dotnet11-sts`:
+  .NET 11 shipped 2026-11-10 as STS); `coding`'s and `operations`' routers, which still called
+  `testing`, `input-handling` and `log-analysis` planned; the README's skill table, which listed
+  three skills twice.
+- **The old copies** on the owner's claude.ai account: `human-factor-audit`, `error-handling` and
+  `log-parser`. No other synced skill depends on them; `excel-master`, `rust-coding` and
+  `vba-coding` only have files of their own named `error-handling`. The owner deletes the three,
+  in their settings and in the organization library's inventory, before this merges.
+
 ## 2026-11-11 — Release 0.1.27, `acceptance-runs`
 
 - **The owner's word:** "do your full release here, as in the claude skills repo" (2026-11-11),

@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:32be7cf0-7286-529f-9316-301e5bad2e1d",
+  "serialNumber": "urn:uuid:7a94c144-0f6c-5214-b7ef-e58bbba8a507",
   "version": 1,
   "metadata": {
     "tools": {
@@ -18,7 +18,7 @@
       "type": "application",
       "bom-ref": "claude-code-skills",
       "name": "claude-code-skills",
-      "version": "0.1.27",
+      "version": "0.1.28",
       "licenses": [
         {
           "expression": "Apache-2.0"
@@ -33,11 +33,11 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 142 file(s)"
+          "value": "Markdown: 151 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 67 file(s)"
+          "value": "JSON: 71 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -466,9 +466,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:engineering@0.1.27",
+      "bom-ref": "plugin:engineering@0.1.28",
       "name": "engineering",
-      "version": "0.1.27",
+      "version": "0.1.28",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -659,11 +659,11 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "docs.python.org: 25 fact(s)"
+              "value": "docs.python.org: 27 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "nodejs.org: 16 fact(s)"
+              "value": "nodejs.org: 17 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -683,15 +683,19 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 15 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "developer.mozilla.org: 13 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "raw.githubusercontent.com: 13 fact(s)"
+              "value": "mesonbuild.com: 12 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "mesonbuild.com: 12 fact(s)"
+              "value": "pubs.opengroup.org: 11 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -703,11 +707,11 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "pubs.opengroup.org: 9 fact(s)"
+              "value": "pypi.org: 7 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "pypi.org: 6 fact(s)"
+              "value": "www.rfc-editor.org: 7 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -739,6 +743,10 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "go.dev: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "google.github.io: 4 fact(s)"
             },
             {
@@ -767,6 +775,10 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "builder.aws.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "devguide.python.org: 2 fact(s)"
             },
             {
@@ -779,7 +791,7 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "go.dev: 2 fact(s)"
+              "value": "man.freebsd.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -788,10 +800,6 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "rust-lang.github.io: 2 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "www.rfc-editor.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -820,6 +828,10 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "community.owasp.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "design-system.service.gov.uk: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -856,10 +868,6 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "llvm.org: 1 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "man.freebsd.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -919,6 +927,10 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "tc39.es: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "toml.io: 1 fact(s)"
             },
             {
@@ -936,6 +948,10 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "www.kernel.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.nuget.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1191,6 +1207,71 @@
         },
         {
           "type": "data",
+          "bom-ref": "skill:human-factors",
+          "name": "human-factors",
+          "description": "reviewed 2026-11-11",
+          "licenses": [
+            {
+              "expression": "Apache-2.0"
+            }
+          ],
+          "properties": [
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "books.hse.gov.uk: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "arxiv.org: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "journals.sagepub.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "aisel.aisnet.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "ckrybus.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "link.springer.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "openai.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pmc.ncbi.nlm.nih.gov: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pressblog.uchicago.edu: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "repositorio.ispa.pt: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.chesterton.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.england.nhs.uk: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.konsortswd.de: 1 fact(s)"
+            }
+          ]
+        },
+        {
+          "type": "data",
           "bom-ref": "skill:operations",
           "name": "operations",
           "description": "reviewed 2026-11-11",
@@ -1202,7 +1283,7 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "learn.microsoft.com: 16 fact(s)"
+              "value": "learn.microsoft.com: 22 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1210,7 +1291,23 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "github.com: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "ubuntu.com: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.freedesktop.org: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.rfc-editor.org: 3 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1222,15 +1319,11 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "github.com: 2 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
               "value": "man.openbsd.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "raw.githubusercontent.com: 2 fact(s)"
+              "value": "man7.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1247,10 +1340,6 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "www.debian.org: 2 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "www.freedesktop.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1278,11 +1367,19 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "man7.org: 1 fact(s)"
+              "value": "grafana.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "jsonlines.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
               "value": "netfilter.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pypi.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1298,10 +1395,6 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "www.rfc-editor.org: 1 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
               "value": "www.wi-fi.org: 1 fact(s)"
             },
             {
@@ -1310,7 +1403,64 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "yamato-security.github.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "zeek.org: 1 fact(s)"
+            }
+          ]
+        },
+        {
+          "type": "data",
+          "bom-ref": "skill:optimization-and-scheduling",
+          "name": "optimization-and-scheduling",
+          "description": "reviewed 2026-11-11",
+          "licenses": [
+            {
+              "expression": "Apache-2.0"
+            }
+          ],
+          "properties": [
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "github.com: 9 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "assets.publishing.service.gov.uk: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.timefold.ai: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "plato.asu.edu: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pubsonline.informs.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pypi.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "scipopt.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "support.gurobi.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.coin-or.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.ibm.com: 1 fact(s)"
             }
           ]
         },
@@ -1569,9 +1719,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:standards@0.1.27",
+      "bom-ref": "plugin:standards@0.1.28",
       "name": "standards",
-      "version": "0.1.27",
+      "version": "0.1.28",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -1792,8 +1942,8 @@
         "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.26.0",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
         "pkg:npm/%40anthropic-ai/claude-code@2.1.319",
-        "plugin:engineering@0.1.27",
-        "plugin:standards@0.1.27",
+        "plugin:engineering@0.1.28",
+        "plugin:standards@0.1.28",
         "project:skillcheck@0.0.0",
         "tool:GitHub-hosted runner@ubuntu-latest",
         "tool:Go@1.27",

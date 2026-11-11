@@ -1,0 +1,30 @@
+[
+  {
+    "query": "My CP-SAT job-shop model says OPTIMAL but the makespan looks too long. Can I trust it, and how would I prove the schedule is right?",
+    "should_trigger": true
+  },
+  {
+    "query": "Help me build a nurse roster for 40 staff over four weeks: nobody does more than three nights in a row, and people's weekend preferences count but aren't mandatory.",
+    "should_trigger": true
+  },
+  {
+    "query": "Our sales team quotes ship dates by dividing open orders by the plant's daily capacity, and we're always late. What should the formula be?",
+    "should_trigger": true
+  },
+  {
+    "query": "Which solver should I use for a lot-sizing MIP in Python now that PuLP stopped finding CBC after the upgrade?",
+    "should_trigger": true
+  },
+  {
+    "query": "The production planner hit its 60-second time limit. What should the report say about how good the plan is?",
+    "should_trigger": true
+  },
+  {
+    "query": "We want to automate the supervisors' manual whiteboard schedule. Before we replace it, what is the whiteboard actually doing for them?",
+    "should_trigger": false
+  },
+  {
+    "query": "Write pytest property-based tests for my date-parsing helper with Hypothesis.",
+    "should_trigger": false
+  }
+]

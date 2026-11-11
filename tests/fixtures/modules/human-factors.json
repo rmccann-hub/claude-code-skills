@@ -1,0 +1,37 @@
+[
+  {
+    "query": "We want to automate the step where finance re-keys every invoice into a second spreadsheet. It looks like pure waste. Anything to check before we cut it?",
+    "should_trigger": true
+  },
+  {
+    "query": "The warehouse team keeps using the old green-screen system even though the new app is faster. Should we force the switch, and how long will they be slower?",
+    "should_trigger": true
+  },
+  {
+    "query": "Operators keep silencing the overflow alarm. Management wants more training. Is that the right fix?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm designing a new intake workflow for the clinic. How do I tell which of the nurses' workarounds are there for a reason and which are just bad habits?",
+    "should_trigger": true
+  },
+  {
+    "query": "If we automate this inspection fully, how do we keep people able to take over when it breaks?",
+    "should_trigger": true
+  },
+  {
+    "query": "Build a weekly shift roster for 12 nurses that respects rest rules and keeps utilization under 85%.",
+    "should_trigger": false,
+    "note": "optimization-and-scheduling skill"
+  },
+  {
+    "query": "Review the settings dialog of my desktop app: which options confuse users, and what should the defaults be?",
+    "should_trigger": false,
+    "note": "user-experience skill"
+  },
+  {
+    "query": "Our new scheduling pipeline outputs labor totals. How can I check they're right when there's no known answer to compare against?",
+    "should_trigger": false,
+    "note": "testing skill, test-oracles module"
+  }
+]

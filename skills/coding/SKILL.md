@@ -85,6 +85,7 @@ the fact's row is in whichever module holds it.
 | [`input-handling`](references/input-handling.md) | Validating input at the trust boundary, allow-lists, parsing into types, canonicalizing paths, Unicode and URLs, size limits, and encoding output for HTML, SQL, shells, logs, terminals and CSV |
 | [`configuration`](references/configuration.md) | How a program takes its settings: precedence, one name per setting, validation at startup, typed config, environment variables, secrets from a store, required settings and feature flags |
 | [`config-formats`](references/config-formats.md) | YAML, JSON, TOML and XML: choosing a format, YAML's implicit types and safe loading, duplicate keys, large JSON numbers, schemas in CI, TOML versions, and parsing untrusted XML safely |
+| [`error-handling`](references/error-handling.md) | Any language: what to catch and where, "not found" against "couldn't look", exit codes and a child's exit status, causes, retries with backoff, timeouts, circuit breakers, RFC 9457 problem details, and messages people read |
 
 ## Check before you act
 
@@ -122,10 +123,10 @@ status words are the standard's:
 - **Dependencies as a supply chain:** lockfiles, provenance, invented package names and install
   scripts belong to a security skill's supply-chain-security module, planned in this
   repository.
-- **Designing tests:** a testing skill, planned. Each module here names its language's test
-  runner and leaves test design there.
-- **Escaping for logs and terminals, in detail:** planned `input-handling` and
-  `logging-and-observability` modules. The contract's third rule applies until they ship.
+- **Designing tests:** the `testing` skill. Each module here names its language's test runner
+  and leaves test design there.
+- **Escaping for logs and terminals, in detail:** `input-handling` here, and a planned
+  `logging-and-observability` module. The contract's third rule applies until it ships.
 - **Prose and Markdown:** house-style.
 
 ## Where this came from
