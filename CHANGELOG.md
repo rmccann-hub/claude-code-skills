@@ -30,6 +30,8 @@ Notable changes to this repository. The format follows
 
 ### Changed
 
+- The standard is v0.49.1: turn rules for two repositories reviewing each other, and secrets
+  from the environment or a secret store, preferring one the platform mounts.
 - `house-style`'s Vale rule for sentence-case headings accepts AI, GUI, HTML, KDE, MCP,
   OIDC, TODO, URL and XML, as it accepts JSON, SQL and YAML, and system names such as
   SELinux, systemd, WireGuard, Group Policy and AD CS.
