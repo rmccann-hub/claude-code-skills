@@ -119,8 +119,8 @@ Grouped by subject; the Skill column is each module's one home.
 | `releases-and-versions` | `git-workflows` | Release tags and workflows, changelog entries, version numbers, release lines and backports | shipped | core | R05 |
 | `leaked-data` | `git-workflows` | A secret or personal information in a commit: rotating, and rewriting history at the owner's request | shipped | core | R08 |
 | `gitignore` | `git-workflows` | `.gitignore` rules, secret files, lockfiles, untracking a file | shipped | core | R08 |
-| `ci-cd` | `git-workflows` | Environments and deployment, beyond the CI that `ci-workflows` and `ci-speed` cover | planned | core | R08, R21 |
-| `versioning-and-releases` | `git-workflows` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `releases-and-versions` covers | planned | core | R05 |
+| `ci-cd` | `git-workflows` | Environments and deployment, beyond the CI that `ci-workflows` and `ci-speed` cover | shipped | core | R08, R21 |
+| `versioning-and-releases` | `git-workflows` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `releases-and-versions` covers | shipped | core | R05 |
 | `legacy-modernization` | `architecture` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
 | `logging-and-observability` | `coding` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | planned | standard | R07 |
 | `performance-and-concurrency` | `coding` | Profiling, complexity, caching, async and threads | planned | standard | R07 |
@@ -307,7 +307,9 @@ palettes in `visual-design`, not in `excel-master`.
 ## Lessons waiting for their module
 
 What live repositories taught that belongs to a module not built yet. Each module takes its
-lessons in when it's built, and its reasons cite them.
+lessons in when it's built, and its reasons cite them. A lesson taken in stays here, marked
+with the module that took it, so its number still resolves, until the next split of this file
+moves it to the archive.
 
 - **L1, `testing-patterns`:** check the fact, not a symptom the failure path shares. When one check is
   re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
@@ -371,7 +373,7 @@ lessons in when it's built, and its reasons cite them.
   which fails on a new compiler's new warnings. Ask the binary whether it's instrumented: a
   test log looked sanitized while the binary wasn't. Argument shape is a probe axis of its
   own, and it found an overread both sanitizers missed.
-- **L24, `versioning-and-releases`:** a fork whose advancing part is SemVer build metadata
+- **L24, `versioning-and-releases`, taken in:** a fork whose advancing part is SemVer build metadata
   can't order its releases by version, since the specification ignores build metadata for
   precedence. Order by a release sequence.
 - **L25, `house-style`:** a claim takes the strongest verb its evidence supports and no

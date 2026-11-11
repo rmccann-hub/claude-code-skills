@@ -61,6 +61,8 @@ as fact `node20`, and the fact's row is in whichever module holds it.
 | [`leaked-data`](references/leaked-data.md) | a secret or personal information that reached a commit, and rewriting history to remove it |
 | [`gitignore`](references/gitignore.md) | writing or debugging `.gitignore`, ignoring secrets, committing lockfiles, or untracking a file |
 | [`pr-stewardship`](references/pr-stewardship.md) | writing or auditing a repository's steward skill, the file that tells agent sessions when to merge or hold a pull request, what to do about red or stalled CI, how to answer review, and what an owner's hold covers |
+| [`ci-cd`](references/ci-cd.md) | Deploying from GitHub Actions: environments and their gates, which refs may deploy, required reviewers, OIDC instead of cloud keys, one artifact promoted, one deploy at a time, smoke tests and rollback |
+| [`versioning-and-releases`](references/versioning-and-releases.md) | Release notes for people upgrading, a published support window, long-term support lines, security advisories and CVEs, deprecation timelines, and which release is marked latest |
 
 Tested examples to copy, each described in its module:
 

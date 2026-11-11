@@ -25,9 +25,9 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 104 |
+| Markdown | 106 |
 | Python | 53 |
-| JSON | 39 |
+| JSON | 41 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -172,33 +172,37 @@ again.
 | `coding` | www.open-std.org | 1 |
 | `coding` | www.powershellgallery.com | 1 |
 | `coding` | www.typescriptlang.org | 1 |
-| `git-workflows` | docs.github.com | 46 |
+| `git-workflows` | docs.github.com | 64 |
 | `git-workflows` | git-scm.com | 18 |
 | `git-workflows` | raw.githubusercontent.com | 10 |
 | `git-workflows` | github.blog | 7 |
 | `git-workflows` | code.claude.com | 4 |
+| `git-workflows` | keepachangelog.com | 4 |
 | `git-workflows` | docs.kernel.org | 3 |
 | `git-workflows` | pypi.org | 3 |
+| `git-workflows` | cli.github.com | 2 |
+| `git-workflows` | devguide.python.org | 2 |
 | `git-workflows` | docs.zizmor.sh | 2 |
 | `git-workflows` | github.com | 2 |
-| `git-workflows` | keepachangelog.com | 2 |
+| `git-workflows` | martinfowler.com | 2 |
+| `git-workflows` | nodejs.org | 2 |
+| `git-workflows` | peps.python.org | 2 |
 | `git-workflows` | rustc-dev-guide.rust-lang.org | 2 |
+| `git-workflows` | semver.org | 2 |
+| `git-workflows` | 12factor.net | 1 |
 | `git-workflows` | abseil.io | 1 |
 | `git-workflows` | blog.rust-lang.org | 1 |
 | `git-workflows` | chromium.googlesource.com | 1 |
-| `git-workflows` | cli.github.com | 1 |
 | `git-workflows` | cveawg.mitre.org | 1 |
-| `git-workflows` | devguide.python.org | 1 |
 | `git-workflows` | docs.astral.sh | 1 |
 | `git-workflows` | docs.prow.k8s.io | 1 |
 | `git-workflows` | dora.dev | 1 |
 | `git-workflows` | go.dev | 1 |
 | `git-workflows` | llvm.org | 1 |
-| `git-workflows` | martinfowler.com | 1 |
 | `git-workflows` | nvie.com | 1 |
 | `git-workflows` | pip.pypa.io | 1 |
 | `git-workflows` | semgrep.dev | 1 |
-| `git-workflows` | semver.org | 1 |
+| `git-workflows` | sre.google | 1 |
 | `git-workflows` | towncrier.readthedocs.io | 1 |
 | `git-workflows` | www.conventionalcommits.org | 1 |
 | `house-style` | developers.google.com | 5 |

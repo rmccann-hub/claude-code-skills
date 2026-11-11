@@ -1,0 +1,36 @@
+[
+  {
+    "query": "We deploy to AWS from GitHub Actions with an access key stored as a repo secret. How do we get rid of the key?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I make our production deploy workflow wait for someone to approve it, and stop people approving their own deploys?",
+    "should_trigger": true
+  },
+  {
+    "query": "Staging builds the Docker image, then production builds it again from the tag. Is that a problem?",
+    "should_trigger": true
+  },
+  {
+    "query": "Two merges landed a minute apart and both deploy jobs ran against prod at once. How do I stop that?",
+    "should_trigger": true
+  },
+  {
+    "query": "Last week's release broke the site and we couldn't roll back quickly. How should rollback work in our pipeline?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we deploy every merge to main, or only when we push a version tag?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our pull request CI takes 25 minutes. How do we speed it up without dropping tests?",
+    "should_trigger": false,
+    "note": "ci-speed"
+  },
+  {
+    "query": "Is it safe to use pull_request_target so fork PRs can post a comment with the test results?",
+    "should_trigger": false,
+    "note": "actions-security"
+  }
+]

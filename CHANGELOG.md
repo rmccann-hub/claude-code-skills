@@ -6,6 +6,11 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `git-workflows` gains `ci-cd` (environments, OIDC, promotion, rollback) and
+  `versioning-and-releases` (release notes, support windows, advisories).
+
 ### Changed
 
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends

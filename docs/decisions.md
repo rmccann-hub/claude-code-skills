@@ -2,6 +2,19 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — `git-workflows`' `ci-cd` and `versioning-and-releases`
+
+- **Asked, by the owner:** "finish what you can ... and anything else in the repo but partially
+  complete, to a fully complete stage" (2026-11-11). Both were planned, with research run on
+  2026-09-23 (R05, R08) and 2026-10-26 (R21), and never built.
+- **Built:** one helper agent per module, reviewed here. R08 lists environments as not
+  covered, and R05 is mostly supply chain, so both rest on primary sources fetched on
+  2026-11-11: GitHub Docs, Python's and Node's release schedules, PEP 387, Keep a Changelog,
+  Twelve-Factor, Google's SRE book and Fowler.
+- **Lesson taken in:** L24 (`versioning-and-releases`).
+- **Sources:** GitHub Docs (CC BY 4.0), the rest as each states. Facts in our own words, with
+  short quotes. Nothing adapted.
+
 ## 2026-11-10 — `user-experience` planned, and research for it and `review-loops`
 
 - **Asked, by the owner:** "lets make the testing-patterns and review-loops skills next ... what
