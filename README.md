@@ -62,6 +62,7 @@ To check another repository's prose against the house style, follow the house-st
 | `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
 | `house-style` | `engineering` | One style for prose and Markdown in every repository, with the reasons for each rule, and the Vale style and CI job that check it |
 | `testing` | `engineering` | Tests and checks a pass can be trusted from: proving a test, gate or grader can fail, checking results against an independent reference, scoring by the worst case, and flaky tests, with the reasons for each |
+| `user-experience` | `engineering` | How a desktop or web program behaves for its user: heuristic reviews with severity ratings, status that stays current, windows and dialogs that appear when they should, settings with good defaults and one place each, and GUI tests by machine and with people |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill

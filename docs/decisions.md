@@ -117,6 +117,26 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   and oasdiff. Facts in our own words, with short quotes. Nothing adapted.
 - **Draft #73:** its `review-loops` part is superseded by this; its `supply-chain-security`
   draft stays open there until R24 is run.
+## 2026-11-11 — `user-experience`, with four modules
+
+- **Asked, by the owner:** "what about a gui review and a gui end user use and a gui ease of
+  use type skill ... make sure things like windows dont start before they should or hide
+  things, or give you options in many places, or behind 20 options choices" (2026-11-10), then
+  "finish what you can" (2026-11-11). Planned in the decision of 2026-11-10 below.
+- **Built:** `usability-review`, `windows-and-dialogs`, `settings-and-options` and
+  `gui-testing`, one helper agent each, from R27's checked claims
+  (`research/runs/2026-11-10-R27-user-experience.md`) and the evidence from an audited desktop
+  application named in that decision. Reviewed here; two Audit tables' status words were
+  corrected to the standard's.
+- **What R27 changed:** choice overload is conditional, so the modules never cut a useful
+  option to shorten a list, which suits the owner's power-user programs; Apple no longer
+  forbids a modal on a modal; undo beats a confirmation; the platforms, not the toolkits, set
+  the guidelines; GTK 4 is driven through AT-SPI.
+- **This repository's own practice, said so where used,** since no primary source states them:
+  one place per setting, nothing shown before it's ready, and no verdict word over a failure.
+- **Sources:** NN/g and Apple (all rights reserved), KDE (CC BY-SA 4.0), GNOME (licence not
+  stated on its pages), Microsoft Learn, Qt (GFDL), GTK (LGPL), the choice-overload papers, and
+  each test tool's registry. Facts in our own words, with short quotes. Nothing adapted.
 - **Merged by the owner,** because `.claude/settings.json` turns off the new skill's installed
   copy here.
 

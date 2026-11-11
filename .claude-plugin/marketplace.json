@@ -36,7 +36,8 @@
         "./skills/coding",
         "./skills/git-workflows",
         "./skills/house-style",
-        "./skills/testing"
+        "./skills/testing",
+        "./skills/user-experience"
       ]
     }
   ]

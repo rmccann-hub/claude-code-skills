@@ -1,0 +1,34 @@
+[
+  {
+    "query": "How do I write automated tests for my PySide6 app that would catch a modal dialog opening behind the main window?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our GTK 4 app needs end-to-end UI tests in CI and gtk_test_widget_click doesn't exist anymore. What do I drive it with?",
+    "should_trigger": true
+  },
+  {
+    "query": "The status bar still says Passed after the next job starts. Write a test that would have caught that, without sleeps.",
+    "should_trigger": true
+  },
+  {
+    "query": "We got a SUS score of 70 from our testers. Is that good, and how should we run sessions with real users?",
+    "should_trigger": true
+  },
+  {
+    "query": "Pick a tool to drive our Windows desktop app from Python tests, and tell me which version to pin",
+    "should_trigger": true
+  },
+  {
+    "query": "Review our app's interface against Nielsen's heuristics and rate each problem by severity",
+    "should_trigger": false
+  },
+  {
+    "query": "Should the delete-profile confirmation be a modal dialog, and which button should be the default?",
+    "should_trigger": false
+  },
+  {
+    "query": "How do I mock the database in pytest and stop my integration tests from flaking?",
+    "should_trigger": false
+  }
+]
