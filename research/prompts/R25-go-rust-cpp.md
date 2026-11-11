@@ -1,6 +1,6 @@
 # RESEARCH RUN R25: Go, Rust and C++
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 27 October 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 27 October 2026, updated 10 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 27 October 2026.
+be current, precise and sourced. Today is 10 November 2026.
 
 This run informs these categories: go, rust, cpp, and legacy-languages (C++98).
 
@@ -38,7 +38,7 @@ C, which an earlier version of run R12 covered alongside these, now has R12 to i
 7. **Depth over breadth.** Finish the Priority questions fully. If you run out of room, list the
    rest under "Not covered".
 8. **Beliefs marked "(the standard, date)"** come from this repository's own standard,
-   PROJECT-BOOTSTRAP-AND-AUDIT v0.48.2, in its section of dated facts. Checking them also
+   PROJECT-BOOTSTRAP-AND-AUDIT v0.49.0, in its section of dated facts. Checking them also
    checks that standard, so say plainly when one is wrong.
 
 ## Output
@@ -70,12 +70,12 @@ Then these sections, in this order:
 - Go releases every February and August; Go 1.26 was released in February 2026; Go 1.27 was released or is due in August 2026; the two most recent releases are supported.
 - Go 1.23 added range-over-func iterators; 1.24 added testing.B.Loop, `tool` directives in go.mod and Swiss-table maps; 1.25 added testing/synctest, WaitGroup.Go, container-aware GOMAXPROCS and an experimental encoding/json/v2.
 - Go's official module layout guide does not endorse a `pkg/` directory.
-- (the standard, 2026-10) Rust 1.99.1 is current (2026-10-15), on edition 2024, and Cargo.lock is committed for libraries too, which reversed the advice in 2023.
+- (the standard, 2026-11) Rust 1.99.1 is current (2026-10-15), on edition 2024, and Cargo.lock is committed for libraries too, which reversed the advice in 2023.
 - Rust releases every six weeks; the 2024 edition was stabilized in Rust 1.85 (February 2025); let chains were stabilized in 1.88 for the 2024 edition.
 - thiserror 2 and anyhow are the standard error crates; cargo-deny, cargo-audit and cargo-vet cover the supply chain.
 - C++23 is published; C++26 was finalized in 2025-2026 with static reflection, contracts and std::execution.
 - CMake 4.0 removed compatibility with versions older than 3.5.
-- CISA and the NSA asked vendors to publish memory-safety roadmaps by 1 January 2026.
+- CISA and the FBI asked vendors, in non-binding guidance, to publish memory-safety roadmaps by the end of 2025.
 
 ## Questions
 

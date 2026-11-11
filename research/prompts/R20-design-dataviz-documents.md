@@ -1,6 +1,6 @@
 # RESEARCH RUN R20: Visual design, data visualization, documents and output formats
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026, updated 10 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 10 November 2026.
 
 This run informs these categories: visual-theme, data-visualization, documentation (output), word-documents (styling).
 
@@ -82,3 +82,4 @@ Then these sections, in this order:
 
 5. Typography: system font stacks, variable fonts, Office's default fonts (Aptos) and their availability outside Windows, font licensing (SIL OFL).
 6. Documents: accessible Word and PowerPoint (headings, alt text, tables, reading order), PDF/UA-2 and PDF 2.0 tooling, Markdown-to-document pipelines (Pandoc's current version, Quarto), Mermaid for diagrams.
+7. Generated reports: established practice for computing every figure and summary in a report from the same final data as the conclusion beside it (computed documents, such as Quarto), and for citing a figure from a tool at the version or commit that produced it, with sources.
