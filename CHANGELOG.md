@@ -6,6 +6,13 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- `testing`, a new skill: `test-gates` proves a test, gate, checker or grader can fail;
+  `test-oracles` covers what a result is checked against and scoring by the worst case;
+  `flaky-tests` covers tests that pass and fail on the same code. `ci-workflows`' gate cases
+  moved to `test-gates`.
+
 ### Changed
 
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends

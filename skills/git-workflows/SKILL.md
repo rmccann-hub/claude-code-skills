@@ -52,7 +52,7 @@ as fact `node20`, and the fact's row is in whichever module holds it.
 | [`commits-and-pull-requests`](references/commits-and-pull-requests.md) | writing a commit message, naming a branch, opening or reviewing a pull request, choosing and checking the commit grammar, or the address commits carry |
 | [`branches-and-merging`](references/branches-and-merging.md) | the branching model, protecting the default branch, choosing and enforcing the merge strategy, or moving off Git Flow or `master` |
 | [`rebasing-and-recovery`](references/rebasing-and-recovery.md) | deleting a branch, rebasing and pushing your own branch, conflicts and conflict markers, recovering a lost commit, leaving shared history alone, reading Git's paths with `-z`, or 64-character commit IDs |
-| [`ci-workflows`](references/ci-workflows.md) | a GitHub Actions workflow's triggers, timeouts, installs, path filters and required checks; proving a gate, a test job or a workflow works |
+| [`ci-workflows`](references/ci-workflows.md) | a GitHub Actions workflow's triggers, timeouts, installs, path filters and required checks; checking that a gate, a test job or a workflow ran |
 | [`ci-speed`](references/ci-speed.md) | how long CI should take, which suites run before and after merge, making CI faster without testing less, canceling superseded runs, caching builds, timing tests, and timeouts that come and go |
 | [`actions-security`](references/actions-security.md) | a workflow's permissions and credentials, untrusted input in a `run:` step, `pull_request_target` and `workflow_run`, approving fork runs, or linting and scanning workflows with actionlint, zizmor or CodeQL |
 | [`action-pinning`](references/action-pinning.md) | pinning a workflow's actions to commit SHAs, finding a tag's commit, workflow dependency lockfiles, Dependabot for actions and its cooldown, the SHA-pinning policy, or moving off Node 20 actions |
@@ -127,7 +127,7 @@ Workflows may end in `.yml` or `.yaml`, so every search covers both.
   - dimension 10, *Documentation, versioning and handoff*;
   - its release gate;
   - its starter CI file.
-- **How to design and write the tests CI runs:** that belongs to a testing skill. This one
+- **How to design and write the tests CI runs:** that belongs to the `testing` skill. This one
   covers the job that runs them, and proving that job ran.
 - **Git hosting administration:** servers, organizations, teams and Git LFS configuration.
 

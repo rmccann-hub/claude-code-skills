@@ -5,8 +5,8 @@ making CI faster without testing less, caching what a job builds, or a slow test
 or a timeout that comes and goes.
 
 It covers how long checks take and where they run. Triggers, timeouts on every job, installs,
-required checks and proving a gate are `ci-workflows`. How to design the tests themselves
-belongs to a testing skill.
+required checks and checking that a gate ran are `ci-workflows`. Proving a gate can fail, and
+flaky tests, belong to the `testing` skill.
 
 ## Rules
 
