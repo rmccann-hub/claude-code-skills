@@ -332,6 +332,38 @@ def test_fetch_returns_other_content_as_it_came(monkeypatch):
     assert facts.fetch_text("https://example.com/api") == body
 
 
+def test_fetch_refuses_a_pdf_rather_than_read_its_bytes_as_text(monkeypatch):
+    monkeypatch.setattr(
+        facts.urllib.request,
+        "urlopen",
+        lambda request, timeout: FakeResponse(b"%PDF-1.7 \x00\xff", "application/pdf"),
+    )
+    with pytest.raises(facts.NotText, match="application/pdf"):
+        facts.fetch_text("https://example.com/paper.pdf")
+
+
+def test_a_quote_whose_only_source_is_a_pdf_is_left_to_be_checked_by_hand():
+    calls: list[str] = []
+
+    def fetch(source: str) -> str:
+        calls.append(source)
+        raise facts.NotText("application/pdf")
+
+    assert list(facts.verify([fact("paper", "https://example.com/paper.pdf")], fetch)) == []
+    assert calls == ["https://example.com/paper.pdf"]
+
+
+def test_a_pdf_beside_a_page_still_has_its_quote_looked_for_on_the_page():
+    def fetch(source: str) -> str:
+        if source.endswith(".pdf"):
+            raise facts.NotText("application/pdf")
+        return "nothing like it"
+
+    checked = [fact("both", "https://example.com/paper.pdf", "https://example.com/page")]
+    [(_, problem)] = facts.verify(checked, fetch)
+    assert problem == 'the quote is no longer at its source: "a quote"'
+
+
 def test_fetch_runs_ls_remote_for_a_tag_source(monkeypatch):
     runs = []
 
