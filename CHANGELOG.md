@@ -8,6 +8,7 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- `agent-engineering` gains `agent-context-files` and `ai-agent-security`.
 - `agent-engineering`, a new skill, with `review-loops`: agent sessions reviewing each other's
   work, closing rounds on evidence, holding the turn by a compare-and-set, and stopping for a
   person.

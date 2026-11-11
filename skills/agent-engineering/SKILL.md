@@ -8,10 +8,10 @@ metadata:
 
 # Agent engineering
 
-How to build and run AI agents that work with each other and with people. Its first module is
-`review-loops`: agent sessions reviewing each other's work, within one repository or across two
-that depend on each other. Building skills, agent context files and defending agents against
-injection are planned modules (`skill-builder`, `agent-context-files`, `ai-agent-security`).
+How to build and run AI agents that work with each other and with people: the context files
+that steer a session, defending a session against text that tries to steer it, and agent
+sessions reviewing each other's work, within one repository or across two that depend on each
+other. Building and tuning skills is a planned module, `skill-builder`.
 Driving one repository's own pull requests to green is `git-workflows`' `pr-stewardship`; the
 standard's *Cross-repository contracts* section sets what an audit checks between repositories,
 and this skill says how the sessions meet it.
@@ -35,6 +35,8 @@ mistakes, audit checks, reasons, dated facts and sources.
 | Module | Read it for |
 |---|---|
 | [`review-loops`](references/review-loops.md) | Agent sessions reviewing each other's work: rounds and turns between two repositories, messages, closing a round on evidence, shared contracts, AI reviewers' findings, and stopping for a person |
+| [`agent-context-files`](references/agent-context-files.md) | Writing and keeping AGENTS.md, CLAUDE.md and rule files: what earns a line, hooks and deny rules for what must always or never happen, path-scoped rules, settings, subagents' tools, project MCP servers, other tools' files, and parallel helpers |
+| [`ai-agent-security`](references/ai-agent-security.md) | Prompt injection and what limits its reach, the lethal trifecta, permissions, sandboxes and network allow-lists, secrets kept out of context, MCP servers and skills as code you run, and hidden Unicode |
 
 ## When something here is wrong
 

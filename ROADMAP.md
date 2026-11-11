@@ -86,7 +86,7 @@ Grouped by subject; the Skill column is each module's one home.
 |---|---|---|---|---|---|
 | `keeping-current` | `project-bootstrap-and-audit` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | `agent-engineering` | Design, write, test and tune a skill | planned | core | done |
-| `agent-context-files` | `agent-engineering` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
+| `agent-context-files` | `agent-engineering` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | shipped | core | R01 |
 | `review-loops` | `agent-engineering` | Agent sessions in two repositories reviewing each other's work: the few rules that end rounds, the ones that cost more than they caught, and where agents have to stop for a person | shipped | core | R26 |
 
 ### B. Engineering practice, for every language
@@ -102,7 +102,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `input-handling` | `coding` | Validation, sanitization and output encoding by context | planned | core | R04 |
 | `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | planned | core | R04 |
 | `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
-| `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
+| `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | shipped | core | R01 |
 | `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
 | `testing-patterns` | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06, R06b |
 | `api-patterns` | `architecture` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
@@ -475,7 +475,7 @@ moves it to the archive.
   copied byte for byte by the other and checked by SHA-256, never retyped. Every hash in a
   message is pasted from a command's output: one draft's hash had its first 16 characters
   right and the rest invented.
-- **L39, `agent-context-files`:** parallel helper sessions pay for read-only audits, which found
+- **L39, `agent-context-files`, taken in:** parallel helper sessions pay for read-only audits, which found
   real defects, but not for running full test suites at once: seven on four cores pushed one
   suite past its limit. Helpers run their targeted tests, and one integrator runs the suite.
 - **L40, `documentation`:** a status block that code checks stays current, and prose that no
@@ -532,7 +532,7 @@ moves it to the archive.
 - **L52, `input-handling`:** text from outside is escaped for where it lands: a terminal, a log
   another program parses, an issue an agent reads, a GUI that renders markup. One checker put
   a remote server's error text, unescaped, into a weekly issue that agents read.
-- **L53, `ai-agent-security`:** code and tests get the hidden-character scan that agent files
+- **L53, `ai-agent-security`, taken in:** code and tests get the hidden-character scan that agent files
   get, and a test plants a hidden character as an escape, never as the character. Three tests
   held the characters they planted literally, and the repository's own scan skipped code. An
   agent writing escape sequences checks the bytes that landed: one agent's tool turned
@@ -552,7 +552,7 @@ moves it to the archive.
   unrelated phrase, a fixture holding a state the code can never reach, and a test-count
   baseline taken from a local run that CI's collection didn't match. Each case gets a planted
   test. `ci-workflows` is at 15,387 characters, so it splits before these go in.
-- **L57, `agent-context-files`:** parallel helper agents on one record collide: two took the
+- **L57, `agent-context-files`, taken in:** parallel helper agents on one record collide: two took the
   same task number, rows were duplicated, and a failure showed only on the combined tree. Each
   branch takes its own range of numbers, citations are restored from `-x` trailers, and the
   gate runs once on the combined tree.

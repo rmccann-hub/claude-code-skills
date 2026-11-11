@@ -2,6 +2,24 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — `agent-engineering`'s `agent-context-files` and `ai-agent-security`
+
+- **Asked, by the owner:** "finish what you can ... and anything else in the repo but partially
+  complete, to a fully complete stage" (2026-11-11). Both were planned, with R01 run on
+  2026-09-23, and never built.
+- **Built:** one helper agent per module, reviewed here. Claude Code and MCP change fast and
+  R01 is seven weeks old, so every fact was fetched again on 2026-11-11, with check-by dates
+  three months out for Claude Code's.
+- **Lessons taken in:** L39 and L57 (`agent-context-files`), L53 (`ai-agent-security`). L53
+  recurred while the module was written: a tool turned an escape for U+202E into the
+  character itself, twice, and `skillcheck` would have failed it.
+- **Found for a follow-up:** `skillcheck`'s hidden-character scan leaves out variation
+  selectors, which OWASP's 2026 list names as a way to hide instructions.
+- **Sources:** Claude Code's documentation (Anthropic's, restricted: facts in our own words),
+  OWASP (CC BY-SA 4.0: brief quotes), Simon Willison and Meta on the trifecta and the rule of
+  two, the MCP specification, GitHub's, Cursor's and Gemini's documentation, and the Trojan
+  Source paper. Nothing adapted.
+
 ## 2026-11-11 — `agent-engineering`, with `review-loops`
 
 - **Asked, by the owner:** "start on the skeleton of the review-loop too, this is important"

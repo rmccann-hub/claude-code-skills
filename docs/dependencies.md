@@ -26,9 +26,9 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 106 |
+| Markdown | 108 |
 | Python | 53 |
-| JSON | 40 |
+| JSON | 42 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -121,15 +121,24 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
-| `agent-engineering` | arxiv.org | 7 |
-| `agent-engineering` | code.claude.com | 1 |
-| `agent-engineering` | docs.github.com | 1 |
+| `agent-engineering` | code.claude.com | 23 |
+| `agent-engineering` | arxiv.org | 8 |
+| `agent-engineering` | docs.github.com | 2 |
+| `agent-engineering` | raw.githubusercontent.com | 2 |
+| `agent-engineering` | agents.md | 1 |
+| `agent-engineering` | ai.meta.com | 1 |
+| `agent-engineering` | cursor.com | 1 |
+| `agent-engineering` | cveawg.mitre.org | 1 |
+| `agent-engineering` | developers.openai.com | 1 |
 | `agent-engineering` | docs.pact.io | 1 |
+| `agent-engineering` | geminicli.com | 1 |
 | `agent-engineering` | git-scm.com | 1 |
 | `agent-engineering` | github.blog | 1 |
 | `agent-engineering` | google.github.io | 1 |
+| `agent-engineering` | invariantlabs.ai | 1 |
 | `agent-engineering` | martin.kleppmann.com | 1 |
 | `agent-engineering` | oasdiff.com | 1 |
+| `agent-engineering` | simonwillison.net | 1 |
 | `agent-engineering` | www.anthropic.com | 1 |
 | `coding` | learn.microsoft.com | 60 |
 | `coding` | docs.python.org | 19 |
