@@ -63,7 +63,7 @@ research. These rules are that structure.
 | `git-workflows` | `engineering` | Commits, branches, pull requests, CI, hooks, tags, changelogs and releases | shipped |
 | `house-style` | `engineering` | Writing prose, Markdown, READMEs and documentation | shipped |
 | `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | shipped |
-| `testing` | `engineering` | Writing, reviewing or fixing tests, and choosing a test strategy | planned |
+| `testing` | `engineering` | Writing, reviewing or fixing tests, and choosing a test strategy | shipped |
 | `architecture` | `engineering` | Designing systems, APIs, layouts and plans, and modernizing old code | planned |
 | `data` | `engineering` | SQL, schemas, migrations, indexes and transactions | planned |
 | `security` | `engineering` | Threat models, authentication, cryptography, dependencies and the supply chain, privacy and licenses | planned |
@@ -104,7 +104,10 @@ Grouped by subject; the Skill column is each module's one home.
 | `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
 | `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | planned | core | R01 |
 | `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
-| `testing-patterns` | `testing` | Strategy, test doubles, fixtures, property-based and mutation testing, flaky tests | planned | core | R06, R06b |
+| `testing-patterns` | `testing` | Strategy, test doubles, fixtures, coverage, property-based and mutation testing, each language's frameworks, hardware acceptance runs, fault injection | planned | core | R06, R06b |
+| `test-gates` | `testing` | Proving a test, gate, checker or grader can fail: the parent commit, a planted defect, the couldn't-check path, mutating the checker | shipped | core | R06 |
+| `test-oracles` | `testing` | What a result is checked against: independent references, recorded samples, baselines, scoring by the worst case | shipped | core | R06 |
+| `flaky-tests` | `testing` | A test that passes and fails on the same code: the cause, races in the program, quarantine, keeping a fix | shipped | core | R06 |
 | `api-patterns` | `architecture` | REST, OpenAPI, GraphQL, gRPC, auth flows, pagination, versioning, webhooks | planned | core | R19 |
 | `sql-craftsman` | `data` | Schema design, migrations, SQL style, indexing, transactions | planned | core | R14 |
 | `commits-and-pull-requests` | `git-workflows` | Commit grammar and messages, trailers, the author's address, branch names, pull requests and review comments | shipped | core | R08 |
@@ -311,12 +314,12 @@ lessons in when it's built, and its reasons cite them. A lesson taken in stays h
 with the module that took it, so its number still resolves, until the next split of this file
 moves it to the archive.
 
-- **L1, `testing-patterns`:** check the fact, not a symptom the failure path shares. When one check is
+- **L1, `test-gates`, taken in:** check the fact, not a symptom the failure path shares. When one check is
   re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
   live repository's acceptance step passed an identification because rows had loaded. They were
   the placeholders its app loads when a lookup finds nothing. A sibling check, re-keyed onto the
   identifier after the same symptom fooled it once before, caught it two steps later.
-- **L2, `testing-patterns`:** a test that needs outside data, such as an entry in a public catalog,
+- **L2, `test-oracles`, taken in:** a test that needs outside data, such as an entry in a public catalog,
   names the fixture it expects, and says so when the fixture is the cause. The same rig made
   three acceptance runs in 40 minutes, on two inputs the catalog didn't know. Each one read as
   a failed step, not as the wrong input.
@@ -326,31 +329,31 @@ moves it to the archive.
 - **L4, `logging-and-observability`:** an evidence bundle lists what it left out, and the raw
   facts each verdict was computed from. That bundle did both, so "nothing was missing" could be
   told from "nothing was collected", and a wrong label could be checked against its inputs.
-- **L5, `testing-patterns`:** a regression test for a wiring bug goes through the production entry
+- **L5, `test-gates`, taken in:** a regression test for a wiring bug goes through the production entry
   point. Four releases claimed a fix whose test handed the fact straight to the renderer, while
   nothing in the app ever passed it on.
-- **L6, `testing-patterns`:** grep for a call site before believing a documented capability. Four
+- **L6, `test-gates`, taken in:** grep for a call site before believing a documented capability. Four
   cancel methods were documented and never called.
-- **L7, `testing-patterns`:** a test asserts the invariant, not today's state, and a rule about releases
+- **L7, `test-gates`, taken in:** a test asserts the invariant, not today's state, and a rule about releases
   runs on the release path. A unit test blocked every commit during a review round, and didn't
   block the releases it was for.
-- **L8, `testing-patterns`:** the command typed locally stands in for CI's, so it matches CI's import
+- **L8, `test-gates`, taken in:** the command typed locally stands in for CI's, so it matches CI's import
   path and compiler flags. `python -m pytest` adds the current directory to `sys.path` and the
   `pytest` script doesn't; a bare `gcc` passed code the project's flags reject.
-- **L9, `testing-patterns`:** a gate never picks its subject by sort or directory order. The "newest
+- **L9, `test-gates`, taken in:** a gate never picks its subject by sort or directory order. The "newest
   verification" was whichever file the directory listed last.
-- **L10, `testing-patterns`:** a scripted edit with several parts asserts each part landed. One assert
+- **L10, `test-gates`, taken in:** a scripted edit with several parts asserts each part landed. One assert
   covered one replacement while the others silently did nothing.
 - **L11, `testing-patterns`:** a stand-in for hardware can be a fault-injection shim. An `LD_PRELOAD`
   shim that fails reads found a hang no drive run had, and reproduced a damaged disc on demand.
-- **L12, `testing-patterns`:** a parser that offline tests never reach is tested against a recorded
+- **L12, `test-oracles`, taken in:** a parser that offline tests never reach is tested against a recorded
   response. Tests that all ran offline left a network parser at 27% branch coverage, hiding
   three crashes.
-- **L13, `testing-patterns`:** an intermittent failure can be a race in the program, not the test. One
+- **L13, `flaky-tests`, taken in:** an intermittent failure can be a race in the program, not the test. One
   was a signal arriving after the loop, fixed in the program. This adds to F87.
-- **L14, `testing-patterns`:** filed evidence is read as a set of claims. Two defects sat for weeks in
+- **L14, `test-oracles`, taken in:** filed evidence is read as a set of claims. Two defects sat for weeks in
   logs both sides had filed and nobody had read.
-- **L15, `testing-patterns`:** a check is independent of another by the time between them, not the
+- **L15, `test-oracles`, taken in:** a check is independent of another by the time between them, not the
   date. Two checks on consecutive dates were 26 minutes apart.
 - **L16, `error-handling`:** a broad `try` around a whole validator fails open. One field of
   the wrong type made the validator return no errors, and a path-traversal template was saved.
@@ -434,7 +437,7 @@ moves it to the archive.
     and rule numbers were wrong by the time they were read. Each side caught them by checking
     its own tree.
 
-- **L31, `testing-patterns`:** a check must be able to fail, and these tests show it can:
+- **L31, `test-gates`, taken in:** a check must be able to fail, and these tests show it can:
   - it compares the whole value, and the value the document wrote. A checker that cut two
     hashes to 16 characters, and another that never read the hash a record wrote beside its
     citation, both passed a changed hash;
@@ -446,7 +449,7 @@ moves it to the archive.
     "complete" list built for one build left out a flag only the other build took;
   - a sweep over a population carries a minimum count, and each fix is reverted once to show
     its test fails. Two probes found tests that couldn't fail.
-- **L32, `testing-patterns`:** a flaky failure is fixed where it is, then a ratchet refuses the
+- **L32, `flaky-tests`, taken in:** a flaky failure is fixed where it is, then a ratchet refuses the
   pattern coming back: it fails closed on code it can't place, and its allowlist may only
   shrink. Two flakes from one directory walk racing a parallel worker's cleanup were the same
   shape, and a third had been written before the ratchet.
@@ -481,12 +484,12 @@ moves it to the archive.
 - **L40, `documentation`, taken in:** a status block that code checks stays current, and prose that no
   test reads drifts. One audit found 103 statements in a project's documentation that its
   tree no longer supported, and the checked block caught a stale line the same week.
-- **L41, `testing-patterns`:** a reference is checked against an independent authority before
+- **L41, `test-oracles`, taken in:** a reference is checked against an independent authority before
   matching it counts as correct. One project's test called matching another tool's output
   "parity", and called a re-read that converged on that output "the feature working". On that
   item the reference was wrong: the main checksum database disagreed at its highest
   confidence, and the project's own later audit said so.
-- **L42, `testing-patterns`:** a second source corroborates a result only when it's
+- **L42, `test-oracles`, taken in:** a second source corroborates a result only when it's
   independent of the first and carries weight. One app showed a green "verified" from a
   secondary database on 8 of 26 results whose primary check rejected a part. Each match was
   one entry, most likely from the same user and a read with the same fault, while over a
@@ -509,7 +512,7 @@ moves it to the archive.
 - **L46, `review-loops`:** a coordinator sends one file of record, naming each earlier file it
   replaces. Four reports went to two sessions in one day, each correcting the one before, so a
   reader holding an earlier one would have worked from a claim since withdrawn.
-- **L47, `testing-patterns`:** a reference's settings are read from its own artifacts before
+- **L47, `test-oracles`, taken in:** a reference's settings are read from its own artifacts before
   they're stated. A report said a baseline had run without a two-pass mode, and every log in
   that baseline carried the mode's second checksum.
 - **L48, `documentation`, taken in:** figures cited from a tool come from the implementation in use, at
@@ -519,7 +522,7 @@ moves it to the archive.
   that a step finished. "Copy OK", "confirmed across 3 re-reads" and "read successfully" were
   printed over tracks whose audio a checksum database showed was wrong, and readers took each
   as a verdict.
-- **L50, `testing-patterns`:** a tool that reports on its own output is scored by its worst
+- **L50, `test-oracles`, taken in:** a tool that reports on its own output is scored by its worst
   case, an output that's wrong and reported as fine, not by how many are right. Every output is
   checked against a source the tool doesn't control, and scored right, wrong but reported, or
   wrong and reported as fine. One scoring of 178 outputs found 14 wrong, and 9 of those
@@ -547,7 +550,7 @@ moves it to the archive.
   is renumbered by the commit that reached the reader's branch first, without asking the owner.
   A request the owner gives both sessions names one builder: both built the same test runner
   the same evening.
-- **L56, `testing-patterns`:** four more ways a gate passed its defect, beyond `ci-workflows`'
+- **L56, `test-gates`, taken in:** four more ways a gate passed its defect, beyond `ci-workflows`'
   *Prove a gate works*: a mangled key in a header, a pattern matching its word inside an
   unrelated phrase, a fixture holding a state the code can never reach, and a test-count
   baseline taken from a local run that CI's collection didn't match. Each case gets a planted

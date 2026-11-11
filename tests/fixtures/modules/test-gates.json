@@ -1,0 +1,34 @@
+[
+  {
+    "query": "I just wrote a CI check that makes sure the release workflow verifies the checksum before running the binary. It passes. How do I know it actually works?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our secret scanner says clean on every PR. How can I prove it would catch something?",
+    "should_trigger": true
+  },
+  {
+    "query": "My validation script exits 0 when the input file is missing. Is that a problem, and what should it do instead?",
+    "should_trigger": true
+  },
+  {
+    "query": "In my plugin eval, the grader that checks the skill fired always passes with the plugin. Should it count toward the score?",
+    "should_trigger": true
+  },
+  {
+    "query": "Tests pass on my machine with python -m pytest but fail in CI. Why would that be, and how do I keep them in step?",
+    "should_trigger": true
+  },
+  {
+    "query": "We fixed a bug where the setting never reached the renderer and added a test, but the bug came back. How should the regression test be written?",
+    "should_trigger": true
+  },
+  {
+    "query": "One of our integration tests fails about one run in twenty and passes on rerun. How do I track it down?",
+    "should_trigger": false
+  },
+  {
+    "query": "Our test says the output matches the reference tool's output exactly. Is matching that tool good enough to call it correct?",
+    "should_trigger": false
+  }
+]

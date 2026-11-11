@@ -38,6 +38,7 @@
     "skill-orchestrator": "off",
     "skill-stress-tester": "off",
     "slack-gif-creator": "off",
+    "testing": "off",
     "web-artifacts-builder": "off"
   }
 }

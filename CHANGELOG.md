@@ -14,6 +14,10 @@ Notable changes to this repository. The format follows
   `config-formats`.
 - `house-style`'s `documentation`: the four kinds of page, reference generated from code, docs
   checked in CI, diagrams as text, docs sites, and splitting long documents.
+- `testing`, a new skill: `test-gates` proves a test, gate, checker or grader can fail;
+  `test-oracles` covers what a result is checked against and scoring by the worst case;
+  `flaky-tests` covers tests that pass and fail on the same code. `ci-workflows`' gate cases
+  moved to `test-gates`.
 
 ### Changed
 

@@ -44,6 +44,30 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
 - **Sources:** Diátaxis, GitHub Docs (CC BY 4.0), Mermaid, MkDocs, Material, Zensical, Sphinx,
   Docusaurus, the Python and Rust documentation, and Django's contributing guide. Facts in our
   own words, with short quotes. Nothing adapted.
+## 2026-11-11 — `testing`, its first three modules
+
+- **Asked, by the owner:** "lets make the testing-patterns and review-loops skills next"
+  (2026-11-10), then "finish what you can" (2026-11-11).
+- **Built:** the skill `testing`, with `test-gates` (proving a test, gate, checker or grader
+  can fail), `test-oracles` (what a result is checked against, scoring by the worst case) and
+  `flaky-tests`. Each module was written by one helper agent from R06's checked claims
+  (`research/runs/2026-11-10-R06-testing.md`) and the roadmap's lessons, and reviewed here:
+  the Audit tables' status words were corrected to the standard's.
+- **Lessons taken in:** L1, L5 to L10, L31 and L56 (`test-gates`); L2, L12, L14, L15, L41,
+  L42, L47 and L50 (`test-oracles`); L13 and L32 (`flaky-tests`). They stay listed, marked
+  with the module that took them, so their numbers resolve. L11 waits for R06b.
+- **Moved:** `ci-workflows`' *Prove a gate works* cases to `test-gates`, which drops
+  `ci-workflows` from 15,387 to about 14,350 characters, under the 15,000 target.
+- **Sources:** Google's mutation-testing papers (arXiv's licence, and the authors'
+  copyright), Google's, Microsoft's and GitHub's published flaky-test practice, and Claude
+  Code's plugin-evals documentation (Anthropic's, restricted). Facts in our own words, with
+  short quotes. Nothing adapted under another licence.
+- **Not yet:** `testing-patterns` (strategy, doubles, fixtures, coverage, property-based and
+  mutation tools, each language's frameworks, hardware acceptance runs and fault injection)
+  waits for R06b. The old claude.ai skill `testing-patterns` stays until it ships, since it
+  still covers those; two synced skills, `go-coding` and `ruby-coding`, name it.
+- **Merged by the owner,** because `.claude/settings.json` turns off the new skill's installed
+  copy here.
 
 ## 2026-11-10 — `user-experience` planned, and research for it and `review-loops`
 
