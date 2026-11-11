@@ -6,6 +6,16 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.27] - 2026-11-11
+
+### Added
+
+- `testing` gains `acceptance-runs`: unattended acceptance runs on real hardware (a health
+  check before the run, a device lost mid-run kept apart from a product failure, the evidence a
+  run keeps) and fault injection for ordinary programs on Linux, macOS and Windows.
+- The research R06c (hardware acceptance runs, fault injection, test strategy) is filed with its
+  checks.
+
 ## [0.1.26] - 2026-11-11
 
 ### Added

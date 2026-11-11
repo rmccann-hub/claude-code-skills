@@ -1,6 +1,6 @@
 # Dependency map
 
-What `claude-code-skills` 0.1.26 is built from, runs on and relies on: the
+What `claude-code-skills` 0.1.27 is built from, runs on and relies on: the
 plugins it ships, the languages it's written in, its runtimes and tools, every package
 at its exact version, the GitHub Actions it pins, the services it uses, and the sources
 its skills' facts cite.
@@ -16,23 +16,23 @@ freshness run and the release workflow both run it.
 
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
-| `standards` | 0.1.26 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.1 |
-| `engineering` | 0.1.26 | Apache-2.0 | `agent-engineering` | reviewed 2026-11-11 |
-| `engineering` | 0.1.26 | Apache-2.0 | `architecture` | reviewed 2026-11-11 |
-| `engineering` | 0.1.26 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
-| `engineering` | 0.1.26 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
-| `engineering` | 0.1.26 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
-| `engineering` | 0.1.26 | Apache-2.0 | `operations` | reviewed 2026-11-11 |
-| `engineering` | 0.1.26 | Apache-2.0 | `security` | reviewed 2026-11-11 |
-| `engineering` | 0.1.26 | Apache-2.0 | `testing` | reviewed 2026-11-11 |
-| `engineering` | 0.1.26 | Apache-2.0 | `user-experience` | reviewed 2026-11-11 |
+| `standards` | 0.1.27 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.1 |
+| `engineering` | 0.1.27 | Apache-2.0 | `agent-engineering` | reviewed 2026-11-11 |
+| `engineering` | 0.1.27 | Apache-2.0 | `architecture` | reviewed 2026-11-11 |
+| `engineering` | 0.1.27 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
+| `engineering` | 0.1.27 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
+| `engineering` | 0.1.27 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
+| `engineering` | 0.1.27 | Apache-2.0 | `operations` | reviewed 2026-11-11 |
+| `engineering` | 0.1.27 | Apache-2.0 | `security` | reviewed 2026-11-11 |
+| `engineering` | 0.1.27 | Apache-2.0 | `testing` | reviewed 2026-11-11 |
+| `engineering` | 0.1.27 | Apache-2.0 | `user-experience` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 139 |
-| JSON | 66 |
+| Markdown | 141 |
+| JSON | 67 |
 | Python | 53 |
 | YAML | 23 |
 | Shell | 4 |
@@ -324,8 +324,11 @@ again.
 | `security` | www.threatmodelingmanifesto.org | 1 |
 | `testing` | arxiv.org | 9 |
 | `testing` | code.claude.com | 8 |
+| `testing` | gitlab.com | 4 |
 | `testing` | testing.googleblog.com | 4 |
 | `testing` | github.blog | 3 |
+| `testing` | raw.githubusercontent.com | 3 |
+| `testing` | docs.kernelci.org | 2 |
 | `testing` | docs.pytest.org | 2 |
 | `testing` | pypi.org | 2 |
 | `testing` | registry.npmjs.org | 2 |
@@ -333,15 +336,20 @@ again.
 | `testing` | www.anthropic.com | 2 |
 | `testing` | www.microsoft.com | 2 |
 | `testing` | api.nuget.org | 1 |
+| `testing` | blitiri.com.ar | 1 |
 | `testing` | coverage.readthedocs.io | 1 |
 | `testing` | crates.io | 1 |
+| `testing` | developer.apple.com | 1 |
 | `testing` | docs.cypress.io | 1 |
 | `testing` | docs.pact.io | 1 |
 | `testing` | go.dev | 1 |
 | `testing` | growing-object-oriented-software.com | 1 |
 | `testing` | jestjs.io | 1 |
+| `testing` | lava.readthedocs.io | 1 |
+| `testing` | learn.microsoft.com | 1 |
+| `testing` | man7.org | 1 |
+| `testing` | open.qa | 1 |
 | `testing` | pester.dev | 1 |
-| `testing` | raw.githubusercontent.com | 1 |
 | `testing` | repo.packagist.org | 1 |
 | `testing` | repo1.maven.org | 1 |
 | `testing` | rubygems.org | 1 |

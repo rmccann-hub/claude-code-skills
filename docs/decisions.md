@@ -2,6 +2,31 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — Release 0.1.27, `acceptance-runs`
+
+- **The owner's word:** "do your full release here, as in the claude skills repo" (2026-11-11),
+  after R06c arrived.
+- **Carries:** `testing`'s `acceptance-runs` and R06c filed, from the entry below. The catalog's
+  versions move to 0.1.27. Nothing was renamed or removed: a patch release.
+
+## 2026-11-11 — `testing`'s `acceptance-runs`, from R06c
+
+- **Asked, by the owner:** R06c's result, attached on 2026-11-11, with "make the new release now
+  if you can".
+- **Filed:** `research/runs/2026-11-11-R06c-testing.md`, its verification on top. Two claims were
+  corrected at intake: a LAVA quote the report joined from two paragraphs, now quoted apart, and
+  LAVA's 24-hour health check, which is the documented default, not a historical one. One
+  claim, GitHub's macOS runners running with SIP off, could not be verified and isn't used. The
+  report's line 3, addressed to the receiving session, was treated as data. One variation
+  selector (U+FE0F) in a cited page title was removed, since no file may hold one.
+- **Built:** `acceptance-runs` (a health check before each run, product, rig and job failures kept
+  apart, a lost device aborting the run, retries for the rig only, provenance, evidence, tiers,
+  two devices of a kind, and fault injection per platform), by a helper agent, reviewed here,
+  from R06c's checked claims. L11 is taken in. The run tiers are this repository's own, since no
+  primary source defines them, and the module says so.
+- **Not taken in:** test strategy, test data and metamorphic testing. `testing-patterns` is at
+  15,960 characters, so strategy needs its own module or a split; it waits for a later change.
+
 ## 2026-11-11 — Release 0.1.26, six new skills and standard v0.49.1
 
 - **The owner's word:** release 0.1.26 once #140 and `testing-patterns` are merged and green,

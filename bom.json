@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:565e54d8-9c66-5ba5-841b-18e786acd7d9",
+  "serialNumber": "urn:uuid:2107c94e-3de3-5835-9dee-70aa2bfdbfd7",
   "version": 1,
   "metadata": {
     "tools": {
@@ -18,7 +18,7 @@
       "type": "application",
       "bom-ref": "claude-code-skills",
       "name": "claude-code-skills",
-      "version": "0.1.26",
+      "version": "0.1.27",
       "licenses": [
         {
           "expression": "Apache-2.0"
@@ -33,11 +33,11 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 139 file(s)"
+          "value": "Markdown: 141 file(s)"
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 66 file(s)"
+          "value": "JSON: 67 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -466,9 +466,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:engineering@0.1.26",
+      "bom-ref": "plugin:engineering@0.1.27",
       "name": "engineering",
-      "version": "0.1.26",
+      "version": "0.1.27",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -1372,11 +1372,23 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "gitlab.com: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "testing.googleblog.com: 4 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
               "value": "github.blog: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.kernelci.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1408,11 +1420,19 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "blitiri.com.ar: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "coverage.readthedocs.io: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
               "value": "crates.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "developer.apple.com: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1436,11 +1456,23 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "pester.dev: 1 fact(s)"
+              "value": "lava.readthedocs.io: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "raw.githubusercontent.com: 1 fact(s)"
+              "value": "learn.microsoft.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "man7.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "open.qa: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "pester.dev: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -1537,9 +1569,9 @@
     },
     {
       "type": "application",
-      "bom-ref": "plugin:standards@0.1.26",
+      "bom-ref": "plugin:standards@0.1.27",
       "name": "standards",
-      "version": "0.1.26",
+      "version": "0.1.27",
       "description": "A Claude Code plugin from this repository's catalog.",
       "licenses": [
         {
@@ -1760,8 +1792,8 @@
         "pkg:golang/github.com/vale-cli/vale/v3/cmd/vale@v3.26.0",
         "pkg:golang/github.com/zricethezav/gitleaks/v8@v8.30.1",
         "pkg:npm/%40anthropic-ai/claude-code@2.1.319",
-        "plugin:engineering@0.1.26",
-        "plugin:standards@0.1.26",
+        "plugin:engineering@0.1.27",
+        "plugin:standards@0.1.27",
         "project:skillcheck@0.0.0",
         "tool:GitHub-hosted runner@ubuntu-latest",
         "tool:Go@1.27",
