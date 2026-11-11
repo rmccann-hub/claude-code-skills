@@ -53,7 +53,10 @@ and dependencies. A second version of a published rule drifts from the first.
    - Material under another license comes in with its notice: name the license in the `license`
      field and keep a `THIRD-PARTY-NOTICES.md` in the skill's directory.
    - Anthropic's Apache-2.0 skills may be adapted, keeping their notice and marking the changes.
-   - Nothing from Anthropic's source-available document skills (docx, pdf, pptx, xlsx).
+   - Anthropic's document skills (docx, pdf, pptx, xlsx) were source-available, and their
+     license files now say Apache-2.0 (read 2026-11-11). Adapt them like its other skills,
+     but only from a pinned commit whose license file you read at that commit, and name the
+     commit in the notice.
 4. **No secrets and no company detail.** Use placeholders:
    - `example.com` and its subdomains (RFC 2606) for hosts;
    - `192.0.2.0/24`, `198.51.100.0/24` and `203.0.113.0/24` (RFC 5737) for addresses;

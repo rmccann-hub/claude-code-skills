@@ -75,8 +75,8 @@ Each says what fails when it's broken. One that names nothing is advice: nothing
 - **The plan lives in `ROADMAP.md` alone:** no progress, handoff or plan files. A handoff for
   another session lives outside the repository, marked transient, with an expiry. Nothing checks it.
 - **Third-party material comes in only under its license,** in the skill's `license` field, a
-  `THIRD-PARTY-NOTICES.md` and `docs/decisions.md`; none from Anthropic's source-available
-  document skills. Nothing checks it.
+  `THIRD-PARTY-NOTICES.md` and `docs/decisions.md`; Anthropic's document skills only from a
+  pinned commit whose license file says Apache-2.0. Nothing checks it.
 - **This repository is public.** Nothing work-owned is committed without a `docs/decisions.md`
   entry naming who permitted it; company detail belongs in the consuming repository's
   `.claude/skills/`. A repository a skill ran on goes unnamed, even by a findable quote, unless
