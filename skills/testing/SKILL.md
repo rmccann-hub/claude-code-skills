@@ -18,6 +18,9 @@ strategy, test doubles, fixtures, coverage and each language's frameworks are th
 
 ## What applies to every module
 
+These summarize the modules; each module holds the cases, the fixes and the reasons, so read
+the one that fits before answering.
+
 1. **A check you've only seen pass proves nothing yet.** See it fail on the defect it exists to
    catch before trusting its pass.
 2. **"Couldn't check" is a failure,** never a pass: a missing input, an empty range or a tool
