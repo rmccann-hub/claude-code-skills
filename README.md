@@ -57,6 +57,7 @@ To check another repository's prose against the house style, follow the house-st
 | Skill | Plugin | What it does |
 |---|---|---|
 | `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.49.0) |
+| `agent-engineering` | `engineering` | AI agent sessions reviewing each other's work: closing rounds on evidence, holding the turn, one builder per request, contracts both sides check, AI reviewers' findings, and where agents stop for a person, with the reasons and the research behind each |
 | `coding` | `engineering` | The contract every code change meets, then Python, TypeScript and JavaScript, HTML and CSS, C# and .NET, PowerShell, and Bash: rules, common mistakes, review checks and the reasons for each, with dated facts |
 | `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
 | `house-style` | `engineering` | One style for prose and Markdown in every repository, with the reasons for each rule, and the Vale style and CI job that check it |

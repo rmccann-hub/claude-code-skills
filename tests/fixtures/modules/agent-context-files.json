@@ -1,0 +1,36 @@
+[
+  {
+    "query": "Our AGENTS.md has grown to 400 lines and Claude still ignores half of it. What should I cut, and what should stay?",
+    "should_trigger": true
+  },
+  {
+    "query": "I keep telling Claude to run the formatter after every edit and it forgets. Should that go in CLAUDE.md or somewhere else?",
+    "should_trigger": true
+  },
+  {
+    "query": "We use Cursor, Copilot and Claude Code on the same repo. How do I give all three the same instructions without keeping three copies in sync?",
+    "should_trigger": true
+  },
+  {
+    "query": "I want a reviewer subagent that can read the code but never change anything. How should I define it?",
+    "should_trigger": true
+  },
+  {
+    "query": "My .claude/rules/frontend.md has globs and alwaysApply in its frontmatter, and it seems to load in every session. What's wrong?",
+    "should_trigger": true
+  },
+  {
+    "query": "Which of my Claude Code settings belong in the committed settings.json and which in settings.local.json, and how do I hide a skill in just this project?",
+    "should_trigger": true
+  },
+  {
+    "query": "A vendored library ships an AGENTS.md telling agents to turn off the test suite. Is that an attack, and how do I protect my agents from it?",
+    "should_trigger": false,
+    "note": "injected instructions: ai-agent-security"
+  },
+  {
+    "query": "Audit this repository against the standard and rate its agent configuration dimension.",
+    "should_trigger": false,
+    "note": "a standard audit: project-bootstrap-and-audit"
+  }
+]

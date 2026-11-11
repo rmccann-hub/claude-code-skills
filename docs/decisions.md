@@ -66,6 +66,57 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   mutation tools, each language's frameworks, hardware acceptance runs and fault injection)
   waits for R06b. The old claude.ai skill `testing-patterns` stays until it ships, since it
   still covers those; two synced skills, `go-coding` and `ruby-coding`, name it.
+## 2026-11-11 — `agent-engineering`'s `skill-builder`
+
+- **Asked, by the owner:** "finish what you can ... to a fully complete stage" (2026-11-11).
+  Planned since the skill-authoring research of 2026-09-23, marked "done" on the roadmap.
+- **Built:** by one helper agent, reviewed here, from the Agent Skills specification,
+  Anthropic's skill documentation, Claude Code's plugin-evals page, and this repository's own
+  process (`docs/authoring-a-skill.md`, `skillcheck`), every fact fetched on 2026-11-11.
+- **Found:** Anthropic's skills README now says its document skills are Apache-2.0 too.
+  AGENTS.md's rule against taking anything from them stands; whether its reason still holds
+  is the owner's question.
+- **Sources:** agentskills.io, Anthropic's documentation (restricted: facts in our own words),
+  and Anthropic's skill-creator (Apache-2.0, a reference only: nothing copied).
+
+## 2026-11-11 — `agent-engineering`'s `agent-context-files` and `ai-agent-security`
+
+- **Asked, by the owner:** "finish what you can ... and anything else in the repo but partially
+  complete, to a fully complete stage" (2026-11-11). Both were planned, with R01 run on
+  2026-09-23, and never built.
+- **Built:** one helper agent per module, reviewed here. Claude Code and MCP change fast and
+  R01 is seven weeks old, so every fact was fetched again on 2026-11-11, with check-by dates
+  three months out for Claude Code's.
+- **Lessons taken in:** L39 and L57 (`agent-context-files`), L53 (`ai-agent-security`). L53
+  recurred while the module was written: a tool turned an escape for U+202E into the
+  character itself, twice, and `skillcheck` would have failed it.
+- **Found for a follow-up:** `skillcheck`'s hidden-character scan leaves out variation
+  selectors, which OWASP's 2026 list names as a way to hide instructions.
+- **Sources:** Claude Code's documentation (Anthropic's, restricted: facts in our own words),
+  OWASP (CC BY-SA 4.0: brief quotes), Simon Willison and Meta on the trifecta and the rule of
+  two, the MCP specification, GitHub's, Cursor's and Gemini's documentation, and the Trojan
+  Source paper. Nothing adapted.
+
+## 2026-11-11 — `agent-engineering`, with `review-loops`
+
+- **Asked, by the owner:** "start on the skeleton of the review-loop too, this is important"
+  (2026-10-21), "lets make the testing-patterns and review-loops skills next" (2026-11-10),
+  and "finish what you can" (2026-11-11).
+- **Built:** the skill `agent-engineering`, with its first module, `review-loops`, from draft
+  #73's skeleton, eleven of the roadmap's lessons (L26, L28, L30, L35 to L38, L45, L46, L54,
+  L55) and R26's checked claims (`research/runs/2026-11-10-R26-review-loops.md`). One helper
+  agent finished the module; it was reviewed here.
+- **R26 changed the draft:** a round closes on evidence, not agreement, since voting explains
+  most of debate's gains and agents talk each other out of right answers; turn and stop rules
+  stay, since MAST counts inter-agent misalignment and unawareness of termination among the
+  failures; and the turn is held by a compare-and-set, a push that lands only if the branch
+  hasn't moved, with the turn number as a fencing token. That revises proposal D, still the
+  owner's to answer for the standard: a convention alone orders crossings but prevents none.
+- **Sources:** arXiv papers under CC BY 4.0 and CC BY-NC-ND 4.0 (quoted, never adapted),
+  Anthropic's and GitHub's documentation, Google's review guide, Kleppmann, Git's manual, Pact
+  and oasdiff. Facts in our own words, with short quotes. Nothing adapted.
+- **Draft #73:** its `review-loops` part is superseded by this; its `supply-chain-security`
+  draft stays open there until R24 is run.
 - **Merged by the owner,** because `.claude/settings.json` turns off the new skill's installed
   copy here.
 

@@ -17,18 +17,18 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.25 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.0 |
+| `engineering` | 0.1.25 | Apache-2.0 | `agent-engineering` | reviewed 2026-11-11 |
 | `engineering` | 0.1.25 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
 | `engineering` | 0.1.25 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.25 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
-| `engineering` | 0.1.25 | Apache-2.0 | `testing` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 108 |
+| Markdown | 109 |
 | Python | 53 |
-| JSON | 42 |
+| JSON | 43 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -121,6 +121,28 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
+| `agent-engineering` | code.claude.com | 27 |
+| `agent-engineering` | arxiv.org | 8 |
+| `agent-engineering` | agentskills.io | 5 |
+| `agent-engineering` | raw.githubusercontent.com | 3 |
+| `agent-engineering` | docs.github.com | 2 |
+| `agent-engineering` | platform.claude.com | 2 |
+| `agent-engineering` | agents.md | 1 |
+| `agent-engineering` | ai.meta.com | 1 |
+| `agent-engineering` | cursor.com | 1 |
+| `agent-engineering` | cveawg.mitre.org | 1 |
+| `agent-engineering` | developers.openai.com | 1 |
+| `agent-engineering` | docs.pact.io | 1 |
+| `agent-engineering` | geminicli.com | 1 |
+| `agent-engineering` | git-scm.com | 1 |
+| `agent-engineering` | github.blog | 1 |
+| `agent-engineering` | google.github.io | 1 |
+| `agent-engineering` | invariantlabs.ai | 1 |
+| `agent-engineering` | martin.kleppmann.com | 1 |
+| `agent-engineering` | oasdiff.com | 1 |
+| `agent-engineering` | simonwillison.net | 1 |
+| `agent-engineering` | support.claude.com | 1 |
+| `agent-engineering` | www.anthropic.com | 1 |
 | `coding` | learn.microsoft.com | 60 |
 | `coding` | docs.python.org | 19 |
 | `coding` | nodejs.org | 16 |
@@ -210,9 +232,3 @@ again.
 | `house-style` | github.com | 1 |
 | `house-style` | pubs.opengroup.org | 1 |
 | `house-style` | www.gov.uk | 1 |
-| `testing` | code.claude.com | 6 |
-| `testing` | github.blog | 3 |
-| `testing` | testing.googleblog.com | 3 |
-| `testing` | www.microsoft.com | 2 |
-| `testing` | arxiv.org | 1 |
-| `testing` | research.google.com | 1 |

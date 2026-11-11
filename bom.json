@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:933a2ac9-a566-5203-903c-8ce4a49d94f0",
+  "serialNumber": "urn:uuid:9f19f8e8-1194-5a6b-9b2c-c93b0b71c46f",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 108 file(s)"
+          "value": "Markdown: 109 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 42 file(s)"
+          "value": "JSON: 43 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -478,6 +478,107 @@
       "components": [
         {
           "type": "data",
+          "bom-ref": "skill:agent-engineering",
+          "name": "agent-engineering",
+          "description": "reviewed 2026-11-11",
+          "licenses": [
+            {
+              "expression": "Apache-2.0"
+            }
+          ],
+          "properties": [
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "code.claude.com: 27 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "arxiv.org: 8 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "agentskills.io: 5 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.github.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "platform.claude.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "agents.md: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "ai.meta.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "cursor.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "cveawg.mitre.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "developers.openai.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.pact.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "geminicli.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "git-scm.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "github.blog: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "google.github.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "invariantlabs.ai: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "martin.kleppmann.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "oasdiff.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "simonwillison.net: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "support.claude.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.anthropic.com: 1 fact(s)"
+            }
+          ]
+        },
+        {
+          "type": "data",
           "bom-ref": "skill:coding",
           "name": "coding",
           "description": "reviewed 2026-10-27",
@@ -868,43 +969,6 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "www.gov.uk: 1 fact(s)"
-            }
-          ]
-        },
-        {
-          "type": "data",
-          "bom-ref": "skill:testing",
-          "name": "testing",
-          "description": "reviewed 2026-11-11",
-          "licenses": [
-            {
-              "expression": "Apache-2.0"
-            }
-          ],
-          "properties": [
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "code.claude.com: 6 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "github.blog: 3 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "testing.googleblog.com: 3 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "www.microsoft.com: 2 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "arxiv.org: 1 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "research.google.com: 1 fact(s)"
             }
           ]
         }

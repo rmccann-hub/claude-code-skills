@@ -18,6 +18,11 @@ Notable changes to this repository. The format follows
   `test-oracles` covers what a result is checked against and scoring by the worst case;
   `flaky-tests` covers tests that pass and fail on the same code. `ci-workflows`' gate cases
   moved to `test-gates`.
+- `agent-engineering` gains `skill-builder`: designing, testing and tuning an Agent Skill.
+- `agent-engineering` gains `agent-context-files` and `ai-agent-security`.
+- `agent-engineering`, a new skill, with `review-loops`: agent sessions reviewing each other's
+  work, closing rounds on evidence, holding the turn by a compare-and-set, and stopping for a
+  person.
 
 ### Changed
 
