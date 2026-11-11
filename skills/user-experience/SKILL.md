@@ -18,6 +18,9 @@ design to `testing`.
 
 ## What applies to every module
 
+These summarize the modules; each module holds the cases, the checks and the reasons, so read
+the one that fits before answering.
+
 1. **Follow the platform's guidelines,** GNOME's, KDE's, Apple's or Microsoft's, over a
    toolkit's defaults or a habit from another platform. The platforms set the rules; toolkits
    implement them.
@@ -38,9 +41,9 @@ mistakes, audit checks, reasons, dated facts and sources.
 
 | Module | Read it for |
 |---|---|
-| [`usability-review`](references/usability-review.md) | A heuristic review of an interface, with severity ratings; status and feedback that stay current; error prevention and recovery; shortcuts for experts |
-| [`windows-and-dialogs`](references/windows-and-dialogs.md) | When a window or dialog should appear, modality, parents and focus, default buttons, one dialog at a time, nothing hidden or shown before it's ready, long operations |
-| [`settings-and-options`](references/settings-and-options.md) | Defaults and presets, progressive disclosure, each setting in one place with one meaning, how many choices is too many, and power users' options |
+| [`usability-review`](references/usability-review.md) | Reviewing a program for what would confuse or annoy its users, with severity ratings; status and feedback that stay current; error messages; preventing and undoing destructive actions; making frequent actions faster for experts without removing options |
+| [`windows-and-dialogs`](references/windows-and-dialogs.md) | When a window or dialog should appear; modality, parents and focus; default buttons; one dialog at a time (Qt, GTK, WinUI's ContentDialog, Apple); nothing hidden behind another or shown before it's ready; reviewing dialog code; long operations |
+| [`settings-and-options`](references/settings-and-options.md) | Defaults and presets, progressive disclosure, hiding or graying out an option that doesn't apply, each setting in one place with one meaning, an inventory of every setting, how many choices is too many, and power users' options |
 | [`gui-testing`](references/gui-testing.md) | Driving a GUI from tests per toolkit (Qt, GTK, web, Windows), catching windows that appear wrongly or status that goes stale, and testing with people |
 
 ## When something here is wrong
