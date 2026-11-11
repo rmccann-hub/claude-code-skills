@@ -2,6 +2,23 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — Release 0.1.26, six new skills and standard v0.49.1
+
+- **The owner's word:** release 0.1.26 once #140 and `testing-patterns` are merged and green,
+  without asking again (2026-11-11, recorded above), and "make the new release now if you can"
+  (2026-11-11), after deleting the old claude.ai `testing-patterns`.
+- **Carries:** six new skills, `testing`, `agent-engineering`, `user-experience`, `security`,
+  `architecture` and `operations` (#140, #144); `coding`'s five new modules (#136),
+  `git-workflows`' `ci-cd` and `versioning-and-releases` (#137) and `house-style`'s
+  `documentation` (#133); standard v0.49.1 (#142); the research R06, R06b, R26 and R27 filed
+  (#127, #144) and R06c's prompt, eleven prompts brought up to date (#128); `skillcheck` fixes for PDF
+  sources, permission levels and variation selectors (#129, #134, #139); two stale facts
+  (#141).
+- **Unchanged for consumers:** no skill or module was renamed or removed. The old claude.ai
+  copies of `windows-admin`, `docker-containers`, `networking-security` and `testing-patterns`
+  were deleted by the owner before their successors merged. A patch release, as 0.1.23 was
+  for `coding`.
+
 ## 2026-11-11 — `testing`'s `testing-patterns` and `agent-written-tests`, and R06c
 
 - **Asked, by the owner:** R06b's result, attached on 2026-11-11, with "do what you can from
@@ -21,7 +38,6 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   R06b listed as not covered.
 - **The old copy:** the owner's claude.ai skill `testing-patterns` is deleted on the session's
   word before this merges, as the owner chose on 2026-11-11.
-
 ## 2026-11-11 — The owner's answers: merging new skills, D, E, F, the old copy and 0.1.26
 
 - **Merging, a standing word:** a session may merge #140, and any later pull request whose only
