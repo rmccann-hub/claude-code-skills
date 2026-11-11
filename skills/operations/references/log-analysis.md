@@ -6,7 +6,7 @@ other text logs, JSON and CSV logs, a timeline across hosts, and writing up what
 
 Fixing what the logs point to is `linux`, `windows-admin`, `docker-containers` or
 `networking-security`, by where it runs; making the journal persistent is `linux`. What a program
-should write to its logs is a planned module, logging-and-observability. Scripts that parse logs
+should write to its logs is the coding skill's logging-and-observability. Scripts that parse logs
 follow `coding`'s language modules.
 
 ## Rules

@@ -7,8 +7,8 @@ and circuit breakers, an HTTP API's error responses, and error messages people r
 This module holds what every language shares; each language's syntax is in `python-coding`,
 `javascript-coding`, `csharp-coding`, `powershell-scripts`, `bash-coding` and `c-coding`.
 Rejecting bad input is `input-handling`'s, a setting that fails its check `configuration`'s,
-and API design beyond errors the planned `api-patterns` module's. What to log is the planned
-logging-and-observability module's.
+and API design beyond errors the planned `api-patterns` module's. What to log is
+logging-and-observability's.
 
 ## Rules
 

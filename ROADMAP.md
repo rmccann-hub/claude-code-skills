@@ -127,11 +127,12 @@ Grouped by subject; the Skill column is each module's one home.
 | `ci-cd` | `git-workflows` | Environments and deployment, beyond the CI that `ci-workflows` and `ci-speed` cover | shipped | core | R08, R21 |
 | `versioning-and-releases` | `git-workflows` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `releases-and-versions` covers | shipped | core | R05 |
 | `legacy-modernization` | `architecture` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
-| `logging-and-observability` | `coding` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | planned | standard | R07, R07b |
-| `performance-and-concurrency` | `coding` | Profiling, complexity, caching, async and threads | planned | standard | R07, R07c |
+| `logging-and-observability` | `coding` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | shipped | standard | R07, R07b |
+| `performance-and-concurrency` | `coding` | Profiling, complexity, caching, async and threads | shipped | standard | R07, R07c |
 | `configuration` | `coding` | Layered config, environment variables, validation at startup, secret stores | shipped | standard | R04 |
 | `architecture-and-design` | `architecture` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
 | `human-factors` | `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | shipped | standard | R23, R23b |
+| `studying-work` | `human-factors` | Finding what a step is for: watching and interviewing people at their work, goals and plans, how deep to go, and the traps that bend a study | shipped | standard | R23b |
 | `usability-review` | `user-experience` | A heuristic review of a program's interface: status that's current, consistency, error prevention and recovery, recognition over recall, severity ratings | shipped | standard | R27 |
 | `windows-and-dialogs` | `user-experience` | When a window or dialog appears, modality, focus and stacking, nothing shown before it's ready or hidden behind another, long operations and notifications | shipped | standard | R27 |
 | `settings-and-options` | `user-experience` | Defaults, presets, progressive disclosure, each setting in one place, and how many choices is too many | shipped | standard | R27 |
@@ -189,6 +190,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `docker-containers` | `operations` | Dockerfiles, Compose, hardening, registries | shipped | standard | R15 |
 | `log-analysis` | `operations` | Event logs, crash dumps, journals, application logs | shipped | standard | R07 |
 | `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | shipped | standard | R28, R23, R28b |
+| `plan-checking` | `optimization-and-scheduling` | Checking what a solver returns and testing a planner: an independent checker, runs stopped at a limit, reproducible runs, published instances as oracles | shipped | standard | R28, R28b |
 | `linux-gaming` | `linux-gaming` | Proton, Steam, handhelds | planned | on request | R15 |
 | `kubernetes` | `operations` | Clusters, workloads, the Gateway API | planned | on request | R15 |
 | `cloud` | `operations` | Azure, AWS and Google Cloud baselines | planned | on request | R15 |
@@ -325,10 +327,10 @@ moves it to the archive.
   names the fixture it expects, and says so when the fixture is the cause. The same rig made
   three acceptance runs in 40 minutes, on two inputs the catalog didn't know. Each one read as
   a failed step, not as the wrong input.
-- **L3, `logging-and-observability`:** every timestamp carries its offset. The same app logged
+- **L3, `logging-and-observability`, taken in:** every timestamp carries its offset. The same app logged
   in local time and wrote its evidence bundle in UTC, so one event sat four hours apart in the
   two.
-- **L4, `logging-and-observability`:** an evidence bundle lists what it left out, and the raw
+- **L4, `logging-and-observability`, taken in:** an evidence bundle lists what it left out, and the raw
   facts each verdict was computed from. That bundle did both, so "nothing was missing" could be
   told from "nothing was collected", and a wrong label could be checked against its inputs.
 - **L5, `test-gates`, taken in:** a regression test for a wiring bug goes through the production entry
@@ -364,10 +366,10 @@ moves it to the archive.
 - **L18, `error-handling`, taken in:** a captured child process records a tri-state exit code, null for a
   child never reaped, its arguments as run, and long output as head and tail with a count of
   what was cut.
-- **L19, `logging-and-observability`:** a program that writes two records of one run makes them
+- **L19, `logging-and-observability`, taken in:** a program that writes two records of one run makes them
   agree. The machine-readable record and the archival log disagreed, and the archival one was
   wrong.
-- **L20, `logging-and-observability`:** a population is recorded once, as data, and never
+- **L20, `logging-and-observability`, taken in:** a population is recorded once, as data, and never
   derived again. One total was re-derived, and fixed, in four files.
 - **L21, `api-patterns`:** a contract derived from format strings can't see a change of meaning.
   An error count began to include encoder failures, and the contract diff showed one row of
@@ -520,7 +522,7 @@ moves it to the archive.
 - **L48, `documentation`, taken in:** figures cited from a tool come from the implementation in use, at
   a named commit. One project's table of a scoring program's deductions came partly from an
   unmaintained reimplementation, and the program in use differed on four rows.
-- **L49, `logging-and-observability`:** a status line names the outcome that was checked, not
+- **L49, `logging-and-observability`, taken in:** a status line names the outcome that was checked, not
   that a step finished. "Copy OK", "confirmed across 3 re-reads" and "read successfully" were
   printed over tracks whose audio a checksum database showed was wrong, and readers took each
   as a verdict.

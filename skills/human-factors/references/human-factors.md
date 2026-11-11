@@ -5,18 +5,20 @@ take: what a habit, workaround, double check or familiar tool is for, purpose ve
 drift, the dip after a tool change, taking over from automation, and this reasoning's limits.
 
 People in plans, such as fatigue, shift design and utilization, are the
-`optimization-and-scheduling` skill's. Interfaces are the `user-experience` skill's. Checking a
-fact or result is the `test-oracles` module of the `testing` skill.
+`optimization-and-scheduling` skill's. How to watch the work and ask about it is the
+`studying-work` module's. Interfaces are the `user-experience` skill's. Checking a fact or
+result is the `test-oracles` module of the `testing` skill.
 
 ## Rules
 
 1. **Find what a step is for before you remove or automate it.** Watch the work as done, not
-   as written (fact `hf-work-as-done`), and ask the people who do it (fact `hf-hse-consult`).
+   as written (fact `hf-work-as-done`), and ask the people who do it (fact `hf-hse-consult`),
+   by the `studying-work` module's methods.
 2. **Test each habit: purpose, bias or drift.** Familiarity alone justifies nothing (fact
    `hf-hse-familiar-rules`). Say which it is, on what evidence.
 3. **Decide keep, change gradually or override,** and say why.
-4. **Budget for a dip of months after a tool change,** and don't promise recovery (facts
-   `hf-mcafee-dip`, `hf-ems911`).
+4. **Budget for a dip of months after a tool change,** and promise neither recovery nor a
+   shorter dip (facts `hf-mcafee-dip`, `hf-ems911`, `hf-ed-dip`).
 5. **Automate so people can still take over,** and trust it as far as it deserves (facts
    `hf-bainbridge`, `hf-misuse-disuse`).
 6. **Human factors never alter a fact.** Findings, measurements and quotes stay as found. Mark
@@ -26,16 +28,16 @@ fact or result is the `test-oracles` module of the `testing` skill.
 
 ### Before removing a step
 
-Ask, and record the answers (our synthesis of HSE's and Hollnagel's guidance):
+Ask and record (our synthesis of HSE and Hollnagel):
 
-- What failure or delay did it last catch? Its doers "will have insights", in HSE's words.
+- What failure or delay did it last catch?
 - Is it a routine, situational or exceptional departure from the procedure (fact
   `hf-hse-violations`)? The first two usually point at a gap in the design.
 - Does it keep alive a skill needed when the automation fails?
 - Does it answer an unreliable system, such as false alarms? Fix that first.
 - Has the margin it protects been shrinking? Then look for drift.
 
-Observe the step as performed, when it's skipped and what follows, and whether accounts agree.
+Observe it as performed, when it's skipped and what follows, and whether accounts agree.
 
 ### Purpose, bias or drift
 
@@ -50,16 +52,15 @@ Observe the step as performed, when it's skipped and what follows, and whether a
 - **Keep** a habit that catches failures the new design doesn't, or keeps a take-over skill.
 - **Change gradually** a workaround for a real constraint: the constraint first, then the
   workaround, with the dip budgeted.
-- **Override** drift, a familiar-rule mistake or a safety violation: HSE holds that departing
-  from established health and safety standards is not acceptable.
+- **Override** drift, a familiar-rule mistake or a safety violation, which HSE never accepts.
 
 ### Automation
 
 - **Keep the take-over skill.** Physical skills fade unused (fact `hf-bainbridge`): Bainbridge
   suggests hands-on control for a short period each shift, or simulator practice.
 - **Calibrate trust.** Misuse is over-reliance, disuse is neglect after false alarms (fact
-  `hf-misuse-disuse`), and abuse, in the same paper, automating without regard for the people
-  left. Show how reliable the automation is.
+  `hf-misuse-disuse`); abuse is automating without regard for the people left. Show how
+  reliable the automation is.
 
 ### The limit for AI agents
 
@@ -70,7 +71,6 @@ reasoning about habits adds a pull. So:
   habit or preference changes one.
 - Preferences count in **Recommendations**: design choices, trade-offs among valid options,
   taste. Each names the human factors it weighed.
-- Load this skill for design, automation and optimization, never for research or retrieval.
 
 ### Habits by purpose
 
@@ -78,7 +78,7 @@ Our synthesis; the facts named are the sources.
 
 | Habit | For | Stops serving when | Facts |
 |---|---|---|---|
-| Keeping a familiar, slower tool | Avoiding a dip of months; keeping skill | The new tool is proven, people trained, the dip budgeted | `hf-mcafee-dip`, `hf-ems911` |
+| Keeping a familiar, slower tool | Avoiding a dip of months; keeping skill | The new tool is proven, the dip budgeted, a fallback kept | `hf-mcafee-dip`, `hf-ems911` |
 | A second person rechecks | Catching slips the doer can't see | It's a rubber stamp | `hf-hse-checks` |
 | A partly done checklist left out | Preventing lapses after interruptions | It's filled in from memory | `hf-hse-checks` |
 | Routine or situational rule-bending | Doing the job under real constraints | It becomes normalized deviance | `hf-hse-violations` |
@@ -93,9 +93,10 @@ Our synthesis; the facts named are the sources.
 - **Removing a step the written procedure lacks,** unwatched. Watch the work first.
 - **Quoting "don't take a fence down until you know why it was put up" as Chesterton's.** It's
   a short form Kennedy recorded (fact `hf-fence`).
-- **Booking a new tool's benefits from go-live day.** Budget months; plan for no recovery.
-- **Citing a vendor's weeks-to-proficiency claim as research,** or the productivity J-curve for
-  a team's dip: it models mismeasured investment across an economy.
+- **Booking a new tool's benefits from go-live day,** or promising training shortens the dip.
+  Budget months; plan for no recovery.
+- **Citing a vendor's weeks-to-proficiency claim as research,** or the economy-wide
+  productivity J-curve for a team's dip.
 - **"A habit takes 66 days."** That's a median; individuals ranged widely (fact `hf-lally`).
 - **Presenting Safety-II as measured.** It's a position (fact `hf-safety-ii-critique`).
 - **An agent taking the person's framing while gathering facts,** or softening a finding because
@@ -135,13 +136,16 @@ Severity uses the standard's status words.
   causing errors (fact `hf-hse-familiar-rules`). Status quo bias is measured, with economic
   explanations (fact `hf-status-quo`). A habit can be risk accepted a step at a time (fact
   `hf-vaughan`).
-- **What it costs:** time per habit; keeping all keeps errors, removing all loses safeguards.
+- **What it costs:** time per habit. Keeping all keeps errors; removing all loses safeguards.
 
 ### The dip
 
 - **The reason:** in one firm, lead time and on-time delivery fell at go-live and beat the old
   levels after several months (fact `hf-mcafee-dip`). Another case never got back (fact
-  `hf-ems911`), though its authors judged the benefits worth the long decrease.
+  `hf-ems911`), though its authors judged the benefits worth the long decrease, and emergency
+  physicians still saw fewer patients an hour 6 to 8 months on (fact `hf-ed-dip`).
+- **Nothing shown to shorten it:** the research found no field study where training, phasing
+  or parallel running did. Do them for other reasons, not to promise a shorter dip.
 - **Choose differently** for a small change with little to learn, or a failing old tool.
 
 ### Automation and facts
@@ -149,10 +153,9 @@ Severity uses the standard's status words.
 - **Automation:** the skills it lets fade are the ones a take-over needs (fact
   `hf-bainbridge`), and trust follows reliability badly both ways (fact `hf-misuse-disuse`).
   **Cost:** practice time, or a simulator.
-- **Facts:** five assistants were consistently sycophantic (fact `hf-sharma`), models agreed
-  with statements they knew were wrong when the user did (fact `hf-wei`), and a production
-  update was rolled back for it (fact `hf-gpt4o`). **Cost:** labeling every output, and
-  findings a person may dislike.
+- **Facts:** assistants are sycophantic and agree with errors they know of when the user does
+  (facts `hf-sharma`, `hf-wei`); one production update was rolled back for it (fact
+  `hf-gpt4o`). **Cost:** labeling every output, and findings a person may dislike.
 - **Reach:** most psychology samples come from a small share of the world (fact `hf-weird`),
   so universality is unproven; Safety-II is contested (fact `hf-safety-ii-critique`).
 
@@ -171,6 +174,7 @@ published by the Health and Safety Executive and licensed under the Open Governm
 | `hf-safety-ii-critique` | Safety-II questioned | [Smith and Valenta, 2018](https://pmc.ncbi.nlm.nih.gov/articles/PMC6037502/) | "Or, alternatively, is Safety II yet another case of “work as imagined”?" | 2026-11-11 | 2027-05-11 |
 | `hf-mcafee-dip` | A dip, then recovery after months, one firm | [McAfee, 2002](https://journals.sagepub.com/doi/10.1111/j.1937-5956.2002.tb00183.x) | "Immediately after adoption, lead time and on‐time delivery performance suffered" and "After several months, performance in these areas improved significantly relative to preadoption levels." | 2026-11-11 | 2027-05-11 |
 | `hf-ems911` | A case that never recovered | [McLeod et al., 2008](https://aisel.aisnet.org/cgi/viewcontent.cgi?article=3361&context=cais) | "In the case of EMS911, operational performance in the post-implementation period never approached that observed in the pre-implementation period." | 2026-11-11 | 2027-05-11 |
+| `hf-ed-dip` | Emergency physicians not recovered at 6-8 months, 2021 | [PubMed 33598662](https://pubmed.ncbi.nlm.nih.gov/33598662/) | "Physician efficiency decreased and did not recover to baseline." and "(-0.31 patient/hour, P = 0.03)" | 2026-11-11 | 2027-05-11 |
 | `hf-bainbridge` | Unused skills fade | [Bainbridge, 1983](https://ckrybus.com/static/papers/Bainbridge_1983_Automatica.pdf) | "physical skills deteriorate when they are not used" | 2026-11-11 | 2027-05-11 |
 | `hf-misuse-disuse` | Misuse and disuse | [Parasuraman and Riley, 1997](https://journals.sagepub.com/doi/10.1518/001872097778543886) | "Misuse refers to over reliance on automation, which can result in failures of monitoring or decision biases." and "Disuse, or the neglect or underutilization of automation, is commonly caused by alarms that activate falsely." | 2026-11-11 | 2027-05-11 |
 | `hf-status-quo` | Status quo bias, with explanations | [Samuelson and Zeckhauser, 1988](https://link.springer.com/article/10.1007/BF00055564) | "A series of decision-making experiments shows that individuals disproportionately stick with the status quo." and "Economics, psychology, and decision theory provide possible explanations for this bias." | 2026-11-11 | 2027-05-11 |
@@ -189,4 +193,4 @@ published by the Health and Safety Executive and licensed under the Open Governm
 | HSE, HSG48 | Rule-breaking, familiar rules, consulting, checks | Open Government Licence v3.0: quoted and adapted, attributed above |
 | Hollnagel, Wears and Braithwaite | Work as done | No changes allowed: brief quotes, our own words |
 | Smith and Valenta; Sharma et al.; Wei et al. | Safety-II critique; sycophancy | CC BY 4.0: quoted, attributed |
-| McAfee; McLeod et al.; Bainbridge; Parasuraman and Riley; Samuelson and Zeckhauser; Lally et al.; Henrich et al.; UChicago Press; OpenAI; American Chesterton Society | Their facts | Copyright: brief quotes, our own words |
+| McAfee; McLeod et al.; Calder-Sprackman et al.; Bainbridge; Parasuraman and Riley; Samuelson and Zeckhauser; Lally et al.; Henrich et al.; UChicago Press; OpenAI; American Chesterton Society | Their facts | Copyright: brief quotes, our own words |

@@ -19,8 +19,8 @@ interfaces to `user-experience`; checking a fact or result to `testing`.
 
 ## What applies to every module
 
-These summarize the module; it holds the cases, the checks and the reasons, so read it before
-answering.
+These summarize the modules; they hold the cases, the checks and the reasons, so read the one
+that fits before answering.
 
 1. **Find what a step is for before removing or automating it:** watch the work as done, and
    ask the people who do it.
@@ -41,6 +41,7 @@ mistakes, audit checks, reasons, dated facts and sources.
 | Module | Read it for |
 |---|---|
 | [`human-factors`](references/human-factors.md) | Removing, automating or redesigning a step people take: what a habit, workaround, double check or familiar tool is for, purpose versus bias or drift, keep or change or override, the dip after a tool change, take-over skill and trust in automation, and keeping facts apart from preferences |
+| [`studying-work`](references/studying-work.md) | Finding out what a step is for: watching and interviewing people at their work, breaking a task into goals and plans and how deep to go, why asking alone misses purposes, a check that caught nothing while watched, and the traps that bend a study |
 
 ## When something here is wrong
 

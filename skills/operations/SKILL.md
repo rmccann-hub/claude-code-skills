@@ -12,8 +12,8 @@ How to run, troubleshoot and harden the systems code runs on: Windows Server and
 Directory, Linux hosts, containers, and the networks between them. Scripting itself is
 `coding`'s `powershell-scripts` and `bash-coding`, with their security modules; deploying from
 CI is `git-workflows`' `ci-cd`; application security is `security`. Reading logs and crash
-dumps is `log-analysis`, here; what a program should log is a planned `logging-and-observability`
-module. Kubernetes, cloud baselines and infrastructure as code are planned on request.
+dumps is `log-analysis`, here; what a program should log is `coding`'s
+`logging-and-observability`. Kubernetes, cloud baselines and infrastructure as code are planned on request.
 
 ## What applies to every module
 

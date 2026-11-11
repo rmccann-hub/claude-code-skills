@@ -86,6 +86,8 @@ the fact's row is in whichever module holds it.
 | [`configuration`](references/configuration.md) | How a program takes its settings: precedence, one name per setting, validation at startup, typed config, environment variables, secrets from a store, required settings and feature flags |
 | [`config-formats`](references/config-formats.md) | YAML, JSON, TOML and XML: choosing a format, YAML's implicit types and safe loading, duplicate keys, large JSON numbers, schemas in CI, TOML versions, and parsing untrusted XML safely |
 | [`error-handling`](references/error-handling.md) | Any language: what to catch and where, "not found" against "couldn't look", exit codes and a child's exit status, causes, retries with backoff, timeouts, circuit breakers, RFC 9457 problem details, and messages people read |
+| [`performance-and-concurrency`](references/performance-and-concurrency.md) | Making code faster or concurrent, any language: measuring first, sampling profilers and flame graphs, benchmark harnesses and their pitfalls, task groups and structured concurrency, cancellation, blocking an event loop, race detectors, and caches |
+| [`logging-and-observability`](references/logging-and-observability.md) | What a program writes to its logs and metrics, any language: structured records, timestamps with offsets, levels, trace IDs from W3C Trace Context, keeping secrets and personal data out, logging libraries and their versions, OpenTelemetry, RED and USE, SLOs and burn-rate alerts, and Prometheus |
 
 ## Check before you act
 
@@ -125,8 +127,6 @@ status words are the standard's:
   repository.
 - **Designing tests:** the `testing` skill. Each module here names its language's test runner
   and leaves test design there.
-- **Escaping for logs and terminals, in detail:** `input-handling` here, and a planned
-  `logging-and-observability` module. The contract's third rule applies until it ships.
 - **Prose and Markdown:** house-style.
 
 ## Where this came from
@@ -134,8 +134,9 @@ status words are the standard's:
 - The owner's earlier language skills, as lists of topics, checks and lessons. Nothing was
   copied from them. What each kept, dropped and why is in this skill's repository, in the
   research results of 2026-10-26.
-- Research runs R09 (Python), R10 (TypeScript and the web), R11 (.NET and PowerShell), R12
-  (C and Meson) and R15 (shell), filed in this skill's repository. They were leads until each
+- Research runs R07, R07b and R07c (errors, logging, performance and concurrency), R09
+  (Python), R10 (TypeScript and the web), R11 (.NET and PowerShell), R12 (C and Meson) and R15
+  (shell), filed in this skill's repository. They were leads until each
   claim was checked at its source.
 
 ## When something here is wrong

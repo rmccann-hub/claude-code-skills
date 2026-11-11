@@ -1,0 +1,30 @@
+[
+  {
+    "query": "My CP-SAT job-shop model says OPTIMAL but the makespan looks too long. Can I trust it, and how would I prove the schedule is right?",
+    "should_trigger": true
+  },
+  {
+    "query": "The production planner hit its 60-second time limit. What should the report say about how good the plan is?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our scheduler's tests pass on my laptop and fail in CI with a different roster each time. How do I make the solver give the same answer in tests?",
+    "should_trigger": true
+  },
+  {
+    "query": "OR-Tools says my shift model is infeasible and gave me a list of the constraints that clash. Is that list safe to show the planners?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'd like regression tests for our RCPSP heuristic against Taillard or PSPLIB instances. What should each test assert, and can we commit the instance files?",
+    "should_trigger": true
+  },
+  {
+    "query": "Should we use CP-SAT or HiGHS for a weekly shift roster with qualifications and rest rules?",
+    "should_trigger": false
+  },
+  {
+    "query": "My pytest suite has a test that fails one run in twenty with no code change. How do I track down the flakiness?",
+    "should_trigger": false
+  }
+]

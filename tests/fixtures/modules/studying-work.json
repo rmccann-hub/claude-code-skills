@@ -1,0 +1,37 @@
+[
+  {
+    "query": "Before we cut the manager sign-off step from the expense flow, how do we find out what it's actually for?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm interviewing the dispatchers about their workflow and they keep saying the steps are obvious, but they can't explain them. How should I run these sessions?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is hierarchical task analysis worth doing for our order-picking process, and how far down should we break it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Two of us are replacing a lab's paper sample log with an app. We have about a week to learn how the techs really work. What's the best use of that week?",
+    "should_trigger": true
+  },
+  {
+    "query": "We watched the packing line for three days and the second visual inspection never caught anything. Is that enough to drop it?",
+    "should_trigger": true
+  },
+  {
+    "query": "The ops team found a real reason for their shadow spreadsheet, but it duplicates the new system. Do we keep it, phase it out or force them off it?",
+    "should_trigger": false,
+    "note": "human-factors module (keep, change gradually or override)"
+  },
+  {
+    "query": "How long will the doctors be slower after the clinic switches to the new records system?",
+    "should_trigger": false,
+    "note": "human-factors module (the dip)"
+  },
+  {
+    "query": "Run a usability review of our checkout page and tell me which fields confuse people.",
+    "should_trigger": false,
+    "note": "user-experience skill"
+  }
+]

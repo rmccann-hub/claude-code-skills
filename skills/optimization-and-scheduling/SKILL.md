@@ -18,8 +18,8 @@ section 8, Dependencies.
 
 ## What applies to every module
 
-These summarize the module; it holds the cases, the facts and the reasons, so read it before
-answering.
+These summarize the modules; they hold the cases, the facts and the reasons, so read the one
+that fits before answering.
 
 1. **A solver's status is a claim, not proof.** Check every plan with plain code that never
    imports the solver, and replay an infeasibility core with presolve off.
@@ -39,7 +39,8 @@ mistakes, audit checks, reasons, dated facts and sources.
 
 | Module | Read it for |
 |---|---|
-| [`optimization-and-scheduling`](references/optimization-and-scheduling.md) | Building or checking a solver's plan: choosing CP-SAT, HiGHS, SCIP, Timefold, Gurobi or CPLEX; hard and soft constraints and weights; CP-SAT settings and tests; time limits and gaps; fatigue, learning and utilization; lead-time quotes from backlog |
+| [`optimization-and-scheduling`](references/optimization-and-scheduling.md) | Building a solver's plan: choosing CP-SAT, HiGHS, SCIP, Timefold, Gurobi or CPLEX; hard and soft constraints, weights and strict priorities; CP-SAT settings; solver licenses in containers; fatigue, learning and utilization; lead-time quotes from backlog |
+| [`plan-checking`](references/plan-checking.md) | Checking what a solver returns and testing a planner: an unconfirmed OPTIMAL or INFEASIBLE, an infeasibility core, a run stopped at its time limit, CP-SAT tests that repeat, and benchmark instances with published bounds |
 
 ## When something here is wrong
 

@@ -6,6 +6,28 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.29] - 2026-11-11
+
+### Added
+
+- `coding` gains `logging-and-observability` (structured records, trace IDs, what to keep out of
+  logs, logging libraries, SLOs and alerts) and `performance-and-concurrency` (profiling first,
+  flame graphs, benchmark harnesses, task ownership, cancellation and race detectors).
+- `human-factors` gains `studying-work`: finding what a step is for by watching and asking at
+  the work, goals and plans, and the traps that bend a study.
+- `optimization-and-scheduling` gains `plan-checking`, split from its first module: checking
+  what a solver returns, reproducible CP-SAT tests and published instances as expected answers.
+- The research R07b, R07c, R23b and R28b is filed with its checks.
+
+### Changed
+
+- `optimization-and-scheduling`: CP-SAT has no lexicographic API; Gurobi's licenses in
+  containers; Timefold's Python solver is discontinued; Kingman's formula attributed correctly.
+- `human-factors`: no field study found shows that training or phasing shortens the dip after a
+  tool change, so the module no longer implies it.
+- `coding`, `operations` and `security` no longer call `logging-and-observability` or
+  `input-handling` planned.
+
 ## [0.1.28] - 2026-11-11
 
 ### Added
