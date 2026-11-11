@@ -139,6 +139,23 @@ Append-only. Supersede by adding a new entry that points at the old one; never e
   each test tool's registry. Facts in our own words, with short quotes. Nothing adapted.
 - **Merged by the owner,** because `.claude/settings.json` turns off the new skill's installed
   copy here.
+## 2026-11-11 — `security` and `architecture`, each with its first module
+
+- **Asked, by the owner:** "finish what you can, then give me followup research reports to do
+  to finish them, and anything else in the repo but partially complete, to a fully complete
+  stage" (2026-11-11). Both skills were planned, with research run on 2026-09-23 (R04, R02).
+- **Built:** `security` with `secure-coding`, and `architecture` with `repo-structure`, one
+  helper agent per module, reviewed here. The research is seven weeks old, so every fact was
+  fetched again on 2026-11-11; the editions cited are OWASP Top 10:2025, ASVS 5.0.0 and the
+  2025 CWE Top 25.
+- **Not yet:** `security`'s `supply-chain-security` waits for R24, and its draft stays on #73;
+  `privacy-and-compliance` for R18. `architecture`'s `api-patterns` and
+  `architecture-and-design` wait for R19, and `legacy-modernization` for R17.
+- **Sources:** OWASP (Top 10 pages CC BY 3.0; cheat sheets and ASVS CC BY-SA 4.0: brief
+  quotes, our own words otherwise), MITRE's CWE, NIST SP 800-63B-4, the Python, Go, Node,
+  .NET, Rust and Git documentation, and Google's engineering book. Nothing adapted.
+- **Merged by the owner,** because `.claude/settings.json` turns off the new skills' installed
+  copies here.
 
 ## 2026-11-10 — `user-experience` planned, and research for it and `review-loops`
 

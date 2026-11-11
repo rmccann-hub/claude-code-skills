@@ -1,0 +1,34 @@
+[
+  {
+    "query": "I'm adding a password login to our Flask app. How should I hash and store the passwords, and what password rules should I enforce?",
+    "should_trigger": true
+  },
+  {
+    "query": "Can you do a security review of this pull request? It adds a new endpoint that returns a customer's invoices by ID.",
+    "should_trigger": true
+  },
+  {
+    "query": "We're about to let users upload files that other users can share. What could go wrong here, and how do I threat model it quickly?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it fine to generate password reset tokens with Math.random(), and should I encrypt them with AES in ECB mode before storing?",
+    "should_trigger": true
+  },
+  {
+    "query": "Which version of the OWASP Top 10 and ASVS should our security checklist reference now?",
+    "should_trigger": true
+  },
+  {
+    "query": "How long should user sessions last before they time out, and what should our audit log record when someone fails to sign in?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it safe to call subprocess.run with shell=True on a filename the user typed in?",
+    "should_trigger": false
+  },
+  {
+    "query": "An AI assistant suggested an npm package I've never heard of. How do I check it's real before I install it?",
+    "should_trigger": false
+  }
+]

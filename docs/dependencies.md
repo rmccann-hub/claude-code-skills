@@ -17,19 +17,19 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.25 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.0 |
-| `engineering` | 0.1.25 | Apache-2.0 | `agent-engineering` | reviewed 2026-11-11 |
+| `engineering` | 0.1.25 | Apache-2.0 | `architecture` | reviewed 2026-11-11 |
 | `engineering` | 0.1.25 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
 | `engineering` | 0.1.25 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.25 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
-| `engineering` | 0.1.25 | Apache-2.0 | `user-experience` | reviewed 2026-11-11 |
+| `engineering` | 0.1.25 | Apache-2.0 | `security` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 109 |
+| Markdown | 108 |
 | Python | 53 |
-| JSON | 43 |
+| JSON | 41 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -122,28 +122,19 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
-| `agent-engineering` | code.claude.com | 27 |
-| `agent-engineering` | arxiv.org | 8 |
-| `agent-engineering` | agentskills.io | 5 |
-| `agent-engineering` | raw.githubusercontent.com | 3 |
-| `agent-engineering` | docs.github.com | 2 |
-| `agent-engineering` | platform.claude.com | 2 |
-| `agent-engineering` | agents.md | 1 |
-| `agent-engineering` | ai.meta.com | 1 |
-| `agent-engineering` | cursor.com | 1 |
-| `agent-engineering` | cveawg.mitre.org | 1 |
-| `agent-engineering` | developers.openai.com | 1 |
-| `agent-engineering` | docs.pact.io | 1 |
-| `agent-engineering` | geminicli.com | 1 |
-| `agent-engineering` | git-scm.com | 1 |
-| `agent-engineering` | github.blog | 1 |
-| `agent-engineering` | google.github.io | 1 |
-| `agent-engineering` | invariantlabs.ai | 1 |
-| `agent-engineering` | martin.kleppmann.com | 1 |
-| `agent-engineering` | oasdiff.com | 1 |
-| `agent-engineering` | simonwillison.net | 1 |
-| `agent-engineering` | support.claude.com | 1 |
-| `agent-engineering` | www.anthropic.com | 1 |
+| `architecture` | learn.microsoft.com | 3 |
+| `architecture` | git-scm.com | 2 |
+| `architecture` | go.dev | 2 |
+| `architecture` | abseil.io | 1 |
+| `architecture` | angular.dev | 1 |
+| `architecture` | doc.rust-lang.org | 1 |
+| `architecture` | docs.npmjs.com | 1 |
+| `architecture` | github.com | 1 |
+| `architecture` | nodejs.org | 1 |
+| `architecture` | packaging.python.org | 1 |
+| `architecture` | peps.python.org | 1 |
+| `architecture` | pkg.go.dev | 1 |
+| `architecture` | pnpm.io | 1 |
 | `coding` | learn.microsoft.com | 60 |
 | `coding` | docs.python.org | 19 |
 | `coding` | nodejs.org | 16 |
@@ -233,17 +224,9 @@ again.
 | `house-style` | github.com | 1 |
 | `house-style` | pubs.opengroup.org | 1 |
 | `house-style` | www.gov.uk | 1 |
-| `user-experience` | www.nngroup.com | 16 |
-| `user-experience` | developer.gnome.org | 6 |
-| `user-experience` | develop.kde.org | 5 |
-| `user-experience` | pypi.org | 5 |
-| `user-experience` | developer.apple.com | 3 |
-| `user-experience` | docs.gtk.org | 3 |
-| `user-experience` | chernev.com | 2 |
-| `user-experience` | doc.qt.io | 2 |
-| `user-experience` | learn.microsoft.com | 2 |
-| `user-experience` | playwright.dev | 2 |
-| `user-experience` | api.nuget.org | 1 |
-| `user-experience` | measuringu.com | 1 |
-| `user-experience` | scheibehenne.com | 1 |
-| `user-experience` | www.cs.umd.edu | 1 |
+| `security` | cheatsheetseries.owasp.org | 7 |
+| `security` | owasp.org | 6 |
+| `security` | cwe.mitre.org | 1 |
+| `security` | go.dev | 1 |
+| `security` | pages.nist.gov | 1 |
+| `security` | www.threatmodelingmanifesto.org | 1 |

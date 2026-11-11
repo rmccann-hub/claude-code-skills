@@ -25,6 +25,8 @@ Notable changes to this repository. The format follows
   person.
 - `user-experience`, a new skill: `usability-review`, `windows-and-dialogs`,
   `settings-and-options` and `gui-testing`.
+- `security`, a new skill, with `secure-coding`; and `architecture`, a new skill, with
+  `repo-structure`.
 
 ### Changed
 

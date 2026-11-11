@@ -33,9 +33,11 @@
       "license": "Apache-2.0",
       "skills": [
         "./skills/agent-engineering",
+        "./skills/architecture",
         "./skills/coding",
         "./skills/git-workflows",
         "./skills/house-style",
+        "./skills/security",
         "./skills/testing",
         "./skills/user-experience"
       ]
