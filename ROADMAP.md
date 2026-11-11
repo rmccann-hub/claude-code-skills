@@ -59,7 +59,7 @@ research. These rules are that structure.
 
 | Skill | Plugin | Loads when | Status |
 |---|---|---|---|
-| `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.49.0 | shipped |
+| `project-bootstrap-and-audit` | `standards` | Setting up, retrofitting, auditing or re-checking a repository against the standard, v0.49.1 | shipped |
 | `git-workflows` | `engineering` | Commits, branches, pull requests, CI, hooks, tags, changelogs and releases | shipped |
 | `house-style` | `engineering` | Writing prose, Markdown, READMEs and documentation | shipped |
 | `coding` | `engineering` | Writing, reviewing or fixing code in any language: the contract every change meets, then the language and the practice at hand | shipped |
@@ -1300,6 +1300,11 @@ v0.49.0:
   `ci-speed`, and the starter CI cancels a pull request's superseded runs and caches.
 - **F164:** where agent sessions drive pull requests, dimension 6 asks for a steward skill at
   `.claude/skills/steward/SKILL.md`, by `git-workflows`' `pr-stewardship`.
+- **F166, in v0.49.1:** *Turns are written down, and a crossing is settled without the
+  person*, in *Cross-repository contracts*, from proposal D as R26 revised it; the owner
+  approved it on 2026-11-11.
+- **F167, in v0.49.1:** dimension 7's secrets come from the environment or a secret store,
+  preferring a store the platform mounts; the owner approved it on 2026-11-11.
 - **F154, in v0.48.1:** Phase 0's fifth question also asks which comes first, the local
   time or the UTC stamp. The owner chose local time first on 2026-10-20.
 - **F150, in v0.47.0:** *Language toolchains* names Python 3.15, released 2026-10-09. A run
