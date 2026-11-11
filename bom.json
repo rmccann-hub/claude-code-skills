@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:db6a94e0-37e5-5d73-9dc2-99f266e1c53f",
+  "serialNumber": "urn:uuid:2fff6516-541c-509c-bac8-0845943e44da",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 110 file(s)"
+          "value": "Markdown: 112 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 45 file(s)"
+          "value": "JSON: 47 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -806,7 +806,7 @@
           "properties": [
             {
               "name": "claude-code-skills:fact-source",
-              "value": "docs.github.com: 46 fact(s)"
+              "value": "docs.github.com: 64 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -826,11 +826,23 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "keepachangelog.com: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "docs.kernel.org: 3 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
               "value": "pypi.org: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "cli.github.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "devguide.python.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -842,11 +854,27 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "keepachangelog.com: 2 fact(s)"
+              "value": "martinfowler.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "nodejs.org: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "peps.python.org: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
               "value": "rustc-dev-guide.rust-lang.org: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "semver.org: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "12factor.net: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -862,15 +890,7 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "cli.github.com: 1 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
               "value": "cveawg.mitre.org: 1 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
-              "value": "devguide.python.org: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -894,10 +914,6 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "martinfowler.com: 1 fact(s)"
-            },
-            {
-              "name": "claude-code-skills:fact-source",
               "value": "nvie.com: 1 fact(s)"
             },
             {
@@ -910,7 +926,7 @@
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "semver.org: 1 fact(s)"
+              "value": "sre.google: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
