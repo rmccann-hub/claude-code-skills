@@ -172,7 +172,7 @@ platform. **Choose differently:** a long-running service gains little from AOT, 
 | ID | Fact | Source | Quote | Checked | Check by |
 |---|---|---|---|---|---|
 | `cs-dotnet10-lts` | .NET 10 is LTS, to 2028-11-14 | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | "LTS Active November 14, 2028" | 2026-10-26 | 2027-04-26 |
-| `cs-dotnet8-9-end` | .NET 8 and 9 end 2026-11-10 | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | "STS Maintenance November 10, 2026" and "LTS Maintenance November 10, 2026" | 2026-10-26 | 2027-04-26 |
+| `cs-dotnet8-9-end` | .NET 8 and 9 ended on 2026-11-10, at 8.0.34 and 9.0.23 | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | "8.0.34 November 10, 2026 November 10, 2026" and "9.0.23 November 10, 2026 November 10, 2026" | 2026-11-11 | 2027-05-11 |
 | `cs-dotnet11-rc` | .NET 11 is at RC2 | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | ".NET 11 RC2 October 13, 2026" | 2026-10-26 | 2027-04-26 |
 | `cs-support-policy` | LTS: 3 years, STS: 2; odd is STS; latest patch only | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | "patches for three years" and "patches for two years" and "Odd numbered releases are STS" and "need the latest patch" | 2026-10-26 | 2027-04-26 |
 | `cs-langversion-default` | .NET 10 means C# 14 | [Learn](https://learn.microsoft.com/dotnet/csharp/language-reference/language-versioning) | ".NET 10.x C# 14" | 2026-10-26 | 2027-04-26 |
