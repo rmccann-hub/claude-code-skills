@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:7095a55c-5024-5ec6-a1f4-9b830c9d3599",
+  "serialNumber": "urn:uuid:db6a94e0-37e5-5d73-9dc2-99f266e1c53f",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 109 file(s)"
+          "value": "Markdown: 110 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 44 file(s)"
+          "value": "JSON: 45 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -939,7 +939,15 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "raw.githubusercontent.com: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "vale.sh: 4 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.sphinx-doc.org: 3 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -947,15 +955,35 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "github.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "learn.microsoft.com: 2 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "raw.githubusercontent.com: 2 fact(s)"
+              "value": "diataxis.fr: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
-              "value": "github.com: 1 fact(s)"
+              "value": "doc.rust-lang.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.djangoproject.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.github.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.python.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "platform.claude.com: 1 fact(s)"
             },
             {
               "name": "claude-code-skills:fact-source",
@@ -963,7 +991,19 @@
             },
             {
               "name": "claude-code-skills:fact-source",
+              "value": "squidfunk.github.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
               "value": "www.gov.uk: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.mkdocs.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "zensical.org: 1 fact(s)"
             }
           ]
         }

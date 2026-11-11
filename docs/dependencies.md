@@ -25,9 +25,9 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 109 |
+| Markdown | 110 |
 | Python | 53 |
-| JSON | 44 |
+| JSON | 45 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -226,10 +226,20 @@ again.
 | `git-workflows` | towncrier.readthedocs.io | 1 |
 | `git-workflows` | www.conventionalcommits.org | 1 |
 | `house-style` | developers.google.com | 5 |
+| `house-style` | raw.githubusercontent.com | 4 |
 | `house-style` | vale.sh | 4 |
+| `house-style` | www.sphinx-doc.org | 3 |
 | `house-style` | docs.vale.sh | 2 |
+| `house-style` | github.com | 2 |
 | `house-style` | learn.microsoft.com | 2 |
-| `house-style` | raw.githubusercontent.com | 2 |
-| `house-style` | github.com | 1 |
+| `house-style` | diataxis.fr | 1 |
+| `house-style` | doc.rust-lang.org | 1 |
+| `house-style` | docs.djangoproject.com | 1 |
+| `house-style` | docs.github.com | 1 |
+| `house-style` | docs.python.org | 1 |
+| `house-style` | platform.claude.com | 1 |
 | `house-style` | pubs.opengroup.org | 1 |
+| `house-style` | squidfunk.github.io | 1 |
 | `house-style` | www.gov.uk | 1 |
+| `house-style` | www.mkdocs.org | 1 |
+| `house-style` | zensical.org | 1 |

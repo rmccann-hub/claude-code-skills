@@ -36,6 +36,7 @@ def found(root) -> list[tuple[str, str, str]]:
         "GH_TOKEN: ${{ github.token }} and auth=$(printf 'x-access-token:%s' \"$GH_TOKEN\")",
         "if: ${{ secrets.TOKEN == '' }} and TokenIgnores = \"(?:x)\" and tokens: [very]",
         "client_secret = os.environ['SECRET'] and password = getpass()",
+        "permissions: id-token: write, and pull-requests: read",
     ],
 )
 def test_reserved_and_placeholder_data_passes(tmp_path, line):

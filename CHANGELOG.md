@@ -10,6 +10,8 @@ Notable changes to this repository. The format follows
 
 - `coding` gains five modules: `code-style`, `types`, `input-handling`, `configuration` and
   `config-formats`.
+- `house-style`'s `documentation`: the four kinds of page, reference generated from code, docs
+  checked in CI, diagrams as text, docs sites, and splitting long documents.
 
 ### Changed
 
@@ -21,6 +23,8 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
+- `skillcheck`'s `test-data` rule no longer reads a permission level, as in a workflow's
+  `id-token: write`, as a secret's value.
 - `skillcheck --verify` leaves a quote whose only source is a PDF to be checked by hand,
   rather than reading the PDF's bytes as text and reporting the quote gone.
 - `coding`: two facts whose sources reworded them, found by the weekly freshness run. ESLint's
