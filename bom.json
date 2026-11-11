@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:31c135b8-2c9d-5fb7-aef5-bf4d0de9a061",
+  "serialNumber": "urn:uuid:933a2ac9-a566-5203-903c-8ce4a49d94f0",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 100 file(s)"
+          "value": "Markdown: 108 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 39 file(s)"
+          "value": "JSON: 42 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -868,6 +868,43 @@
             {
               "name": "claude-code-skills:fact-source",
               "value": "www.gov.uk: 1 fact(s)"
+            }
+          ]
+        },
+        {
+          "type": "data",
+          "bom-ref": "skill:testing",
+          "name": "testing",
+          "description": "reviewed 2026-11-11",
+          "licenses": [
+            {
+              "expression": "Apache-2.0"
+            }
+          ],
+          "properties": [
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "code.claude.com: 6 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "github.blog: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "testing.googleblog.com: 3 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.microsoft.com: 2 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "arxiv.org: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "research.google.com: 1 fact(s)"
             }
           ]
         }

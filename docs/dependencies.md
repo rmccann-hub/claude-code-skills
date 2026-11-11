@@ -20,14 +20,15 @@ freshness run and the release workflow both run it.
 | `engineering` | 0.1.25 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
 | `engineering` | 0.1.25 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.25 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
+| `engineering` | 0.1.25 | Apache-2.0 | `testing` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 100 |
+| Markdown | 108 |
 | Python | 53 |
-| JSON | 39 |
+| JSON | 42 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -209,3 +210,9 @@ again.
 | `house-style` | github.com | 1 |
 | `house-style` | pubs.opengroup.org | 1 |
 | `house-style` | www.gov.uk | 1 |
+| `testing` | code.claude.com | 6 |
+| `testing` | github.blog | 3 |
+| `testing` | testing.googleblog.com | 3 |
+| `testing` | www.microsoft.com | 2 |
+| `testing` | arxiv.org | 1 |
+| `testing` | research.google.com | 1 |
