@@ -1,6 +1,6 @@
 # RESEARCH RUN R17: Legacy languages and modernization
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026, updated 10 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 10 November 2026.
 
 This run informs these categories: legacy-languages, legacy-modernization.
 

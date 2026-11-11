@@ -1,6 +1,6 @@
 # Research runs
 
-Twenty-five prompts, one file each. Each file is the whole prompt: paste all of it into a new
+Twenty-eight prompts, one file each. Each file is the whole prompt: paste all of it into a new
 claude.ai chat with Research turned on (or Web search, if Research isn't offered). Run them
 in any order, several at a time in separate chats. Priority 1 first.
 
@@ -15,6 +15,7 @@ no message. Save each one under the name its second line gives, for example `R01
 | R04 | 1 | [R04-secure-coding.md](R04-secure-coding.md) | Secure coding, input handling, threat modelling, authentication and cryptography | secure-coding, input-handling, configuration, and the security file of every skill |
 | R05 | 1 | [R05-supply-chain-versioning-releases.md](R05-supply-chain-versioning-releases.md) | Supply chain, dependencies, versioning, changelogs, releases, deprecation, and keeping current | supply-chain-security, versioning-and-releases, keeping-current, ci-cd |
 | R06 | 2 | [R06-testing.md](R06-testing.md) | Testing | testing, and the testing file of every language skill |
+| R06b | 2 | [R06b-testing-follow-up.md](R06b-testing-follow-up.md) | Testing, the questions R06 didn't reach: checks that can't fail, test oracles, the worst case, what's missing, hardware acceptance runs, fault injection, tests agents write, strategy, doubles, coverage, property and mutation testing, end-to-end, shell, test data, Kotlin, Ruby and Bash | testing, and the testing file of every language skill |
 | R07 | 2 | [R07-errors-logging-performance.md](R07-errors-logging-performance.md) | Error handling, logging, observability, performance, concurrency, and log analysis | error-handling, logging-and-observability, performance-and-concurrency, log-analysis |
 | R08 | 1 | [R08-git-github-cicd.md](R08-git-github-cicd.md) | Git, GitHub, code review, and CI/CD | git-workflows (shipped), ci-cd, and the standard's CI, dependency and security dimensions |
 | R09 | 2 | [R09-python.md](R09-python.md) | Python and Python for data | python, and the Python side of data-and-sql and excel |
