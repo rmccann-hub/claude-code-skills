@@ -43,6 +43,8 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
+- Two facts the full source check found stale: Git's current release is 2.56.1, and .NET 8
+  and 9 reached end of support on 2026-11-10.
 - `skillcheck`'s hidden-character scan, and the cloud install hook's copy of it, cover
   variation selectors, which can carry a hidden instruction; it found one in a filed report.
 - `skillcheck`'s `test-data` rule no longer reads a permission level, as in a workflow's
