@@ -72,8 +72,8 @@ research. These rules are that structure.
 | `business-apps` | `engineering` | Automating or extending Excel, Word, Epicor Kinetic and SOLIDWORKS | planned |
 | `visual-design` | `engineering` | Themes, palettes, charts and accessibility | planned |
 | `user-experience` | `engineering` | Reviewing, designing or testing how a program behaves for the person using it: status and feedback, windows and dialogs, settings and options, and whether it's easy to learn and to use | shipped |
-| `optimization-and-scheduling` | `engineering` | Solvers, schedules and plans, with the people in them | planned |
-| `human-factors` | `engineering` | Designing or changing what people do: the habits that look wasteful and serve a purpose. It never bends a factual finding | planned |
+| `optimization-and-scheduling` | `engineering` | Solvers, schedules and plans, with the people in them | shipped |
+| `human-factors` | `engineering` | Designing or changing what people do: the habits that look wasteful and serve a purpose. It never bends a factual finding | shipped |
 | `linux-gaming` | `personal` | Proton, Steam and handheld PCs | planned |
 
 ## Modules
@@ -103,7 +103,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | shipped | core | R04 |
 | `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
 | `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | shipped | core | R01 |
-| `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | planned | core | R07 |
+| `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | shipped | core | R07 |
 | `testing-patterns` | `testing` | Strategy, test doubles and contract tests, coverage, each framework's settings that fail open, frameworks per language, property-based and mutation tools | shipped | core | R06, R06b |
 | `agent-written-tests` | `testing` | Tests an AI coding agent writes, changes or runs: tests first, high-risk test diffs, gaming, holdout tests, mutation-testing what it wrote | shipped | core | R06b |
 | `acceptance-runs` | `testing` | Unattended acceptance runs on hardware: preconditions, a device lost mid-run, run tiers, evidence; fault injection for ordinary programs | shipped | core | R06c |
@@ -131,7 +131,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `performance-and-concurrency` | `coding` | Profiling, complexity, caching, async and threads | planned | standard | R07 |
 | `configuration` | `coding` | Layered config, environment variables, validation at startup, secret stores | shipped | standard | R04 |
 | `architecture-and-design` | `architecture` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
-| `human-factors` | `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | planned | standard | R23 |
+| `human-factors` | `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | shipped | standard | R23 |
 | `usability-review` | `user-experience` | A heuristic review of a program's interface: status that's current, consistency, error prevention and recovery, recognition over recall, severity ratings | shipped | standard | R27 |
 | `windows-and-dialogs` | `user-experience` | When a window or dialog appears, modality, focus and stacking, nothing shown before it's ready or hidden behind another, long operations and notifications | shipped | standard | R27 |
 | `settings-and-options` | `user-experience` | Defaults, presets, progressive disclosure, each setting in one place, and how many choices is too many | shipped | standard | R27 |
@@ -187,8 +187,8 @@ Grouped by subject; the Skill column is each module's one home.
 | `linux` | `operations` | Administration and troubleshooting across distributions | shipped | standard | R15 |
 | `networking-security` | `operations` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | shipped | standard | R15 |
 | `docker-containers` | `operations` | Dockerfiles, Compose, hardening, registries | shipped | standard | R15 |
-| `log-analysis` | `operations` | Event logs, crash dumps, journals, application logs | planned | standard | R07 |
-| `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | planned | standard | R28, R23 |
+| `log-analysis` | `operations` | Event logs, crash dumps, journals, application logs | shipped | standard | R07 |
+| `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | shipped | standard | R28, R23 |
 | `linux-gaming` | `linux-gaming` | Proton, Steam, handhelds | planned | on request | R15 |
 | `kubernetes` | `operations` | Clusters, workloads, the Gateway API | planned | on request | R15 |
 | `cloud` | `operations` | Azure, AWS and Google Cloud baselines | planned | on request | R15 |
@@ -357,11 +357,11 @@ moves it to the archive.
   logs both sides had filed and nobody had read.
 - **L15, `test-oracles`, taken in:** a check is independent of another by the time between them, not the
   date. Two checks on consecutive dates were 26 minutes apart.
-- **L16, `error-handling`:** a broad `try` around a whole validator fails open. One field of
+- **L16, `error-handling`, taken in:** a broad `try` around a whole validator fails open. One field of
   the wrong type made the validator return no errors, and a path-traversal template was saved.
-- **L17, `error-handling`:** an exit code carries one meaning. One program exited 1 for both a
+- **L17, `error-handling`, taken in:** an exit code carries one meaning. One program exited 1 for both a
   failed read and a stopped search, and its consumer couldn't step its retry ladder down.
-- **L18, `error-handling`:** a captured child process records a tri-state exit code, null for a
+- **L18, `error-handling`, taken in:** a captured child process records a tri-state exit code, null for a
   child never reaped, its arguments as run, and long output as head and tail with a count of
   what was cut.
 - **L19, `logging-and-observability`:** a program that writes two records of one run makes them
@@ -497,7 +497,7 @@ moves it to the archive.
   one entry, most likely from the same user and a read with the same fault, while over a
   thousand entries disagreed. Show a match's weight beside the dissent, and never show a
   minority match as verified when the primary check rejects.
-- **L43, `error-handling`:** "not found" and "couldn't look" are different results, and a
+- **L43, `error-handling`, taken in:** "not found" and "couldn't look" are different results, and a
   check that infers absence from "nothing matched" can't tell them apart. One app skipped its
   extra verification pass when nothing matched a database, a rule meant for inputs the
   database lacks. It also fired when the lookup failed and when every item misread, the two

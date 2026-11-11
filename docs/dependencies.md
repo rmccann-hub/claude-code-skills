@@ -1,6 +1,6 @@
 # Dependency map
 
-What `claude-code-skills` 0.1.27 is built from, runs on and relies on: the
+What `claude-code-skills` 0.1.28 is built from, runs on and relies on: the
 plugins it ships, the languages it's written in, its runtimes and tools, every package
 at its exact version, the GitHub Actions it pins, the services it uses, and the sources
 its skills' facts cite.
@@ -16,23 +16,25 @@ freshness run and the release workflow both run it.
 
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
-| `standards` | 0.1.27 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.1 |
-| `engineering` | 0.1.27 | Apache-2.0 | `agent-engineering` | reviewed 2026-11-11 |
-| `engineering` | 0.1.27 | Apache-2.0 | `architecture` | reviewed 2026-11-11 |
-| `engineering` | 0.1.27 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
-| `engineering` | 0.1.27 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
-| `engineering` | 0.1.27 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
-| `engineering` | 0.1.27 | Apache-2.0 | `operations` | reviewed 2026-11-11 |
-| `engineering` | 0.1.27 | Apache-2.0 | `security` | reviewed 2026-11-11 |
-| `engineering` | 0.1.27 | Apache-2.0 | `testing` | reviewed 2026-11-11 |
-| `engineering` | 0.1.27 | Apache-2.0 | `user-experience` | reviewed 2026-11-11 |
+| `standards` | 0.1.28 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.1 |
+| `engineering` | 0.1.28 | Apache-2.0 | `agent-engineering` | reviewed 2026-11-11 |
+| `engineering` | 0.1.28 | Apache-2.0 | `architecture` | reviewed 2026-11-11 |
+| `engineering` | 0.1.28 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
+| `engineering` | 0.1.28 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
+| `engineering` | 0.1.28 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
+| `engineering` | 0.1.28 | Apache-2.0 | `human-factors` | reviewed 2026-11-11 |
+| `engineering` | 0.1.28 | Apache-2.0 | `operations` | reviewed 2026-11-11 |
+| `engineering` | 0.1.28 | Apache-2.0 | `optimization-and-scheduling` | reviewed 2026-11-11 |
+| `engineering` | 0.1.28 | Apache-2.0 | `security` | reviewed 2026-11-11 |
+| `engineering` | 0.1.28 | Apache-2.0 | `testing` | reviewed 2026-11-11 |
+| `engineering` | 0.1.28 | Apache-2.0 | `user-experience` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 142 |
-| JSON | 67 |
+| Markdown | 151 |
+| JSON | 71 |
 | Python | 53 |
 | YAML | 23 |
 | Shell | 4 |
@@ -162,19 +164,20 @@ again.
 | `architecture` | pkg.go.dev | 1 |
 | `architecture` | pnpm.io | 1 |
 | `coding` | learn.microsoft.com | 66 |
-| `coding` | docs.python.org | 25 |
-| `coding` | nodejs.org | 16 |
+| `coding` | docs.python.org | 27 |
+| `coding` | nodejs.org | 17 |
 | `coding` | tiswww.case.edu | 16 |
 | `coding` | www.w3.org | 16 |
 | `coding` | cheatsheetseries.owasp.org | 15 |
 | `coding` | man7.org | 15 |
+| `coding` | raw.githubusercontent.com | 15 |
 | `coding` | developer.mozilla.org | 13 |
-| `coding` | raw.githubusercontent.com | 13 |
 | `coding` | mesonbuild.com | 12 |
+| `coding` | pubs.opengroup.org | 11 |
 | `coding` | docs.astral.sh | 9 |
 | `coding` | gcc.gnu.org | 9 |
-| `coding` | pubs.opengroup.org | 9 |
-| `coding` | pypi.org | 6 |
+| `coding` | pypi.org | 7 |
+| `coding` | www.rfc-editor.org | 7 |
 | `coding` | clang.llvm.org | 5 |
 | `coding` | cwe.mitre.org | 5 |
 | `coding` | devblogs.microsoft.com | 5 |
@@ -182,6 +185,7 @@ again.
 | `coding` | www.typescriptlang.org | 5 |
 | `coding` | curl.se | 4 |
 | `coding` | dotnet.microsoft.com | 4 |
+| `coding` | go.dev | 4 |
 | `coding` | google.github.io | 4 |
 | `coding` | mypy.readthedocs.io | 4 |
 | `coding` | packaging.python.org | 4 |
@@ -189,13 +193,13 @@ again.
 | `coding` | git-scm.com | 3 |
 | `coding` | web.dev | 3 |
 | `coding` | best.openssf.org | 2 |
+| `coding` | builder.aws.com | 2 |
 | `coding` | devguide.python.org | 2 |
 | `coding` | docs.pydantic.dev | 2 |
 | `coding` | eslint.org | 2 |
-| `coding` | go.dev | 2 |
+| `coding` | man.freebsd.org | 2 |
 | `coding` | pyyaml.org | 2 |
 | `coding` | rust-lang.github.io | 2 |
-| `coding` | www.rfc-editor.org | 2 |
 | `coding` | www.shellcheck.net | 2 |
 | `coding` | yaml.org | 2 |
 | `coding` | 12factor.net | 1 |
@@ -203,6 +207,7 @@ again.
 | `coding` | biomejs.dev | 1 |
 | `coding` | check-jsonschema.readthedocs.io | 1 |
 | `coding` | community.owasp.org | 1 |
+| `coding` | design-system.service.gov.uk | 1 |
 | `coding` | doc.qt.io | 1 |
 | `coding` | docs.github.com | 1 |
 | `coding` | documentation.ubuntu.com | 1 |
@@ -212,7 +217,6 @@ again.
 | `coding` | json-schema.org | 1 |
 | `coding` | lists.gnu.org | 1 |
 | `coding` | llvm.org | 1 |
-| `coding` | man.freebsd.org | 1 |
 | `coding` | manpages.debian.org | 1 |
 | `coding` | martinfowler.com | 1 |
 | `coding` | neverworkintheory.org | 1 |
@@ -227,11 +231,13 @@ again.
 | `coding` | specifications.freedesktop.org | 1 |
 | `coding` | src.fedoraproject.org | 1 |
 | `coding` | support.apple.com | 1 |
+| `coding` | tc39.es | 1 |
 | `coding` | toml.io | 1 |
 | `coding` | valgrind.org | 1 |
 | `coding` | www.cisa.gov | 1 |
 | `coding` | www.freedesktop.org | 1 |
 | `coding` | www.kernel.org | 1 |
+| `coding` | www.nuget.org | 1 |
 | `coding` | www.open-std.org | 1 |
 | `coding` | www.powershellgallery.com | 1 |
 | `coding` | www.unicode.org | 1 |
@@ -288,34 +294,61 @@ again.
 | `house-style` | www.gov.uk | 1 |
 | `house-style` | www.mkdocs.org | 1 |
 | `house-style` | zensical.org | 1 |
-| `operations` | learn.microsoft.com | 16 |
+| `human-factors` | books.hse.gov.uk | 4 |
+| `human-factors` | arxiv.org | 2 |
+| `human-factors` | journals.sagepub.com | 2 |
+| `human-factors` | aisel.aisnet.org | 1 |
+| `human-factors` | ckrybus.com | 1 |
+| `human-factors` | link.springer.com | 1 |
+| `human-factors` | openai.com | 1 |
+| `human-factors` | pmc.ncbi.nlm.nih.gov | 1 |
+| `human-factors` | pressblog.uchicago.edu | 1 |
+| `human-factors` | repositorio.ispa.pt | 1 |
+| `human-factors` | www.chesterton.org | 1 |
+| `human-factors` | www.england.nhs.uk | 1 |
+| `human-factors` | www.konsortswd.de | 1 |
+| `operations` | learn.microsoft.com | 22 |
 | `operations` | docs.docker.com | 12 |
+| `operations` | raw.githubusercontent.com | 4 |
+| `operations` | github.com | 3 |
 | `operations` | ubuntu.com | 3 |
+| `operations` | www.freedesktop.org | 3 |
+| `operations` | www.rfc-editor.org | 3 |
 | `operations` | csrc.nist.gov | 2 |
 | `operations` | docs.fedoraproject.org | 2 |
-| `operations` | github.com | 2 |
 | `operations` | man.openbsd.org | 2 |
-| `operations` | raw.githubusercontent.com | 2 |
+| `operations` | man7.org | 2 |
 | `operations` | suricata.io | 2 |
 | `operations` | wiki.nftables.org | 2 |
 | `operations` | www.cisa.gov | 2 |
 | `operations` | www.debian.org | 2 |
-| `operations` | www.freedesktop.org | 2 |
 | `operations` | access.redhat.com | 1 |
 | `operations` | blog.snort.org | 1 |
 | `operations` | dnf.readthedocs.io | 1 |
 | `operations` | docs.sigstore.dev | 1 |
 | `operations` | fedoraproject.org | 1 |
 | `operations` | firewalld.org | 1 |
-| `operations` | man7.org | 1 |
+| `operations` | grafana.com | 1 |
+| `operations` | jsonlines.org | 1 |
 | `operations` | netfilter.org | 1 |
+| `operations` | pypi.org | 1 |
 | `operations` | techcommunity.microsoft.com | 1 |
 | `operations` | wiki.almalinux.org | 1 |
 | `operations` | www.netfilter.org | 1 |
-| `operations` | www.rfc-editor.org | 1 |
 | `operations` | www.wi-fi.org | 1 |
 | `operations` | www.wireguard.com | 1 |
+| `operations` | yamato-security.github.io | 1 |
 | `operations` | zeek.org | 1 |
+| `optimization-and-scheduling` | github.com | 9 |
+| `optimization-and-scheduling` | assets.publishing.service.gov.uk | 1 |
+| `optimization-and-scheduling` | docs.timefold.ai | 1 |
+| `optimization-and-scheduling` | plato.asu.edu | 1 |
+| `optimization-and-scheduling` | pubsonline.informs.org | 1 |
+| `optimization-and-scheduling` | pypi.org | 1 |
+| `optimization-and-scheduling` | scipopt.org | 1 |
+| `optimization-and-scheduling` | support.gurobi.com | 1 |
+| `optimization-and-scheduling` | www.coin-or.org | 1 |
+| `optimization-and-scheduling` | www.ibm.com | 1 |
 | `security` | cheatsheetseries.owasp.org | 7 |
 | `security` | owasp.org | 6 |
 | `security` | cwe.mitre.org | 1 |

@@ -6,6 +6,22 @@ Notable changes to this repository. The format follows
 
 ## [Unreleased]
 
+## [0.1.28] - 2026-11-11
+
+### Added
+
+- `human-factors`, a new skill: what a habit, workaround or familiar tool in people's work is
+  for before a redesign, an automation or an optimization removes it, and the rule that keeps
+  facts apart from preferences.
+- `optimization-and-scheduling`, a new skill: solvers, schedules, rosters and lead-time quotes,
+  with every plan checked independently of the solver and the people in it modeled.
+- `coding` gains `error-handling`; `operations` gains `log-analysis`.
+- The research R07, R23 and R28 is filed with its checks.
+
+### Changed
+
+- `csharp-coding`: .NET 11 is released (STS), no longer a release candidate.
+
 ## [0.1.27] - 2026-11-11
 
 ### Added

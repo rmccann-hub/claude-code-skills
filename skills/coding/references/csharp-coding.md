@@ -10,8 +10,8 @@ the .NET 10.0.403 SDK, nullable on, `latest-Recommended` analysis and warnings a
 
 ## Rules
 
-1. **Target `net10.0`.** .NET 8 and 9 end together (fact `cs-dotnet8-9-end`), 10 is LTS (fact
-   `cs-dotnet10-lts`), 11 a release candidate (fact `cs-dotnet11-rc`), and only a latest patch
+1. **Target `net10.0`.** .NET 8 and 9 ended together (fact `cs-dotnet8-9-end`), 10 is LTS (fact
+   `cs-dotnet10-lts`), 11 is a shorter STS release (fact `cs-dotnet11-sts`), and only a latest patch
    is supported (fact `cs-support-policy`). Leave `LangVersion` unset so the target picks C#
    (fact `cs-langversion-default`), never `latest` (fact `cs-langversion-latest`). Pin an SDK in
    `global.json` with `rollForward` (fact `cs-global-json`).
@@ -173,7 +173,7 @@ platform. **Choose differently:** a long-running service gains little from AOT, 
 |---|---|---|---|---|---|
 | `cs-dotnet10-lts` | .NET 10 is LTS, to 2028-11-14 | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | "LTS Active November 14, 2028" | 2026-10-26 | 2027-04-26 |
 | `cs-dotnet8-9-end` | .NET 8 and 9 ended on 2026-11-10, at 8.0.34 and 9.0.23 | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | "8.0.34 November 10, 2026 November 10, 2026" and "9.0.23 November 10, 2026 November 10, 2026" | 2026-11-11 | 2027-05-11 |
-| `cs-dotnet11-rc` | .NET 11 is at RC2 | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | ".NET 11 RC2 October 13, 2026" | 2026-10-26 | 2027-04-26 |
+| `cs-dotnet11-sts` | .NET 11 shipped 2026-11-10 as STS, supported to 2028-11-14 | [Policy](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core) | ".NET 11 November 10, 2026 11.0.0 November 10, 2026 STS Active November 14, 2028" | 2026-11-11 | 2027-02-11 |
 | `cs-support-policy` | LTS: 3 years, STS: 2; odd is STS; latest patch only | [Policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) | "patches for three years" and "patches for two years" and "Odd numbered releases are STS" and "need the latest patch" | 2026-10-26 | 2027-04-26 |
 | `cs-langversion-default` | .NET 10 means C# 14 | [Learn](https://learn.microsoft.com/dotnet/csharp/language-reference/language-versioning) | ".NET 10.x C# 14" | 2026-10-26 | 2027-04-26 |
 | `cs-langversion-latest` | Not `latest` | [Learn](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version) | "Don't set the LangVersion element to latest" | 2026-10-26 | 2027-10-26 |

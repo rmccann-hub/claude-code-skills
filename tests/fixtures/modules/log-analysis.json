@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Our file server rebooted twice overnight. I exported the System .evtx from it; how do I work out what happened and when?",
+    "should_trigger": true
+  },
+  {
+    "query": "I've got a MEMORY.DMP from a blue screen on a Windows 11 box. Walk me through finding which driver crashed it.",
+    "should_trigger": true
+  },
+  {
+    "query": "nginx died around 3am on two of our Ubuntu hosts and the app server's logs are in a different time zone. Help me build one timeline from journalctl and the app's JSON log.",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a Python script that pulls every error out of a 4 GB JSON-lines application log and tells me which lines it couldn't read.",
+    "should_trigger": true
+  },
+  {
+    "query": "Triage these event logs from a possibly compromised workstation with Hayabusa or Chainsaw, and check whether anyone deleted records.",
+    "should_trigger": true
+  },
+  {
+    "query": "My service won't start after an update; systemctl says failed. What should I check?",
+    "should_trigger": false
+  },
+  {
+    "query": "What should our Go service write to its logs, and should we use OpenTelemetry for structured logging?",
+    "should_trigger": false
+  },
+  {
+    "query": "Set up Group Policy so Windows Server keeps a bigger Security event log and forwards it to a collector.",
+    "should_trigger": false
+  }
+]

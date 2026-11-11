@@ -12,8 +12,8 @@ How to run, troubleshoot and harden the systems code runs on: Windows Server and
 Directory, Linux hosts, containers, and the networks between them. Scripting itself is
 `coding`'s `powershell-scripts` and `bash-coding`, with their security modules; deploying from
 CI is `git-workflows`' `ci-cd`; application security is `security`. Reading logs and crash
-dumps is a planned module, `log-analysis`, waiting for research; Kubernetes, cloud baselines
-and infrastructure as code are planned on request.
+dumps is `log-analysis`, here; what a program should log is a planned `logging-and-observability`
+module. Kubernetes, cloud baselines and infrastructure as code are planned on request.
 
 ## What applies to every module
 
@@ -42,6 +42,7 @@ mistakes, audit checks, reasons, dated facts and sources.
 | [`linux`](references/linux.md) | Linux hosts across distributions: support windows, troubleshooting in order, systemd units and the journal, updates, SSH and sudo, SELinux and AppArmor, disk full, time sync, and backups |
 | [`docker-containers`](references/docker-containers.md) | Dockerfiles, Compose files and images: multi-stage builds, pinned bases, no secrets in layers, non-root and read-only containers, health checks, registries, signing and scanning, and debugging |
 | [`networking-security`](references/networking-security.md) | Networks for an office or home: default-deny firewalls applied safely, VLAN segmentation, IDS, WireGuard and other VPNs, WPA3 Wi-Fi, encrypted DNS, exposing services, and packet capture |
+| [`log-analysis`](references/log-analysis.md) | Reading logs as evidence: Windows event logs and `.evtx` triage, crash dumps and blue screens, the systemd journal and kernel log, IIS, JSON and CSV logs, time zones and clock skew across hosts, and reporting findings |
 
 ## When something here is wrong
 
