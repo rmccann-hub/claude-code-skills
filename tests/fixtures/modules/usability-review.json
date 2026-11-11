@@ -1,14 +1,37 @@
 [
   {
-    "query": "TODO(new-skill) a request this module should answer",
+    "query": "Can you do a heuristic review of the main window of my Qt app? The code is in src/ui. Rate how bad each problem is.",
     "should_trigger": true
   },
   {
-    "query": "TODO(new-skill) another one, worded differently",
+    "query": "Our status bar still says Passed while the next job is running, and the device list doesn't update when I unplug something. What else should I look for in the UI?",
     "should_trigger": true
   },
   {
-    "query": "TODO(new-skill) a near miss another module takes",
-    "should_trigger": false
+    "query": "Go through this desktop app and tell me what would confuse or annoy a user: labels, error messages, anything that deletes stuff without a way back.",
+    "should_trigger": true
+  },
+  {
+    "query": "My tool is for power users. How do I make the frequent actions faster without taking any options away?",
+    "should_trigger": true
+  },
+  {
+    "query": "How many people should review an interface for usability problems, and how do we combine their severity ratings?",
+    "should_trigger": true
+  },
+  {
+    "query": "My file picker opens behind the main window and blocks input. How should dialogs be parented and stacked?",
+    "should_trigger": false,
+    "note": "windows-and-dialogs"
+  },
+  {
+    "query": "The preferences dialog has forty settings. Should some move under an Advanced tab, and which defaults should we pick?",
+    "should_trigger": false,
+    "note": "settings-and-options"
+  },
+  {
+    "query": "Write pytest-qt tests that click through the export wizard and check the result.",
+    "should_trigger": false,
+    "note": "gui-testing"
   }
 ]

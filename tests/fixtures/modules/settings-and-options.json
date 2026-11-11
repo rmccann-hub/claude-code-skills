@@ -1,14 +1,36 @@
 [
   {
-    "query": "TODO(new-skill) a request this module should answer",
+    "query": "My app's preferences window has about 40 options and a reviewer says that's too many. It's a tool for power users, so I don't want to drop any. How should I organize it?",
     "should_trigger": true
   },
   {
-    "query": "TODO(new-skill) another one, worded differently",
+    "query": "The output folder can be set from the toolbar, from the preferences dialog and with a --out-dir flag, and they don't always agree. What's the right way to handle that?",
     "should_trigger": true
   },
   {
-    "query": "TODO(new-skill) a near miss another module takes",
-    "should_trigger": false
+    "query": "Should an option that doesn't apply in the current mode be hidden or grayed out?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm adding quality presets like Fast, Balanced and Archival to my encoder GUI. What happens when someone picks one and then changes a single field?",
+    "should_trigger": true
+  },
+  {
+    "query": "In a Qt settings page, when do I use a switch versus a checkbox, and when should radio buttons become a dropdown?",
+    "should_trigger": true
+  },
+  {
+    "query": "Go through every setting this program has and tell me where each is set, what its default is, and whether any test covers it.",
+    "should_trigger": true
+  },
+  {
+    "query": "My preferences dialog opens behind the main window and the app stops responding to clicks. How do I fix it?",
+    "should_trigger": false,
+    "note": "windows-and-dialogs"
+  },
+  {
+    "query": "Write pytest-qt tests that click through my app's settings dialog and check the values are saved.",
+    "should_trigger": false,
+    "note": "gui-testing"
   }
 ]

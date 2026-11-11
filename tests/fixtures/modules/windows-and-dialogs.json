@@ -1,14 +1,34 @@
 [
   {
-    "query": "TODO(new-skill) a request this module should answer",
+    "query": "Our app checks for updates in the background and pops up an 'update available' dialog. Sometimes it ends up behind the main window and then nothing responds to clicks. How should this work?",
     "should_trigger": true
   },
   {
-    "query": "TODO(new-skill) another one, worded differently",
+    "query": "In my Qt app, when someone deletes a project the confirm box has Yes and No. Which one should Enter press, and do I even need the box?",
     "should_trigger": true
   },
   {
-    "query": "TODO(new-skill) a near miss another module takes",
+    "query": "Review this PyQt code for how it opens its dialogs. Can two of them end up open at once, and is each one attached to the right window?",
+    "should_trigger": true
+  },
+  {
+    "query": "The device details window opens before the scan finishes and shows zeros for a few seconds, and it stays open after the USB device is unplugged. What should it do instead?",
+    "should_trigger": true
+  },
+  {
+    "query": "A batch export takes about ten minutes. Should that be a modal progress dialog, and how do I let people know it finished if they've moved on to something else?",
+    "should_trigger": true
+  },
+  {
+    "query": "I'm building a WinUI 3 app and calling ShowAsync on a ContentDialog from a button handler throws an exception. What am I doing wrong?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our preferences window has 80 options across six tabs and people can't find anything. How should we organize them without taking options away?",
+    "should_trigger": false
+  },
+  {
+    "query": "How do I write an automated test that clicks through the dialogs of a GTK 4 app on Wayland?",
     "should_trigger": false
   }
 ]
