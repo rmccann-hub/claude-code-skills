@@ -57,9 +57,11 @@ To check another repository's prose against the house style, follow the house-st
 | Skill | Plugin | What it does |
 |---|---|---|
 | `project-bootstrap-and-audit` | `standards` | Sets up a new repository, or audits an existing one, against the PROJECT-BOOTSTRAP-AND-AUDIT standard (v0.49.0) |
+| `architecture` | `engineering` | Where each file and folder goes: layouts by ecosystem, tests' places, feature or layer folders, naming, one repository or several, and moving files without losing history |
 | `coding` | `engineering` | The contract every code change meets, then Python, TypeScript and JavaScript, HTML and CSS, C# and .NET, PowerShell, and Bash: rules, common mistakes, review checks and the reasons for each, with dated facts |
 | `git-workflows` | `engineering` | Commit messages, pull requests, the merge strategy, branch deletion, GitHub Actions CI, hooks, `.gitignore`, release tags, changelogs and backports, with the reasons for each and what other projects do |
 | `house-style` | `engineering` | One style for prose and Markdown in every repository, with the reasons for each rule, and the Vale style and CI job that check it |
+| `security` | `engineering` | Threat modeling, authentication, sessions and passwords, authorization, cryptography and randomness, security logging, and security review, against OWASP Top 10:2025, ASVS 5.0.0 and the CWE Top 25 |
 
 More arrive one at a time, each through the review in
 [docs/authoring-a-skill.md](docs/authoring-a-skill.md). [ROADMAP.md](ROADMAP.md) lists every skill
