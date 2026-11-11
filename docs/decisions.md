@@ -2,6 +2,27 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — `operations`, with four modules, replacing three old skills
+
+- **Asked, by the owner:** "finish what you can ... to a fully complete stage" (2026-11-11).
+  Planned for wave 4 of the rebuild, with R11 and R15 run on 2026-10-26.
+- **Built:** `windows-admin`, `linux`, `docker-containers` and `networking-security`, one
+  helper agent each, reviewed here, every fact fetched on 2026-11-11. Corrections to the
+  research: Windows Update for Business is now Windows Update client policies; Server 2022's
+  mainstream support ended 2026-10-14; Debian 12's regular security support ends 2026-07-11,
+  not 06-10; Suricata is at 8.0.8 and Zeek's LTS at 9.0.1. `log-analysis` waits for R07;
+  `kubernetes`, `cloud` and `infrastructure-as-code` stay on request.
+- **Old copies, before this merges:** the owner's claude.ai skills `windows-admin`,
+  `docker-containers` and `networking-security` share these modules' names. The owner deletes
+  them, in their own settings and in the organization library's inventory, by
+  `docs/authoring-a-skill.md` step 12. Among the synced skills, `networking-security` names
+  the other two and `windows-admin` names `networking-security`; all three go together, so
+  none is left naming a deleted one.
+- **Sources:** Microsoft Learn, distribution and systemd documentation, OpenSSH, Docker's and
+  Podman's documentation, nftables, WireGuard, the Wi-Fi Alliance, CISA, NIST and the
+  Suricata and Zeek projects. Facts in our own words, with short quotes. Nothing adapted.
+- **Merged by the owner,** because `.claude/settings.json` turns off the new skill's installed
+  copy here.
 ## 2026-11-11 — `git-workflows`' `ci-cd` and `versioning-and-releases`
 
 - **Asked, by the owner:** "finish what you can ... and anything else in the repo but partially

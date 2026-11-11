@@ -20,14 +20,15 @@ freshness run and the release workflow both run it.
 | `engineering` | 0.1.25 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
 | `engineering` | 0.1.25 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.25 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
+| `engineering` | 0.1.25 | Apache-2.0 | `operations` | reviewed 2026-11-11 |
 
 ## Languages
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 112 |
+| Markdown | 117 |
 | Python | 53 |
-| JSON | 47 |
+| JSON | 51 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -247,3 +248,31 @@ again.
 | `house-style` | www.gov.uk | 1 |
 | `house-style` | www.mkdocs.org | 1 |
 | `house-style` | zensical.org | 1 |
+| `operations` | learn.microsoft.com | 16 |
+| `operations` | docs.docker.com | 12 |
+| `operations` | ubuntu.com | 3 |
+| `operations` | csrc.nist.gov | 2 |
+| `operations` | docs.fedoraproject.org | 2 |
+| `operations` | github.com | 2 |
+| `operations` | man.openbsd.org | 2 |
+| `operations` | raw.githubusercontent.com | 2 |
+| `operations` | suricata.io | 2 |
+| `operations` | wiki.nftables.org | 2 |
+| `operations` | www.cisa.gov | 2 |
+| `operations` | www.debian.org | 2 |
+| `operations` | www.freedesktop.org | 2 |
+| `operations` | access.redhat.com | 1 |
+| `operations` | blog.snort.org | 1 |
+| `operations` | dnf.readthedocs.io | 1 |
+| `operations` | docs.sigstore.dev | 1 |
+| `operations` | fedoraproject.org | 1 |
+| `operations` | firewalld.org | 1 |
+| `operations` | man7.org | 1 |
+| `operations` | netfilter.org | 1 |
+| `operations` | techcommunity.microsoft.com | 1 |
+| `operations` | wiki.almalinux.org | 1 |
+| `operations` | www.netfilter.org | 1 |
+| `operations` | www.rfc-editor.org | 1 |
+| `operations` | www.wi-fi.org | 1 |
+| `operations` | www.wireguard.com | 1 |
+| `operations` | zeek.org | 1 |

@@ -1,0 +1,34 @@
+[
+  {
+    "query": "We still have three Windows Server 2016 boxes running file shares. How long are they patched, and what should the upgrade plan look like?",
+    "should_trigger": true
+  },
+  {
+    "query": "I need to roll out a new Group Policy that changes the screen lock timeout. What's the safe way to test it before it hits every machine?",
+    "should_trigger": true
+  },
+  {
+    "query": "Our old NAS stopped accepting connections from the new 2025 server. Can I just turn off SMB signing on the server to fix it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Audit our certificate templates in AD CS for the ESC1 kind of misconfiguration",
+    "should_trigger": true
+  },
+  {
+    "query": "WSUS is deprecated, right? What should we patch our domain controllers with now, and is hotpatching worth it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Help desk needs to restart the print spooler on a few servers without being local admins. How do I set that up?",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a PowerShell script that reads a CSV of users and fails cleanly with a proper exit code when a row is bad",
+    "should_trigger": false
+  },
+  {
+    "query": "Design VLANs to split our office network from the IoT cameras, with firewall rules between them",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Can you review this Dockerfile for our Flask app? The image is 1.2 GB and it rebuilds all the pip packages every time I change one line of code.",
+    "should_trigger": true
+  },
+  {
+    "query": "My web service starts before Postgres is ready and crashes on boot. Here's my docker-compose.yml, what's the right way to make it wait?",
+    "should_trigger": true
+  },
+  {
+    "query": "We need to pass a private npm token during the image build without it ending up in the final image. How should I do that?",
+    "should_trigger": true
+  },
+  {
+    "query": "Lock down this compose service so it doesn't run as root, can't write to its own filesystem and can't eat all the host's memory.",
+    "should_trigger": true
+  },
+  {
+    "query": "How do we sign the images we push to our registry and check the signature before deploying, now that content trust is gone?",
+    "should_trigger": true
+  },
+  {
+    "query": "A container keeps exiting with code 137 and there's nothing useful in its logs. How do I find out why?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I set up ufw on my Ubuntu server so SSH is only reachable from one office subnet?",
+    "should_trigger": false
+  },
+  {
+    "query": "A systemd service on my Debian box keeps restarting every few seconds. How do I see why it's failing?",
+    "should_trigger": false
+  }
+]

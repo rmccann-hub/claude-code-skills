@@ -34,7 +34,8 @@
       "skills": [
         "./skills/coding",
         "./skills/git-workflows",
-        "./skills/house-style"
+        "./skills/house-style",
+        "./skills/operations"
       ]
     }
   ]

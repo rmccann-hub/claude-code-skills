@@ -8,39 +8,53 @@ indicators:
   - ":"
   - "."
 exceptions:
+  - AD CS
   - AI
   - API
   - APIs
   - Anthropic
+  - AppArmor
   - CI
   - CLI
   - Claude
   - Claude Code
   - CodeQL
+  - Credential Guard
+  - DHCP
+  - DNS
   - Dependabot
   - Docker
   - GUI
   - Git
   - GitHub
   - GitHub Actions
+  - Group Policy
   - HTML
+  - IDS
+  - JEA
   - JSON
   - JavaScript
   - KDE
   - Keep a Changelog
+  - LAPS
   - Linux
   - MCP
   - Markdown
   - Node.js
   - OIDC
+  - Podman
   - PowerShell
+  - Protected Users
   - PyPI
   - Python
   - README
   - Rust
+  - SELinux
   - SHA
   - SHA-256
+  - SMB
   - SQL
+  - SSH
   - Semantic Versioning
   - TODO
   - TODOs
@@ -48,8 +62,13 @@ exceptions:
   - TypeScript
   - URL
   - URLs
+  - VPN
   - Vale
+  - Wi-Fi
   - Windows
+  - Windows Server
+  - WireGuard
   - XML
   - YAML
   - macOS
+  - systemd

@@ -8,6 +8,8 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- `operations`, a new skill: `windows-admin`, `linux`, `docker-containers` and
+  `networking-security`.
 - `git-workflows` gains `ci-cd` (environments, OIDC, promotion, rollback) and
   `versioning-and-releases` (release notes, support windows, advisories).
 - `coding` gains five modules: `code-style`, `types`, `input-handling`, `configuration` and
@@ -18,7 +20,8 @@ Notable changes to this repository. The format follows
 ### Changed
 
 - `house-style`'s Vale rule for sentence-case headings accepts AI, GUI, HTML, KDE, MCP,
-  OIDC, TODO, URL and XML, as it accepts JSON, SQL and YAML.
+  OIDC, TODO, URL and XML, as it accepts JSON, SQL and YAML, and system names such as
+  SELinux, systemd, WireGuard, Group Policy and AD CS.
 - `git-workflows`' `pr-stewardship` records a lifted hold where the hold was, names who tends
   bots' pull requests, and adds four mistakes; `releases-and-versions` checks what consumers
   install and reads what a failed publish made before retrying.
