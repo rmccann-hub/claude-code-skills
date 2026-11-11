@@ -103,7 +103,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `secure-coding` | `security` | OWASP Top 10, ASVS, CWE Top 25, authentication, cryptography, threat modeling | shipped | core | R04 |
 | `supply-chain-security` | `security` | Dependencies, lockfiles, pinning, SBOMs, provenance, malicious and hallucinated packages | planned | core | R05, R21, R24 |
 | `ai-agent-security` | `agent-engineering` | Prompt injection, permission design, secret exposure, MCP, skills as a supply chain, hidden Unicode | shipped | core | R01 |
-| `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | shipped | core | R07, R07b |
+| `error-handling` | `coding` | Failure classes, retries, timeouts, circuit breakers, user messages, RFC 9457 | shipped | core | R07, R07b, R07d |
 | `testing-patterns` | `testing` | Strategy, test doubles and contract tests, coverage, each framework's settings that fail open, frameworks per language, property-based and mutation tools | shipped | core | R06, R06b |
 | `agent-written-tests` | `testing` | Tests an AI coding agent writes, changes or runs: tests first, high-risk test diffs, gaming, holdout tests, mutation-testing what it wrote | shipped | core | R06b |
 | `acceptance-runs` | `testing` | Unattended acceptance runs on hardware: preconditions, a device lost mid-run, run tiers, evidence; fault injection for ordinary programs | shipped | core | R06c |
@@ -127,12 +127,12 @@ Grouped by subject; the Skill column is each module's one home.
 | `ci-cd` | `git-workflows` | Environments and deployment, beyond the CI that `ci-workflows` and `ci-speed` cover | shipped | core | R08, R21 |
 | `versioning-and-releases` | `git-workflows` | Release notes and support windows, beyond the tags, changelogs, versions and deprecation that `releases-and-versions` covers | shipped | core | R05 |
 | `legacy-modernization` | `architecture` | Reading legacy code, characterization tests, the strangler fig pattern, migration playbooks | planned | core | R17 |
-| `logging-and-observability` | `coding` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | shipped | standard | R07, R07b |
-| `performance-and-concurrency` | `coding` | Profiling, complexity, caching, async and threads | shipped | standard | R07, R07c |
+| `logging-and-observability` | `coding` | Structured logs, OpenTelemetry, metrics, tracing, what never to log | shipped | standard | R07, R07b, R07d |
+| `performance-and-concurrency` | `coding` | Profiling, complexity, caching, async and threads | shipped | standard | R07, R07c, R07e |
 | `configuration` | `coding` | Layered config, environment variables, validation at startup, secret stores | shipped | standard | R04 |
 | `architecture-and-design` | `architecture` | Principles, boundaries, decision records, diagrams, planning, refactoring | planned | standard | R19 |
-| `human-factors` | `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | shipped | standard | R23, R23b |
-| `studying-work` | `human-factors` | Finding what a step is for: watching and interviewing people at their work, goals and plans, how deep to go, and the traps that bend a study | shipped | standard | R23b |
+| `human-factors` | `human-factors` | The habits, notions and mindsets common to people that look odd or wasteful from outside but serve a purpose: what each is for, how to spot one before a design, an automation or an optimization removes it, and how to design with it. Loaded only by the few agents that design or change what people do; it never bends a factual finding | shipped | standard | R23, R23b, R23c |
+| `studying-work` | `human-factors` | Finding what a step is for: watching and interviewing people at their work, goals and plans, how deep to go, and the traps that bend a study | shipped | standard | R23b, R23c |
 | `usability-review` | `user-experience` | A heuristic review of a program's interface: status that's current, consistency, error prevention and recovery, recognition over recall, severity ratings | shipped | standard | R27 |
 | `windows-and-dialogs` | `user-experience` | When a window or dialog appears, modality, focus and stacking, nothing shown before it's ready or hidden behind another, long operations and notifications | shipped | standard | R27 |
 | `settings-and-options` | `user-experience` | Defaults, presets, progressive disclosure, each setting in one place, and how many choices is too many | shipped | standard | R27 |
@@ -189,8 +189,8 @@ Grouped by subject; the Skill column is each module's one home.
 | `networking-security` | `operations` | Firewalls, segmentation, IDS, VPN, Wi-Fi, DNS | shipped | standard | R15 |
 | `docker-containers` | `operations` | Dockerfiles, Compose, hardening, registries | shipped | standard | R15 |
 | `log-analysis` | `operations` | Event logs, crash dumps, journals, application logs | shipped | standard | R07 |
-| `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | shipped | standard | R28, R23, R28b |
-| `plan-checking` | `optimization-and-scheduling` | Checking what a solver returns and testing a planner: an independent checker, runs stopped at a limit, reproducible runs, published instances as oracles | shipped | standard | R28, R28b |
+| `optimization-and-scheduling` | `optimization-and-scheduling` | Solvers, business rules as constraints, the human factors in plans, with `human-factors` | shipped | standard | R28, R23, R28b, R28c |
+| `plan-checking` | `optimization-and-scheduling` | Checking what a solver returns and testing a planner: an independent checker, runs stopped at a limit, reproducible runs, published instances as oracles | shipped | standard | R28, R28b, R28c |
 | `linux-gaming` | `linux-gaming` | Proton, Steam, handhelds | planned | on request | R15 |
 | `kubernetes` | `operations` | Clusters, workloads, the Gateway API | planned | on request | R15 |
 | `cloud` | `operations` | Azure, AWS and Google Cloud baselines | planned | on request | R15 |
