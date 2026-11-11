@@ -1,4 +1,4 @@
-# CI/CD
+# Deploying from CI
 
 Read this for setting up a GitHub environment and its protection rules, deciding who can deploy,
 keeping deploy credentials in an environment or moving a deploy off long-lived cloud keys to

@@ -40,7 +40,7 @@ GitHub's generated notes list merged pull requests, contributors and a link (fac
 `vr-generated-notes`): keep those, and write the part above them. Notes live in the host's
 database (fact `vr-kac-notes`), so what must survive a move goes in `CHANGELOG.md`.
 
-### Support windows
+### Support periods
 
 One table in `SECURITY.md`, changed in the release that changes support:
 
@@ -90,7 +90,7 @@ vulnerability reporting (its settings table). Once a report arrives, in a public
 - **Remove the old way only once every supported line has the new one,** so users on any
   supported line can move without a jump (fact `vr-pep387-support`).
 
-### Latest and ordering
+### Which release is latest
 
 - **A release on an older line:** `gh release create v2.8.4 --verify-tag --latest=false` (fact
   `vr-gh-latest`). Through the API, set `make_latest` to `"false"`: it defaults to marking each
@@ -135,7 +135,7 @@ documents kept by hand drift. Many projects publish GitHub's generated notes as 
 `vr-generated-notes`): free, but sorted by pull request, not by what a reader must do. An app
 whose users never see a changelog may need notes only.
 
-### Support windows and long-term lines
+### Support periods and long-term lines
 
 Without a published window, each user guesses, and a security fix reaches some lines and not
 others with no warning. Python's end falls five years after each release (fact
@@ -159,7 +159,7 @@ replacement ends forces a jump. Python's policy rules out both (facts `vr-pep387
 `vr-pep387-support`), at the cost of two code paths for the period. Before 1.0.0, or for a
 security fix, removal may come sooner; say so in the notes.
 
-### Latest and ordering (L24)
+### Which release is latest
 
 The API marks each new release latest (fact `vr-make-latest`). An audited fork's releases
 advanced only in build metadata, which SemVer can't order (fact `vr-semver-build`). Its own
