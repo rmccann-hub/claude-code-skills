@@ -1,6 +1,6 @@
 # RESEARCH RUN R07: Error handling, logging, observability, performance, concurrency, and log analysis
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026, updated 10 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 10 November 2026.
 
 This run informs these categories: error-handling, logging-and-observability, performance-and-concurrency, log-analysis.
 
@@ -66,7 +66,7 @@ Then these sections, in this order:
 - OpenTelemetry traces and metrics are stable in most SDKs, logs are stable in several, and the HTTP semantic conventions are stable.
 - The AWS Builders' Library article on timeouts, retries and backoff with jitter is the standard reference for retry design.
 - Python 3.11 added exception groups and add_note, ES2022 added Error cause, and Go 1.20 added errors.Join.
-- Python 3.14 made free-threaded CPython officially supported (PEP 779); Python 3.15 is due to add a sampling profiler (PEP 799).
+- Python 3.14 made free-threaded CPython officially supported (PEP 779); Python 3.15, released on 9 October 2026, added a sampling profiler (PEP 799).
 - Polly v8 and Microsoft.Extensions.Http.Resilience are the current .NET resilience libraries.
 
 ## Questions
@@ -100,3 +100,4 @@ Then these sections, in this order:
    - Rust: Send and Sync, tokio
    - Java: virtual threads, structured concurrency status
 9. Log analysis: Windows event log tools (Get-WinEvent, EvtxECmd, Chainsaw, Hayabusa), crash dump analysis (current WinDbg), journald and journalctl, common query languages (KQL, LogQL), and whether python-evtx is maintained.
+10. Results that say what happened, with published guidance for each: exit codes that carry one meaning each (POSIX, `sysexits.h` and other documented conventions); telling "not found" from "couldn't look" in a return value or result type; why a broad catch around a whole validator fails open; recording a child process's exit status (including one never reaped), its arguments as run, and long output cut to head and tail with a count of what was cut; and, in logs, timestamps that carry their offset (RFC 3339) and status lines that name the outcome checked rather than a step finished.

@@ -1,6 +1,6 @@
 # RESEARCH RUN R24: Installing what was locked, provenance on install, and registry defences
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 26 October 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 26 October 2026, updated 10 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 26 October 2026.
+be current, precise and sourced. Today is 10 November 2026.
 
 This run informs these categories: supply-chain-security, keeping-current, ci-cd, and the install
 advice in every language skill.
@@ -45,7 +45,7 @@ ecosystems a professional meets most.
 7. **Depth over breadth.** Finish the Priority questions fully. If you run out of room, list the
    rest under "Not covered".
 8. **Beliefs marked "(the standard, date)"** come from this repository's own standard,
-   PROJECT-BOOTSTRAP-AND-AUDIT v0.48.2, in its section of dated facts. Checking them also
+   PROJECT-BOOTSTRAP-AND-AUDIT v0.49.0, in its section of dated facts. Checking them also
    checks that standard, so say plainly when one is wrong.
 9. **Measured over asserted.** Where a question asks what something costs or saves, give
    measurements: what was measured, on what, when, and how large the effect was. Label an
@@ -134,3 +134,7 @@ Then these sections, in this order:
 5. Common mistakes AI coding assistants make with installs: `npm install` where `npm ci` belongs,
    unpinned `pip install`, `curl | sh` installers, and disabling hash or signature checks to fix an
    error, with sources.
+6. Building a dependency from source: published practice on pinning it by full commit SHA rather
+   than a tag or a short prefix, checking that the checkout landed on that commit, and refusing to
+   build from a dirty tree; and what Go modules, Cargo's git dependencies, pip's VCS requirements,
+   npm's git dependencies and Meson's wraps check of each by default.

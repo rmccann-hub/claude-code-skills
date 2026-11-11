@@ -23,6 +23,8 @@ Notable changes to this repository. The format follows
 
 ### Fixed
 
+- `skillcheck --verify` leaves a quote whose only source is a PDF to be checked by hand,
+  rather than reading the PDF's bytes as text and reporting the quote gone.
 - `coding`: two facts whose sources reworded them, found by the weekly freshness run. ESLint's
   support page now gives v9's end of life, still 2026-08-06, in its table; OWASP now says
   "dynamic data values" and names the allow-list for table and column names.

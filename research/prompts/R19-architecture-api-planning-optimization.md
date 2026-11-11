@@ -1,6 +1,6 @@
 # RESEARCH RUN R19: Architecture, API design, planning, optimization and scheduling
 
-For the repository rmccann-hub/claude-code-skills · Prompt version 1 · Written 22 September 2026
+For the repository rmccann-hub/claude-code-skills · Prompt version 2 · Written 22 September 2026, updated 10 November 2026
 
 Paste this whole file into a new chat with Research turned on. Nothing else is needed.
 
@@ -9,7 +9,7 @@ Paste this whole file into a new chat with Research turned on. Nothing else is n
 A public repository that is the reference other code repositories are set up, audited and kept
 current against. It holds Agent Skills for Claude Code (Markdown guidance plus small scripts), the
 checks that test them, and research like this. Professional developers will judge it, so it must
-be current, precise and sourced. Today is 22 September 2026.
+be current, precise and sourced. Today is 10 November 2026.
 
 This run informs these categories: architecture-and-design, api-design, optimization-and-scheduling.
 
@@ -88,3 +88,4 @@ Then these sections, in this order:
 6. Optimization and scheduling: OR-Tools' current version and CP-SAT Python API naming, HiGHS, SCIP (and its current licence), Pyomo, PuLP, Timefold; modelling business rules as constraints (hard versus soft, penalties); the job-shop and flow-shop examples in the official docs.
 7. Human factors in scheduling: peer-reviewed or standards sources on fatigue and shift design, time-of-day effects, changeover and setup behaviour and learning curves, and how schedulers should account for them (for example ISO 10075, HSE guidance, the operations research literature). Label any unsourced heuristic as a heuristic.
 8. Refactoring: the current web edition of Fowler's refactoring catalogue (second edition), a safe refactoring workflow, and tool support per language.
+9. Contracts between programs that read each other's output, from published practice: consumer-driven contracts and contract testing (for example Pact); the tolerant reader and expand-and-contract (parallel change), so a consumer that reads both the old and the new form ships before the producer changes; machine-readable output rather than parsing messages written for people; and two sides that validate the same value agreeing one rule, tested by running one side's property tests against the other's implementation.

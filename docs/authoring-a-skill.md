@@ -38,7 +38,8 @@ and dependencies. A second version of a published rule drifts from the first.
 
    `skillcheck` checks every row's shape and every fact a skill names. `skillcheck --due` lists
    the facts due to be checked again, and `skillcheck --verify` fetches each source and looks
-   for its quote. The freshness workflow runs both each week, and keeps one issue open while
+   for its quote. A quote whose only source is a PDF is checked by hand when it falls due,
+   since its text can't be searched. The freshness workflow runs both each week, and keeps one issue open while
    anything is due. Research results are leads until each claim is checked against its source.
 3. **Licenses.** Quote, paraphrase or adapt a source only as its license allows. The licenses of
    common sources are in `research/runs/2026-09-23-A-source-licences.md`. Broadly:
