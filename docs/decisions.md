@@ -2,6 +2,29 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — `agent-engineering`, with `review-loops`
+
+- **Asked, by the owner:** "start on the skeleton of the review-loop too, this is important"
+  (2026-10-21), "lets make the testing-patterns and review-loops skills next" (2026-11-10),
+  and "finish what you can" (2026-11-11).
+- **Built:** the skill `agent-engineering`, with its first module, `review-loops`, from draft
+  #73's skeleton, eleven of the roadmap's lessons (L26, L28, L30, L35 to L38, L45, L46, L54,
+  L55) and R26's checked claims (`research/runs/2026-11-10-R26-review-loops.md`). One helper
+  agent finished the module; it was reviewed here.
+- **R26 changed the draft:** a round closes on evidence, not agreement, since voting explains
+  most of debate's gains and agents talk each other out of right answers; turn and stop rules
+  stay, since MAST counts inter-agent misalignment and unawareness of termination among the
+  failures; and the turn is held by a compare-and-set, a push that lands only if the branch
+  hasn't moved, with the turn number as a fencing token. That revises proposal D, still the
+  owner's to answer for the standard: a convention alone orders crossings but prevents none.
+- **Sources:** arXiv papers under CC BY 4.0 and CC BY-NC-ND 4.0 (quoted, never adapted),
+  Anthropic's and GitHub's documentation, Google's review guide, Kleppmann, Git's manual, Pact
+  and oasdiff. Facts in our own words, with short quotes. Nothing adapted.
+- **Draft #73:** its `review-loops` part is superseded by this; its `supply-chain-security`
+  draft stays open there until R24 is run.
+- **Merged by the owner,** because `.claude/settings.json` turns off the new skill's installed
+  copy here.
+
 ## 2026-11-10 — `user-experience` planned, and research for it and `review-loops`
 
 - **Asked, by the owner:** "lets make the testing-patterns and review-loops skills next ... what

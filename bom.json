@@ -2,7 +2,7 @@
   "$schema": "http://cyclonedx.org/schema/bom-1.7.schema.json",
   "bomFormat": "CycloneDX",
   "specVersion": "1.7",
-  "serialNumber": "urn:uuid:90ec4f9f-b591-5c35-a3d2-38a63a8f348b",
+  "serialNumber": "urn:uuid:c73b1e08-e19d-5139-9a6e-5f8d28ef9640",
   "version": 1,
   "metadata": {
     "tools": {
@@ -33,7 +33,7 @@
       "properties": [
         {
           "name": "claude-code-skills:language",
-          "value": "Markdown: 104 file(s)"
+          "value": "Markdown: 106 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -41,7 +41,7 @@
         },
         {
           "name": "claude-code-skills:language",
-          "value": "JSON: 39 file(s)"
+          "value": "JSON: 40 file(s)"
         },
         {
           "name": "claude-code-skills:language",
@@ -476,6 +476,59 @@
         }
       ],
       "components": [
+        {
+          "type": "data",
+          "bom-ref": "skill:agent-engineering",
+          "name": "agent-engineering",
+          "description": "reviewed 2026-11-11",
+          "licenses": [
+            {
+              "expression": "Apache-2.0"
+            }
+          ],
+          "properties": [
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "arxiv.org: 7 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "code.claude.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.github.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "docs.pact.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "git-scm.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "github.blog: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "google.github.io: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "martin.kleppmann.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "oasdiff.com: 1 fact(s)"
+            },
+            {
+              "name": "claude-code-skills:fact-source",
+              "value": "www.anthropic.com: 1 fact(s)"
+            }
+          ]
+        },
         {
           "type": "data",
           "bom-ref": "skill:coding",

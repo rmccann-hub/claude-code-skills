@@ -17,6 +17,7 @@ freshness run and the release workflow both run it.
 | Plugin | Version | License | Skill | What it carries |
 |---|---|---|---|---|
 | `standards` | 0.1.25 | CC0-1.0 | `project-bootstrap-and-audit` | standard v0.49.0 |
+| `engineering` | 0.1.25 | Apache-2.0 | `agent-engineering` | reviewed 2026-11-11 |
 | `engineering` | 0.1.25 | Apache-2.0 | `coding` | reviewed 2026-10-27 |
 | `engineering` | 0.1.25 | Apache-2.0 | `git-workflows` | reviewed 2026-11-03 |
 | `engineering` | 0.1.25 | Apache-2.0 | `house-style` | reviewed 2026-10-27 |
@@ -25,9 +26,9 @@ freshness run and the release workflow both run it.
 
 | Language | Tracked files |
 |---|---|
-| Markdown | 104 |
+| Markdown | 106 |
 | Python | 53 |
-| JSON | 39 |
+| JSON | 40 |
 | YAML | 23 |
 | Shell | 4 |
 | TOML | 2 |
@@ -120,6 +121,16 @@ again.
 | Skill | Source | Facts |
 |---|---|---|
 | `project-bootstrap-and-audit` | no dated facts | — |
+| `agent-engineering` | arxiv.org | 7 |
+| `agent-engineering` | code.claude.com | 1 |
+| `agent-engineering` | docs.github.com | 1 |
+| `agent-engineering` | docs.pact.io | 1 |
+| `agent-engineering` | git-scm.com | 1 |
+| `agent-engineering` | github.blog | 1 |
+| `agent-engineering` | google.github.io | 1 |
+| `agent-engineering` | martin.kleppmann.com | 1 |
+| `agent-engineering` | oasdiff.com | 1 |
+| `agent-engineering` | www.anthropic.com | 1 |
 | `coding` | learn.microsoft.com | 60 |
 | `coding` | docs.python.org | 19 |
 | `coding` | nodejs.org | 16 |

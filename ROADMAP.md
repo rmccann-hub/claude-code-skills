@@ -67,7 +67,7 @@ research. These rules are that structure.
 | `architecture` | `engineering` | Designing systems, APIs, layouts and plans, and modernizing old code | planned |
 | `data` | `engineering` | SQL, schemas, migrations, indexes and transactions | planned |
 | `security` | `engineering` | Threat models, authentication, cryptography, dependencies and the supply chain, privacy and licenses | planned |
-| `agent-engineering` | `engineering` | Building skills and agent context files, agents reviewing each other, and defending agents against injection | planned |
+| `agent-engineering` | `engineering` | Building skills and agent context files, agents reviewing each other, and defending agents against injection | shipped |
 | `operations` | `engineering` | Running, troubleshooting or hardening Windows Server, Linux, containers, networks and cloud, and reading their logs and crash dumps | planned |
 | `business-apps` | `engineering` | Automating or extending Excel, Word, Epicor Kinetic and SOLIDWORKS | planned |
 | `visual-design` | `engineering` | Themes, palettes, charts and accessibility | planned |
@@ -87,7 +87,7 @@ Grouped by subject; the Skill column is each module's one home.
 | `keeping-current` | `project-bootstrap-and-audit` | Sweep a repository for versions behind, end-of-life dates, deprecated APIs and stale facts; propose the updates | planned | core | R05, R21 |
 | `skill-builder` | `agent-engineering` | Design, write, test and tune a skill | planned | core | done |
 | `agent-context-files` | `agent-engineering` | AGENTS.md, CLAUDE.md, rules, settings, hooks, subagents, MCP, other agents' files | planned | core | R01 |
-| `review-loops` | `agent-engineering` | Agent sessions in two repositories reviewing each other's work: the few rules that end rounds, the ones that cost more than they caught, and where agents have to stop for a person | planned | core | R26 |
+| `review-loops` | `agent-engineering` | Agent sessions in two repositories reviewing each other's work: the few rules that end rounds, the ones that cost more than they caught, and where agents have to stop for a person | shipped | core | R26 |
 
 ### B. Engineering practice, for every language
 
@@ -307,7 +307,9 @@ palettes in `visual-design`, not in `excel-master`.
 ## Lessons waiting for their module
 
 What live repositories taught that belongs to a module not built yet. Each module takes its
-lessons in when it's built, and its reasons cite them.
+lessons in when it's built, and its reasons cite them. A lesson taken in stays here, marked
+with the module that took it, so its number still resolves, until the next split of this file
+moves it to the archive.
 
 - **L1, `testing-patterns`:** check the fact, not a symptom the failure path shares. When one check is
   re-keyed onto the fact, re-key every other check that reads the same symptom. On 2026-10-04 a
@@ -376,7 +378,7 @@ lessons in when it's built, and its reasons cite them.
   precedence. Order by a release sequence.
 - **L25, `house-style`:** a claim takes the strongest verb its evidence supports and no
   stronger, names the artifact, and says what an absence means.
-- **L26, `review-loops`:** what one loop of two repositories learned over 31 rounds and eight
+- **L26, `review-loops`, taken in:** what one loop of two repositories learned over 31 rounds and eight
   protocol versions, as a starting set:
   - **What worked:**
     - Close conditions fixed at the first lap.
@@ -413,12 +415,12 @@ lessons in when it's built, and its reasons cite them.
   at a prompt after reading "open Konsole". Say what the screen looks like instead, such as
   "you're in the terminal when you see a `$`". Each command goes in its own block, with what
   its output should look like.
-- **L28, `review-loops`:** a change both sides must make is agreed word for word, and then each
+- **L28, `review-loops`, taken in:** a change both sides must make is agreed word for word, and then each
   side runs its checker against the other's tree from a fresh clone. After a history rewrite,
   a stale local branch made one checker read an old map and report 13 false refusals.
 - **L29, `documentation`:** a field whose format a test enforces has the format written beside
   the field. One session learned a status field's format only from a failing test.
-- **L30, `review-loops`:** what one round that moved both sides' evidence taught about running
+- **L30, `review-loops`, taken in:** what one round that moved both sides' evidence taught about running
   the loop, on 2026-10-14 and 15:
   - **The reporting that worked:** eight fixed diagnostic keys in every lap, a seven-heading
     round summary in each side's last lap, and a five-line handoff block ending each reply that
@@ -457,19 +459,19 @@ lessons in when it's built, and its reasons cite them.
 - **L34, `api-patterns`:** where two sides validate the same value, they agree one rule on the
   same raw bytes, the stricter side's, and a property test runs one side's code against a port
   of the other's. A looser rule would have passed a code the other side's own report flagged.
-- **L35, `review-loops`:** take in every message the other side has released before writing
+- **L35, `review-loops`, taken in:** take in every message the other side has released before writing
   anything that sums up the exchange. A digest written before one released lap was filed could
   not be reproduced by its reader, and a counter that included one's own unreleased lap refused
   the other side's verdict.
-- **L36, `review-loops`:** a message says what is established now, names what it waits on by
+- **L36, `review-loops`, taken in:** a message says what is established now, names what it waits on by
   the condition it must meet rather than a version number, commits in advance to how the next
   verdict will be decided, and says what it doesn't ask. A round closed in three laps on that.
   An owner's `I thought we just needed X?` is the instruction, and reading it as a question
   cost a round trip.
-- **L37, `review-loops`:** a shorter acceptance run is scoped from the diff, lists what it leaves
+- **L37, `review-loops`, taken in:** a shorter acceptance run is scoped from the diff, lists what it leaves
   out and the risk, and replaces an agreed close condition only by the owner's recorded
   override. A step that can hang runs last, under a time limit nothing can raise.
-- **L38, `review-loops`:** a file both sides must hold identically is written by one side,
+- **L38, `review-loops`, taken in:** a file both sides must hold identically is written by one side,
   copied byte for byte by the other and checked by SHA-256, never retyped. Every hash in a
   message is pasted from a command's output: one draft's hash had its first 16 characters
   right and the rest invented.
@@ -499,12 +501,12 @@ lessons in when it's built, and its reasons cite them.
   the verdict beside it. One report carried a first-pass count, 12 of 14, beside a verdict of
   13 of 14 written after a corrective pass, because the count was copied from the tool's first
   log.
-- **L45, `review-loops`:** a cause read from a small sample is called a correlation, and it's
+- **L45, `review-loops`, taken in:** a cause read from a small sample is called a correlation, and it's
   withdrawn in writing as soon as the side holding the data shows otherwise. A coordinator
   advised re-reading a misread track more slowly, because a faster build had misread it. The
   other side's reading of the same runs found that build right at the higher speed, the older
   build wrong at nearly the lower one, and a drive that takes no speed setting.
-- **L46, `review-loops`:** a coordinator sends one file of record, naming each earlier file it
+- **L46, `review-loops`, taken in:** a coordinator sends one file of record, naming each earlier file it
   replaces. Four reports went to two sessions in one day, each correcting the one before, so a
   reader holding an earlier one would have worked from a claim since withdrawn.
 - **L47, `testing-patterns`:** a reference's settings are read from its own artifacts before
@@ -536,10 +538,10 @@ lessons in when it's built, and its reasons cite them.
   agent writing escape sequences checks the bytes that landed: one agent's tool turned
   `\u202e` into the character itself three times in one night, the third in this lesson,
   in a root file the scan skipped.
-- **L54, `review-loops`:** a reviewer checks what the code already does before recommending
+- **L54, `review-loops`, taken in:** a reviewer checks what the code already does before recommending
   it. A coordinator listed two gaps that the app had closed a month before, an outbound
   control-character check and an inbound one, because it read the app's plans but not its code.
-- **L55, `review-loops`:** lap numbers per side (L26) still let both sides write the same lap
+- **L55, `review-loops`, taken in:** lap numbers per side (L26) still let both sides write the same lap
   when each writes while waiting: one loop's laps crossed three times in two rounds. The last
   lap names who holds the turn; a lap written out of turn is held; a clash that happens anyway
   is renumbered by the commit that reached the reader's branch first, without asking the owner.
