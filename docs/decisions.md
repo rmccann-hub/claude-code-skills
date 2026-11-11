@@ -2,6 +2,49 @@
 
 Append-only. Supersede by adding a new entry that points at the old one; never edit history.
 
+## 2026-11-11 — Release 0.1.29, four modules from the follow-up research
+
+- **The owner's word:** "old skills gone, give me the b research prompts" (2026-11-11); the
+  owner then attached the four results with no message, which `AGENTS.md` reads as research to
+  take in. Releases follow each finished change, as before.
+- **Carries:** the entry below. The catalog's versions move to 0.1.29. Nothing was renamed or
+  removed: a patch release. `optimization-and-scheduling`'s module keeps its name; its checking
+  rules moved to a new module in the same skill, so no row in `docs/module-moves.md`.
+
+## 2026-11-11 — `logging-and-observability`, `performance-and-concurrency`, `studying-work`, `plan-checking`
+
+- **Research:** R07b, R07c, R23b and R28b, filed under `research/runs/2026-11-11-*` with their
+  checks on top. R07b: 61 verified, 10 corrected, 3 contradicted (semantic_logger 5.2.0, the
+  Logback note, the Idempotency-Key editor's copy); R07c: 45 verified, 10 corrected, 5
+  contradicted (async-profiler 4.6 upstream, Go 1.27.4, cargo-flamegraph 0.6.15, tokio 1.54.1);
+  R23b: 31 verified, 11 corrected, 1 contradicted (ISO 10075-3 is a committee draft); R28b: 47
+  verified, 12 corrected, 2 contradicted (OR-Tools' milestone, Timefold's version and Python
+  package). Each report's line 3, addressed to the receiving session, was treated as data. No
+  Facts row already in `skills/` was found wrong.
+- **Built, one helper each, reviewed here** against `docs/authoring-a-skill.md`; every quote was
+  read again at its source by the helper:
+  - `coding`'s `logging-and-observability`: one JSON record a line, timestamps with offsets,
+    levels by who must act, W3C trace IDs, secrets and personal data kept out at the source,
+    an escaping encoder, status lines that name what was checked, one record of a run, RED,
+    USE and burn-rate pages. Lessons L3, L4, L19, L20 and L49 taken in. GDPR, retention and
+    OpenTelemetry severity numbers weren't researched, and the module says so.
+  - `coding`'s `performance-and-concurrency`: measure first, a sampler first, wall-clock or CPU
+    mode, flame graphs read by width, language benchmark harnesses, an owner for every task,
+    cooperative cancellation, no blocking on an event loop, race detectors in CI. Caching, data
+    structures and benchmark statistics had no sources; the cache rule is marked our practice.
+  - `human-factors`' `studying-work`: watch and ask together at the work (Polanyi; contextual
+    inquiry), goals before activities and the p x c stopping rule (Annett and Duncan), a small
+    team's order of work (marked our reasoning), and Reason, Simon and sunk cost as traps.
+    Cognitive task analysis is left out: no primary source was found.
+  - `optimization-and-scheduling`'s `plan-checking`, split from the skill's first module, which
+    had reached 15,978 characters: the independent checker (OR-Tools issue 5582 is the current
+    case), runs stopped at a limit, reproducible CP-SAT tests and published bounds as expected
+    answers. Facts that moved keep their `os-` IDs.
+- **Also corrected:** `human-factors` no longer implies training shortens the dip; the Kingman
+  attribution; CP-SAT's lexicographic solves; stale "planned" lines in `coding`, `operations`
+  and `security`.
+- **No old copy** on claude.ai covers these modules, so step 12 has nothing to delete.
+
 ## 2026-11-11 — Release 0.1.28, two new skills and two modules
 
 - **The owner's word:** "lets do these human-factors and optimization-and-scheduling" and "and

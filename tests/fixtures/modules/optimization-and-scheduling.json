@@ -1,9 +1,5 @@
 [
   {
-    "query": "My CP-SAT job-shop model says OPTIMAL but the makespan looks too long. Can I trust it, and how would I prove the schedule is right?",
-    "should_trigger": true
-  },
-  {
     "query": "Help me build a nurse roster for 40 staff over four weeks: nobody does more than three nights in a row, and people's weekend preferences count but aren't mandatory.",
     "should_trigger": true
   },
@@ -16,8 +12,16 @@
     "should_trigger": true
   },
   {
-    "query": "The production planner hit its 60-second time limit. What should the report say about how good the plan is?",
+    "query": "Cost matters most, then on-time delivery, then fewer changeovers. How do I make CP-SAT respect that order instead of trading them off?",
     "should_trigger": true
+  },
+  {
+    "query": "We run Gurobi in Docker on our build server. How should the licence get into the container?",
+    "should_trigger": true
+  },
+  {
+    "query": "The planner hit its time limit and reported FEASIBLE. What should the run report say about the gap and the bound?",
+    "should_trigger": false
   },
   {
     "query": "We want to automate the supervisors' manual whiteboard schedule. Before we replace it, what is the whiteboard actually doing for them?",

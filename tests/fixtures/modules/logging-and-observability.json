@@ -1,0 +1,34 @@
+[
+  {
+    "query": "What fields should every log line from our Python services have, and should they be JSON?",
+    "should_trigger": true
+  },
+  {
+    "query": "When a login fails, is it fine to log the user's email address and their session ID?",
+    "should_trigger": true
+  },
+  {
+    "query": "How do I get the trace id into my pino logs so I can line them up with the traces?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up alerts for our API: what should wake someone at 3am and what should only open a ticket?",
+    "should_trigger": true
+  },
+  {
+    "query": "My Rust binary emits tracing events but nothing ever shows up. What am I missing?",
+    "should_trigger": true
+  },
+  {
+    "query": "Go through last night's journalctl output and tell me why the service kept restarting",
+    "should_trigger": false
+  },
+  {
+    "query": "How do I escape user-supplied file names before printing them to the terminal so escape codes can't run?",
+    "should_trigger": false
+  },
+  {
+    "query": "Should this HTTP handler return a 400 or a 500 when the upstream database times out?",
+    "should_trigger": false
+  }
+]

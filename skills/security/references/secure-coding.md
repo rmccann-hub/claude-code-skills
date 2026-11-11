@@ -5,7 +5,7 @@ keeping their sessions, checking what each user may do, choosing cryptography an
 logging security events without secrets, reviewing a change for security, and which editions of
 the OWASP Top 10, the ASVS and the CWE Top 25 are current.
 
-Validating input and encoding output belong to the coding skill's planned `input-handling`
+Validating input and encoding output belong to the coding skill's `input-handling`
 module, and each language's dangerous calls to its security module: `python-security`,
 `javascript-security`, `web-security`, `csharp-security`, `powershell-security`,
 `bash-security` and `c-security`. Which dependencies to trust is `supply-chain-security`,
@@ -79,7 +79,7 @@ party, or changes sign-in, permissions or cryptography.
 Log sign-in successes and failures, authorization and session failures, and administrators'
 actions, and alert on repeated failures. Leave out passwords, session IDs (hash one to tie
 events together), access tokens, keys and connection strings. Escaping text for a log is
-`input-handling`'s; logging in general is the planned `logging-and-observability` module's.
+`input-handling`'s; logging in general is the coding skill's `logging-and-observability`.
 
 Review a change by what it touches: a new endpoint, a server-side check and a second-user test;
 outside input, `input-handling` and the language's module; sign-in, rules 3 to 6; cryptography,

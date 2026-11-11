@@ -9,8 +9,8 @@ This module holds the practice every language shares. Each language's calls are 
 `python-security`, `javascript-security`, `csharp-security`, `powershell-security`,
 `bash-security` and `c-security`, and `web-security` takes HTML, URLs in pages and sanitizers.
 Designing the types that hold parsed values is `types`'s; parser settings for YAML, JSON, TOML
-and XML are `config-formats`'s. What to log is the planned `logging-and-observability` module's,
-and hidden characters in files an agent reads the planned `ai-agent-security`'s.
+and XML are `config-formats`'s. What to log is `logging-and-observability`'s,
+and hidden characters in files an agent reads `ai-agent-security`'s.
 
 ## Rules
 
