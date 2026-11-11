@@ -1,0 +1,36 @@
+[
+  {
+    "query": "Write the GitHub release notes for 3.0.0 from our changelog. Users need to know what breaks.",
+    "should_trigger": true
+  },
+  {
+    "query": "How long should we keep fixing 2.x now that 3.0 is out, and where do we tell people?",
+    "should_trigger": true
+  },
+  {
+    "query": "Someone privately reported a vulnerability in our library. How do we fix it, get a CVE and tell users?",
+    "should_trigger": true
+  },
+  {
+    "query": "Is it worth keeping an LTS branch for our CLI, or should we only support the latest release?",
+    "should_trigger": true
+  },
+  {
+    "query": "I published 1.9.3 as a patch for the old line and now GitHub shows it as the latest release instead of 2.4.0.",
+    "should_trigger": true
+  },
+  {
+    "query": "We're dropping the old config format. How do we tell users when it goes away?",
+    "should_trigger": true
+  },
+  {
+    "query": "Backport this fix to the release/2.x branch with cherry-pick.",
+    "should_trigger": false,
+    "note": "releases-and-versions"
+  },
+  {
+    "query": "We pushed an API key to GitHub last night. Get it out of the history.",
+    "should_trigger": false,
+    "note": "leaked-data"
+  }
+]

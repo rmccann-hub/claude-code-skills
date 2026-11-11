@@ -8,6 +8,8 @@ Notable changes to this repository. The format follows
 
 ### Added
 
+- `git-workflows` gains `ci-cd` (environments, OIDC, promotion, rollback) and
+  `versioning-and-releases` (release notes, support windows, advisories).
 - `coding` gains five modules: `code-style`, `types`, `input-handling`, `configuration` and
   `config-formats`.
 - `house-style`'s `documentation`: the four kinds of page, reference generated from code, docs
