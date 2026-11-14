@@ -137,6 +137,9 @@ Grouped by subject; the Skill column is each module's one home.
 | `windows-and-dialogs` | `user-experience` | When a window or dialog appears, modality, focus and stacking, nothing shown before it's ready or hidden behind another, long operations and notifications | shipped | standard | R27 |
 | `settings-and-options` | `user-experience` | Defaults, presets, progressive disclosure, each setting in one place, and how many choices is too many | shipped | standard | R27 |
 | `gui-testing` | `user-experience` | Testing a GUI by machine, through accessibility interfaces and toolkit helpers, and with people, by task-based tests | shipped | standard | R27 |
+| `interface-patterns` | `user-experience` | What a current interface is built from on each platform: design languages, consistent components, layout and window sizes, forms, empty, loading and error states, UX writing, keyboard-first use | planned | standard | R29 |
+| `command-line-interfaces` | `user-experience` | Command-line programs for people and scripts: arguments and help, output for people against programs, exit codes, progress, confirming destructive commands | planned | standard | R29 |
+| `feedback-loop` | `user-experience` | From user issues to fixes: feedback in the product, crash reports and consented usage data, triage, interfaces built to change, visual regression tests | planned | standard | R30 |
 | `accessibility` | `visual-design` | WCAG 2.2, ARIA, contrast, testing tools | planned | standard | R18 |
 | `internationalization` | `coding` | Unicode, locales, time zones, formats, right-to-left text | planned | standard | R18 |
 | `privacy-and-compliance` | `security` | Personal data, retention, licenses and notices, obligations on software publishers | planned | standard | R18 |

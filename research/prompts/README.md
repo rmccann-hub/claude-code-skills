@@ -1,6 +1,6 @@
 # Research runs
 
-Thirty-nine prompts, one file each. Each file is the whole prompt: paste all of it into a new
+Forty-one prompts, one file each. Each file is the whole prompt: paste all of it into a new
 claude.ai chat with Research turned on (or Web search, if Research isn't offered). Run them
 in any order, several at a time in separate chats. Priority 1 first.
 
@@ -32,9 +32,9 @@ no message. Save each one under the name its second line gives, for example `R01
 | R15 | 3 | [R15-shell-config-containers-linux-cloud.md](R15-shell-config-containers-linux-cloud.md) | Shell, configuration formats, containers, Kubernetes, infrastructure as code, Linux, networking and cloud | shell, config-formats, containers, kubernetes, infrastructure-as-code, cloud, linux, networking-security, linux-gaming |
 | R16 | 2 | [R16-office-epicor-solidworks.md](R16-office-epicor-solidworks.md) | Office (Excel, Word, VBA), Epicor Kinetic and SOLIDWORKS | excel, vba, word-documents, epicor-kinetic, solidworks-api, legacy-languages (VBA, VBScript) |
 | R17 | 3 | [R17-legacy-modernization.md](R17-legacy-modernization.md) | Legacy languages and modernization | legacy-languages, legacy-modernization |
-| R18 | 3 | [R18-accessibility-i18n-privacy-licensing.md](R18-accessibility-i18n-privacy-licensing.md) | Accessibility, internationalization, privacy and licensing compliance | accessibility, internationalization, privacy-and-compliance, documentation (licences and notices) |
+| R18 | 2 | [R18-accessibility-i18n-privacy-licensing.md](R18-accessibility-i18n-privacy-licensing.md) | Accessibility, internationalization, privacy and licensing compliance | accessibility, internationalization, privacy-and-compliance, documentation (licences and notices) |
 | R19 | 3 | [R19-architecture-api-planning-optimization.md](R19-architecture-api-planning-optimization.md) | Architecture, API design and planning (optimization and scheduling moved to R28) | architecture-and-design, api-design |
-| R20 | 3 | [R20-design-dataviz-documents.md](R20-design-dataviz-documents.md) | Visual design, data visualization, documents and output formats | visual-theme, data-visualization, documentation (output), word-documents (styling) |
+| R20 | 2 | [R20-design-dataviz-documents.md](R20-design-dataviz-documents.md) | Visual design, data visualization, documents and output formats | visual-theme, data-visualization, documentation (output), word-documents (styling) |
 | R21 | 1 | [R21-fewest-dependencies-newest-versions.md](R21-fewest-dependencies-newest-versions.md) | Fewest dependencies and newest versions: what a dependency costs, when to add or remove one, which runtime versions to target and test, and CI that checks less | project-bootstrap-and-audit (dimensions 2, 6 and 8), keeping-current, supply-chain-security, ci-cd, and the dependency advice in every language skill |
 | R23 | 2 | [R23-human-factors.md](R23-human-factors.md) | Human factors: the habits, notions and mindsets common to people that look wasteful from outside and serve a purpose, how to tell one from a bias, designing and automating with them, and the limit that keeps agents gathering facts unbiased | human-factors, optimization-and-scheduling, and every skill that designs, automates or optimizes work people do |
 | R23b | 2 | [R23b-human-factors-follow-up.md](R23b-human-factors-follow-up.md) | Human factors, what R23 didn't reach: task-analysis methods, primary sources, the size of the dip after a new system, and plans that treated people as deterministic | human-factors, optimization-and-scheduling |
@@ -47,6 +47,8 @@ no message. Save each one under the name its second line gives, for example `R01
 | R28 | 2 | [R28-optimization-and-scheduling.md](R28-optimization-and-scheduling.md) | Optimization and scheduling with the people in the plan: solvers, scheduling models, fatigue and shift design, lead-time quoting, and checking a plan without trusting the solver | optimization-and-scheduling, human-factors |
 | R28b | 2 | [R28b-optimization-and-scheduling-follow-up.md](R28b-optimization-and-scheduling-follow-up.md) | Optimization and scheduling, what R28 didn't reach: official model examples, multi-objective solves, test oracles, people in the plan, due-date quoting, simulation and re-planning | optimization-and-scheduling |
 | R28c | 2 | [R28c-optimization-and-scheduling-second-follow-up.md](R28c-optimization-and-scheduling-second-follow-up.md) | Optimization and scheduling, what R28b didn't reach: official examples, people in the plan, re-planning stability, benchmark licences, dispatching rules, due-date quoting, testing models | optimization-and-scheduling |
+| R29 | 2 | [R29-modern-interfaces-and-consistency.md](R29-modern-interfaces-and-consistency.md) | Modern interfaces and consistency: platform design languages today, design systems and keeping screens consistent, layout, forms and screen states, command-line interfaces, UX writing, keyboard-first use, onboarding and changing a familiar layout | user-experience (interface-patterns, command-line-interfaces), visual-design |
+| R30 | 2 | [R30-from-user-issues-to-fixes.md](R30-from-user-issues-to-fixes.md) | From user issues to fixes: feedback in the product, crash reports and usage data with consent, triage, building an interface to change, visual regression tests, measuring whether a fix helped | user-experience (feedback-loop), testing, logging-and-observability, git-workflows |
 
 Already covered in the building session, so there's no run for them: the skill-authoring
 rules; licensing and ownership; the licences of reference sources; this repository's own
